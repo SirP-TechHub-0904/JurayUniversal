@@ -1,0 +1,54 @@
+﻿ 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h4>@ViewBag.DataTitle</h4>
+<canvas id="@ViewBag.sn"></canvas>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var chartid = '@ViewBag.sn';
+        console.log(chartid);
+
+        // Use Razor syntax to serialize the model data
+        var data = @Html.Raw(Json.Serialize(ViewBag.outcomex));
+        console.log(data);
+
+        var labelsForChart = 'labels_' + chartid;
+        var valuesForChart = 'values_' + chartid;
+        var colorsForChart = 'colors_' + chartid;
+        var ctxForChart = 'ctx_' + chartid;
+
+        if (typeof window[labelsForChart] === 'undefined') {
+            window[labelsForChart] = data.map(entry => entry.mainData);
+        }
+        if (typeof window[valuesForChart] === 'undefined') {
+            window[valuesForChart] = data.map(entry => entry.againstData);
+        }
+        if (typeof window[colorsForChart] === 'undefined') {
+            window[colorsForChart] = data.map(entry => entry.colorData);
+        }
+         
+        if (typeof window[ctxForChart] === 'undefined') {
+            window[ctxForChart] = document.getElementById(chartid).getContext('2d');
+        }
+
+        // Create the bar chart
+        new Chart(window[ctxForChart], {
+            type: 'bar',
+            data: {
+                labels: window[labelsForChart],
+                datasets: [{
+                    label: '@ViewBag.DataTitle',
+                    data: window[valuesForChart],
+                    backgroundColor: window[colorsForChart] // Customize the bar color
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // Start the y-axis from zero
+                    }
+                }
+            }
+        });
+    });
+</script>

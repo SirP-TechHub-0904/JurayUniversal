@@ -1,0 +1,355 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model JurayUniversal.Website.Areas.UI.Pages.IndexModel
+@{
+    Layout = null;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Samples</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/JurayUniversal.Website.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Sample UI</a>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <h3>THEMES</h3>
+            <table id="" class="table table-bordered table-striped">
+                <tr>
+                    <th>Theme</th>
+                    <th>Code</th>
+                    <th>Sections</th>
+                    <th>Site Link with Demo images</th>
+                    <th>Site Link main images</th>
+                    <th>Status</th>
+                </tr>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+                {
+                    <tr>
+                        <th>Redbiz</th>
+                        <th>
+                            Layout1111
+                        </th>
+                        <th>
+
+                            <a asp-page="/SectionPage/RedbizSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin1"></span>/Layout/RedBiz-template/index.html
+                        </th>
+                        <th>
+                            <a href="https://redbizwp.themesflat.co/" target="_blank">https://redbizwp.themesflat.co/</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+                {
+
+                    <tr>
+                        <th>Carspot</th>
+                        <th>
+                            Layout2222
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/CarspotSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin2"></span>/Layout/carspot/index.html
+                        </th>
+                        <th>
+                            <a href="https://templates.scriptsbundle.com/carspot/demos/index.html" target="_blank">https://templates.scriptsbundle.com/carspot/demos/index.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+                {
+
+                    <tr>
+                        <th>Alina</th>
+                        <th>
+                            Layout3333
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/AlinaSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin3"></span>/Layout/Alina/index.html
+                        </th>
+                        <th>
+                            <a href="" target="_blank"></a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+                {
+
+                    <tr>
+                        <th>Archo</th>
+                        <th>
+                            Layout4444
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/ArchoSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin4"></span>/Layout/Alina/index.html
+                        </th>
+                        <th>
+                            <a href="https://ui-themez.smartinnovates.net/items/archo/#0" target="_blank">https://ui-themez.smartinnovates.net/items/archo/#0</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+                {
+
+                    <tr>
+                        <th>Bizup</th>
+                        <th>
+                            Layout5555
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/BizupSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin5"></span>/Layout/Bizup/index.html
+                        </th>
+                        <th>
+                            <a href="https://reactheme.com/products/html/bizup/" target="_blank">https://reactheme.com/products/html/bizup/</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+                {
+
+                    <tr>
+                        <th>Industry</th>
+                        <th>
+                            Layout6666
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/IndustrySection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin6"></span>/Layout/Industry/index.html
+                        </th>
+                        <th>
+                            <a href="https://zozothemes.com/html/induzy/index-2.html" target="_blank">https://zozothemes.com/html/induzy/index-2.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+                {
+
+                    <tr>
+                        <th>Lawnella</th>
+                        <th>
+                            Layout7777
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/LawnellaSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin7"></span>/Layout/Lawnella/index.html
+                        </th>
+                        <th>
+                            <a href="http://st.ourhtmldemo.com/template/Lawnella/index.html" target="_blank">http://st.ourhtmldemo.com/template/Lawnella/index.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+                {
+
+                    <tr>
+                        <th>Mistro</th>
+                        <th>
+                            Layout8888
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/MistroSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin8"></span>/Layout/Mistro/index.html
+                        </th>
+                        <th>
+                            <a href="https://themeht.com/template/misto/html/ltr/index.html" target="_blank">https://themeht.com/template/misto/html/ltr/index.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+                {
+
+                    <tr>
+                        <th>Senatory</th>
+                        <th>
+                            Layout9999
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/SenatorySection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin9"></span>/Layout/Senatory/index.html
+                        </th>
+                        <th>
+                            <a href="https://themeim.com/demo/senatory/index.html#" target="_blank">https://themeim.com/demo/senatory/index.html#</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+                {
+
+                    <tr>
+                        <th>Education</th>
+                        <th>
+                            Layout11111111
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/EducationSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin10"></span>/Layout/Education/index.html
+                        </th>
+                        <th>
+                            <a href="https://kodesolution.com/html/2016/studypress-html/demo/index-mp-layout1.html" target="_blank">https://kodesolution.com/html/2016/studypress-html/demo/index-mp-layout1.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout12121212")
+                {
+
+                    <tr>
+                        <th>Streamlab</th>
+                        <th>
+                            Layout12121212
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/StreamlabSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin11"></span>/Layout/Streamlab/index.html
+                        </th>
+                        <th>
+                            <a href="https://template.gentechtreedesign.com/html/streamlab/red-html/index.html" target="_blank">https://template.gentechtreedesign.com/html/streamlab/red-html/index.html</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout12121212")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
+
+            </table>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 -
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        var currentURL = window.location.href;
+
+        var origin = new URL(currentURL).origin;
+        console.log(origin); // Output: "http://www.fom.com"
+        document.getElementById("origin1").textContent = origin;
+        document.getElementById("origin2").textContent = origin;
+        document.getElementById("origin3").textContent = origin;
+        document.getElementById("origin4").textContent = origin;
+        document.getElementById("origin5").textContent = origin;
+        document.getElementById("origin6").textContent = origin;
+        document.getElementById("origin7").textContent = origin;
+        document.getElementById("origin8").textContent = origin;
+        document.getElementById("origin9").textContent = origin;
+        document.getElementById("origin10").textContent = origin;
+        document.getElementById("origin11").textContent = origin;
+        document.getElementById("origin12").textContent = origin;
+
+
+    </script>
+</body>
+</html>

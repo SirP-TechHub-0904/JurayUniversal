@@ -1,0 +1,58 @@
+﻿ 
+
+.itemdownload {
+    border: 2px solid #222222;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    will-change: transform;
+    background-color: #ffffff;
+    transition: all 0.3s ease-in-out;
+    margin-top:10px;
+}
+
+     
+    .itemdownload:hover {
+        border-color: #257d52;
+        transform: scale(1.009);
+    }
+    .itemdownload i {
+        width: 36px;
+        height: 36px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .itemdownload:hover i {
+        color: #7e3af2;
+        fill: red;
+    }
+
+    .itemdownload button {
+        all: unset;
+        margin-left: auto;
+        background-color: #7e3af2;
+        padding: 12px 16px;
+        border-radius: 6px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .itemdownload button:hover {
+            background-color: #7126f1;
+        }
+
+    .itemdownload .filedata {
+        display: flex;
+        gap: 4px;
+        font-size: 12px;
+        color: #888888;
+    }
+.dwn-filename-p p{
+    margin-bottom:0;
+}
+.dwn-filename-p{
+    width:80%;
+}

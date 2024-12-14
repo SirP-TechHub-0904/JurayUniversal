@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.AspNetCore.Http;
+@model JurayUniversal.Website.Areas.IPortfolio.Pages.Account.SetupModel
+@{
+    Layout = "/Pages/Shared/Admin/_Profile.cshtml";
+    var context = HttpContext;
+    var scheme = context.Request.Scheme; // Get the scheme (http or https)
+    var host = context.Request.Host; // Get the host (domain)
+    var currentUrl = $"{scheme}://{host}";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PROFILE TEMPLATE</h3>
+
+                <p class="card-text">
+                    Kindly choose a template for your profile. which can be changed later.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="card card-outline">
+            <div class="card-body">
+                 
+                <div class="row">
+                    @foreach (var item in Model.PortfolioTemplates)
+            {
+                <div class="col-md-4">
+
+                    <div class="card card-default card-outline">
+                        <div class="card-body">
+                            <h5 class="card-title center" style="text-align:center !important;font-weight:900;">@item.Name</h5>
+                            <div style="text-align:center;margin:0 auto;">
+                                <img src="@item.SampleUrl" class="img-fluid" style="max-height:600px;text-align:center;margin:0 auto;" />
+                            </div>
+                            <form method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="Idx" value="@item.Id" />
+                                <input type="submit" value="Select Template" />
+
+                                <a href="@currentUrl/@item.Path" target="_blank" class="card-link">View Template</a>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ICareer.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">CAREER</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.Fullname)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.Fullname)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.Phone)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.Phone)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.ContactAddress)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.ContactAddress)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.Position)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.Position)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.DOB)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.DOB)
+                    </dd>
+                    <dt class="col-sm-2">
+                      CV
+                    </dt>
+                    <dd class="col-sm-10">
+                        <a href="@Model.CareerFile.CvUrl" target="_blank">View CV</a> 
+                    </dd>
+                   
+                    <dt class="col-sm-2"> 
+                        Certificate 
+                    </dt>
+                    <dd class="col-sm-10">
+                        <a href="@Model.CareerFile.CertificateUrl" target="_blank">View Certificate</a>
+                    </dd>
+                     
+                    <dt class="col-sm-2">
+                        Application Letter
+                    </dt>
+                    <dd class="col-sm-10">
+                        <a href="@Model.CareerFile.ApplicationUrl" target="_blank">View Application Letter</a> 
+                    </dd>
+                    
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.PassportUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <img src="@Model.CareerFile.PassportUrl" style="max-height:200px;" class="img-fluid" />
+
+                     </dd>
+                    
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CareerFile.Date)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CareerFile.Date)
+                    </dd>
+                </dl>
+                
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

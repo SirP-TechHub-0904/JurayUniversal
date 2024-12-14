@@ -1,0 +1,473 @@
+﻿@page
+@using JurayUniversal.Application.Services;
+
+
+@model JurayUniversal.Website.Areas.Admin.Pages.Dashboard.IndexModel
+@{
+}
+<!-- Small boxes (Stat box) -->
+
+@if (Model.Custom == true)
+{
+    foreach (var item in Model.DashboardDatas)
+    {
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    @item.Title
+                </h3>
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var xdata in item.DashboardDataLists)
+                    {
+                        if (xdata.DataIdQuery == 0)
+                        {
+                            <div class="col-lg-3 col-6 dashboard-1">
+                                @{ var itemlist = Model.DataListMain.FirstOrDefault(x => x.DataTitle == "USERS"); }
+                                <a asp-page="/UserManagement/Index" asp-area="Admin">
+
+                                    <!-- small box -->
+                                    <div class="small-box @itemlist.DataColor">
+                                        <div class="inner">
+                                            <h3>@itemlist.DataCount</h3>
+
+                                            <p>TOTAL STAFF</p>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-6 dashboard-1">
+                                @{ var itemlistX = Model.DataListMain.FirstOrDefault(x => x.DataTitle == "MALES"); }
+                                <a asp-page="/UserManagement/Index" asp-area="Admin">
+
+                                    <!-- small box -->
+                                    <div class="small-box @itemlistX.DataColor">
+                                        <div class="inner">
+                                            <h3>@itemlistX.DataCount</h3>
+
+                                            <p>TOTAL MALES</p>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-6 dashboard-1">
+                                @{ var itemlistXF = Model.DataListMain.FirstOrDefault(x => x.DataTitle == "FEMALES"); }
+                                <a asp-page="/UserManagement/Index" asp-area="Admin">
+
+                                    <!-- small box -->
+                                    <div class="small-box @itemlistXF.DataColor">
+                                        <div class="inner">
+                                            <h3>@itemlistXF.DataCount</h3>
+
+                                            <p>TOTAL FEMALES</p>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                        if (xdata.DataIdQuery == 000)
+                        {
+                            <div class="col-lg-3 col-6 dashboard-1">
+                                @{ var itemlist = Model.DataListDto.FirstOrDefault(x => x.DataTitle == "CLIENT REQUEST"); }
+
+                                <a asp-page="/IRequest/Index" asp-area="Admin">
+                                    <!-- small box -->
+                                    <div class="small-box @itemlist.DataColor">
+                                        <div class="inner">
+                                            <h3>@itemlist.DataCount</h3>
+
+                                            <p>TOTAL @itemlist.DataTitle</p>
+                                        </div>
+
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            @await Component.InvokeAsync("DashboardData", new { data = xdata.DataIdQuery, color = MainServices.SelectColor() })
+                        }
+                    }
+                    @if (item.UseAccounts == true)
+                    {
+                        @foreach (var xdata in Model.UserAccountDashboard)
+                        {
+
+                            <div class="col-lg-3 col-6 dashboard-1">
+                                <a asp-page="/CH/Index" asp-area="Admin" asp-route-id="@xdata.DataArea">
+                                    <div class="small-box @xdata.DataColor">
+                                        <div class="inner">
+                                            <h3>@xdata.DataCount</h3>
+                                            <p>TOTAL @xdata.DataTitle</p>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                        }
+                    }
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    }
+}
+else
+{
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                STATISTICS
+            </h3>
+
+            <div class="card-tools d-inline">
+
+                <button type="button" class="btn btn-primary btn-sm d-inline" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <!-- Dropdown button -->
+                <div class="btn-group d-inline">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">By Day</a>
+                        <a class="dropdown-item" href="#">By Week</a>
+                        <a class="dropdown-item" href="#">By Month</a>
+                        <a class="dropdown-item" href="#">By Year</a>
+                        <!-- Add more options as needed -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                @foreach (var data in Model.DataListDto)
+                {
+                    <div class="col-lg-3 col-6 dashboard-1">
+                        <!-- small box -->
+                        <div class="small-box @data.DataColor">
+                            <div class="inner">
+                                <h3>@data.DataCount</h3>
+
+                                <p>@data.DataTitle</p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                STATISTICS
+            </h3>
+
+            <div class="card-tools d-inline">
+
+                <button type="button" class="btn btn-primary btn-sm d-inline" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <!-- Dropdown button -->
+                <div class="btn-group d-inline">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">By Day</a>
+                        <a class="dropdown-item" href="#">By Week</a>
+                        <a class="dropdown-item" href="#">By Month</a>
+                        <a class="dropdown-item" href="#">By Year</a>
+                        <!-- Add more options as needed -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                @foreach (var data in Model.DataListMain)
+                {
+                    <div class="col-lg-3 col-6 dashboard-1">
+                        <!-- small box -->
+                        <div class="small-box @data.DataColor">
+                            <div class="inner">
+                                <h3>@data.DataCount</h3>
+
+                                <p>@data.DataTitle</p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+        <div class="card-header">
+
+
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">TASK LIST</h3>
+
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-striped projects">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1%">
+                                        S/N
+                                    </th>
+                                    <th style="width: 20%">
+                                        Task
+                                    </th>
+                                    <th style="width: 20%">
+                                        Project/Feature
+                                    </th>
+                                    <th style="width: 30%">
+                                        Team Members
+                                    </th>
+                                    <th style="width: 8%" class="text-center">
+                                        Status
+                                    </th>
+                                    <th style="width: 8%" class="text-center">
+                                        Proprity
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            @{
+                                int sn = 0;
+                            }
+                            <tbody>
+                                @foreach (var item in Model.XProjectTask)
+                                {
+
+
+                                    <tr>
+                                        <td>
+                                            @{
+                                                sn++;
+                                            }
+                                            @sn
+                                        </td>
+                                        <td>
+
+                                            <a asp-page="/ProjectAct/DetailTask" asp-area="JPTask" asp-route-id="@item.Id">
+                                                @Html.DisplayFor(modelItem => item.Title)
+
+                                            </a>
+                                            <br />
+                                            <div style="line-height:10px;">
+
+
+
+                                                <small>
+                                                    Start @item.StartDate.ToString("dd.MM.yyyy")
+                                                </small>
+                                                <br />
+                                                <small>
+                                                    Finish @if (item.FinishDate != null)
+                                                    {
+                                                        <span> @item.FinishDate.ToString("dd.MM.yyyy")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>--.--.----</span>
+                                                    }
+                                                </small>
+
+                                            </div>
+                                        </td>
+                                        <td class="project-state">
+                                            <h4 style="font-size: .825rem;"> @Html.DisplayFor(modelItem => item.XProjectSection.XProject.Title)</h4>
+                                            <h6 style="font-size: .625rem;">
+                                                @Html.DisplayFor(modelItem => item.XProjectSection.Title)
+
+                                            </h6>
+                                        </td>
+                                        <td>
+
+                                            <ul class="list-inline">
+
+                                                <li class="list-inline-item">
+
+                                                    @if (!String.IsNullOrEmpty(item.User.PassportFilePathUrl))
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="@item.User.PassportFilePathUrl" style="max-height:30px;">
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                    }
+
+
+                                                </li>
+                                                <li class="list-inline-item">
+
+                                                    @if (!String.IsNullOrEmpty(item.TestedBy.PassportFilePathUrl))
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="@item.TestedBy.PassportFilePathUrl" style="max-height:30px;">
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                    }
+
+
+                                                </li>
+                                                <li class="list-inline-item">
+
+                                                    @if (!String.IsNullOrEmpty(item.ApprovedBy.PassportFilePathUrl))
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="@item.ApprovedBy.PassportFilePathUrl" style="max-height:30px;">
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                    }
+
+
+                                                </li>
+                                            </ul>
+
+
+                                        </td>
+
+                                        <td class="project-state">
+                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        </td>
+                                        <td class="project-state">
+                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Priority)</span>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+<!--<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+
+                </h3>
+
+                <div class="card-tools d-inline">
+
+                    <button type="button" class="btn btn-primary btn-sm d-inline" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>-->
+<!-- Dropdown button -->
+<!--<div class="btn-group d-inline">
+    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort By
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">By Day</a>
+        <a class="dropdown-item" href="#">By Week</a>
+        <a class="dropdown-item" href="#">By Month</a>
+        <a class="dropdown-item" href="#">By Year</a>-->
+<!-- Add more options as needed -->
+<!--</div>
+        </div>
+
+    </div>
+</div>-->
+<!-- /.card-header -->
+<!--<div class="card-body">
+            @await Component.InvokeAsync("BarChart", new { data = Model.Query1, title = "REPORT ANALYSIS" })
+        </div>
+
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+            </h3>
+
+            <div class="card-tools d-inline">
+
+                <button type="button" class="btn btn-primary btn-sm d-inline" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>-->
+<!-- Dropdown button -->
+<!--<div class="btn-group d-inline">
+    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort By
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">By Day</a>
+        <a class="dropdown-item" href="#">By Week</a>
+        <a class="dropdown-item" href="#">By Month</a>
+        <a class="dropdown-item" href="#">By Year</a>-->
+<!-- Add more options as needed -->
+<!--</div>
+        </div>
+
+    </div>
+</div>-->
+<!-- /.card-header -->
+<!--<div class="card-body">
+                @await Component.InvokeAsync("PieChart", new { data = Model.Query2, title = "CLIENT REQUEST ANALYSIS" })
+            </div>
+
+        </div>
+    </div>
+</div>-->
+
+
+
+
+@section Scripts {
+
+
+}

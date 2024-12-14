@@ -1,0 +1,104 @@
+// About Us section area header
+.about-us-section-area {
+    &.about-bg {
+        background-image: url(assets/img/about-bg.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0px 135px 0px;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(4, 7, 46, 0.7);
+        }
+    }
+
+    .about-inner {
+        .title {
+            font-size: 65px;
+            line-height: 78px;
+            font-family: var(--heading-font);
+            font-weight: 700;
+            -webkit-text-stroke: 1px #fff;
+            color: rgba(4, 7, 46, 0);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.breadcrumbs {
+    text-align: center;
+
+    &.style-01 {
+        text-align: left;
+        margin-bottom: 20px;
+
+        ul {
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+
+            li {
+                +li {
+                    &::before {
+                        color: var(--heading-color);
+                    }
+                }
+
+                a {
+                    color: var(--heading-color);
+
+                    &.active {
+                        color: var(--main-color-one);
+                    }
+                }
+
+                i {
+                    color: var(--main-color-one);
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+
+    ul {
+        list-style: none;
+        text-align: center;
+        margin: 0;
+        padding: 5px 15px;
+        display: inline-block;
+        border-radius: 4px;
+        background: var(--main-color-one);
+
+        li {
+            display: inline;
+
+            +li {
+                margin-left: 5px;
+
+                &::before {
+                    content: '/';
+                    display: inline-block;
+                    color: #fff;
+                    font-size: 18px;
+                    margin-right: 5px;
+                }
+            }
+
+            a {
+                font-size: 16px;
+                line-height: 28px;
+                font-family: var(--heading-font);
+                font-weight: 400;
+                color: #fff;
+            }
+        }
+    }
+}

@@ -1,0 +1,427 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Account.UpdateProfileModel
+@{
+}
+<style>
+    .input-group-sm > .custom-select, .input-group-sm > .form-control:not(textarea) {
+        height: auto;
+    }
+
+    .daiv {
+        box-shadow: 0px 11px 35px 0px #c5b5b4;
+        padding: 20px;
+    }
+
+    .secdaiv {
+        box-shadow: 0px 4px 5px 0px #c5b5b4;
+        padding: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">UPDATE PROFILE</h6>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+
+                    <a asp-page="/Users/Index" asp-area="NIPSSADMIN" class="btn btn-primary" style="float:right;">Back</a>
+                }
+                else
+                {
+
+                    <a asp-page="./Profile" class="btn btn-primary btn-sm" style="float:right;">Back</a>
+                }
+            </div>
+            <div class="card-header">
+                <span class="btn btn-warning btn-xs">Page 1/9</span>
+            </div>
+            @if (TempData["noteerror"] != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>@TempData["noteerror"]</strong>
+                </div>
+            }
+            <div class="card-body">
+                <div class="row">
+
+
+                    <div class="col-md-12">
+                        <h4>PERSONAL BIODATA</h4>
+                        <div class="daiv" style="margin-bottom:20px;">
+
+                            <form method="post" enctype="multipart/form-data">
+                                <input asp-for="Input.Id" value="@Model.UserDatas.Id" type="hidden"/>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.Title" class="control-label"></label>
+                                    <select asp-for="Input.Title" value="@Model.UserDatas.Title" class="form-control" asp-items="ViewBag.NameTitle">
+                                        <option value="">Choose</option>
+                                    </select>
+                                    <span asp-validation-for="Input.Title" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.FirstName" class="control-label"></label>
+                                    <input asp-for="Input.FirstName" value="@Model.UserDatas.FirstName" class="form-control" id="upper1" oninput="myUppercase('upper1')" />
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="Input.MiddleName" class="control-label"></label>
+                                    <input asp-for="Input.MiddleName" value="@Model.UserDatas.MiddleName" class="form-control" id="upper3" oninput="myUppercase('upper3')" />
+                                    <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.LastName" class="control-label"></label>
+                                    <input asp-for="Input.LastName" value="@Model.UserDatas.LastName" class="form-control" id="upper2" oninput="myUppercase('upper2')" />
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="Input.AltPhoneNumber" class="control-label"></label>
+                                    <input asp-for="Input.AltPhoneNumber" value="@Model.UserDatas.AltPhoneNumber" class="form-control" required="required" />
+                                    <span asp-validation-for="Input.AltPhoneNumber" class="text-danger"></span>
+                                </div>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Participant"))
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="Input.Sponsor" class="control-label"></label>
+                                        <textarea asp-for="Input.Sponsor" class="form-control" required="required">@Model.UserDatas.Sponsor</textarea>
+                                        <span asp-validation-for="Input.Sponsor" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.SponsorAddress" class="control-label"></label>
+                                        <textarea asp-for="Input.SponsorAddress" class="form-control" required="required">@Model.UserDatas.SponsorAddress</textarea>
+                                        <span asp-validation-for="Input.SponsorAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.PreviousAppointment" class="control-label"></label>
+                                        <textarea asp-for="Input.PreviousAppointment" class="form-control" required="required">@Model.UserDatas.SponsorAddress</textarea>
+                                        <span asp-validation-for="Input.PreviousAppointment" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.PositionOrRank" class="control-label"></label>
+                                        <input asp-for="Input.PositionOrRank" value="@Model.UserDatas.PositionOrRank" required="required" class="form-control" />
+                                        <span asp-validation-for="Input.PositionOrRank" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label asp-for="Input.PermanentHomeAddress" class="control-label"></label>
+                                    <textarea asp-for="Input.PermanentHomeAddress" class="form-control" required="required">@Model.UserDatas.PermanentHomeAddress</textarea>
+                                    <span asp-validation-for="Input.PermanentHomeAddress" class="text-danger"></span>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label asp-for="Input.PermanentState" class="control-label">Permanent State (@Model.UserDatas.PermanentState)</label>
+                                    <select asp-for="Input.PermanentState" onchange="toggleLGA(this); " id="state" class="form-control" required="required">
+                                        <option value="" selected="selected">- Select -</option>
+                                        <option value="Abia">Abia</option>
+                                        <option value="Adamawa">Adamawa</option>
+                                        <option value="AkwaIbom">AkwaIbom</option>
+                                        <option value="Anambra">Anambra</option>
+                                        <option value="Bauchi">Bauchi</option>
+                                        <option value="Bayelsa">Bayelsa</option>
+                                        <option value="Benue">Benue</option>
+                                        <option value="Borno">Borno</option>
+                                        <option value="Cross River">Cross River</option>
+                                        <option value="Delta">Delta</option>
+                                        <option value="Ebonyi">Ebonyi</option>
+                                        <option value="Edo">Edo</option>
+                                        <option value="Ekiti">Ekiti</option>
+                                        <option value="Enugu">Enugu</option>
+                                        <option value="FCT">FCT</option>
+                                        <option value="Gombe">Gombe</option>
+                                        <option value="Imo">Imo</option>
+                                        <option value="Jigawa">Jigawa</option>
+                                        <option value="Kaduna">Kaduna</option>
+                                        <option value="Kano">Kano</option>
+                                        <option value="Katsina">Katsina</option>
+                                        <option value="Kebbi">Kebbi</option>
+                                        <option value="Kogi">Kogi</option>
+                                        <option value="Kwara">Kwara</option>
+                                        <option value="Lagos">Lagos</option>
+                                        <option value="Nasarawa">Nasarawa</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Ogun">Ogun</option>
+                                        <option value="Ondo">Ondo</option>
+                                        <option value="Osun">Osun</option>
+                                        <option value="Oyo">Oyo</option>
+                                        <option value="Plateau">Plateau</option>
+                                        <option value="Rivers">Rivers</option>
+                                        <option value="Sokoto">Sokoto</option>
+                                        <option value="Taraba">Taraba</option>
+                                        <option value="Yobe">Yobe</option>
+                                        <option value="Zamfara">Zamafara</option>
+                                    </select>
+                                    <span asp-validation-for="Input.PermanentState" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.PermanentLga" class="control-label">Permanent Lga (@Model.UserDatas.PermanentLga)</label>
+                                    <select id="lga" asp-for="Input.PermanentLga" class="form-control select-lga">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.Address" class="control-label"></label>
+                                    <input asp-for="Input.Address" value="@Model.UserDatas.Address" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.City" class="control-label"></label>
+                                    <input asp-for="Input.City" value="@Model.UserDatas.City" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.City" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.State" class="control-label"></label>
+                                    <select asp-for="Input.State" value="@Model.UserDatas.State" class="form-control" required="required">
+                                        <option value="">- Select -</option>
+                                        <option value="Abia">Abia</option>
+                                        <option value="Adamawa">Adamawa</option>
+                                        <option value="AkwaIbom">AkwaIbom</option>
+                                        <option value="Anambra">Anambra</option>
+                                        <option value="Bauchi">Bauchi</option>
+                                        <option value="Bayelsa">Bayelsa</option>
+                                        <option value="Benue">Benue</option>
+                                        <option value="Borno">Borno</option>
+                                        <option value="Cross River">Cross River</option>
+                                        <option value="Delta">Delta</option>
+                                        <option value="Ebonyi">Ebonyi</option>
+                                        <option value="Edo">Edo</option>
+                                        <option value="Ekiti">Ekiti</option>
+                                        <option value="Enugu">Enugu</option>
+                                        <option value="FCT">FCT</option>
+                                        <option value="Gombe">Gombe</option>
+                                        <option value="Imo">Imo</option>
+                                        <option value="Jigawa">Jigawa</option>
+                                        <option value="Kaduna">Kaduna</option>
+                                        <option value="Kano">Kano</option>
+                                        <option value="Katsina">Katsina</option>
+                                        <option value="Kebbi">Kebbi</option>
+                                        <option value="Kogi">Kogi</option>
+                                        <option value="Kwara">Kwara</option>
+                                        <option value="Lagos">Lagos</option>
+                                        <option value="Nasarawa">Nasarawa</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Ogun">Ogun</option>
+                                        <option value="Ondo">Ondo</option>
+                                        <option value="Osun">Osun</option>
+                                        <option value="Oyo">Oyo</option>
+                                        <option value="Plateau">Plateau</option>
+                                        <option value="Rivers">Rivers</option>
+                                        <option value="Sokoto">Sokoto</option>
+                                        <option value="Taraba">Taraba</option>
+                                        <option value="Yobe">Yobe</option>
+                                        <option value="Zamfara">Zamafara</option>
+                                    </select>
+                                    <span asp-validation-for="Input.State" class="text-danger"></span>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label asp-for="Input.DateOfBirth" class="control-label">
+                                        Date Of Birth (@if (Model.UserDatas.DateOfBirth != null)
+                                        {
+                                            @Model.UserDatas.DateOfBirth.Value.Date.ToString("dd MMM, yyyy")
+
+                                        })
+                                    </label>
+
+                                    <input asp-for="Input.DateOfBirth" type="date" class="form-control" />
+
+                                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.Gender" class="control-label"></label>
+                                    @Html.DropDownListFor(model => model.Input.Gender, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.GenderStatus))), new { @class = "form-control", required = "required" })
+                                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.MaritalStatus" class="control-label"></label>
+                                    <select asp-for="Input.MaritalStatus" value="@Model.UserDatas.MaritalStatus" required="required" class="form-control">
+                                        <option value="single">Single</option>
+                                        <option value="married">Married</option>
+                                        <option value="divorced">Divorced</option>
+                                        <option value="widowed">Widowed</option>
+                                    </select>
+                                    <span asp-validation-for="Input.MaritalStatus" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.Biography" class="control-label">Short Biography</label>
+                                    <textarea asp-for="Input.Biography" class="form-control summernote" required="required" maxlength="1000">@Html.Raw(Model.UserDatas.Biography)</textarea> 
+
+                                    <span asp-validation-for="Input.Biography" class="text-danger"></span>
+                                </div>
+
+                                @if (!String.IsNullOrEmpty(Model.UserDatas.PassportFilePathUrl))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Passport Photograph</label><br />
+                                        <img src="@Model.UserDatas.PassportFilePathUrl" style="max-height:200px;" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Upload/Change Passport Photograph</label><br />
+                                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Upload/Change Passport Photograph</label><br />
+                                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" required="required" />
+                                    </div>
+                                }
+                                @if (!String.IsNullOrEmpty(Model.UserDatas.ValidIDCardUrl))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Official Valid ID Card</label><br />
+                                        <img src="@Model.UserDatas.ValidIDCardUrl" style="max-height:200px;" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Upload/Change Official Valid ID Card</label><br />
+                                        <input type="file" class="control-label" asp-for="imageidcard" accept="image/*" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Upload/Change Official Valid ID Card</label><br />
+                                        <input type="file" class="control-label" asp-for="imageidcard" accept="image/*" required="required" />
+                                    </div>
+
+                                }
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Participant"))
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="Input.InternationalPassportNumber" class="control-label"></label>
+                                        <input asp-for="Input.InternationalPassportNumber" value="@Model.UserDatas.InternationalPassportNumber" required="required" class="form-control" />
+                                        <span asp-validation-for="Input.InternationalPassportNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Input.InternationalPassportExpiringDate" class="control-label"></label>
+                                        <input asp-for="Input.InternationalPassportExpiringDate" value="@Model.UserDatas.InternationalPassportExpiringDate" required="required" class="form-control" />
+                                        <span asp-validation-for="Input.InternationalPassportExpiringDate" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label asp-for="Input.BloodGroup" class="control-label"></label>
+                                    <input asp-for="Input.BloodGroup" value="@Model.UserDatas.BloodGroup" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.BloodGroup" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.Genotype" class="control-label"></label>
+                                    <input asp-for="Input.Genotype" value="@Model.UserDatas.Genotype" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.Genotype" class="text-danger"></span>
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <label asp-for="Input.EmergencyContactName" class="control-label"></label>
+                                    <input asp-for="Input.EmergencyContactName" value="@Model.UserDatas.EmergencyContactName" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.EmergencyContactName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.EmergencyContactNumber" class="control-label"></label>
+                                    <input asp-for="Input.EmergencyContactNumber" value="@Model.UserDatas.EmergencyContactNumber" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.EmergencyContactNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Input.EmergencyContactRelationship" class="control-label"></label>
+                                    <input asp-for="Input.EmergencyContactRelationship" value="@Model.UserDatas.EmergencyContactRelationship" required="required" class="form-control" />
+                                    <span asp-validation-for="Input.EmergencyContactRelationship" class="text-danger"></span>
+                                </div>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Participant"))
+                                {
+                                    @if (!String.IsNullOrEmpty(Model.UserDatas.EmergencyContactValidIdCardUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Emergency Contact Valid ID Card</label><br />
+                                            <img src="@Model.UserDatas.EmergencyContactValidIdCardUrl" style="max-height:200px;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Change Emergency Contact Valid ID Card</label><br />
+                                            <input type="file" class="control-label" asp-for="imageemmergency" accept="image/*" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Upload Emergency Contact Valid ID Card</label><br />
+                                            <input type="file" class="control-label" asp-for="imageemmergency" accept="image/*" required="required" />
+                                        </div>
+                                    }
+                                }
+                                <div class="form-group">
+                                    <input type="submit" value="Save and Continue" class="btn btn-primary" />
+                                    @*<a asp-page="./Education" class="btn btn-primary" style="float:right;">Next</a>*@
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(Model.UserDatas.AccomodationUpdateStatus == JurayUniversal.Domain.Enum.Enum.AccomodationUpdateStatus.Request) 
+    { 
+<!--<div>
+    <div id="accomodationModal" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">-->
+
+            <!-- Modal content-->
+            <!--<div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    
+                </div>
+                <div class="modal-body">
+                    <h4 class="modal-title">ACCOMODATION ALLOCATION</h4>
+                </div>
+
+                <div class="modal-footer">
+                    <a asp-page="./Accomodation" class="btn btn-success" style="width:100%;">Choose Accomodation</a>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="width:100%;">Continue with Profile Update</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>-->
+
+}
+@section Scripts {
+    <script src="~/js/lga.js"></script>
+    <script src="~/js/lgaList.js"></script>
+    @*@if (TempData["accommodate"] != null)
+    {*@
+        <script>
+            $(document).ready(function () {
+
+                $('#accomodationModal').modal('show');
+            
+            });
+        </script>
+    
+}

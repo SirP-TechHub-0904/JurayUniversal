@@ -1,0 +1,401 @@
+﻿@page
+@model JurayUniversal.Website.Pages.TpgModel
+@{
+
+    ViewData["Title"] = "TESTIMONY PAGE";
+    ViewData["PageName"] = "TESTIMONY PAGE";
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+
+    @if (Model.Templatechoose == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "TESTIMONY" })
+
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+{
+    <div class="section-block">
+        <div class="container">
+            <div class="section-heading center-holder">
+
+                <div class="section-heading-line"></div>
+            </div>
+            <div class="row mt-50">
+                @foreach (var item in Model.Testimonies)
+                {
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="testmonial-box">
+                            <div class="row">
+                                <div class="col-2 pr-0">
+                                    <img src="@item.ImageUrl" alt="@item.Title">
+                                </div>
+                                <div class="col-10">
+                                    <h5>@item.Title</h5>
+
+                                    <p>
+                                        @item.Description
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+{
+    <section class="news section-padding">
+        <div class="container">
+            <div class="row">
+
+                <!-- Middle Content Box -->
+                <div class="col-md-12 col-xs-12 col-sm-12">
+                    <div class="row">
+                        <div class="owl-testimonial-1">
+                            @foreach (var item in Model.Testimonies)
+                            {
+                                <div class="single_testimonial">
+                                    <div class="textimonial-content">
+                                        <h4>Just fabulous</h4>
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="testimonial-meta-box">
+                                        <img src="@item.ImageUrl" alt="">
+                                        <div class="testimonial-meta">
+                                            <h3 class="">@item.Title </h3>
+
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Middle Content Box End -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+{
+
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+{
+    <section class="testimonials grid section-padding">
+        <div class="container">
+            <div class="section-head text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8 col-sm-10">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="testim">
+                        @foreach (var item in Model.Testimonies)
+                        {
+                            <div class="item wow fadeInUp" data-wow-delay=".3s">
+                                <span class="quote-icon"><img src="img/clients/quote.svg" alt=""></span>
+                                <div class="cont">
+                                    <p class="playfont">
+                                        @item.Description
+                                    </p>
+                                </div>
+                                <div class="info">
+                                    <div class="author">
+                                        <img src="@item.ImageUrl" alt="">
+                                    </div>
+                                    <h6>@item.Title </h6>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+{
+    <div class="rs-testimonial style2 bg10 pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="sec-title2 text-center md-left mb-30">
+                <div class="sub-text">Testimonials</div>
+                <h2 class="title mb-0 white-color">Whats our customers saying<br> about us</h2>
+            </div>
+            <div class="rs-carousel owl-carousel" data-loop="true" data-items="3" data-margin="30"
+                 data-autoplay="true" data-hoverpause="true" data-autoplay-timeout="5000" data-smart-speed="800"
+                 data-dots="false" data-nav="false" data-nav-speed="false" data-center-mode="false"
+                 data-mobile-device="1" data-mobile-device-nav="false" data-mobile-device-dots="true"
+                 data-ipad-device="2" data-ipad-device-nav="false" data-ipad-device-dots="true" data-ipad-device2="2"
+                 data-ipad-device-nav2="false" data-ipad-device-dots2="true" data-md-device="3"
+                 data-md-device-nav="false" data-md-device-dots="true">
+                @foreach (var item in Model.Testimonies)
+                {
+
+                    <div class="testi-wrap">
+                        <div class="item-content">
+                            <span><img src="assets/images/testimonial/quote.png" alt="@item.Title"></span>
+                            <p>
+                                @item.Description
+                            </p>
+                        </div>
+                        <div class="testi-content">
+                            <div class="image-wrap">
+                                <img src="@item.ImageUrl" alt="@item.ImageUrl">
+                            </div>
+                            <div class="testi-information">
+                                <div class="testi-name">@item.Title</div>
+
+                                <div class="ratting-img">
+                                    <img src="assets/images/testimonial/ratting.png" alt="@item.Title">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+{
+    <section id="testimonials-services" class="testimonials-section pad-bottom-70">
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <!-- Col -->
+                <div class="col-lg-8">
+                    <!-- Row -->
+                    <div class="row">
+                        @foreach (var item in Model.Testimonies)
+                        {
+                            <div class="col-md-6">
+                                <!-- Testimonial -->
+                                <div class="testimonials-inner pad-30 mb-4 box-shadow">
+                                    <div class="testimonials-item">
+                                        <div class="media">
+                                            <div class="testimonials-thumb align-self-start relative mr-3">
+                                                <img src="@item.ImageUrl" width="80" height="80" class="img-fluid b-radius-50" alt="@item.Title">
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="testimonials-details">
+                                                    <div class="testimonials-title mt-3">
+                                                        <h4 class="mb-0"> target="_blank">@item.Title</h4>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="testimonials-desc mt-3">
+                                            <p class="mb-0">@item.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonial -->
+                            </div>
+                        }
+
+                    </div>
+                    <!-- Row -->
+                </div>
+                <!-- Col -->
+                <!-- Col -->
+            </div>
+        </div>
+        <!-- Container -->
+    </section>
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+{
+    <section class="testimonial_all tp_five">
+        <div class="container">
+
+            <div class="row grid">
+                <div class="grid-sizer"></div>
+                @foreach (var item in Model.Testimonies)
+                {
+                    <div class="grid-item col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="testimonial_outer type_five">
+                            <div class="image">
+                                <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title>
+                            </div>
+                            <div class="content_inner">
+                                <ul>
+                                    <li><span class="icon-star"></span> <span class="icon-star"></span> <span class="icon-star"></span> <span class="icon-star"></span> <span class="icon-night"></span> </li>
+                                </ul>
+                                <p>@item.Description</p>
+                                <div class="authour_name">
+                                    <h2>@item.Title</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+    </section>
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+{
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="owl-carousel" data-items="1" data-autoplay="true">
+                        @foreach (var item in Model.Testimonies)
+                        {
+                            <div class="item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-10">
+                                        <div class="testimonial position-relative">
+                                            <div class="d-md-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <div class="testimonial-avatar">
+                                                        <div class="testimonial-img">
+                                                            <img class="img-fluid" src="@item.ImageUrl" alt="@item.Title">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1 ms-md-5 mt-5 mt-md-0">
+                                                    <div class="testimonial-content">
+                                                        <span><i class="fas fa-quote-left"></i></span>
+                                                        <p>@item.Description</p>
+                                                        <div class="testimonial-caption">
+                                                            <h6>@item.Title</h6>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+{
+    <div class="testimonial-section-area testimonial-bg margin-top-120"
+         style="background-image: url(assets/img/team.png);">
+        <div class="shapes">
+            <img src="assets/img/shape-04.png" class="shape-01" alt="">
+            <img src="assets/img/shape-03.png" class="shape-02" alt="">
+            <div class="shape-03"></div>
+            <div class="shape-04"></div>
+        </div>
+        <div class="shapes style-01">
+            <img src="assets/img/shape-04.png" class="shape-01" alt="">
+            <img src="assets/img/shape-03.png" class="shape-02" alt="">
+            <div class="shape-03"></div>
+            <div class="shape-04"></div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="testimonial-carousel-area">
+                        <div class="testimonial-carousel-three">
+                            @foreach (var item in Model.Testimonies)
+                            {
+                                <div class="party-single-item style-02">
+                                    <div class="content">
+
+                                        <h4 class="title">People's Say About us</h4>
+                                        <div class="quotes">
+                                            <p class="description">"@item.Description"</p>
+                                            <i class="icon-quotes"></i>
+                                            <img src="assets/img/shape-02.png" class="quotes-shape" alt="">
+                                        </div>
+                                        <div class="author-meta">
+                                            <span class="author-name">@item.Title</span>
+                                            <span class="line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

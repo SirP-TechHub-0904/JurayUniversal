@@ -1,0 +1,94 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IProposalPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE REPORT</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+<h3>Are you sure you want to delete this?</h3>
+<div>
+     <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.SubmittedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.SubmittedBy.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.DateSubmitted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.DateSubmitted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.DateApproved)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.DateApproved)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Proposal.TypedProposal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Proposal.TypedProposal)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Proposal.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

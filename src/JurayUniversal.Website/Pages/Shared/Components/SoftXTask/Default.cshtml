@@ -1,0 +1,71 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.XProjectTask>
+@{
+    // Create a HashSet to store unique random numbers
+    HashSet<int> uniqueNumbers = new HashSet<int>();
+
+    // Create a Random object to generate random numbers
+    Random random = new Random();
+
+    // Generate 2000 unique random numbers
+    while (uniqueNumbers.Count < 2000)
+    {
+        int randomNumber = random.Next(1, 2001);
+        uniqueNumbers.Add(randomNumber);
+    }
+
+    // Convert the HashSet to a List if needed
+    List<int> randomNumbersList = new List<int>(uniqueNumbers);
+    // Print or use the generated random numbers as needed
+    int number = randomNumbersList.FirstOrDefault();
+}
+
+
+<div class="card card-warning card-tabs">
+
+    <div class="card-body">
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>TITLE</th>
+                    <th>USER</th>
+                    <th>STATUS</th>
+                    <th>VERIFIED</th>
+                    <th>APPROVED</th>
+                </tr>
+            </thead>
+            @{ int sn = 0;}
+            <tbody>
+                @foreach (var xtesk in Model)
+                {
+                    <tr>
+                        <td>
+                            @{ sn++;}
+                            @sn
+                        </td>
+                        <td>@xtesk.Title</td>
+                        <td>@xtesk.User.Email</td>
+                        <td>@xtesk.Status</td>
+                        <td>@xtesk.TestStatus</td>
+                        <td>@xtesk.ApproveStatus</td>
+                        <td>
+                            <a class="btn btn-warning" asp-page="./SoftDetailTask" asp-route-id="@xtesk.Id">More Information</a>
+
+                            @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                            {
+                                <a class="btn btn-danger" asp-page="./UpdateTask" asp-route-id="@xtesk.Id">Update</a>
+
+                            }
+
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+
+
+
+            </div>
+        </div>
+   

@@ -1,0 +1,130 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IBlogs.Post.EditModel
+
+@{
+    ViewData["Title"] = "BLOG Edit";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE BLOG POST</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Blog.Id" />
+                    <input type="hidden" asp-for="Blog.VideoKey" />
+                    <input type="hidden" asp-for="Blog.VideoUrl" />
+                    <input type="hidden" asp-for="Blog.ImageKey" />
+                    <input type="hidden" asp-for="Blog.ImageUrl" />
+
+                    <div class="form-group">
+                        <label asp-for="Blog.Title" class="control-label"></label>
+                        <input asp-for="Blog.Title" class="form-control" />
+                        <span asp-validation-for="Blog.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.Date" class="control-label"></label>
+                        <input asp-for="Blog.Date" class="form-control" />
+                        <span asp-validation-for="Blog.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.SortOrder" class="control-label"></label>
+                        <input asp-for="Blog.SortOrder" class="form-control" />
+                        <span asp-validation-for="Blog.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Blog.Publish" /> @Html.DisplayNameFor(model => model.Blog.Publish)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.Description" class="control-label"></label>
+                        <textarea asp-for="Blog.Description" class="form-control"></textarea>
+                        <span asp-validation-for="Blog.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.FullDescription" class="control-label"></label>
+                        <textarea asp-for="Blog.FullDescription" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Blog.FullDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.BlogCategoryId" class="control-label">Post Category</label>
+                        <select asp-for="Blog.BlogCategoryId" class="form-control" asp-items="ViewBag.BlogCategoryId"></select>
+                        <span asp-validation-for="Blog.BlogCategoryId" class="text-danger"></span>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.Blog.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse Image</label><br />
+                            <img src="@Model.Blog.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                        </div>
+                    } @if (!String.IsNullOrEmpty(Model.Blog.VideoUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse Video</label><br />
+                            <video width="" style="height:200px;" controls="controls">
+                                <source src="@Model.Blog.VideoUrl" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label"> Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Blog.AddToRibon" /> @Html.DisplayNameFor(model => model.Blog.AddToRibon)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.RibonSortOrder" class="control-label"></label>
+                        <input asp-for="Blog.RibonSortOrder" class="form-control" />
+                        <span asp-validation-for="Blog.RibonSortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.RibonCustomDisplayTitle" class="control-label"></label>
+                        <input asp-for="Blog.RibonCustomDisplayTitle" class="form-control" />
+                        <span asp-validation-for="Blog.RibonCustomDisplayTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

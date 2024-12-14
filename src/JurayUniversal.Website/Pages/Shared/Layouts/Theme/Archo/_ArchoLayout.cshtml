@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+
+    @await Component.InvokeAsync("Redirect")
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="~/Layout/archo/css/plugins.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Core Style Css -->
+    <link rel="stylesheet" href="~/Layout/archo/css/style.css" />
+    <style>
+    </style>
+    <link href="~/Layout/archo/css/main.css" rel="stylesheet" />
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+
+
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body>
+
+    @await Component.InvokeAsync("Reloader")
+
+    @await Component.InvokeAsync("Menu")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer")
+    <script src="~/Layout/archo/js/jquery-3.0.0.min.js"></script>
+    <script src="~/Layout/archo/js/jquery-migrate-3.0.0.min.js"></script>
+
+    <!-- plugins -->
+    <script src="~/Layout/archo/js/plugins2.js"></script>
+
+    <!-- custom scripts -->
+    <script src="~/Layout/archo/js/scripts.js"></script>
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

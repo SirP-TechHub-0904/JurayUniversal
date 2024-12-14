@@ -1,0 +1,12 @@
+﻿@{
+    if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+}

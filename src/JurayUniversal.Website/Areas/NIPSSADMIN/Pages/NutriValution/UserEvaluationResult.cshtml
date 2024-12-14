@@ -1,0 +1,97 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.NutriValution.UserEvaluationResultModel
+@{
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+    /* For mobile devices */
+    @@media (max-width: 600px) {
+        th, td {
+            display: block;
+            width: 100%;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        .card-title {
+            font-size: 0.8rem;
+        }
+    }
+    /* For desktop devices */
+    @@media (min-width: 601px) {
+        th, td {
+            display: table-cell;
+            width: 50%;
+        }
+    }
+</style>
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ASSESSMENT OF NUTRITIONAL/DIETARY FOR @Model.UserDatas.FullnameX</h3>
+        <a asp-page="./DownloadEvaluation" asp-route-id="@Model.UserDatas.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Download</a>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    int sn = 0;
+                }
+                 
+                    @foreach (var item in Model.ParticipantNutritionCategory)
+                    {
+                        <div class="">
+                            @{
+                                sn++;
+                            }
+                            <div class="card-header">
+                                <h4 class="card-title" style="font-weight:900;">
+                                    (@sn) @item.Name
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                @foreach (var list in Model.UserNutritionEvaluation.Where(x => x.NutritionCategoryId == item.Id))
+                                {
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th style="">
+                                                    @list.NutritionCategoryList.Question
+                                                </th>
+                                                <td style="">
+                                                    @list.Result
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                }
+
+ 
+
+
+                            </div>
+                        </div>
+                    }
+                     
+            </div>
+
+        </div>
+    </div>
+
+</div>

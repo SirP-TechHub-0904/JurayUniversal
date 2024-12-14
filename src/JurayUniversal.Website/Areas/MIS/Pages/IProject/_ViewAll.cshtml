@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<JurayUniversal.Application.Dtos.Project.ProjectCategoryListDto>
+
+@{
+    ViewData["Title"] = "Project Category";
+}
+
+<table class="table table-bordered table-hover table-striped" id="dataTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Category</th>
+            <th>Projects</th>
+            <th>Progress</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @{ int sn = 0;}
+    <tbody>
+        @if (Model.Count() != 0)
+        {
+            @foreach (var item in Model)
+            {
+                { sn++; }
+                <tr>
+                    <td>@sn.</td>
+                    <td>
+                        <a style="color: #007bff; cursor: pointer;" onclick="jQueryModalGet('?handler=Details&id=@item.Id','Details of @ViewData["Title"]')">
+
+                            @item.Title
+                        </a>
+
+                    </td>
+                    <td>
+                        <a asp-page="/IProject/Main/Index" asp-route-id="@item.Id">
+                            @item.Projects
+                        </a>
+                   </td>
+                    <td>
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                        </div>
+                    </td>
+                    <td text-right">
+                        <a onclick="jQueryModalGet('?handler=CreateOrEdit&id=@item.Id','Edit @ViewData["Title"]')" class="btn btn-primary text-white"> <i class="fas fa-edit fa-xs"></i></a>
+                        <form method="post" asp-page="PcategoryList" asp-route-id="@item.Id" asp-page-handler="Delete" onsubmit="return jQueryModalDelete(this)" class="d-inline">
+                            <button type="submit" class="btn btn-danger text-white"> <i class="fas fa-trash fa-xs"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $("#dataTable").DataTable();
+    });
+</script>

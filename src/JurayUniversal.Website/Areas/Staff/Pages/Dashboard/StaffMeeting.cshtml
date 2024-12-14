@@ -1,0 +1,138 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.StaffMeetingModel
+
+@{
+    ViewData["Title"] = "StaffMeeting";
+}
+<!-- Default box -->
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">
+            @if (Model.Meeting != null)
+            {
+                if (Model.IDD < 0)
+                {
+                    <span>Last</span>
+                }
+                <span>  Meeting Held on @Model.Meeting.StartTime.Value.Date.ToString("ddd dd MMM, yyyy")</span>
+            }
+            else
+            {
+                <span>NO MEETING AVAILABLE</span>
+            }
+        </h4>
+
+        <a asp-page="./AllMeetings" class="btn bg-gradient-warning btn-sm" style="float:right;">Other Meetings</a>
+
+    </div>
+    @if (Model.Meeting != null)
+    {
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Start Time</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Meeting.StartTime.Value.ToString("hh:mm tt")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Close Time</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Meeting.CloseTime.Value.ToString("hh:mm tt")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Attendance</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Meeting.MeetingAttendances.Count()</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="info-box-two bg-light" style="padding:20px;">
+                                <h4>Minute</h4>
+                                <div class="post">
+
+                                    @Html.Raw(Model.Meeting.Minute)
+                                </div>
+                                <br /><br />
+                                <h5>Comment</h5>
+                                <div class="post">
+
+                                    @Html.Raw(Model.Meeting.Comment)
+                                </div>
+                                <div class="post clearfix">
+                                    <form method="post">
+                                        <input type="hidden" asp-for="Mid" value="@Model.Meeting.Id" />
+                                        <div class="input-group">
+                                            <input type="text" asp-for="Comment" placeholder="Comment or observation or correction ..." class="form-control">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary">Send</button>
+                                            </span>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                    <div class="info-box-two bg-light">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th colspan="2"> <h3 class="text-primary"><i class="fas fa-users"></i> Attendance</h3></th>
+
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr> @if (Model.Meeting.MeetingAttendances.Count() > 0)
+                                {
+                                    foreach (var u in Model.Meeting.MeetingAttendances)
+                                    {
+
+                                        <tr>
+                                            <th style="width:60%;">@u.User.GetFullName()</th>
+                                            <th style="width:40%;">@u.Time.ToString("hh:mm tt")</th>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th colspan="2"> NO ONE PRESENT IN THE MEETING</th>
+                                    </tr>
+
+                                }
+
+
+
+
+                            </thead>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- /.card-body -->
+    }
+    
+
+        </div>
+        <!-- /.card -->

@@ -1,0 +1,119 @@
+// Media page
+.media-section {
+    position: relative;
+    padding-top: 120px;
+    margin-top: 145px;
+    background-repeat: no-repeat;
+
+    &.style-01 {
+        margin-top: 0;
+    }
+
+    @media only screen and (max-width: 767px) {
+        margin-top: 100px;
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 158px;
+        background-color: var(--secondary-color);
+        opacity: .75;
+    }
+
+    .section-title {
+        .subtitle {
+            p {
+                color: #fff;
+            }
+        }
+
+        .title {
+            color: #fff;
+        }
+    }
+
+    .video-play {
+        &.style-01 {
+            &::after {
+                @media only screen and (max-width: 320px) {
+                    left: -12%;
+                }
+            }
+        }
+    }
+}
+
+.media-wrapper {
+    position: relative;
+    z-index: 9;
+    margin-bottom: -160px;
+}
+
+.media-item {
+    background-color: #FBFBFD;
+    padding: 30px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+.media-thumb {
+    position: relative;
+
+    img {
+        width: 100%;
+    }
+
+    .media-thumb-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .video-play {
+            i {
+                background: transparent;
+                border: 1px solid #fff;
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
+
+.media-content {
+    padding-top: 20px;
+
+    .category {
+        font-size: 12px;
+        background-color: var(--main-color-one);
+        text-transform: uppercase;
+        color: $white;
+        border-radius: 2px;
+        padding: 5px 10px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    .title {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 30px;
+        margin-bottom: 15px;
+    }
+
+    .date {
+        font-size: 14px;
+        font-weight: 500;
+
+        i {
+            margin-right: 8px;
+        }
+    }
+}

@@ -1,0 +1,260 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IExpenses.MainExpenses.UpdateExpensesModel
+
+@{
+    ViewData["Title"] = "UpdateExpenses";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE EXPENES FOR @Model.CompayExpenses.ExpensesCategory.Title</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CompayExpenses.Id" />
+                    <input type="hidden" asp-for="CompayExpenses.UserId" />
+                    <input type="hidden" asp-for="CompayExpenses.ExpensesCategoryId" />
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("CEO") || User.IsInRole("mSuperAdmin") || User.IsInRole("CFO"))
+                    {
+
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Note" class="control-label"></label>
+                            <input value="@Model.CompayExpenses.Note" class="form-control" readonly="readonly" />
+                            <span asp-validation-for="CompayExpenses.Note" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Amount" class="control-label"></label>
+                            <input value="@Model.CompayExpenses.Amount" class="form-control" readonly="readonly" />
+                            <span asp-validation-for="CompayExpenses.Amount" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Date" class="control-label"></label>
+                            <input value="@Model.CompayExpenses.Date" class="form-control" readonly="readonly" />
+                            <span asp-validation-for="CompayExpenses.Date" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByManager)
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByManager)
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ManagerNote)
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayFor(model => model.CompayExpenses.ManagerNote)
+                        </div>
+                        <hr />
+                    <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCEO)
+                    </div>
+                    <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCEO)
+                    </div>
+                    <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CeoNote)
+                    </div>
+                    <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CeoNote)
+                    </div>
+                    <hr />
+                    <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCFO)
+                    </div>
+                    <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCFO)
+                    </div>
+                    <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CfoNote)
+                    </div>
+                    <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CfoNote)
+                    </div>
+                    }
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+                    {
+
+
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Note" class="control-label"></label>
+                            <input asp-for="Input.Note" class="form-control" />
+                            <span asp-validation-for="CompayExpenses.Note" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Amount" class="control-label"></label>
+                            <input asp-for="Input.Amount" class="form-control" />
+                            <span asp-validation-for="CompayExpenses.Amount" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.Date" class="control-label"></label>
+                            <input asp-for="Input.Date" class="form-control" />
+                            <span asp-validation-for="CompayExpenses.Date" class="text-danger"></span>
+                        </div>
+                        <hr />
+
+                        <hr />
+                        <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCEO)
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCEO)
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CeoNote)
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CeoNote)
+                        </div>
+                        <hr />
+                        <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCFO)
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCFO)
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CfoNote)
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CfoNote)
+                        </div>
+
+                        <hr />
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="Input.ApprovedByManager" /> @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByManager)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.ManagerNote" class="control-label"></label>
+                            <textarea asp-for="Input.ManagerNote" class="form-control" ></textarea>
+                            <span asp-validation-for="CompayExpenses.ManagerNote" class="text-danger"></span>
+                        </div>
+                        @if (!String.IsNullOrEmpty(Model.CompayExpenses.ProveImageUrl)){
+                           <a href="@Model.CompayExpenses.ProveImageUrl" target="_blank">
+                                Preview
+                            </a>
+                        }
+                        <div class="form-group">
+                            <label class="control-label">Prove Image</label><br />
+                            <input type="file" class="control-label" asp-for="imagefile" />
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="Input.Close" /> @Html.DisplayNameFor(model => model.CompayExpenses.Close)
+                            </label>
+                        </div>
+                    }
+
+                    <hr />
+                    <hr />
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("CEO") || User.IsInRole("mSuperAdmin"))
+                    {
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="Input.ApprovedByCEO" /> @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCEO)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.CeoNote" class="control-label"></label>
+                            <textarea asp-for="Input.CeoNote" class="form-control" ></textarea>
+                            <span asp-validation-for="CompayExpenses.CeoNote" class="text-danger"></span>
+                        </div>
+                    }
+
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("CFO") || User.IsInRole("mSuperAdmin"))
+                    {
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="Input.ApprovedByCFO" /> @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCFO)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompayExpenses.CfoNote" class="control-label"></label>
+                            <textarea asp-for="Input.CfoNote" class="form-control" ></textarea>
+                            <span asp-validation-for="CompayExpenses.CfoNote" class="text-danger"></span>
+                        </div>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("CEO") || User.IsInRole("mSuperAdmin") || User.IsInRole("CFO"))
+                    {
+                        if (Model.CompayExpenses.ApprovedByManager == true)
+                        {
+                            if (User.Identity.IsAuthenticated && User.IsInRole("CFO"))
+                            {
+                                if (Model.CompayExpenses.ApprovedByCEO == true)
+                                {
+                                    <div class="form-group">
+                                        <input type="submit" value="Submit" class="btn btn-primary" />
+                                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h6>CEO needs to approve before you approve</h6>
+                                    <input disabled="disabled" value="Submit" class="btn btn-primary" />
+                                    <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                                }
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                    <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+
+
+                            <div class="form-group">
+                                <h6>Manager needs to approve before you approve</h6>
+                                <input disabled="disabled" value="Submit" class="btn btn-primary" />
+                                <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                            </div>
+                        }
+                    }
+                    else if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
+                    {
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                        </div>
+                    }
+
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

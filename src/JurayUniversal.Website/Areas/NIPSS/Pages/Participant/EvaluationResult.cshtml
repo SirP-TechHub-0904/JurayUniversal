@@ -1,0 +1,116 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.EvaluationResultModel
+@{
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title center">
+                    EVALUATION RESULTS
+                </h6>
+
+            </div>
+
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                        <div class="sec-title" style="border: 2px solid #ffffff; box-shadow: 1px 1.6px 3.6px rgb(30 64 44), 2px 0px 2.9px rgb(65 112 86); padding: 16px; background-color: white;">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:center;margin:0 auto !important">
+                                        <div class="" style="text-align:center;margin:0 auto;">
+                                            <img src="~/images/logo.png" style="text-align:center;margin:0 auto;height:100px;" />
+                                        </div>
+
+                                        <h4 class="center">
+                                            <span style="font-weight:800;"> RESOURCE PERSON'S EVALUATION RESULTS</span>
+                                        </h4>
+                                        <h5 class="center">
+                                            <span style="font-weight:800;">National Institute for Policy and Strategic Studies, Kuru</span>
+                                        </h5>
+                                        <h6 class="center">
+                                            <span style="font-weight:800;"> @Model.ParticipantList.Course.CourseCategory.Name NO.@Model.ParticipantList.Course.SecNumber, @Model.ParticipantList.Course.Year.ToString("yyyy")</span>
+                                        </h6>
+                                    </div>
+                                </div>
+
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>S/N</th>
+                                                    <th>
+                                                        Date
+                                                    </th>
+
+                                                    <th>Resource Person</th>
+                                                    <th>Topic</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+
+                                            @{
+                                                int sn = 0;
+                                            }
+                                            <tbody>
+                                                @foreach (var item in Model.ModeratorEvaluations.OrderByDescending(x=>x.TimeTable.Date))
+                                                {
+                                                    <tr>
+
+                                                        <td>
+                                                            @{
+                                                                sn++;
+                                                            }
+                                                            @sn
+                                                        </td>
+
+                                                        <td>
+                                                            @item.TimeTable.Date.ToString("ddd dd MMM, yyyy")
+                                                        </td>
+                                                        <td>
+                                                            @if (item.Moderator.User != null)
+                                                            {
+                                                                @item.Moderator.User.FullnameX
+                                                            }
+                                                            else
+                                                            {
+                                                                @item.Moderator.Fullname
+                                                            }
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.Raw(item.TimeTable.Content)
+                                                        </td>
+
+                                                        <td>
+                                                            <a class="btn btn-primary btn-xs" asp-page="./EModeratorResult" asp-route-tid="@item.TimeTableId" asp-route-mid="@item.ModeratorId">View Result</a>
+
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

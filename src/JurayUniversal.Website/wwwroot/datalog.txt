@@ -1,0 +1,291 @@
+07/01/2024 17:03:30 - log  Juray smart solutions limited -  System.Net.Mail.SmtpException: The operation has timed out.
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmail(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 184
+07/01/2024 17:05:12 - log  Juray smart solutions limited -  System.Net.Mail.SmtpException: The operation has timed out.
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmail(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 184
+04/02/2024 18:33:59 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 158
+04/02/2024 18:33:59 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 177
+04/02/2024 18:33:59 - log  National Institute for Policy and Strategic Studies – Kuru -  System.InvalidOperationException: The SMTP host was not specified.
+   at System.Net.Mail.SmtpClient.CheckHostAndPort()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 190
+05/02/2024 11:41:44 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 158
+05/02/2024 11:41:44 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 177
+05/02/2024 12:05:59 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 12:05:59 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 12:22:04 - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.IO.IOException: Unable to read data from the transport connection: The connection was closed.
+   at System.Net.Mail.SmtpReplyReaderFactory.ProcessRead(Byte[] buffer, Int32 offset, Int32 read, Boolean readLine)
+   at System.Net.Mail.SmtpReplyReaderFactory.ReadLines(SmtpReplyReader caller, Boolean oneLine)
+   at System.Net.Mail.ReadLinesCommand.Send(SmtpConnection conn)
+   at System.Net.Mail.EHelloCommand.Send(SmtpConnection conn, String domain)
+   at System.Net.Mail.SmtpConnection.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpTransport.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 191
+05/02/2024 12:24:58 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 12:24:59 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 12:27:03 - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: The operation has timed out.
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 191
+05/02/2024 13:21:32 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 13:21:32 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 13:22:26 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 13:22:26 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 13:28:33 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 13:28:33 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 15:32:11 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 15:32:11 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 15:36:12 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 15:36:12 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 15:45:21 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 15:45:21 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 16:07:41 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 16:07:41 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+05/02/2024 17:20:39 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+05/02/2024 17:20:39 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+06/02/2024 09:42:34 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+06/02/2024 09:42:34 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+06/02/2024 09:42:38 - log  National Institute for Policy and Strategic Studies – Kuru -  System.InvalidOperationException: The SMTP host was not specified.
+   at System.Net.Mail.SmtpClient.CheckHostAndPort()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 191
+06/02/2024 10:01:47 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+06/02/2024 10:01:47 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+06/02/2024 10:01:56 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+06/02/2024 10:01:56 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+06/02/2024 12:07:51 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+06/02/2024 12:07:51 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+06/02/2024 12:11:15 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 159
+06/02/2024 12:11:15 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 178
+09/02/2024 12:56:45 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 12:56:45 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 14:47:55 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 14:47:55 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 14:51:14 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 14:51:14 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 14:56:27 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 14:56:27 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 14:59:03 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 14:59:04 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 14:59:44 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 14:59:44 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 15:00:30 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 15:00:30 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+09/02/2024 15:01:14 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+09/02/2024 15:01:14 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+10/02/2024 16:58:05 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+10/02/2024 16:58:05 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+10/02/2024 16:58:26 - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Internals.SocketExceptionFactory+ExtendedSocketException (10060): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond. [::ffff:142.250.102.109]:587
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+--- End of stack trace from previous location ---
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+   at System.Net.Mail.SmtpConnection.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpTransport.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 192
+10/02/2024 17:12:25 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+10/02/2024 17:12:25 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+10/02/2024 17:12:46 - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Internals.SocketExceptionFactory+ExtendedSocketException (10060): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond. [::ffff:74.125.71.109]:587
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+--- End of stack trace from previous location ---
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+   at System.Net.Mail.SmtpConnection.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpTransport.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 192
+10/02/2024 18:18:22 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+10/02/2024 18:18:22 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+10/02/2024 18:18:43 - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Internals.SocketExceptionFactory+ExtendedSocketException (10060): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond. [::ffff:142.250.27.109]:587
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+--- End of stack trace from previous location ---
+   at System.Net.Sockets.TcpClient.Connect(String hostname, Int32 port)
+   at System.Net.Mail.SmtpConnection.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpTransport.GetConnection(String host, Int32 port)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 192
+15/02/2024 12:19:40 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+15/02/2024 12:19:40 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+15/02/2024 12:59:18 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+15/02/2024 12:59:18 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+15/02/2024 16:39:16 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+15/02/2024 16:39:16 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+16/02/2024 17:06:28 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+16/02/2024 17:06:28 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+23/02/2024 14:13:32 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 160
+23/02/2024 14:13:32 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 179
+01/04/2024 00:11:15 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 164
+01/04/2024 00:11:15 - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 183
+17/07/2024 10:55:32 PM - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 164
+17/07/2024 10:55:32 PM - log  cc emails National Institute for Policy and Strategic Studies – Kuru -  System.ArgumentException: The parameter 'addresses' cannot be an empty string. (Parameter 'addresses')
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 183
+17/07/2024 10:59:28 PM - log  National Institute for Policy and Strategic Studies – Kuru -  System.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.Send(SmtpConnection conn, Byte[] command, MailAddress from, Boolean allowUnicode)
+   at System.Net.Mail.SmtpTransport.SendMail(MailAddress sender, MailAddressCollection recipients, String deliveryNotify, Boolean allowUnicode, SmtpFailedRecipientException& exception)
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at JurayUniversal.Application.Repository.NotifyRegister.EmailSendService.SendEmailWithResult(String name, String to, String cc, String bcc, String subject, String body) in C:\Users\JURAY\source\repos\JurayUniversal\src\JurayUniversal.Application\Repository\NotifyRegister\EmailSendService.cs:line 196

@@ -1,0 +1,218 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IConfigSettings.IndexModel
+
+@{
+    ViewData["Title"] = "Index"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DataConfig</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.LoginCSS)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.LoginCSS)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.LayoutCSS)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.LayoutCSS)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.LayoutJavaScript)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.LayoutJavaScript)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.DashboardCSS)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.DashboardCSS)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttpswww)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.RedirectTohttpswww)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttps)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.RedirectTohttps)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.Configuration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.Configuration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.LiveConfiguration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.LiveConfiguration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.MailSender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.MailSender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.DisplayName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.DisplayName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookUsername)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookUsername)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookSecurity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookSecurity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookSenderEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookSenderEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookSSLEnable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookSSLEnable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.OutlookUseDefaultCredentials)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.OutlookUseDefaultCredentials)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GooglePort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GooglePort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleUsername)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleUsername)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleSecurity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleSecurity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleSenderEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleSenderEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleSSLEnable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleSSLEnable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.GoogleUseDefaultCredentials)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.GoogleUseDefaultCredentials)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailServer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailServer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailUsername)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailUsername)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailSecurity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailSecurity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailSenderEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailSenderEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailSSLEnable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailSSLEnable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.WebmailUseDefaultCredentials)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.WebmailUseDefaultCredentials)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.CCmails)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.CCmails)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataConfig.BBmails)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataConfig.BBmails)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.DataConfig.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

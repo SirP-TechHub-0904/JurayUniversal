@@ -1,0 +1,136 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IAttendance.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ATTENDANCE LIST</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-6" style="">
+                <form method="get">
+                    <div class="input-group input-group-sm" style="margin-bottom:7px;">
+
+                        <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]" style="padding: 18px;">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-flat">Search</button>
+                        </span>
+                    </div>
+                </form>
+
+                <p>
+                    Search result for <span style="font-weight:900;color:#b62626;"><i>@TempData["date"]</i></span>
+
+                </p>
+
+            </div>
+            @*<div class="col-md-6" style="">
+                <a asp-page="./AttendanceQuery" class="btn bg-gradient-warning btn-sm" style="float:right;">Attendance Query</a>
+
+            </div>*@
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>DAY/DATE</th>
+                        <th>NAME</th>
+                        <th>ARRIVAL TIME</th>
+                        <th>CLOSE TIME</th>
+                        <th>STATUS</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    @foreach (var item in Model.Attendance)
+                    {
+                        <tr>
+
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+
+                                    @item.Date.Date.ToString("ddd dd MMM, yyyy")
+                                </a>
+                            </td>
+                            <td>@item.User.GetFullName()</td>
+                            <td>
+                                @if (item.StartTime != null)
+                                {
+                                    @item.StartTime.Value.ToString("hh:mm tt")
+                                    <span class="btn btn-success btn-xs">
+                                        @Html.DisplayFor(modelItem => item.ArivalPeriodStatus)
+                                    </span>
+                                }
+                            <a>
+                                <i class="fas fa-clock"></i>
+                            </a>
+                               
+                            </td>
+                            <td>
+                                @if (item.CloseTime != null)
+                                {
+                                    @item.CloseTime.Value.ToString("hh:mm tt")
+                                    <span class="btn btn-success btn-xs">
+                                        @Html.DisplayFor(modelItem => item.ClosePeriodStatus)
+                                    </span>
+                                }
+                                <a>
+                                    <i class="fas fa-clock"></i>
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AttendanceStatus)
+
+                            </td>
+                            <td>
+                              
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success">Action</button>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+                                                @if (User.Identity.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+                                                {
+                                                    <a class="dropdown-item" asp-page="./UpdateTime" asp-route-id="@item.Id">Update Time</a>
+                                                    <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                                    <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                 @if (item.Date.Date == DateTime.UtcNow.Date)
+                                { }
+                                else if (item.Date.Date > DateTime.UtcNow.Date)
+                                {
+                                    <span>Not Yet Due Date </span>
+                                }
+                                else if (item.Date.Date < DateTime.UtcNow.Date)
+                                {
+                                    <span>Date Passed </span>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+

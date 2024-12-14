@@ -1,0 +1,127 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.Main.CreateModel
+
+@{
+    ViewData["Title"] = string.Format("{0} CREATE", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW @await Component.InvokeAsync("ProductTitle")</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Product.Title" class="control-label"></label>
+                        <input asp-for="Product.Title" class="form-control" />
+                        <span asp-validation-for="Product.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.ProductCategoryId" class="control-label"></label>
+                        <select asp-for="Product.ProductCategoryId" class="form-control" asp-items="ViewBag.ProductCategoryId">
+                            <option value="">NO CATEGORY</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.ShortDescription" class="control-label"></label>
+                        <textarea asp-for="Product.ShortDescription" class="form-control"></textarea>
+                        <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.FullDescription" class="control-label"></label>
+                        <textarea asp-for="Product.FullDescription" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Product.FullDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowInDropdown" /> @Html.DisplayNameFor(model => model.Product.ShowInDropdown)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowInHome" /> @Html.DisplayNameFor(model => model.Product.ShowInHome)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Product.MiniTitle" class="control-label"></label>
+                        <input asp-for="Product.MiniTitle" class="form-control" />
+                        <span asp-validation-for="Product.MiniTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.Amount" class="control-label"></label>
+                        <input asp-for="Product.Amount" class="form-control" />
+                        <span asp-validation-for="Product.Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.DisableAmount" /> @Html.DisplayNameFor(model => model.Product.DisableAmount)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowSamples" /> @Html.DisplayNameFor(model => model.Product.ShowSamples)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.StatusNote" class="control-label"></label>
+                        <input asp-for="Product.StatusNote" class="form-control" />
+                        <span asp-validation-for="Product.StatusNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.ButtonText" class="control-label"></label>
+                        <input asp-for="Product.ButtonText" class="form-control" />
+                        <span asp-validation-for="Product.ButtonText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label">Title Background Image</label><br />
+                        <input type="file" class="control-label" asp-for="bgfile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

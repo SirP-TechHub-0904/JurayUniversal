@@ -1,0 +1,16 @@
+﻿@model JurayUniversal.Domain.Models.CompanyProgramCategory
+
+
+<div class="col-lg-3 col-6 dashboard-1">
+    <a asp-page="/CM/Index" asp-area="Admin" asp-route-id="@Model.Id" asp-route-title="@Model.Title">
+        <!-- small box  data.DataColor-->
+        <div class="small-box @ViewBag.Color">
+            <div class="inner">
+                <h3>@Model.CompanyPrograms.Count()</h3>
+
+                <p>TOTAL @Model.Title</p>
+            </div>
+
+        </div>
+    </a>
+</div>

@@ -1,0 +1,13 @@
+﻿@model JurayUniversal.Domain.Models.NIPSS.AccountModeratorEvaluation
+
+@if (Model != null)
+{
+    <a class="btn btn-success">Done</a>
+
+}
+else
+{
+    <a class="btn btn-primary" asp-page="./ModeratorEvaluationPage" asp-route-id="@ViewBag.Mid" asp-route-tid="@ViewBag.Tid">Evaluate</a>
+
+}
+ 

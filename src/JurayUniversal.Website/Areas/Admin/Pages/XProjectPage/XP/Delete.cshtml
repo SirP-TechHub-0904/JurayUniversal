@@ -1,0 +1,88 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.XProjectPage.XP.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE PROJECT</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Are you sure you want to delete this?</h3>
+                <div>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.Title)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.FullDescription)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.FullDescription)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.CreatedDate)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.CreatedDate)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.StartDate)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.StartDate)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.DateToStartTesting)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.DateToStartTesting)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.DateToGoLive)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.DateToGoLive)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProject.Priority)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProject.Priority)
+                        </dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="XProject.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

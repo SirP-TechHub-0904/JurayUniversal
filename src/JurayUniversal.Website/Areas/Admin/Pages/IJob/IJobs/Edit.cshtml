@@ -1,0 +1,166 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IJob.IJobs.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE JOB</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Job.Id" />
+            <div class="form-group">
+                <label asp-for="Job.Title" class="control-label"></label>
+                <input asp-for="Job.Title" class="form-control" />
+                <span asp-validation-for="Job.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Description" class="control-label"></label>
+                <input asp-for="Job.Description" class="form-control" />
+                <span asp-validation-for="Job.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Email" class="control-label"></label>
+                <input asp-for="Job.Email" class="form-control" />
+                <span asp-validation-for="Job.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.PhoneNumber" class="control-label"></label>
+                <input asp-for="Job.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Job.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ContactEmail" class="control-label"></label>
+                <input asp-for="Job.ContactEmail" class="form-control" />
+                <span asp-validation-for="Job.ContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ContactPhoneNumber" class="control-label"></label>
+                <input asp-for="Job.ContactPhoneNumber" class="form-control" />
+                <span asp-validation-for="Job.ContactPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.OfficeEmail" class="control-label"></label>
+                <input asp-for="Job.OfficeEmail" class="form-control" />
+                <span asp-validation-for="Job.OfficeEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.OfficePhoneNumber" class="control-label"></label>
+                <input asp-for="Job.OfficePhoneNumber" class="form-control" />
+                <span asp-validation-for="Job.OfficePhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Date" class="control-label"></label>
+                <input asp-for="Job.Date" class="form-control" />
+                <span asp-validation-for="Job.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.StartDate" class="control-label"></label>
+                <input asp-for="Job.StartDate" class="form-control" />
+                <span asp-validation-for="Job.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ReminderDate" class="control-label"></label>
+                <input asp-for="Job.ReminderDate" class="form-control" />
+                <span asp-validation-for="Job.ReminderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ExpiringDate" class="control-label"></label>
+                <input asp-for="Job.ExpiringDate" class="form-control" />
+                <span asp-validation-for="Job.ExpiringDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.BusinessName" class="control-label"></label>
+                <input asp-for="Job.BusinessName" class="form-control" />
+                <span asp-validation-for="Job.BusinessName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.RequestDomain" class="control-label"></label>
+                <input asp-for="Job.RequestDomain" class="form-control" />
+                <span asp-validation-for="Job.RequestDomain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ApprovedDomain" class="control-label"></label>
+                <input asp-for="Job.ApprovedDomain" class="form-control" />
+                <span asp-validation-for="Job.ApprovedDomain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.DescribeOrganization" class="control-label"></label>
+                <input asp-for="Job.DescribeOrganization" class="form-control" />
+                <span asp-validation-for="Job.DescribeOrganization" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Objectives" class="control-label"></label>
+                <input asp-for="Job.Objectives" class="form-control" />
+                <span asp-validation-for="Job.Objectives" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.Colors" class="control-label"></label>
+                <input asp-for="Job.Colors" class="form-control" />
+                <span asp-validation-for="Job.Colors" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.WebsiteOnMind" class="control-label"></label>
+                <input asp-for="Job.WebsiteOnMind" class="form-control" />
+                <span asp-validation-for="Job.WebsiteOnMind" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.RequestStartDate" class="control-label"></label>
+                <input asp-for="Job.RequestStartDate" class="form-control" />
+                <span asp-validation-for="Job.RequestStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.RequestFinishDate" class="control-label"></label>
+                <input asp-for="Job.RequestFinishDate" class="form-control" />
+                <span asp-validation-for="Job.RequestFinishDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Job.DoYouHaveLogo" /> @Html.DisplayNameFor(model => model.Job.DoYouHaveLogo)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Job.DoWeDoLogo" /> @Html.DisplayNameFor(model => model.Job.DoWeDoLogo)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.JobCategoryId" class="control-label"></label>
+                <select asp-for="Job.JobCategoryId" class="form-control" asp-items="ViewBag.JobCategoryId"></select>
+                <span asp-validation-for="Job.JobCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Job.ProfileId" class="control-label"></label>
+                <select asp-for="Job.ProfileId" class="form-control" asp-items="ViewBag.ProfileId"></select>
+                <span asp-validation-for="Job.ProfileId" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

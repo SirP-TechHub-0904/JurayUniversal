@@ -1,0 +1,125 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IExpenses.ISalary.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE SALARY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Salary.Id" />
+            <div class="form-group">
+                <label asp-for="Salary.UserId" class="control-label"></label>
+                <select asp-for="Salary.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="Salary.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.Amount" class="control-label"></label>
+                <input asp-for="Salary.Amount" class="form-control" />
+                <span asp-validation-for="Salary.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.DefaulterCharge" class="control-label"></label>
+                <input asp-for="Salary.DefaulterCharge" class="form-control" />
+                <span asp-validation-for="Salary.DefaulterCharge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.BonusAmount" class="control-label"></label>
+                <input asp-for="Salary.BonusAmount" class="form-control" />
+                <span asp-validation-for="Salary.BonusAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.Balance" class="control-label"></label>
+                <input asp-for="Salary.Balance" class="form-control" />
+                <span asp-validation-for="Salary.Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.Note" class="control-label"></label>
+                <input asp-for="Salary.Note" class="form-control" />
+                <span asp-validation-for="Salary.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.Month" class="control-label"></label>
+                <input asp-for="Salary.Month" class="form-control" />
+                <span asp-validation-for="Salary.Month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.PaymentStatus" class="control-label"></label>
+                <select asp-for="Salary.PaymentStatus" class="form-control"></select>
+                <span asp-validation-for="Salary.PaymentStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Salary.ApprovedByManager" /> @Html.DisplayNameFor(model => model.Salary.ApprovedByManager)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.ManagerNote" class="control-label"></label>
+                <input asp-for="Salary.ManagerNote" class="form-control" />
+                <span asp-validation-for="Salary.ManagerNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.ApprovedByManagerDate" class="control-label"></label>
+                <input asp-for="Salary.ApprovedByManagerDate" class="form-control" />
+                <span asp-validation-for="Salary.ApprovedByManagerDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Salary.ApprovedByCEO" /> @Html.DisplayNameFor(model => model.Salary.ApprovedByCEO)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.CeoNote" class="control-label"></label>
+                <input asp-for="Salary.CeoNote" class="form-control" />
+                <span asp-validation-for="Salary.CeoNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.ApprovedByCeoDate" class="control-label"></label>
+                <input asp-for="Salary.ApprovedByCeoDate" class="form-control" />
+                <span asp-validation-for="Salary.ApprovedByCeoDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Salary.ApprovedByCFO" /> @Html.DisplayNameFor(model => model.Salary.ApprovedByCFO)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.CfoNote" class="control-label"></label>
+                <input asp-for="Salary.CfoNote" class="form-control" />
+                <span asp-validation-for="Salary.CfoNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary.ApprovedByCfoDate" class="control-label"></label>
+                <input asp-for="Salary.ApprovedByCfoDate" class="form-control" />
+                <span asp-validation-for="Salary.ApprovedByCfoDate" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

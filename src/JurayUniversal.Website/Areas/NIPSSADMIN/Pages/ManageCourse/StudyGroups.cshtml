@@ -1,0 +1,255 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.ManageCourse.StudyGroupsModel
+
+@{
+    ViewData["Title"] = "StudyGroups";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">@Model.StudyGroupCategory.Title</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Directing Staff</h3>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Fullname
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Phone Number
+                                        </th>
+                                        <th>Position</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int sn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.StudyGroupCategory.StudyGroups.Where(x => x.User.Role == "Directing"))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    sn++;
+                                                }
+                                                @sn
+                                            </td>
+                                            <td>
+                                                @item.User.FullnameX
+                                            </td>
+
+
+
+                                            <td>
+                                                @item.User.Email
+                                            </td>
+                                            <td>
+                                                @item.User.PhoneNumber
+                                            </td>
+                                            <td>
+                                                @item.Position
+                                            </td>
+                                            <td>
+                                                <a asp-page="./UpdateStudyGroupAccount" asp-route-id="@item.Id" class="btn btn-primary">
+                                                    Update Position
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Other Staff</h3>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Fullname
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Phone Number
+                                        </th>
+                                        <th>Position</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int sxn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.StudyGroupCategory.StudyGroups.Where(x => x.User.Role == "Staff"))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    sxn++;
+                                                }
+                                                @sxn
+                                            </td>
+                                            <td>
+                                                @item.User.FullnameX
+                                            </td>
+
+
+
+                                            <td>
+                                                @item.User.Email
+                                            </td>
+                                            <td>
+                                                @item.User.PhoneNumber
+                                            </td>
+                                            <td>
+                                                @item.Position
+                                            </td>
+                                            <td>
+                                                <a asp-page="./UpdateStudyGroupAccount" asp-route-id="@item.Id" class="btn btn-primary">
+                                                    Update Position
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Members</h3>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Fullname
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Phone Number
+                                        </th>
+                                        <th>Position</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int xsxn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.StudyGroupCategory.StudyGroups.Where(x => x.User.Role == "Participant"))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    xsxn++;
+                                                }
+                                                @xsxn
+                                            </td>
+                                            <td>
+                                                @item.User.FullnameX
+                                            </td>
+
+
+
+                                            <td>
+                                                @item.User.Email
+                                            </td>
+                                            <td>
+                                                @item.User.PhoneNumber
+                                            </td>
+                                            <td>
+                                                @item.Position
+                                            </td>
+                                            <td>
+                                                <a asp-page="./UpdateStudyGroupAccount" asp-route-id="@item.Id" class="btn btn-primary">
+                                                    Update Position
+                                                </a>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Add A Directing Staff to the Study Group</h3>
+
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="StudyGroupCategory.Id" />
+
+                            <div class="form-group">
+                                <label class="control-label"></label>
+                                <select asp-for="StaffId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.DirectingStaff">
+                                    <option value="">Choose</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Add Directing Staff" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,0 +1,345 @@
+/*---------------------------------------
+    ## Button
+---------------------------------------*/
+
+.btn-wrapper {
+    display: block;
+
+    &.administration {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &.poll-btn {
+        position: fixed;
+        top: 50%;
+        right: -2.5%;
+        z-index: 2;
+        transform: rotate(270deg);
+    }
+
+    &.vote-btn {
+        margin-top: 38px;
+    }
+
+    .boxed-btn {
+        background-color: var(--secondary-color);
+        color: #fff;
+        display: inline-block;
+        padding: 17px 27px;
+        border-radius: 5px;
+        text-transform: capitalize;
+        text-align: center;
+        cursor: pointer;
+        @include transition($transition);
+        transition: .7s all ease;
+        font-weight: 600;
+
+        &.btn-sanatory {
+            background-color: var(--main-color-one);
+            text-transform: uppercase;
+            box-shadow: 0 7px 20px rgba(221, 19, 26, 0.3);
+
+            .icon-paper-plan {
+                margin-left: 5px;
+            }
+
+            &:hover {
+                background-color: var(--secondary-color);
+                box-shadow: 0 7px 20px rgba(14, 17, 90, 0.3);
+            }
+
+            &.style-01 {
+                background-color: transparent;
+                color: var(--main-color-one);
+                border: 2px solid var(--main-color-one);
+                box-shadow: none;
+                text-transform: capitalize;
+
+                &.reverse {
+                    color: #fff;
+                    border-color: #fff;
+
+                    &:hover {
+                        background-color: #fff;
+                        border-color: #fff;
+                        color: var(--main-color-one);
+                    }
+                }
+
+                i {
+                    margin-right: 10px;
+                    margin-left: 0;
+                }
+
+                .fa-chevron-right {
+                    margin-left: 10px;
+                    margin-right: 0px;
+                }
+
+                &:hover {
+                    background-color: var(--main-color-one);
+                    border-color: var(--main-color-one);
+                    color: #fff;
+                }
+            }
+
+            &.style-02 {
+                background-color: transparent;
+                color: var(--heading-color);
+                border: 2px solid var(--heading-color);
+                box-shadow: none;
+                text-transform: capitalize;
+                font-size: 18px;
+                line-height: 24px;
+                font-family: var(--body-font);
+                font-weight: 700;
+
+                i {
+                    margin-right: 10px;
+                    margin-left: 0;
+                }
+
+                &:hover {
+                    background-color: var(--heading-color);
+                    border-color: var(--heading-color);
+                    color: #fff;
+                }
+            }
+
+            &.style-03 {
+                background-color: var(--heading-color);
+                width: 100%;
+                padding-top: 14px;
+                border: 1px solid var(--heading-color);
+                transition: .7s all ease;
+
+                &:hover {
+                    background: transparent;
+                    border: 1px solid #fff;
+                }
+            }
+
+            &.style-04 {
+                background-color: transparent;
+                color: $white;
+                border: 1px solid $white;
+                box-shadow: none;
+                text-transform: uppercase;
+                font-size: 18px;
+                line-height: 24px;
+                font-family: var(--body-font);
+                font-weight: 700;
+                padding: 16px 23px;
+
+                &:hover {
+                    background-color: $white;
+                    border-color: $white;
+                    color: var(--main-color-one);
+                }
+            }
+
+            &.volunteer {
+                padding: 17px 30px;
+                box-shadow: none;
+
+                i {
+                    margin-right: 12px;
+                }
+            }
+        }
+
+        &.btn-poll {
+            background-color: var(--main-color-one);
+            text-transform: uppercase;
+            padding: 21px 27px;
+
+            &:hover {
+                background-color: var(--main-color-one);
+            }
+        }
+
+        &:hover {
+            background-color: var(--secondary-color);
+        }
+
+        &.btn-rounded {
+            border-radius: 30px;
+        }
+
+        &.reverse-color {
+            background-color: var(--main-color-two);
+
+            &:hover {
+                background-color: var(--main-color-one);
+            }
+        }
+
+        &.political-btn {
+            background-color: #fff;
+            color: var(--main-color-one);
+            padding: 14px 30px;
+            transition: .5s all ease;
+
+            i {
+                margin-left: 10px;
+            }
+
+            &.style-01 {
+                padding: 15px 60px;
+                border-radius: 4px;
+
+                &:hover {
+                    background: var(--heading-color);
+                }
+            }
+
+            &.style-02 {
+                padding: 18px 27px;
+                background: var(--heading-color);
+                color: #fff;
+                text-transform: uppercase;
+            }
+
+            &:hover {
+                background: var(--main-color-one);
+                color: #fff;
+            }
+        }
+
+        &.event-btn {
+            background: transparent;
+            color: var(--main-color-one);
+            padding: 0;
+            font-size: 18px;
+            line-height: 24px;
+            font-family: var(--body-font);
+            font-weight: 700;
+            transition: .5s all ease;
+
+            span {
+                opacity: 0;
+                visibility: hidden;
+                transition: .5s all ease;
+            }
+
+            &:hover {
+                margin-left: 8px;
+
+                span {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            i {
+                font-size: 18px;
+                margin-right: 12px;
+            }
+        }
+
+        &.read-btn {
+            background: transparent;
+            border: 2px solid var(--main-color-one);
+            border-radius: 8px;
+            font-size: 18px;
+            font-family: var(--body-font);
+            font-weight: 700;
+            color: var(--main-color-one);
+            padding: 18px 24px;
+            transition: .3s all ease;
+            margin-top: 75px;
+
+            &:hover {
+                background: var(--secondary-color);
+                border: 2px solid var(--secondary-color);
+                color: #fff;
+            }
+
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        &.counter-btn {
+            background: var(--main-color-one);
+            border-radius: 0;
+            text-transform: capitalize;
+            font-weight: 700;
+            font-size: 16px;
+
+            i {
+                margin-left: 10px;
+            }
+
+            &:hover {
+                background-color: $white;
+                color: var(--heading-color);
+            }
+        }
+    }
+}
+
+.close-btn {
+    position: absolute;
+    right: -1px;
+    top: 0px;
+    width: 100px;
+    height: 100px;
+    color: $white;
+    border-color: var(--main-color-one);
+    background-color: var(--main-color-one);
+    transition: all 0.3s ease-in;
+    padding: 0;
+    text-align: center;
+    border: none;
+    font-size: 24px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.desktop-center {
+    text-align: center;
+}
+
+.desktop-left {
+    text-align: left;
+}
+
+.desktop-right {
+    text-align: right;
+}
+
+@media only screen and (max-width: 768px) {
+    .tablet-center {
+        text-align: center;
+    }
+
+    .tablet-left {
+        text-align: left;
+    }
+
+    .tablet-right {
+        text-align: right;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .mobile-center {
+        text-align: center;
+    }
+
+    .mobile-left {
+        text-align: left;
+    }
+
+    .mobile-right {
+        text-align: right;
+    }
+}

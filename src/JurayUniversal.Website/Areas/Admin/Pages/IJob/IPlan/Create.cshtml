@@ -1,0 +1,81 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IJob.IPlan.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW PLANS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Plan.Title" class="control-label"></label>
+                        <input asp-for="Plan.Title" class="form-control" />
+                        <span asp-validation-for="Plan.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plan.Description" class="control-label"></label>
+                        <input asp-for="Plan.Description" class="form-control" />
+                        <span asp-validation-for="Plan.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plan.JobCategoryId" class="control-label"></label>
+                        <select asp-for="Plan.JobCategoryId" class="form-control" asp-items="ViewBag.JobCategoryId"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Plan.Price" class="control-label"></label>
+                        <input asp-for="Plan.Price" class="form-control" />
+                        <span asp-validation-for="Plan.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.Disable" /> @Html.DisplayNameFor(model => model.Plan.Disable)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.ForPrivate" /> @Html.DisplayNameFor(model => model.Plan.ForPrivate)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.Compulsory" /> @Html.DisplayNameFor(model => model.Plan.Compulsory)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plan.DaysToComplete" class="control-label"></label>
+                        <input asp-for="Plan.DaysToComplete" class="form-control" />
+                        <span asp-validation-for="Plan.DaysToComplete" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

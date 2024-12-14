@@ -1,0 +1,507 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.PageSection>
+@using System.Text.RegularExpressions;
+
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+    int listcountforhome = 500;
+    // Get the URL for the home page
+    string homeUrl = Url.Page("/Index");
+
+    // Get the current URL
+    string currentUrl = Context.Request.Path;
+
+    // Check if the current URL is the home page URL
+    bool isHomePage = currentUrl.Equals(homeUrl, StringComparison.OrdinalIgnoreCase);
+}
+@foreach (var item in Model)
+{
+    if (item.TemplateKey == "36")
+    {
+        <div class="section-full mobile-page-padding p-t100 p-b70 bg-white @item.CustomClass">
+            <div class="container">
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="a-about">
+                                <div class="sx-media">
+                                    <img alt="" src="@item.ImageUrl">
+                                </div>
+                                <div class="dot-corner">
+                                    <img src="~/customcss/r-corner.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="a-about-home-right">
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div data-title="01" class="sx-separator">
+                                            <h2 data-period="2000" class="sep-line-one typewrite" data-type="[ '@item.Title']">
+                                                <span class="wrap">@item.Title</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        @Html.Raw(item.FullDescription)
+                                    </p>
+                                </div>
+                                <div class="year-ex">
+                                    <div class="year-ex-info sx-bg-light">
+                                        <div class="year-ex-count">
+                                            <span class="text-outline">@item.Qoute</span>
+                                        </div>
+                                        <div class="year-ex-content">
+                                            <span class="info1 sx-text-black">@item.MiniTitle</span>
+                                            <span class="info2 sx-text-primary">@item.Description</span>
+                                        </div>
+                                        <div class="dot-corner">
+                                            <img src="~/customcss/r-corner.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                @foreach (var list in item.PageSectionLists)
+                                {
+                                    <h3 class="sx-tilte">
+                                        @Html.Raw(list.Description)
+                                    </h3>
+                                }
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="site-button-secondry btn-half outline">@item.ButtonText <span class="sx-bg-primary"></span></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="site-button-secondry btn-half outline">@item.ButtonText <span class="sx-bg-primary"></span></a>
+
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="site-button-secondry btn-half outline">@item.ButtonText <span class="sx-bg-primary"></span></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="site-button-secondry btn-half outline">@item.ButtonText <span class="sx-bg-primary"></span></a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    else if (item.TemplateKey == "37")
+    {
+
+        <div class="mobile-page-padding p-b70 p-t100 section-full sx-bg-light @item.CustomClass">
+            <div class="container">
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-12">
+                            <div class="m-skills-left">
+                                <!---->
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div data-title="02" class="sx-separator">
+                                            <h2 data-period="2000" class="sep-line-one typewrite" data-type="[ '@item.MiniTitle']">
+                                                <span class="wrap">@item.MiniTitle</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div><!---->
+                                <h3 class="sx-tilte">@item.Title</h3>
+                                <div class="our-exp p-b30">
+                                    @foreach (var list in item.PageSectionLists.Take(4))
+                                    {
+                                        <div>
+
+                                            <span class="progressText"><b>@list.Title</b></span>
+                                            <div class="progress">
+                                                <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="progress-bar sx-bg-primary progress-bar-striped progress-bar-animated text-black" aria-valuenow="@list.MiniTitle" style="width: @list.MiniTitle%;"></div>
+                                                <span> @list.MiniTitle%</span>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="sx-btn-wrap m-t30">
+                                    @if (item.ButtonLink == "0")
+                                    {
+                                        <a href="#" class="site-button btn-half m-b30">@item.ButtonText</a>
+                                    }
+                                    else if (item.ButtonLink == "Direct")
+                                    {
+                                        <a href="@item.DirectUrl" class="site-button btn-half m-b30">@item.ButtonText</a>
+
+                                    }
+                                    else if (item.ButtonLink == "00")
+                                    {
+                                        <a asp-page="/Contact" class="site-button btn-half m-b30">@item.ButtonText</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="site-button btn-half m-b30">@item.ButtonText</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-12 col-sm-12">
+                            <div class="m-skills-right">
+                                <div class="row">
+                                    @foreach (var list in item.PageSectionLists.Skip(4).Take(1))
+                                    {
+                                        <div class="col-lg-6 col-md-6 m-b30">
+                                            <div class="icon-count-2-outer">
+                                                <div class="sx-icon-box-wraper">
+                                                    <div class="icon-count-2">
+                                                        <div class="icon-xld inline-icon m-b30 scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="@list.IconText"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+
+                                                            <h4 class="sx-tilte">@list.Title</h4>
+                                                            <p>
+                                                                @Html.Raw(list.Description)
+                                                            </p>
+                                                            <div class="text-left">
+                                                                @if (list.ButtonLink == "0")
+                                                                {
+                                                                    <a class="site-button-link" href="#">@list.ButtonText</a>
+                                                                }
+                                                                else if (list.ButtonLink == "Direct")
+                                                                {
+                                                                    <a href="@list.DirectUrl" class="site-button-link">@list.ButtonText</a>
+
+                                                                }
+                                                                else if (list.ButtonLink == "00")
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Contact">@list.ButtonText</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.ButtonText</a>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @foreach (var list in item.PageSectionLists.Skip(5).Take(1))
+                                    {
+                                        <div class="col-lg-6 col-md-6 m-b30">
+                                            <div class="icon-count-2-outer">
+                                                <div class="sx-icon-box-wraper">
+                                                    <div class="icon-count-2">
+                                                        <div class="icon-xld inline-icon m-b30 scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="@list.IconText"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+
+                                                            <h4 class="sx-tilte">@list.Title</h4>
+                                                            <p>
+                                                                @Html.Raw(list.Description)
+                                                            </p>
+                                                            <div class="text-left">
+                                                                @if (list.ButtonLink == "0")
+                                                                {
+                                                                    <a class="site-button-link" href="#">@list.ButtonText</a>
+                                                                }
+                                                                else if (list.ButtonLink == "Direct")
+                                                                {
+                                                                    <a href="@list.DirectUrl" class="site-button-link">@list.ButtonText</a>
+
+                                                                }
+                                                                else if (list.ButtonLink == "00")
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Contact">@list.ButtonText</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.ButtonText</a>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @foreach (var list in item.PageSectionLists.Skip(6).Take(1))
+                                    {
+
+                                        <div class="col-lg-6 col-md-6 m-b30">
+                                            <div class="icon-count-2-outer">
+                                                <div class="sx-icon-box-wraper">
+                                                    <div class="icon-count-2">
+                                                        <div class="icon-xld inline-icon m-b30 scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="@list.IconText"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+
+                                                            <h4 class="sx-tilte">@list.Title</h4>
+                                                            <p>
+                                                                @Html.Raw(list.Description)
+                                                            </p>
+                                                            <div class="text-left">
+                                                                @if (list.ButtonLink == "0")
+                                                                {
+                                                                    <a class="site-button-link" href="#">@list.ButtonText</a>
+                                                                }
+                                                                else if (list.ButtonLink == "Direct")
+                                                                {
+                                                                    <a href="@list.DirectUrl" class="site-button-link">@list.ButtonText</a>
+
+                                                                }
+                                                                else if (list.ButtonLink == "00")
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Contact">@list.ButtonText</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.ButtonText</a>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @foreach (var list in item.PageSectionLists.Skip(7).Take(1))
+                                    {
+
+                                        <div class="col-lg-6 col-md-6 m-b30">
+                                            <div class="icon-count-2-outer">
+                                                <div class="sx-icon-box-wraper">
+                                                    <div class="icon-count-2">
+                                                        <div class="icon-xld inline-icon m-b30 scale-in-center">
+                                                            <span class="icon-cell sx-text-primary"><i class="@list.IconText"></i></span>
+                                                        </div>
+                                                        <div class="icon-content">
+
+                                                            <h4 class="sx-tilte">@list.Title</h4>
+                                                            <p>
+                                                                @Html.Raw(list.Description)
+                                                            </p>
+                                                            <div class="text-left">
+                                                                @if (list.ButtonLink == "0")
+                                                                {
+                                                                    <a class="site-button-link" href="#">@list.ButtonText</a>
+                                                                }
+                                                                else if (list.ButtonLink == "Direct")
+                                                                {
+                                                                    <a href="@list.DirectUrl" class="site-button-link">@list.ButtonText</a>
+
+                                                                }
+                                                                else if (list.ButtonLink == "00")
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Contact">@list.ButtonText</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="site-button-link" asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.ButtonText</a>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!---->
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (item.TemplateKey == "38")
+    {
+
+        <div class="section-full mobile-page-padding p-t100 p-b70 bg-white @item.CustomClass">
+            <div class="section-content">
+                <div class="container">
+                    <div class="section-head">
+                        <div class="sx-separator-outer separator-center">
+                            <div data-title="03" class="sx-separator">
+                                <h2 data-period="2000" class="sep-line-one typewrite" data-type="[ '@item.Title']">
+                                    <span class="wrap">@item.Title</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid filter-carousal-1-outer relative">
+                    <div class="fliter-left-style">
+                        <div class="clearfix filter-pos-left sx-bg-light bg-no-repeat bg-bottom-right" style="background-image: url(../../../../customcss/r-corner.png/);">
+                            <ul class="btn-filter-wrap">
+
+                                <li class="btn-active btn-filter" data-filter="*">@item.MiniTitle</li>
+                                @foreach (var list in item.PageSectionLists)
+                                {
+                                    <li class="btn-filter" data-filter=".col-one">@list.Title</li>
+                                }
+
+                            </ul>
+                        </div>
+                        <div class="filter-carousal-1">
+                            <div class="section-content">
+                                <div class="owl-carousel owl-carousel-filter mfp-gallery owl-btn-vertical-center owl-loaded owl-drag">
+                                    <!--*transform: translate3d(0px, 0px, 0px); transition: all; width: 2571px;*-->
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage" style="">
+                                            @foreach (var list in item.PageSectionLists)
+                                            {
+                                                <div class="owl-item" style="width: 337.2px; margin-right: 30px;">
+                                                    <div class="col-one fadingcol item overflow-hide">
+                                                        <div class="box-animation-one">
+                                                            <img alt="" src="@list.ImageUrl">
+                                                            <div class="box-inner-content">
+                                                                <h4 class="sx-tilte">
+                                                                    <a href="javascript:void();">@list.Title</a>
+                                                                </h4>
+                                                                <p class="m-b0">@list.MiniTitle</p>
+                                                                <a class="elem" href="@list.ImageUrl" title="@list.Title" data-lcl-txt="@list.MiniTitle" data-lcl-author="@list.Title" data-lcl-thumb="@list.ImageUrl"><i></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="owl-nav">
+                                        <button type="button" role="presentation" class="owl-prev disabled">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                        <button type="button" role="presentation" class="owl-next">
+                                            <i class="fa fa-angle-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="owl-dots disabled"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (item.TemplateKey == "39")
+    {
+        <div class="section-full mobile-page-padding p-t100 p-b70 sx-bg-light @item.CustomClass">
+            <div class="container">
+                <div class="large-title-block">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6">
+                            <div class="large-title">
+                                <div class="section-head">
+                                    <div class="sx-separator-outer separator-left">
+                                        <div data-title="04" class="sx-separator">
+                                            <h2 data-period="2000" class="sep-line-one typewrite" data-type="[ '@item.Title']">
+                                                <span class="wrap">@item.Title</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            <div class="large-title-info">
+                                <p>
+                                    @Html.Raw(item.Description)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div class="client-grid m-b40">
+                        <div class="row justify-content-center no-gutters">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                    @{
+                                        string url = "";
+                                        if (list.ButtonLink == "0")
+                                        {
+                                            url = "";
+
+                                        }
+                                        else if (list.ButtonLink == "Direct")
+                                        {
+                                            url = list.DirectUrl;
+
+                                        }
+                                        else if (list.ButtonLink == "00")
+                                        {
+                                            url = "/Contact";
+                                        }
+                                        else
+                                        {
+                                            url = Url.Page("/Source", new { id = list.ButtonLink, title = regex.Replace(list.Title, "-") });
+                                        }
+                                    }
+                                    <a class="client-logo-pic" href="@url">
+                                        <img alt="" src="@list.ImageUrl">
+                                        <div>
+                                            <span class="site-button-link">@list.ButtonText</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="two-part-b-section d-flex justify-content-between">
+                        @if (item.ButtonLink == "0")
+                        {
+                            <a href="#" class="site-button-secondry btn-half outline m-r15">
+                                @item.ButtonText
+                                <span class="sx-bg-primary"></span>
+                            </a>
+                        }
+                        else if (item.ButtonLink == "Direct")
+                        {
+                            <a href="@item.DirectUrl" class="site-button-secondry btn-half outline m-r15">
+                                @item.ButtonText
+                                <span class="sx-bg-primary"></span>
+                            </a>
+
+                        }
+                        else if (item.ButtonLink == "00")
+                        {
+                            <a asp-page="/Contact" class="site-button-secondry btn-half outline m-r15">
+                                @item.ButtonText
+                                <span class="sx-bg-primary"></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="site-button-secondry btn-half outline m-r15">
+                                @item.ButtonText
+                                <span class="sx-bg-primary"></span>
+                            </a>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    }
+
+
+}
+@section Scripts {
+
+
+}

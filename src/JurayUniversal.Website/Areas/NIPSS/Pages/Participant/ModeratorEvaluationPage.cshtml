@@ -1,0 +1,146 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.ModeratorEvaluationPageModel
+@{
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title center">
+                    EVALUATION
+                </h6>
+
+            </div>
+
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="post">
+                            <input asp-for="TimetableId" type="hidden" value="@Model.Moderator.TimeTableId" />
+                            <input asp-for="ParticipantListId" type="hidden" value="@Model.ParticipantList.Id" />
+                           
+                            <input asp-for="ModeratorId" type="hidden" value="@Model.Moderator.Id" />
+
+
+
+                            <div class="sec-title" style="border: 2px solid #ffffff; box-shadow: 1px 1.6px 3.6px rgb(30 64 44), 2px 0px 2.9px rgb(65 112 86); padding: 16px; background-color: white;">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align:center;margin:0 auto !important">
+                                            <div class="" style="text-align:center;margin:0 auto;">
+                                                <img src="~/images/logo.png" style="text-align:center;margin:0 auto;height:100px;" />
+                                            </div>
+
+                                            <h4 class="center">
+                                                <span style="font-weight:800;"> RESOURCE PERSON'S EVALUATION FORM</span>
+                                            </h4>
+                                            <h5 class="center">
+                                                <span style="font-weight:800;">National Institute for Policy and Strategic Studies, Kuru</span>
+                                            </h5>
+                                            <h6 class="center">
+                                                <span style="font-weight:800;"> @Model.ParticipantList.Course.CourseCategory.Name NO.@Model.ParticipantList.Course.SecNumber, @Model.ParticipantList.Course.Year.ToString("yyyy")</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>Date</th>
+                                                <td>@Model.Moderator.TimeTable.Date.ToString("ddd dd MMM, yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Topic discussed</th>
+                                                <td>@Model.Moderator.TimeTable.Content</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Name of the Resource Person</th>
+
+                                                <td>
+                                                    @if (Model.Moderator.User != null)
+                                                    {
+                                                        @Model.Moderator.User.FullnameX
+                                                    }
+                                                    else
+                                                    {
+                                                        @Model.Moderator.Fullname
+                                                    }
+
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p style="text-decoration: underline;text-align:center;font-weight:900;">Please tick your appropriate responses from the options below.</p>
+                                        </div>
+                                        @foreach (var item in Model.EvaluationQuestions)
+                                        {
+                                            <div class="" style="box-shadow: 1px 0.6px 1.6px rgb(30 64 44), 1px 0px 2.9px rgb(65 112 86); margin-bottom: 10px; padding: 10px; ">
+                                                <input asp-for="EvaluationQuestionId" type="hidden" value="@item.Id" />
+
+                                                <div class="row">
+                                                    <div class="col-md-6">@item.Question</div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" id="EvaluationResult_@item.Id" name="EvaluationResult_@item.Id" required="required" type="radio" value="1" style=" width: 20px; height: 20px;">
+                                                                <label class="form-check-label" for="EvaluationResult_@item.Id">Strongly Disagree</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" id="EvaluationResult_@item.Id" name="EvaluationResult_@item.Id" required="required" type="radio" value="2" style=" width: 20px; height: 20px;">
+                                                                <label class="form-check-label" for="EvaluationResult_@item.Id">Disagree</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" id="EvaluationResult_@item.Id" name="EvaluationResult_@item.Id" required="required" type="radio" value="3" style=" width: 20px; height: 20px;">
+                                                                <label class="form-check-label" for="EvaluationResult_@item.Id">Neutral</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" id="EvaluationResult_@item.Id" name="EvaluationResult_@item.Id" required="required" type="radio" value="4" style=" width: 20px; height: 20px;">
+                                                                <label class="form-check-label" for="EvaluationResult_@item.Id">Agree</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" id="EvaluationResult_@item.Id" name="EvaluationResult_@item.Id" required="required" type="radio" value="5" style=" width: 20px; height: 20px;">
+                                                                <label class="form-check-label" for="EvaluationResult_@item.Id">Strongly Agree</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="sec-title" style="border: 2px solid #ffffff; box-shadow: 1px 1.6px 3.6px rgb(30 64 44), 2px 0px 2.9px rgb(65 112 86); padding: 16px; background-color: white;">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-md-12" style="margin-left: 0px;">
+                                            <button type="submit" class="btn btn-primary" style="margin-left: 0px;">Submit Evaluation</button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

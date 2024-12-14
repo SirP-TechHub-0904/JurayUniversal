@@ -1,0 +1,72 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.CM.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@Model.Category.Title</h3>
+        <a asp-page="./Create" asp-route-id="@Model.Category.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+        <p>
+            @Model.Category.Description
+        </p>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Title)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].State)
+                        </th>
+
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.CompanyProgram)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./Info" asp-route-id="@item.Id" asp-route-title="@item.Title">
+                                    @Html.DisplayFor(modelItem => item.Title)
+
+                                </a>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.ITestimony.EditModel
+
+@{
+    ViewData["Title"] = "TESTIMONY Edit";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE TESTIMONY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Testimony.Id" />
+                    <input type="hidden" asp-for="Testimony.ImageUrl" />
+                    <input type="hidden" asp-for="Testimony.ImageKey" />
+                    <div class="form-group">
+                        <label asp-for="Testimony.Title" class="control-label"></label>
+                        <input asp-for="Testimony.Title" class="form-control" />
+                        <span asp-validation-for="Testimony.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Testimony.Description" class="control-label"></label>
+                        <textarea asp-for="Testimony.Description" class="form-control"></textarea>
+                        <span asp-validation-for="Testimony.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Testimony.SortOrder" class="control-label"></label>
+                        <input asp-for="Testimony.SortOrder" class="form-control" />
+                        <span asp-validation-for="Testimony.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Testimony.Show" /> @Html.DisplayNameFor(model => model.Testimony.Show)
+                        </label>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.Testimony.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse Image</label><br />
+                            <img src="@Model.Testimony.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label">Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

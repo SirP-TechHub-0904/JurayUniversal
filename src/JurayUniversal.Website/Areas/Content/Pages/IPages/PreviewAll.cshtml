@@ -1,0 +1,66 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.PreviewAllModel
+@{
+    @if (Model.Templatechoose == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+
+    ViewData["Ignore"] = "Ignore";
+
+}
+@{ int sn = 0;}
+@foreach (var item in Model.PageSections)
+{
+    {
+        sn++;
+    }
+    <div class="clearfix"></div>
+    <h6 style="margin:15px 0;padding:0px;text-align:center;font-weight:900;border-bottom:1px solid black;"> SN: [@sn] --- @await Component.InvokeAsync("PreviewTitle", new { secid = item.Id })</h6>
+    <div class="clearfix"></div>
+
+    @await Component.InvokeAsync("PageSection", new { secid = item.Id })
+    <div class="clearfix"></div>
+    <h6 style="margin: 15px; padding: 20px; text-align: center; font-weight: 900; border-bottom: 1px solid black;">PREVIEW END</h6>
+    <div class="clearfix"></div>
+}

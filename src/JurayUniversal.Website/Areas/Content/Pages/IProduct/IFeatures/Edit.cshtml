@@ -1,0 +1,67 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.IFeatures.EditModel
+
+@{
+    ViewData["Title"] = string.Format("{0} FEATURE edit", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE @await Component.InvokeAsync("ProductTitle") FEATURES</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProductFeature.Id" />
+                    <input type="hidden" asp-for="ProductFeature.ProductId" />
+                    <div class="form-group">
+                        <label asp-for="ProductFeature.Title" class="control-label"></label>
+                        <input asp-for="ProductFeature.Title" class="form-control" />
+                        <span asp-validation-for="ProductFeature.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductFeature.IconText" class="control-label"></label>
+                        <input asp-for="ProductFeature.IconText" class="form-control" />
+                        <span asp-validation-for="ProductFeature.IconText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductFeature.Description" class="control-label"></label>
+                        <input asp-for="ProductFeature.Description" class="form-control" />
+                        <span asp-validation-for="ProductFeature.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="/IProduct/Main/Details" asp-route-id="@Model.ProductFeature.ProductId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

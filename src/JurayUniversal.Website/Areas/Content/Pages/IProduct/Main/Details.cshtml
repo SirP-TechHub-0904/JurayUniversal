@@ -1,0 +1,357 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.Main.DetailsModel
+
+@{
+    ViewData["Title"] = string.Format("{0} DETAILS", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<!-- /.card -->
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i>
+            @Model.Product.Title <span style="font-size: 0.9rem;padding-left:20px;">OUR @await Component.InvokeAsync("ProductTitle")</span>
+        </h3>        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+    </div>
+    <div class="card-body">
+        <p class="text-justify">@Html.Raw(Model.Product.ShortDescription)</p>
+
+
+    </div>
+    <div class="card-body">
+        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+            <li class="nav-item">
+                <a style="font-size: 23px;font-weight: 900;" class="nav-link active" id="custom-content-below-major-tab" data-toggle="pill" href="#custom-content-below-major" role="tab" aria-controls="custom-content-below-major" aria-selected="false">FULL DETAILS</a>
+            </li>
+            <li class="nav-item">
+                <a style="font-size: 23px;font-weight: 900;" class="nav-link" id="custom-content-below-features-tab" data-toggle="pill" href="#custom-content-below-features" role="tab" aria-controls="custom-content-below-features" aria-selected="false">FEATURES (@Model.Product.ProductFeatures.Count())</a>
+            </li>
+
+            <li class="nav-item">
+                <a style="font-size: 23px;font-weight: 900;" class="nav-link " id="custom-content-below-sample-tab" data-toggle="pill" href="#custom-content-below-sample" role="tab" aria-controls="custom-content-below-sample" aria-selected="true"> SAMPLES (@Model.Product.ProductSamples.Count()) </a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="custom-content-below-tabContent">
+            <div class="tab-pane fade show active" id="custom-content-below-major" role="tabpanel" aria-labelledby="custom-content-below-major-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-size: 23px;font-weight: 900;">FULL DETAILS</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <h4>@Html.DisplayNameFor(model => model.Product.MiniTitle)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.MiniTitle)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.Amount)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.Amount)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.DisableAmount)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.DisableAmount)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.ShowSamples)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.ShowSamples)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.StatusNote)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.StatusNote)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.ButtonText)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.ButtonText)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.ShowInHome)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.ShowInHome)</p>
+                        <hr />
+                        <h4>@Html.DisplayNameFor(model => model.Product.ShowInDropdown)</h4>
+                        <p class="text-justify">@Html.DisplayFor(model => model.Product.ShowInDropdown)</p>
+                        <hr />
+
+
+                        <h4>Full Description</h4>
+                        <br>
+                        @Html.Raw(Model.Product.FullDescription)
+                        <hr />
+                        <h4> @Html.DisplayNameFor(model => model.Product.ShowInDropdown)</h4>
+                        <p>@Html.DisplayFor(model => model.Product.ShowInDropdown)</p>
+
+                        <hr />
+
+
+                        @if (!String.IsNullOrEmpty(Model.Product.ImageUrl))
+                        {
+                            <h4>Image</h4>
+                            <br>
+                            <img src="@Model.Product.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                            <hr />
+                        }   @if (!String.IsNullOrEmpty(Model.Product.VideoUrl))
+                        {
+                            <h4>Video</h4>
+                            <br>
+                            <video width="" style="height:200px;" controls="controls">
+                                <source src="@Model.Product.VideoUrl" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video> <hr />
+                        }
+                        <a asp-page="./Edit" asp-route-id="@Model.Product.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Update</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="custom-content-below-features" role="tabpanel" aria-labelledby="custom-content-below-features-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-size: 23px;font-weight: 900;">
+                            PRODUCT FEATURES
+                        </h3>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Title
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>Icon</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int sn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.Product.ProductFeatures)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    sn++;
+                                                }
+                                                @sn
+                                            </td>
+                                            <td>
+
+                                                @item.Title
+
+                                            </td>
+
+                                            <td>
+                                                @item.Description
+                                            </td>
+                                            <td>
+                                                @item.IconText <i class="@item.IconText"></i>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-success">Action</button>
+
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                        </button>
+                                                        <div class="dropdown-menu" style="">
+
+                                                            <a class="dropdown-item" asp-page="/IProduct/IFeatures/Details" asp-route-id="@item.Id">Details</a>
+                                                            <a class="dropdown-item" asp-page="/IProduct/IFeatures/Edit" asp-route-id="@item.Id">Edit</a>
+                                                            <a class="dropdown-item" asp-page="/IProduct/IFeatures/Delete" asp-route-id="@item.Id">Delete</a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Add New Feature</h4>
+                        <form method="post" enctype="multipart/form-data" asp-page-handler="Features">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="ProductFeature.ProductId" type="hidden" value="@Model.Product.Id" />
+                            <div class="form-group">
+                                <label asp-for="ProductFeature.Title" class="control-label"></label>
+                                <input asp-for="ProductFeature.Title" class="form-control" />
+                                <span asp-validation-for="ProductFeature.Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductFeature.IconText" class="control-label"></label>
+                                <input asp-for="ProductFeature.IconText" class="form-control" />
+                                <span asp-validation-for="ProductFeature.IconText" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductFeature.Description" class="control-label"></label>
+                                <input asp-for="ProductFeature.Description" class="form-control" />
+                                <span asp-validation-for="ProductFeature.Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="tab-pane fade" id="custom-content-below-sample" role="tabpanel" aria-labelledby="custom-content-below-sample-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-size: 23px;font-weight: 900;">
+                            PRODUCT SAMPLES
+                        </h3>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Title
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>Image</th>
+                                        <th>Video</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int xxsnn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.Product.ProductSamples)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    xxsnn++;
+                                                }
+                                                @xxsnn
+                                            </td>
+                                            <td>
+
+                                                @item.Title
+
+                                            </td>
+
+                                            <td>
+                                                @item.Description
+                                            </td>
+                                            <td>
+                                                @if (!String.IsNullOrEmpty(item.ImageUrl))
+                                                {
+                                                    <img src="@item.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!String.IsNullOrEmpty(item.VideoUrl))
+                                                {
+                                                    <video width="" style="height:200px;" controls="controls">
+                                                        <source src="@item.VideoUrl" type="video/mp4">
+                                                        Your browser does not support HTML5 video.
+                                                    </video>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-success">Action</button>
+
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                        </button>
+                                                        <div class="dropdown-menu" style="">
+
+                                                            <a class="dropdown-item" asp-page="/IProduct/ISample/Details" asp-route-id="@item.Id">Details</a>
+                                                            <a class="dropdown-item" asp-page="/IProduct/ISample/Edit" asp-route-id="@item.Id">Edit</a>
+                                                            <a class="dropdown-item" asp-page="/IProduct/ISample/Delete" asp-route-id="@item.Id">Delete</a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card-body">
+                        <h4>Add New Sample</h4>
+                        <form method="post" enctype="multipart/form-data" asp-page-handler="Sample">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="ProductSample.ProductId" type="hidden" value="@Model.Product.Id" />
+                            <div class="form-group">
+                                <label asp-for="ProductSample.Title" class="control-label"></label>
+                                <input asp-for="ProductSample.Title" class="form-control" />
+                                <span asp-validation-for="ProductSample.Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductSample.Description" class="control-label"></label>
+                                <textarea asp-for="ProductSample.Description" class="form-control"></textarea>
+                                <span asp-validation-for="ProductSample.Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductSample.FullDescription" class="control-label"></label>
+                                <textarea asp-for="ProductSample.FullDescription" class="form-control summernote"></textarea>
+                                <span asp-validation-for="ProductSample.FullDescription" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">sample Image</label><br />
+                                <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Sample Video</label><br />
+                                <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,683 @@
+﻿@model JurayUniversal.Domain.Models.DashboardSetting
+
+@{
+    Domain.Models.Setting setting = ViewBag.setting;
+}
+
+
+
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            DASHBOARD
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        @if (Model.StatisticsDashboard == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Statistics
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.ChartsDashboard == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Charts
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.ProjectsDashboard == true && Model.ActivateProject == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Projects
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.CommunicationDashboard == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Communication
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.UsersDashboard == true && Model.ActivateUserManagement == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Users
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.FinanceDashboard == true && Model.ActivateFinanceManagement == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Finance
+                    </p>
+                </a>
+            </li>
+        }
+
+        @if (Model.OrderDashboard == true && Model.ActivateOrder == true)
+        {
+            <li class="nav-item">
+                <a asp-page="/" asp-area="" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Order
+                    </p>
+                </a>
+            </li>
+        }
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            ACCOUNT
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a asp-page="/" asp-area="" class="nav-link">
+                <i class="nav-icon fas fa-circle nav-icon"></i>
+                <p class="uppercase">
+                    Profile
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a asp-page="/" asp-area="" class="nav-link">
+                <i class="nav-icon fas fa-circle nav-icon"></i>
+                <p class="uppercase">
+                    Two Factor Auth.
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="" class="nav-link">
+                <i class="nav-icon fas fa-circle nav-icon"></i>
+                <p class="uppercase">
+                    Activity Logging
+                </p>
+            </a>
+        </li>
+    </ul>
+</li>
+@if (Model.ActivateProject == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                PROJECTS
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+                <a asp-page="/IProject/PcategoryList" asp-area="MIS" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Category
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IProject/Main/Index" asp-area="MIS" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        All Projects
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+}
+
+@if (Model.ActivateUserManagement == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                USERS
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivateUser == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="/IUsers/Accounts/Index" asp-area="MIS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Users
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateRoles == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Roles
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateAttendance == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Attendance
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateReport == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateRoles == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Roles
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateTask == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Task
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateTrainings == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Trainings
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateSalaries == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Salaries
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateJobReferrals == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Job Referrals
+                        </p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+@if (Model.ActivateReportAndAnalysis == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                REPORT AND ANALYSIS
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivateUserReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Users Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateVisitorsReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Visitors Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateProjectReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Project Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateUserReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Users Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateCommunicationReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Communication Report
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateContentReportAndAnalysis == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Content Report
+                        </p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+
+@if (Model.ActivateContentManagement == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                CONTENT MGT.
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivateBlogContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Blog
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateProductContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            @await Component.InvokeAsync("ProductTitle")
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateFaqContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            FAQ
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateTestimonyContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Testimonies
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateSliderContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Web Banner
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateContactInformationContent == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Contact Information
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateSiteMap == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Site Map
+                        </p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+@if (Model.ActivateProposalManagement == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                PROPOSAL
+                 
+            </p>
+        </a>
+    </li>
+}
+@if (Model.ActivateOrder == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                ORDERS
+                
+            </p>
+        </a>
+    </li>
+}
+@if (Model.ActivateFinanceManagement == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                FINANCE MGT.
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivatePaymentOnFinanceManagement == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Payments
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateBudgetOnFinanceManagement == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Budgets
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateExpensesOnFinanceManagement == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Expenses
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateAccountsOnFinanceManagement == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Accounts
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateReportOnFinanceManagement == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Report
+                        </p>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </li>
+}
+ 
+@if (Model.ActivateCommnunicationTools == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>                
+                <abbr title="COMMUNICATION TOOLS">COMM. TOOLS</abbr>
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivateForumCommnunicationTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Our Forum
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateChatCommnunicationTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Chat
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateNoticeBoardCommnunicationTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Notice Board
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateContactUsCommnunicationTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Contact Us Request
+                        </p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+
+@if (Model.ActivateManagementTools == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                TOOLS
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            @if (Model.ActivateSmsTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            SMS
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateEmailTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            EMAIL
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateNewsletterTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Newsletter
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateBirthdayTools == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Birthdays
+                        </p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+@if (Model.ActivateSettings == true)
+{
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Settings
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+    </li>
+}
+

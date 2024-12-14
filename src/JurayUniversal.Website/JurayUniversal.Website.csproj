@@ -1,0 +1,948 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-JurayUniversal.Website-4c5034ff-665d-4b46-9fe7-d94f4a542df7</UserSecretsId>
+	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+	  <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Admin\Pages\AC\Details.cshtml" />
+    <Content Remove="Areas\Admin\Pages\AC\Edit.cshtml" />
+    <Content Remove="Areas\Admin\Pages\AC\Index.cshtml" />
+    <Content Remove="Areas\Admin\Pages\AC\NewUser.cshtml" />
+    <Content Remove="Areas\Admin\Pages\UserManagement\Data.cshtml" />
+    <Content Remove="Areas\Admin\Pages\UserManagement\UpdateUserPermissionAdmin.cshtml" />
+    <Content Remove="Areas\Content\Pages\Advance\Search.cshtml" />
+    <Content Remove="Areas\EmailJS\Pages\Error.cshtml" />
+    <Content Remove="Areas\EmailJS\Pages\_ValidationScriptsPartial.cshtml" />
+    <Content Remove="Areas\EmailJS\Pages\_ViewImports.cshtml" />
+    <Content Remove="Areas\EmailJS\Pages\_ViewStart.cshtml" />
+    <Content Remove="Areas\IPortfolio\Pages\Error.cshtml" />
+    <Content Remove="Areas\IPortfolio\Pages\_ValidationScriptsPartial.cshtml" />
+    <Content Remove="Areas\IPortfolio\Pages\_ViewImports.cshtml" />
+    <Content Remove="Areas\IPortfolio\Pages\_ViewStart.cshtml" />
+    <Content Remove="Areas\NIPSSADMIN\Pages\Users\UpdateUserPermission.cshtml" />
+    <Content Remove="Areas\SMS\Pages\Error.cshtml" />
+    <Content Remove="Pages\Shared\Components\Slider\Datacheck.cshtml" />
+    <Content Remove="Pages\Shared\Components\TestimonyHome\Default.cshtml" />
+    <Content Remove="web.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
+    <Content Include="wwwroot\Layout\carspot\js\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.7" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.104.16" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
+    <PackageReference Include="EPPlus" Version="7.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.29" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.29" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.3.2" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="System.Management" Version="7.0.1" />
+    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
+    <PackageReference Include="Zen.Barcode.Rendering.Framework" Version="3.1.10729.1" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JurayUniversal.Application\JurayUniversal.Application.csproj" />
+    <ProjectReference Include="..\JurayUniversal.Domain\JurayUniversal.Domain.csproj" />
+    <ProjectReference Include="..\JurayUniversal.Infrastructure\JurayUniversal.Infrastructure.csproj" />
+    <ProjectReference Include="..\JurayUniversal.Persistence.EF.SQL\JurayUniversal.Persistence.EF.SQL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\IUsers\Permissions\" />
+    <Folder Include="Areas\Admin\Pages\IUsers\Teams\" />
+    <Folder Include="Areas\Admin\Pages\NewFolder\" />
+    <Folder Include="Areas\EmailJS\Pages\Users\" />
+    <Folder Include="Areas\Management\Pages\SmsSettingPage\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Features\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Files\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Challenges\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Task\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Reports\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Users\" />
+    <Folder Include="Areas\MIS\Pages\IProject\Referrals\" />
+    <Folder Include="Areas\MIS\Pages\IUsers\Teams\" />
+    <Folder Include="Areas\MIS\Pages\IUsers\Permissions\" />
+    <Folder Include="Areas\ThemePage\Pages\ICategory\" />
+    <Folder Include="Areas\Tools\Pages\Contact\" />
+    <Folder Include="Areas\Tools\Pages\Deliveries\" />
+    <Folder Include="Areas\Tools\Pages\Subscribers\" />
+    <Folder Include="Pages\Shared\Components\Navigation\" />
+    <Folder Include="wwwroot\Layout\Alina\" />
+    <Folder Include="wwwroot\Layout\carspot\uploads\" />
+    <Folder Include="wwwroot\templatesample\alina\" />
+    <Folder Include="wwwroot\templatesample\education\" />
+    <Folder Include="wwwroot\templatesample\senatory\" />
+    <Folder Include="wwwroot\templatesample\Streamlab\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Pages\AC\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\AC\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\AC\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\AC\NewUser.cshtml" />
+    <None Include="Areas\Admin\Pages\Dashboard\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\Error.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\AttendanceQuery.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IAttendance\UpdateTime.cshtml" />
+    <None Include="Areas\Admin\Pages\ICareer\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\ICareer\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\ICareer\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\ICareer\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\ICareer\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\Category\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\Category\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\Category\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\Category\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\Category\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\ISalary\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\ISalary\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\ISalary\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\ISalary\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\ISalary\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IExpenses\MainExpenses\UpdateExpenses.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\CompanyFunds\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\CompanyFunds\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\CompanyFunds\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\CompanyFunds\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\CompanyFunds\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\Source\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\Source\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\Source\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\Source\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IFunds\Source\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\ICategoryPage\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\ICategoryPage\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\ICategoryPage\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\ICategoryPage\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\ICategoryPage\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IJobs\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IJobs\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IJobs\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IJobs\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IJobs\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IPlan\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IPlan\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IPlan\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IPlan\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IJob\IPlan\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetingAttendance\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetingAttendance\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetingAttendance\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetingAttendance\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetingAttendance\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetings\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetings\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetings\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetings\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IMeetings\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IProposalPage\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IProposalPage\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IProposalPage\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IProposalPage\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IProposalPage\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\AdminTask.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\UpdateReport.cshtml" />
+    <None Include="Areas\Admin\Pages\IReport\UpdateTask.cshtml" />
+    <None Include="Areas\Admin\Pages\IRequest\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\IRequest\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\IRequest\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\IRequest\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\IRequest\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingAttendance\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingAttendance\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingAttendance\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingAttendance\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingAttendance\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingSchedule\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingSchedule\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingSchedule\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingSchedule\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\ITrainingSchedule\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\ITraining\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\ITraining\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\ITraining\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\ITraining\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\ITraining\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\BarCodeGenerator.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Data.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\NewUser.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\Ref.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\UpdateUserPermissionAdmin.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\UpdateUserPermission.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\UserRoleManagement.cshtml" />
+    <None Include="Areas\Admin\Pages\UserManagement\ValidateUser.cshtml" />
+    <None Include="Areas\Admin\Pages\UtilityCode\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\UtilityCode\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Admin\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\Admin\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\Content\Pages\Advance\Search.cshtml" />
+    <None Include="Areas\EmailJS\Pages\Error.cshtml" />
+    <None Include="Areas\EmailJS\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\EmailJS\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\EmailJS\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\IPortfolio\Pages\Error.cshtml" />
+    <None Include="Areas\IPortfolio\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\IPortfolio\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\IPortfolio\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Dashboard\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Error.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\EVP\Create.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\EVP\Delete.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\EVP\Details.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\EVP\Edit.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Category\Create.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Category\Delete.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Category\Details.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Category\Edit.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Category\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Create.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Delete.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Details.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Edit.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\ManageCourse\UpdateStatus.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Participants\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\IAccomodation\Create.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\IAccomodation\Delete.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\IAccomodation\Details.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\IAccomodation\Edit.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\IAccomodation\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\NameTitle\Create.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\NameTitle\Delete.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\NameTitle\Details.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\NameTitle\Edit.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\SettingPage\NameTitle\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\Add.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\Course.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\Index.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\Info.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\RegistrationStatus.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\Update.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\Users\UpdateUserPermission.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\NIPSSADMIN\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Account\Accomodation.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Account\Profile.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Account\UpdateProfile.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Dashboard\Index.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Error.cshtml" />
+    <None Include="Areas\NIPSS\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\NIPSS\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\NIPSS\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\SMS\Pages\Error.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\AllMeetings.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\AttendanceInfo.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\Details.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\Index.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\JobDetails.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\JobList.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\MeetingInfo.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\OfficeProposal.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\ReferralPage.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\ReportDetails.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\StaffMeeting.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\StaffTraining.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\StaffTrainingShedule.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\TrainingDetails.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\TrainingInfo.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\UserAttendance.cshtml" />
+    <None Include="Areas\Staff\Pages\Dashboard\UserReport.cshtml" />
+    <None Include="Areas\Staff\Pages\Error.cshtml" />
+    <None Include="Areas\Staff\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Staff\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\Staff\Pages\_ViewStart.cshtml" />
+    <None Include="Pages\Shared\Components\Slider\Datacheck.cshtml" />
+    <None Include="Pages\Shared\Components\Slider\Default.cshtml" />
+    <None Include="Pages\Shared\Components\RoleData\Default.cshtml" />
+    <None Include="Pages\Shared\Components\TestimonyHome\Default.cshtml" />
+    <None Include="wwwroot\css\flaticon\fonts\Flaticon.svg" />
+    <None Include="wwwroot\css\flaticon\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\css\flaticon\fonts\ionicons.svg" />
+    <None Include="wwwroot\css\flaticon\fonts\_flaticon.scss" />
+    <None Include="wwwroot\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-grid.rtl.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-utilities.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-utilities.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap.rtl.css.map" />
+    <None Include="wwwroot\dist\css\bootstrap.rtl.min.css.map" />
+    <None Include="wwwroot\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\dist\js\bootstrap.esm.js" />
+    <None Include="wwwroot\dist\js\bootstrap.esm.js.map" />
+    <None Include="wwwroot\dist\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\dist\js\bootstrap.esm.min.js.map" />
+    <None Include="wwwroot\dist\js\bootstrap.js" />
+    <None Include="wwwroot\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\fonts\Flaticon.svg" />
+    <None Include="wwwroot\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\fonts\_flaticon.scss" />
+    <None Include="wwwroot\gallery\assets\js\combining.js" />
+    <None Include="wwwroot\images\svg\asset-38.svg" />
+    <None Include="wwwroot\js\asyncloader.min.js" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\js\jquery-3.5.1.min.js" />
+    <None Include="wwwroot\js\jquery-3.6.0.min.js" />
+    <None Include="wwwroot\js\jquery.counterup.min.js" />
+    <None Include="wwwroot\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\js\jquery.waypoints.min.js" />
+    <None Include="wwwroot\js\loadmore.js" />
+    <None Include="wwwroot\js\owl.carousel.min.js" />
+    <None Include="wwwroot\js\popper.min.js" />
+    <None Include="wwwroot\js\script.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\slick.min.js" />
+    <None Include="wwwroot\js\streamlab-core.js" />
+    <None Include="wwwroot\js\swiper-bundle.min.js" />
+    <None Include="wwwroot\Layout\archo\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Layout\archo\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Layout\archo\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Layout\archo\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\Layout\archo\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Layout\archo\img\clients\quote.svg" />
+    <None Include="wwwroot\Layout\archo\js\jquery-3.0.0.min.js" />
+    <None Include="wwwroot\Layout\archo\js\jquery-migrate-3.0.0.min.js" />
+    <None Include="wwwroot\Layout\archo\js\jquery.event.move.js" />
+    <None Include="wwwroot\Layout\archo\js\jquery.twentytwenty.js" />
+    <None Include="wwwroot\Layout\archo\js\map.js" />
+    <None Include="wwwroot\Layout\archo\js\plugins2.js" />
+    <None Include="wwwroot\Layout\archo\js\scripts - Copy.js" />
+    <None Include="wwwroot\Layout\archo\js\scripts.js" />
+    <None Include="wwwroot\Layout\archo\js\swiper.min.js" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_accordion.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_blog.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_buttons.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_carousel.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_clients.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_contact-form.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_counter.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_extra.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_feature-box.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_footers.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_intro.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_navbar.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_overlay.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_portfolio.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_pricing.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_process.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_progress-bar.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_section-heading.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_sliders.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_tabs.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_team.scss" />
+    <None Include="wwwroot\Layout\archo\scss\shortcodes\_testimonials.scss" />
+    <None Include="wwwroot\Layout\archo\scss\style.scss" />
+    <None Include="wwwroot\Layout\archo\scss\_helper.scss" />
+    <None Include="wwwroot\Layout\archo\scss\_responsive.scss" />
+    <None Include="wwwroot\Layout\archo\scss\_shortcodes.scss" />
+    <None Include="wwwroot\Layout\archo\scss\_typography.scss" />
+    <None Include="wwwroot\Layout\archo\scss\_variables.scss" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\Flaticon.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\font\flaticon.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\font\flaticon.woff2" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\icofont.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\linea-arrows-10.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\linea-basic-10.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\fonts\_flaticon.scss" />
+    <None Include="wwwroot\Layout\bizup\assets\images\about\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\achievement\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\background\shape\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\banner\style1\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\banner\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\bg\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\blog\home-6\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\blog\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\breadcrumbs\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\choose\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\counter\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\estimate\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\branding.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\clipboard.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\content-writing.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\data-processing.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\delivery-complete.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\group.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\head.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\quality.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\icons\risks.svg" />
+    <None Include="wwwroot\Layout\bizup\assets\images\partner\main-home\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\partner\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\pricing\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\project\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\main-home\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\style3\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\style4\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\style5\icons\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\style5\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\style6\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\services\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\shop\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\slider\h2-sl1.webp" />
+    <None Include="wwwroot\Layout\bizup\assets\images\slider\h2-sl2.webp" />
+    <None Include="wwwroot\Layout\bizup\assets\images\slider\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\team\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\testimonial\avatar\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\testimonial\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\images\Thumbs.db" />
+    <None Include="wwwroot\Layout\bizup\assets\inc\custom-slider\js\jquery.nivo.slider.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\contact.form.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\jquery.counterup.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\jquery.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\jquery.nav.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\main.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\modernizr-2.8.3.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\skill.bars.jquery.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\waypoints.min.js" />
+    <None Include="wwwroot\Layout\bizup\assets\js\wow.min.js" />
+    <None Include="wwwroot\Layout\bizup\style.less" />
+    <None Include="wwwroot\Layout\industry\fonts\Flaticon.svg" />
+    <None Include="wwwroot\Layout\industry\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Layout\industry\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Layout\industry\fonts\Simple-Line-Icons.svg" />
+    <None Include="wwwroot\Layout\industry\fonts\Simple-Line-Icons.woff2" />
+    <None Include="wwwroot\Layout\industry\fonts\themify.svg" />
+    <None Include="wwwroot\Layout\industry\inc\function.php" />
+    <None Include="wwwroot\Layout\industry\inc\PHPMailer.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\.gitignore" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\.travis.yml" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\CONTRIBUTING.md" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\examples\example-captcha.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\LICENSE" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\phpunit.xml.dist" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\README.md" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\autoload.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\ReCaptcha.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod\Curl.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod\CurlPost.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod\Post.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod\Socket.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestMethod\SocketPost.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\RequestParameters.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\src\ReCaptcha\Response.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\ReCaptchaTest.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\RequestMethod\CurlPostTest.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\RequestMethod\PostTest.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\RequestMethod\SocketPostTest.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\RequestParametersTest.php" />
+    <None Include="wwwroot\Layout\industry\inc\recaptcha-master\tests\ReCaptcha\ResponseTest.php" />
+    <None Include="wwwroot\Layout\industry\js\appear.demo.js" />
+    <None Include="wwwroot\Layout\industry\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\industry\js\Chart.bundle.min.js" />
+    <None Include="wwwroot\Layout\industry\js\custom.js" />
+    <None Include="wwwroot\Layout\industry\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.appear.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.circle.progress.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.countdown.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.easing.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.paroller.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.scrollspeed.min.js" />
+    <None Include="wwwroot\Layout\industry\js\jquery.youtubebackground.js" />
+    <None Include="wwwroot\Layout\industry\js\moment.min.js" />
+    <None Include="wwwroot\Layout\industry\js\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\industry\js\popper.min.js" />
+    <None Include="wwwroot\Layout\industry\js\sectionscroll.js" />
+    <None Include="wwwroot\Layout\industry\js\smartresize.min.js" />
+    <None Include="wwwroot\Layout\industry\js\validator.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.svg" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\fonts\revicons\revicons.svg" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.actions.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.carousel.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.kenburn.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.layeranimation.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.migration.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.navigation.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.parallax.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.slideanims.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\extensions\revolution.extension.video.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\jquery.themepunch.enablelog.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\jquery.themepunch.revolution.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\jquery.themepunch.tools.min.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\main-slider\home.slider-1.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\main-slider\home.slider-2.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\main-slider\home.slider-3.js" />
+    <None Include="wwwroot\Layout\industry\rs-plugin\js\main-slider\main.slider.js" />
+    <None Include="wwwroot\Layout\lawnella\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Layout\lawnella\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Layout\lawnella\fonts\fonts\icomoon.svg" />
+    <None Include="wwwroot\Layout\lawnella\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\Layout\lawnella\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\Layout\lawnella\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\bsnav.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\contact.js" />
+    <None Include="wwwroot\Layout\lawnella\js\custom.js" />
+    <None Include="wwwroot\Layout\lawnella\js\gmaps.js" />
+    <None Include="wwwroot\Layout\lawnella\js\html5lightbox.js" />
+    <None Include="wwwroot\Layout\lawnella\js\isotope.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\jquery-ui.js" />
+    <None Include="wwwroot\Layout\lawnella\js\jquery.fancybox.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\lightbox-jscss\fonts\lg.svg" />
+    <None Include="wwwroot\Layout\lawnella\js\lightbox-jscss\js\lightgallery-all.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\map-script.js" />
+    <None Include="wwwroot\Layout\lawnella\js\masonry.pkgd.js" />
+    <None Include="wwwroot\Layout\lawnella\js\owl.js" />
+    <None Include="wwwroot\Layout\lawnella\js\popper.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\validator.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\waypoints.min.js" />
+    <None Include="wwwroot\Layout\lawnella\js\wow.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\css\.DS_Store" />
+    <None Include="wwwroot\Layout\lawnella\revolution\css\closedhand.cur" />
+    <None Include="wwwroot\Layout\lawnella\revolution\css\index.php" />
+    <None Include="wwwroot\Layout\lawnella\revolution\css\openhand.cur" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\.DS_Store" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\.DS_Store" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\index.php" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.actions.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.carousel.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.kenburn.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.layeranimation.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.migration.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.navigation.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.parallax.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.slideanims.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\revolution.extension.video.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\index.php" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.actions.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.carousel.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.kenburn.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.layeranimation.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.migration.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.navigation.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.parallax.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.slideanims.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\extensions\source\revolution.extension.video.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\index.php" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\jquery.themepunch.enablelog.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\jquery.themepunch.revolution.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\jquery.themepunch.tools.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\source\index.php" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\source\jquery.themepunch.enablelog.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\source\jquery.themepunch.revolution.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\source\jquery.themepunch.tools.min.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\source\tp-color-picker.js" />
+    <None Include="wwwroot\Layout\lawnella\revolution\js\tp-color-picker.min.js" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Layout\mistro\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Layout\mistro\fonts\Flaticon.svg" />
+    <None Include="wwwroot\Layout\mistro\fonts\themify.svg" />
+    <None Include="wwwroot\Layout\mistro\fonts\_flaticon.scss" />
+    <None Include="wwwroot\Layout\mistro\js\contact-form\contact-form.js" />
+    <None Include="wwwroot\Layout\mistro\js\countdown\jquery.countdown.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\counter\counter.js" />
+    <None Include="wwwroot\Layout\mistro\js\isotope\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\magnific-popup\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\owl-carousel\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\parallax\parallaxie.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\particle\jquery.particleground.min.js" />
+    <None Include="wwwroot\Layout\mistro\js\theme-script.js" />
+    <None Include="wwwroot\Layout\mistro\js\theme.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\flaticon.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\flaticon.woff2" />
+    <None Include="wwwroot\Layout\Senatory\assets\fonts\icomoon.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\Icon Collection\font\flaticon.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\Icon Collection\font\flaticon.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\Icon Collection\font\flaticon.woff2" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\blub.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\ckeck.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\envelop-02.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\envelop-03.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\envelop.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\Group 68.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\hand-shake.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\hand.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\home.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\king.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\lines.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\loader.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\location.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\love.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\Path 35.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\people.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\phone-02.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\phone.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\quotes-02.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\quotes-03.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\quotes.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\Repeat-Grid.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\search.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\shape.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\sports.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\star.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\target.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\tree.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\icon\trofee.svg" />
+    <None Include="wwwroot\Layout\Senatory\assets\img\political-event-02.png - Shortcut.lnk" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\active.rProgressbar.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\audio.player.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\contact.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\goolge-map-activate.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery-2.2.4.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery.countdown.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery.counterup.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery.magnific-popup.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery.ripples-min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jQuery.rProgressbar.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\jquery.validate.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\lottie-player.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\mail-validation.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\main.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\parallax.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\slick.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\tilt.jquery.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\typed.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\waypoints.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\js\wow.min.js" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_accordion.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_audio_player.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_back_top.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_blockquote.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_blog.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_button.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_campaign_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_contact_form.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_contact_info_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_core_feature_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_countdown_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_counterup_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_donation_single_items.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_event_single_items.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_gallery_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_history_single-item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_issues_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_join_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_news_single-item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_our_vision_single_items.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_page_demo_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_party_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_people_say_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_pgbar_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_planing_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_poll_area.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_preloader.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_principle_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_responsive_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_search_popup.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_section_title.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_services_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_single_party_member.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_testimonial_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_video_btn.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_volunteer_single-item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\elements\_why_choose_single_item.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\global\_global.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\global\_mixins.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\global\_variables.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_about_us_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_administrative_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_campaign_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_career.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_contact_area.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_core_feature_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_cta_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_donate_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_error_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_event-facilities.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_faq_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_footer.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_header.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_header_bottom_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_help_faq_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_history.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_map_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_media.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_meet_member_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_mission_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_navbar.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_office_address.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_page_demo_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_party_section_area.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_political_event_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_political_gallery_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_responsive_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_see_our_video_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_strenth_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_testimonial_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_trafic_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_vote_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_why_choose_us_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_widgets.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\sections\_youth_leader_section.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\style.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_default_navbar.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_post_navigation.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_block.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_block_color.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_caption.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_gallery.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_list.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_pagination.scss" />
+    <None Include="wwwroot\Layout\Senatory\assets\scss\wp_unite_test\_wp_table.scss" />
+    <None Include="wwwroot\Layout\Streamlab\css\flaticon\fonts\Flaticon.svg" />
+    <None Include="wwwroot\Layout\Streamlab\css\flaticon\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\css\flaticon\fonts\ionicons.svg" />
+    <None Include="wwwroot\Layout\Streamlab\css\flaticon\fonts\_flaticon.scss" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\Flaticon.svg" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Layout\Streamlab\fonts\_flaticon.scss" />
+    <None Include="wwwroot\Layout\Streamlab\images\svg\asset-38.svg" />
+    <None Include="wwwroot\Layout\Streamlab\js\asyncloader.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\isotope.pkgd.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\jquery-3.5.1.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\jquery-3.6.0.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\jquery.counterup.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\jquery.waypoints.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\loadmore.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\popper.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\script.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\slick.min.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\streamlab-core.js" />
+    <None Include="wwwroot\Layout\Streamlab\js\swiper-bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.min.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\css\css" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\img\pr-0.jif" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\img\pr-1.jif" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\bootstrap.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\circle-progress.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\common.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\controls.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\custom-scripts.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\demo.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\isotope.pkgd.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\jquery.fancybox.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\jquery.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\jquery.mixitup.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\jquery.nav.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\js" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\map-init.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\map.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\marker.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\onion.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\owl.carousel.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\packery-mode.pkgd.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\popper.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\styleswitcher.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\util.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\validator.min.js.download" />
+    <None Include="wwwroot\portfoliotheme\themejohn\assest\js\wow.min.js.download" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Content\Pages\Advance\Search.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Content\Pages\Advance\Search.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\ChangeEmail.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\Deleted.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\Profile.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\Send.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\_CreateOrEdit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\_Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\_ViewAll.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Admin\Pages\IUsers\Accounts\_ViewDelete.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\MIS\Pages\IProject\Main\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\MIS\Pages\IProject\Main\_Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\MIS\Pages\IProject\Main\_Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\MIS\Pages\IProject\Main\_ViewAll.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

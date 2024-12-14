@@ -1,0 +1,93 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.AdminStaff.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">STAFF</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Fullname
+                        </th>
+
+                        <th>Reg. No.</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Last Login</th>
+
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.StaffManagers)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="/Users/Info" asp-route-id="@item.UserId">
+                                    @Html.DisplayFor(modelItem => item.User.FullnameX)
+
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StaffId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.LastLogin)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserStatus)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/Users/Update" asp-route-id="@item.UserId">Edit</a>
+                                            <a class="dropdown-item" asp-page="/Users/UpdateEmail" asp-route-id="@item.UserId">Update Email</a>
+                                            <a class="dropdown-item" asp-page="/Users/StaffStatus" asp-route-id="@item.UserId">Registration Status</a>
+                                            <a class="dropdown-item" asp-area="NIPSS" asp-page="/Account/PrintStatus" asp-route-id="@item.UserId">Registration Printout</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

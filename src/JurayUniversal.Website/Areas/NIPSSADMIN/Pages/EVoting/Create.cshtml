@@ -1,0 +1,80 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.EVoting.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW E-VOTING</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Evoting.Title" class="control-label"></label>
+                        <input asp-for="Evoting.Title" class="form-control" />
+                        <span asp-validation-for="Evoting.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Evoting.Instructions" class="control-label"></label>
+                        <textarea asp-for="Evoting.Instructions" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Evoting.Instructions" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Evoting.DateToStart" class="control-label"></label>
+                        <input asp-for="Evoting.DateToStart" class="form-control" />
+                        <span asp-validation-for="Evoting.DateToStart" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Evoting.EndDate" class="control-label"></label>
+                        <input asp-for="Evoting.EndDate" class="form-control" />
+                        <span asp-validation-for="Evoting.EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Evoting.VotingStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Evoting.VotingStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.VotingStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Evoting.VotingStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Evoting.StartVoting" /> @Html.DisplayNameFor(model => model.Evoting.StartVoting)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Evoting.ShowResult" /> @Html.DisplayNameFor(model => model.Evoting.ShowResult)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Evoting.CourseId" class="control-label"></label>
+                        <select asp-for="Evoting.CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

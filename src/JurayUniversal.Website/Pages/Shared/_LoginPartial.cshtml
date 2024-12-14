@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
+@using JurayUniversal.Domain.Models;
+@inject SignInManager<Profile> SignInManager
+@inject UserManager<Profile> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    
+    <li class="nav-item">
+        <form class="form-inline" asp-area="V2" asp-page="/AuthV2/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+ 
+</ul>

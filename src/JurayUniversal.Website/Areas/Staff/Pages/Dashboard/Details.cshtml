@@ -1,0 +1,191 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.DetailsModel
+@{
+}
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i>
+            @Model.Proposal.Title <span style="font-size: 0.9rem;padding-left:20px;">our proposals</span>
+        </h3>        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+            <li class="nav-item">
+                <a style="font-size: 23px;font-weight: 900;" class="nav-link active" id="custom-content-below-major-tab" data-toggle="pill" href="#custom-content-below-major" role="tab" aria-controls="custom-content-below-major" aria-selected="false">FULL DETAILS</a>
+            </li>
+
+
+            <li class="nav-item">
+                <a style="font-size: 23px;font-weight: 900;" class="nav-link " id="custom-content-below-sample-tab" data-toggle="pill" href="#custom-content-below-sample" role="tab" aria-controls="custom-content-below-sample" aria-selected="true"> DOCUMENTS (@Model.ProposalFiles.Count()) </a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="custom-content-below-tabContent">
+            <div class="tab-pane fade show active" id="custom-content-below-major" role="tabpanel" aria-labelledby="custom-content-below-major-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-size: 23px;font-weight: 900;">FULL DETAILS</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.SubmittedBy)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.SubmittedBy.GetFullName())
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.Date)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.Date)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.DateSubmitted)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.DateSubmitted)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.DateApproved)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.DateApproved)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.ProposalStatus)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.ProposalStatus)
+                            </dd>
+
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.Description)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.Raw(Model.Proposal.Description)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.Address)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Proposal.Address)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.Note)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.Raw(Model.Proposal.Note)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Proposal.TypedProposal)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.Raw(Model.Proposal.TypedProposal)
+                            </dd>
+                        </dl>
+
+
+                     </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="custom-content-below-sample" role="tabpanel" aria-labelledby="custom-content-below-sample-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-size: 23px;font-weight: 900;">
+                            DOCUMENTS
+                        </h3>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            Title
+                                        </th>
+
+                                        <th>Document</th>
+                                         
+                                    </tr>
+                                </thead>
+                                @{
+                                    int xxsnn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.ProposalFiles)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    xxsnn++;
+                                                }
+                                                @xxsnn
+                                            </td>
+                                            <td>
+
+                                                @item.Title
+
+                                            </td>
+
+                                            <td>
+                                                @if (!String.IsNullOrEmpty(item.Url))
+                                                {
+                                                    <a href="@item.Url" target="_blank">
+                                                        Preview
+                                                    </a>
+                                                }
+                                            </td>
+
+                                             
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="card-body">
+        <h4>Add Note or Report or Progress</h4>
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="PId" type="hidden" value="@Model.Proposal.Id" />
+
+            <div class="form-group">
+                <label asp-for="NewReport" class="control-label">Type Note or Report or Progress</label>
+                <textarea asp-for="NewReport" class="form-control"></textarea>
+                <span asp-validation-for="NewReport" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+
+            </div>
+        </form>
+
+    </div>
+    <!-- /.card -->
+</div>

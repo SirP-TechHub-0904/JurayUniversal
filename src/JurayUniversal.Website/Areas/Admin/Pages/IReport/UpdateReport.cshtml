@@ -1,0 +1,202 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IReport.UpdateReportModel
+
+@{
+    ViewData["Title"] = "UpdateReport";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE REPORT FOR @Model.Report.User.GetFullName()</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" style="height: auto;overflow: visible;">
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #007bff;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">TASK</span>
+
+                            </div>
+
+                            <div class="direct-chat-text bg-primary">
+                                @if (!String.IsNullOrEmpty(Model.Report.TaskNote))
+                                {
+                                    @Html.Raw(Model.Report.TaskNote)
+                                }
+                                else
+                                {
+                                    <span>No Special Task Assigned to You</span>
+
+
+                                }
+
+
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #28a745;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">ACHIEVEMENT</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-success">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.Achievement))
+                                {
+                                    @Html.Raw(Model.Report.Achievement)
+                                }
+                                else
+                                {
+                                    <span>No Achievement Recorded</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #dc3545;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Issues And Challenges</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-danger">
+                                @if (!String.IsNullOrEmpty(Model.Report.IssuesAndChallenges))
+                                {
+                                    @Html.Raw(Model.Report.IssuesAndChallenges)
+                                }
+                                else
+                                {
+                                    <span>No Issues And Challenges Recorded</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #17a2b8;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Plans For Next Day</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-info">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.PlansForNextDay))
+                                {
+                                    @Html.Raw(Model.Report.PlansForNextDay)
+                                }
+                                else
+                                {
+                                    <span>No Plans For Next Day</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #8e9293;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Manager's Comments</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-default">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.ManagerReport))
+                                {
+                                    @Html.Raw(Model.Report.ManagerReport)
+                                }
+                                else
+                                {
+                                    <span>No Comment Yet</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #8e9293;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Admin's Comments</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-default">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.AdminNote))
+                                {
+                                    @Html.Raw(Model.Report.AdminNote)
+                                }
+                                else
+                                {
+                                    <span>No Comment Yet</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+
+                    </div>
+                    <hr />
+                 </div>
+                <!-- /.card-body -->
+
+
+
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Report.Id" />
+                     
+                    <div class="form-group">
+                        <label asp-for="Report.ManagerReport" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.ManagerReport" class="text-danger"></span>
+                    </div>
+                 
+                    <div class="form-group">
+                        <label asp-for="Report.ReportPeriodStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Report.ReportPeriodStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ReportPeriodStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Report.ReportPeriodStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.VerificationStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Report.VerificationStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.VerificationStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Report.VerificationStatus" class="text-danger"></span>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

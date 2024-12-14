@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+    @await Component.InvokeAsync("Redirect")
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- animate -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/animate.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/bootstrap.min.css" />
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/magnific-popup.css" />
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/owl.carousel.min.css" />
+    <!-- Slick Slider -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/slick.css">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/font-awesome.min.css" />
+    <!-- iconmoon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/iconmoon.css">
+    <!-- Hover CSS -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/hover-min.css" />
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/style.css" />
+    <!-- responsive Stylesheet -->
+    <link rel="stylesheet" href="~/Layout/Senatory/assets/css/responsive.css" />
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+
+
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body>
+    @await Component.InvokeAsync("Reloader")
+
+    @await Component.InvokeAsync("Menu")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer")
+    <script src="~/Layout/Senatory/assets/js/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap -->
+    <script src="~/Layout/Senatory/assets/js/bootstrap.min.js"></script>
+    <!-- magnific popup -->
+    <script src="~/Layout/Senatory/assets/js/jquery.magnific-popup.js"></script>
+    <!-- wow -->
+    <script src="~/Layout/Senatory/assets/js/wow.min.js"></script>
+    <!-- owl carousel -->
+    <script src="~/Layout/Senatory/assets/js/owl.carousel.min.js"></script>
+    <!-- slick Slider -->
+    <script src="~/Layout/Senatory/assets/js/slick.min.js"></script>
+    <!-- waypoint -->
+    <script src="~/Layout/Senatory/assets/js/waypoints.min.js"></script>
+    <!-- counterup -->
+    <script src="~/Layout/Senatory/assets/js/jquery.counterup.min.js"></script>
+    <!-- countdown -->
+    <script src="~/Layout/Senatory/assets/js/jquery.countdown.min.js"></script>
+    <!-- main js -->
+    <script src="~/Layout/Senatory/assets/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

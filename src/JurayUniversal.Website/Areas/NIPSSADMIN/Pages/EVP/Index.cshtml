@@ -1,0 +1,65 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.EVP.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">EVALUATION QUESTION LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EvaluationQuestion[0].Question)
+                        </th>
+                        <th>
+                            Abbreviated Question
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EvaluationQuestion[0].Publish)
+                        </th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.EvaluationQuestion)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.Id">
+                                    @item.Question
+                                </a>
+                            </td>
+                            <td>
+                                @item.AbbreviatedQuestion
+                            </td>
+                            <td>
+                                @item.Publish
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

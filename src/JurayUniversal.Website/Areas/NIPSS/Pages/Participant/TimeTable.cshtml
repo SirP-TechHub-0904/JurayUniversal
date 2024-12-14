@@ -1,0 +1,130 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.TimeTableModel
+@{
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">
+                    PROFILE MANAGER
+
+                </h6>
+
+            </div>
+            
+
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="sec-title" style="border: 2px solid #ffffff; box-shadow: 1px 1.6px 3.6px rgb(30 64 44), 2px 0px 2.9px rgb(65 112 86); padding: 16px; background-color: white;">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-md-4" style="text-align:center;margin:0 auto !important">
+                                            <h4>
+                                                <span style="font-weight:800;"> @Model.Title</span>
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-4" style="text-align:center;margin:0 auto !important">
+                                            <form method="get">
+                                                <div class="input-group input-group-sm" style="margin-bottom:7px;">
+                                                    <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
+                                                    <span class="input-group-btn">
+                                                        <button type="submit" class="btn btn-success btn-flat">Search</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                            <form method="get">
+                                                <input type="hidden" name="searchdatecancel" value="cancel">
+                                                @if (TempData["date"] != null)
+                                                {
+                                                    <p>
+                                                        Search result for <span style="font-weight:900;color:#b62626;"><i>@TempData["date"]</i></span>
+
+                                                        @*<a class="btn btn-primary" asp-page="/sharet" asp-route-id="@TempData["sharedate"]" asp-route-k="single" style="color:white;font-weight:700;">Share <i class="fa fa-whatsapp" style="color:white;font-weight:700;"></i></a>*@
+                                                        <a href="whatsapp://send?text=@TempData["link"]" data-action="share/whatsapp/share"
+                                                           target="_blank" class="btn btn-primary" style="color:white;font-weight:700;"> Share to WhatsApp </a>
+                                                        <button type="submit" class="btn btn-danger btn-flat">Cancel</button>
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>
+                                                        <a href="whatsapp://send?text=@TempData["link"]" data-action="share/whatsapp/share"
+                                                           target="_blank" class="btn btn-primary" style="color:white;font-weight:700;"> Share to WhatsApp </a>
+                                                    </p>
+
+                                                }
+                                            </form>
+
+                                        </div>
+                                        <div class="col-md-4" style="text-align:center;margin:0 auto !important">
+                                            <a asp-page="./TimeTable" asp-route-date="@Model.NextWeek" class="btn btn-success float-right" style="float:right;color:white;">@Model.NextWeekTitle</a>
+                                            <a asp-page="./TimeTable" asp-route-date="@Model.PreviousWeek" class="btn btn-success float-right" style="float:right;color:white;margin-right:9px;">@Model.PreviousWeekTitle</a>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    @*<div class="table-responsive">
+                                        <table class="table table-bordered" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="">DAY/DATE</th>
+                                                    <th style="">TIME</th>
+                                                    <th style="">LECTURE/ACTIVITY</th>
+                                                    <th style="">MODERATOR</th>
+                                                    <th style="">LECTURER</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>*@
+                                                @foreach (var x in Model.TimeTables.ToList())
+                                                {
+                                                    @*<tr>
+
+                                                        <td colspan="5" style=" ">
+                                                            <table class="table" style=" ">*@
+                                                                @await Component.InvokeAsync("TimeTable", new { date = x })
+                                                            @*</table>
+                                                        </td>
+
+                                                    </tr>*@
+                                                }
+
+                                            @*</tbody>
+                                        </table>
+                                    </div>*@
+                                </div>
+
+
+                            </div>
+                            <div class="sec-title" style="border: 2px solid #ffffff; box-shadow: 1px 1.6px 3.6px rgb(30 64 44), 2px 0px 2.9px rgb(65 112 86); padding: 16px; background-color: white;">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @if (Model.Desc != null)
+                                            {
+                                                <h4 style="padding-left:8px;">NOTE:</h4>
+                                                <div class="text-justify" style="text-align: justify !important; padding-left: 8px;">
+                                                    @Html.Raw(Model.Desc)
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.ReferralPageModel
+@{
+}
+
+<style>
+    .shareUrl-input {
+  cursor: pointer;
+}
+
+ 
+
+.shareUrl {
+  width: 100%;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.shareUrl-header {
+  margin-bottom: 10px;
+}
+
+.shareUrl-headerText {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 22px;
+}
+
+.shareUrl-subtext {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.shareUrl-body {
+  margin-bottom: 10px;
+}
+
+    .shareUrl-input {
+        width: 100%;
+        padding: 5px 0;
+        border: 2px solid rgb(0 0 0 / 71%);
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: rgb(84 73 73 / 90%);
+        background: rgba(0, 0, 0, 0);
+        border-radius: 3px;
+        transition: all 300ms ease;
+    }
+.shareUrl-input:hover, .shareUrl-input:focus, .shareUrl-input:active {
+  border-color: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@@media (min-width: 568px) {
+  .shareUrl {
+    padding: 20px 10px;
+  }
+
+  .shareUrl-input {
+    max-width: 100%;
+    font-size: 36px;
+  }
+
+  .shareUrl-headerText {
+    font-size: 22px;
+  }
+}
+.u-verticalGrid {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.u-flexCenter {
+  display: flex;
+  align-items: center !important;
+}
+
+.u-flexCenterHorizontal {
+  display: flex;
+  justify-content: center !important;
+}
+
+.u-sizeViewHeightMin100 {
+  min-height: 100vh !important;
+}
+
+.u-size1040 {
+  max-width: 1040px;
+}
+
+.u-marginAuto {
+  margin: 0 auto;
+}
+</style>
+@{
+    string reflink = "http://JurayUniversal.ng/Request/" + Model.Profile.RefCode;
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE TESTIMONY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="wrapper">
+                    <div class="content u-flexCenter">
+                        <div class="shareUrl u-verticalGrid u-marginAuto u-size1040">
+                            <header class="shareUrl-header">
+
+                                <h1 class="shareUrl-headerText">@Model.Profile.GetFullName() Referral Link</h1>
+                                 
+                            </header>
+                            <div class="shareUrl-body">
+                                <div class="container">
+                                    <!-- COPY INPUT -->
+                                    <input class="shareUrl-input js-shareUrl" type="text" readonly="readonly" />
+                                    <p class="shareUrl-subtext">Click above to copy the link.</p>
+                                </div>
+                            </div>
+
+                            <a href="whatsapp://send?text=Your Website Info Form: click on the link to complete the form @reflink">Share on WhatsApp</a>
+
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+<input type="hidden" value="@reflink" id="dataurl2" />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        (function () {
+
+            // Create reusable copy fn
+            function copy(element) {
+
+                return function () {
+                    document.execCommand('copy', false, element.select());
+                }
+            }
+
+            // Grab shareUrl element
+            var shareUrl = document.querySelector('.js-shareUrl');
+
+            // Create new instance of copy, passing in shareUrl element
+            var copyShareUrl = copy(shareUrl);
+
+            // Set value via markup or JS
+            const doc = document.getElementById("dataurl2");
+            var hiddenValues = doc.value;
+            shareUrl.value = hiddenValues;
+
+            // Click listener with copyShareUrl handler
+            shareUrl.addEventListener('click', copyShareUrl, false);
+
+        }());
+    </script>
+
+}

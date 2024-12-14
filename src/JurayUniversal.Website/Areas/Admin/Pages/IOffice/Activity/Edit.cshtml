@@ -1,0 +1,62 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IOffice.Activity.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE OFFICE ACTIVITY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="OfficeActivityDialy.Id" />
+                    <input type="hidden" asp-for="OfficeActivityDialy.OfficeActivityCategoryId" />
+                    <input type="hidden" asp-for="OfficeActivityDialy.Date" />
+                    <input type="hidden" asp-for="OfficeActivityDialy.Logs" />
+                    <input type="hidden" asp-for="OfficeActivityDialy.LastUpdate" />
+                    <input type="hidden" asp-for="OfficeActivityDialy.UpdateCount" />
+                    <input type="hidden" asp-for="INote" />
+
+                    <div class="form-group">
+                        <label asp-for="OfficeActivityDialy.Note" class="control-label"></label>
+                        <textarea asp-for="OfficeActivityDialy.Note" class="form-control"></textarea>
+                        <span asp-validation-for="OfficeActivityDialy.Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OfficeActivityDialy.Amount" class="control-label"></label>
+                        <input asp-for="OfficeActivityDialy.Amount" class="form-control" />
+                        <span asp-validation-for="OfficeActivityDialy.Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OfficeActivityDialy.Customer" class="control-label"></label>
+                        <input asp-for="OfficeActivityDialy.Customer" class="form-control" />
+                        <span asp-validation-for="OfficeActivityDialy.Customer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Details" asp-route-id="@Model.OfficeActivityDialy.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

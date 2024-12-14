@@ -1,0 +1,100 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.JobListModel
+@{
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">JOB LIST</h3>
+         
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                           
+                            @Html.DisplayNameFor(model => model.Job[0].Title)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].PhoneNumber)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].Date)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].ReminderDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].BusinessName)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Job[0].RequestDomain)
+                        </th>
+
+                        <th>
+                            Referred By
+                        </th>
+                        
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Job)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td> <a asp-page="./JobDetails" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Title)</a>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BusinessName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profile.GetFullName())
+                            </td>
+                            
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

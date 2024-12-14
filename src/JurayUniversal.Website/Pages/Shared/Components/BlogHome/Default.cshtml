@@ -1,0 +1,530 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.Blog>
+
+@using System.Text.RegularExpressions;
+
+@{
+    Domain.Models.Setting xsetting = ViewBag.sxt;
+    Domain.Models.SuperSetting supsetting = ViewBag.suppersetting;
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+@if (xsetting.AddBlogToHome == true)
+{
+
+    @if (supsetting.TemplateLayoutKey == "Layout1111")
+    {
+
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+            <div class="section-block-grey">
+                <div class="container">
+                    <div class="blg-title">
+                        <h3>@xsetting.BlogDisplayTitle</h3>
+                    </div>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-4 col-sm-4 col-12">
+                                <div class="blog-grid">
+                                    <div class="blog-grid-img">
+                                        <img src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
+                                        <div class="data-box-grid">
+                                            <h4>@item.Date.ToString("dd")</h4>
+                                            <p>@item.Date.ToString("MMM")</p>
+                                        </div>
+                                    </div>
+                                    <div class="blog-grid-text">
+                                        <h4 style=" height: 54px;overflow:hidden;">@item.Title</h4>
+                                        <ul>
+                                            <li><i class="fa fa-calendar"></i>@item.Date.ToString("MMM dd, yyyy")</li>
+
+                                        </ul>
+                                        <div class="choose-3-line">
+                                            <p style=" height: 107px; overflow: hidden;text-overflow:ellipsis !important;">
+                                                @item.Description
+                                            </p>
+                                        </div>
+                                        <div class="mt-20 left-holder" style="margin-top:5px;">
+                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="primary-button button-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else if (supsetting.BlogTemplateKey == "Blog2222")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog3333")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog4444")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog5555")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog6666")
+        {
+
+        }
+
+        <!-- Service Boxes END -->
+    }
+
+    else if (supsetting.TemplateLayoutKey == "Layout2222")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+            <section class="section-padding no-top error-page pattern-bgs gray ">
+                <!-- Main Container -->
+                <div class="container">
+                    <div class="heading-panel" style="margin-bottom:20px;">
+                        <div class="col-xs-12 col-md-12 col-sm-12 text-center">
+                            <!-- Main Title -->
+                            <h1 style="margin-top:20px;">@xsetting.BlogDisplayTitle</h1>
+                            <!-- Short Description -->
+                        </div>
+                    </div>
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Middle Content Area -->
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <div class="row">
+                                <!-- Blog Archive -->
+                                <div class="posts-masonry">
+                                    @foreach (var item in Model)
+                                    {
+                                        <!-- Blog Post-->
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="blog-post">
+                                                <div class="post-img">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"> <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;"> </a>
+
+                                                </div>
+                                                <div class="post-info"> <a href="">Aug 30, 2017</a>  </div>
+                                                <h3 class="post-title"> <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"> @item.Title </a> </h3>
+                                                <p class="post-excerpt">
+                                                    @item.Description  																						<a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><strong>Read More</strong></a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Blog Post-->
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Row End -->
+                </div>
+                <!-- Main Container End -->
+            </section>
+        }
+        else if (supsetting.BlogTemplateKey == "Blog2222")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog3333")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog4444")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog5555")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog6666")
+        {
+
+        }
+
+
+
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout3333")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog2222")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog3333")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog4444")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog5555")
+        {
+
+        }
+        else if (supsetting.BlogTemplateKey == "Blog6666")
+        {
+
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout4444")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+            <section class="blog-pg section-padding">
+                <div class="container">
+                    <div class="blg-title">
+                        <h3>@xsetting.BlogDisplayTitle</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="posts">
+                                <div class="row">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="item mb-80">
+                                                <div class="img">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                        <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
+                                                    </a>
+                                                    <div class="info">
+                                                        <div class="date">
+                                                            <h5>
+                                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                                    <span class="num custom-font">@item.Date.ToString("dd")</span>
+                                                                    <span>@item.Date.ToString("MMM")</span>
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-10 offset-lg-1">
+                                                        <div class="content">
+
+                                                            <h4 class="title">
+                                                                <a href="blog-details.html">
+                                                                    @item.Title
+                                                                </a>
+                                                            </h4>
+                                                            <p>
+                                                                @item.Description
+                                                            </p>
+                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="more">Read More</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout5555")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+
+            {
+                <!-- Blog Section Start -->
+                <div class="rs-inner-blog pt-100 pb-100 md-pt-70 md-pb-70">
+                    <div class="container custom">
+                        <div class="blg-title">
+                            <h3>@xsetting.BlogDisplayTitle</h3>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12 pr-35 md-pr-15 md-mt-50">
+                                <div class="row">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="col-lg-4 col-md-4 mb-50">
+                                            <div class="blog-item">
+                                                <div class="blog-img">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                        <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
+                                                    </a>
+
+
+                                                </div>
+                                                <div class="blog-content">
+                                                    <h3 class="blog-title">
+                                                        <a href="blog-details.html">
+                                                            @item.Title
+                                                    </h3>
+                                                    <div class="blog-meta">
+                                                        <ul class="btm-cate">
+                                                            <li>
+                                                                <div class="blog-date">
+                                                                    <i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="blog-desc">
+                                                        @item.Description
+                                                    </div>
+                                                    <div class="blog-button">
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="blog-btn">Continue Reading</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Blog Section End -->
+            }
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout6666")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+            <div class="rs-inner-blog pt-100 pb-100 md-pt-70 md-pb-70">
+                <div class="container custom">
+                    <div class="blg-title">
+                        <h3>@xsetting.BlogDisplayTitle</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 order-last">
+                        </div>
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-8 pr-35 md-pr-15 md-mt-50">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12 mb-50">
+                                        <div class="blog-item">
+                                            <div class="blog-img">
+                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                    <img src="@item.ImageUrl"
+                                                         alt="@item.Title">
+                                                </a>
+
+                                            </div>
+                                            <div class="blog-content">
+                                                <h3 class="blog-title">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                        @item.Title
+                                                    </a>
+                                                </h3>
+                                                <div class="blog-meta">
+                                                    <ul class="btm-cate">
+                                                        <li>
+                                                            <div class="blog-date">
+                                                                <i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                                <div class="blog-desc">
+                                                    @item.Description
+                                                </div>
+                                                <div class="blog-button">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="blog-btn">Continue Reading</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout7777")
+    {
+        if (supsetting.BlogTemplateKey == "Blog1111")
+        {
+            <section class="blog_right_sidebar">
+                <div class="container">
+                    <div class="blg-title">
+                        <h3>@xsetting.BlogDisplayTitle</h3>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-8 col-md-12">
+
+                            <div class="right_sidebar_details news_type_one">
+                                <div class="row">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="col-sm-12">
+                                            <div class="latest_news_inner type_four">
+                                                <div class="image">
+                                                    <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title">
+
+
+                                                </div>
+                                                <div class="content_inner">
+                                                    <div class="tag">
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">><span class="icon-folder"></span>@item.BlogCategory</a>
+                                                    </div>
+                                                    <h2>
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">>@item.Title </a>
+                                                    </h2>
+                                                    <ul>
+                                                        <li><span class="icon-calendar"></span>@item.Date.ToString("MMM dd, yyyy")</li>
+                                                    </ul>
+                                                    <p>@item.Description</p>
+
+                                                    <ul class="bottom_box">
+                                                        <li>
+                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="theme_btn">Read More</a>
+                                                        </li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+
+            </section>
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout8888")
+    {
+
+        {
+            if (supsetting.BlogTemplateKey == "Blog1111")
+            {
+                <section class="hm-blog1">
+                    <div class="container">
+                        <div class="blg-title">
+                            <h3>@xsetting.BlogDisplayTitle</h3>
+                        </div>
+
+                        <div class="row align-items-center">
+                            <div class="col-sm-12">
+                                <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-margin="30" data-autoplay="true">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="item">
+                                            <div class="post style-3">
+                                                <div class="post-image">
+                                                    <img src="@item.ImageUrl" alt="@item.Title">
+                                                </div>
+                                                <div class="post-desc">
+                                                    <div class="post-date"><i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")</div>
+                                                    <div class="post-title">
+                                                        <h5><a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                                    </div>
+                                                    <p>@item.Description</p>
+                                                </div>
+                                                <div class="post-bottom">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+
+        }
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout9999")
+    {
+
+        {
+            if (supsetting.BlogTemplateKey == "Blog1111")
+            {
+                <div class="issues-around-us-section style-01">
+                    <div class="container">
+                        <div class="blg-title">
+                            <h3>@xsetting.BlogDisplayTitle</h3>
+                        </div>
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="news-single-items-two">
+                                        <div class="thumbnail">
+                                            <img src="@item.ImageUrl" alt="@item.Title">
+
+                                        </div>
+                                        <div class="content">
+                                            <div class="post-meta">
+
+                                                <div class="post-date">
+                                                    <div class="icon">
+                                                        <img src="assets/img/home-six/icon/calender-02.png" alt="">
+                                                    </div>
+                                                    <p class="date">@item.Date.ToString("MMM dd, yyyy")</p>
+                                                </div>
+                                            </div>
+                                            <h4 class="title">@item.Title</h4>
+                                            <p>@item.Description</p>
+                                            <div class="btn-wrapper">
+                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="boxed-btn event-btn"><i class="fas fa-arrow-right"></i>Read More</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        }
+    }
+}

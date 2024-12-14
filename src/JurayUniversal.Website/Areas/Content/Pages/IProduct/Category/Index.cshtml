@@ -1,0 +1,98 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.Category.IndexModel
+
+@{
+    ViewData["Title"] = string.Format("{0} Category", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@await Component.InvokeAsync("ProductTitle") CATEGORY</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductCategory[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductCategory[0].Publish)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductCategory[0].MenuSortOrder)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductCategory[0].HomeSortFrom)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.ProductCategory)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Publish)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MenuSortOrder)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HomeSortFrom)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

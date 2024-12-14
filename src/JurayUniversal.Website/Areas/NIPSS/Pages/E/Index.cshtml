@@ -1,0 +1,50 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.E.IndexModel
+@{
+    Layout = "/Pages/Shared/Admin/_UserNoMenu.cshtml";
+
+}
+<style>
+
+    .nav-item h3 {
+        display: none;
+    }
+</style>
+<section>
+    <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4"></div>
+        <div class="col-md-4 col-xs-4 col-sm-4">
+            <div class="" style="margin: 0 auto; text-align: center;">
+                <img src="/NIPSS-logo-x.png" style="margin:0 auto;text-align:center;max-height:80px;padding:10px;">
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 col-sm-4"></div>
+    </div>
+</section>
+<div class="">
+    <div class="card">
+        <div class="card-header center">
+            <h3 style="font-weight: 900; text-align: center;">E-VOTING</h3>
+        </div>
+        <div class="card-header center">
+            <h4 style="text-align:center;">@Model.Evoting.Title</h4>
+        </div>
+        <div class="card-body">
+            <div class="" style="margin: 0 auto; text-align: center;">
+                <img src="~/NIPSS-vote.png" style="margin:0 auto;text-align:center;max-height:200px;" class="img-fluid">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="btn btn-warning" style="padding: 30px; background-color: #d39e007a; border-color: #c695009c;width:100%;">
+                <i class="fa fa-lock"></i> <span style="margin:10px;font-style:italic;">
+
+                    @Html.Raw(Model.SuperSetting.EncryptionNote)
+                </span>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p class="center" style="text-align:center;"><i>Click Vote when your ready to vote.</i></p>
+            <a asp-page="./StartVoting" asp-route-id="@Model.Evoting.Id" class="btn btn-primary" style="width:100%;">Vote</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+
+    @await Component.InvokeAsync("Redirect")
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/customcss/styles.2daab993ef0ed745.css" rel="stylesheet" />
+    <!-- inject css start -->
+    <!--== bootstrap -->
+    <link href="~/Layout/mistro/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!--== animate -->
+    <link href="~/Layout/mistro/css/animate.css" rel="stylesheet" type="text/css" />
+
+    <!--== fontawesome -->
+    <link href="~/Layout/mistro/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--== themify-icons -->
+    <link href="~/Layout/mistro/css/themify-icons.css" rel="stylesheet" type="text/css" />
+
+    <!--== magnific-popup -->
+    <link href="~/Layout/mistro/css/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+
+    <!--== owl-carousel -->
+    <link href="~/Layout/mistro/css/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css" />
+
+    <!--== spacing -->
+    <link href="~/Layout/mistro/css/spacing.css" rel="stylesheet" type="text/css" />
+
+    <!--== base -->
+    <link href="~/Layout/mistro/css/base.css" rel="stylesheet" type="text/css" />
+
+    <!--== shortcodes -->
+    <link href="~/Layout/mistro/css/shortcodes.css" rel="stylesheet" type="text/css" />
+
+    <!--== default-theme -->
+    <link href="~/Layout/mistro/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!--== responsive -->
+    <link href="~/Layout/mistro/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+    <link href="~/customcss/download35.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+
+
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body>
+    @await Component.InvokeAsync("Reloader")
+
+    @await Component.InvokeAsync("Menu")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer")
+    <div class="scroll-top"><a class="smoothscroll" href="#top"><i class="fas fa-chevron-up"></i></a></div>
+
+    <!--== theme -->
+    <script src="~/Layout/mistro/js/theme.js"></script>
+
+    <!--== magnific-popup -->
+    <script src="~/Layout/mistro/js/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!--== owl-carousel -->
+    <script src="~/Layout/mistro/js/owl-carousel/owl.carousel.min.js"></script>
+
+    <!--== parallax -->
+    <script src="~/Layout/mistro/js/parallax/parallaxie.min.js"></script>
+
+    <!--== counter -->
+    <script src="~/Layout/mistro/js/counter/counter.js"></script>
+
+    <!--== particle -->
+    <script src="~/Layout/mistro/js/particle/jquery.particleground.min.js"></script>
+
+    <!--== countdown -->
+    <script src="~/Layout/mistro/js/countdown/jquery.countdown.min.js"></script>
+
+    <!--== isotope -->
+    <script src="~/Layout/mistro/js/isotope/isotope.pkgd.min.js"></script>
+
+    <!--== contact-form -->
+    <script src="~/Layout/mistro/js/contact-form/contact-form.js"></script>
+
+    <!--== theme-script -->
+    <script src="~/Layout/mistro/js/theme-script.js"></script>
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

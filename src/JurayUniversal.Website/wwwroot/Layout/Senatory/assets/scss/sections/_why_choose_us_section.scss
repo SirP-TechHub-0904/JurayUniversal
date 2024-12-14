@@ -1,0 +1,155 @@
+// Why Choose Section start header
+
+.why-choose-us-section {
+    margin-top: 120px;
+    overflow: hidden;
+
+    &.style-01 {
+        margin-top: 70px;
+    }
+
+    &.style-02 {
+        margin-top: 90px;
+    }
+
+    &.choose-bg {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 90px 0px 100px 0px;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--heading-color);
+            opacity: 0.85;
+        }
+    }
+
+    .choose-bg-02 {
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        width: 50%;
+    }
+
+    .choose-bg-03 {
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        width: 54%;
+    }
+
+    .single-items-wrapper {
+        margin-right: 50px;
+
+        .why-choose-single-items {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 25px;
+            transition: .5s all ease;
+
+            &:hover {
+                background: var(--main-color-one);
+
+                .icon {
+                    color: #fff;
+
+                    &::after {
+                        border-color: #fff;
+                    }
+                }
+
+                .content {
+                    .title {
+                        color: #fff;
+                    }
+
+                    p {
+                        color: #fff;
+                    }
+                }
+
+                .shape {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .icon {
+                font-size: 42px;
+                color: var(--heading-color);
+                margin-right: 20px;
+                position: relative;
+                width: 80px;
+                height: 80px;
+                line-height: 80px;
+                text-align: center;
+
+                // background-color: green;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border: 1px dashed var(--heading-color);
+                    border-radius: 50%;
+                    top: -5px;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                }
+            }
+
+            .content {
+                flex: 1;
+
+                .title {
+                    font-size: 20px;
+                    line-height: 28px;
+                    font-family: var(--body-font);
+                    font-weight: 700;
+                    color: var(--heading-color);
+                }
+
+                p {
+                    font-size: 16px;
+                    line-height: 28px;
+                    font-family: var(--body-font);
+                    font-weight: 400;
+                    color: #6B6B6B;
+                }
+            }
+
+            .shape {
+                position: absolute;
+                top: 0;
+                right: 0;
+                visibility: hidden;
+                opacity: 0;
+                transition: .3s all ease;
+            }
+        }
+    }
+}

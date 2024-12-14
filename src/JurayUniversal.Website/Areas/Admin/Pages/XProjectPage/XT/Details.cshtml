@@ -1,0 +1,127 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.XProjectPage.XT.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS PROJECT TASK</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.Title)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.StartDate)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.StartDate)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.FinishDate)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.FinishDate)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.Status)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.Status)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.Priority)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.Priority)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.User)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.User.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.RateUser)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.RateUser)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.Files)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.Files)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.TestCriterial)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.TestCriterial)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.TestStatus)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.TestStatus)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.TestedBy)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.TestedBy.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.RateTester)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.RateTester)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.ApprovedBy)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.ApprovedBy.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.ApproveStatus)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.ApproveStatus)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.XProjectTask.RateApprover)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.XProjectTask.RateApprover)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+            </div>
+        </div>
+    </div>
+    </div>

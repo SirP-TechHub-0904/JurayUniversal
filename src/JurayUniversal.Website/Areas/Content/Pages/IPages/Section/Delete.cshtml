@@ -1,0 +1,125 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.Section.DeleteModel
+
+@{
+    ViewData["Title"] = "PAGE SECTION Delete";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE WEBPAGE SECTION</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PageSection</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.VideoUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.VideoUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.VideoKey)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.VideoKey)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.ImageUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.ImageKey)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.ImageKey)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.FullDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.FullDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.ButtonText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.ButtonText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.ButtonLink)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.ButtonLink)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.ShowInHome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.ShowInHome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.Disable)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.Disable)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.HomePageSortOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.HomePageSortOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.PageSortOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.PageSortOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageSection.WebPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageSection.WebPage.Title)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="PageSection.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

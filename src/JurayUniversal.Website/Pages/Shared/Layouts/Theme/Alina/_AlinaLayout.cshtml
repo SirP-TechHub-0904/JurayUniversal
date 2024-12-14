@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebsiteCSS")
+
+    @await Component.InvokeAsync("Redirect")
+</head>
+<body>
+
+
+    <h1>alina</h1>
+    @await Component.InvokeAsync("Menu")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer")
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

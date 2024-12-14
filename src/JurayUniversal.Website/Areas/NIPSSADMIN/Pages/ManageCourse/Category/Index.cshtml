@@ -1,0 +1,60 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.ManageCourse.Category.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">COURSE CATEGORY MANAGEMENT</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CourseCategory[0].Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CourseCategory[0].Abbreviation)
+                        </th> 
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.CourseCategory)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+
+                                <a asp-page="./Edit" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                    </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Abbreviation)
+                            </td>
+                           
+                        </tr>
+                    } 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

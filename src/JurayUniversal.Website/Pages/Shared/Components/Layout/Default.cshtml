@@ -1,0 +1,16 @@
+﻿@model JurayUniversal.Domain.Models.SuperSetting
+
+
+
+@if (Model.TemplateLayoutKey == "Layout1111"){
+    Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+}
+else if (Model.TemplateLayoutKey == "Layout2222")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+}
+else if (Model.TemplateLayoutKey == "Layout3333")
+{
+    Layout = "_Layout";
+}
+ 

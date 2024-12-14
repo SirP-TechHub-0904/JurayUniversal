@@ -1,0 +1,96 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.EVoting.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">E-VOTING MANAGEMENT</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evoting[0].Title)
+                        </th>
+                         
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evoting[0].DateToStart)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evoting[0].EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evoting[0].VotingStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evoting[0].StartVoting)
+                        </th>
+                        
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Evoting)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateToStart)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VotingStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartVoting)
+                            </td>
+                              
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IFormSettings.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FormSetting</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.FormSetting.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,75 @@
+﻿@page
+@model JurayUniversal.Website.Areas.UserBudget.Pages.BD.AssignedBudgetModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ASSIGNED BUDGET LIST</h3>
+         
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped projects">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BudgetMainCategory[0].Title)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.BudgetMainCategory[0].StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BudgetMainCategory[0].EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BudgetMainCategory[0].Status)
+                        </th>
+                        <th>
+                           Owner
+                        </th>
+                        
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.BudgetMainCategory)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./Budget" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </a>
+                            </td>
+
+                            <td>
+                                @item.StartDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.EndDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                               @item.User.FullnameX
+                            </td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users.CourseModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">PARTICIPANT COURSE UPDATE</h3>
+        <a asp-page="./Index" class="btn bg-gradient-primary btn-sm" style="float:right;">Back</a>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.UserDatas.FullnameX)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.UserDatas.FullnameX)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.UserDatas.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.UserDatas.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.UserDatas.PhoneNumber)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.UserDatas.PhoneNumber)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.UserDatas.Role)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.UserDatas.Role)
+                    </dd>
+
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">CHOOSE COURSE</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <select asp-for="CourseId" class="form-control" id="xcourse" asp-items="ViewBag.CourseId">
+                        <option value="">Choose</option>
+                    </select>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserId" value="@Model.UserDatas.Id" />
+
+
+
+            </div>
+            <div class="col-md-12">
+                <span id="courseInformation"></span>
+
+            </div>
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <input type="submit" value="Continue" class="btn btn-primary" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+ 
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#xcourse").change(function () {
+                console.log("check in");
+                var courseId = $(this).val();
+                console.log("check ID");
+                console.log(courseId);
+                $.ajax({
+                    type: "GET",
+                    url: "/NIPSSADMIN/Users/Course?handler=CourseInformation",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: { courseId: courseId },
+
+                    success: function (data) {
+                        $("#courseInformation").empty();
+                        $("#courseInformation").append(data);
+                        console.log(data);
+                    }
+
+                });
+                // Make sure to wrap this code within a function or an event handler
+                //async function loadLGAs(courseId) {
+                //    try {
+                //        const response = await fetch(`/NIPSSADMIN/Users/Course?handler=CourseInformation=${courseId}`, {
+                //            method: 'GET',
+                //            headers: {
+                //                'Content-Type': 'application/json; charset=utf-8'
+                //            },
+                //            // You can include other options here if needed
+                //        });
+
+                //        if (!response.ok) {
+                //            throw new Error(`HTTP error! Status: ${response.status}`);
+                //        }
+
+                //        const data = await response.json();
+                //        console.log(data);
+                //        // Assuming your response is an array of objects with 'text' and 'value' properties
+                //        $("#courseInformation").empty();
+                //        $("#courseInformation").append();
+
+                //    } catch (error) {
+                //        console.error('Error fetching datas:', error);
+                //    }
+                //}
+
+                //// Call the function with the desired stateId
+                //loadLGAs(courseId);
+
+
+                console.log("check out");
+                console.log(courseId);
+            });
+        });
+
+        //function getCourseInformation(courseId) {
+        //    $.ajax({
+        //        url: '/Users/Course?handler=GetCourseInformation',
+        //        type: 'GET',
+        //        data: { courseId: courseId },
+        //        success: function (data) {
+        //            // Update the COURSE INFORMATION card with the received data
+        //            $('#courseInformation').html(data);
+        //        }
+        //    });
+        //}
+    </script>
+
+}

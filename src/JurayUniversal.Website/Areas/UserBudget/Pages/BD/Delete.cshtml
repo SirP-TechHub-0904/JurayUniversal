@@ -1,0 +1,76 @@
+﻿@page
+@model JurayUniversal.Website.Areas.UserBudget.Pages.BD.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BudgetMainCategory</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.LastUpdatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.LastUpdatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.User.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BudgetMainCategory.AccessEmails)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BudgetMainCategory.AccessEmails)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="BudgetMainCategory.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

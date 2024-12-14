@@ -1,0 +1,231 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.WebSetting.UiPropertyModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">SUB UPDATE SETTINGS</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <form method="post">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class=" ">UNIVERSAL SETTINGS</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="todo-list" data-widget="todo-list">
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.TemplateLayoutKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.TemplateLayoutKey" class="form-control">
+                                            <option value="Layout1111">Redbiz Template</option>
+                                            <option value="Layout2222">Carsport Template</option>
+                                            <option value="Layout3333">Alina Template</option>
+                                            <option value="Layout4444">Archo Template</option>
+                                            <option value="Layout5555">Bizup Template</option>
+                                            <option value="Layout6666">Industry Template</option>
+                                            <option value="Layout7777">Lawnella Template</option>
+                                            <option value="Layout8888">Mistro Template</option>
+                                            <option value="Layout9999">Senatory Template</option>
+                                            <option value="Layout11111111">Education Template</option>
+                                            <option value="Layout12121212">Streamlab Template</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.TemplateLayoutKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.LoginTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.LoginTemplateKey" class="form-control">
+                                            <option value="Login1111">Login One</option>
+                                            <option value="Login2222">Login Two</option>
+                                            <option value="Login3333">Login Three</option>
+                                            <option value="Login4444">Login Four</option>
+                                            <option value="Login5555">Login Five</option>
+                                            <option value="Login6666">Login Agilevendor</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.LoginTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.ColorTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.ColorTemplateKey" class="form-control">
+                                            <option value="Colour1111">Colour One</option>
+                                            <option value="Colour2222">Colour Two</option>
+                                            <option value="Colour3333">Colour Three</option>
+                                            <option value="Colour4444">Colour Four</option>
+                                            <option value="Colour5555">Colour Five</option>
+                                            <option value="Colour6666">Colour Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.ColorTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.SliderTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.SliderTemplateKey" class="form-control">
+                                            <option value="Slider1111">Slider One</option>
+                                            <option value="Slider2222">Slider Two</option>
+                                            <option value="Slider3333">Slider Three</option>
+                                            <option value="Slider4444">Slider Four</option>
+                                            <option value="Slider5555">Slider Five</option>
+                                            <option value="Slider6666">Slider Six</option>
+                                            <option value="Slider7777">Slider Seven</option>
+                                            <option value="Slider8888">Slider Eight</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.SliderTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.ProductTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.ProductTemplateKey" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="Product1111">Product One</option>
+                                            <option value="Product2222">Product Two</option>
+                                            <option value="Product3333">Product Three</option>
+                                            <option value="Product4444">Product Four</option>
+                                            <option value="Product5555">Product Five</option>
+                                            <option value="Product6666">Product Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.ProductTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.BlogTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.BlogTemplateKey" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="Blog1111">Blog One</option>
+                                            <option value="Blog2222">Blog Two</option>
+                                            <option value="Blog3333">Blog Three</option>
+                                            <option value="Blog4444">Blog Four</option>
+                                            <option value="Blog5555">Blog Five</option>
+                                            <option value="Blog6666">Blog Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.BlogTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.ReloaderTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.ReloaderTemplateKey" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="Reloader1111">Reloader One</option>
+                                            <option value="Reloader2222">Reloader Two</option>
+                                            <option value="Reloader3333">Reloader Three</option>
+                                            <option value="Reloader4444">Reloader Four</option>
+                                            <option value="Reloader5555">Reloader Five</option>
+                                            <option value="Reloader6666">Reloader Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.ReloaderTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.PageHeaderTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.PageHeaderTemplateKey" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="PageHeader1111">PageHeader One</option>
+                                            <option value="PageHeader2222">PageHeader Two</option>
+                                            <option value="PageHeader3333">PageHeader Three</option>
+                                            <option value="PageHeader4444">PageHeader Four</option>
+                                            <option value="PageHeader5555">PageHeader Five</option>
+                                            <option value="PageHeader6666">PageHeader Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.PageHeaderTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.FooterTemplateKey" class="control-label"></label>
+                                        <select asp-for="SuperSetting.FooterTemplateKey" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="Footer1111">Footer One</option>
+                                            <option value="Footer2222">Footer Two</option>
+                                            <option value="Footer3333">Footer Three</option>
+                                            <option value="Footer4444">Footer Four</option>
+                                            <option value="Footer5555">Footer Five</option>
+                                            <option value="Footer6666">Footer Six</option>
+                                        </select>
+                                        <span asp-validation-for="SuperSetting.FooterTemplateKey" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+
+
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.LoginTitle" class="control-label"></label>
+                                        <input asp-for="SuperSetting.LoginTitle" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.LoginTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.LoginNoteTitle" class="control-label"></label>
+                                        <input asp-for="SuperSetting.LoginNoteTitle" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.LoginNoteTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label" asp-for="SuperSetting.LoginNote"></label><br />
+
+                                        <textarea asp-for="SuperSetting.LoginNote" class="form-control "></textarea>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label" asp-for="SuperSetting.LoginNoteFooter"></label><br />
+
+                                        <textarea asp-for="SuperSetting.LoginNoteFooter" class="form-control "></textarea>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.UseNormalLogoInLogin" /> @Html.DisplayNameFor(model => model.SuperSetting.UseNormalLogoInLogin)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.UseWhiteLogoInLogin" /> @Html.DisplayNameFor(model => model.SuperSetting.UseWhiteLogoInLogin)
+                                        </label>
+                                    </div>
+                                </li>
+                             
+                                 
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.ShowMadeByJuray" /> @Html.DisplayNameFor(model => model.SuperSetting.ShowMadeByJuray)
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-footer">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

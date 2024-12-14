@@ -1,0 +1,43 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IFacilityPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Facility</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.State)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.State)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.LGA)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.LGA)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.Ward)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.Ward)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Facility.FacilityLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Facility.FacilityLocation)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Facility.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

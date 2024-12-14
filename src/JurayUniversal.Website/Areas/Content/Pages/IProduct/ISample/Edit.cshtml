@@ -1,0 +1,99 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.ISample.EditModel
+
+@{
+    ViewData["Title"] = string.Format("{0} SAMPLE EDIT", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE @await Component.InvokeAsync("ProductTitle") SAMPLE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProductSample.Id" />
+                    <input type="hidden" asp-for="ProductSample.ProductId" />
+                    <input type="hidden" asp-for="ProductSample.VideoKey" />
+                    <input type="hidden" asp-for="ProductSample.VideoUrl" />
+                    <input type="hidden" asp-for="ProductSample.ImageKey" />
+                    <input type="hidden" asp-for="ProductSample.ImageUrl" />
+
+                    <div class="form-group">
+                        <label asp-for="ProductSample.Title" class="control-label"></label>
+                        <input asp-for="ProductSample.Title" class="form-control" />
+                        <span asp-validation-for="ProductSample.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductSample.Description" class="control-label"></label>
+                        <textarea asp-for="ProductSample.Description" class="form-control"></textarea>
+                        <span asp-validation-for="ProductSample.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductSample.FullDescription" class="control-label"></label>
+                        <textarea asp-for="ProductSample.FullDescription" class="form-control summernote"></textarea>
+                        <span asp-validation-for="ProductSample.FullDescription" class="text-danger"></span>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.ProductSample.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse sample Image</label><br />
+                            <img src="@Model.ProductSample.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                        </div>
+                    } @if (!String.IsNullOrEmpty(Model.ProductSample.VideoUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse sample Video</label><br />
+                            <video width="" style="height:200px;" controls="controls">
+                                <source src="@Model.ProductSample.VideoUrl" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label">sample Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="/IProduct/Main/Details" asp-route-id="@Model.ProductSample.ProductId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

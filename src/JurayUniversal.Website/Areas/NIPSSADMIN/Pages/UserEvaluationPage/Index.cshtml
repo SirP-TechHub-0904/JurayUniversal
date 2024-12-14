@@ -1,0 +1,113 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.UserEvaluationPage.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Resource Person Evaluation</h3>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="text-align:center;margin:0 auto !important">
+            <h2 class="center">
+                @if (Model.All != null)
+                {
+                    <span style="font-weight:800;"> @Model.All</span>
+                }
+                else
+                {
+                    <span style="font-weight:800;"> @Model.Title</span>
+
+                }
+            </h2>
+
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6" style="text-align:center;margin:0 auto !important">
+            <form method="get">
+                <div class="input-group input-group-sm" style="margin-bottom:7px;">
+                    <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success btn-flat">Search</button>
+                    </span>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Date</th>
+                        <th>
+                            Resource Person
+                        </th>
+                        <th>
+                            Topic
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Moderators.ToList())
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @item.TimeTable.Date.ToString("ddd dd MMM, yyyy")
+                            </td>
+                            <td>
+                                @if (item.User != null)
+                                {
+
+                                    <span>
+                                        <strong>@item.User.FullnameX</strong>(@item.Position)
+                                    </span>
+
+                                }
+                                else
+                                {
+                                    <span>
+
+
+                                        <strong>@item.Fullname</strong>(@item.Position)
+                                    </span>
+                                }
+
+                            </td>
+                            <td style="word-break:break-all;">
+
+                                @Html.Raw(item.TimeTable.Content)
+                            </td>
+
+
+                            <td>
+                               
+                                <a class="btn btn-primary" asp-page="./ViewEvaluationResult" asp-route-id="@item.Id" asp-route-tid="@item.TimeTableId">View Evaluations</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

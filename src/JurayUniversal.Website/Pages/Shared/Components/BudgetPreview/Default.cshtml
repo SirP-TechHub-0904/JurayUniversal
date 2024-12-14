@@ -1,0 +1,155 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.BudgetSubCategory>
+
+
+<div class="table-responsive">
+    <table id="" class="table table-bordered table-striped projects" border="1">
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td colspan="7" style="text-align:left;font-weight:900;">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>S/N</th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Amount In Naira
+                    </th>
+                    <th>
+                        Amount In Dollar
+                    </th>
+                    <th colspan="2">Summary</th>
+                    @{
+                        int sn = 0;
+                    }
+                </tr>
+                <tr>
+                    <th colspan="5"></th>
+                    <th>Naira</th>
+                    <th>Dollar</th>
+                </tr>
+
+                @foreach (var bd in item.BudgetList.Where(x => x.Show == true))
+                {
+                    <tr>
+                        <td>
+                            @{
+                                sn++;
+                            }
+                            @sn
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => bd.Title)
+                            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#projectDescription-@bd.Id"><i class="fa fa-eye"></i></button>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => bd.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => bd.AmountInNaira)
+                        </td>
+                        <td colspan="3">
+                            @Html.DisplayFor(modelItem => bd.AmountInDollar)
+                        </td>
+
+                    </tr>
+
+
+                    <div id="projectDescription-@bd.Id" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title uppercase">Details on  @Html.DisplayFor(modelItem => bd.Title)</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Raw(bd.Note)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                <tr style="background-color: #212529a1; ">
+                    @{
+                        string amtNaira = "----";
+                        string amtDollar = "----";
+                        if (item.BudgetList.Where(x => x.Show == true).Sum(x => x.AmountInNaira) > 0)
+                        {
+                            decimal tnt = item.BudgetList.Sum(x => x.AmountInNaira);
+                            amtNaira = "₦" + tnt.ToString("#,##0.00");
+                        }
+                        if (item.BudgetList.Where(x => x.Show == true).Sum(x => x.AmountInDollar) > 0)
+                        {
+                            decimal tntx = item.BudgetList.Sum(x => x.AmountInDollar);
+                            amtDollar = "$" + tntx.ToString("#,##0.00");
+                        }
+                    }
+                    <td style="font-weight:900;color:black;">
+                        #
+                    </td>
+                    <td colspan="2" style="font-weight:900;color:black;">
+                        Total
+                    </td>
+                    <td style="font-weight:900;color:black;">
+                        @amtNaira
+
+                    </td>
+                    <td style="font-weight:900;color:black;">
+                        @amtDollar
+                    </td>
+                    <td style="font-weight:900;color:black;">
+                        @amtNaira
+
+                    </td>
+                    <td style="font-weight:900;color:black;">
+                        @amtDollar
+                    </td>
+
+                </tr>
+                <tr style="background-color: #ffffff; ">
+                    <td colspan="7"></td>
+                </tr>
+            }
+            <tr style="background-color: #ffffff; ">
+                <td colspan="7"></td>
+            </tr>
+            <tr style="background-color: #212529a1; ">
+                <td style="font-weight:900;color:black;">
+                    #
+                </td>
+                <td colspan="2" style="font-weight:900;color:black;">
+                    Grand Total
+                </td>
+                <td style="font-weight:900;color:black;">
+                </td>
+                <td style="font-weight:900;color:black;">
+                </td>
+                <td style="font-weight:900;color:black;">
+                    @await Component.InvokeAsync("BudgetNairaSum", new { id = ViewBag.mId })
+                </td>
+                <td style="font-weight:900;color:black;">
+                    @await Component.InvokeAsync("BudgetDollarSum", new { id = ViewBag.mId })
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+ 

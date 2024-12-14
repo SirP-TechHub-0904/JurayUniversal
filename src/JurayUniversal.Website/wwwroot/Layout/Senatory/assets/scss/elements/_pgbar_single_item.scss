@@ -1,0 +1,48 @@
+// Progress Single Item
+.progress-item {
+    .single-progressbar {
+        .progressbar {
+            width: 100%;
+            position: relative;
+            background-color: transparent;
+            border: 1px solid #AAAAAA;
+            padding: 2px 0px 2px 2px;
+            .proggress {
+                height: 5px;
+                width: 10px;
+            }
+            .percentCount {
+                position: absolute;
+                color: white;
+                left: 0%;
+                top: -43px;
+                background-color: var(--main-color-one);
+                padding: 5px 10px;
+                font-size: 12px;
+                font-weight: 500;
+                &::after {
+                    position: absolute;
+                    content: '';
+                    left: 50%;
+                    transform: translateX(-50%);
+                    bottom: -17px;
+                    border-top: 10px solid var(--main-color-one);
+                    border-right: 10px solid transparent;
+                    border-bottom: 10px solid transparent;
+                    border-left: 10px solid transparent;
+                }
+            }
+        }
+    }
+}
+
+.progress-content {
+    .goal {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        .raised {
+            color: #fff;
+        }
+    }
+}

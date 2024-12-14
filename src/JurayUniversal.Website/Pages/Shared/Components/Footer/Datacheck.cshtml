@@ -1,0 +1,18 @@
+﻿@using System.Text.RegularExpressions;
+
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+@{
+    Domain.Models.Setting xsetting = ViewBag.setting;
+    Domain.Models.SuperSetting supersetting = ViewBag.supersetting;
+}
+
+@await Component.InvokeAsync("PageSection", new { position = "fixed" })
+
+
+
+@if (supersetting.TemplateLayoutKey == "Layout7777")
+{
+
+}

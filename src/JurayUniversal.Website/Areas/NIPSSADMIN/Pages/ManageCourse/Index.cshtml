@@ -1,0 +1,101 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.ManageCourse.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">COURSE MANAGEMENT</h3>
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("mSuperAdmin")) { 
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+        <a asp-page="/ManageCourse/Category/Index" class="btn bg-gradient-primary btn-sm" style="float:right;">Course Category</a>
+        }
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].Year)
+                        </th>
+                        <th> Course Category
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].EndDate)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].CourseStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].Theme)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Course)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @item.Year.ToString("yyyy")
+                            </td>
+
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+                                    @if(item.CourseCategory != null) {
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.CourseCategory.Name) (@item.CourseCategory.Abbreviation @item.SecNumber)
+                                        </span>
+}
+else
+                {
+                    <span>.......</span>
+                }
+                                </a>
+                            </td>
+
+                            <td>
+                                @item.StartDate.ToString("dd MMM")
+                            </td>
+                            <td>
+                                @item.EndDate.ToString("dd MMM")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CourseStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Theme)
+                            </td>
+                            <td>
+                                <a asp-page="/Participants/StudyGroupList" asp-route-id="@item.Id" class="btn btn-primary">
+                                    Study Group
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

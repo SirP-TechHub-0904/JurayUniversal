@@ -1,0 +1,66 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MIS.Pages.Main.FeaturesModel
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@Model.ProjectTitle Project Features</h3>
+
+
+    </div>
+    <div class="card-body">
+
+
+        <div class="div-sec">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Data.ProjectMainId" value="@Model.Id" type="hidden" />
+                        <div class="form-group">
+                            <label asp-for="Data.GeneralFeatureId" class="control-label">Features</label>
+                            <div class="input-group">
+                                <select asp-for="Data.GeneralFeatureId" class="form-control" asp-items="ViewBag.GeneralFeatureId"></select>
+                                <div class="input-group-append">
+                                    <a onclick="jQueryModalGet('?handler=AddGeneralFeature','Add General Feature')" class="btn btn-primary text-white"> Add Features</a>
+                                </div>
+                            </div>
+                        </div>
+                         
+                        <div class="form-group">
+                            <label asp-for="Data.Cost" class="control-label"></label>
+                            <input type="number" asp-for="Data.Cost" class="form-control" />
+                            <span asp-validation-for="Data.Cost" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Data.DateStarted" class="control-label"></label>
+                            <input type="date" asp-for="Data.DateStarted" class="form-control" />
+                            <span asp-validation-for="Data.DateStarted" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Data.DateFinised" class="control-label"></label>
+                            <input type="date" asp-for="Data.DateFinised" class="form-control" />
+                            <span asp-validation-for="Data.DateFinised" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+
+</div>
+@section Scripts
+{
+    
+
+}

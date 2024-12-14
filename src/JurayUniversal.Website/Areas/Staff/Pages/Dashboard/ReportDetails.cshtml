@@ -1,0 +1,261 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.ReportDetailsModel
+
+@{
+    ViewData["Title"] = "ReportDetails";
+}
+
+<style>
+    p, h4, h3, h2, h1, h5, h6{
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+</style>
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title text-upper">REPORT FOR @Model.Report.Date.ToString("ddd dd MMM, yyyy")</h3>
+        <a asp-page="./UserReport" class="btn bg-gradient-warning btn-sm" style="float:right;">Back to Report</a>
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" style="height: auto;overflow: visible;">
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #007bff;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">TASK</span>
+
+                            </div>
+
+                            <div class="direct-chat-text bg-primary">
+                                @if (!String.IsNullOrEmpty(Model.Report.TaskNote))
+                                {
+                                    @Html.Raw(Model.Report.TaskNote)
+                                }
+                                else
+                                {
+                                    <span>No Special Task Assigned to You</span>
+
+
+                                }
+
+                                
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #28a745;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">ACHIEVEMENT</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-success">
+                               
+                                @if (!String.IsNullOrEmpty(Model.Report.Achievement))
+                                {
+                                     @Html.Raw(Model.Report.Achievement)
+                                }
+                                else
+                                {
+                                    <span>No Achievement Recorded</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #dc3545;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Issues And Challenges</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-danger">
+                                 @if (!String.IsNullOrEmpty(Model.Report.IssuesAndChallenges))
+                                {
+                                    @Html.Raw(Model.Report.IssuesAndChallenges)
+                                }
+                                else
+                                {
+                                    <span>No Issues And Challenges Recorded</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #17a2b8;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Plans For Next Day</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-info">
+                                 
+                                @if (!String.IsNullOrEmpty(Model.Report.PlansForNextDay))
+                                {
+                                   @Html.Raw(Model.Report.PlansForNextDay)
+                                }
+                                else
+                                {
+                                    <span>No Plans For Next Day</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #8e9293;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Manager's Comments</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-default">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.ManagerReport))
+                                {
+                                    @Html.Raw(Model.Report.ManagerReport)
+                                }
+                                else
+                                {
+                                    <span>No Comment Yet</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #8e9293;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">Admin's Comments</span>
+                            </div>
+
+                            <div class="direct-chat-text bg-default">
+
+                                @if (!String.IsNullOrEmpty(Model.Report.AdminNote))
+                                {
+                                    @Html.Raw(Model.Report.AdminNote)
+                                }
+                                else
+                                {
+                                    <span>No Comment Yet</span>
+
+
+                                }
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+
+                    </div>
+                    <hr />
+
+
+                    <button id="btn" class="btn btn-danger btn-xs">Update Report</button>
+                </div>
+                <!-- /.card-body -->
+
+                <form id="form" method="post">
+                    <input type="hidden" asp-for="Report.Id" />
+                    <div class="card card-primary">
+                        <div class="card-header" style="padding:10px;margin:4px;">
+                            <h6 class="">UPDATE REPORT</h6>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Achievement</label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Achievement"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Issues And Challenges</label>
+                                <textarea class="form-control summernote" asp-for="NewReport.IssuesAndChallenges"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Plans For Next Day</label>
+                                <textarea class="form-control summernote" asp-for="NewReport.PlansForNextDay"></textarea>
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+  
+    </div>
+    <style>
+    #form {
+                display: none;
+            }
+    </style>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+            const btn = document.getElementById('btn');
+
+            btn.addEventListener('click', () => {
+                const form = document.getElementById('form');
+
+                if (form.style.display === 'none') {
+                    // 👇️ this SHOWS the form
+                    form.style.display = 'block';
+                } else {
+                    // 👇️ this HIDES the form
+                    form.style.display = 'none';
+                }
+            });
+        </script>
+        @*    <script>
+    var checkbox = document.getElementById("showForm");
+    var checkbox2 = document.getElementById("showForm2");
+    var form = document.getElementById("myForm");
+    var form2 = document.getElementById("myForm2");
+    const myButton = document.querySelector('#showForm');
+    myButton.addEventListener('click', function () {
+    if (this.checked) {
+    form.style.display = "block";
+    form2.style.display = "none";
+    } else {
+    form.style.display = "none";
+    form2.style.display = "block";
+    }
+    });
+
+    const toggleButton = document.querySelector('#toggleButton');
+    let isToggled = false;
+
+    toggleButton.addEventListener('click', function () {
+    if (isToggled) {
+    form.style.display = "block";
+    } else {
+    form.style.display = "none";
+    }
+    isToggled = !isToggled;
+    });
+    </script>
+    *@
+    }

@@ -1,0 +1,54 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IAttendance.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE ATTENANCE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Attendance.Id" />
+                    <input type="hidden" asp-for="Attendance.UserId" />
+                    <input type="hidden" asp-for="Attendance.StartTime" />
+                    <input type="hidden" asp-for="Attendance.CloseTime" />
+                    <input type="hidden" asp-for="Attendance.AttendanceStatus" />
+
+
+                    <div class="form-group">
+                        <label asp-for="Attendance.Note" class="control-label"></label>
+                        <textarea asp-for="Attendance.Note" class="form-control"></textarea>
+                        <span asp-validation-for="Attendance.Note" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

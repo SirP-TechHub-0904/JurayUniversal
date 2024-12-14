@@ -1,0 +1,65 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ITrainingSchedule.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW TRAINING SCHEDULE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TrainingSchedule.Topic" class="control-label"></label>
+                <input asp-for="TrainingSchedule.Topic" class="form-control" />
+                <span asp-validation-for="TrainingSchedule.Topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingSchedule.Date" class="control-label"></label>
+                <input asp-for="TrainingSchedule.Date" class="form-control" />
+                <span asp-validation-for="TrainingSchedule.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingSchedule.Moderator" class="control-label"></label>
+                <input asp-for="TrainingSchedule.Moderator" class="form-control" />
+                <span asp-validation-for="TrainingSchedule.Moderator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingSchedule.Trainner" class="control-label"></label>
+                <input asp-for="TrainingSchedule.Trainner" class="form-control" />
+                <span asp-validation-for="TrainingSchedule.Trainner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingSchedule.TrainingStatus" class="control-label"></label>
+                <select asp-for="TrainingSchedule.TrainingStatus" class="form-control"></select>
+                <span asp-validation-for="TrainingSchedule.TrainingStatus" class="text-danger"></span>
+            </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

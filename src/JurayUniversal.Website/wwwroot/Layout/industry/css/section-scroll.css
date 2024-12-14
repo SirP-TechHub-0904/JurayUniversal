@@ -1,0 +1,172 @@
+.hero-parent {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+	}
+.hero {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.home-hero-wine .can {
+    background-size: 700px auto;
+}
+.home-hero-wine .can {
+    background-attachment: fixed;
+    background-position: 50% center;
+    background-repeat: no-repeat;
+    background-size: 700px auto;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.home-hero-wine.sauvignon-blanc {
+    background-color: hsl(90, 41%, 45%);
+}
+.home-hero-wine.sauvignon-blanc .can {
+    background-image: url("../images/t/can-sauvignon-blanc.png");
+}
+.home-hero-wine.rose {
+    background-color: hsl(225, 61%, 36%);
+}
+.home-hero-wine.rose .can {
+    background-image: url("../images/t/can-rose.png");
+}
+.home-hero-wine.red-wine {
+    background-color: hsl(358, 70%, 41%);
+}
+.home-hero-wine.red-wine .can {
+    background-image: url("../images/t/can-red-wine.png");
+}
+.home-hero-wine.chardonnay {
+    background-color: #00B4B1;
+}
+.home-hero-wine.chardonnay .can {
+    background-image: url("../images/t/can-chardonnay.png");
+}
+.home-hero-wine.bubbles {
+    background-color: #1D1E1E;
+}
+.home-hero-wine.bubbles .can {
+    background-image: url("../images/t/can-bubbles.png");
+}
+
+
+/* Side Image Animating */
+.home-hero-wine .bg:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+	content: "";
+    background: transparent url(../images/t/line-texture-bg-overlay.png) 50%/7px auto repeat;
+}
+.home-hero-wine .bg.left {
+    left: 0;
+    transform: translateX(-100%);
+    transform-origin: right center;
+}
+.home-hero-wine .bg.right {
+    right: 0;
+    transform: translateX(100%);
+    transform-origin: left center;
+}
+section.animating .home-hero-wine .bg {
+    transform: translateX(0);
+    transition: transform .7s;
+    transition-delay: 1s;
+}
+.home-hero-wine .bg {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transition-delay: 1s;
+}
+.hero-parent .chardonnay .bg {
+    background-image: url(../images/t/bg-chardonnay.jpg);
+}
+.hero-parent .bubbles .bg {
+    background-image: url(../images/t/bg-bubbles.jpg);
+}
+.hero-parent .sauvignon-blanc .bg {
+    background-image: url(../images/t/bg-sauvignon-blanc.jpg);
+}
+.hero-parent .rose .bg {
+    background-image: url(../images/t/bg-rose.jpg);
+}
+.hero-parent .red-wine .bg {
+    background-image: url(../images/t/bg-red-wine.jpg);
+}
+.home-hero-wine .content {
+    width: 50%;
+    height: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.home-hero-wine .content.left {
+    left: 0;
+    padding-right: 15%;
+    padding-left: 12%;
+    margin-left: auto;
+}
+.home-hero-wine .content.right {
+	right: 0;
+    padding-left: 12%;
+}
+.hero-parent .rose .wine-title {
+    color: #f3896f;
+}
+.wine-title {
+    color: #424242;
+    font-weight: 700;
+    text-transform: uppercase;
+    font: normal normal 4vw/1.1 Heavitas,Arial Black,Helvetica,sans-serif;
+    letter-spacing: .01em;
+    margin: 0 0 5px;
+    padding: 0;
+}
+.overflow-container {
+    overflow: hidden;
+    display: block;
+}
+.overflow-inner {
+    transform: translateY(100%);
+    transition-delay: 1s;
+    display: block;
+}
+section.animating .overflow-container .overflow-inner {
+    transform: translateY(0);
+    transition: transform .8s cubic-bezier(.24,.72,.35,1.01);
+    transition-delay: .6s;
+}
+section.animating .overflow-container .overflow-inner.delay1 {
+    transition-delay: .8s;
+}
+section.animating .overflow-container .overflow-inner.delay2 {
+    transition-delay: 1s;
+}
+section.animating .overflow-container .overflow-inner.delay3 {
+    transition-delay: 1.2s;
+}

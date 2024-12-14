@@ -1,0 +1,377 @@
+﻿@page
+@model JurayUniversal.Website.Areas.JPTask.Pages.ProjectAct.SoftDetailTaskModel
+@{
+}
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Task Management</h3>
+                            <a asp-page="./Details" asp-route-id="@Model.XProjectTask.XProjectSection.XProjectId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Task Title</th>
+                                    <td>
+                                        @Model.XProjectTask.Title
+
+                                        @if (Model.XProjectTask.CloseTask == true)
+                                        {
+                                            <span class="btn btn-danger">Closed</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Feature</th>
+                                    <td>@Model.XProjectTask.XProjectSection.Title</td>
+                                </tr>
+                                <tr>
+                                    <th>Project</th>
+
+                                    <td>@Model.XProjectTask.XProjectSection.XProject.Title</td>
+                                </tr>
+
+
+                                <tr>
+                                    <th>Start Date</th>
+
+                                    <td>@Model.XProjectTask.StartDate</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Finish Date</th>
+
+                                    <td>@Model.XProjectTask.FinishDate</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+
+                                    <td>@Html.Raw(Model.XProjectTask.Description)</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>@Model.XProjectTask.Status</td>
+                                </tr>
+                                <tr>
+                                    <th>Priority</th>
+                                    <td>@Model.XProjectTask.Priority</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Test Status</th>
+                                    <td>@Model.XProjectTask.TestStatus</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Files
+                                        @if (Model.XProjectTask.CloseTask == false)
+                                        {
+                                            <a asp-page="./UploadFile" asp-route-id="@Model.XProjectTask.Id" class="btn btn-xs btn-primary">Upload</a>
+                                        }
+                                    </th>
+                                    <td>
+                                        @await Component.InvokeAsync("XProjectFile", new { id = Model.XProjectTask.XProjectSection.XProjectId })
+
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                    <div class="row juray-card-section">
+                        <div class="col-md-7">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">User Section (@Model.XProjectTask.User.Email)</h3>
+
+                                </div>
+                                <div class="card-body">
+                                    <h6>Date Finished: @Model.XProjectTask.UserDateFinished</h6>
+                                    <h6>Status: @Model.XProjectTask.Status</h6>
+                                    <div>
+                                        <h6> Note/Report</h6>
+                                        <ul>
+                                            @Html.Raw(Model.XProjectTask.UserTaskNote)
+
+                                        </ul>
+                                        <br />
+                                    </div>
+                                    <hr />
+                                    @if (Model.UserId == Model.XProjectTask.UserId)
+                                    {
+                                        if (Model.XProjectTask.CloseTask == false)
+                                        {
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">
+                                                        Update Section
+                                                    </h3>
+                                                    
+                                                </div>
+                                                <div class="card-body" >
+                                                    <form method="post" asp-page-handler="UserReport">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                        <input type="hidden" name="id" value="@Model.XProjectTask.Id" />
+
+                                                        <div class="form-group">
+                                                            <label asp-for="XProjectTask.UserTaskNote" class="control-label">Note</label>
+                                                            <textarea name="message" class="form-control"></textarea>
+                                                            <span asp-validation-for="XProjectTask.UserTaskNote" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label asp-for="XProjectTask.Status" class="control-label"></label>
+                                                            @Html.DropDownListFor(model => model.XProjectTask.Status, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus))), new { @class = "form-control" })
+                                                            <span asp-validation-for="XProjectTask.Status" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Update" class="btn btn-primary" />
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">Tester Section (@Model.XProjectTask.TestedBy.Email)</h3>
+
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <h6> Test Criterial</h6>
+                                        @Html.Raw(Model.XProjectTask.TestCriterial)
+                                        <br />
+                                    </div>
+                                    <hr />
+                                    <h6>Date Finished: @Model.XProjectTask.TesterDateFinished</h6>
+                                    <h6>Test Status: @Model.XProjectTask.TestStatus</h6>
+                                    <div>
+                                        <h6> Note/Report</h6>
+                                        <ul>
+                                            @Html.Raw(Model.XProjectTask.TesterTaskNote)
+
+                                        </ul>
+                                        <br />
+                                    </div>
+                                    <hr />
+                                    @if (Model.UserId == Model.XProjectTask.TestedById)
+                                    {
+                                        if (Model.XProjectTask.CloseTask == false)
+                                        {
+                                            <div class="card collapsed-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">
+                                                        Update Tester Section
+                                                    </h3>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="display:none;">
+                                                    <form method="post" asp-page-handler="TesterReport">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                        <input type="hidden" name="id" value="@Model.XProjectTask.Id" />
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Note</label>
+                                                            <textarea name="message" class="form-control"></textarea>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label asp-for="XProjectTask.TestStatus" class="control-label"></label>
+                                                            @Html.DropDownListFor(model => model.XProjectTask.TestStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.XProjectTaskStatus))), new { @class = "form-control" })
+                                                            <span asp-validation-for="XProjectTask.TestStatus" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @if (Model.XProjectTask.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Done)
+                                                            {
+                                                                <input type="submit" value="Update" class="btn btn-primary" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <h6>The Task is not Done Yet</h6>
+                                                            }
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">Approval Section (@Model.XProjectTask.ApprovedBy.Email)</h3>
+
+                                </div>
+                                <div class="card-body">
+
+                                    <h6>Date Finished: @Model.XProjectTask.ApprovedDateFinished</h6>
+                                    <h6>Approval Status: @Model.XProjectTask.ApproveStatus</h6>
+                                    <div>
+                                        <h6> Note/Report</h6>
+                                        <ul>
+                                            @Html.Raw(Model.XProjectTask.ApproveTaskNote)
+
+                                        </ul>
+
+                                        <br />
+                                    </div>
+                                    <hr />
+                                    @if (Model.UserId == Model.XProjectTask.ApprovedById)
+                                    {
+                                        if (Model.XProjectTask.CloseTask == false)
+                                        {
+                                            <div class="card collapsed-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">
+                                                        Update Approval Section
+                                                    </h3>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="display:none;">
+                                                    <form method="post" asp-page-handler="ApprovalReport">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                        <input type="hidden" name="id" value="@Model.XProjectTask.Id" />
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Note</label>
+                                                            <textarea name="message" class="form-control"></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Rate User</label>
+                                                            <select name="RateUser" class="form-control">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Rate Tester</label>
+                                                            <select name="RateTester" class="form-control">
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label asp-for="XProjectTask.ApproveStatus" class="control-label"></label>
+                                                            @Html.DropDownListFor(model => model.XProjectTask.ApproveStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.XProjectTaskStatus))), new { @class = "form-control" })
+                                                            <span asp-validation-for="XProjectTask.ApproveStatus" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @if (Model.XProjectTask.TestStatus == JurayUniversal.Domain.Enum.Enum.XProjectTaskStatus.Success)
+                                                            {
+                                                                <input type="submit" value="Update" class="btn btn-primary" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <h6>The Task is not Done Yet</h6>
+                                                            }
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h3 class="card-title">Close Task</h3>
+
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="card-body" style=" ">
+                                        <form method="post" asp-page-handler="CloseTask">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" name="id" value="@Model.XProjectTask.Id" />
+
+
+                                            @*<div class="form-group form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" asp-for="XProjectTask.CloseTask" /> Close Task
+                                                    </label>
+                                                </div>*@
+                                            @if (Model.XProjectTask.CloseTask == true)
+                                            {
+                                                <div class="form-group">
+                                                    <input type="submit" value="Open Task" class="btn btn-primary" />
+
+
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group">
+                                                    <input type="submit" value="Close Task" class="btn btn-primary" />
+
+
+                                                </div>
+                                            }
+
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+
+                        <div class="col-md-5">
+
+                            @await Component.InvokeAsync("XMessageSection", new { id = Model.XProjectTask.XProjectSection.XProject.Id })
+
+                        </div>
+                    </div>
+
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

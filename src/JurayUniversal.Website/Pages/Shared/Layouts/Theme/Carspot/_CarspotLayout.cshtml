@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+    @await Component.InvokeAsync("Redirect")
+
+
+
+
+
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="description" content="">
+    <meta name="author" content="ScriptsBundle">
+    <!-- =-=-=-=-=-=-= Mobile Specific =-=-=-=-=-=-= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- =-=-=-=-=-=-= Bootstrap CSS Style =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/bootstrap.css">
+    <!-- =-=-=-=-=-=-= Template CSS Style =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/style.css">
+    <!-- =-=-=-=-=-=-= Font Awesome =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- =-=-=-=-=-=-= Flat Icon =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/css/flaticon.css" rel="stylesheet">
+    <!-- =-=-=-=-=-=-= Et Line Fonts =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/et-line-fonts.css" type="text/css">
+    <!-- =-=-=-=-=-=-= Menu Drop Down =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/carspot-menu.css" type="text/css">
+    <!-- =-=-=-=-=-=-= Animation =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/animate.min.css" type="text/css">
+    <!-- =-=-=-=-=-=-= Select Options =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/css/select2.min.css" rel="stylesheet" />
+    <!-- =-=-=-=-=-=-= noUiSlider =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/css/nouislider.min.css" rel="stylesheet">
+    <!-- =-=-=-=-=-=-= Listing Slider =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/css/slider.css" rel="stylesheet">
+    <!-- =-=-=-=-=-=-= Owl carousel =-=-=-=-=-=-= -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/carspot/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Layout/carspot/css/owl.theme.css">
+    <!-- =-=-=-=-=-=-= Check boxes =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/skins/minimal/minimal.css" rel="stylesheet">
+    <!-- =-=-=-=-=-=-= PrettyPhoto =-=-=-=-=-=-= -->
+    <link rel="stylesheet" href="~/Layout/carspot/css/jquery.fancybox.min.css" type="text/css" media="screen" />
+    <!-- =-=-=-=-=-=-= Responsive Media =-=-=-=-=-=-= -->
+    <link href="~/Layout/carspot/css/responsive-media.css" rel="stylesheet">
+    <!-- =-=-=-=-=-=-= Template Color =-=-=-=-=-=-= -->
+    <!-- For This Page Only -->
+    <!-- Base MasterSlider style sheet -->
+    <link rel="stylesheet" href="~/Layout/carspot/js/masterslider/style/masterslider.css" />
+    <link rel="stylesheet" href="~/Layout/carspot/js/masterslider/skins/default/style.css" />
+    <link rel="stylesheet" href="~/Layout/carspot/js/masterslider/style/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600%7CSource+Sans+Pro:400,400i,600" rel="stylesheet">
+    <!-- JavaScripts -->
+    <script src="~/Layout/carspot/js/modernizr.js"></script>
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+    <link href="~/unistyle/organogram1.css" rel="stylesheet" />
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body>
+    @await Component.InvokeAsync("Reloader")
+    @if (ViewData["Ignore"] == null)
+    {
+        @await Component.InvokeAsync("Menu")
+    }
+    @RenderBody()
+
+    @if (ViewData["Ignore"] == null)
+    {
+        @await Component.InvokeAsync("Footer")
+
+    }
+
+    <!-- Back To Top -->
+    <a href="#0" class="cd-top">Top</a>
+    <!-- =-=-=-=-=-=-= JQUERY =-=-=-=-=-=-= -->
+    <script src="~/Layout/carspot/js/jquery.min.js"></script>
+    <!-- Bootstrap Core Css  -->
+    <script src="~/Layout/carspot/js/bootstrap.min.js"></script>
+    <!-- Jquery Easing -->
+    <script src="~/Layout/carspot/js/easing.js"></script>
+    <!-- Menu Hover  -->
+    <script src="~/Layout/carspot/js/carspot-menu.js"></script>
+    <!-- Jquery Appear Plugin -->
+    <script src="~/Layout/carspot/js/jquery.appear.min.js"></script>
+    <!-- Numbers Animation   -->
+    <script src="~/Layout/carspot/js/jquery.countTo.js"></script>
+    <!-- Jquery Select Options  -->
+    <script src="~/Layout/carspot/js/select2.min.js"></script>
+    <!-- noUiSlider -->
+    <script src="~/Layout/carspot/js/nouislider.all.min.js"></script>
+    <!-- Carousel Slider  -->
+    <script src="~/Layout/carspot/js/carousel.min.js"></script>
+    <script src="~/Layout/carspot/js/slide.js"></script>
+    <!-- Image Loaded  -->
+    <script src="~/Layout/carspot/js/imagesloaded.js"></script>
+    <script src="~/Layout/carspot/js/isotope.min.js"></script>
+    <!-- CheckBoxes  -->
+    <script src="~/Layout/carspot/js/icheck.min.js"></script>
+    <!-- Jquery Migration  -->
+    <script src="~/Layout/carspot/js/jquery-migrate.min.js"></script>
+
+    <!-- Style Switcher -->
+    <script src="~/Layout/carspot/js/color-switcher.js"></script>
+    <!-- PrettyPhoto -->
+    <script src="~/Layout/carspot/js/jquery.fancybox.min.js"></script>
+    <!-- Wow Animation -->
+    <script src="~/Layout/carspot/js/wow.js"></script>
+    <!-- Template Core JS -->
+    <script src="~/Layout/carspot/js/custom.js"></script>
+    <!-- For This Page Only -->
+    <!-- MasterSlider -->
+    <script src="~/Layout/carspot/js/masterslider/masterslider.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            "use strict";
+            var slider = new MasterSlider();
+            // adds Arrows navigation control to the slider.
+            slider.control('arrows');
+            slider.setup('masterslider', {
+                width: 1400,    // slider standard width
+                height: 560,   // slider standard height
+                layout: 'fullwidth',
+                loop: true,
+                preload: 0,
+                fillMode: 'fill',
+                instantStartLayers: true,
+                autoplay: true,
+                view: "basic"
+
+            });
+            // add scroll parallax effect
+
+        })(jQuery);
+    </script>
+
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

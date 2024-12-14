@@ -1,0 +1,215 @@
+﻿@using System.Text.RegularExpressions;
+
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+@{
+    Domain.Models.Setting xsetting = ViewBag.setting;
+    Domain.Models.SuperSetting supersetting = ViewBag.supersetting;
+}
+
+
+@Html.Raw(ViewBag.DataConfigs.LiveConfiguration)
+
+
+
+@if (supersetting.TemplateLayoutKey == "Layout1111")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <div id="preloader">
+            <div class="row loader">
+                <div class="loader-icon"></div>
+            </div>
+        </div>
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader2222")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader3333")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader4444")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader5555")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader6666")
+    {
+
+    }
+}
+else if (supersetting.TemplateLayoutKey == "Layout2222")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <!-- =-=-=-=-=-=-= Preloader =-=-=-=-=-=-= -->
+        <div class="preloader"></div>
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader2222")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader3333")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader4444")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader5555")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader6666")
+    {
+
+    }
+}
+else if (supersetting.TemplateLayoutKey == "Layout3333")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+
+
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout4444")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        @*<div id="preloader">
+                <div class="loading-text">Loading</div>
+            </div>*@
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout5555")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <div class="offwrap"></div>
+
+        <!--Preloader start here-->
+        <div id="pre-load">
+            <div id="loader" class="loader">
+                <div class="loader-container">
+                    <div class='loader-icon'><img src="@supersetting.CompanyLogoUrl" alt="@supersetting.CompanyName"></div>
+                </div>
+            </div>
+        </div>
+        <!--Preloader area end here-->
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout6666")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <div class="page-loader" style="background: url(@supersetting.CompanyIconUrl) 50% 50% no-repeat rgb(249,249,249);"></div>
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout7777")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <!-- Preloader -->
+        <div class="preloader" style="background-image: url(@supersetting.CompanyIconUrl);"></div>
+        <!-- Preloader -->
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout8888")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+        <div id="ht-preloader">
+            <div class="loader clear-loader"><img src="@supersetting.CompanyIconUrl" alt=""></div>
+        </div>
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout9999")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+
+    }
+
+}
+else if (supersetting.TemplateLayoutKey == "Layout11111111")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader2222")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader3333")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader4444")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader5555")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader6666")
+    {
+
+    }
+}
+else if (supersetting.TemplateLayoutKey == "Layout12121212")
+{
+    if (supersetting.ReloaderTemplateKey == "Reloader1111")
+    {
+
+
+        <div id="gen-loading">
+            <div id="gen-loading-center">
+                @if (!String.IsNullOrEmpty(supersetting.ReloaderIconUrl))
+                {
+                    <img src="@supersetting.ReloaderIconUrl" alt="loading">
+                }
+                else
+                {
+                    <img src="@supersetting.CompanyIconUrl" alt="loading">
+                }
+
+            </div>
+        </div>
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader2222")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader3333")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader4444")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader5555")
+    {
+
+    }
+    else if (supersetting.ReloaderTemplateKey == "Reloader6666")
+    {
+
+    }
+}

@@ -1,0 +1,607 @@
+﻿@page "/UAP/{id}"
+@model JurayUniversal.Website.Pages.UAPModel
+@{
+    Layout = null;
+}
+@*user application profile*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Model.SuperSetting.CompanyNameAbbreviation @Model.UserDatas.FullnameX | Registration Status Print</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/dashboard/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dashboard/dist/css/adminlte.min.css">
+    <style type="text/css">
+
+        .contentdiv {
+            width: 135px;
+            height: 84px;
+            display: table;
+            border: 2px solid red;
+        }
+
+            .contentdiv p {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+        .element {
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+        }
+
+        .element2 {
+            width: 1em;
+            font-size: 10px;
+            letter-spacing: 20px;
+            height: 20px;
+            /* arbitrarily large letter-spacing for safety */
+        }
+
+        .hide {
+            display: none
+        }
+
+
+        .broad-sheet table tr:first-child td {
+            background: #f6f6f6;
+            color: #1F1F1F;
+            border-right: 1px solid #DDD;
+            border-top: 1px solid #D7DCE5;
+            font-weight: bold
+        }
+
+        .broad-sheet table tr td {
+            border-right: 1px solid #D7DCE5;
+        }
+
+        .broad-sheet table {
+            border: 1px solid #D7DCE5;
+            font-family: Monda
+        }
+
+        .average {
+            background: #0099FF;
+            color: #FFF
+        }
+        /*.broad-sheet table .average-h{background:#0099FF; color:#FFF}*/
+
+        .broad-sheet table tr:first-child td:nth-last-child(3) {
+            background: #0099FF;
+            color: #FFF;
+            border: 1px solid #0086DF
+        }
+
+        .broad-sheet table td:nth-last-child(3) {
+            background: #0099FF;
+            color: #FFF;
+            border-bottom: 1px solid #0086DF;
+            border-right: 1px solid #0086DF
+        }
+
+
+        .broad-sheet table tr:first-child td:nth-last-child(4) {
+            background: #3D4958;
+            color: #FFF;
+            border: 1px solid #2E3641
+        }
+
+        .broad-sheet table td:nth-last-child(4) {
+            background: #3D4958;
+            color: #FFF;
+            border: 1px solid #2E3641;
+            border-right: 1px solid #2E3641
+        }
+
+        .broad-sheet table tr:nth-child(odd) {
+            background: #F5F7F9;
+        }
+
+        .broad-sheet table tr:nth-child(even) {
+            background: #FFF;
+        }
+
+        .broad-sheet table tr:hover {
+            background: #E8EBF0;
+        }
+
+
+        /*#divBroadSheet table {
+            width: 100%*/
+        }
+
+        #divBroadSheet table tr td {
+            border: 1px solid #D7DCE5;
+            font-weight: bold
+        }
+
+
+        .fee_title {
+            font-weight: bold;
+            font-size: 14px;
+            float: left;
+            margin-left: 20px
+        }
+
+        .fee_title2 {
+            font-weight: bold;
+            font-size: 14px;
+            float: right;
+            margin-right: 20px
+        }
+
+        .fail {
+            color: #FF0000
+        }
+
+        .pass {
+            color: #000000
+        }
+
+
+        #watermark {
+            z-index: 1000000000;
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            margin-left: -200px;
+            opacity: .3;
+        }
+
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+
+        @@media print {
+            table#result th, table#result td {
+                border-left: solid 1px #1f1f1f;
+                border-bottom: solid 1px #1f1f1f;
+                /*border:1px solid #1f1f1f; border-collapse:collapse;*/
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+
+            table.rName td {
+                border-bottom: 1px solid #3b3b3b
+            }
+        }
+
+        table.rName td {
+            border-bottom: 1px solid #D7DCE5
+        }
+
+        table#result th, table#result td, table#r1 th, table#r1 td {
+            /*border-left: solid 1px #1f1f1f; border-bottom: solid 1px #1f1f1f;*/
+            border: 1px solid #1f1f1f;
+            border-collapse: collapse;
+        }
+
+        .wrapper_pad td {
+            padding-left: 5px;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        .style1 {
+            color: #000
+        }
+
+        .wrapper1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        .wrapper1 {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+
+
+
+        .result_wrapper tr:nth-child(even) {
+            background: #FFF
+        }
+
+        .result_wrapper tr:nth-child(odd) {
+            background: #F5F7F9
+        }
+
+        .result_wrapper td {
+            border-bottom: 1px #D7DCE5 solid;
+        }
+
+            .result_wrapper td:nth-child(even) {
+                background: #FFF
+            }
+
+            .result_wrapper td:nth-child(odd) {
+                background: #F5F7F9
+            }
+
+        .result_wrapper table tr:hover {
+            background: #E8EBF0;
+        }
+
+        /*.result_wrapper tr:first-child td{background:#1f1f1f; color:#FFF; font-family:Monda; font-size:14px}
+        */
+        .result_wrapper {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        .result_wrapper {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+            .result_wrapper td {
+                border-left: 1px solid #D7DCE5
+            }
+
+        .result_wrapper {
+            border: 1px solid #D7DCE5;
+        }
+
+        /*.result_wrapper td:nth-child(7) , .result_wrapper td:nth-child(13){
+                                            background:#FFF;color:#000; font-family: palatino linotype, Georgia,verdana;
+                                            font-size:15px; font-weight:bold;
+                                            }
+                                            */
+
+        /*
+        .result_wrapper tr:nth-child(3) td {
+                                            background:#FFF; color:#000; font-family: palatino linotype, Georgia,verdana;
+                                            font-size:15px; font-weight:bold;
+                                        }
+        */
+        .dotted {
+            border-bottom: 1px dashed #0066ff
+        }
+
+
+        .result_table {
+            border: 1px solid #D7DCE5;
+            width: 100%;
+            margin: 4px 0%
+        }
+
+        #result_wrapper {
+            width: 70%;
+            height: auto;
+            background: #FFF;
+            z-index: 300;
+            border: 4px solid #D7DCE5;
+            padding: 2px;
+        }
+
+        .topBtn {
+            background: #0099FF;
+            color: #FFF;
+            position: fixed;
+            width: 100px;
+            top: 0;
+            left: 45%;
+            padding: 2px 20px;
+            font-family: Monda;
+            font-size: 14px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            cursor: pointer
+        }
+
+
+        @@media only screen and ( max-width:1000px ) {
+            #result_wrapper {
+                width: 90%;
+                height: auto;
+                background: #FFF;
+                z-index: 300;
+                border: 4px solid #D7DCE5;
+                padding: 4px;
+            }
+        }
+
+        @@media only screen and ( max-width:850px ) {
+            #result_wrapper {
+                width: 100%;
+                height: auto;
+                background: #FFF;
+                z-index: 300;
+                border: 4px solid #D7DCE5;
+                padding: 4px;
+                border: 0px solid #FF0000
+            }
+        }
+
+        @@media only screen and ( max-width:530px ) {
+            .fee_title {
+                font-weight: normal;
+                font-size: 14px;
+                float: left;
+                margin-left: 5px
+            }
+
+            .fee_title2 {
+                font-weight: normal;
+                font-size: 14px;
+                float: right;
+                margin-right: 5px
+            }
+        }
+
+
+        @@media only screen and ( max-width:450px ) {
+            #result_wrapper {
+                width: 460px;
+                height: auto;
+                background: #FFF;
+                z-index: 300;
+                border: 4px solid #D7DCE5;
+                padding: 4px;
+                border: 0px solid #FF0000
+            }
+
+            .fee_title {
+                font-weight: normal;
+                font-size: 14px;
+                float: left;
+                margin-left: 5px
+            }
+
+            .fee_title2 {
+                font-weight: normal;
+                font-size: 14px;
+                float: right;
+                margin-right: 5px
+            }
+        }
+
+        @@media only screen and ( max-width:400px ) {
+            #result_wrapper {
+                width: 500px;
+                height: auto;
+                background: #FFF;
+                z-index: 300;
+                border: 4px solid #D7DCE5;
+                padding: 4px;
+                border: 0px solid #FF0000
+            }
+        }
+
+
+        @@media print {
+            table#result th, table#result td {
+                border-left: solid 1px #1f1f1f;
+                border-bottom: solid 1px #1f1f1f;
+                /*border:1px solid #1f1f1f; border-collapse:collapse;*/
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+
+            table.rName td {
+                border-bottom: 1px solid #3b3b3b
+            }
+
+
+
+            #result_wrapper {
+                width: 900px;
+                height: auto;
+                background: #FFF;
+                z-index: 300;
+                border: 4px solid #D7DCE5;
+                padding: 4px;
+            }
+
+                #result_wrapper tr td {
+                    border-bottom: 1px solid #000
+                }
+
+            #result1 tr td {
+                border-bottom: 1px solid #000;
+                border-left: 1px solid #000
+            }
+
+            .topBtn {
+                display: none
+            }
+
+            .result_wrapper {
+                font-weight: bold;
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 12px
+            }
+
+            table.rName td {
+                border-bottom: 1px solid #3b3b3b;
+                font-weight: bold
+            }
+
+            .top_bar {
+                font-weight: bold
+            }
+
+            .linear {
+                background: #FFF
+            }
+        }
+
+        .top_bar {
+            font-weight: bold
+        }
+
+        .result_wrapper1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        .result_wrapper1 {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        .result_wrapper1 {
+            border: 1px solid #D7DCE5;
+        }
+
+        .result_wrapper1 {
+            font-weight: bold;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px
+        }
+
+        @@media print {
+            #test {
+                page-break-inside: avoid;
+            }
+        }
+
+        @@media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-12">
+
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+                <!-- title row -->
+                <div class="row">
+                    <div class="col-12">
+                        <h4>
+
+                            <img class="" src="@Model.SuperSetting.CompanyWhiteLogoUrl" style="max-height:50px;" />
+
+                            <small class="float-right">Printed Date: @DateTime.UtcNow.AddHours(1).ToString("dd/MM/yyyy")</small>
+                        </h4>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- info row -->
+              @if(Model.Ntfound == false) { 
+                <div class="row invoice-info">
+                    <div class="col-sm-4 invoice-col">
+                        <div style="padding:5px;background-color:white;">
+                            <img src="@Model.UserDatas.PassportFilePathUrl" style="max-height:120px;" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 invoice-col">
+
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 invoice-col">
+                        
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <!-- Table row -->
+                <div class="row">
+                    <dl class="row">
+
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UserDatas.FullnameX)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UserDatas.FullnameX)
+                        </dd>
+
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UserDatas.PhoneNumber)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UserDatas.PhoneNumber)
+                        </dd>
+
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UserDatas.Email)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UserDatas.Email)
+                        </dd>
+
+                        @if (Model.Participant != null)
+                        {
+                            <dt class="col-sm-2">
+                                Course
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Model.Participant.Course.CourseCategory.Name (@Model.Participant.Course.CourseCategory.Abbreviation @Model.Participant.Course.SecNumber, @Model.Participant.Course.Year.ToString("yyyy"))
+                            </dd>
+                            <dt class="col-sm-2">
+                                Registration Number
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Participant.IdNumber)
+                            </dd>
+
+                        }
+                        @if (Model.StaffManager != null)
+                        {
+                            <dt class="col-sm-2">
+                                Registration Number
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.StaffManager.StaffId)
+                            </dd>
+
+                        }
+
+                    </dl>
+
+                    <!-- /.col -->
+                </div>
+                @*<img src="~/verified.png" />*@
+
+<!-- /.row -->
+
+
+<!-- /.row -->
+
+
+<!-- this row will not appear when printing -->
+}
+else
+            {
+                <h5>UNABLE TO VERIFY ACCOUNT</h5>
+            }
+            </div>
+            <!-- /.invoice -->
+        </div><!-- /.col -->
+    </div>
+
+
+</body>
+</html>

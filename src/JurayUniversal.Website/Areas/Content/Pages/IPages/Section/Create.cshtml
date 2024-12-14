@@ -1,0 +1,134 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.Section.CreateModel
+
+@{
+    ViewData["Title"] = "PAGE SECTION Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW WEBPAGE SECTION</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.VideoUrl" class="control-label"></label>
+                        <input asp-for="PageSection.VideoUrl" class="form-control" />
+                        <span asp-validation-for="PageSection.VideoUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.VideoKey" class="control-label"></label>
+                        <input asp-for="PageSection.VideoKey" class="form-control" />
+                        <span asp-validation-for="PageSection.VideoKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.ImageUrl" class="control-label"></label>
+                        <input asp-for="PageSection.ImageUrl" class="form-control" />
+                        <span asp-validation-for="PageSection.ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.ImageKey" class="control-label"></label>
+                        <input asp-for="PageSection.ImageKey" class="form-control" />
+                        <span asp-validation-for="PageSection.ImageKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.Title" class="control-label"></label>
+                        <input asp-for="PageSection.Title" class="form-control" />
+                        <span asp-validation-for="PageSection.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.Description" class="control-label"></label>
+                        <input asp-for="PageSection.Description" class="form-control" />
+                        <span asp-validation-for="PageSection.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.FullDescription" class="control-label"></label>
+                        <input asp-for="PageSection.FullDescription" class="form-control" />
+                        <span asp-validation-for="PageSection.FullDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.ButtonText" class="control-label"></label>
+                        <input asp-for="PageSection.ButtonText" class="form-control" />
+                        <span asp-validation-for="PageSection.ButtonText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.ButtonLink" class="control-label"></label>
+                        <select asp-for="PageSection.ButtonLink" class="form-control" asp-items="ViewBag.WebPageId">
+                            <option value="0">#</option>
+                            <option value="000">Contact Us Page</option>
+
+                        </select>
+                        <span asp-validation-for="PageSection.ButtonLink" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSection.ShowInHome" /> @Html.DisplayNameFor(model => model.PageSection.ShowInHome)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSection.DisableButton" /> @Html.DisplayNameFor(model => model.PageSection.DisableButton)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSection.Disable" /> @Html.DisplayNameFor(model => model.PageSection.Disable)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.HomePageSortOrder" class="control-label"></label>
+                        <input asp-for="PageSection.HomePageSortOrder" class="form-control" />
+                        <span asp-validation-for="PageSection.HomePageSortOrder" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PageSection.HomeSortFrom" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.PageSection.HomeSortFrom, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.HomeSortFrom))), new { @class = "form-control" })
+                        <span asp-validation-for="PageSection.HomeSortFrom" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PageSection.PageSortOrder" class="control-label"></label>
+                        <input asp-for="PageSection.PageSortOrder" class="form-control" />
+                        <span asp-validation-for="PageSection.PageSortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.WebPageId" class="control-label"></label>
+                        <select asp-for="PageSection.WebPageId" class="form-control" asp-items="ViewBag.WebPageId"></select>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSection.ShowSectionInBlog" /> @Html.DisplayNameFor(model => model.PageSection.ShowSectionInBlog)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSection.HomeSortFrom" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.PageSection.BlogSectionPosition, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.BlogSectionPosition))), new { @class = "form-control" })
+                        <span asp-validation-for="PageSection.HomeSortFrom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

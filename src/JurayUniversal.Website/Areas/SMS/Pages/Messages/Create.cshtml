@@ -1,0 +1,131 @@
+﻿@page
+@model JurayUniversal.Website.Areas.SMS.Pages.Messages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW SMS MESSAGE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SmsMessage.SmsMessageCategoryId" value="@Model.Id" />
+
+            <div class="form-group">
+                <label asp-for="SmsMessage.SenderId" class="control-label"></label>
+                <input asp-for="SmsMessage.SenderId" class="form-control" />
+                <span asp-validation-for="SmsMessage.SenderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Recipients" class="control-label"></label>
+                <input asp-for="SmsMessage.Recipients" class="form-control" />
+                <span asp-validation-for="SmsMessage.Recipients" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.MessageContent" class="control-label"></label>
+                <input asp-for="SmsMessage.MessageContent" class="form-control" />
+                <span asp-validation-for="SmsMessage.MessageContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response" class="control-label"></label>
+                <input asp-for="SmsMessage.Response" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.SummaryReport" class="control-label"></label>
+                <input asp-for="SmsMessage.SummaryReport" class="form-control" />
+                <span asp-validation-for="SmsMessage.SummaryReport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.UnitsUsed" class="control-label"></label>
+                <input asp-for="SmsMessage.UnitsUsed" class="form-control" />
+                <span asp-validation-for="SmsMessage.UnitsUsed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Scheduleddate" class="control-label"></label>
+                <input asp-for="SmsMessage.Scheduleddate" class="form-control" />
+                <span asp-validation-for="SmsMessage.Scheduleddate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.DeliveredDate" class="control-label"></label>
+                <input asp-for="SmsMessage.DeliveredDate" class="form-control" />
+                <span asp-validation-for="SmsMessage.DeliveredDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Status" class="control-label"></label>
+                <select asp-for="SmsMessage.Status" class="form-control"></select>
+                <span asp-validation-for="SmsMessage.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Resent" class="control-label"></label>
+                <input asp-for="SmsMessage.Resent" class="form-control" />
+                <span asp-validation-for="SmsMessage.Resent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_status" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_status" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_error_code" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_error_code" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_error_code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_cost" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_cost" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_msg" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_msg" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_msg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_length" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_length" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_page" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_page" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_page" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_balance" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_balance" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsMessage.Response_BalanceResponse" class="control-label"></label>
+                <input asp-for="SmsMessage.Response_BalanceResponse" class="form-control" />
+                <span asp-validation-for="SmsMessage.Response_BalanceResponse" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- /.row -->
+    </div>
+<!-- /.card-body -->
+<div class="card-footer">
+</div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

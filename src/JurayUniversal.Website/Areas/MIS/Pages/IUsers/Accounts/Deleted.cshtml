@@ -1,0 +1,40 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MIS.Pages.IProject.DeletedModel
+
+@{
+    ViewData["Title"] = "Deleted Users";
+}
+ 
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+
+        <div class="card-tools">
+            <div class="pagination pagination-sm float-right" style="margin-right: 10px;">
+                <a asp-page="./Index" class="btn bg-danger" style="margin:4px;">
+                    Active Users
+                </a>
+                <a id="reload" class="btn bg-warning" style="margin:4px;">
+                    Reload
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="viewAll" class="card-body table-responsive"></div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#viewAll').load('?handler=ViewAllPartial');
+             
+        });
+        $(function () {
+            $('#reload').on('click', function () {
+                $('#viewAll').load('?handler=ViewAllPartial');
+                toastr.success('success')
+            });
+        });
+    </script>
+}

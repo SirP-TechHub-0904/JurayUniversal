@@ -1,0 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace JurayUniversal.Website.Areas.NIPSS.Pages.ITools
+{
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
+    public class RapidModel : PageModel
+    {
+        public IActionResult OnGet()
+        {
+            return RedirectToPage("/Dashboard/ComingSoon", new { area = "NIPSS" });
+        }
+    }
+}

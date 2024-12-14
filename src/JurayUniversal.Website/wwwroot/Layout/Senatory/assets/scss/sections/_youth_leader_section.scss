@@ -1,0 +1,55 @@
+// Youth Leader Section Styling Here
+.youth-leader-section {
+    margin-top: 120px;
+    position: relative;
+    z-index: 0;
+    &.youth-bg {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 115px 0px 120px 0px;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(4, 7, 46, 0.85);
+        }
+    }
+    .youth-shape {
+        background-size: contain;
+        background-repeat: no-repeat;
+        min-height: 390px;
+        width: 100%;
+        position: absolute;
+        left: 125px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .section-title {
+        .subtitle {
+           p {
+               color: #fff;
+           }
+        }
+        .title {
+            color: #fff;
+        }
+    }
+    .btn-wrapper {
+        text-align: center;
+        .btn-sanatory {
+            box-shadow: none;
+            transition: .5s all ease;
+            i {
+                margin-left: 8px;
+            }
+            &:hover {
+                background: #fff;
+                color: var(--main-color-one);
+            }
+        }
+    }
+}

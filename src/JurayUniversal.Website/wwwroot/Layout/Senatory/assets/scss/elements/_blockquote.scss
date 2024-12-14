@@ -1,0 +1,99 @@
+/*Wp  BlockQuote */
+blockquote:not(.has-light-gray-color):not(.has-very-dark-gray-color):not(.is-style-large):not(.is-style-large) {
+  // background-color: var(--main-color-two);
+  padding: 40px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  border: 1px solid #CCCCCC;
+  position: relative;
+  text-align: left;
+  color: #fff;
+  z-index: 0;
+
+  // overflow: hidden;
+  &:before {
+    content: "\e921";
+    font-family: 'icomoon';
+    font-weight: 900;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: -22px;
+    left: 35px;
+    color: var(--main-color-one);
+    font-size: 50px;
+    line-height: .8;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    background: #fff;
+  }
+
+  &:after {
+    content: "\e922";
+    font-family: 'icomoon';
+    font-weight: 900;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    bottom: -28px;
+    right: 45px;
+    color: var(--main-color-one);
+    font-size: 50px;
+    line-height: .8;
+    background: #fff;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+  }
+
+  p {
+    font-family: var(--heading-font);
+    color: var(--heading-color);
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 46px;
+    font-style: italic;
+
+    &.style-03 {
+      font-size: 24px;
+    }
+
+    &.style-04 {
+      font-size: 28px;
+    }
+  }
+
+  .author-name {
+    font-size: 20px;
+    line-height: 24px;
+    font-family: var(--heading-font);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--main-color-one);
+    position: absolute;
+    right: 13%;
+    bottom: -13%;
+    background: #fff;
+    width: 152px;
+    text-align: center;
+
+    &.style-01 {
+      right: 19%;
+      bottom: -20%;
+    }
+
+    &.style-02 {
+      right: 19%;
+      bottom: -11%;
+    }
+  }
+
+  cite {
+    color: #001b61 !important;
+    font-weight: 700;
+    margin-top: 10px;
+    display: block;
+    font-style: normal;
+  }
+}

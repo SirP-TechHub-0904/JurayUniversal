@@ -1,0 +1,84 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IReport.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW REPORT</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Report.UserId" class="control-label"></label>
+                <select asp-for="Report.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.Achievement" class="control-label"></label>
+                <input asp-for="Report.Achievement" class="form-control" />
+                <span asp-validation-for="Report.Achievement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.PlansForNextDay" class="control-label"></label>
+                <input asp-for="Report.PlansForNextDay" class="form-control" />
+                <span asp-validation-for="Report.PlansForNextDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.IssuesAndChallenges" class="control-label"></label>
+                <input asp-for="Report.IssuesAndChallenges" class="form-control" />
+                <span asp-validation-for="Report.IssuesAndChallenges" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.TaskNote" class="control-label"></label>
+                <input asp-for="Report.TaskNote" class="form-control" />
+                <span asp-validation-for="Report.TaskNote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.TaskNoteStatus" class="control-label"></label>
+                <select asp-for="Report.TaskNoteStatus" class="form-control"></select>
+                <span asp-validation-for="Report.TaskNoteStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.ReportStatus" class="control-label"></label>
+                <select asp-for="Report.ReportStatus" class="form-control"></select>
+                <span asp-validation-for="Report.ReportStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.ManagerReport" class="control-label"></label>
+                <input asp-for="Report.ManagerReport" class="form-control" />
+                <span asp-validation-for="Report.ManagerReport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Report.AdminNote" class="control-label"></label>
+                <input asp-for="Report.AdminNote" class="form-control" />
+                <span asp-validation-for="Report.AdminNote" class="text-danger"></span>
+            </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

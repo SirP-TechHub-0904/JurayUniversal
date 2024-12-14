@@ -1,0 +1,53 @@
+﻿@page
+@model JurayUniversal.Website.Areas.SMS.Pages.SenderIdPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE SMS SENDER ID</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SenderId.Id" />
+            <div class="form-group">
+                <label asp-for="SenderId.SenderIdStatus" class="control-label"></label>
+                @Html.DropDownListFor(model => model.SenderId.SenderIdStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.SenderIdStatus))), new { @class = "form-control" })
+                <span asp-validation-for="SenderId.SenderIdStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SenderId.Title" class="control-label"></label>
+                <input asp-for="SenderId.Title" class="form-control" />
+                <span asp-validation-for="SenderId.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SenderId.Date" class="control-label"></label>
+                <input asp-for="SenderId.Date" class="form-control" />
+                <span asp-validation-for="SenderId.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- /.row -->
+    </div>
+<!-- /.card-body -->
+<div class="card-footer">
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

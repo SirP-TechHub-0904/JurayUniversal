@@ -1,0 +1,65 @@
+// Strenth Section Styling Here
+.strenth-section-area {
+    margin-top: 115px;
+    position: relative;
+
+    .senatory-logo {
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 320px;
+
+        .strenth-img {
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: top;
+            min-height: 527px;
+        }
+    }
+}
+
+.strenth-single-items {
+    &.style-01 {
+        margin-top: 80px;
+    }
+    + .strenth-single-items {
+        margin-top: 100px;
+    }
+    .content {
+        display: flex;
+        .title {
+            font-size: 24px;
+            line-height: 28px;
+            font-family: var(--heading-font);
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            span {
+                font-size: 10px;
+                color: var(--main-color-one);
+                margin-right: 5px;
+            }
+
+            .number {
+                font-size: 20px;
+                line-height: 27px;
+                font-family: var(--heading-font);
+                font-weight: 400;
+                color: var(--main-color-one);
+                margin-right: 5px;
+                margin-left: 15px;
+            }
+        }
+    }
+
+    .description {
+        font-size: 16px;
+        line-height: 28px;
+        font-family: var(--body-font);
+        font-weight: 400;
+        color: var(--heading-color);
+        margin-bottom: 0px;
+    }
+}

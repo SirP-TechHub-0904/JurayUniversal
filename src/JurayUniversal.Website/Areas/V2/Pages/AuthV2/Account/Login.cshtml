@@ -1,0 +1,128 @@
+﻿@page
+@model JurayUniversal.Website.V2.Pages.Authv2.Account.LoginModel
+
+@{
+
+    @await Component.InvokeAsync("Redirect")
+
+    @if (Model.SuperSetting.LoginTemplateKey == "Login1111")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginOne.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login2222")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginTwo.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login333")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginThree.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login4444")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFour.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login5555")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFive.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login6666")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/AgileVendorLogin/_AgileVendorLogin.cshtml";
+    }
+    ViewData["Title"] = "Log in";
+}
+
+
+@if (Model.SuperSetting.LoginTemplateKey == "Login6666")
+{
+    <h3>@ViewData["Title"]</h3>
+
+    <form id="account" method="post">
+
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating">
+            <label asp-for="Input.Email" class="form-label"></label>
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <label asp-for="Input.Password" class="form-label"></label>
+            <input asp-for="Input.Password" id="myInput" class="form-control" autocomplete="current-password" aria-required="true" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="clearfix" style="margin-bottom:20px;">
+            <input type="checkbox" onclick="myFunction()" style="float:left;"><span style="float:left;">Show Password</span>
+        </div>
+        <div class="fo-s">
+            <div class="form-floating">
+                <input class="" asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </div>
+            <a id="forgot-password" asp-page="./ForgotPassword" class="forgot-password">Forgot Password</a>
+        </div>
+        <div>
+            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+        </div>
+
+    </form>
+
+}
+else if (Model.SuperSetting.LoginTemplateKey == "Login1111")
+{
+    <h4>@Html.Raw(Model.SuperSetting.LoginTitle)</h4>
+    <form id="account" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Email input -->
+        <div class="form-outline">
+            <label class="form-label" for="form3Example3" style="margin-bottom: .3rem; margin-top: .8rem;">Email address</label>
+            <input type="email" id="form3Example3" asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline">
+            <label class="form-label" for="myInput" style="margin-bottom: .3rem; margin-top: .8rem;">Password</label>
+            <input type="password" id="myInput" asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-check d-flex mb-4">
+                    <input class="form-check-input me-2" type="checkbox" asp-for="Input.RememberMe" id="form2Example33" />
+                    <label class="form-check-label" for="form2Example33">
+                        Remember Me
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="form-check d-flex">
+
+                    <input type="checkbox" onclick="myFunction()" id="" class="form-check-input me-2">
+                    <label class="form-check-label" for="form2Example33f">
+                        Show Password
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- Checkbox -->
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">
+            Login
+        </button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+            <a id="forgot-password" asp-page="./ForgotPassword" class="forgot-password">Forgot Password</a>
+        </div>
+    </form>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+
+
+}

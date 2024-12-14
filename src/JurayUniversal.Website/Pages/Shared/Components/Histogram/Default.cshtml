@@ -1,0 +1,65 @@
+﻿<svg id="populationChart" width="400" height="400"></svg>
+<style>
+    .bar {
+        fill: steelblue;
+    }
+</style>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+    const defaultData = [
+        { state: "Abia", population: "1000" },
+        { state: "Lagos", population: "2000" },
+        { state: "Calabar", population: "3000" },
+        { state: "Enugu", population: "6000" },
+        { state: "Akwaibom", population: "9000" }
+    ];
+    const values = defaultData.map(entry => entry.population);
+
+    // Set up histogram parameters
+    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const width = 400 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    // Create SVG element
+    const svg = d3.select('#populationChart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    // Set up histogram scale
+    const x = d3.scaleLinear()
+        .domain([d3.min(values), d3.max(values)])
+        .range([0, width]);
+
+    // Set up histogram bins
+    const bins = d3.histogram()
+        .domain(x.domain())
+        .thresholds(x.ticks(10))(values);
+
+    // Set up histogram bars
+    const bar = svg.selectAll('.bar')
+        .data(bins)
+        .enter()
+        .append('g')
+        .attr('class', 'bar')
+        .attr('transform', d => `translate(${x(d.x0)}, ${height})`);
+
+    // Draw histogram bars
+    bar.append('rect')
+        .attr('x', 1)
+        .attr('width', d => x(d.x1) - x(d.x0) - 1)
+        .attr('height', d => height - y(d.length))
+        .attr('fill', 'steelblue');
+
+    // Add x-axis
+    svg.append('g')
+        .attr('transform', `translate(0, ${height})`)
+        .call(d3.axisBottom(x));
+
+    // Add y-axis
+    svg.append('g')
+        .call(d3.axisLeft(y).ticks(5));
+  
+</script>

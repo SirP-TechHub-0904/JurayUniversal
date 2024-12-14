@@ -1,0 +1,39 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants.IndexModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">COURSES</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    @foreach (var item in Model.CourseCategory)
+                    {
+                        <div class="col-md-4">
+                            <a asp-page="./CourseList" asp-route-id="@item.Id" style="">
+
+                                <!-- small box -->
+                                <div class="small-box bg-default">
+                                    <div class="inner">
+
+                                        <h3>@item.Abbreviation</h3>
+
+
+                                        <p>@item.Name</p>
+                                    </div>
+                                </div>
+                            </a> </div>
+                       
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

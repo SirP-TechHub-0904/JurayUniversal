@@ -1,0 +1,440 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MIS.Pages.Main.DetailsModel
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+
+
+    </div>
+    <div class="card-body">
+
+
+        <div class="div-sec">
+
+
+            <div class="">
+                <h4 class="">Project [@Model.Data.Title]</h4>
+                <h6 class="p-minititle">ID [@Model.Data.UniqueID]</h6>
+                <div>
+
+
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <div class="">
+                                <h6>Members</h6>
+                            </div>
+                        </li>
+                        @if (Model.Data.ProjectUsers.Count() < 1)
+                        {
+                            <li class="list-inline-item">
+                                <div class="">
+                                    <p>NO MEMBER YET</p>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+
+                        }
+                        @foreach (var member in Model.Data.ProjectUsers)
+                        {
+
+                            <li class="list-inline-item">
+                                <div class="avatar-circle">
+                                    <span class="avatar-text">@member.Profile.UserName.Substring(0, 2)</span>
+                                </div>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="card-tools">
+                    <div class="pagination pagination-sm" style="margin-right: 10px;">
+                        <a href="#featurespage" class="btn bg-success" style="margin-right: 5px;">
+                            Features
+                        </a>
+                        <a class="btn bg-warning" style="margin-right: 5px;">
+                            Task
+                        </a>
+                        <a class="btn bg-xyz-11" href="#projectteam" style="margin-right: 5px;">
+                            Team
+                        </a>
+                        <a class="btn bg-xyz-29" style="margin-right: 5px;" href="#projectfiles">
+                            Files
+                        </a>
+                        <a class="btn bg-xyz-46" style="margin-right: 5px;" onclick="jQueryModalGet('?handler=ProjectReport&id=@Model.Data.Id','Project Report')">
+                            Report
+                        </a>
+                        <a class="btn bg-xyz-208" style="margin-right: 5px;" onclick="jQueryModalGet('?handler=ProjectChallenges&id=@Model.Data.Id','Project Challenges')">
+                            Challenges
+                        </a>
+                        <a class="btn bg-danger" style="margin-right: 5px;" asp-route-id="@Model.Data.Id" asp-page="./Borad">
+                            Board
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="project-1">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+                    <div class="div-sec">
+                        <h6>Description</h6>
+                        <p>
+                            @Model.Data.Description
+                        </p>
+                        <hr />
+                        <h6>Authentication</h6>
+                        <p>
+                            <span class="hide-show-icon" onclick="toggleVisibility()"><i class="fas fa-eye"></i></span>
+                            <span class="hidden-content">@Model.Data.Authentications</span>
+                            <span class="visible-content">XXXXXX</span>
+                        </p>
+                        <hr />
+                        <h6>Referred By</h6>
+                        <p>
+
+                            @Model.Data.ProfileReferral
+                        </p>
+                        <hr />
+                        <h6>Material</h6>
+                        <p>
+
+                            @Model.Data.Materials
+                        </p>
+                        <hr />
+                        <h6>Note</h6>
+                        <p>
+                            @Model.Data.Note
+                        </p>
+                        <hr />
+                        <h6>Start Daate - Delivery Date</h6>
+                        <p>
+                            @JurayUniversal.Website.Middlewares.HtmlHelperValueExtensions.Value(Html, Model.Data.DateStarted) - @JurayUniversal.Website.Middlewares.HtmlHelperValueExtensions.Value(Html, Model.Data.DateStarted)
+
+                        </p>
+                        <hr />
+                        <h6>Last Update</h6>
+                        <p>
+                            @JurayUniversal.Website.Middlewares.HtmlHelperValueExtensions.Value(Html, Model.Data.LastUpdateDate)
+
+                        </p> <hr />
+                    </div>
+                    <div class="row div-sec">
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Estimated budget</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Data.Budget</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Total amount spent</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Data.AmountSpent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Estimated project duration</span>
+                                    <span class="info-box-number text-center text-muted mb-0">@Model.Data.Duration</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row div-sec">
+                        <div class="col-12">
+
+
+                            <div class="card-header bg-primary">
+                                <h3 class="card-title">Features</h3>
+
+                                <div class="card-tools">
+                                    <div class="pagination pagination-sm float-right" style="margin-right: 10px;">
+                                        <a class="btn bg-warning btn-xs" asp-page="./Features" asp-route-id="@Model.Data.Id">
+                                            Add Feature
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table class="table table-striped projects" id="featurespage">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 1%">
+                                            #
+                                        </th>
+                                        <th style="width: 20%">
+                                            Feature
+                                        </th>
+                                        <th style="width: 30%">
+                                            Total Task (Todo/Doing/Done)
+                                        </th>
+                                        <th>
+                                            Project Progress
+                                        </th>
+                                        <th style="width: 8%" class="text-center">
+                                            Status
+                                        </th>
+                                        <th style="width: 20%">
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @{ int sn1 = 0;}
+                                <tbody>
+                                    @if (Model.ProjectFeatureListDto.Count() > 0)
+                                    {
+                                        foreach (var feature in Model.ProjectFeatureListDto)
+                                        {
+                                            { sn1++; }
+
+                                            <tr>
+                                                <td>
+                                                    @sn1
+                                                </td>
+                                                <td>
+                                                    <a>
+                                                        @feature.Title
+                                                    </a>
+                                                    <br />
+                                                    <small>
+                                                        Date (@feature.Date)
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    @feature.TotalTask (@feature.TotalTodo/@feature.TotalDoing/@feature.TotalDone)
+
+                                                </td>
+                                                <td class="project_progress">
+                                                    <div class="progress progress-sm">
+                                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@feature.TotalProgress" aria-valuemin="0" aria-valuemax="100" style="width: @feature.TotalProgress%">
+                                                        </div>
+                                                    </div>
+                                                    <small>
+                                                        @feature.TotalProgress% Complete
+                                                    </small>
+                                                </td>
+                                                <td class="project-state">
+                                                    <span class="badge badge-primary">@feature.ProjectFeatureStatus</span>
+                                                </td>
+                                                <td class="project-actions text-right">
+                                                    <a class="btn btn-primary btn-sm" href="#">
+                                                        <i class="fas fa-folder">
+                                                        </i>
+
+                                                    </a>
+                                                    <a class="btn btn-info btn-sm" href="#">
+                                                        <i class="fas fa-pencil-alt">
+                                                        </i>
+
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm" href="#">
+                                                        <i class="fas fa-trash">
+                                                        </i>
+
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th colspan="6">
+                                                No Feature Yet
+                                            </th>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row div-sec">
+                        <div class="col-12" id="projectteam">
+                            <div class="card-header bg-primary">
+                                <h3 class="card-title">Teams</h3>
+
+                                <div class="card-tools">
+                                    <div class="pagination pagination-sm float-right" style="margin-right: 10px;">
+                                        <a class="btn bg-warning btn-xs" asp-page="./Team" asp-route-id="@Model.Data.Id">
+                                            Add Team
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom:10px;">
+
+                                <table class="table table-striped projects">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 1%">
+                                                #
+                                            </th>
+                                            <th style="width: 20%">
+                                                Team
+                                            </th>
+                                            <th style="width: 30%">
+                                                Members
+                                            </th>
+
+                                            <th style="width: 20%">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        int snxx = 0;
+                                    }
+                                    <tbody>
+                                        @if (Model.Data.ProjectTeams.Count() > 0)
+                                        {
+                                            foreach (var team in Model.Data.ProjectTeams)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @{ snxx++;}
+                                                        @snxx
+                                                    </td>
+                                                    <td>
+                                                        @team.Title
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-inline">
+                                                            @foreach (var user in team.ProjectUsers)
+                                                            {
+                                                               <li class="list-inline-item">
+                                                                   <div class="avatar-circle">
+                                                                       <span class="avatar-text">@user.Profile.UserName.Substring(0, 2)</span>
+                                                                   </div>
+                                                               </li>
+                                                            }
+
+                                                            
+                                                        </ul>
+                                                    </td>
+                                                   
+                                                    <td class="project-actions text-right">
+                                                        <a class="btn btn-primary btn-sm" href="#">
+                                                            <i class="fas fa-folder">
+                                                            </i>
+                                                            View
+                                                        </a>
+                                                        
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="4">
+                                                    No Member Yet
+                                                </td>
+                                            </tr>
+                                        }
+
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="div-sec">
+                        <div class="card-header bg-primary">
+                            <h3 class="card-title">Project Files</h3>
+
+                            <div class="card-tools">
+                                <div class="pagination pagination-sm float-right" style="margin-right: 10px;">
+                                    <a class="btn bg-warning btn-xs">
+                                        Add File
+                                    </a>
+                                    <a class="btn bg-danger btn-xs">
+                                        Make a Report
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled">
+                            @foreach (var file in Model.Data.ProjectFiles)
+                            {
+
+                                var fileExtension = System.IO.Path.GetExtension(file.FileKey).ToLower();
+
+                                if (fileExtension == ".pdf")
+                                {
+                                    <li>
+                                        <a href="@file.FileUrl" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> @file.Title</a>
+                                    </li>
+                                }
+                                else if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png" || fileExtension == ".gif")
+                                {
+                                    <li>
+                                        <a href="@file.FileUrl" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> @file.Title</a>
+                                    </li>
+                                }
+                                else if (fileExtension == ".doc" || fileExtension == ".docx")
+                                {
+                                    <li>
+                                        <a href="@file.FileUrl" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> @file.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@file.FileUrl" class="btn-link text-secondary"><i class="far fa-fw fa-file"></i> @file.Title</a>
+                                    </li>
+                                }
+                            }
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        function toggleVisibility() {
+            var hiddenContent = document.querySelector('.hidden-content');
+            var visibleContent = document.querySelector('.visible-content');
+            var icon = document.querySelector('.hide-show-icon');
+
+            if (hiddenContent.style.display === 'none') {
+                hiddenContent.style.display = 'inline';
+                visibleContent.style.display = 'none';
+                icon.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Change the eye icon to a hiding monkey emoji
+            } else {
+                hiddenContent.style.display = 'none';
+                visibleContent.style.display = 'inline';
+                icon.innerHTML = '<i class="fas fa-eye"></i>';// Change the hiding monkey emoji back to an eye icon
+            }
+        }
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.QAs.CourseListModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">QUESTIONS AND ANSWERS FOR COURSES</h3>
+
+         
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Course[0].Year)
+                        </th>
+                        <th>
+                            Course Category
+                        </th>
+
+                       
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Course)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @item.Year.ToString("yyyy")
+                            </td>
+
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+                                    @if (item.CourseCategory != null)
+                                    {
+                                        <span>
+                                            @Html.DisplayFor(modelItem => item.CourseCategory.Name) (@item.CourseCategory.Abbreviation @item.SecNumber)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>.......</span>
+                                    }
+                                </a>
+                            </td>
+
+                           
+                            <td>
+                                <a asp-page="./ModeratorList" asp-route-id="@item.Id" class="btn btn-primary">
+                                    View QAs By Moderators
+                                </a>
+                                <a asp-page="./QuestionList" asp-route-courseid="@item.Id" class="btn btn-primary">
+                                    View All QAs
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

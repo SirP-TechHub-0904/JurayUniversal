@@ -1,0 +1,81 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.QAModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Ask Questions to the Resource Person</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Date</th>
+                        <th>
+                            Resource Person
+                        </th>
+                        <th>
+                            Topic
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Moderators)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @item.TimeTable.Date.ToString("ddd dd MMM, yyyy")
+                            </td>
+                            <td>
+                                @if (item.User != null)
+                                {
+
+                                    <span>
+                                        <strong>@item.User.FullnameX</strong>(@item.Position)
+                                    </span>
+
+                                }
+                                else
+                                {
+                                    <span>
+
+
+                                        <strong>@item.Fullname</strong>(@item.Position)
+                                    </span>
+                                }
+
+                            </td>
+                            <td style="word-break:break-all;">
+
+                                @Html.Raw(item.TimeTable.Content)
+                            </td>
+
+
+                            <td>
+
+                                <a class="btn btn-primary" asp-page="./ResourceQuestions" asp-route-mid="@item.Id">Questions</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.EVoting.UpdateCategoryModel
+
+@{
+    ViewData["Title"] = "UpdateCategory";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE E-VOTING FOR @Model.VoteCategory.Evoting.Title</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="VoteCategory.Id" />
+                    <input type="hidden" asp-for="VoteCategory.EvotingId" />
+
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.Title" class="control-label"></label>
+                        <input asp-for="VoteCategory.Title" class="form-control" />
+                        <span asp-validation-for="VoteCategory.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.SortOrder" class="control-label"></label>
+                        <input asp-for="VoteCategory.SortOrder" class="form-control" />
+                        <span asp-validation-for="VoteCategory.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.Description" class="control-label"></label>
+                        <textarea asp-for="VoteCategory.Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="VoteCategory.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <a asp-page="./Details" asp-route-id="@Model.VoteCategory.EvotingId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
