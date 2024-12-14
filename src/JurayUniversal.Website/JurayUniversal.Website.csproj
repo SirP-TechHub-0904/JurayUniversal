@@ -10,6 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\templatesample\alina\**" />
+    <Compile Remove="wwwroot\templatesample\education\**" />
+    <Compile Remove="wwwroot\templatesample\Streamlab\**" />
+    <Content Remove="wwwroot\templatesample\alina\**" />
+    <Content Remove="wwwroot\templatesample\education\**" />
+    <Content Remove="wwwroot\templatesample\Streamlab\**" />
+    <EmbeddedResource Remove="wwwroot\templatesample\alina\**" />
+    <EmbeddedResource Remove="wwwroot\templatesample\education\**" />
+    <EmbeddedResource Remove="wwwroot\templatesample\Streamlab\**" />
+    <None Remove="wwwroot\templatesample\alina\**" />
+    <None Remove="wwwroot\templatesample\education\**" />
+    <None Remove="wwwroot\templatesample\Streamlab\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Areas\Admin\Pages\AC\Details.cshtml" />
     <Content Remove="Areas\Admin\Pages\AC\Edit.cshtml" />
     <Content Remove="Areas\Admin\Pages\AC\Index.cshtml" />
@@ -104,10 +119,7 @@
     <Folder Include="Pages\Shared\Components\Navigation\" />
     <Folder Include="wwwroot\Layout\Alina\" />
     <Folder Include="wwwroot\Layout\carspot\uploads\" />
-    <Folder Include="wwwroot\templatesample\alina\" />
-    <Folder Include="wwwroot\templatesample\education\" />
     <Folder Include="wwwroot\templatesample\senatory\" />
-    <Folder Include="wwwroot\templatesample\Streamlab\" />
   </ItemGroup>
 
   <ItemGroup>
