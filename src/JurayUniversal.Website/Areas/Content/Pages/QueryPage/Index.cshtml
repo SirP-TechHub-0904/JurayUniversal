@@ -1,0 +1,119 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.QueryPage.IndexModel
+@{
+}
+<style>
+    input[type=checkbox], input[type=radio] {
+        box-sizing: border-box;
+        padding: 0;
+        margin-right: 10px;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ADVANCE SEARCH QUERY</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        @*<form class="form-horizontal">
+
+            @Html.Raw(Model.Fields)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-group font-large">
+                        <span class="input-group-btn">
+                            <a style="border-top-right-radius: 0; border-bottom-right-radius: 0;" class="btn btn-default collapsed" data-toggle="collapse" title="Fine tune search parameters" href="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions" id="tggl-advanced">
+                               Query Option
+                            </a>
+                        </span>
+                        <input type="text" asp-for="Searchfile" class="form-control" placeholder="Search&hellip;">
+                    </div>
+                    <div class="collapse" id="advancedOptions" aria-expanded="true">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group" style="padding:20px;">
+                                        <label for="actors" class="col-sm-2 control-label">Query Area</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" asp-for="Fields" value="all" checked="checked" />All Areas
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" asp-for="Fields" value="Pages" />Pages
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" asp-for="Fields" value="Blogs" />Blogs
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" asp-for="Fields" value="Services" />Services
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="radio" asp-for="Fields" value="Others" />Others
+                                                </label>
+                                            </div>
+                                        </div>
+                                         
+                                    </div>
+                                     
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="margin-top:5px;">
+                    <button type="submit" style="width: 100%; background-color: #343a40; border-color: #343a40;" class="btn btn-info">Search</button>
+                </div>
+            </div>
+
+        </form>*@
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+    $(document).ready(function () {
+        $("#tggl-advanced").tooltip('show');
+
+        $("[data-accepted-field]").on("change", function () {
+            var $el = $(this),
+                fieldName = $el.data("acceptedField"),
+                allowed = ($el.data("acceptedIds") || "").split("|");
+
+            $("[name=\"" + fieldName + "\"]").each(function (idx, el) {
+                var $e = $(this),
+                    id = $e.attr("id");
+                if (!allowed.length)
+                    return;
+
+                switch (allowed.indexOf(id)) {
+                    case -1:
+                        $e.prop({ disabled: true, checked: false });
+                        break;
+                    case 0:
+                        $e.prop({ disabled: false, checked: true });
+                        break;
+                    default:
+                        $e.prop({ disabled: false, checked: false });
+                        break;
+                }
+            });
+        });
+        $("[data-accepted-field]").filter(":checked").trigger("change");
+    });
+    </script>
+}

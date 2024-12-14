@@ -1,0 +1,357 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.IndexModel
+@{
+}
+
+
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+
+
+                    <div class="content-header" style="padding:1px 0;padding-top:20px;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6" style="padding-left:0;">
+                                    <h5 class="m-0" style="font-weight:900;">ATTENDANCE REOPRT FOR @TempData["title"]</h5>
+                                </div>
+                                <div class="col-sm-6" style="padding-left:0;">
+                                    <form method="get">
+                                        <div class="input-group input-group-sm" style="margin-bottom:7px;">
+                                            <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-success btn-flat">Search</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>@Model.Attendance.Count()</h3>
+
+                                    <p>Total</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>
+                                        @Model.Attendance.Where(x => x.AttendanceStatus == JurayUniversal.Domain.Enum.Enum.AttendanceStatus.Present).Count()/
+                                        @Model.Attendance.Where(x => x.AttendanceStatus == JurayUniversal.Domain.Enum.Enum.AttendanceStatus.Absent).Count()
+                                    </h3>
+
+                                    <p>Present/Absent</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>
+
+                                        @Model.Attendance.Where(x => x.StartTime != null && Model.Setting.DefaultAttendanceStartTime != null && x.StartTime.Value.TimeOfDay > Model.Setting.DefaultAttendanceStartTime.Value.TimeOfDay).Count()
+                                    </h3>
+
+                                    <p>Late</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    @*@{
+                                            var presnt = Model.Attendance.Where(x => x.AttendanceStatus == JurayUniversal.Domain.Models.Enum.AttendanceStatus.Present).AsQueryable();
+                                            foreach(var xv in present)
+                                            {
+                                                TimeSpan timeDifference = xv.tim - Model.Setting.DefaultAttendanceStartTime;
+                                                int minuteDifference = (int)timeDifference.TotalMinutes;
+                                                decimal result = 100.00 * Convert.ToDecimal(minuteDifference);
+                                            }
+
+                                        }*@
+                                    <h3>0</h3>
+
+                                    <p>Dept </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="content-header" style="padding:1px 0;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12" style="padding-left:0;">
+                                    <h5 class="m-0" style="font-weight:900;">REPORT</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>@Model.Report.Count()</h3>
+
+                                    <p>Total</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>
+                                        @Model.Report.Where(x => x.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Submitted).Count()
+
+                                    </h3>
+
+                                    <p>Submitted</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>
+                                        @Model.Report.Where(x => x.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Failed).Count()
+                                    </h3>
+
+                                    <p>Failed</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+
+                                    <h3>@Model.Report.Where(x => x.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.NoReport).Count()</h3>
+
+                                    <p>No Report </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+
+                <div class="card-body">
+                    <div class="card-header">
+
+
+                    </div>
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">TASK LIST</h3>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped projects">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 1%">
+                                                    S/N
+                                                </th>
+                                                <th style="width: 20%">
+                                                    Task
+                                                </th>
+                                                <th style="width: 20%">
+                                                    Project/Feature
+                                                </th>
+                                                <th style="width: 30%">
+                                                    Team Members
+                                                </th>
+                                                 <th style="width: 8%" class="text-center">
+                                                    Status
+                                                </th>
+                                                <th style="width: 8%" class="text-center">
+                                                    Proprity
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            int sn = 0;
+                                        }
+                                        <tbody>
+                                            @foreach (var item in Model.XProjectTask)
+                                            {
+                                                
+
+                                                <tr>
+                                                    <td>
+                                                        @{
+                                                            sn++;
+                                                        }
+                                                        @sn
+                                                    </td>
+                                                    <td>
+
+                                                        <a asp-page="/ProjectAct/DetailTask" asp-area="JPTask" asp-route-id="@item.Id">
+                                                            @Html.DisplayFor(modelItem => item.Title)
+
+                                                        </a>
+                                                        <br />
+                                                        <div style="line-height:10px;">
+
+
+
+                                                            <small>
+                                                                Start @item.StartDate.ToString("dd.MM.yyyy")
+                                                            </small>
+                                                            <br />
+                                                            <small>
+                                                                Finish @if (item.FinishDate != null)
+                                                                {
+                                                                    <span> @item.FinishDate.ToString("dd.MM.yyyy")</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>--.--.----</span>
+                                                                }
+                                                            </small>
+
+                                                        </div>
+                                                    </td>
+                                                    <td class="project-state">
+                                                        <h4 style="font-size: .825rem;"> @Html.DisplayFor(modelItem => item.XProjectSection.XProject.Title)</h4>
+                                                        <h6 style="font-size: .625rem;">
+                                                            @Html.DisplayFor(modelItem => item.XProjectSection.Title)
+
+                                                        </h6>
+                                                    </td>
+                                                    <td>
+
+                                                        <ul class="list-inline">
+
+                                                            <li class="list-inline-item">
+
+                                                                @if (!String.IsNullOrEmpty(item.User.PassportFilePathUrl))
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="@item.User.PassportFilePathUrl" style="max-height:30px;">
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                                }
+
+
+                                                            </li>
+                                                            <li class="list-inline-item">
+
+                                                                @if (!String.IsNullOrEmpty(item.TestedBy.PassportFilePathUrl))
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="@item.TestedBy.PassportFilePathUrl" style="max-height:30px;">
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                                }
+
+
+                                                            </li>
+                                                            <li class="list-inline-item">
+
+                                                                @if (!String.IsNullOrEmpty(item.ApprovedBy.PassportFilePathUrl))
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="@item.ApprovedBy.PassportFilePathUrl" style="max-height:30px;">
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="max-height:30px;">
+
+                                                                }
+
+
+                                                            </li>
+                                                        </ul>
+
+
+                                                    </td>
+                                                   
+                                                    <td class="project-state">
+                                                        <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>
+                                                    </td>
+                                                    <td class="project-state">
+                                                        <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Priority)</span>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

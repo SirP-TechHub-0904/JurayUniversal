@@ -1,0 +1,179 @@
+﻿@page
+@model JurayUniversal.Website.Areas.JPTask.Pages.ProjectAct.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PROJECT LIST</h3>
+
+        @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+        {
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+        }
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            S/N
+                        </th>
+                        <th style="width: 20%">
+                            Project Name
+                        </th>
+                        <th style="width: 30%">
+                            Team Members
+                        </th>
+                        <th>
+                            Progress
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Status
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Proprity
+                        </th>
+                        @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                        {
+                            <th style="width: 20%">
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                    List<string> listTaskIds = new List<string>();
+                }
+                <tbody>
+                    @foreach (var item in Model.XProject)
+                    {
+
+                        var listUsers = item.Sections.SelectMany(x => x.Tasks)
+                                    .SelectMany(t => new[] { t.UserId, t.TestedById, t.ApprovedById }).Distinct()
+                                    .ToList();
+                        var listTask = item.Sections.SelectMany(x => x.Tasks)
+
+            .ToList();
+                        //listTaskIds.AddRange(listUsers);
+
+                        if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || listUsers.Contains(Model.UserId))
+                        {
+
+
+                            <tr>
+                                <td>
+                                    @{
+                                        sn++;
+                                    }
+                                    @sn
+                                </td>
+                                <td>
+                                    @if (item.Title.Contains("DIALY ACTIVITY"))
+                                    {
+                                        <a asp-page="./SoftDetails" asp-route-id="@item.Id">
+                                            @Html.DisplayFor(modelItem => item.Title)
+
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page="./Details" asp-route-id="@item.Id">
+                                            @Html.DisplayFor(modelItem => item.Title)
+
+                                        </a>
+                                    }
+
+                                    <br />
+                                    <div style="line-height:10px;">
+
+
+
+                                        <small>
+                                            Created @item.CreatedDate.ToString("dd.MM.yyyy")
+                                        </small>
+                                        <br />
+                                        <small>
+                                            Start @if (item.StartDate != null)
+                                            {
+                                                <span> @item.StartDate.ToString("dd.MM.yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span>--.--.----</span>
+                                            }
+                                        </small>
+                                        <br />
+                                        <small>
+                                            Test @if (item.DateToStartTesting != null)
+                                            {
+                                                <span> @item.DateToStartTesting.ToString("dd.MM.yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span>--.--.----</span>
+                                            }
+                                        </small>
+                                        <br />
+                                        <small>
+                                            Go Live @if (item.DateToGoLive != null)
+                                            {
+                                                <span> @item.DateToGoLive.ToString("dd.MM.yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span>--.--.----</span>
+                                            }
+                                        </small>
+                                    </div>
+                                </td>
+                                <td>
+                                    @await Component.InvokeAsync("XUserImagesList", new { id = item.Id })
+
+                                </td>
+                                <td class="project_progress">
+                                    @{
+                                        int donetask = listTask.Select(x => x.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Done).Count();
+                                        int alltask = listTask.Count();
+
+                                        int result = 0;
+                                        if (alltask > 0)
+                                        {
+                                            result = (donetask / alltask) * 100;
+                                        }
+                                    }
+
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: @result%">
+                                        </div>
+                                    </div>
+                                    <small>
+                                        @result% Complete
+                                    </small>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-success">@Html.DisplayFor(modelItem => item.ProjectStatus)</span>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Priority)</span>
+                                </td>   @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                                {
+                                    <td class="project-actions text-right">
+
+                                        <a class="btn btn-info btn-sm" asp-page="./Edit" asp-route-id="@item.Id">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Edit
+                                        </a>
+
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

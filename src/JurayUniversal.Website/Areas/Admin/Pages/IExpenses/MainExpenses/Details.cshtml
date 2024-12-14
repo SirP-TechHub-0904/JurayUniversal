@@ -1,0 +1,110 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IExpenses.MainExpenses.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS EXPENES</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.Close)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.Close)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.User)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.User.GetFullName())
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.Note)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.Note)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ProveImageUrl)
+                        </dt>
+                        <dd class="col-sm-10">
+                            <a href="@Model.CompayExpenses.ProveImageUrl" target="_blank">
+                                Preview
+                            </a>
+                        </dd>
+
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.Amount)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.Amount)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ExpensesCategory)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ExpensesCategory.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.Date)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.Date)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByManager)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByManager)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ManagerNote)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ManagerNote)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCEO)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCEO)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CeoNote)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CeoNote)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.ApprovedByCFO)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.ApprovedByCFO)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CompayExpenses.CfoNote)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CompayExpenses.CfoNote)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer"> 
+                <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+            </div>
+        </div>
+    </div>

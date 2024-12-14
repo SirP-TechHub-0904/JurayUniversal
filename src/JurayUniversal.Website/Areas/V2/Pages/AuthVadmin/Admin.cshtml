@@ -1,0 +1,55 @@
+﻿@page
+@model JurayUniversal.Website.V2.Pages.AuthVadmin.AdminModel
+@{ ViewData["Title"] = "JSSL ROLES";
+
+}
+<div class=" ">
+    @if (Model.Profile != null)
+    {
+        <h4>Email: @Model.Profile.Email</h4>
+        <h4>Admin20@Unix</h4>
+    }
+    else
+    {
+
+        <form id="account" method="post">
+
+
+            <div>
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Generate Admin</button>
+            </div>
+
+        </form>
+    }
+</div>
+<br />
+<br />
+<div class=" ">
+    @if (Model.Profile2 != null)
+    {
+        <h4>Email: @Model.Profile2.Email</h4>
+        <h4>qwe@321</h4>
+    }
+    else
+    {
+
+        <form id="account" method="post" asp-page-handler="NewAcc">
+
+
+            <div>
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Generate Client Admin</button>
+            </div>
+
+        </form>
+    }
+</div>
+<br />
+<br />
+<form id="account" method="post" asp-page-handler="ReconcileRoles">
+
+
+    <div>
+        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Regenerate Roles</button>
+    </div>
+
+</form>

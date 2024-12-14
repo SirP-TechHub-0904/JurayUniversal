@@ -1,0 +1,178 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.XProjectTask>
+@{ 
+    // Create a HashSet to store unique random numbers
+    HashSet<int> uniqueNumbers = new HashSet<int>();
+
+    // Create a Random object to generate random numbers
+    Random random = new Random();
+
+    // Generate 2000 unique random numbers
+    while (uniqueNumbers.Count < 2000)
+    {
+        int randomNumber = random.Next(1, 2001);
+        uniqueNumbers.Add(randomNumber);
+    }
+
+    // Convert the HashSet to a List if needed
+    List<int> randomNumbersList = new List<int>(uniqueNumbers);
+    // Print or use the generated random numbers as needed
+    int number = randomNumbersList.FirstOrDefault();
+    }
+        
+        
+<div class="card card-warning card-tabs">
+    <div class="card-header p-0 pt-1">
+        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-one-todo-@number-tab" data-toggle="pill" href="#custom-tabs-one-todo-@number" role="tab" aria-controls="custom-tabs-one-todo-@number" aria-selected="true">TO DO</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-one-doing-@number-tab" data-toggle="pill" href="#custom-tabs-one-doing-@number" role="tab" aria-controls="custom-tabs-one-doing-@number" aria-selected="false">DOING</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-one-done-@number-tab" data-toggle="pill" href="#custom-tabs-one-done-@number" role="tab" aria-controls="custom-tabs-one-done-@number" aria-selected="false">DONE</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="custom-tabs-one-tabContent">
+            <div class="tab-pane fade" id="custom-tabs-one-todo-@number" role="tabpanel" aria-labelledby="custom-tabs-one-todo-@number-tab">
+                @foreach (var xtesk in Model.Where(x => x.Status == Domain.Enum.Enum.ProjectTaskStatus.ToDo))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Title: @xtesk.Title
+                            </h3>
+                            <div class="clearfix"></div>
+                            <div class="juray-xs" style="text-transform:unset;font-size:12px;line-height:1;margin-bottom:5px;">
+                                <p>User: @xtesk.User.Email</p>
+                                <p>Tester: @xtesk.TestedBy.Email</p>
+                                <p>Approval: @xtesk.ApprovedBy.Email</p>
+                                <p>priority: @xtesk.Priority</p>
+                                <p>
+                                    Status: @if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.ToDo)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Doing)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Done)
+                                    {
+                                        <span class="btn btn-xs btn-warning">@xtesk.Status</span>
+                                    }
+                                </p>
+                                <p></p>
+
+                            </div>
+                            <a class="btn btn-warning" asp-page="./DetailTask" asp-route-id="@xtesk.Id">More Information</a>
+
+                            @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                            {
+                                <a class="btn btn-danger" asp-page="./UpdateTask" asp-route-id="@xtesk.Id">Update</a>
+
+                            }
+
+                            </div>
+
+
+                    </div>
+                }
+            </div>
+
+            <div class="tab-pane fade" id="custom-tabs-one-doing-@number" role="tabpanel" aria-labelledby="custom-tabs-one-doing-@number-tab">
+                @foreach (var xtesk in Model.Where(x => x.Status == Domain.Enum.Enum.ProjectTaskStatus.Doing))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Title: @xtesk.Title
+                            </h3>
+                            <div class="clearfix"></div>
+                            <div class="juray-xs" style="text-transform:unset;font-size:12px;line-height:1;margin-bottom:5px;">
+                                <p>User: @xtesk.User.Email</p>
+                                <p>Tester: @xtesk.TestedBy.Email</p>
+                                <p>Approval: @xtesk.ApprovedBy.Email</p>
+                                <p>priority: @xtesk.Priority</p>
+                                <p>
+                                    Status: @if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.ToDo)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Doing)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Done)
+                                    {
+                                        <span class="btn btn-xs btn-primary">@xtesk.Status</span>
+                                    }
+                                </p>
+                                <p></p>
+
+                            </div>
+                            <a class="btn btn-warning" asp-page="./DetailTask" asp-route-id="@xtesk.Id">More Information</a>
+                            @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                            {
+                                <a class="btn btn-danger" asp-page="./UpdateTask" asp-route-id="@xtesk.Id">Update</a>
+
+                            }
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+            <div class="tab-pane fade" id="custom-tabs-one-done-@number" role="tabpanel" aria-labelledby="custom-tabs-one-done-@number-tab">
+                @foreach (var xtesk in Model.Where(x => x.Status == Domain.Enum.Enum.ProjectTaskStatus.Done))
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Title: @xtesk.Title
+                            </h3>
+                            <div class="clearfix"></div>
+                            <div class="juray-xs" style="text-transform:unset;font-size:12px;line-height:1;margin-bottom:5px;">
+                                <p>User: @xtesk.User.Email</p>
+                                <p>Tester: @xtesk.TestedBy.Email</p>
+                                <p>Approval: @xtesk.ApprovedBy.Email</p>
+                                <p>priority: @xtesk.Priority</p>
+                                <p>
+                                    Status: @if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.ToDo)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Doing)
+                                    {
+                                        <span class="btn btn-xs btn-default">@xtesk.Status</span>
+                                    }
+                                    else if (xtesk.Status == JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus.Done)
+                                    {
+                                        <span class="btn btn-xs btn-success">@xtesk.Status</span>
+                                    }
+                                </p>
+                                <p></p>
+
+                            </div>
+                            <a class="btn btn-warning" asp-page="./DetailTask" asp-route-id="@xtesk.Id">More Information</a>
+                            @if (User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+                            {
+                                <a class="btn btn-danger" asp-page="./UpdateTask" asp-route-id="@xtesk.Id">Update</a>
+
+                            }
+
+
+                        </div>
+
+                        
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+ 

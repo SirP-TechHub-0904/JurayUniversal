@@ -1,0 +1,527 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.ISettings.IndexModel
+
+@{
+    ViewData["Title"] = "SETTINGS "; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS SETTINGS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.Qoute)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.Qoute)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.TopNote)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.TopNote)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.FacebookPage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.FacebookPage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.InstagramPage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.InstagramPage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.TwitterPage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.TwitterPage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.TiktokPage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.TiktokPage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.YoutubeChannel)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.YoutubeChannel)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddressOne)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddressOne)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddressTwo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddressTwo)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.EmailOne)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.EmailOne)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailOneInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailOneInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailOneInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailOneInFooter)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.EmailTwo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.EmailTwo)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailTwoInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailTwoInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailTwoInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailTwoInFooter)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.EmailThree)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.EmailThree)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailThreeInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailThreeInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowEmailThreeInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowEmailThreeInFooter)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.PhoneOne)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.PhoneOne)
+                    </dd>
+
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneOneInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneOneInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneOneInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneOneInFooter)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.PhoneTwo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.PhoneTwo)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneTwoInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneTwoInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneTwoInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneTwoInFooter)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.PhoneThree)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.PhoneThree)
+                    </dd>
+
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneThreeInTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneThreeInTop)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowPhoneThreeInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowPhoneThreeInFooter)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.WorkingHour)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.WorkingHour)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddFaqToHome)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddFaqToHome)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddFaqToFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddFaqToFooter)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddTestimonyToHome)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddTestimonyToHome)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddTestimonyToFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddTestimonyToFooter)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddPartnerToHome)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddPartnerToHome)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.DisableMainTopMenu)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.DisableMainTopMenu)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.UseCustomMenuTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.UseCustomMenuTop)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.CustomMenuTop)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.CustomMenuTop)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowProductsInMenu)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowProductsInMenu)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowProductsInFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowProductsInFooter)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowTwoProducts)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowTwoProducts)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowSixProducts)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowSixProducts)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ShowThreeProducts)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ShowThreeProducts)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.DefaultTitleBackgroundUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @if (!String.IsNullOrEmpty(Model.Setting.DefaultTitleBackgroundUrl))
+                        {
+                            <img src="@Model.Setting.DefaultTitleBackgroundUrl" class="img-fluid" style="max-height:150px;" />
+
+                        }
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.GoogleMap)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.Setting.GoogleMap)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.DefaultAttendanceStartTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.DefaultAttendanceStartTime)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.DefaultAttendanceCloseTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.DefaultAttendanceCloseTime)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.EarlyMinute)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.EarlyMinute)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.OntimeMinute)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.OntimeMinute)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.LateMinute)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.LateMinute)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.VeryLateMinute)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.VeryLateMinute)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.DefaultAttendanceStartTimeSaturday)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.DefaultAttendanceStartTimeSaturday)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.ReportCloseTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.ReportCloseTime)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.JobCardNote)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.Setting.JobCardNote)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.JobCardTitleBackgroundUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @if (!String.IsNullOrEmpty(Model.Setting.JobCardTitleBackgroundUrl))
+                        {
+                            <img src="@Model.Setting.JobCardTitleBackgroundUrl" class="img-fluid" style="max-height:150px;" />
+
+                        }
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.BankName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.BankName)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AccountNumber)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AccountNumber)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AccountName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AccountName)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.SignatureUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @if (!String.IsNullOrEmpty(Model.Setting.SignatureUrl))
+                        {
+                            <img src="@Model.Setting.SignatureUrl" class="img-fluid" style="max-height:150px;" />
+
+                        }
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.SignatureName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.SignatureName)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.SignatureTitle)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.SignatureTitle)
+                    </dd>
+
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.BlogDisplayTitle)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.BlogDisplayTitle)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddBlogToFooter)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddBlogToFooter)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddBlogToHome)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddBlogToHome)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.AddBlogToMenu)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.AddBlogToMenu)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.UseCategoryBlog)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.UseCategoryBlog)
+                    </dd>
+
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.EnableBreakingNewsRibon)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.EnableBreakingNewsRibon)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.BreakingNewsRibonTitle)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.BreakingNewsRibonTitle)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Setting.RibonPosition)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Setting.RibonPosition)
+                    </dd>
+
+                </dl>
+
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@Model.Setting.Id">Edit</a>
+
+
+        </div>
+    </div>
+</div>
+
+
+

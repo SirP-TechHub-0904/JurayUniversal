@@ -1,0 +1,71 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.XProjectPage.XM.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE PROJECT MESSAGE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="XProjectMessage.Id" />
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.Message" class="control-label"></label>
+                        <input asp-for="XProjectMessage.Message" class="form-control" />
+                        <span asp-validation-for="XProjectMessage.Message" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.CreateDate" class="control-label"></label>
+                        <input asp-for="XProjectMessage.CreateDate" class="form-control" />
+                        <span asp-validation-for="XProjectMessage.CreateDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.RepliedDate" class="control-label"></label>
+                        <input asp-for="XProjectMessage.RepliedDate" class="form-control" />
+                        <span asp-validation-for="XProjectMessage.RepliedDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.SenderId" class="control-label"></label>
+                        <select asp-for="XProjectMessage.SenderId" class="form-control" asp-items="ViewBag.SenderId"></select>
+                        <span asp-validation-for="XProjectMessage.SenderId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.ReceiverId" class="control-label"></label>
+                        <select asp-for="XProjectMessage.ReceiverId" class="form-control" asp-items="ViewBag.ReceiverId"></select>
+                        <span asp-validation-for="XProjectMessage.ReceiverId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectMessage.XProjectId" class="control-label"></label>
+                        <select asp-for="XProjectMessage.XProjectId" class="form-control" asp-items="ViewBag.XProjectId"></select>
+                        <span asp-validation-for="XProjectMessage.XProjectId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

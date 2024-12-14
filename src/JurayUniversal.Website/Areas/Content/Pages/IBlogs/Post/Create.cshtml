@@ -1,0 +1,107 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IBlogs.Post.CreateModel
+
+@{
+    ViewData["Title"] = "BLOG Create";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW BLOG POST</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Blog.Title" class="control-label"></label>
+                        <input asp-for="Blog.Title" class="form-control" />
+                        <span asp-validation-for="Blog.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.Date" class="control-label"></label>
+                        <input asp-for="Blog.Date" class="form-control" />
+                        <span asp-validation-for="Blog.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.SortOrder" class="control-label"></label>
+                        <input asp-for="Blog.SortOrder" class="form-control" />
+                        <span asp-validation-for="Blog.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Blog.Publish" /> @Html.DisplayNameFor(model => model.Blog.Publish)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.BlogCategoryId" class="control-label">Post Category</label>
+                        <select asp-for="Blog.BlogCategoryId" class="form-control" asp-items="ViewBag.BlogCategoryId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.Description" class="control-label"></label>
+                        <textarea asp-for="Blog.Description" class="form-control"></textarea>
+                        <span asp-validation-for="Blog.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.FullDescription" class="control-label"></label>
+                        <textarea asp-for="Blog.FullDescription" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Blog.FullDescription" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Blog.AddToRibon" /> @Html.DisplayNameFor(model => model.Blog.AddToRibon)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.SortOrder" class="control-label"></label>
+                        <input asp-for="Blog.SortOrder" class="form-control" />
+                        <span asp-validation-for="Blog.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Blog.RibonCustomDisplayTitle" class="control-label"></label>
+                        <input asp-for="Blog.RibonCustomDisplayTitle" class="form-control" />
+                        <span asp-validation-for="Blog.RibonCustomDisplayTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

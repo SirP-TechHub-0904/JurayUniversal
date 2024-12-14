@@ -1,0 +1,61 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.Users.IndexModel
+@{
+} 
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h3>USERS</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UsersWithRoles)
+        {
+            <tr>
+                <td>
+
+                    @user.FirstName
+                    @user.MiddleName
+                    @user.LastName
+
+                </td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.Roles.Any())
+                    {
+                        @foreach (var role in user.Roles)
+                        {
+                            <input type="checkbox" name="SelectedRoles" value="@role" checked />
+                            <span>@role</span>
+                        }
+                        @foreach (var role in Model.AllRoles.Except(user.Roles))
+                        {
+                            <span>
+                                <input type="checkbox" name="SelectedRoles" value="@role" checked />
+                                @role
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        <span>No roles assigned</span>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="UpdateRoles">
+                        <input type="hidden" name="UserId" value="@user.Id" />
+                        <button type="submit" class="btn btn-primary">Update Roles</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

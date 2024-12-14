@@ -1,0 +1,106 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IMeetings.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS MEETING</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Meeting Date
+                                </th>
+                                <td>
+                                    @Model.Meeting.StartTime.Value.Date.ToString("ddd dd MMM, yyyy")
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Start Time
+                                </th>
+                                <td>
+
+                                    @Model.Meeting.StartTime.Value.ToString("hh:mm tt")
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Close Time
+                                </th>
+                                <td>
+
+                                    @Model.Meeting.StartTime.Value.ToString("hh:mm tt")
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">ATTENDANCE (@Model.Meeting.MeetingAttendances.Count()) 
+                                    @if (Model.Meeting.CloseUpdate == false)
+                                    {
+                                        <a asp-page="/IMeetingAttendance/Create" asp-route-id="@Model.Meeting.Id" class="btn btn-warning">Add New Attendee</a>
+                                    }
+                                </th>
+                            </tr>
+                            @if (Model.Meeting.MeetingAttendances.Count() > 0)
+                            {
+                                foreach (var u in Model.Meeting.MeetingAttendances)
+                                {
+                                    <tr>
+                                        <th>@u.User.GetFullName()</th>
+                                        <th>@u.Time.ToString("hh:mm tt")</th>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th colspan="2">NO ONE PRESENT IN THE MEETING</th>
+                                </tr>
+                            }
+
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+       
+    </div>
+    <div class="card-body">
+        <div style="box-shadow:1px 1px 1px 1px gray;padding:20px;">
+        <h4>Minute of the Meeting</h4>
+        @Html.Raw(Model.Meeting.Minute)
+        </div>
+    </div>
+    <div class="card-body">
+        <div style="box-shadow:1px 1px 1px 1px gray;padding:20px;">
+        <h4>Comments and Contributions</h4>
+        @Html.Raw(Model.Meeting.Comment)
+        </div>
+    </div>
+    <div class="card-body">
+        <h4>Update Close Status</h4>
+        @Html.DisplayFor(model => model.Meeting.CloseUpdate)
+    </div>
+    <div class="card-footer">
+        
+        <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+    </div>
+</div>
+ 

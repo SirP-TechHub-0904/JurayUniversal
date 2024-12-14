@@ -1,0 +1,127 @@
+﻿
+@model JurayUniversal.Application.Dtos.Project.ProjectEditDto
+@{
+    ViewData["Title"] = "Project Category";
+}
+
+<form id="create-form" enctype="multipart/form-data" method="post" asp-page="Index" asp-route-id="@Model.Id" asp-page-handler="Edit" onsubmit="return jQueryModalPost(this);">
+    <div class="form-group">
+        <label class="form-label" asp-for="Title"></label>
+        <div class="">
+            <input type="text" autocomplete="off" asp-for="Title" name="Title" class="form-control">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Description"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="Description" name="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Materials"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="Materials" name="Materials" class="form-control"></textarea>
+            <span asp-validation-for="Materials" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Note"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="Note" name="Note" class="form-control"></textarea>
+            <span asp-validation-for="Note" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Authentications"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="Authentications" name="Authentications" class="form-control"></textarea>
+            <span asp-validation-for="Authentications" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Urls"></label>
+        <div class="">
+            <input type="text" autocomplete="off" asp-for="Urls" name="Urls" class="form-control">
+            <span asp-validation-for="Urls" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="LastUpdateDate"></label>
+        <div class="">
+            <input type="date" autocomplete="off" asp-for="LastUpdateDate" name="DateStarted" class="form-control">
+            <span asp-validation-for="LastUpdateDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Budget"></label>
+        <div class="">
+            <input type="number" autocomplete="off" asp-for="Budget" name="Budget" class="form-control">
+            <span asp-validation-for="Budget" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="AmountSpent"></label>
+        <div class="">
+            <input type="number" autocomplete="off" asp-for="AmountSpent" name="AmountSpent" class="form-control">
+            <span asp-validation-for="AmountSpent" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="FinancialReport"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="FinancialReport" name="FinancialReport" class="form-control"></textarea>
+            <span asp-validation-for="FinancialReport" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProjectStatus" class="control-label"></label>
+        @Html.DropDownListFor(model => model.ProjectStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ProjectStatus))), new { @class = "form-control" })
+        <span asp-validation-for="ProjectStatus" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="ProfileReferralId">Referral</label>
+        <select class="form-control" id="ProfileReferralId" name="ProfileReferralId">
+            @foreach (var option in Model.ReferralOptions)
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Category dropdown -->
+    <div class="form-group">
+        <label for="ProjectCategoryId">Category</label>
+        <select class="form-control" id="ProjectCategoryId" name="ProjectCategoryId">
+            @foreach (var option in Model.CategoryOptions)
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        </select>
+    </div>
+    @if (!String.IsNullOrEmpty(Model.LogoPicture))
+    {
+        <div class="form-group">
+            <label class="control-label">Previouse Project Logo</label><br />
+            <img src="@Model.LogoPicture" class="img-fluid" style="max-height:150px;" />
+        </div>
+    }
+    <div class="form-group">
+        <label class="control-label">Project Logo</label><br />
+        <input type="file" class="control-label" name="file" accept="image/*" />
+    </div>
+    <div class="form-group justify-content-between">
+        <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" id="button" class="btn btn-primary save-button">Save</button>
+    </div>
+
+</form>
+<script type="text/javascript" language=javascript>
+    $.validator.unobtrusive.parse(document);
+    $("#button").click(function (event) {
+        if ($('#create-form').valid()) {
+            $(event.target).attr("disabled", "disabled");
+        }
+    });
+</script>

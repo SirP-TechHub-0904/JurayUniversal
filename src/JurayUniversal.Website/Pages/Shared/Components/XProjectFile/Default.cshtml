@@ -1,0 +1,23 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.XProjectFile>
+
+<div class="card collapsed-card">
+    <div class="card-header">
+        <h3 class="card-title">
+            View Files
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body" style="display:none;">
+        @foreach (var item in Model)
+        {
+            <h6>@item.Title</h6>
+            <p>@item.Description</p>
+            <a href="@item.Url" target="_blank" class="btn btn-xs btn-primary">Open</a>
+            <hr />
+        }
+    </div>
+</div>

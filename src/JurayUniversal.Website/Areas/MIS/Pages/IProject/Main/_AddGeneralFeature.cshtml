@@ -1,0 +1,47 @@
+﻿@model JurayUniversal.Domain.Models.GeneralFeature
+@{
+    ViewData["Title"] = "General Features";
+}
+<form id="create-form" method="post" asp-page="Features" asp-page-handler="AddGeneralFeature" onsubmit="return jQueryModalPost(this);">
+    <div class="form-group">
+        <label class="form-label" asp-for="Title"></label>
+        <div class="">
+            <input type="text" autocomplete="off" asp-for="Title" name="Title" class="form-control" required="required">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Description"></label>
+        <div class="">
+            <textarea type="text" autocomplete="off" asp-for="Description" name="Description" class="form-control" required="required"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group justify-content-between">
+        <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" id="button" class="btn btn-primary save-button">Add</button>
+    </div>
+
+</form>
+<script type="text/javascript" language="javascript">
+    $.validator.unobtrusive.parse(document);
+
+    $("#create-form").submit(function (event) {
+        var title = $("#Title").val();
+        var description = $("#Description").val();
+
+        if (title.trim() === "" || description.trim() === "") {
+            event.preventDefault();
+            return false;
+        }
+
+        $("#button").attr("disabled", "disabled");
+    });
+</script>
+ 
+
+
+
+
+

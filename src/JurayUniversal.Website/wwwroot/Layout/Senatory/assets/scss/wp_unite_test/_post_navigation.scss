@@ -1,0 +1,68 @@
+/* --------------------------
+    Post Navigation
+---------------------------- */
+.post-navigation-area {
+  margin: 40px 0 0px 0;
+  .post-navigation-inner {
+    .content-area.style-01.no-line {
+      .content {
+        text-align: left;
+      }
+    }
+  }
+}
+.post-navigation-inner {
+  display: flex;
+  position: relative;
+  z-index: 0;
+  border-radius: 3px;
+  .content-area {
+    width: calc(100% / 2);
+  }
+  div {
+    .title {
+      font-size: 18px;
+      line-height: 25px;
+      transition: all 300ms;
+      margin-bottom: 0px;
+      a {
+        transition: all 300ms;
+      }
+      &:hover {
+        >a {
+          color: var(--main-color-one);
+        }
+      }
+    }
+    &:first-child {
+      text-align: left;
+    }
+  }
+  .content-area.no-line {
+    width: 100%;
+  }
+  .prev-post {
+    transition: all 300ms;
+    font-size: 14px;
+    display: block;
+    font-family: var(--body-font);
+    font-weight: 500;
+    color: var(--main-color-one);
+    margin-bottom: 10px;
+  }
+  .next-post {
+    transition: all 300ms;
+    font-size: 14px;
+    display: block;
+    font-family: var(--body-font);
+    font-weight: 500;
+    color: var(--main-color-one);
+    margin-bottom: 10px;
+  }
+}
+.blog-comment-navigation {
+  .comment-navigation {
+    min-height: 50px;
+    margin-bottom: 30px;
+  }
+}

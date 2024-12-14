@@ -1,0 +1,238 @@
+/* =============================================== */
+/* ---------------->>> COLORS STYLES <<<------------- */
+/* ================================================ */ 
+
+/*Link Colors*/
+a:hover, a:active, a:focus, .post-meta li a:hover,
+.nav.author-social>li>a:hover, .popup-youtube:hover span,
+.circle-progress-wrap .progress-value {
+	color: #fc8902;
+}
+.rtl a:hover, .rtl a:active, .rtl a:focus, .rtl .post-meta li a:hover, .rtl .nav.author-social>li>a:hover{
+	color: #fc8902;
+}
+.post-comments span.author:before, 
+.post-comments span.date:before, 
+a.comment-reply-link i, .blog-link .link:hover {
+    color: #fc8902;
+}
+/*Bg Dark Colors*/
+.bg-theme {
+    background: #fc8902;
+}
+.bg-semi-transparent-dark ul.nav.navbar-main > li > a:hover, 
+.bg-semi-transparent-dark .mega-dropdown .dropdown-menu > li > ul > li > a:hover,
+.bg-transparent.typo-white ul.nav.navbar-main > li > a:hover {
+	color: #fc8902;
+}
+/* Topbar Bg Colors */
+.topbar.top-bar-bg-color {
+    background: #fc8902;
+}
+/*Main Menu Colors*/
+.navbar ul.nav.navbar-main > li > a:hover, .navbar ul.nav.navbar-main > li.active > a,
+ul.nav.navbar-main.theme-main-menu > li > a.active, .bg-dark .dropdown-menu > li.active > a {
+	color: #fc8902;
+}
+.mega-dropdown .dropdown-menu > li > ul > li > a:hover,
+.bg-dark .mega-dropdown .dropdown-menu > li > ul > li > a:hover,
+.sticky-main-wrapper ul.nav.navbar-nav > li > a:hover,
+.sticky-main-wrapper ul.nav.navbar-nav > li.active > a,
+.bg-dark .dropdown-menu > li > a:hover, .zmm-wrapper .zmm-dropdown-toggle {
+	color: #fc8902;
+}
+.bg-dark .search-form .search-btn,
+.search-form .search-btn {
+	background: #fc8902;
+}
+footer.bg-light a:hover, footer.bg-dark a:hover,
+footer.bg-overlay-dark a:hover, footer.bg-overlay-light a:hover {
+	color: #fc8902;
+}
+/*Theme Colors*/
+.theme-color, 
+.typo-white .theme-color,
+.typo-dark .theme-color {
+	color: #fc8902;
+}
+.themeh-color, 
+.typo-white .themeh-color,
+.typo-dark .themeh-color {
+	color: #fc8902;
+}
+/*Hover Colors*/
+.bg-dark a:hover, .typo-white a:hover, .typo-dark a:hover {
+	color: #fc8902;
+}
+.typo-dark .btn:hover, .bg-dark .btn:hover {
+	color: #fff;
+}
+/* Hover Bg Colors*/
+.hvr-theme:hover {
+	background-color: #fc8902;
+}
+/*Background Overlay Colors*/
+.theme-overlay {
+    background: rgba(26, 188, 156, 0.88);
+}
+/*Icon Colors*/
+.icon-theme, .day-count-icon > span {
+	color: #fc8902;
+}
+.full-view-wrapper .close:before, .full-view-wrapper .close:after,
+.overlay-search .close:before, .overlay-search .close:after {
+    background: #fc8902;	
+}
+/*Woo Commerce Colors*/
+.product-rating > i, span.rating {
+    color: #fc8902;
+}
+/*Social Icon Colors*/
+.social-icons.icons-circle a > span,
+.post-meta .social-icons.small.icons-circle a > span:hover,
+.social-icons.icons-squared a > span {
+    background: #fc8902;
+}
+.header-inner .bg-dark .social-icons span:hover {
+	color: #fc8902;
+}
+/*Button Colors*/
+.btn, button, .btn-default, .contact-form-2 .btn:hover, .h-btn > .btn:hover,
+.header-4 .h-btn.btn-2 > .btn {
+	background: #fc8902;
+}
+.h-btn > .btn {
+	color: #fc8902;
+}
+
+/*Border Colors*/
+.feature-box-wrap.f-box-style-3, .contact-form-2 .btn,
+.contact-form-2 .btn:hover, .contact-form-3 .form-control:focus,
+.contact-form-3 .btn, .contact-form-4 .form-control:focus,
+.contact-form-4 .btn, .contact-form-5 .form-control:focus,
+.contact-form-5 .btn, .h-btn > .btn:hover, 
+.team-style-3 .team-details  {
+    border-color: #fc8902;
+}
+.blog-details {
+    border-top: 3px solid #fc8902;
+}
+.form-control:focus, .form-control:active {
+    border: solid 1px #fc8902;
+}
+.blog-classic .blog-inner>.blog-thumb:before {
+    border-top-color: #fc8902;
+    border-bottom-color: #fc8902;
+}
+.blog-classic .blog-inner>.blog-thumb:after {
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-right-width: 2px;
+    border-right-style: solid;
+    border-right-color: #fc8902;
+    border-left-color: #fc8902;
+}
+.b-dot {
+    border: dotted #fc8902;
+}
+.feature-box-wrap.f-box-style-2:after,
+.contact-form-2 .form-control:focus {
+    border-bottom-color: #fc8902;
+}
+.border-bottom {
+    background: #fc8902;
+}
+/*Owl Slider Colors*/
+.typo-dark .owl-dot.active span,
+.typo-white .owl-dot.active span,
+.owl-dot.active span,
+.owl-carousel .owl-nav button.owl-next, 
+.owl-carousel .owl-nav button.owl-prev {
+    color: #fc8902;
+}
+.typo-dark .owl-dot.active span,
+.typo-white .owl-dot.active span,
+.owl-dot.active span,
+.owl-carousel .owl-nav button.owl-next, 
+.owl-carousel .owl-nav button.owl-prev {
+    color: #fc8902;
+}
+.typo-white .owl-carousel .owl-nav button.owl-next span, 
+.typo-white .owl-carousel .owl-nav button.owl-prev span {
+    color: #fc8902;
+}
+/* Portfolio Colors*/
+.portfolio-icons a {
+    background: #fc8902;
+}
+.portfolio-filter > ul > li.active > a, span.portfolio-meta-icon {
+    color: #fc8902;
+}
+.portfolio-filter.portfolio-filter-2 > ul > li > a:before {
+    background: #fc8902;
+}
+/*Team Colors*/
+.team-style-7 .team-details > .bottom-dot {
+    background: #fc8902;
+}
+/*Testimonials Colors*/
+.quote:before {
+    background: #fc8902;
+}
+.testimonials-style-7 .testimonials-desc .blockquote-1:before {
+    color: #fc8902;
+}
+/*Featurebox Colors*/
+.feature-title-4 a, span.feature-count, .f-list-4 .feature-list-icon span {
+	color: #fc8902;
+}
+.f-list-2.feature-list-icon span,
+.f-list-5 .feature-list-icon span {
+	background: #fc8902;
+}
+/*Timeline Colors*/
+.timeline-left .timeline > li > .timeline-sep-title {
+    background: #fc8902;
+}
+.timeline-left .timeline > li.timeline-inverted > .timeline-panel:after {
+    border-left-color: #fc8902;
+    border-right-color: #fc8902;
+}
+/*Service Shortcode*/
+.service-box-style-2 .service-title a:after,
+.service-category-list a:hover,
+.service-category-list .active a {
+    background: #fc8902;
+}
+/*Counter Colors*/
+span.v-border, .counter-value.h-border:before {
+    background: #fc8902;
+}
+/*Tab Colors*/
+.tab-body .nav-tabs .nav-link:hover,
+.tab-body .nav-tabs .nav-link.active,
+.tab-body.tab-style-5 .nav-tabs .nav-link.active:before {
+    background: #fc8902;
+}
+.tab-body.tab-style-3 .nav-tabs .nav-link.active::after {
+    border-top-color: #fc8902;
+}
+.tab-body.tab-style-5 .nav-tabs .nav-link.active {
+    color: #fc8902;
+}
+/*Selectors Colors*/
+::selection {
+	background: #fc8902;
+    color: #fff;
+    text-shadow: none;                                                                  
+}
+::-moz-selection {
+    background: #fc8902;
+    color: #fff;
+    text-shadow: none;
+}
+::-webkit-selection {
+    background: #fc8902;
+    color: #fff;
+    text-shadow: none;
+}

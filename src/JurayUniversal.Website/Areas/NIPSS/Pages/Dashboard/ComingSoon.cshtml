@@ -1,0 +1,51 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Dashboard.ComingSoonModel
+@{
+}
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="box">
+            <div class="box-header">
+                <h2 class="box-title" style="text-align:center;font-weight:900;text-transform:uppercase;">
+                    COMING SOON...
+                </h2>
+            </div>
+            <div class="box-body">
+                 
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        // Function to update the countdown
+        function updateCountdown() {
+            var countdownElement = document.getElementById('countdown');
+            var countdown = '@Model.Countdown';
+            var timeLeft = parseInt(countdown.substring(0, countdown.indexOf('.'))); // Extract seconds from TimeSpan
+
+            // Update the countdown every second
+            var countdownInterval = setInterval(function() {
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = 'Event has started!';
+                } else {
+                    var days = Math.floor(timeLeft / (60 * 60 * 24));
+                    var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                    var minutes = Math.floor((timeLeft % (60 * 60)) / 60);
+                    var seconds = timeLeft % 60;
+
+                    countdownElement.textContent = 'Time until the event: ' + days + ' days, ' + hours + ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds';
+
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        // Call the updateCountdown function when the page loads
+        window.onload = function() {
+            updateCountdown();
+        };
+    </script>
+}

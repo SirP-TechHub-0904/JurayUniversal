@@ -1,0 +1,80 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.BudgetList>
+
+
+<div class="table-responsive">
+    <table id="" class="table table-bordered table-striped projects">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Amount In Naira
+                </th>
+                <th>
+                    Amount In Dollar
+                </th>
+
+                <th>Show</th>
+                <th></th>
+            </tr>
+        </thead> @{
+            int sn = 0;
+        }
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
+                            sn++;
+                        }
+                        @sn
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountInNaira)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountInDollar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Show)
+                    </td>
+
+                    <td>
+                        <a asp-page="./UpdateBudgetList" asp-route-id="@item.Id" class="btn btn-danger btn-xs">Edit</a>
+                        <a asp-page="./ListDetails" asp-route-id="@item.Id" class="btn btn-danger btn-xs">Details</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    #
+                </td>
+                <td colspan="2">
+                    Sum
+                </td>
+                <td>
+                    @Model.Where(x => x.Show == true).Sum(x => x.AmountInNaira)
+                </td>
+                <td>
+                    @Model.Where(x => x.Show == true).Sum(x => x.AmountInDollar)
+                </td>
+
+                <td colspan="2">
+                     
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,416 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.EVoting.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS E-VOTING</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Evoting.Title)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.DateToStart)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Evoting.DateToStart)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.EndDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Evoting.EndDate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.VotingStatus)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Evoting.VotingStatus)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.StartVoting)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Evoting.StartVoting)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Evoting.Course)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.Evoting.Course.CourseCategory.Abbreviation
+                        @Model.Evoting.Course.SecNumber,
+                        @Model.Evoting.Course.Year.ToString("yyyy")
+                    </dd>
+                </dl>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">POSITION MANAGEMENT</h3>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+
+
+                @foreach (var item in Model.Evoting.VoteCategories.OrderBy(x=>x.SortOrder))
+                {
+                    <div class="card" style="border: 2px solid #40a73f;">
+
+                        <div class="card-header bg-success">
+                            <h3 class="card-title" style="font-weight:900;font-size:18px;">@item.Title</h3>
+
+
+
+
+                        </div>
+                        <div class="card-header">
+                            <a asp-page="./ViewResult" asp-route-id="@item.Id" class="btn bg-gradient-primary btn-sm">Result</a>
+                            <a href="#" class="btn bg-gradient-warning btn-sm" data-toggle="modal" data-target="#detailsModal_@item.Id">Details</a>
+                            <a asp-page="./UpdateCategory" asp-route-id="@item.Id" class="btn bg-gradient-danger btn-sm">Update</a>
+                            <a asp-page="./AddCandidate" asp-route-id="@item.Id" class="btn bg-gradient-primary btn-sm">Add Candidate</a>
+
+                        </div>
+                        <div class="modal fade" id="detailsModal_@item.Id" tabindex="-1" role="dialog" aria-labelledby="manifestoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="manifestoModalLabel">
+
+                                            <span>
+                                                @item.Title
+                                            </span>
+
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>@Html.Raw(item.Description)</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+
+                                @foreach (var cnd in Model.VoteCondidates.Where(y => y.VoteCategoryId == item.Id))
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                @if (cnd.Candidate != null)
+                                                {
+                                                    <h4 class="text-center" style="font-weight:900;">@cnd.Candidate.FullnameX</h4>
+
+
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="text-center" style="font-weight:900;">@cnd.Title</h4>
+
+
+                                                }
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="" style="text-align:center;margin:0 auto;">
+                                                    <a href="@cnd.CandidateImageUrl">
+                                                        <img src="@cnd.CandidateImageUrl" class="img-fluid voting-img" style="text-align: center; margin: 0 auto;max-height:300px;" />
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <p class="text-justify" style="min-height:150px;">
+                                                        @cnd.ShortProfile
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <a href="#" class="btn btn-primary" style="width:100%" data-toggle="modal" data-target="#manifestoModal_@cnd.Id">Manifesto</a>
+
+                                                        </div>
+                                                        @if (Model.Evoting.ShowResult == true)
+                                                        {
+                                                            <div class="col-md-6">
+                                                                <a class="btn btn-primary" style="width: 100%; margin-top: 4px; font-size: 12px;">
+                                                                    Position: (
+                                                                    @if (cnd.ResultPosition == 0)
+                                                                    {
+
+
+                                                                        <span>---</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>@cnd.ResultPosition</span>
+                                                                    }
+                                                                    )
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <a class="btn btn-success" style="width: 100%; margin-top: 4px; font-size: 12px;">Votes: (@cnd.UserVote.Count())</a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal fade" id="manifestoModal_@cnd.Id" tabindex="-1" role="dialog" aria-labelledby="manifestoModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="manifestoModalLabel">
+                                                        @if (cnd.Candidate != null)
+                                                        {
+                                                            <span>
+                                                                @cnd.Candidate.FullnameX Manifesto
+                                                            </span> }
+                                                        else
+                                                        {
+                                                            <span>
+                                                                @cnd.Title Manifesto
+                                                            </span>
+
+                                                        }
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>@Html.Raw(cnd.Manifesto)</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    }
+                    </div>
+                </div>
+    </div>
+</div>
+
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3>NEW ELECTION POSITION</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="VoteCategory.EvotingId" value="@Model.Evoting.Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.Title" class="control-label"></label>
+                        <input asp-for="VoteCategory.Title" class="form-control" />
+                        <span asp-validation-for="VoteCategory.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.SortOrder" class="control-label"></label>
+                        <input asp-for="VoteCategory.SortOrder" class="form-control" />
+                        <span asp-validation-for="VoteCategory.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VoteCategory.Description" class="control-label"></label>
+                        <textarea asp-for="VoteCategory.Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="VoteCategory.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
+
+@*<div class="card">
+        <div class="card-header">
+            <h3 class="card-title">CANDIDATE MANAGEMENT</h3>
+
+        </div>
+         <div class="card-body">
+            <div class="row">
+
+                @foreach (var item in Model.Evoting.VoteCategories)
+                {
+
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                @if (item.Candidate != null)
+                                {
+                                    <h4 class="text-center" style="font-weight:900;">@item.Candidate.FullnameX</h4>
+                                    <h6 class="text-center">@item.Position</h6>
+
+                                }
+                                else
+                                {
+                                    <h4 class="text-center" style="font-weight:900;">@item.Title</h4>
+                                    <h6 class="text-center">@item.Position</h6>
+
+                                }
+                            </div>
+                            <div class="card-body">
+                                <div class="" style="text-align:center;margin:0 auto;">
+                                    <a href="@item.CandidateImageUrl">
+                                        <img src="@item.CandidateImageUrl" class="img-fluid" style="text-align: center; margin: 0 auto;height:300px;" />
+                                    </a>
+                                </div>
+                                <div>
+                                    <p class="text-justify" style="height:150px;">
+                                        @item.ShortProfile
+                                    </p>
+                                    <a href="#" class="btn btn-primary" style="width:100%" data-toggle="modal" data-target="#manifestoModal_@item.Id">Manifesto</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                     <div class="modal fade" id="manifestoModal_@item.Id" tabindex="-1" role="dialog" aria-labelledby="manifestoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="manifestoModalLabel">
+                                        @if (item.Candidate != null)
+                                        {
+                                            <span>
+                                                @item.Candidate.FullnameX Manifesto
+                                            </span> }
+                                    else
+                                    {
+                                    <span>
+                                        @item.Title Manifesto
+                                    </span>
+
+                                            }
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                 <p>@Html.Raw(item.Manifesto)</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3>NEW CANDIDTATE</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="VoteCategory.VotingId" value="@Model.Evoting.Id" />
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="VoteCategory.CandidateId" class="control-label">Select from Participants</label>
+                            <select asp-for="VoteCategory.CandidateId" asp-items="ViewBag.CandidateId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
+                                <option value="">Select</option>
+
+                            </select>
+                        </div>
+                        <h4>OR</h4>
+
+                        <div class="form-group">
+                            <label asp-for="VoteCategory.Title" class="control-label"></label>
+                            <input asp-for="VoteCategory.Title" class="form-control" />
+                            <span asp-validation-for="VoteCategory.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="VoteCategory.Position" class="control-label"></label>
+                            <input asp-for="VoteCategory.Position" class="form-control" />
+                            <span asp-validation-for="VoteCategory.Position" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="VoteCategory.ShortProfile" class="control-label"></label>
+                            <textarea asp-for="VoteCategory.ShortProfile" class="form-control" required="required" maxlength="500"></textarea>
+                            <span asp-validation-for="VoteCategory.ShortProfile" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="VoteCategory.Manifesto" class="control-label"></label>
+                            <textarea asp-for="VoteCategory.Manifesto" class="form-control summernote" required="required"></textarea>
+                            <span asp-validation-for="VoteCategory.Manifesto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Banner, Campain Image etc</label><br />
+                            <input type="file" class="control-label" asp-for="imagefile" accept="image/*" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+         </div>
+         <div class="card-footer">
+        </div>
+    </div>*@

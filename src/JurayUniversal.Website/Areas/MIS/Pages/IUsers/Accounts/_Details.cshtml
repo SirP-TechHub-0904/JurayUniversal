@@ -1,0 +1,53 @@
+﻿
+@model JurayUniversal.Application.Dtos.UsersDto.UserDetailsDto
+@{
+    ViewData["Title"] = "User";
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => Model.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => Model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => Model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.DateOfBirth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => Model.DateOfBirth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => Model.PassportFilePathUrl)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.PassportFilePathUrl" class="img-fluid" style="max-height:150px;" />
+        </dd>
+    </dl>
+</div>
+<div class="form-group justify-content-between">
+    <button type="button" class="btn btn-secondary close-button btn-xs" data-bs-dismiss="modal">Cancel</button>
+    @if (Model.UserStatus != JurayUniversal.Domain.Enum.Enum.UserStatus.Deleted)
+    {
+        <a onclick="jQueryModalGet('?handler=CreateOrEdit&id=@Model.Id','Edit @ViewData["Title"]')" class="btn btn-info btn-xs text-white"> Edit</a>
+    }
+    <a asp-page="./Profile" asp-route-id="@Model.Id" class="btn btn-success btn-xs">Full Profile</a>
+    <a asp-page="./ChangeEmail" asp-route-id="@Model.Id" class="btn btn-success btn-xs">Change Email</a>
+    <a asp-page="./Send" asp-route-id="@Model.Id" class="btn btn-success btn-xs">Send Login Details to User</a>
+</div>
+<script type="text/javascript" language=javascript>
+    $.validator.unobtrusive.parse(document);
+</script>

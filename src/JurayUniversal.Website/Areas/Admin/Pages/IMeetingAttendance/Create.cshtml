@@ -1,0 +1,53 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IMeetingAttendance.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title text-upper">NEW ATTENDANCE FOR MEETING HELD ON @Model.Meeting.StartTime.Value.Date.ToString("ddd dd MMM, yyyy")</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    
+                    <input type="hidden" asp-for="MeetingAttendance.MeetingId" value="@Model.Meeting.Id" />
+                    <input type="hidden" asp-for="MeetingTime" value="@Model.Meeting.StartTime.Value" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MeetingAttendance.UserId" class="control-label">Profile Name</label>
+                <select asp-for="MeetingAttendance.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+             
+            <div class="form-group">
+                <label asp-for="MeetingAttendance.Time" class="control-label"></label>
+                <input asp-for="MeetingAttendance.Time" class="form-control" />
+                <span asp-validation-for="MeetingAttendance.Time" class="text-danger"></span>
+            </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="/IMeetings/Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

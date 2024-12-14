@@ -1,0 +1,56 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ITrainingAttendance.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE TRAINING ATTENDANCE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TrainingAttendance.Id" />
+            <div class="form-group">
+                <label asp-for="TrainingAttendance.UserId" class="control-label"></label>
+                <select asp-for="TrainingAttendance.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="TrainingAttendance.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingAttendance.TrainingId" class="control-label"></label>
+                <select asp-for="TrainingAttendance.TrainingId" class="form-control" asp-items="ViewBag.TrainingId"></select>
+                <span asp-validation-for="TrainingAttendance.TrainingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainingAttendance.Time" class="control-label"></label>
+                <input asp-for="TrainingAttendance.Time" class="form-control" />
+                <span asp-validation-for="TrainingAttendance.Time" class="text-danger"></span>
+            </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

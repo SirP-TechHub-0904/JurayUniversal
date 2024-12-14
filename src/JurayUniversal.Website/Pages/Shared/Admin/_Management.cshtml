@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MANAGEMENT DASHBOARD</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/JurayUniversal.Website.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dashboard/plugins/summernote/summernote-bs4.min.css">
+    
+    <link rel="shortcut icon" href="https://www.juray.ng/img/logo.png" type="image/x-icon" />
+
+    <style>
+        .footer[b-5dhtjtke2r] {
+            position: absolute;
+            bottom: unset;
+            width: 100%;
+            white-space: nowrap;
+            line-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand">MANAGEMENT</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Major/Index" asp-area="Dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Index" asp-area="">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/DeviceSetup/Index">Device Setup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Content" asp-page="/ISettings/Index">Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/V3/Index">Advance Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/IDashboardSettings/Index">Dashboard Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/IFormSettings/Index">Form Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/IConfigSettings/Index">Config Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="V2" asp-page="/AuthVadmin/List">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="V2" asp-page="/AuthVadmin/Admin">Admin</a>
+                        </li>
+                        @*<li class="nav-item">
+            <a class="nav-link text-dark" asp-area="V2" asp-page="/AuthVadmin/Recon">Reconsile Admin</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="V2" asp-page="/AuthVadmin/SuperReadonly">SUPER CREATE</a>
+        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Management" asp-page="/IPortfolioTheme/Index">Portfolio Theme</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Juray Universal  
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/dashboard/plugins/summernote/summernote-bs4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote();
+        });
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿
+<html lang="zxx">
+<head>
+
+    @await Component.InvokeAsync("HeadeTitle")
+     @await Component.InvokeAsync("LoginCSS")
+
+</head>
+<body id="top">
+
+    @await Component.InvokeAsync("CompanyName")
+    @await Component.InvokeAsync("LoginNote")
+
+    @await Component.InvokeAsync("CompanyLogo")
+
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("LoginNoteFooter")
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>

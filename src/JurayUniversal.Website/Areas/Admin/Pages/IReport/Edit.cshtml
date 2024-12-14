@@ -1,0 +1,87 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IReport.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE REPORT</h3>
+        <br /><br />
+        <h6>@Model.Report.User.FullnameX</h6>
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Report.Id" />
+                    <input type="hidden" asp-for="Report.UserId" />
+                    <input type="hidden" asp-for="Report.Date" />
+                    <input type="hidden" asp-for="Report.VerificationStatus" />
+                  
+
+                    <div class="form-group">
+                        <label asp-for="Report.Achievement" class="control-label"></label>
+                        <textarea asp-for="Report.Achievement" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.Achievement" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.PlansForNextDay" class="control-label"></label>
+                        <textarea asp-for="Report.PlansForNextDay" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.PlansForNextDay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.IssuesAndChallenges" class="control-label"></label>
+                        <textarea asp-for="Report.IssuesAndChallenges" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.IssuesAndChallenges" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.TaskNote" class="control-label"></label>
+                        <textarea asp-for="Report.TaskNote" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.TaskNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.TaskNoteStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Report.TaskNoteStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.TaskNoteStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Report.TaskNoteStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.ReportStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Report.ReportStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ReportStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Report.ReportStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.ManagerReport" class="control-label"></label>
+                        <textarea asp-for="Report.ManagerReport" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.ManagerReport" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Report.AdminNote" class="control-label"></label>
+                        <textarea asp-for="Report.AdminNote" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.AdminNote" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,72 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.AllMeetingsModel
+@{
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">MEETINGS</h3>
+
+
+ 
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            
+                            Date</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Meeting[0].StartTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Meeting[0].CloseTime)
+                        </th>
+                        <th>Attendance</th>
+                         
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Meeting)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a class="btn btn-default" asp-page="./StaffMeeting" asp-route-id="@item.Id">
+                                    @item.StartTime.Value.ToString("ddd dd MMM, yyyy")
+
+                                </a>
+
+                            </td>
+
+                            <td>
+                                @item.StartTime.Value.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @item.CloseTime.Value.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @item.MeetingAttendances.Count()
+                            </td>
+
+ 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

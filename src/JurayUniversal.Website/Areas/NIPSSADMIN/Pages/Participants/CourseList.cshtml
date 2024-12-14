@@ -1,0 +1,75 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants.CourseListModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">@Model.CourseCategory.Name</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    @foreach (var item in Model.Course)
+                    {
+
+                        <div class="col-md-4">
+                            <!-- Widget: user widget style 2 -->
+                            <div class="card card-widget widget-user-2">
+                                <!-- Add the bg color to the header using any of the bg-* classes -->
+                                <div class="widget-user-header bg-success">
+                                   
+                                    <!-- /.widget-user-image -->
+                                    <h3 class="widget-user-username" style="margin-left: 2px;">@Model.CourseCategory.Abbreviation @item.SecNumber</h3>
+                                    <h5 class="widget-user-desc" style="margin-left: 2px;">YEAR @item.Year.ToString("yyyy")</h5>
+                                    <hr />
+                                    <div>
+                                        <h6>Theme</h6>
+                                        <p>@item.Theme</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                Start <span class="float-right badge bg-primary">@item.StartDate.ToString("dd MMM")</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                End <span class="float-right badge bg-primary">@item.EndDate.ToString("dd MMM")</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                Status <span class="float-right badge bg-info">@item.CourseStatus</span>
+                                            </a>
+                                        </li>
+                                         
+                                        <li class="nav-item">
+                                            <a class="btn btn-success" style="margin:10px;" asp-page="./ListParticipants" asp-route-id="@item.Id">View Participants</a>
+
+                                            <a asp-page="/Participants/StudyGroupList" asp-route-id="@item.Id" class="btn btn-primary">
+                                                Study Group
+                                            </a>
+                                            <a class="btn btn-success" style="margin:10px;" asp-page="/UserEvaluationPage/Index" asp-route-id="@item.Id">Evaluation</a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.widget-user -->
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

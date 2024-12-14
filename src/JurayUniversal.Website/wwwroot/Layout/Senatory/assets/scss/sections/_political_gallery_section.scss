@@ -1,0 +1,25 @@
+// Politicals Gallery Section Start header
+.political-gallery-items {
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        height: 456px;
+        width: 885px;
+        background-color: #EFEFF7;
+        border-radius: 4px;
+        top: 12%;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    .gallery-single-items {
+        &.style-01 {
+            margin-bottom: 30px;
+        }
+        img {
+            border-radius: 10px;
+        }
+    }
+}

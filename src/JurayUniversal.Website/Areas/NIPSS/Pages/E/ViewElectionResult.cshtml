@@ -1,0 +1,212 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.E.ViewElectionResultModel
+@{
+}
+<style>
+    input[type=radio].radio {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 5rem;
+        height: 5rem;
+        position: relative;
+    }
+
+        input[type=radio].radio::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            color: rgba(255, 255, 255, 0);
+            background-color: white;
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
+            font-size: 0rem;
+            font-weight: bolder;
+            line-height: 5rem;
+            text-align: center;
+        }
+
+        input[type=radio].radio:checked::after {
+            content: "✔";
+            color: white;
+            background-color: #28a745;
+            font-size: 4rem;
+        }
+
+        input[type=radio].radio:focus {
+            outline: none;
+        }
+
+        input[type=radio].radio:hover::after {
+            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+        }
+
+    label {
+        display: block;
+        line-height: 5rem;
+        text-transform: uppercase;
+    }
+
+    .fieldset {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+        .fieldset > * {
+            margin-right: 1rem;
+        }
+
+    .info-box {
+        box-shadow: 0 0 1px rgb(42, 26, 26),0 1px 3px rgba(0,0,0,.2);
+    }
+</style>
+<style>
+
+    .nav-item h3 {
+        display: none;
+    }
+</style>
+<section>
+    <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4"></div>
+        <div class="col-md-4 col-xs-4 col-sm-4">
+            <div class="" style="margin: 0 auto; text-align: center;">
+                <img src="/NIPSS-logo-x.png" style="margin:0 auto;text-align:center;max-height:80px;padding:10px;">
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 col-sm-4"></div>
+    </div>
+</section>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 style="text-align:center;"><b style="text-shadow: 2px 2px 2px #888888;font-weight:900;">@Html.DisplayFor(model => model.Evoting.Title)</b></h3>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="card" style="background-color:transparent;box-shadow:none;border:none;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5" style="background-color: #007D53;"></div>
+            <div class="col-md-2">
+                <h2 style="text-align:center;"><b style="text-shadow: 2px 2px 2px #888888;font-weight:900;">RESULT</b></h2>
+
+            </div>
+            <div class="col-md-5" style="background-color: #007D53;"></div>
+
+        </div>
+    </div>
+</div>
+
+<!-- /.card-header -->
+<div class="btn btn-warning" style="padding: 2px; background-color: #d39e007a; border-color: #c695009c; width: 100%; margin-top: 4px; margin-bottom: 4px;">
+    <i class="fa fa-lock"></i> <span style="margin:10px;font-style:italic;">
+        Your vote is encrypted end-to-end, unmodifiable, and secure.
+
+    </span>
+</div>
+<div class="card">
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" onsubmit="return validateForm()">
+                    <input type="hidden" asp-for="VotingId" value="@Model.Evoting.Id" />
+                    @foreach (var item in Model.Evoting.VoteCategories.OrderBy(x => x.SortOrder))
+                    {
+                        <div class="card" style="border: 2px solid #007D53;">
+
+                            <div class="card-header bg-success">
+                                <h3 class="card-title" style="font-weight:900;font-size:18px;">@item.Title (@item.UserVotes.Count() Voters)</h3>
+
+                            </div>
+
+
+
+
+                            <div class="card-body">
+                                <div class="row">
+
+                                    @foreach (var cnd in Model.VoteCondidates.Where(y => y.VoteCategoryId == item.Id).OrderByDescending(x => x.UserVote.Count()))
+                                    {
+
+                                        <div class="col-md-3 col-sm-6 col-12">
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-6" style="">
+                                                            <div class="" style="text-align:center;margin:0 auto;">
+                                                                <img src="@cnd.CandidateImageUrl" style="height: 100px; vertical-align: middle; text-align: center; margin: 0 auto;" class="img-fluid" />
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6">
+                                                            <div class="" style="text-align:center;margin:0 auto;">
+                                                                <h1>@cnd.UserVote.Count()</h1>
+                                                                <h4>Votes</h4> 
+                                                                <a href="#" class="btn btn-danger btn-xs" style="width:100%" data-toggle="modal" data-target="#votelist_@cnd.Id">View Votes</a>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal fade" id="votelist_@cnd.Id" tabindex="-1" role="dialog" aria-labelledby="manifestoModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="" style="text-align:center;margin:0 auto;">
+                                                            <img src="@cnd.CandidateImageUrl" style="height: 100px; vertical-align: middle; text-align: center; margin: 0 auto;" class="img-fluid" />
+
+                                                        </div>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h3>Total Votes (@cnd.UserVote.Count())</h3>
+                                                        @{ int xsn = 0;}
+                                                        @foreach (var list in cnd.UserVote)
+                                                        {
+                                                            <button class="btn btn-primary btn-xs">
+
+                                                                ( @{ xsn++;} @xsn) ENC-@list.EncryptCode
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    }
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

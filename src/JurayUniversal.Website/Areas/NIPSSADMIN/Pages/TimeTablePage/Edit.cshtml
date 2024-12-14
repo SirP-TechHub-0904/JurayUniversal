@@ -1,0 +1,114 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.TimeTablePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE TIMESTABLE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="TimeTable.Id" />
+                    <div class="form-group">
+                        <label asp-for="TimeTable.Date" class="control-label"></label>
+                        <input asp-for="TimeTable.Date" class="form-control" />
+                        <span asp-validation-for="TimeTable.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.EventDate" class="control-label"></label>
+                        <input asp-for="TimeTable.EventDate" class="form-control" />
+                        <span asp-validation-for="TimeTable.EventDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.EventTime" class="control-label"></label>
+                        <input asp-for="TimeTable.EventTime" class="form-control" />
+                        <span asp-validation-for="TimeTable.EventTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.SortOrder" class="control-label"></label>
+                        <input asp-for="TimeTable.SortOrder" class="form-control" />
+                        <span asp-validation-for="TimeTable.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.Title" class="control-label"></label>
+                        <input asp-for="TimeTable.Title" class="form-control" />
+                        <span asp-validation-for="TimeTable.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.SubTitle" class="control-label"></label>
+                        <input asp-for="TimeTable.SubTitle" class="form-control" />
+                        <span asp-validation-for="TimeTable.SubTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.Content" class="control-label"></label>
+
+                        <textarea asp-for="TimeTable.Content" class="form-control summernote"></textarea>
+                        <span asp-validation-for="TimeTable.Content" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="TimeTable.EventType" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.TimeTable.EventType, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.EventType))), new { @class = "form-control" })
+                        <span asp-validation-for="TimeTable.EventType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.ContentStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.TimeTable.ContentStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ContentStatus))), new { @class = "form-control" })
+
+                        <span asp-validation-for="TimeTable.ContentStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.ContentType" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.TimeTable.ContentType, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ContentEnumType))), new { @class = "form-control" })
+
+                        <span asp-validation-for="TimeTable.ContentType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.Note" class="control-label"></label>
+                        <textarea asp-for="TimeTable.Note" class="form-control summernote"></textarea>
+                        <span asp-validation-for="TimeTable.Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="TimeTable.IsLecture" /> @Html.DisplayNameFor(model => model.TimeTable.IsLecture)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.Module" class="control-label"></label>
+                        <input asp-for="TimeTable.Module" class="form-control" />
+                        <span asp-validation-for="TimeTable.Module" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TimeTable.CourseId" class="control-label"></label>
+                        <select asp-for="TimeTable.CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+                        <span asp-validation-for="TimeTable.CourseId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

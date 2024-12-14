@@ -1,0 +1,72 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.TrainingInfoModel
+
+@{
+    ViewData["Title"] = "TrainingInfo";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW ATTENANCE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Topic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Topic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.DocumentUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.DocumentUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.DocumentKey)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.DocumentKey)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.CloseTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.CloseTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.QuestionsAndAnswers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.QuestionsAndAnswers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Moderator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Moderator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Trainner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Trainner.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Training.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

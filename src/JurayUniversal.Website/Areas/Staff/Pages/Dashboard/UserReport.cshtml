@@ -1,0 +1,135 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.UserReportModel
+
+@{
+    ViewData["Title"] = "UserReport";
+}
+
+<style>
+    .input-group-sm > .custom-select, .input-group-sm > .form-control:not(textarea) {
+        height: auto;
+    }</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">MY REPORT FOR THE WEEK</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-2" style="text-align:center;margin:0 auto !important">
+                                        <h6>
+                                            <span style="font-weight:800;"> @Model.Title</span>
+                                        </h6>
+                                    </div>
+                                    <div class="col-md-4" style="text-align:center;margin:0 auto !important">
+                                        <form method="get">
+                                            <div class="input-group input-group-sm" style="margin-bottom:7px;">
+                                                <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
+                                                <span class="input-group-btn">
+                                                    <button type="submit" class="btn btn-success btn-flat">Search</button>
+                                                </span>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div class="col-md-3" style="text-align:center;margin:0 auto !important">
+                                        <a asp-page="./UserReport" asp-route-searchdate="@Model.PreviousWeek" class="btn btn-success float-right" style="float:right;color:white;margin-right:9px;">@Model.PreviousWeekTitle</a>
+
+                                    </div>
+                                    <div class="col-md-3" style="text-align:center;margin:0 auto !important">
+                                        <a asp-page="./UserReport" asp-route-searchdate="@Model.NextWeek" class="btn btn-success float-right" style="float:right;color:white;">@Model.NextWeekTitle</a>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>DAY/DATE</th>
+
+                                                <th>TASK</th>
+                                                <th>STATUS</th>
+                                                <th>PERIOD</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            int sn = 0;
+                                        }
+
+                                        <tbody>
+                                            @foreach (var item in Model.Report)
+                                            {
+                                                <tr>
+
+                                                    <td>
+                                                        @{
+                                                            sn++;
+                                                        }
+                                                        @sn
+                                                    </td>
+                                                    <td>
+                                                        <a asp-page="./ReportDetails" asp-route-id="@item.Id">
+                                                            @item.Date.Date.ToString("ddd dd MMM, yyyy")
+                                                        </a>
+                                                    </td>
+
+                                                    <td>
+                                                        @if (item.TaskNoteStatus == JurayUniversal.Domain.Enum.Enum.TaskNoteStatus.Active)
+                                                        {
+                                                            <span class="btn btn-success">Available</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger">Not Available</span>
+                                                        }
+
+                                                    </td>
+                                                    <td>
+                                                        @if (item.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Submitted)
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.ReportStatus) <i class="fa fa-check btn btn-success"></i>
+                                                        }
+                                                        else if (item.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Failed)
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.ReportStatus) <i class="fa fa-times btn btn-danger"></i>
+                                                        }else
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.ReportStatus)
+                                                        }
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ReportPeriodStatus)
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

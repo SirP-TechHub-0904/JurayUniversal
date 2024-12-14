@@ -1,0 +1,120 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.ISettings.DeleteModel
+
+@{
+    ViewData["Title"] = "SETTINGS Delete"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE SETTINGS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Setting</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.Qoute)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.Qoute)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.FacebookPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.FacebookPage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.InstagramPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.InstagramPage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.TwitterPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.TwitterPage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.TiktokPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.TiktokPage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.YoutubeChannel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.YoutubeChannel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.EmailOne)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.EmailOne)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.EmailTwo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.EmailTwo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.EmailThree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.EmailThree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.PhoneOne)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.PhoneOne)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.PhoneTwo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.PhoneTwo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.PhoneThree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.PhoneThree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Setting.WorkingHour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Setting.WorkingHour)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Setting.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

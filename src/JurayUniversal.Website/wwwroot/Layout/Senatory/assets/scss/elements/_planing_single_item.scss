@@ -1,0 +1,49 @@
+// Project Planing Section & Single Items
+.project-plaing-section {
+    margin-top: 120px;
+    .single-items-wrapper {
+        &.planing-bg {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: right center;
+            min-height: 514px;
+            border-radius: 6px;
+            width: 100%;
+            padding-top: 55px;
+        }
+        .planing-single-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: #FFF9FC;
+            box-shadow: 0px 15px 30px rgba(221, 19, 26, 0.14);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            &.style-01 {
+                margin-left: 50px;
+            }
+            .content {
+                .title {
+                    font-size: 16px;
+                    line-height: 26px;
+                    font-family: var(--body-font);
+                    font-weight: 700;
+                    color: #6B6B6B;
+                    margin-bottom: 0;
+                }
+                p {
+                    font-size: 30px;
+                    line-height: 40px;
+                    font-family: var(--heading-font);
+                    font-weight: 700;
+                    color: var(--main-color-one);
+                    margin-bottom: 0; 
+                }
+            }
+            .icon {
+                font-size: 34px;
+                margin-right: 25px;
+            }
+        }
+    }
+}

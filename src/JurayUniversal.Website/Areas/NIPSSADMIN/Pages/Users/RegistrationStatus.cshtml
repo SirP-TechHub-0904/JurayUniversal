@@ -1,0 +1,144 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users.RegistrationStatusModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">PARTICIPANT COURSE STATUS</h3>
+        <a asp-page="./Index" class="btn bg-gradient-primary btn-sm" style="float:right;">Back to List</a>
+        <a asp-page="./Add" class="btn bg-gradient-warning btn-sm" style="float:right;">Register New Account</a>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ParticipantList.User.FullnameX)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ParticipantList.User.FullnameX)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ParticipantList.User.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ParticipantList.User.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ParticipantList.User.PhoneNumber)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ParticipantList.User.PhoneNumber)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Reg. No.
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ParticipantList.IdNumber)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ParticipantList.User.Role)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ParticipantList.User.Role)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Registered Date
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.ParticipantList.User.Date.ToString("dd MMM, yyyy")
+                    </dd>
+                    <dt class="col-sm-2">
+                        Course
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.ParticipantList.Course.CourseCategory.Name (@Model.ParticipantList.Course.CourseCategory.Abbreviation @Model.ParticipantList.Course.SecNumber, @Model.ParticipantList.Course.Year.ToString("yyyy"))
+                    </dd>
+                    <dt class="col-sm-2">
+                        Theme
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.ParticipantList.Course.Theme
+                    </dd>
+                    <dt class="col-sm-2">
+                        Registration Completion Link
+                    </dt>
+                    <dd class="col-sm-10">
+                        Email Sent
+
+                        @if (Model.ParticipantList.User.EmailSent == true)
+                        {
+                            <span>
+                                (<i class="fa fa-check"></i>)
+                            </span>
+
+
+                        }
+                        else
+                        {
+
+                            <span>
+                                (<i class="fa fa-times"></i>)
+                            </span>
+
+                        }
+                        <form method="post">
+                            <input asp-for="UserId" type="hidden" value="@Model.ParticipantList.UserId" />
+                            <input asp-for="ParticipantId" type="hidden" value="@Model.ParticipantList.Id" />
+                            <input asp-for="SendEmail" type="hidden" value="true" />
+                            <button type="submit" class="btn btn-primary btn-xs">Resend Email</button>
+                        </form>
+                        <br /> SMS Sent
+                        @if (Model.ParticipantList.User.SmsSent == true)
+                        {
+                            <span>
+                                (<i class="fa fa-check"></i>)
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                (<i class="fa fa-times"></i>)
+                            </span>
+
+                        }
+                        <form method="post">
+                            <input asp-for="UserId" type="hidden" value="@Model.ParticipantList.UserId" />
+                            <input asp-for="ParticipantId" type="hidden" value="@Model.ParticipantList.Id" />
+
+                            <input asp-for="SendSMS" type="hidden" value="true" />
+                            <button type="submit" class="btn btn-primary btn-xs">Resend SMS</button>
+                        </form>
+                    </dd>
+                    <dt class="col-sm-2">
+                        First Login Details
+                    </dt>
+                    <dd class="col-sm-10">
+                        Email: @Model.ParticipantList.User.Email <br />
+                        @if (Model.ParticipantList.User.ResetPassword == false)
+                        {
+                            <p>
+                                <i>User Already Login</i>
+                            </p>
+                        }
+                        else
+                        {
+                            <span> Temporal Password: @Model.ParticipantList.User.TempPass</span>
+
+                            <br />
+                            <p>
+                                <i>Kindly copy and send to the user</i>
+                            </p>
+                        }
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

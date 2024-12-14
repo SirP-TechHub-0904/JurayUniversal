@@ -1,0 +1,129 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IModal.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE MODAL</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Are you sure you want to delete this?</h3>
+                <div>
+                    <h4>PostModal</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ImageUrl)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ImageUrl)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ImageKey)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ImageKey)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.Title)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ModalTime)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ModalTime)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ModalOccurance)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ModalOccurance)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.StartTime)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.StartTime)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.StopTime)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.StopTime)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ShowOnlyImage)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ShowOnlyImage)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ShowTitle)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ShowTitle)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ShowDescription)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ShowDescription)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.ShowImage)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.ShowImage)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.PostModal.Publish)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.PostModal.Publish)
+                        </dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="PostModal.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

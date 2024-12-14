@@ -1,0 +1,67 @@
+﻿@page
+@model JurayUniversal.Website.V2.Pages.Authv2.Account.LoginWith2faModel
+@{
+    @await Component.InvokeAsync("Redirect")
+    @if (Model.SuperSetting.LoginTemplateKey == "Login1111")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginOne.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login2222")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginTwo.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login333")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginThree.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login4444")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFour.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login5555")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFive.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login6666")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/AgileVendorLogin/_AgileVendorLogin.cshtml";
+    }
+    ViewData["Title"] = "Two-factor authentication";
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+<div class="">
+    <div class="">
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <input asp-for="RememberMe" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <label asp-for="Input.TwoFactorCode" class="form-label"></label>
+
+                <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
+            </div>
+            <div>
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMachine" class="form-label">
+                        <input asp-for="Input.RememberMachine" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMachine)
+                    </label>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p>
+    Don't have access to your authenticator device? You can
+    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
+</p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,158 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.UserEvaluationPage.ViewEvaluationResultModel
+@{
+}
+
+<div class="card">
+     
+
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;margin:0 auto !important">
+                <div class="" style="text-align:center;margin:0 auto;">
+                    <img src="~/images/logo.png" style="text-align:center;margin:0 auto;height:100px;" />
+                </div>
+
+                <h4 class="center">
+                    <span style="font-weight:800;"> RESOURCE PERSON'S EVALUATION FORM</span>
+                </h4>
+                <h5 class="center">
+                    <span style="font-weight:800;">National Institute for Policy and Strategic Studies, Kuru</span>
+                </h5>
+                
+            </div>
+        </div>
+        <div class="row">
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Date</th>
+                    <td>@Model.Moderator.TimeTable.Date.ToString("ddd dd MMM, yyyy")</td>
+                </tr>
+                <tr>
+                    <th>Topic discussed</th>
+                    <td>@Model.Moderator.TimeTable.Content</td>
+                </tr>
+                <tr>
+                    <th>Name of the Resource Person</th>
+
+                    <td>
+                        @if (Model.Moderator.User != null)
+                        {
+                            @Model.Moderator.User.FullnameX
+                        }
+                        else
+                        {
+                            @Model.Moderator.Fullname
+                        }
+
+
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-8" style="text-align:center;margin:0 auto !important">
+            <h2>Response Distribution</h2>
+            <canvas id="responseChart" width="400" height="200"></canvas>
+        </div>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Participant</th>
+                        @foreach (var question in Model.ParticipantEvaluations.SelectMany(pe => pe.Responses.Keys).Distinct())
+                        {
+                            <th>@question</th>
+                        }
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    @for (int i = 0; i < Model.ParticipantEvaluations.Count; i++)
+                    {
+                        var evaluation = Model.ParticipantEvaluations[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@evaluation.ParticipantName</td>
+                            @foreach (var question in Model.ParticipantEvaluations.SelectMany(pe => pe.Responses.Keys).Distinct())
+                            {
+                                <td>@(evaluation.Responses.TryGetValue(question, out var response) ? ResponseLabel(response) : "-")</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ctx = document.getElementById('responseChart').getContext('2d');
+            var chartData = {
+                labels: @Html.Raw(Json.Serialize(Model.QuestionResponseCounts.Keys.ToList())),
+                datasets: []
+            };
+
+            var responseLabels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+            var responseColors = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#2ecc71'];
+
+            var responseCountsData = @Html.Raw(Json.Serialize(Model.QuestionResponseCounts));
+
+            for (var i = 1; i <= 5; i++) {
+                var responseCounts = [];
+                for (var question in responseCountsData) {
+                    responseCounts.push(responseCountsData[question][i] || 0);
+                }
+                chartData.datasets.push({
+                    label: responseLabels[i - 1],
+                    backgroundColor: responseColors[i - 1],
+                    data: responseCounts
+                });
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true }
+                    }
+                }
+            });
+        });
+    </script>
+}
+@functions {
+    private string ResponseLabel(int response)
+    {
+        return response switch
+        {
+            1 => "Strongly Disagree",
+            2 => "Disagree",
+            3 => "Neutral",
+            4 => "Agree",
+            5 => "Strongly Agree",
+            _ => "-"
+        };
+    }
+}

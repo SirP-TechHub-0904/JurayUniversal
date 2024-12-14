@@ -1,0 +1,310 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings.CreateModel
+
+@{
+    ViewData["Title"] = "Create"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<h1>Create</h1>
+
+<h4>DashboardSetting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DashboardSetting.ActivityProgramTitle" class="control-label"></label>
+                <input asp-for="DashboardSetting.ActivityProgramTitle" class="form-control" />
+                <span asp-validation-for="DashboardSetting.ActivityProgramTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ShowActivityProgram" /> @Html.DisplayNameFor(model => model.DashboardSetting.ShowActivityProgram)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.UserCustomDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.UserCustomDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.StatisticsDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.StatisticsDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ChartsDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.ChartsDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ProjectsDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.ProjectsDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.CommunicationDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.CommunicationDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.UsersDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.UsersDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.FinanceDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.FinanceDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.OrderDashboard" /> @Html.DisplayNameFor(model => model.DashboardSetting.OrderDashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateProject" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProject)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateUserManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUserManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateUser" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUser)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateRoles" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateRoles)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateAttendance" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateAttendance)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateReport" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReport)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateTask" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTask)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateTrainings" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTrainings)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateSalaries" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSalaries)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateJobReferrals" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateJobReferrals)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivatePaymentOnFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivatePaymentOnFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateBudgetOnFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBudgetOnFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateExpensesOnFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateExpensesOnFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateAccountsOnFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateAccountsOnFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateReportOnFinanceManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReportOnFinanceManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateProposalManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProposalManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateUserReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUserReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateVisitorsReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateVisitorsReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateProjectReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProjectReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateCommunicationReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateCommunicationReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateContentReportAndAnalysis" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContentReportAndAnalysis)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateContentManagement" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContentManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivatePagesContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivatePagesContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateBlogContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBlogContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateProductContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProductContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateFaqContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateFaqContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateTestimonyContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTestimonyContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateSliderContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSliderContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateContactInformationContent" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContactInformationContent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateSiteMap" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSiteMap)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateCommnunicationTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateCommnunicationTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateForumCommnunicationTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateForumCommnunicationTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateChatCommnunicationTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateChatCommnunicationTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateNoticeBoardCommnunicationTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateNoticeBoardCommnunicationTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateContactUsCommnunicationTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContactUsCommnunicationTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateManagementTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateManagementTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateSmsTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSmsTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateEmailTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateEmailTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateNewsletterTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateNewsletterTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateBirthdayTools" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBirthdayTools)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateSettings" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSettings)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateOrder" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateOrder)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DashboardSetting.ActivateOfficeActivity" /> @Html.DisplayNameFor(model => model.DashboardSetting.ActivateOfficeActivity)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,403 @@
+﻿@model JurayUniversal.Domain.Models.SuperSetting
+@*@if(Model.ActivateOnlyAuthorizedDevice == true)
+    {
+
+    }*@
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Major/Index" asp-area="Dashboard" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Main/Index" asp-area="Dashboard" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Manager/Index" asp-area="Dashboard" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("Editor"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Editor/Index" asp-area="Dashboard" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("mSuperAdmin"))
+{
+
+
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">EDITOR</li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Content Management
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Pages
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IProduct/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Product
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IBlogs/Post/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Blog
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/ISliders/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Banner Slider
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/ITestimony/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Testimony
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IFaq/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        FAQ
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IModal/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Page Modal
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("mSuperAdmin"))
+{
+
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard Setting
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a asp-page="/IDashboardSettings/ISettings/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Settings
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/IDashboardSettings/IData/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Dashboad Data
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/IDashboardSettings/IDataList/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Dashboad DataList
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Company Program
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a asp-page="/IPrograms/Category/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Category
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IPrograms/ProgramData/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Program
+                    </p>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/IUserCategory/Index" asp-area="Content" class="nav-link">
+            <i class="nav-icon fas fa-circle nav-icon"></i>
+            <p class="uppercase">
+                User/Account Category
+            </p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a asp-page="/AuthV2/Auth/Index" asp-area="V2" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Personal Info.
+            </p>
+        </a>
+    </li>
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("mSuperAdmin"))
+{
+
+
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">DATA</li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Tools
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Contact Us Request
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Subscribers
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        SMS
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Emails
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Deliveries
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/WebSetting/Index" asp-area="Content" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Settings
+            </p>
+        </a>
+    </li>
+
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/WebSetting/UiProperty" asp-area="Content" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Advance Settings
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/WebSetting/DesignSettings" asp-area="Content" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Config. & Style
+            </p>
+        </a>
+    </li>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Security") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/AuthVAdmin/List" asp-area="V2" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Roles
+            </p>
+        </a>
+    </li>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">CONFIGURATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Index" asp-area="UI" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Theme Preview
+            </p>
+        </a>
+    </li>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
+    {
+        <li class="nav-item">
+            <a asp-page="/Users/Index" asp-area="Management" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p class="uppercase">
+                    Mx Users
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ISettings/Index" asp-area="Content" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p class="uppercase">
+                    Settings
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Dashboard/Index" asp-area="Management" class="nav-link" target="_blank">
+                <i class="nav-icon fas fa-th"></i>
+                <p class="uppercase">
+                    Site Management
+                </p>
+            </a>
+        </li>
+    }
+}
+
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">SECURITY & PRIVACY</li>
+
+<li class="nav-item">
+    <a asp-page="/AuthV2/Auth/Index" asp-area="V2" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Personal Info.
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/AuthV2/Auth/EnableAuthenticator" asp-area="V2" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+
+            2-Step Verification
+        </p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a asp-page="/AuthV2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Change Password
+        </p>
+    </a>
+</li>

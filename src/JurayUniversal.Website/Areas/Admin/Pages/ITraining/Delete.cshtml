@@ -1,0 +1,88 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ITraining.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE TRAINING</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+<h3>Are you sure you want to delete this?</h3>
+<div>
+     
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Topic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Topic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.DocumentUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.DocumentUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.DocumentKey)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.DocumentKey)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.CloseTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.CloseTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.QuestionsAndAnswers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.QuestionsAndAnswers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Moderator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Moderator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Training.Trainner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Training.Trainner.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Training.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

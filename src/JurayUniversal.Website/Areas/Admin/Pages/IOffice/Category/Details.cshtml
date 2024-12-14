@@ -1,0 +1,37 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IOffice.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">OFFICE ACTIVITY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.OfficeActivityCategory.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.OfficeActivityCategory.Title)
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- /.row -->
+</div>
+<!-- /.card-body -->
+<div class="card-footer">
+</div>
+</div>

@@ -1,0 +1,55 @@
+﻿@page
+@model JurayUniversal.Website.V2.Pages.Authv2.Account.LoginWithRecoveryCodeModel
+@{
+    @await Component.InvokeAsync("Redirect")
+    @if (Model.TemplateLogin == "Login1111")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginOne.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login2222")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginTwo.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login333")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginThree.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login4444")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFour.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login5555")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFive.cshtml";
+    }
+    else if (Model.SuperSetting.LoginTemplateKey == "Login6666")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/AgileVendorLogin/_AgileVendorLogin.cshtml";
+    }
+    ViewData["Title"] = "Recovery code verification";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<p>
+    You have requested to log in with a recovery code. This login will not be remembered until you provide
+    an authenticator app code at log in or disable 2FA and log in again.
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <label asp-for="Input.RecoveryCode" class="form-label"></label>
+
+                <input asp-for="Input.RecoveryCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

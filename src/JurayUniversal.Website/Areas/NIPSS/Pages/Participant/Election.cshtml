@@ -1,0 +1,41 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.ElectionModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ELECTIONS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    @foreach (var item in Model.Evoting)
+                    {
+                        <div class="col-md-4">
+                            <a asp-page="./EVoting" asp-route-id="@item.Id" style="">
+
+                                <!-- small box -->
+                                <div class="small-box bg-default">
+                                    <div class="inner">
+
+                                        <h3 style="white-space: inherit;">@item.Title</h3>
+
+
+                                        <p>Election Date (@item.DateToStart.ToString("ddd dd MMM, yyyy"))</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

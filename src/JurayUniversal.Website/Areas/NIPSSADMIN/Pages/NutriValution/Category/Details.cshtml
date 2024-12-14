@@ -1,0 +1,120 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.NutriValution.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS NUTRITION CATEGORY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.NutritionCategory.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.NutritionCategory.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.NutritionCategory.Disable)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.NutritionCategory.Disable)
+                    </dd>
+                </dl>
+            </div>
+            <div>
+                <a asp-page="./Edit" asp-route-id="@Model.NutritionCategory.Id" class="btn btn-warning">Edit</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <h4>QUESTIONS</h4>
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NutritionCategoryLists[0].Question)
+                        </th>
+
+                        <th>Result Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.NutritionCategoryLists)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Question)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ResultType)
+                            </td>
+
+                            <td>
+                                <form method="post" asp-page-handler="Delete">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <a asp-page="/NutriValution/Questions/Edit" asp-route-id="@item.Id" class="btn btn-primary btn-xs">Edit</a>
+
+                                    <input type="submit" value="Delete" class="btn btn-danger btn-xs" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>ADD QUESTIONS</h4>
+                <form method="post">
+                    <input type="hidden" asp-for="NutritionCategoryList.NutritionCategoryId" value="@Model.NutritionCategory.Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NutritionCategoryList.Question" class="control-label"></label>
+                        <input asp-for="NutritionCategoryList.Question" class="form-control" />
+                        <span asp-validation-for="NutritionCategoryList.Question" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NutritionCategoryList.ResultType" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.NutritionCategoryList.ResultType, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ResultType))), new { @class = "form-control" })
+                        <span asp-validation-for="NutritionCategoryList.ResultType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+</div>

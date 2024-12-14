@@ -1,0 +1,142 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.TrainingDetailsModel
+
+@{
+    ViewData["Title"] = "TrainingDetails";
+}
+<!-- Default box -->
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">
+
+            Training Held on @Model.Training.Date.Date.ToString("ddd dd MMM, yyyy")
+        </h4>
+
+        <a asp-page="./StaffTraining" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                <div class="row">
+                    <div class="col-12 col-sm-3">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Start Time</span>
+                                <span class="info-box-number text-center text-muted mb-0">
+                                    @if (Model.Training.StartTime != null)
+                                    {
+                                        @Model.Training.StartTime.Value.ToString("hh:mm tt")
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Close Time</span>
+                                <span class="info-box-number text-center text-muted mb-0">
+                                    @if (Model.Training.CloseTime != null)
+                                    {
+                                        @Model.Training.CloseTime.Value.ToString("hh:mm tt")
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Attendance</span>
+                                <span class="info-box-number text-center text-muted mb-0">@Model.Training.TrainingAttendances.Count()</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="info-box bg-light">
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center text-muted">Status</span>
+                                <span class="info-box-number text-center text-muted mb-0">
+                                    @if(Model.Training.TrainingStatus == JurayUniversal.Domain.Enum.Enum.TrainingStatus.Done)
+                                    {
+                                        <span class="btn btn-success btn-xs"> @Html.DisplayFor(model => model.Training.TrainingStatus)</span>
+                                    }
+                                    else if (Model.Training.TrainingStatus == JurayUniversal.Domain.Enum.Enum.TrainingStatus.Canceled)
+                                    {
+                                        <span class="btn btn-warning btn-xs"> @Html.DisplayFor(model => model.Training.TrainingStatus)</span>
+                                    }
+                                    else if (Model.Training.TrainingStatus == JurayUniversal.Domain.Enum.Enum.TrainingStatus.Missed)
+                                    {
+                                        <span class="btn btn-danger btn-xs"> @Html.DisplayFor(model => model.Training.TrainingStatus)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-default btn-xs"> @Html.DisplayFor(model => model.Training.TrainingStatus)</span>
+                                    }
+                                   </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="info-box-two bg-light" style="padding:20px;">
+
+                            <a href="#" class="btn btn-primary" style="margin-right: 5px;color:white;" download="">
+                                <i class="fas fa-download"></i> Download Presentation
+                            </a>
+                            <hr />
+                            <h4>Questions And Answers</h4>
+                            <div class="post">
+
+                                @Html.Raw(Model.Training.QuestionsAndAnswers)
+                            </div>
+                            <br /><br />
+                             
+                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                <div class="info-box-two bg-light">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2"> <h3 class="text-primary"><i class="fas fa-users"></i> Attendance</h3></th>
+
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr> @if (Model.Training.TrainingAttendances.Count() > 0)
+                            {
+                                foreach (var u in Model.Training.TrainingAttendances)
+                                {
+
+                                    <tr>
+                                        <th style="width:60%;">@u.User.GetFullName()</th>
+                                        <th style="width:40%;">@u.Time.ToString("hh:mm tt")</th>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th colspan="2"> NO ONE PRESENT IN THE TRAINING</th>
+                                </tr>
+
+                            }
+
+                        </thead>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,56 @@
+﻿@page
+@model JurayUniversal.Website.Pages.X.IndexModel
+@{
+    Layout = "/Pages/Shared/Admin/_User.cshtml";
+}
+<div class="">
+    <div class="row">
+        <div class="col-md-12">
+            @await Component.InvokeAsync("Map", new { sn = "fvffvfdv" })
+        </div>
+       
+    </div>
+</div>
+
+<!--<div class="">
+    <div class="row">
+        <div class="col-md-4">
+            @await Component.InvokeAsync("PieChart", new { sn = "mmn" })
+        </div>
+        <div class="col-md-4">
+            @await Component.InvokeAsync("PieChart", new { sn = "dfv" })
+        </div>
+        <div class="col-md-4">
+            @await Component.InvokeAsync("PieChart", new { sn = "sssa" })
+        </div>
+    </div>
+</div>
+
+
+<div class="">
+    <div class="row">
+        <div class="col-md-4">
+            @await Component.InvokeAsync("BarChart", new { sn = "saaaa", title = "CENSUS POPULATION" })
+        </div>
+        <div class="col-md-4">
+            @await Component.InvokeAsync("BarChart", new { sn = "reertg", title = "BIRTHDAYS" })
+        </div>
+        <div class="col-md-4">
+            @await Component.InvokeAsync("BarChart", new { sn = "nbfdsa", title = "EMPLOYMENTS" })
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="row">
+        <div class="col-md-4">
+            @await Component.InvokeAsync("Histogram", new { sn = "hsdfghr", title = "AAA CENSUS POPULATION" })
+        </div>-->
+        @*<div class="col-md-4">
+                @await Component.InvokeAsync("BarChart", new { sn = "reertg", title = "BIRTHDAYS" })
+            </div>
+            <div class="col-md-4">
+                @await Component.InvokeAsync("BarChart", new { sn = "nbfdsa", title = "EMPLOYMENTS" })
+            </div>*@
+    <!--</div>
+</div>-->
+

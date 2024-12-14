@@ -1,0 +1,53 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Account.UpdateMealEvaluationModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">FORM FOR ASSESSMENT OF NUTRITIONAL/DIETARY REQUIREMENTS AND PREFERENCES</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    int sn = 0;
+                }
+                @*@foreach (var item in Model.NutritionCategoryList)
+                    {
+
+                        <div class="">
+                            @{
+                                sn++;
+                            }
+                            <div class="card-header">
+                                <h4 class="card-title" style="font-size: 1rem;">
+                                    (@sn) @item.Name
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <ul style="list-style-type: lower-roman;">
+                                    @foreach (var list in item.NutritionCategoryList)
+                                    {
+                                        <li>
+                                            @list.Question  <span style="margin-left:40px;border:1px solid black;padding:5px 13px;">
+                                                @await Component.InvokeAsync("UserEvaluationResult", new { id = list.Id, userId = Model.UserDatas.Id })
+                                            </span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
+                        </div>
+                    }*@
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

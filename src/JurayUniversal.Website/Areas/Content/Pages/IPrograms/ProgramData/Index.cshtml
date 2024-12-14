@@ -1,0 +1,106 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPrograms.ProgramData.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PROGRAM DATA LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].CompanyProgramCategory)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].State)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].Show)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgram[0].SortOrder)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.CompanyProgram)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CompanyProgramCategory.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Show)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SortOrder)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

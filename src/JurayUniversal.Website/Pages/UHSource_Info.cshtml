@@ -1,0 +1,461 @@
+﻿@page "/UHSource_Info/{id}/{title}"
+@model JurayUniversal.Website.Pages.UHSource_InfoModel
+@using System.Text.RegularExpressions;
+
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+@{
+    ViewData["Title"] = Model.Product.Title;
+
+    ViewData["PageName"] = Model.Product.Title;
+    ViewData["Description"] = Model.Product.ShortDescription;
+    ViewData["Image"] = Model.Product.ImageUrl;
+
+    @if (Model.Templatechoose == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+
+@await Component.InvokeAsync("BreadcrumOthers", new { data = Model.Product.Title })
+@if (Model.Setting.ActivateProductsInHome == true || Model.Setting.ShowProductsInFooter == true)
+{
+    if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+
+        <div class="section-block">
+            <div class="container">
+                <div class="row">
+                    <!-- Left Side START -->
+                    <div class="col-md-9 col-sm-8 col-12">
+                        <div class="blog-list-left">
+                            <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title">
+
+                            <div class="blog-title-box">
+                                <h2>@Model.Product.Title</h2>
+
+                            </div>
+
+                            <div class="blog-post-content">
+                                @Html.Raw(Model.Product.FullDescription)
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+        <section class="section-padding no-top gray ">
+            <!-- Main Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+
+                    <!-- Middle Content Area -->
+                    <div class="col-md-8 col-xs-12 col-sm-12">
+                        <div class="pricing-area">
+                            <div class="col-md-9 col-xs-12 col-sm-8">
+                                <div class="heading-zone">
+                                    <h1>@Model.Product.Title</h1>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 detail_price col-xs-12">
+                                <div class="singleprice-tag">@Model.Product.Amount</div>
+                            </div>
+                        </div>
+                        <!-- Single Ad -->
+                        <div class="singlepage-detail ">
+                            <div class="featured-ribbon">
+                                <span>@Model.Product.StatusNote</span>
+                            </div>
+                            <div id="single-slider" class="flexslider">
+                                <ul class="slides">
+                                    @foreach (var list in Model.Product.ProductSamples)
+                                    {
+                                        <li>
+                                            <a href="@list.ImageUrl" data-fancybox="group"><img alt="" src="@list.ImageUrl" /></a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div id="carousel" class="flexslider">
+                                <ul class="slides">
+                                    @foreach (var list in Model.Product.ProductSamples)
+                                    {
+                                        <li>
+                                            <img alt="" src="@list.ImageUrl">
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
+                            <div class="content-box-grid">
+                                <!-- Heading Area -->
+                                <div class="short-features">
+                                    <!-- Heading Area -->
+
+                                    <p>
+                                        @Model.Product.ShortDescription
+                                    </p>
+                                    @foreach (var list in Model.Product.ProductFeatures)
+                                    {
+                                        <div class="col-sm-4 col-md-4 col-xs-12 no-padding">
+                                            <span><strong>@list.Title</strong> :</span> @list.Description
+                                        </div>
+                                    }
+
+                                </div>
+                                <!-- Short Features  -->
+                                <div class="short-features">
+                                    <!-- Ad Specifications -->
+                                    <div class="specification">
+                                        <!-- Heading Area -->
+                                        <div class="heading-panel">
+                                            <h3 class="main-title text-left">
+                                                Description
+                                            </h3>
+                                        </div>
+                                        @Html.Raw(Model.Product.FullDescription)
+
+                                    </div>
+
+                                </div>
+                                <!-- Short Features  -->
+                                <div class="clearfix"></div>
+                            </div>
+                            @if (!String.IsNullOrEmpty(Model.Product.VideoUrl))
+                            {
+                                <div class="list-style-1 margin-top-20">
+                                    <div class="panel with-nav-tabs panel-default">
+                                        <div class="panel-heading">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#tab3default" data-toggle="tab">Video</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="tab-content">
+                                                <div class="tab-pane in active fade" id="tab3default">
+                                                    <div class="video-container">
+                                                        <video controls>
+                                                            <source src="@Model.Product.VideoUrl" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <!-- Share Ad  -->
+                        </div>
+
+
+                        <!-- =-=-=-=-=-=-= Latest Ads End =-=-=-=-=-=-= -->
+                    </div>
+
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </section>
+    }
+
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+        <section class="blog-pg section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="posts">
+                            <div class="item mb-80">
+                                <div class="img">
+                                    <a href="blog-details.html">
+                                        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title" class="thumparallax">
+                                    </a>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <div class="content">
+
+                                            <h4 class="title">
+
+                                                @Model.Product.Title
+
+                                            </h4>
+                                            <p>
+                                                @Html.Raw(Model.Product.FullDescription)
+
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        <div id="rs-single-shop" class="rs-single-shop pt-100 pb-100 md-pt-80 sm-pb-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 sm-mb-30">
+                        <div class="single-product-image">
+                            <div class="images-single">
+                                <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="single-price-info pl-30 sm-pl-0">
+                            <h4 class="product-title">@Model.Product.Title</h4>
+
+                            <p class="some-text">
+                                @Html.Raw(Model.Product.FullDescription)
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+        <section id="blog-single" class="blog-single">
+            <div class="container">
+                <!-- Blog Main Wrap -->
+                <div class="blog-main-wrap blog-list">
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Col -->
+                        <div class="col-lg-8">
+                            <!-- blog-wrap -->
+                            <div class="blog-wrap">
+                                <!-- blog-info-wrap -->
+                                <div class="blog-info-wrap">
+                                    <!-- blog img -->
+                                    <div class="blog-thumb mb-4 pb-2">
+                                        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title" class="img-fluid">
+                                    </div>
+                                    <!-- Meta -->
+                                    <div class="post-meta top-meta pb-4 mb-4">
+                                        <div class="pull-left">
+                                            <ul class="nav">
+                                                <li class="nav-item">
+                                                    <div class="post-date">
+
+                                                        <h3>@Model.Product.Title </h3>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="pull-right">
+
+                                        </div>
+                                    </div>
+                                    <!-- Meta -->
+                                    <div class="blog-content pb-5">
+                                        <p>  @Html.Raw(Model.Product.FullDescription)</p>
+
+                                    </div>
+                                    <!-- Meta -->
+                                    <div class="post-meta bottom-meta pb-4 mb-4">
+
+                                        <div class="pull-right">
+
+                                        </div>
+                                    </div>
+                                    <!-- Meta -->
+                                </div>
+                                <!-- blog-info-wrap -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+
+
+                                </div>
+                                <!-- Col -->
+                            </div>
+                            <!-- Row -->
+                        </div>
+
+                    </div>
+                    <!-- Row -->
+                </div>
+
+            </div>
+            <!-- Container -->
+        </section>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        <section class="product_single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="product_image ">
+                            <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title" class="img-fluid">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="product_details">
+                            <div class="product_header clearfix">
+                                <div class="left">
+                                    <h2>"@Model.Product.Title"</h2>
+
+                                </div>
+
+                            </div>
+                            <div class="product_features">
+                                <p>@Html.Raw(Model.Product.FullDescription)</p>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="related_products">
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-shadow">
+                            <div class="post shadow-none">
+                                <div class="post-image">
+                                    <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title">
+
+                                </div>
+                                <div class="post-desc pb-0">
+                                    <div class="post-title">
+                                        <h4>@Model.Product.Title</h4>
+                                    </div>
+                                    <p class="mb-0 line-h-3">@Html.Raw(Model.Product.FullDescription)</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        <div class="issues-around-us-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="blog-details-items">
+                            <div class="thumb">
+                                <img src="@Model.Product.ImageUrl" alt="@Model.Product.Title">
+                            </div>
+                            <div class="blog-details-item-header">
+
+                            </div>
+                            <h2 class="title">@Model.Product.Title </h2>
+                            <p> @Html.Raw(Model.Product.FullDescription)</p>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}

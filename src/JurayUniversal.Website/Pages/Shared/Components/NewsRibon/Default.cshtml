@@ -1,0 +1,38 @@
+﻿@model ICollection<JurayUniversal.Website.Pages.Shared.ViewComponents.RibonDto>
+
+
+ 
+
+
+<div class="containerx custom-data">
+    <div class="headertext">@ViewBag.rbTitle</div>
+
+    <div>
+        <marquee style=""
+                 onmouseover="this.stop();" onmouseout="this.start();"
+                 direction="left" behavior="scroll" scrollamount="7">
+            @foreach (var item in Model)
+            {
+                if (item.Id.ToString() == "0")
+                {
+                    <a href="#">@item.Title</a>
+                }
+                else if (item.Id.ToString() == "Direct")
+                {
+                    <a href="@item.PathDirectUrl"> @item.Title</a>
+                }
+                else if (item.Id.ToString() == "00")
+                {
+                    <a asp-page="/Contact">@item.Title</a>
+                }
+                else
+                {
+
+                    <a asp-page="@item.Path" asp-route-id="@item.Id" asp-route-title="@item.Title" style="">@item.Title</a>
+
+                }
+            }
+        </marquee>
+    </div>
+</div>
+ 

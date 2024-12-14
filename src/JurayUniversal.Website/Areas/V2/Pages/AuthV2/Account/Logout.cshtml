@@ -1,0 +1,46 @@
+﻿@page
+@model JurayUniversal.Website.V2.Pages.Authv2.Account.LogoutModel
+@{
+    @await Component.InvokeAsync("Redirect")
+    @if (Model.TemplateLogin == "Login1111")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginOne.cshtml";
+    }
+    else if (Model.TemplateLogin == "Login2222")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginTwo.cshtml";
+    }
+    else if (Model.TemplateLogin == "Login333")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginThree.cshtml";
+    }
+    else if (Model.TemplateLogin == "Login4444")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFour.cshtml";
+    }
+    else if (Model.TemplateLogin == "Login5555")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFive.cshtml";
+    }
+    else if (Model.TemplateLogin == "Login6666")
+    {
+        Layout = "/Pages/Shared/Layouts/LoginSection/AgileVendorLogin/_AgileVendorLogin.cshtml";
+    }
+    ViewData["Title"] = "Log out";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+            </form>
+        }
+        else
+        {
+            <p>You have successfully logged out of the application.</p>
+        }
+    }
+</header>

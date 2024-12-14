@@ -1,0 +1,13 @@
+﻿@{
+    //Layout = "/Pages/Shared/Admin/_Main.cshtml";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}

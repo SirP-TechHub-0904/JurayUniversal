@@ -1,0 +1,60 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.StaffTrainingSheduleModel
+
+@{
+    ViewData["Title"] = "StaffTrainingShedule";
+}
+
+<h1>StaffTrainingShedule</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingSchedule[0].Topic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingSchedule[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingSchedule[0].Moderator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingSchedule[0].Trainner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingSchedule[0].TrainingStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TrainingSchedule) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Topic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Moderator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trainner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingStatus)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

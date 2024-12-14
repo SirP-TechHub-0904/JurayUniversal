@@ -1,0 +1,111 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.XProjectPage.XP.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PROJECT LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].FullDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].CreatedDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].DateToStartTesting)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].DateToGoLive)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.XProject[0].Priority)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.XProject)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateToStartTesting)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateToGoLive)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Priority)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/IBlogs/Post/PostList" asp-route-id="@item.Id">Posts</a>
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

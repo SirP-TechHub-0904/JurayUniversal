@@ -1,0 +1,114 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ICareer.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW CAREER</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.Fullname" class="control-label"></label>
+                        <input asp-for="CareerFile.Fullname" class="form-control" />
+                        <span asp-validation-for="CareerFile.Fullname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.Email" class="control-label"></label>
+                        <input asp-for="CareerFile.Email" class="form-control" />
+                        <span asp-validation-for="CareerFile.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.Phone" class="control-label"></label>
+                        <input asp-for="CareerFile.Phone" class="form-control" />
+                        <span asp-validation-for="CareerFile.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.ContactAddress" class="control-label"></label>
+                        <input asp-for="CareerFile.ContactAddress" class="form-control" />
+                        <span asp-validation-for="CareerFile.ContactAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.Position" class="control-label"></label>
+                        <input asp-for="CareerFile.Position" class="form-control" />
+                        <span asp-validation-for="CareerFile.Position" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.DOB" class="control-label"></label>
+                        <input asp-for="CareerFile.DOB" class="form-control" />
+                        <span asp-validation-for="CareerFile.DOB" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.CvUrl" class="control-label"></label>
+                        <input asp-for="CareerFile.CvUrl" class="form-control" />
+                        <span asp-validation-for="CareerFile.CvUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.CvKey" class="control-label"></label>
+                        <input asp-for="CareerFile.CvKey" class="form-control" />
+                        <span asp-validation-for="CareerFile.CvKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.CertificateUrl" class="control-label"></label>
+                        <input asp-for="CareerFile.CertificateUrl" class="form-control" />
+                        <span asp-validation-for="CareerFile.CertificateUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.CertificateKey" class="control-label"></label>
+                        <input asp-for="CareerFile.CertificateKey" class="form-control" />
+                        <span asp-validation-for="CareerFile.CertificateKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.ApplicationUrl" class="control-label"></label>
+                        <input asp-for="CareerFile.ApplicationUrl" class="form-control" />
+                        <span asp-validation-for="CareerFile.ApplicationUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.ApplicationKey" class="control-label"></label>
+                        <input asp-for="CareerFile.ApplicationKey" class="form-control" />
+                        <span asp-validation-for="CareerFile.ApplicationKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.PassportUrl" class="control-label"></label>
+                        <input asp-for="CareerFile.PassportUrl" class="form-control" />
+                        <span asp-validation-for="CareerFile.PassportUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.PassportKey" class="control-label"></label>
+                        <input asp-for="CareerFile.PassportKey" class="form-control" />
+                        <span asp-validation-for="CareerFile.PassportKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CareerFile.Date" class="control-label"></label>
+                        <input asp-for="CareerFile.Date" class="form-control" />
+                        <span asp-validation-for="CareerFile.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

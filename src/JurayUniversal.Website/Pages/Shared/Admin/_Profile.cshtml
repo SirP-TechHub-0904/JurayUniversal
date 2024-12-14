@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @await Component.InvokeAsync("PortfolioAdminHeadeTitle")
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="~/dashboard/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dashboard/dist/css/adminlte.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="~/dashboard/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="~/dashboard/plugins/toastr/toastr.min.css">
+
+    <link rel="stylesheet" href="~/dashboard/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .content-header h1 {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        @await Component.InvokeAsync("PortfolioNavigationHeadeTitle")
+
+        <!-- /.navbar -->
+        <!-- Content Wrapper. Contains page content -->
+       
+
+        <div class="content-wrapper">
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container" style="padding:20px;">
+                    @RenderBody()
+
+
+                </div>
+            </div>
+
+        </div>
+
+        @await Component.InvokeAsync("PortfolioFooter")
+
+    </div>
+
+    <script src="~/dashboard/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dashboard/dist/js/adminlte.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="~/dashboard/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Toastr -->
+    <script src="~/dashboard/plugins/toastr/toastr.min.js"></script>
+
+
+    <script src="~/dashboard/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/dashboard/plugins/jszip/jszip.min.js"></script>
+    <script src="~/dashboard/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/dashboard/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/dashboard/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "responsive": true,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            });
+
+            $("#example3").DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "lengthMenu": false,
+                "responsive": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        });
+    </script>
+
+
+    @if (TempData["success"] != null)
+    {
+        <script>
+
+            toastr.success('@TempData["success"]')
+        </script>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <script>
+
+            toastr.success('@TempData["error"]')
+        </script>
+    }
+    @if (TempData["info"] != null)
+    {
+        <script>
+
+            toastr.success('@TempData["info"]')
+        </script>
+    }
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote();
+        });
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPrograms.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS PROGRAM CATEGORY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CompanyProgramCategory.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CompanyProgramCategory.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CompanyProgramCategory.Publish)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CompanyProgramCategory.Publish)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CompanyProgramCategory.ShowInMenu)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CompanyProgramCategory.ShowInMenu)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CompanyProgramCategory.ShowInDashboard)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CompanyProgramCategory.ShowInDashboard)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>

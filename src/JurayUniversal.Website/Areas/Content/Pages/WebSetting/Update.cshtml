@@ -1,0 +1,686 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.WebSetting.UpdateModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE SETTINGS</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class=" ">ABOUT COMPANY</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="todo-list" data-widget="todo-list">
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.CompanyName" class="control-label"></label>
+                                        <input asp-for="SuperSetting.CompanyName" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.CompanyName" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+
+                                    <div class="form-group">
+                                        <label class="control-label" asp-for="SuperSetting.CompanyDescription"></label><br />
+
+                                        <textarea asp-for="SuperSetting.CompanyDescription" class="form-control "></textarea>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.CompanyWebsiteLink" class="control-label"></label>
+                                        <input asp-for="SuperSetting.CompanyWebsiteLink" class="form-control" placeholder="abcd.com or xinfo.com.ng etc"/>
+                                        <span asp-validation-for="SuperSetting.CompanyWebsiteLink" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.WebsiteTitle" class="control-label"></label>
+                                        <input asp-for="SuperSetting.WebsiteTitle" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.WebsiteTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    @if (!String.IsNullOrEmpty(Model.SuperSetting.CompanyLogoUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Previouse Company Logo </label><br />
+                                            <img src="@Model.SuperSetting.CompanyLogoUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label">Company Logo </label><br />
+                                        <input type="file" class="control-label" asp-for="imagefilecompany" accept="image/*" />
+                                    </div>
+                                </li>
+                                <li>
+                                    @if (!String.IsNullOrEmpty(Model.SuperSetting.CompanyWhiteLogoUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Previouse Company White Logo </label><br />
+                                            <img src="@Model.SuperSetting.CompanyWhiteLogoUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label">Company White Logo </label><br />
+                                        <input type="file" class="control-label" asp-for="imagefilewhitecompany" accept="image/*" />
+                                    </div>
+                                </li>
+                                <li>
+                                    @if (!String.IsNullOrEmpty(Model.SuperSetting.CompanyIconUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Previouse Company Icon </label><br />
+                                            <img src="@Model.SuperSetting.CompanyIconUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label">Company Icon </label><br />
+                                        <input type="file" class="control-label" asp-for="imagefilecompanyicon" accept="image/*" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.ProductTitle" class="control-label"></label>
+                                        <input asp-for="SuperSetting.ProductTitle" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.ProductTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.ProductTitleHome" class="control-label"></label>
+                                        <input asp-for="SuperSetting.ProductTitleHome" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.ProductTitleHome" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.Qoute" class="control-label"></label>
+                                        <textarea asp-for="Setting.Qoute" class="form-control"></textarea>
+                                        <span asp-validation-for="Setting.Qoute" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.TopNote" class="control-label"></label>
+                                        <input asp-for="Setting.TopNote" class="form-control" />
+                                        <span asp-validation-for="Setting.TopNote" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.FacebookPage" class="control-label"></label>
+                                        <input asp-for="Setting.FacebookPage" class="form-control" />
+                                        <span asp-validation-for="Setting.FacebookPage" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.InstagramPage" class="control-label"></label>
+                                        <input asp-for="Setting.InstagramPage" class="form-control" />
+                                        <span asp-validation-for="Setting.InstagramPage" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.TwitterPage" class="control-label"></label>
+                                        <input asp-for="Setting.TwitterPage" class="form-control" />
+                                        <span asp-validation-for="Setting.TwitterPage" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.TiktokPage" class="control-label"></label>
+                                        <input asp-for="Setting.TiktokPage" class="form-control" />
+                                        <span asp-validation-for="Setting.TiktokPage" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.YoutubeChannel" class="control-label"></label>
+                                        <input asp-for="Setting.YoutubeChannel" class="form-control" />
+                                        <span asp-validation-for="Setting.YoutubeChannel" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.WorkingHour" class="control-label"></label>
+                                        <input asp-for="Setting.WorkingHour" class="form-control" />
+                                        <span asp-validation-for="Setting.WorkingHour" class="text-danger"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class=" ">CONTACT INFORMATIONY</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="todo-list" data-widget="todo-list">
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.AddressOne" class="control-label"></label>
+                                        <textarea asp-for="Setting.AddressOne" class="form-control"></textarea>
+                                        <span asp-validation-for="Setting.AddressOne" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowAddressOneInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowAddressOneInTop)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.AddressTwo" class="control-label"></label>
+                                        <textarea asp-for="Setting.AddressTwo" class="form-control"></textarea>
+                                        <span asp-validation-for="Setting.AddressTwo" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.EmailOne" class="control-label"></label>
+                                        <input asp-for="Setting.EmailOne" class="form-control" />
+                                        <span asp-validation-for="Setting.EmailOne" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailOneInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailOneInTop)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailOneInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailOneInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.EmailTwo" class="control-label"></label>
+                                        <input asp-for="Setting.EmailTwo" class="form-control" />
+                                        <span asp-validation-for="Setting.EmailTwo" class="text-danger"></span>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailTwoInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailTwoInTop)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailTwoInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailTwoInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.EmailThree" class="control-label"></label>
+                                        <input asp-for="Setting.EmailThree" class="form-control" />
+                                        <span asp-validation-for="Setting.EmailThree" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailThreeInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailThreeInTop)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowEmailThreeInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowEmailThreeInFooter)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.PhoneOne" class="control-label"></label>
+                                        <input asp-for="Setting.PhoneOne" class="form-control" />
+                                        <span asp-validation-for="Setting.PhoneOne" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneOneInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneOneInTop)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneOneInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneOneInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.PhoneTwo" class="control-label"></label>
+                                        <input asp-for="Setting.PhoneTwo" class="form-control" />
+                                        <span asp-validation-for="Setting.PhoneTwo" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneTwoInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneTwoInTop)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneTwoInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneTwoInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.PhoneThree" class="control-label"></label>
+                                        <input asp-for="Setting.PhoneThree" class="form-control" />
+                                        <span asp-validation-for="Setting.PhoneThree" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneThreeInTop" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneThreeInTop)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowPhoneThreeInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowPhoneThreeInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.GoogleMap" class="control-label"></label>
+                                        <textarea asp-for="Setting.GoogleMap" class="form-control"></textarea>
+                                        <span asp-validation-for="Setting.GoogleMap" class="text-danger"></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class=" ">OTHER FEATURES</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="todo-list" data-widget="todo-list">
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddFaqToHome" /> @Html.DisplayNameFor(model => model.Setting.AddFaqToHome)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddFaqToFooter" /> @Html.DisplayNameFor(model => model.Setting.AddFaqToFooter)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowContactUsMenu" /> @Html.DisplayNameFor(model => model.Setting.ShowContactUsMenu)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowContactUsFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowContactUsFooter)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddTestimonyToHome" /> @Html.DisplayNameFor(model => model.Setting.AddTestimonyToHome)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddTestimonyToFooter" /> @Html.DisplayNameFor(model => model.Setting.AddTestimonyToFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.DisableMainTopMenu" /> @Html.DisplayNameFor(model => model.Setting.DisableMainTopMenu)
+                                        </label>
+
+
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowProductsInMenu" /> @Html.DisplayNameFor(model => model.Setting.ShowProductsInMenu)
+                                        </label>
+                                    </div>
+
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowProductsInFooter" /> @Html.DisplayNameFor(model => model.Setting.ShowProductsInFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ActivateProductsInHome" /> @Html.DisplayNameFor(model => model.Setting.ActivateProductsInHome)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowTwoProducts" /> @Html.DisplayNameFor(model => model.Setting.ShowTwoProducts)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowThreeProducts" /> @Html.DisplayNameFor(model => model.Setting.ShowThreeProducts)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.ShowSixProducts" /> @Html.DisplayNameFor(model => model.Setting.ShowSixProducts)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    @if (!String.IsNullOrEmpty(Model.Setting.DefaultTitleBackgroundUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">Previouse Background</label><br />
+                                            <img src="@Model.Setting.DefaultTitleBackgroundUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label">Default Title Background</label><br />
+                                        <input type="file" class="control-label" asp-for="imagetitlebg" accept="image/*" />
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.GoogleMap" class="control-label"></label>
+                                        <textarea asp-for="Setting.GoogleMap" class="form-control"></textarea>
+                                        <span asp-validation-for="Setting.GoogleMap" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.BlogDisplayTitle" class="control-label"></label>
+                                        <input asp-for="Setting.BlogDisplayTitle" class="form-control" />
+                                        <span asp-validation-for="Setting.BlogDisplayTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddBlogToFooter" /> @Html.DisplayNameFor(model => model.Setting.AddBlogToFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddBlogToHome" /> @Html.DisplayNameFor(model => model.Setting.AddBlogToHome)
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddBlogToMenu" /> @Html.DisplayNameFor(model => model.Setting.AddBlogToMenu)
+                                        </label>
+                                    </div>
+                                </li>
+
+
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.CareerDisplayTitle" class="control-label"></label>
+                                        <input asp-for="Setting.CareerDisplayTitle" class="form-control" />
+                                        <span asp-validation-for="Setting.CareerDisplayTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddCareerToFooter" /> @Html.DisplayNameFor(model => model.Setting.AddCareerToFooter)
+                                        </label>
+                                    </div>
+                                </li>
+
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.AddCareerToMenu" /> @Html.DisplayNameFor(model => model.Setting.AddCareerToMenu)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.SpecialMenuButtonActivate" /> @Html.DisplayNameFor(model => model.SuperSetting.SpecialMenuButtonActivate)
+                                        </label>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.SpecialMenuButtonLink" class="control-label"></label>
+                                        <select asp-for="SuperSetting.SpecialMenuButtonLink" class="form-control" asp-items="ViewBag.WebPageId">
+                                            <option value="0">#</option>
+                                            <option value="Direct">Direct Link (https://www.juray.ng/)</option>
+                                            <option value="000">Contact Us Page</option>
+
+                                        </select>
+
+                                        <span asp-validation-for="SuperSetting.SpecialMenuButtonLink" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.SpecialMenuButtonText" class="control-label"></label>
+                                        <input asp-for="SuperSetting.SpecialMenuButtonText" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.SpecialMenuButtonText" class="text-danger"></span>
+                                    </div>
+                                </li>
+
+
+
+
+
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.ActivateWorkWithUsFooter" /> @Html.DisplayNameFor(model => model.SuperSetting.ActivateWorkWithUsFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.ActivateDownloadOurAppFooter" /> @Html.DisplayNameFor(model => model.SuperSetting.ActivateDownloadOurAppFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.TitleDownloadOurAppFooter" class="control-label"></label>
+                                        <input asp-for="SuperSetting.TitleDownloadOurAppFooter" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.TitleDownloadOurAppFooter" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.DescriptionDownloadOurAppFooter" class="control-label"></label>
+                                        <input asp-for="SuperSetting.DescriptionDownloadOurAppFooter" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.DescriptionDownloadOurAppFooter" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.AppStoreLink" class="control-label"></label>
+                                        <input asp-for="SuperSetting.AppStoreLink" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.AppStoreLink" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="SuperSetting.PlayStoreLink" class="control-label"></label>
+                                        <input asp-for="SuperSetting.PlayStoreLink" class="form-control" />
+                                        <span asp-validation-for="SuperSetting.PlayStoreLink" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+
+
+
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="SuperSetting.ActivateSubscribeFormOnFooter" /> @Html.DisplayNameFor(model => model.SuperSetting.ActivateSubscribeFormOnFooter)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+
+
+
+                                    @if (!String.IsNullOrEmpty(Model.SuperSetting.AppStoreImageUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label asp-for="SuperSetting.AppStoreImageUrl" class="control-label"></label><br />
+                                            <img src="@Model.SuperSetting.AppStoreImageUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label" asp-for="SuperSetting.AppStoreImageUrl"></label><br />
+                                        <input type="file" class="control-label" asp-for="appStoreImage" accept="image/*" />
+                                    </div>
+                                </li>
+                                <li>
+                                    @if (!String.IsNullOrEmpty(Model.SuperSetting.PlayStoreImageUrl))
+                                    {
+                                        <div class="form-group">
+                                            <label asp-for="SuperSetting.PlayStoreImageUrl" class="control-label"></label><br />
+                                            <img src="@Model.SuperSetting.PlayStoreImageUrl" class="img-fluid" style="max-height:150px;" />
+                                        </div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label class="control-label" asp-for="SuperSetting.PlayStoreImageUrl"></label><br />
+                                        <input type="file" class="control-label" asp-for="playStoreImage" accept="image/*" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Setting.EnableBreakingNewsRibon" /> @Html.DisplayNameFor(model => model.Setting.EnableBreakingNewsRibon)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.BreakingNewsRibonTitle" class="control-label"></label>
+                                        <input asp-for="Setting.BreakingNewsRibonTitle" class="form-control" />
+                                        <span asp-validation-for="Setting.BreakingNewsRibonTitle" class="text-danger"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label asp-for="Setting.RibonPosition" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Setting.RibonPosition, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.RibonPosition))), new { @class = "form-control" })
+
+                                        <span asp-validation-for="Setting.RibonPosition" class="text-danger"></span>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-footer">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</form>
+</div>

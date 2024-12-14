@@ -1,0 +1,40 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MIS.Pages.IProject.PcategoryListModel
+
+@{
+    ViewData["Title"] = "Project Category";
+}
+ 
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+
+        <div class="card-tools">
+            <div class="pagination pagination-sm float-right" style="margin-right: 10px;">
+                <a onclick="jQueryModalGet('?handler=CreateOrEdit','Create @ViewData["Title"]')" class="btn bg-success" style="margin-right: 5px;">
+                    Create
+                </a>
+                <a id="reload" class="btn bg-warning">
+                    Reload
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="viewAll" class="card-body table-responsive"></div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#viewAll').load('?handler=ViewAllPartial');
+             
+        });
+        $(function () {
+            $('#reload').on('click', function () {
+                $('#viewAll').load('?handler=ViewAllPartial');
+                toastr.success('success')
+            });
+        });
+    </script>
+}

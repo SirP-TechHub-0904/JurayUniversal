@@ -1,0 +1,88 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.UserManagement.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ACTIVE USER</h3>
+
+
+        <a asp-page="./NewUser" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Staff</a>
+        <a asp-page="./Others" class="btn bg-gradient-primary btn-sm" style="float:right;">Other Staff</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Fullname
+                        </th>
+
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Roles</th>
+                        <th>Status</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.UserDatasList)
+                    {
+                                    <tr>
+
+                                        <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                                        </td>
+                                        <td>
+                                @Html.DisplayFor(modelItem => item.Fullname)
+                                        </td>
+                                         <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                             <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Roles)
+                            </td>
+                                                   <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                                                </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-success">Action</button>
+
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                                    </button>
+                                                    <div class="dropdown-menu" style="">
+
+                                                        <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./BarCodeGenerator" asp-route-id="@item.Id">BarCode Generator</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

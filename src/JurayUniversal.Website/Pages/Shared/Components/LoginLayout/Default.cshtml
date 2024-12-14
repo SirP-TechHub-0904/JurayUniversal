@@ -1,0 +1,24 @@
+﻿@model JurayUniversal.Domain.Models.SuperSetting
+
+
+
+@if (Model.LoginTemplateKey == "Login1111")
+{
+    Layout = "/Pages/Shared/Layouts/LoginSection/_LoginOne.cshtml";
+}
+else if (Model.LoginTemplateKey == "Login2222")
+{
+    Layout = "/Pages/Shared/Layouts/LoginSection/_LoginTwo.cshtml";
+}
+else if (Model.LoginTemplateKey == "Login333")
+{
+    Layout = "/Pages/Shared/Layouts/LoginSection/_LoginThree.cshtml";
+}
+else if (Model.LoginTemplateKey == "Login4444")
+{
+    Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFour.cshtml";
+}
+else if (Model.LoginTemplateKey == "Login5555")
+{
+    Layout = "/Pages/Shared/Layouts/LoginSection/_LoginFive.cshtml";
+}

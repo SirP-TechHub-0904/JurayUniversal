@@ -1,0 +1,142 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Account.AccomodationModel
+@{
+}
+<style>
+    .input-group-sm > .custom-select, .input-group-sm > .form-control:not(textarea) {
+        height: auto;
+    }
+
+    .daiv {
+        box-shadow: 0px 11px 35px 0px #c5b5b4;
+        padding: 20px;
+    }
+
+    .secdaiv {
+        box-shadow: 0px 4px 5px 0px #c5b5b4;
+        padding: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">PARTICIPANT ACCOMODATION</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <td>@Model.UserDatas.FullnameX</td>
+                    </tr>
+                    <tr>
+                        <th>Course</th>
+                        <td>@Model.ParticipantList.Course.CourseCategory.Name (@Model.ParticipantList.Course.CourseCategory.Abbreviation @Model.ParticipantList.Course.SecNumber, @Model.ParticipantList.Course.Year.ToString("yyyy"))</td>
+                    </tr>
+                    <tr>
+                        <th>Reg. No.</th>
+                        <td>@Model.ParticipantList.IdNumber</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.UserAccomodation == null)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title">CHOOSE ANY OF THE ACCOMODATION</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="daiv" style="margin-bottom:20px;">
+                                <div class="row">
+                                    @foreach (var item in Model.Accomodation)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="card" style="height:150px;">
+                                                <form method="post">
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <input type="hidden" name="userId" value="@Model.UserDatas.Id" />
+                                                    <input type="hidden" asp-for="ParticipantId" />
+                                                    <div class="">
+
+                                                        <div class="card-header">
+                                                            <h4 class="text-center">@item.Name</h4> 
+                                                        </div>
+                                                        <div class="card-footer" style="padding:20px;">
+                                                            <input type="submit" class="btn btn-primary" value="Select Accomodation" style="width:100%;"/>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title">My Accomodation</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="daiv" style="margin-bottom:20px;">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3>@Model.UserAccomodation.Name</h3> 
+                                            </div>
+                                            <div class="card-body">
+                                                <p>
+                                                    If you have encountered any faults, damages, or issues with your accommodation, please do not hesitate to let us know. Your feedback is invaluable in ensuring a satisfactory experience for all our participants.
+                                                </p>
+                                                <h6>
+                                                    To submit a complaint or report any concerns, kindly click on the button below:
+                                                </h6>
+                                                <a asp-page="/MaintainancePage/Index" asp-area="NIPSS" class="btn btn-primary">Submit a Complaint</a>
+                                                <p>
+                                                    Your input helps us address any issues promptly and enhance the quality of our services. We appreciate your cooperation and strive to make your stay as comfortable as possible. Thank you for keeping up.
+
+                                                </p>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,85 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.NIPSS.TimeTable>
+
+  
+
+
+    <tr>
+        <td rowspan="@Model.Count()" style="width: 15%; word-break: break-word;vertical-align:middle;">@ViewBag.datete</td>
+        <td style="width:85%;">
+            <table class="table table-bordered" style="width:100%;">
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        @if (i.ContentType == JurayUniversal.Domain.Enum.Enum.ContentEnumType.IsSingle)
+                        {
+                            <td style="width:100%;text-align:center;" colspan="3">
+                                @if (i.ContentStatus == JurayUniversal.Domain.Enum.Enum.ContentStatus.IsBold)
+                                {
+                                    <span style="font-weight:900;">@Html.Raw(i.Content)</span>
+                                }
+                                else if (i.ContentStatus == JurayUniversal.Domain.Enum.Enum.ContentStatus.IsRed)
+                                {
+                                    <span class="text-danger">@Html.Raw(i.Content)</span>
+                                }
+                                else
+                                {
+                                    <span>@Html.Raw(i.Content)</span>
+                                }
+
+                                @if (i.IsLecture == true)
+                                {
+                                    <span>
+                                        @await Component.InvokeAsync("TimeTableEvenDoc", new { id = i.Id })
+                                    </span>
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="width: 15%;">@i.EventTime</td>
+                            <td style="width: 40%; word-break: break-word;">
+                                @if (i.ContentStatus == JurayUniversal.Domain.Enum.Enum.ContentStatus.IsBold)
+                                {
+                                    <span style="font-weight:900;">@Html.Raw(i.Content)</span>
+                                }
+                                else if (i.ContentStatus == JurayUniversal.Domain.Enum.Enum.ContentStatus.IsRed)
+                                {
+                                    <span class="text-danger">@Html.Raw(i.Content)</span>
+                                }
+                                else
+                                {
+                                    <span>@Html.Raw(i.Content)</span>
+                                }
+
+
+                            </td>
+                            <td style="width: 23%; word-break: break-word;">
+                                <ul>
+                                    @foreach (var list in i.Moderators)
+                                    {
+                                        <li>
+                                            @if (list.User != null)
+                                            {
+                                                @list.User.FullnameX
+
+                                            }
+                                            else
+                                            {
+                                                @list.Fullname
+                                            } <span>(@list.Position)</span>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </td>
+
+                        }
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+
+
+
+

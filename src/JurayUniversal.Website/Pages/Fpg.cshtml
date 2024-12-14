@@ -1,0 +1,303 @@
+﻿@page
+@model JurayUniversal.Website.Pages.FpgModel
+@{
+    ViewData["Title"] = "FREQUENTLY ASKED QUESTIONS";
+    ViewData["PageName"] = "FREQUENTLY ASKED QUESTIONS";
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+    @if (Model.Templatechoose == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "FREQUENTLY ASKED QUESTIONS" })
+
+
+@if (Model.Setting.AddFaqToFooter == true || Model.Setting.AddFaqToFooter == true)
+{
+    if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+        <div class="section-block">
+            <div class="container">
+                <div class="section-heading">
+                    <h4>FREQUENTLY ASKED QUESTIONS</h4>
+                </div>
+                <div class="row mt-40">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <div class="pr-30-md">
+                            <!-- Accordions Grey START -->
+                            <div class="panel-group mt-10" id="accordion2" role="tablist" aria-multiselectable="true">
+                                @foreach (var item in Model.FAQs)
+                                {
+                                    <div class="panel panel-grey accordion">
+                                        <div class="panel-heading accordion-heading" role="tab" id="acc1_@item.Id">
+                                            <h4 class="panel-title accordion-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#ac_col1_@item.Id" aria-expanded="true" aria-controls="ac_col1">
+                                                    @item.Title
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="ac_col1_@item.Id" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="acc1_@item.Id">
+                                            <div class="panel-body accordion-body">
+                                                @item.Message
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                            <!-- Accordions Grey END -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+
+
+        <section class="section-padding no-top error-page pattern-bgs gray ">
+            <!-- Main Container -->
+            <div class="container">
+                <div class="heading-panel" style="margin-bottom:20px;">
+                    <div class="col-xs-12 col-md-12 col-sm-12 text-center">
+                        <!-- Main Title -->
+                        <h1 style="margin-top:20px;">FREQUENTLY ASKED QUESTIONS</h1>
+                        <!-- Short Description -->
+                    </div>
+                </div>
+                <!-- Row -->
+                <div class="row">
+                    <!-- Middle Content Area -->
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="row">
+                            <!-- Blog Archive -->
+                            <ul class="accordion">
+                                @foreach (var item in Model.FAQs)
+                                {
+
+                                    <li class="in">
+                                        <h3 class="accordion-title"><a href="#">@item.Title</a></h3>
+                                        <div class="accordion-content">
+                                            <p>
+                                                @item.Message
+                                            </p>
+                                        </div>
+                                    </li>
+
+                                }
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </section>
+
+    }
+
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        <div id="rs-faq" class="rs-faq pt-100 pb-100 md-pt-70 md-pb-70">
+            <div class="container">
+                <div class="row y-middle">
+                    <div class="col-lg-5 pr-40 md-pr-15 md-mb-50">
+                        <div class="sec-title">
+                            <h2 class="title pb-30">
+                                FREQUENTLY ASKED QUESTIONS
+                            </h2>
+
+
+                        </div>
+                    </div>
+                    @foreach (var item in Model.FAQs)
+                    {
+                        <div class="col-lg-7 pl-30 md-pl-15">
+                            <div class="faq-content">
+                                <div id="accordion" class="accordion">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" href="#" data-bs-toggle="collapse"
+                                               data-bs-target="#collapseOne" aria-expanded="true">
+                                                @item.Title
+                                            </a>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                                            <div class="card-body">
+                                                @item.Message
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        <section class="faqs faq_type_one">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="accordion" id="faq-accordion">
+                            @foreach (var item in Model.FAQs)
+                            {
+                                <div class="card">
+                                    <div class="card-header" id="heading_@item.Id">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse_@item.Id" aria-expanded="true" aria-controls="collapse_@item.Id">
+                                                @item.Title <i class="flaticon-plus main"></i> <i class="flaticon-minus main active-min"></i>
+                                            </button>
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapse_@item.Id" class="collapse fade" aria-labelledby="heading_@item.Id" data-parent="#faq-accordion">
+                                        <div class="card-body">
+                                            @item.Message
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </section>
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="accordion" id="accordion">
+                            @foreach (var item in Model.FAQs)
+                            {
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading_@item.Id">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@item.Id" aria-expanded="true" aria-controls="collapse_@item.Id">
+                                            @item.Title
+                                        </button>
+                                    </h2>
+                                    <div id="collapse_@item.Id" class="accordion-collapse collapse" aria-labelledby="heading_@item.Id" data-bs-parent="#accordion">
+                                        <div class="accordion-body">@item.Message</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        <section class="help-and-faq-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="help-single-item">
+                            <div class="content">
+                                <h4 class="title">Frequently Asked  Questions</h4>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="accordion-wrapper-three">
+                            <!-- accordion wrapper -->
+                            <div id="accordion">
+                                @foreach (var item in Model.FAQs)
+                                {
+                                    <div class="card">
+                                        <div class="card-header" id="headingOwo">
+                                            <h5 class="mb-0">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-target="#collapse_@item.Id" aria-expanded="false" aria-controls="collapse_@item.Id">
+                                                    <i class="fas fa-star"></i>
+                                                    @item.Title
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapse_@item.Id" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                @item.Message
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+}

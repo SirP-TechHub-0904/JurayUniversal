@@ -1,0 +1,79 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.DeviceSetup.IndexModel
+
+@{
+    ViewData["Title"] = "JSSL DEVICE MANAGEMENT";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">DEVICE LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnableDevice[0].UserInformation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnableDevice[0].DeviceInformation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnableDevice[0].DisableDevice)
+            </th>
+            <th></th>
+        </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+    <tbody>
+@foreach (var item in Model.EnableDevice) {
+        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserInformation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeviceInformation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisableDevice)
+            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IModal.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW MODAL</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="PostModal.Title" class="control-label"></label>
+                        <input asp-for="PostModal.Title" class="form-control" />
+                        <span asp-validation-for="PostModal.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.Description" class="control-label"></label>
+                        <input asp-for="PostModal.Description" class="form-control" />
+                        <span asp-validation-for="PostModal.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.ModalTime" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.PostModal.ModalTime, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ModalTime))), new { @class = "form-control" })
+
+                        <span asp-validation-for="PostModal.ModalTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.ModalOccurance" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.PostModal.ModalOccurance, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ModalOccurance))), new { @class = "form-control" })
+
+                        <span asp-validation-for="PostModal.ModalOccurance" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.StartTime" class="control-label"></label>
+                        <input asp-for="PostModal.StartTime" class="form-control" />
+                        <span asp-validation-for="PostModal.StartTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.StopTime" class="control-label"></label>
+                        <input asp-for="PostModal.StopTime" class="form-control" />
+                        <span asp-validation-for="PostModal.StopTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PostModal.ShowOnlyImage" /> @Html.DisplayNameFor(model => model.PostModal.ShowOnlyImage)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PostModal.ShowTitle" /> @Html.DisplayNameFor(model => model.PostModal.ShowTitle)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PostModal.ShowDescription" /> @Html.DisplayNameFor(model => model.PostModal.ShowDescription)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PostModal.ShowImage" /> @Html.DisplayNameFor(model => model.PostModal.ShowImage)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PostModal.Publish" /> @Html.DisplayNameFor(model => model.PostModal.Publish)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostModal.ButtonLink" class="control-label"></label>
+                        <select asp-for="PostModal.ButtonLink" class="form-control" asp-items="ViewBag.WebPageId">
+                            <option value="0">#</option>
+                            <option value="000">Contact Us Page</option>
+
+                        </select>
+
+                        <span asp-validation-for="PostModal.ButtonLink" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

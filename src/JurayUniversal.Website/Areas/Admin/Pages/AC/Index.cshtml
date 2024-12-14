@@ -1,0 +1,72 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.AC.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">USER MANAGEMENT</h3>
+
+
+        <a asp-page="./NewUser" asp-route-id="@Model.UserCategory.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Staff</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Fullname
+                        </th>
+
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Roles</th>
+                        <th>Status</th>
+                         
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.UserDatasList)
+                    {
+                                    <tr>
+
+                                        <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                                        </td>
+                                        <td>
+                                            <a asp-page="./Details" asp-route-id="@item.Id">
+                                                @Html.DisplayFor(modelItem => item.Fullname)
+                                            </a>
+                                               
+                                        </td>
+                                         <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                             <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Roles)
+                            </td>
+                                                   <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                                                </td>
+                                        
+
+                                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

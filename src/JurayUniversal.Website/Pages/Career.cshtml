@@ -1,0 +1,183 @@
+﻿@page
+@model JurayUniversal.Website.Pages.CareerModel
+
+@{
+    ViewData["Title"] = Model.Setting.CareerDisplayTitle;
+
+    ViewData["PageName"] = Model.Setting.CareerDisplayTitle;
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+
+    @if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = Model.Setting.CareerDisplayTitle })
+
+ 
+<style>
+    .contact-form input {
+        font-weight: 500 !important;
+        border-radius: 5px;
+        font-size: 13px;
+        border: 1px solid #f6f7f8;
+        background: #f6f7f8;
+        color: #777 !important;
+        outline: none;
+        width: 100%;
+        padding: 14px;
+        margin: 0 0 19px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+    }
+
+    .contact-form select {
+        font-weight: 500 !important;
+        border-radius: 5px;
+        font-size: 13px;
+        border: 1px solid #f6f7f8;
+        background: #f6f7f8;
+        color: #777 !important;
+        outline: none;
+        width: 100%;
+        padding: 14px;
+        margin: 0 0 19px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 0;
+        margin: 0;
+        padding: 0;
+        color: black !important;
+    }
+</style>
+ 
+<div class="section-block">
+    <div class="container">
+        <div class="" style="border: 1px solid #ececec; border-radius: 5px; -webkit-box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16); -moz-box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16); box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16);padding:20px;">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="section-heading mt-15">
+                        <h6>
+
+                            Please check below for available job opportunities that meet your criteria and send your application by filling out the Job Application Form.
+                        </h6>
+                    </div>
+                    <div class="contact-form-box mt-30">
+
+                        <form class="contact-form" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">Fullname</label>
+                                    <input type="text" asp-for="CareerFile.Fullname" placeholder="Fullname" required="required">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Email</label>
+                                    <input type="text" asp-for="CareerFile.Email" placeholder="Email" required="required">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Phone Number</label>
+                                    <input type="text" asp-for="CareerFile.Phone" placeholder="Phone Number" required="required">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="">Contact Address</label>
+                                    <input type="text" asp-for="CareerFile.ContactAddress" placeholder="Contact Address" required="required">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Date of Birth</label>
+                                    <input type="date" asp-for="CareerFile.DOB" placeholder="Date of Birth" required="required">
+                                </div>
+
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Which position would you like to apply for?</label>
+                                    <select type="text" asp-for="CareerFile.Position" required="required" asp-items="ViewBag.CareerPath">
+                                        <option value="">Select Job</option>
+
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="">Upload CV</label>
+                                    <input type="file" asp-for="cvfile" accept="application/pdf" required="required">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Upload Application Letter</label>
+                                    <input type="file" asp-for="appfile" accept="application/pdf" required="required">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="">Upload Certificates (All in One PDF File)</label>
+                                    <input type="file" asp-for="certificatefile" accept="application/pdf" required="required">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <label class="">Upload Passport</label>
+                                    <input type="file" asp-for="passportfile" required="required">
+                                </div>
+                                <div class="col-md-12 mb-30">
+                                    <div class="center-holder">
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Form END -->
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section END -->

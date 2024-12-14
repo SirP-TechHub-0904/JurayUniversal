@@ -1,0 +1,384 @@
+﻿@model JurayUniversal.Domain.Models.SuperSetting
+
+@*@if(Model.ActivateOnlyAuthorizedDevice == true)
+{
+    
+}*@
+
+@*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/IProposalPage/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Proposal
+            </p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Team Management
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+
+            <li class="nav-item">
+                <a asp-page="/IAttendance/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle"></i>
+                    <p>
+                        Attendance
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IReport/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle"></i>
+                    <p>
+                        Reports
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/ITraining/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle"></i>
+                    <p>
+                        Training
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/UserManagement/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle"></i>
+                    <p>
+                        User Management
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Customer Care") || User.IsInRole("Admin") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/IRequest/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th nav-icon"></i>
+            <p class="uppercase">
+                Client Request
+            </p>
+        </a>
+    </li>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Secretary") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/IMeetings/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Meeting
+            </p>
+        </a>
+    </li>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("mSuperAdmin"))
+{
+
+
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">EDITOR</li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Content Management
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+
+            <li class="nav-item">
+                <a asp-page="/IService/Main/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Services
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IPages/Main/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Pages
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IProduct/Main/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Product
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IBlogs/Post/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Blog
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/ISliders/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Banner Slider
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IPartners/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Partners
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/ITestimony/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Testimony
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IFaq/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        FAQ
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="/ITeams/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Team
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("CFO") || User.IsInRole("mSuperAdmin") || User.IsInRole("CEO") || User.IsInRole("Fund"))
+{
+
+
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">FUNDS</li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Finance Management
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+
+            <li class="nav-item">
+                <a asp-page="/IFunds/CompanyFunds/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Company Funds
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IFunds/Source/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                    <p class="uppercase">
+                        Source
+                    </p>
+                </a>
+            </li>
+
+
+        </ul>
+    </li>
+
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+{
+
+
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">JOBS</li>
+
+    <li class="nav-item">
+        <a asp-page="/IJob/ICategoryPage/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Job Category
+            </p>
+        </a>
+    </li>
+
+
+    <li class="nav-item">
+        <a asp-page="/IJob/IJobs/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Job
+            </p>
+        </a>
+    </li>
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">EXPENSES</li>
+
+    <li class="nav-item">
+        <a asp-page="/IExpenses/Category/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Category
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/IExpenses/ISalary/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Salary
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-page="/IExpenses/MainExpenses/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Expenses
+            </p>
+        </a>
+    </li>
+}
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-item">
+        <a asp-page="/ISettings/Index" asp-area="Admin" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Settings
+            </p>
+        </a>
+    </li>
+}
+
+
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">STAFF NAVIGATION</li>
+
+<li class="nav-item">
+    <a asp-page="/Dashboard/Index" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Dashboard
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/UserAttendance" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Attendance
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/UserReport" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Reports
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/StaffMeeting" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Meeting
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/StaffTraining" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Training
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/OfficeProposal" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Proposal
+        </p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a asp-page="/Dashboard/JobList" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Job List
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/ReferralPage" asp-area="Staff" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Referral Page
+        </p>
+    </a>
+</li>
+@if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
+{
+    <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">XM NAVIGATION</li>
+
+    <li class="nav-item">
+        <a asp-page="/Account/Roles/List" asp-area="Identity" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p class="uppercase">
+                Roles
+            </p>
+        </a>
+    </li>
+}*@

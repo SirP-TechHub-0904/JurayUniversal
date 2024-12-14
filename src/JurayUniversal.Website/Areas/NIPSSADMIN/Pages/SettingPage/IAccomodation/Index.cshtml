@@ -1,0 +1,126 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.SettingPage.IAccomodation.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ACCOMODATION LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-lg-6 col-6 ">
+                <a>
+
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@Model.AccomodationListCount</h3>
+
+                            <p>TOTAL</p>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 ">
+                <a>
+
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@Model.TakenAccomodation</h3>
+
+                            <p>ALLOCATED</p>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Accomodation[0].Name)
+                        </th>
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Participant
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Accomodation)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </a>
+                            </td>
+                            <td>
+                                @if (item.Disable == false)
+                                {
+
+
+                                    <span class="btn btn-xs btn-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="btn btn-xs btn-danger">Disabled</span>
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ParticipantList.User.FullnameX)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

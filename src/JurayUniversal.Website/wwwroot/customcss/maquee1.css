@@ -1,0 +1,52 @@
+﻿ 
+.containerx {
+    position: relative;
+    border: 1px solid #777;
+    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+    font-family: 'Oswald',serif;
+}
+
+.containerx, .containerx .headertext {
+    padding: 7px;
+    background-color: #fff;
+    color: #626060;
+    font-weight: bold;
+}
+
+    .containerx .headertext {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        padding: 10px 10px;
+        border-right: 1px solid #777;
+        background: #C8102E;
+        color: #fff;
+        text-shadow: 1px 1px #111;
+    }
+
+    .containerx marquee {
+        line-height: 1.5;
+    }
+
+        .containerx marquee p {
+            margin: 0;
+        }
+
+marquee a:hover, a:focus {
+    color: #222c46;
+    font-weight: 900;
+    font-size: larger;
+}
+
+marquee {
+    width: 100%;
+    color: red;
+}
+
+    marquee a {
+        padding-right: 10px;
+        padding-left: 10px;
+        border-right: 2px solid red;
+    }
+     

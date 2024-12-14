@@ -1,0 +1,160 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.NutriValution.UserQuestionsModel
+@{
+}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+    /* For mobile devices */
+    @@media (max-width: 600px) {
+        th, td {
+            display: block;
+            width: 100%;
+        }
+
+        th {
+            text-align: left;
+        }
+        .card-title {
+            font-size: 0.8rem;
+        }
+    }
+    /* For desktop devices */
+    @@media (min-width: 601px) {
+        th, td {
+            display: table-cell;
+            width:50%;
+        }
+
+       
+    }
+</style>
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">FORM FOR ASSESSMENT OF NUTRITIONAL/DIETARY REQUIREMENTS AND PREFERENCES</h3>
+
+    </div>
+    <div class="card-header">
+        <h3 class="card-title"> @Model.UserDatas.FullnameX</h3>
+
+    </div>
+    <!-- /.card-header -->
+   
+    <div class="card-body">
+        <p>
+            This form is designed to assess your nutritional/dietary requirements and preferences in line with your health/medical requirements/conditions. It will guide the Catering Service Department in the course of the preparation and management of your nutritional needs, during the Senior Executive Course (SEC) 46, 2024. Please note that information provided by you herein will not be used for any other purpose other than the need to plan and implement your nutritional/dietary needs.
+        </p>
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    int sn = 0;
+                }
+                <form method="post">
+                    <input asp-for="UserDatas.Id" hidden="hidden" />
+                    @foreach (var item in Model.ParticipantNutritionCategory)
+                    {
+                        <div class="">
+                            @{
+                                sn++;
+                            }
+                            <div class="card-header">
+                                <h4 class="card-title" style="font-weight:900;">
+                                    (@sn) @item.Name
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                @foreach (var list in Model.UserNutritionEvaluation.Where(x => x.NutritionCategoryId == item.Id))
+                                {
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th style="">
+                                                    @list.NutritionCategoryList.Question
+                                                </th>
+                                                <td style="">
+                                                    @if (list.ResultType == JurayUniversal.Domain.Enum.Enum.ResultType.YesNo)
+                                                    {
+                                                        <select name="@($"NutritionResult_{list.Id}")" value="@list.Result" class="form-control">
+                                                            @if (list.Result == "Yes")
+                                                            {
+                                                                <option value="Yes" selected>Yes</option>
+                                                                <option value="No">No</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No" selected="">No</option>
+                                                            }
+
+                                                        </select>
+
+                                                    }
+                                                    else if (list.ResultType == JurayUniversal.Domain.Enum.Enum.ResultType.Text)
+                                                    {
+
+                                                        <textarea type="text" name="@($"NutritionResult_{list.Id}")" value="@list.Result" class="form-control">@list.Result</textarea>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                }
+
+
+                                @*<ul style="list-style-type: lower-roman;">
+                                        @foreach (var list in item.UserNutritionEvaluation)
+                                        {
+                                            <li>
+                                                <label>@list.NutritionCategoryList.Question:</label>
+                                                @if (list.ResultType == JurayUniversal.Domain.Enum.Enum.ResultType.YesNo)
+                                                {
+                                                    <select name="@($"NutritionResult_{list.Id}")" value="@list.Result">
+                                                        @if (list.Result == "Yes")
+                                                        {
+                                                            <option value="Yes" selected>Yes</option>
+                                                            <option value="No">No</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No" selected="">No</option>
+                                                        }
+
+                                                    </select>
+
+                                                }
+                                                else if (list.ResultType == JurayUniversal.Domain.Enum.Enum.ResultType.Text)
+                                                {
+                                                    <br />
+                                                    <input type="text" name="@($"NutritionResult_{list.Id}")" value="@list.Result" />
+                                                }
+
+
+
+
+                                            </li>
+                                        }
+                                    </ul>*@
+
+
+                            </div>
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Update Evaluation</button> <!-- Added a submit button for form submission -->
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>

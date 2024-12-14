@@ -1,0 +1,71 @@
+﻿@page
+@model JurayUniversal.Website.Areas.JPTask.Pages.ProjectAct.NewFeatureModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW PROJECT FEATURE</h3>
+
+    </div>
+    <!-- /.card-header -->
+    
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" value="@Model.ProjectId" asp-for="@Model.XProjectSection.XProjectId" />
+
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.Title" class="control-label"></label>
+                        <input asp-for="XProjectSection.Title" class="form-control" />
+                        <span asp-validation-for="XProjectSection.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.Description" class="control-label"></label>
+                        <textarea asp-for="XProjectSection.Description" class="form-control"></textarea>
+                        <span asp-validation-for="XProjectSection.Description" class="text-danger"></span>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.StartDate" class="control-label"></label>
+                        <input asp-for="XProjectSection.StartDate" class="form-control" />
+                        <span asp-validation-for="XProjectSection.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.DateToStartTesting" class="control-label"></label>
+                        <input asp-for="XProjectSection.DateToStartTesting" class="form-control" />
+                        <span asp-validation-for="XProjectSection.DateToStartTesting" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.EndDate" class="control-label"></label>
+                        <input asp-for="XProjectSection.EndDate" class="form-control" />
+                        <span asp-validation-for="XProjectSection.EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectSection.Priority" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.XProjectSection.Priority, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.Priority))), new { @class = "form-control" })
+                        <span asp-validation-for="XProjectSection.Priority" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                        <a asp-page="./Details" asp-route-id="@Model.ProjectId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

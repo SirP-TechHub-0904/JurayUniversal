@@ -1,0 +1,82 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IFunds.CompanyFunds.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW COMPANY FUNDS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="CompanyFund.FundSourceId" class="control-label"></label>
+                        <select asp-for="CompanyFund.FundSourceId" class="form-control" asp-items="ViewBag.FundSourceId"></select>
+                    </div>
+
+            <div class="form-group">
+                <label asp-for="CompanyFund.FundType" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.CompanyFund.FundType, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.FundType))), new { @class = "form-control" })
+                        <span asp-validation-for="CompanyFund.FundType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyFund.FundStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.CompanyFund.FundStatus, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.FundStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="CompanyFund.FundStatus" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label asp-for="CompanyFund.FundMeans" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.CompanyFund.FundMeans, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.FundMeans))), new { @class = "form-control" })
+                        <span asp-validation-for="CompanyFund.FundMeans" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="CompanyFund.Date" class="control-label"></label>
+                <input asp-for="CompanyFund.Date" class="form-control" />
+                <span asp-validation-for="CompanyFund.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyFund.Note" class="control-label"></label>
+                <input asp-for="CompanyFund.Note" class="form-control" />
+                <span asp-validation-for="CompanyFund.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyFund.Amount" class="control-label"></label>
+                <input asp-for="CompanyFund.Amount" type="number" class="form-control" />
+                <span asp-validation-for="CompanyFund.Amount" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <label class="control-label">Receipt</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

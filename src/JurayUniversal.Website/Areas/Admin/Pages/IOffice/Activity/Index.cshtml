@@ -1,0 +1,120 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IOffice.Activity.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">OFFICE ACTIVITY @Model.Title</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" style=" width: 100%; padding: 18px;">@Model.Customer Customers</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-danger" style=" width: 100%; padding: 18px;">@string.Format("₦{0:N0}", Model.Amount)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="text-align:center;margin:0 auto !important">
+                <p style="margin: 0; font-weight: 900;">
+                    @if (Model.Today == true)
+                    {
+                        <span>Today's Activity @DateTime.UtcNow.Date.ToString("ddd dd MMM, yyyy")</span>
+                    }
+                    else
+                    {
+                        <span>Result Activity for @TempData["startdate"] to @TempData["enddate"]</span>
+                    }
+                </p>
+                <form method="get">
+                    <div class="input-group input-group-sm" style="margin-bottom:7px;">
+                        <input type="hidden" asp-for="Id">
+                        <input type="date" name="startdate" class="form-control" placeholder="@TempData["startdate"]">
+                        <input type="date" name="enddate" class="form-control" placeholder="@TempData["enddate"]">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-flat">Search</button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.OfficeActivityDialy[0].Amount)
+                        </th>
+                        <th>
+                            Customers
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OfficeActivityDialy[0].LastUpdate)
+                        </th>
+                        <th>
+                            Update By
+                        </th>
+                          
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.OfficeActivityDialy)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.OfficeActivityCategory.Title)
+
+                                </a> 
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUpdate)
+                            </td>
+                            <td>
+                               
+                                    @Html.DisplayFor(modelItem => item.LastUpdateBy.FullnameX)
+                                 
+                            </td>
+                             
+                             
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.XProjectPage.XT.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW PROJECT TASK</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="XProjectTask.Id" />
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Title" class="control-label"></label>
+                        <input asp-for="XProjectTask.Title" class="form-control" />
+                        <span asp-validation-for="XProjectTask.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Description" class="control-label"></label>
+                        <input asp-for="XProjectTask.Description" class="form-control" />
+                        <span asp-validation-for="XProjectTask.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.StartDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.StartDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.FinishDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.FinishDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.FinishDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Status" class="control-label"></label>
+                        <select asp-for="XProjectTask.Status" class="form-control"></select>
+                        <span asp-validation-for="XProjectTask.Status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Priority" class="control-label"></label>
+                        <select asp-for="XProjectTask.Priority" class="form-control"></select>
+                        <span asp-validation-for="XProjectTask.Priority" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.UserId" class="control-label"></label>
+                        <select asp-for="XProjectTask.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                        <span asp-validation-for="XProjectTask.UserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.RateUser" class="control-label"></label>
+                        <input asp-for="XProjectTask.RateUser" class="form-control" />
+                        <span asp-validation-for="XProjectTask.RateUser" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Files" class="control-label"></label>
+                        <input asp-for="XProjectTask.Files" class="form-control" />
+                        <span asp-validation-for="XProjectTask.Files" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestCriterial" class="control-label"></label>
+                        <input asp-for="XProjectTask.TestCriterial" class="form-control" />
+                        <span asp-validation-for="XProjectTask.TestCriterial" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestStatus" class="control-label"></label>
+                        <select asp-for="XProjectTask.TestStatus" class="form-control"></select>
+                        <span asp-validation-for="XProjectTask.TestStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestedById" class="control-label"></label>
+                        <select asp-for="XProjectTask.TestedById" class="form-control" asp-items="ViewBag.TestedById"></select>
+                        <span asp-validation-for="XProjectTask.TestedById" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.RateTester" class="control-label"></label>
+                        <input asp-for="XProjectTask.RateTester" class="form-control" />
+                        <span asp-validation-for="XProjectTask.RateTester" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.ApprovedById" class="control-label"></label>
+                        <select asp-for="XProjectTask.ApprovedById" class="form-control" asp-items="ViewBag.ApprovedById"></select>
+                        <span asp-validation-for="XProjectTask.ApprovedById" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.ApproveStatus" class="control-label"></label>
+                        <select asp-for="XProjectTask.ApproveStatus" class="form-control"></select>
+                        <span asp-validation-for="XProjectTask.ApproveStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.RateApprover" class="control-label"></label>
+                        <input asp-for="XProjectTask.RateApprover" class="form-control" />
+                        <span asp-validation-for="XProjectTask.RateApprover" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

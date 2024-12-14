@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+    @await Component.InvokeAsync("Redirect")
+    <!-- meta tag -->
+    <meta charset="utf-8">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap v4.4.1 css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/bootstrap.min.css">
+    <!-- font-awesome css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- flaticon css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/fonts/flaticon.css">
+    <!-- animate css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/animate.css">
+    <!-- owl.carousel css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/owl.carousel.css">
+    <!-- off canvas css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/off-canvas.css">
+    <!-- magnific popup css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/magnific-popup.css">
+    <!-- Main Menu css -->
+    <link rel="stylesheet" href="~/Layout/bizup/assets/css/rsmenu-main.css">
+    <!-- nivo slider CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/inc/custom-slider/css/nivo-slider.css">
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/inc/custom-slider/css/preview.css">
+    <!-- spacing css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/rs-spacing.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/style.css"> <!-- This stylesheet dynamically changed from style.less -->
+    <!-- responsive css -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/bizup/assets/css/responsive.css">
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+
+
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body class="defult-home">
+
+    @await Component.InvokeAsync("Reloader")
+    <div class="main-content">
+
+
+
+        @await Component.InvokeAsync("Menu")
+
+        @RenderBody()
+
+        @await Component.InvokeAsync("Footer")
+    </div>
+    <!-- modernizr js -->
+    <script src="~/Layout/bizup/assets/js/modernizr-2.8.3.min.js"></script>
+    <!-- jquery latest version -->
+    <script src="~/Layout/bizup/assets/js/jquery.min.js"></script>
+    <!-- Bootstrap v4.4.1 js -->
+    <script src="~/Layout/bizup/assets/js/bootstrap.min.js"></script>
+    <!-- op nav js -->
+    <script src="~/Layout/bizup/assets/js/jquery.nav.js"></script>
+    <!-- isotope.pkgd.min js -->
+    <script src="~/Layout/bizup/assets/js/isotope.pkgd.min.js"></script>
+    <!-- owl.carousel js -->
+    <script src="~/Layout/bizup/assets/js/owl.carousel.min.js"></script>
+    <!-- wow js -->
+    <script src="~/Layout/bizup/assets/js/wow.min.js"></script>
+    <!-- Skill bar js -->
+    <script src="~/Layout/bizup/assets/js/skill.bars.jquery.js"></script>
+    <!-- imagesloaded js -->
+    <script src="~/Layout/bizup/assets/js/imagesloaded.pkgd.min.js"></script>
+    <!-- waypoints.min js -->
+    <script src="~/Layout/bizup/assets/js/waypoints.min.js"></script>
+    <!-- counterup.min js -->
+    <script src="~/Layout/bizup/assets/js/jquery.counterup.min.js"></script>
+    <!-- magnific popup js -->
+    <script src="~/Layout/bizup/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Nivo slider js -->
+    <script src="~/Layout/bizup/assets/inc/custom-slider/js/jquery.nivo.slider.js"></script>
+    <!-- contact form js -->
+    <script src="~/Layout/bizup/assets/js/contact.form.js"></script>
+    <!-- main js -->
+    <script src="~/Layout/bizup/assets/js/main.js"></script>
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

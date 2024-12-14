@@ -1,0 +1,125 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.IStudyGroupsModel
+@{
+}
+@foreach (var item in Model.StudyGroupCategory)
+{
+    <div class="card card-default card-success">
+        <div class="card-header">
+            <h3 class="card-title">@item.Title (@item.StudyGroups.Count())</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12" id="">
+                <div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Fullname</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        @{ int sn = 0;}
+                        @{ int xsn = 0;}
+                        @{ int ysn = 0;}
+
+                        <tbody>
+                            <tr>
+                                <th colspan="5">Directing Staff</th>
+                            </tr>
+                            @foreach (var list in item.StudyGroups.Where(x => x.User.Role == "Directing"))
+                            {
+                                <tr>
+                                    <td>
+                                        @{ sn++;}
+                                        @sn
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {
+                                            @list.User.FullnameX}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.Email}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.PhoneNumber}
+                                    </td>
+                                    <td>
+
+                                        @list.Position
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <th colspan="5">Other Staff</th>
+                            </tr>
+                            @foreach (var list in item.StudyGroups.Where(x => x.User.Role == "Staff"))
+                            {
+                                <tr>
+                                    <td>
+                                        @{ xsn++;}
+                                        @xsn
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {
+                                            @list.User.FullnameX}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.Email}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.PhoneNumber}
+                                    </td>
+                                    <td>
+
+                                        @list.Position
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <th colspan="5">Participants</th>
+                            </tr>
+                            @foreach (var list in item.StudyGroups.Where(x => x.User.Role == "Participant"))
+                            {
+                                <tr>
+                                    <td>
+                                        @{ ysn++;}
+                                        @ysn
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {
+                                            @list.User.FullnameX}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.Email}
+                                    </td>
+                                    <td>
+                                        @if (list.User != null)
+                                        {@list.User.PhoneNumber}
+                                    </td>
+                                    <td>
+
+                                        @list.Position
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+}

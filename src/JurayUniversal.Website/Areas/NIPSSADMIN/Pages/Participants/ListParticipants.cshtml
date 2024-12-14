@@ -1,0 +1,104 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants.ListParticipantsModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PARTICIPANTS ON @Model.Course.CourseCategory.Name (@Model.Course.CourseCategory.Abbreviation @Model.Course.SecNumber, @Model.Course.Year.ToString("yyyy"))</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Fullname
+                        </th>
+
+                        <th>Reg. No.</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Last Login</th>
+                        <th>Study Group</th>
+                        <th>Accomodation</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.ParticipantList)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="/Users/Info" asp-route-id="@item.UserId">
+                                    @Html.DisplayFor(modelItem => item.User.FullnameX)
+
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.LastLogin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudyGroup.StudyGroupCategory.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Accomodation.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserStatus)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/Users/Update" asp-route-id="@item.UserId">Edit</a>
+                                            <a class="dropdown-item" asp-page="/Users/UpdateEmail" asp-route-id="@item.UserId">Update Email</a>
+                                            <a class="dropdown-item" asp-page="/Account/UpdateProfile" asp-area="NIPSS" asp-route-id="@item.UserId">Update Full Profile</a>
+                                            <a class="dropdown-item" asp-page="/Users/UpdateAccomodation" asp-route-id="@item.UserId">Update Accomodation</a>
+                                            <a class="dropdown-item" asp-page="/Users/UpdateStudyGroup" asp-route-id="@item.UserId">Update Study Group</a>
+                                            <a class="dropdown-item" asp-page="/Users/RegistrationStatus" asp-route-id="@item.Id">Registration Status</a>
+                                            <a class="dropdown-item" asp-area="NIPSS" asp-page="/Account/PrintStatus" asp-route-id="@item.UserId">Registration Printout</a>
+                                            <a class="dropdown-item" asp-page="/NutriValution/UserQuestions" asp-route-id="@item.UserId">Nutrition Evaluation</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JurayUniversal.Domain\JurayUniversal.Domain.csproj" />
+    <ProjectReference Include="..\JurayUniversal.Infrastructure\JurayUniversal.Infrastructure.csproj" />
+    <ProjectReference Include="..\JurayUniversal.Persistence.EF.SQL\JurayUniversal.Persistence.EF.SQL.csproj" />
+    <ProjectReference Include="..\PostmarkEmailService\PostmarkEmailService.csproj" />
+  </ItemGroup>
+
+</Project>

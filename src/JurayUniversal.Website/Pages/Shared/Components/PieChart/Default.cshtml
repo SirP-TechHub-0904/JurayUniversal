@@ -1,0 +1,50 @@
+﻿<div>
+    <h4>@ViewBag.DataTitle</h4>
+    <canvas id="@ViewBag.sn" width="400" height="400"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    console.log("jdfkjd");
+    // Use Razor syntax to serialize the model data
+    var data = @Html.Raw(Json.Serialize(ViewBag.outcomex));
+    var chartid ='@ViewBag.sn';
+    console.log(data);
+    console.log("ddddd");
+    console.log(chartid);
+    console.log("aassddd");
+    var labelsForChart = 'labels_' + chartid;
+    var valuesForChart = 'values_' + chartid;
+    var colorsForChart = 'colors_' + chartid;
+    var ctxForChart = 'ctx_' + chartid;
+
+    if (typeof window[labelsForChart] === 'undefined') {
+        window[labelsForChart] = data.map(entry => entry.mainData);
+    }
+    if (typeof window[valuesForChart] === 'undefined') {
+        window[valuesForChart] = data.map(entry => entry.againstData);
+    }
+    if (typeof window[colorsForChart] === 'undefined') {
+        window[colorsForChart] = data.map(entry => entry.colorData);
+    }
+    console.log(data);
+
+    if (typeof window[ctxForChart] === 'undefined') {
+        window[ctxForChart] = document.getElementById(chartid).getContext('2d');
+    }
+
+    // Create the pie chart
+    new Chart(window[ctxForChart], {
+        type: 'pie',
+        data: {
+            labels: window[labelsForChart],
+            datasets: [{
+                data: window[valuesForChart],
+                backgroundColor: window[colorsForChart]
+            }],
+        },
+    });
+</script>
+
+
+

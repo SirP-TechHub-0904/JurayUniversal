@@ -1,0 +1,56 @@
+// Header Bottom Area 
+.header-bottom-area {
+    position: relative;
+
+    &.style-01 {
+        margin-top: 120px;
+    }
+}
+
+.bottom-single-items {
+    border: 1px dashed #FFCECE;
+    background: #fff;
+    border-radius: 10px;
+    padding: 40px 20px 40px 20px;
+    transition: .5s all ease;
+    margin-bottom: 30px;
+
+    &:hover {
+        border: 1px dashed #fff;
+        box-shadow: 0px 12px 30px rgba(221, 19, 26, 0.08);
+
+        .icon {
+            background: #fff;
+            border: 1px solid var(--main-color-one);
+            color: var(--main-color-one);
+            box-shadow: none;
+        }
+    }
+
+    .icon {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        background: var(--main-color-one);
+        border: 1px solid var(--main-color-one);
+        border-radius: 8px;
+        box-shadow: 0px 5px 20px rgb(221 19 26 / 40%);
+        font-size: 48px;
+        margin: 0px auto 20px auto;
+        color: #fff;
+        transition: .7s all ease;
+    }
+
+    .content {
+        .title {
+            text-align: center;
+            font-size: 24px;
+            line-height: 28px;
+            font-family: var(--heading-font);
+            font-weight: 600;
+            color: var(--heading-color);
+            margin-bottom: 0px;
+        }
+    }
+}

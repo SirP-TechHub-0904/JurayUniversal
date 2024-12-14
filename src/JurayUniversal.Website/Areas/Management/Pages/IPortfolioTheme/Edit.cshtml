@@ -1,0 +1,54 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IPortfolioTheme.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PortfolioTemplate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PortfolioTemplate.Id" />
+            <input type="hidden" asp-for="PortfolioTemplate.SampleKey" />
+            <input type="hidden" asp-for="PortfolioTemplate.SampleUrl" />
+            <div class="form-group">
+                <label asp-for="PortfolioTemplate.Name" class="control-label"></label>
+                <input asp-for="PortfolioTemplate.Name" class="form-control" />
+                <span asp-validation-for="PortfolioTemplate.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PortfolioTemplate.Path" class="control-label"></label>
+                <input asp-for="PortfolioTemplate.Path" class="form-control" />
+                <span asp-validation-for="PortfolioTemplate.Path" class="text-danger"></span>
+            </div>
+            @if (!String.IsNullOrEmpty(Model.PortfolioTemplate.SampleUrl))
+            {
+                <div class="form-group">
+                    <label class="control-label">Previouse Image</label><br />
+                    <img src="@Model.PortfolioTemplate.SampleUrl" class="img-fluid" style="max-height:150px;" />
+                </div>
+            }
+
+            <div class="form-group">
+                <label class="control-label"> Image</label><br />
+                <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

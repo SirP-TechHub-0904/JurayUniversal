@@ -1,0 +1,780 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users.DownloadModel
+@{
+    //Layout = "/Pages/Shared/_Pdf_Layout.cshtml";
+    Layout = null;
+}
+<html>
+<head>
+    <title id="page-title-j" style="text-transform: uppercase;"> BIODATA | National Institute for Policy and Strategic Studies – Kuru</title>
+    <link rel="shortcut icon" href="https://nipss24.s3.amazonaws.com/c53c6a8c-967d-4694-856f-e7ed67d0cf4f.jpg?AWSAccessKeyId=AKIA4Y267QYK25XMO6WE&amp;Expires=1801924559&amp;Signature=hj3h5Y0Z7Xy5%2FG1RVG4tgpSHjkM%3D" type="image/x-icon">
+    <link href="~/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Function to handle download
+        function downloadFunction() {
+
+            const element = document.getElementById('body');
+            const formattedDate = '@Model.UserDatas.FullnameX.ToUpper().Replace(" ", "_").Replace("'", "").Replace("/", "").Replace(".", "").Replace("-", "")';
+            const options = {
+                margin: 10,
+                filename: 'Biodata_' + formattedDate + '.pdf',
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 4 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf(element, options);
+
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <button onclick="downloadFunction()" class="btn btn-primary" style="margin:20px;padding:10px;text-align:center;">Download as PDF</button>
+
+        <div id="body" class="avoid-break">
+
+            <style>
+                body {
+                    margin: 0;
+                    font-family: "Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #212529;
+                    text-align: left;
+                    background-color: #fff;
+                    margin-top: 5m; /* Adjust this value as needed */
+                    margin-bottom: 5mm; /* Adjust this value as needed */
+
+                    word-break: break-all;
+                }
+
+
+                .card-header1 {
+                    background-color: #007D53 !important;
+                    color: white;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+
+                .input-group-sm > .custom-select, .input-group-sm > .form-control:not(textarea) {
+                    height: auto;
+                }
+
+                .daiv {
+                    box-shadow: 0px 11px 35px 0px #c5b5b4;
+                    word-break: break-all;
+                }
+
+                .secdaiv {
+                    box-shadow: 0px 4px 5px 0px #c5b5b4;
+                    word-break: break-all;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th, td {
+                    padding: 5px;
+                    border-bottom: 1px solid #ccc;
+                    text-align: left;
+                    vertical-align: top;
+                }
+
+                th {
+                    width: 30%;
+                }
+
+                @@media print {
+                    /* Avoid breaking specific elements across pages */
+                    .avoid-break {
+                        page-break-inside: avoid;
+                    }
+                }
+                img {
+                    page-break-inside: avoid !important;
+                }
+                p {
+                    page-break-inside: avoid !important;
+                }
+                tr {
+                    page-break-inside: avoid !important;
+                }
+                .secdaiv {
+                    page-break-inside: avoid !important;
+                }
+                h5 {
+                    page-break-inside: avoid !important;
+                }
+                span {
+                    page-break-inside: avoid !important;
+                }
+                strong {
+                    page-break-inside: avoid !important;
+                }
+                .personel {
+                    page-break-inside: avoid !important;
+                }
+            </style>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header" style="margin:0 auto;text-align:center;">
+                            <img src="~/NIPSS-logo-x.png" style="margin:0 auto;text-align:center;max-height:80px;padding:10px;" />
+
+                        </div>
+                        <div class="card-header card-header1">
+                            <h4 class="card-title"> @Model.UserDatas.FullnameX.ToUpper()</h4>
+
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table style="width:100%; border-collapse: collapse;">
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <th align="start" style="width:50%; border-bottom: 1px solid #ccc; padding: 10px;">
+
+                                                                <h5>Passport Photograph</h5>
+                                                                <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.PassportImage))" style="max-height:120px;" />
+                                                            </th>
+                                                            <td align="start" style="width: 50%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                <h5>Verification Barcode</h5>
+                                                                <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.BarcodeImage))" style="max-height:120px;" />
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PhoneNumber)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PhoneNumber)
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Email)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Email)
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.AltPhoneNumber)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.AltPhoneNumber)
+                                                            </td>
+                                                        </tr>
+                                                        @if (Model.Participant != null)
+                                                        {
+                                                            <tr>
+                                                                <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    Course
+                                                                </th>
+                                                                <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    @Model.Participant.Course.CourseCategory.Name (@Model.Participant.Course.CourseCategory.Abbreviation @Model.Participant.Course.SecNumber, @Model.Participant.Course.Year.ToString("yyyy"))
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    Registration Number
+                                                                </th>
+                                                                <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    @Html.DisplayFor(model => model.Participant.IdNumber)
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    Accomodation
+                                                                </th>
+                                                                <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                    @if (Model.Participant.Accomodation != null)
+                                                                    {
+                                                                        @Model.Participant.Accomodation.Name
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>Not Assigned Yet</span>
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Role)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Role)
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PermanentHomeAddress)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PermanentHomeAddress)
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PermanentLga)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PermanentLga)
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PermanentState)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PermanentState)
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Address)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Address)
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.City)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.City)
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.State)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.State)
+                                                            </td>
+                                                        </tr>
+
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.DateOfBirth)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @if (Model.UserDatas.DateOfBirth != null)
+                                                                {
+                                                                    @Model.UserDatas.DateOfBirth.Value.Date.ToString("dd MMM, yyyy")
+
+                                                                }
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Gender)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Gender)
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.MaritalStatus)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.MaritalStatus)
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.BloodGroup)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.BloodGroup)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Genotype)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Genotype)
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PreviousAppointment)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PreviousAppointment)
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.PositionOrRank)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.PositionOrRank)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.Sponsor)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.Sponsor)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.SponsorAddress)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.SponsorAddress)
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.InternationalPassportNumber)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.InternationalPassportNumber)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.InternationalPassportExpiringDate)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.InternationalPassportExpiringDate)
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.ValidIDCardUrl)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+
+                                                                <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.ValidIDImage))" style="max-height:200px;" />
+
+
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.EmergencyContactName)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.EmergencyContactName)
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.EmergencyContactNumber)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.EmergencyContactNumber)
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.EmergencyContactRelationship)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayFor(model => model.UserDatas.EmergencyContactRelationship)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th align="start" style="width:30%; border-bottom: 1px solid #ccc; padding: 10px;">
+                                                                @Html.DisplayNameFor(model => model.UserDatas.EmergencyContactValidIdCardUrl)
+                                                            </th>
+                                                            <td align="start" style="border-bottom: 1px solid #ccc; padding: 10px;">
+
+                                                                <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.EmagencyImage))" style="max-height:200px;" />
+
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                </table>
+
+                                                <div>
+                                                    @foreach (var item in Model.ProfileCategories)
+                                                    {
+                                                        <div class="daiv" style="margin-bottom: 10px; border: 2px solid #c5b5b4; border-radius: 6px;padding:5px;">
+                                                            <h5 style="padding-bottom:3px;border-bottom:1px solid black;font-weight:900;">@item.Title</h5>
+                                                            <div>
+                                                                @foreach (var list in item.ProfileCategoryLists)
+                                                                {
+
+
+                                                                    @if (item.Title.ToUpper().Contains("EDUCATION"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+
+                                                                            @if (!String.IsNullOrEmpty(list.Qualification))
+                                                                            {
+                                                                                <div class="personel">
+                                                                                    <strong>
+                                                                                        @if (!String.IsNullOrEmpty(list.FieldOfStudy))
+                                                                                        {
+                                                                                            @list.FieldOfStudy
+
+                                                                                        }
+
+                                                                                    </strong>
+                                                                                    <br />
+                                                                                    <strong>
+
+                                                                                        @if (!String.IsNullOrEmpty(list.Qualification))
+                                                                                        {
+                                                                                            @list.Qualification
+
+                                                                                        }
+                                                                                    </strong> <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.StartDate))
+                                                                                        {
+
+                                                                                            <span>
+                                                                                                @list.StartDate
+                                                                                            </span>
+
+                                                                                        } -  @if (list.Currently == false)
+                                                                                        {
+                                                                                            @if (!String.IsNullOrEmpty(list.EndDate))
+                                                                                            {
+
+                                                                                                @list.EndDate
+
+                                                                                            }
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <text>Current</text>
+
+                                                                                        }
+                                                                                    </span>
+                                                                                    <br />
+                                                                                    <strong>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </strong> @if (!String.IsNullOrEmpty(list.City))
+                                                                                    {
+                                                                                        <span>
+                                                                                            - @list.City
+                                                                                        </span>
+
+                                                                                    }
+                                                                                </div>
+
+                                                                            }
+
+                                                                        </div>}
+
+
+                                                                    @if (item.Title.ToUpper().Contains("EXPERIENCE"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <strong>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </strong> <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.StartDate))
+                                                                                        {
+
+                                                                                            @list.StartDate
+
+                                                                                        } @if (list.Currently == false)
+                                                                                        {
+                                                                                            @if (!String.IsNullOrEmpty(list.EndDate))
+                                                                                            {
+
+                                                                                                <text> -</text> @list.EndDate
+
+                                                                                            }
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <text>Current</text>
+
+                                                                                        }
+                                                                                    </span>
+                                                                                    <br />
+                                                                                    <strong>
+                                                                                        @if (!String.IsNullOrEmpty(list.Employer))
+                                                                                        {
+
+                                                                                            @list.Employer
+
+                                                                                        }
+                                                                                    </strong> @if (!String.IsNullOrEmpty(list.City))
+                                                                                    {
+                                                                                        <span>
+                                                                                            - @list.City
+                                                                                        </span>
+
+                                                                                    }
+                                                                                    <br />
+                                                                                    @if (!String.IsNullOrEmpty(list.Description))
+                                                                                    {
+                                                                                        <span>
+                                                                                            @Html.Raw(list.Description)
+                                                                                        </span>
+
+                                                                                    }
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+                                                                    @if (item.Title.ToUpper().Contains("CERTIFICATIONS"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <strong>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </strong> <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.StartDate))
+                                                                                        {
+
+                                                                                            <span>- @list.StartDate</span>
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+                                                                    @if (item.Title.ToUpper().Contains("AWARDS"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+
+                                                                    @if (item.Title.ToUpper().Contains("SKILLS"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+
+                                                                    @if (item.Title.ToUpper().Contains("LANGUAGES"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+
+                                                                        </div>}
+
+
+                                                                    @if (item.Title.ToUpper().Contains("INTEREST"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Title))
+                                                                            {
+                                                                                <div>
+                                                                                    <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.Title))
+                                                                                        {
+
+                                                                                            @list.Title
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+
+                                                                    @if (item.Title.ToUpper().Contains("REFERENCES"))
+                                                                    {
+                                                                        <div class="secdaiv" style="border-bottom: 1px solid #766d6c;">
+                                                                            @if (!String.IsNullOrEmpty(list.Description))
+                                                                            {
+                                                                                <div>
+                                                                                    <span>
+                                                                                        @if (!String.IsNullOrEmpty(list.Description))
+                                                                                        {
+
+                                                                                            @list.Description
+
+                                                                                        }
+                                                                                    </span>
+
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+
+                                                                }
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    }
+                                                </div>
+
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

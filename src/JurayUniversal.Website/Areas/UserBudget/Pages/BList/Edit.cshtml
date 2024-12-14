@@ -1,0 +1,60 @@
+﻿@page
+@model JurayUniversal.Website.Areas.UserBudget.Pages.BList.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BudgetList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BudgetList.Id" />
+            <div class="form-group">
+                <label asp-for="BudgetList.Title" class="control-label"></label>
+                <input asp-for="BudgetList.Title" class="form-control" />
+                <span asp-validation-for="BudgetList.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetList.Note" class="control-label"></label>
+                <input asp-for="BudgetList.Note" class="form-control" />
+                <span asp-validation-for="BudgetList.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetList.BudgetSubCategoryId" class="control-label"></label>
+                <select asp-for="BudgetList.BudgetSubCategoryId" class="form-control" asp-items="ViewBag.BudgetSubCategoryId"></select>
+                <span asp-validation-for="BudgetList.BudgetSubCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetList.AmountInNaira" class="control-label"></label>
+                <input asp-for="BudgetList.AmountInNaira" class="form-control" />
+                <span asp-validation-for="BudgetList.AmountInNaira" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetList.AmountInDollar" class="control-label"></label>
+                <input asp-for="BudgetList.AmountInDollar" class="form-control" />
+                <span asp-validation-for="BudgetList.AmountInDollar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetList.Status" class="control-label"></label>
+                <select asp-for="BudgetList.Status" class="form-control"></select>
+                <span asp-validation-for="BudgetList.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

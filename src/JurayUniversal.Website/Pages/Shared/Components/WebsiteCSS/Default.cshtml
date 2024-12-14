@@ -1,0 +1,54 @@
+﻿@model JurayUniversal.Domain.Models.SuperSetting
+
+
+@if (Model.TemplateLayoutKey == "Layout1111")
+{
+
+    @if (Model.ColorTemplateKey == "Colour1111")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles.css" id="colors">
+    }
+    else if (Model.ColorTemplateKey == "Colour2222")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles-2.css" id="colors">
+    }
+    else if (Model.ColorTemplateKey == "Colour3333")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles-3.css" id="colors">
+    }
+    else if (Model.ColorTemplateKey == "Colour4444")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles-4.css" id="colors">
+    }
+    else if (Model.ColorTemplateKey == "Colour5555")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles-5.css" id="colors">
+    }
+    else if (Model.ColorTemplateKey == "Colour6666")
+    {
+        <link rel="stylesheet" type="text/css" href="~/Layout/RedBiz-template/css/styles-6.css" id="colors">
+    }
+    <link href="~/Layout/RedBiz-template/css/main.css" rel="stylesheet" />
+
+
+}
+else if (Model.TemplateLayoutKey == "Layout2222")
+{
+    @if (Model.ColorTemplateKey == "Colour1111")
+    {
+        <link rel="stylesheet" id="color" href="~/Layout/carspot/css/colors/defualt.css">
+    }
+    else if (Model.ColorTemplateKey == "Colour2222")
+    {
+        <link rel="stylesheet" id="color" href="~/Layout/carspot/css/colors/green.css">
+    }
+    else if (Model.ColorTemplateKey == "Colour3333")
+    {
+        <link rel="stylesheet" id="color" href="~/Layout/carspot/css/colors/purple.css">
+    }
+
+    <link href="~/Layout/carspot/css/main.css" rel="stylesheet" />
+}
+<style>
+    @Html.Raw(ViewBag.DataConfigs.LayoutCSS)
+</style>

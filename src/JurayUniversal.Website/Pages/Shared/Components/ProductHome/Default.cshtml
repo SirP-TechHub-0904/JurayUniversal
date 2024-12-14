@@ -1,0 +1,271 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.Product>
+@using System.Text.RegularExpressions;
+
+@{
+    Domain.Models.Setting xsetting = ViewBag.setting;
+    Domain.Models.SuperSetting supsetting = ViewBag.suppersetting;
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+@if (xsetting.ActivateProductsInHome == true)
+{
+    if (supsetting.TemplateLayoutKey == "Layout1111")
+    {
+        <div class="section-block-grey">
+            <div class="container">
+                <div class="section-heading center-holder">
+                    <h3>@supsetting.ProductTitleHome</h3>
+                </div>
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4 col-sm-4 col-12">
+                            <div class="blog-grid">
+                                <div class="blog-grid-img">
+                                    <img src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
+
+                                </div>
+                                <div class="blog-grid-text">
+                                    <h4 style=" height: 54px;overflow:hidden;">@item.Title</h4>
+
+                                    <div class="choose-3-line">
+                                        <p style=" height: 107px; overflow: hidden;text-overflow:ellipsis !important;">
+                                            @item.ShortDescription
+                                        </p>
+                                    </div>
+                                    <div class="mt-20 left-holder" style="margin-top:5px;">
+                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="primary-button button-sm">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    }
+
+    else if (supsetting.TemplateLayoutKey == "Layout2222")
+    {
+        <section class="custom-padding">
+            <!-- Main Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    <div class="clearfix"></div>
+                    <!-- Heading Area -->
+                    <div class="heading-panel">
+                        <div class="col-xs-12 col-md-12 col-sm-12 text-center">
+                            <!-- Main Title -->
+                            <h1>@supsetting.ProductTitleHome</h1>
+                            <!-- Short Description -->
+                        </div>
+                    </div>
+                    <!-- Middle Content Box -->
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <div class="posts-masonry">
+
+                                @if (xsetting.ShowTwoProducts == true)
+                                {
+                                    foreach (var item in Model.Take(2))
+                                    {
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;">
+                                                    <!-- Ad Status --><span class="ad-status"> @item.StatusNote </span>
+                                                    <!-- View Details --><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="view-details">View Details</a>
+                                                    <!-- Additional Info -->
+                                                    <div class="additional-information">
+                                                        @foreach (var list in item.ProductFeatures.Take(5))
+                                                        {
+                                                            <p>@list.Title : @list.Description</p>
+                                                        }
+
+                                                    </div>
+                                                    <!-- Additional Info End-->
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Category -->
+                                                    <div class="category-title"> <span><a class="list4width" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.MiniTitle</a></span> </div>
+                                                    <!-- Ad Title -->
+                                                    <h3 style=" height: 60px; text-overflow: ellipsis; overflow: hidden;"><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style=" height: 60px; text-overflow: ellipsis; overflow: hidden;">@item.Title </a></h3>
+                                                    <!-- Price -->
+                                                    <div class="price">@item.Amount   </div>
+                                                </div>
+                                                <!-- Addition Info -->
+                                                <div class="ad-info">
+                                                    <ul>
+                                                        @foreach (var list in item.ProductFeatures.Take(3))
+                                                        {
+                                                            <li style="width: 33%; white-space: nowrap; overflow: hidden; "><i class="@list.IconText"></i>@list.Description</li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+
+                                    }
+                                }
+                                else if (xsetting.ShowThreeProducts == true)
+                                {
+                                    foreach (var item in Model.Take(3))
+                                    {
+                                        <div class="col-md-4 col-xs-12 col-sm-6">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;">
+                                                    <!-- Ad Status --><span class="ad-status"> @item.StatusNote </span>
+                                                    <!-- View Details --><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="view-details">View Details</a>
+                                                    <!-- Additional Info -->
+                                                    <div class="additional-information">
+                                                        @foreach (var list in item.ProductFeatures.Take(5))
+                                                        {
+                                                            <p>@list.Title : @list.Description</p>
+                                                        }
+
+                                                    </div>
+                                                    <!-- Additional Info End-->
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Category -->
+                                                    <div class="category-title"> <span><a class="list4width" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.MiniTitle</a></span> </div>
+                                                    <!-- Ad Title -->
+                                                    <h3 style=" height: 60px; text-overflow: ellipsis; overflow: hidden;"><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style=" height: 60px; text-overflow: ellipsis; overflow: hidden;">@item.Title </a></h3>
+                                                    <!-- Price -->
+                                                    <div class="price">@item.Amount   </div>
+                                                </div>
+                                                <!-- Addition Info -->
+                                                <div class="ad-info">
+                                                    <ul>
+                                                        @foreach (var list in item.ProductFeatures.Take(3))
+                                                        {
+                                                            <li style="width: 33%; white-space: nowrap; overflow: hidden; "><i class="@list.IconText"></i>@list.Description</li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+
+                                    }
+                                }
+                                else if (xsetting.ShowSixProducts == true)
+                                {
+                                    foreach (var item in Model.Take(3))
+                                    {
+                                        <div class="col-md-3 col-xs-12 col-sm-6">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;">
+                                                    <!-- Ad Status --><span class="ad-status"> @item.StatusNote </span>
+                                                    <!-- View Details --><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="view-details">View Details</a>
+                                                    <!-- Additional Info -->
+                                                    <div class="additional-information">
+                                                        @foreach (var list in item.ProductFeatures.Take(5))
+                                                        {
+                                                            <p>@list.Title : @list.Description</p>
+                                                        }
+
+                                                    </div>
+                                                    <!-- Additional Info End-->
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Category -->
+                                                    <div class="category-title"> <span><a class="list4width" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.MiniTitle</a></span> </div>
+                                                    <!-- Ad Title -->
+                                                    <h3 style=" height: 60px; text-overflow: ellipsis; overflow: hidden;"><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title </a></h3>
+                                                    <!-- Price -->
+                                                    <div class="price">@item.Amount   </div>
+                                                </div>
+                                                <!-- Addition Info -->
+                                                <div class="ad-info">
+                                                    <ul>
+                                                        @foreach (var list in item.ProductFeatures.Take(3))
+                                                        {
+                                                            <li style="width: 33%; white-space: nowrap; overflow: hidden; "><i class="@list.IconText"></i>@list.Description</li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+
+                                    }
+                                }
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Middle Content Box End -->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </section>
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout3333")
+    {
+
+    }
+    else if (supsetting.TemplateLayoutKey == "Layout8888")
+    {
+        <section>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h1>@supsetting.ProductTitleHome</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-12">
+                        <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-margin="30" data-autoplay="true">
+
+                            @foreach (var item in Model)
+                            {
+                                <div class="item">
+                                    <div class="post style-3">
+                                        <div class="post-image">
+                                            <img src="@item.ImageUrl" alt="@item.Title">
+                                        </div>
+                                        <div class="post-desc"> 
+                                            <div class="post-title">
+                                                <h5><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                            </div>
+                                            <p>@item.ShortDescription</p>
+                                        </div>
+                                        <div class="post-bottom">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

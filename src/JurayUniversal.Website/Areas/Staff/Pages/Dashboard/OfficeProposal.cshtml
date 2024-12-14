@@ -1,0 +1,74 @@
+﻿@page
+@model JurayUniversal.Web.Areas.Staff.Pages.Dashboard.OfficeProposalModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PROPOSAL LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Proposal[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Proposal[0].SubmittedBy)
+                        </th>
+                         
+                        <th>
+                            @Html.DisplayNameFor(model => model.Proposal[0].DateSubmitted)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Proposal[0].DateApproved)
+                        </th>
+                        
+                         
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Proposal)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id"> 
+                                @Html.DisplayFor(modelItem => item.Title)</a>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SubmittedBy.GetFullName())
+                            </td>
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateSubmitted)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateApproved)
+                            </td>
+                           
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

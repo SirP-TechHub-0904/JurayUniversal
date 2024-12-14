@@ -1,0 +1,105 @@
+// History Single Timeline Items Start header
+// .history-item-wrap {
+//     overflow: hidden;
+// }
+
+.history-single-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 80px;
+    position: relative;
+    + .history-single-item {
+        &::after {
+            content: '';
+            width: 2px;
+            height: 105%;
+            bottom: 58%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px dashed #AAAAAA;
+            position: absolute;
+            z-index: -2;
+        }
+    } 
+    &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 45%;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        // background: var(--main-color-one);
+        border: 2px solid var(--main-color-one);
+        z-index: -1;
+    }
+    &:nth-child(even) {
+        flex-direction: row-reverse;
+        .history-year{
+            margin-right: 145px;
+        }
+    }
+    .circle {
+        width: 12px;
+        height: 12px;
+        background: var(--main-color-one);
+        border-radius: 50%;
+        position: absolute;
+        right: 50%;
+        top: 47%;
+        transform: translateX(6px);
+    }
+    .history-single-item-content {
+        .thumb {
+            background-repeat: no-repeat;
+            background-size: contain;
+            min-height: 285px;
+            border-radius: 10px 10px 0px 0px;
+        }
+        .content {
+            padding: 30px;
+            box-shadow: 0px 12px 30px rgba(80, 80, 80, 0.2);
+            border-radius: 0px 0px 10px 10px;
+            .title {
+                font-size: 24px;
+                line-height: 28px;
+                font-family: var(--body-font);
+                font-weight: 700;
+                color: var(--heading-color);
+            }
+            p {
+                font-size: 16px;
+                line-height: 28px;
+                font-family: var(--body-font);
+                font-weight: 400;
+                color: #6B6B6B;
+                max-width: 420px;
+            }
+        }
+    }
+    .history-year {
+        margin-left: 145px;
+        width: 120px;
+        height: 85px;
+        text-align: center;
+        background: var(--main-color-one);
+        border-radius: 6px;
+        .month {
+            font-size: 18px;
+            line-height: 28px;
+            font-family: var(--body-font);
+            font-weight: 400;
+            color: #FFFFFF;
+            margin-bottom: 0;
+        }
+        .year {
+            font-size: 40px;
+            line-height: 48px;
+            font-family: var(--heading-font);
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0;
+        }
+    }
+}

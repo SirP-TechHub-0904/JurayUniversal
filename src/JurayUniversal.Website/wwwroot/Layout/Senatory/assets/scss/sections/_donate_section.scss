@@ -1,0 +1,80 @@
+// Donation section
+
+.donation-section-area {
+    margin-top: 115px;
+
+    .party-single-item {
+        .sub-title-02 {
+            color: var(--heading-font);
+        }
+    }
+
+    &.political {
+        background-color: #F9F9FF;
+        padding: 120px 0px;
+        margin-top: 120px;
+    }
+
+    &.style-01 {
+        margin-top: 0;
+        padding-top: 250px;
+    }
+
+    .thumbnail {
+        img {
+            border-radius: 8px;
+        }
+    }
+
+    .donate-bg {
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: top;
+        min-height: 375px;
+    }
+
+    .donate-bg-02 {
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        min-height: 350px;
+    }
+
+    .btn-wrapper {
+        &.home-six {
+            display: flex;
+
+            .price-btn {
+                border-radius: 0;
+            }
+
+            .boxed-btn {
+                &.btn-sanatory {
+                    box-shadow: none;
+                    border-radius: 0;
+                    padding: 16px 22px;
+                    display: inline-block;
+                }
+            }
+        }
+
+        .price-btn {
+            border: 1px solid #BEBEBE;
+            padding: 12px 22px;
+            border-radius: 5px;
+            margin-right: 20px;
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 700;
+            font-family: var(--heading-font);
+            color: #505050;
+            transition: .3s all ease;
+            display: inline-block;
+
+            &:hover {
+                border-color: var(--main-color-one);
+                color: var(--main-color-one);
+            }
+        }
+    }
+}

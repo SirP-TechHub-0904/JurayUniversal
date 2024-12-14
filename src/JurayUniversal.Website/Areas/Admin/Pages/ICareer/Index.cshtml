@@ -1,0 +1,94 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.ICareer.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">CAREER APPLICATIONS</h3>
+        <a asp-page="/ICareer/Path/Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Career Roles</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareerFile[0].Fullname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareerFile[0].Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareerFile[0].Phone)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareerFile[0].Position)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CareerFile[0].Date)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.CareerFile)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fullname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

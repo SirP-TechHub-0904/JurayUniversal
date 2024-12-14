@@ -1,0 +1,147 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IReport.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">REPORT LIST</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-6" style="">
+                <form method="get">
+                    <div class="input-group input-group-sm" style="margin-bottom:7px;">
+
+                        <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-flat">Search</button>
+                        </span>
+                    </div>
+                </form>
+
+                <p>
+                    Search result for <span style="font-weight:900;color:#b62626;"><i>@TempData["date"]</i></span>
+
+                </p>
+
+            </div>
+            <div class="col-md-6" style="">
+                <a asp-page="./ReportQuery" class="btn bg-gradient-warning btn-sm" style="float:right;">Report Query</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>DAY/DATE</th>
+                        <th>NAME</th>
+                        
+                        <th>TASK</th>
+                        <th>STATUS</th>
+                        <th>PERIOD</th>
+                        <th>VERIFICATION STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    @foreach (var item in Model.Report)
+                    {
+                        <tr>
+
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+
+                                    @item.Date.Date.ToString("ddd dd MMM, yyyy")
+                                </a>
+                            </td>
+                            <td>@item.User.GetFullName()</td>
+                            <td>
+                                @if(item.TaskNoteStatus == JurayUniversal.Domain.Enum.Enum.TaskNoteStatus.Active)
+                                {
+                                    <span class="btn btn-success">Available</span>
+                                }else{
+                                     <span class="btn btn-danger">Not Available</span>
+                                }
+ 
+                            </td>
+                            <td>
+                                @if (item.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Submitted)
+                                {
+                                    @Html.DisplayFor(modelItem => item.ReportStatus) <i class="fa fa-check btn btn-success"></i>
+                                }
+                                else if (item.ReportStatus == JurayUniversal.Domain.Enum.Enum.ReportStatus.Failed)
+                                {
+                                    @Html.DisplayFor(modelItem => item.ReportStatus) <i class="fa fa-times btn btn-danger"></i>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.ReportStatus)
+                                }
+                                    
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.ReportPeriodStatus)
+
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.VerificationStatus)
+
+                            </td>
+                            
+                            <td>
+                             
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success">Action</button>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                                <a class="dropdown-item" asp-page="./UpdateReport" asp-route-id="@item.Id">Manager Report</a>
+                                                @if (item.Date.Date >= DateTime.UtcNow.Date)
+                                                {
+                                                    <a class="dropdown-item" asp-page="./UpdateTask" asp-route-id="@item.Id">Update Task</a>
+                                                }
+                                                <a class="dropdown-item" asp-page="./AdminTask" asp-route-id="@item.Id">Admin Report</a>
+                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                              @* @if (item.Date.Date == DateTime.UtcNow.Date)
+                                {    }
+                                else if (item.Date.Date > DateTime.UtcNow.Date)
+                                {
+                                    <span>Not Yet Due Date </span>
+                                }
+                                else if (item.Date.Date < DateTime.UtcNow.Date)
+                                {
+                                    <span>Date Passed </span>
+                                }*@
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+

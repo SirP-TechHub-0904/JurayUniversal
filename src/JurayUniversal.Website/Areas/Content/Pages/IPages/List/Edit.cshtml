@@ -1,0 +1,143 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.List.EditModel
+
+@{
+    ViewData["Title"] = "PAGE LIST Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE PAGE SECTION LIST</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PageSectionList.Id" />
+                    <input type="hidden" asp-for="PageSectionList.PageSectionId" />
+                    <input type="hidden" asp-for="PageSectionList.VideoKey" />
+                    <input type="hidden" asp-for="PageSectionList.VideoUrl" />
+                    <input type="hidden" asp-for="PageSectionList.ImageKey" />
+                    <input type="hidden" asp-for="PageSectionList.ImageUrl" />
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.Title" class="control-label"></label>
+                        <input asp-for="PageSectionList.Title" class="form-control" />
+                        <span asp-validation-for="PageSectionList.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.MiniTitle" class="control-label"></label>
+                        <input asp-for="PageSectionList.MiniTitle" class="form-control" />
+                        <span asp-validation-for="PageSectionList.MiniTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.SortOrder" class="control-label"></label>
+                        <input asp-for="PageSectionList.SortOrder" class="form-control" />
+                        <span asp-validation-for="PageSectionList.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.Description" class="control-label"></label>
+                        <input asp-for="PageSectionList.Description" class="form-control" />
+                        <span asp-validation-for="PageSectionList.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.MoreDescription" class="control-label"></label>
+                        <input asp-for="PageSectionList.MoreDescription" class="form-control" />
+                        <span asp-validation-for="PageSectionList.MoreDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.IconText" class="control-label"></label>
+                        <input asp-for="PageSectionList.IconText" class="form-control" />
+                        <span asp-validation-for="PageSectionList.IconText" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.ButtonText" class="control-label"></label>
+                        <input asp-for="PageSectionList.ButtonText" class="form-control" />
+                        <span asp-validation-for="PageSectionList.ButtonText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.ButtonLink" class="control-label"></label>
+                        <select asp-for="PageSectionList.ButtonLink" class="form-control" asp-items="ViewBag.WebPageId">
+                            <option value="0">#</option>
+                            <option value="Direct">Direct Link (https://www.juray.ng/)</option>
+                            <option value="000">Contact Us Page</option>
+
+                        </select>
+
+                        <span asp-validation-for="PageSectionList.ButtonLink" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.DirectUrl" class="control-label"></label>
+                        <input asp-for="PageSectionList.DirectUrl" class="form-control" />
+                        <span asp-validation-for="PageSectionList.DirectUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSectionList.Disable" /> @Html.DisplayNameFor(model => model.PageSectionList.Disable)
+                        </label>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.PageSectionList.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse sample Image</label><br />
+                            <img src="@Model.PageSectionList.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                        </div>
+                    } @if (!String.IsNullOrEmpty(Model.PageSectionList.VideoUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse sample Video</label><br />
+                            <video width="" style="height:200px;" controls="controls">
+                                <source src="@Model.PageSectionList.VideoUrl" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label">sample Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Sample Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PageSectionList.AddToRibon" /> @Html.DisplayNameFor(model => model.PageSectionList.AddToRibon)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.RibonSortOrder" class="control-label"></label>
+                        <input asp-for="PageSectionList.RibonSortOrder" class="form-control" />
+                        <span asp-validation-for="PageSectionList.RibonSortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSectionList.RibonCustomDisplayTitle" class="control-label"></label>
+                        <input asp-for="PageSectionList.RibonCustomDisplayTitle" class="form-control" />
+                        <span asp-validation-for="PageSectionList.RibonCustomDisplayTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="/IPages/Section/Details" asp-route-id="@Model.PageSectionList.PageSectionId" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

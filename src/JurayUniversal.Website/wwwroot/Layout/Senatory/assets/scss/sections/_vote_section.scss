@@ -1,0 +1,53 @@
+// Vote Section area
+
+.vote-section-area{
+    position: relative;
+    overflow: hidden;
+    padding: 140px 0 140px;
+    &.vote-bg {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .party-shape {
+        position: absolute;
+        top: 0;
+        right: 13%;
+    }
+    .party-shape-01 {
+        position: absolute;
+        bottom: -50px;
+        right: -4%;
+    }
+    .party-shape-02 {
+        width: 255px;
+        height: 1px;
+        background-color: var(--main-color-one);
+        position: absolute;
+        top: 45%;
+        right: 5%;
+        transform: rotate(61deg);
+    }
+    .party-shape-03 {
+        width: 290px;
+        height: 1px;
+        background-color: var(--main-color-one);
+        position: absolute;
+        top: 145px;
+        right: 3%;
+        transform: rotate(63deg);
+    }
+    .video-section {
+        margin-top: 65px;
+        span {
+            font-size: 40px;
+            line-height: 68px;
+            font-weight: 400;
+            font-family: var(--heading-font-02);
+            color: #fff;
+        }
+    }
+}
+
+

@@ -1,0 +1,69 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.IFeatures.DeleteModel
+
+@{
+    ViewData["Title"] = string.Format("{0} FEATURE delete", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DELETE @await Component.InvokeAsync("ProductTitle") FEATURES</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Are you sure you want to delete this?</h3>
+                <div>
+                    <h4>ProductFeature</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.ProductFeature.Title)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.ProductFeature.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.ProductFeature.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.ProductFeature.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.ProductFeature.Product)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.ProductFeature.Product.FullDescription)
+                        </dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="ProductFeature.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

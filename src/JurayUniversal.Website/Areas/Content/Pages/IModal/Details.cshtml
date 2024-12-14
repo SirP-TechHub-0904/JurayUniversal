@@ -1,0 +1,116 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IModal.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS MODAL</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ImageUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ImageUrl)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ImageKey)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ImageKey)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ModalTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ModalTime)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ModalOccurance)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ModalOccurance)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.StartTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.StartTime)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.StopTime)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.StopTime)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ShowOnlyImage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ShowOnlyImage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ShowTitle)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ShowTitle)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ShowDescription)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ShowDescription)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.ShowImage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.ShowImage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PostModal.Publish)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PostModal.Publish)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>

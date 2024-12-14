@@ -1,0 +1,222 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IJob.ICategoryPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS JOB CATEGORY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.JobCategory.Title)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.JobCategory.Title)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.JobCategory.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.JobCategory.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.JobCategory.Private)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.JobCategory.Private)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.JobCategory.Disable)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.JobCategory.Disable)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- /.card-body -->
+           
+        </div>
+    </div>
+
+
+    <div class="card-header">
+        <h3 class="card-title">PLAN LIST</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example3" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Description
+                        </th>
+
+                        <th>Price</th>
+                        <th>Private</th>
+                        <th>Disable</th>
+                        <th>Compulsory</th>
+                        <th>Days</th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.PlanList)
+                    {
+                        if(item.ForPrivate == true)
+                        {
+                            <tr class="bg-danger">
+
+                                <td>
+                                    @{
+                                        sn++;
+                                    }
+                                    @sn
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ForPrivate)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Disable)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Compulsory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DaysToComplete)
+                                </td>
+
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="">
+
+                                <td>
+                                    @{
+                                        sn++;
+                                    }
+                                    @sn
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ForPrivate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Disable)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Compulsory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DaysToComplete)
+                                </td>
+
+
+
+                            </tr> 
+                        }
+                      
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Plan.JobCategoryId" value="@Model.JobCategory.Id" />
+                    <div class="form-group">
+                        <label asp-for="Plan.Title" class="control-label"></label>
+                        <input asp-for="Plan.Title" class="form-control" />
+                        <span asp-validation-for="Plan.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plan.Description" class="control-label"></label>
+                        <input asp-for="Plan.Description" class="form-control" />
+                        <span asp-validation-for="Plan.Description" class="text-danger"></span>
+                    </div>
+                 
+                    <div class="form-group">
+                        <label asp-for="Plan.Price" class="control-label"></label>
+                        <input asp-for="Plan.Price" class="form-control" />
+                        <span asp-validation-for="Plan.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.Disable" /> @Html.DisplayNameFor(model => model.Plan.Disable)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.ForPrivate" /> @Html.DisplayNameFor(model => model.Plan.ForPrivate)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Plan.Compulsory" /> @Html.DisplayNameFor(model => model.Plan.Compulsory)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plan.DaysToComplete" class="control-label"></label>
+                        <input asp-for="Plan.DaysToComplete" class="form-control" />
+                        <span asp-validation-for="Plan.DaysToComplete" class="text-danger"></span>
+                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+ 
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <div class="card-footer">
+        <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+    </div>
+</div>
+

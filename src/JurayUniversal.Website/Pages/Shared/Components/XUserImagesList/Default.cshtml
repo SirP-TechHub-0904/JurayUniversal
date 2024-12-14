@@ -1,0 +1,33 @@
+﻿@model ICollection<JurayUniversal.Domain.Models.Profile>
+
+
+
+
+<ul class="list-inline">
+
+
+    @foreach (var item in Model)
+    {
+
+        <li class="list-inline-item">
+
+            @if (!String.IsNullOrEmpty(item.PassportFilePathUrl))
+            {
+                <span class="" style="text-align:center;margin:auto;height:25px;width:25px;">
+                    <img alt="Avatar" class="table-avatar" src="@item.PassportFilePathUrl" style="height:25px;width:auto;">
+                </span>
+
+            }
+            else
+            {
+                <span class="" style="text-align:center;margin:auto;height:25px;width:25px;">
+                    <img alt="Avatar" class="table-avatar" src="~/dashboard/dist/img/avatar.png" style="height:25px;width:auto;">
+                </span>
+            }
+
+
+        </li>
+    }
+
+
+</ul>

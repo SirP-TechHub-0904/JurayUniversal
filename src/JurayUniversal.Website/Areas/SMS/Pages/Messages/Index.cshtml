@@ -1,0 +1,177 @@
+﻿@page
+@model JurayUniversal.Website.Areas.SMS.Pages.Messages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"> SMS MESSAGE LIST FOR @Model.SmsMessageCategory.Title</h3>
+
+
+        <a asp-page="./Create" asp-route-id="@Model.SmsMessageCategory.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].SenderId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Recipients)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].MessageContent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].SummaryReport)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].UnitsUsed)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Scheduleddate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].DeliveredDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Resent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_error_code)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_cost)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_msg)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_length)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_page)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_balance)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].Response_BalanceResponse)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SmsMessage[0].SmsMessageCategory)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.SmsMessage)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SenderId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Recipients)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MessageContent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SummaryReport)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitsUsed)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Scheduleddate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DeliveredDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Resent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_error_code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_cost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_msg)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_length)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_page)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_balance)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Response_BalanceResponse)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SmsMessageCategory.Id)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

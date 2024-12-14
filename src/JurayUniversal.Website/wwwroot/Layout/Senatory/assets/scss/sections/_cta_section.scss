@@ -1,0 +1,89 @@
+// Call to Action Section Styling Here
+.call-to-action-section {
+    background: #050A3E;
+    padding: 120px 0px;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    margin-top: 90px;
+
+    .cta-bg {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        width: 40%;
+        height: 100%;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: transparent linear-gradient(270deg, #050A3E 0%, #050A3E80 100%) 0% 0% no-repeat padding-box;
+        }
+    }
+
+    .cta-shape {
+        position: absolute;
+        right: 0px;
+        bottom: 0;
+        width: 50%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: right;
+    }
+
+    .cta-items {
+        p.subtitle {
+            font-size: 14px;
+            line-height: 2;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            margin-bottom: 0;
+            display: inline-block;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 0;
+            word-spacing: 4px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent linear-gradient(90deg, #DD131A 0%, #FFFFFF00 100%) 0% 0% no-repeat padding-box;
+                opacity: 0.16;
+            }
+
+            i {
+                margin-right: 10px;
+                color: var(--main-color-one);
+            }
+        }
+
+        .title {
+            font-size: 40px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: $white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: 400;
+            color: #CCCCCC;
+            margin-bottom: 40px;
+        }
+    }
+}

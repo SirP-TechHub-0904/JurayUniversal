@@ -1,0 +1,78 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.List.CreateModel
+
+@{
+    ViewData["Title"] = "PAGE LIST Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW PAGE SECTION LIST</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.VideoUrl" class="control-label"></label>
+                <input asp-for="PageSectionList.VideoUrl" class="form-control" />
+                <span asp-validation-for="PageSectionList.VideoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.VideoKey" class="control-label"></label>
+                <input asp-for="PageSectionList.VideoKey" class="form-control" />
+                <span asp-validation-for="PageSectionList.VideoKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.ImageUrl" class="control-label"></label>
+                <input asp-for="PageSectionList.ImageUrl" class="form-control" />
+                <span asp-validation-for="PageSectionList.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.ImageKey" class="control-label"></label>
+                <input asp-for="PageSectionList.ImageKey" class="form-control" />
+                <span asp-validation-for="PageSectionList.ImageKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.Title" class="control-label"></label>
+                <input asp-for="PageSectionList.Title" class="form-control" />
+                <span asp-validation-for="PageSectionList.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.Description" class="control-label"></label>
+                <input asp-for="PageSectionList.Description" class="form-control" />
+                <span asp-validation-for="PageSectionList.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="PageSectionList.Disable" /> @Html.DisplayNameFor(model => model.PageSectionList.Disable)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageSectionList.PageSectionId" class="control-label"></label>
+                <select asp-for="PageSectionList.PageSectionId" class ="form-control" asp-items="ViewBag.PageSectionId"></select>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

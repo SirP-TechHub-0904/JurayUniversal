@@ -1,0 +1,100 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IFunds.CompanyFunds.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">COMPANY FUNDS LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyFund[0].Date)
+                        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyFund[0].FundType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyFund[0].FundStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyFund[0].FundSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyFund[0].FundMeans)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyFund[0].Amount)
+            </th>
+            <th></th>
+        </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+    <tbody>
+@foreach (var item in Model.CompanyFund) {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FundType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FundStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FundSource.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FundMeans)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

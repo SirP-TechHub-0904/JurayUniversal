@@ -1,0 +1,190 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IConfigSettings.CreateModel
+
+@{
+    ViewData["Title"] = "Create"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<h1>Create</h1>
+
+<h4>DataConfig</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DataConfig.LoginCSS" class="control-label"></label>
+                <input asp-for="DataConfig.LoginCSS" class="form-control" />
+                <span asp-validation-for="DataConfig.LoginCSS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.LayoutCSS" class="control-label"></label>
+                <input asp-for="DataConfig.LayoutCSS" class="form-control" />
+                <span asp-validation-for="DataConfig.LayoutCSS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.LayoutJavaScript" class="control-label"></label>
+                <input asp-for="DataConfig.LayoutJavaScript" class="form-control" />
+                <span asp-validation-for="DataConfig.LayoutJavaScript" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.DashboardCSS" class="control-label"></label>
+                <input asp-for="DataConfig.DashboardCSS" class="form-control" />
+                <span asp-validation-for="DataConfig.DashboardCSS" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.RedirectTohttpswww" /> @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttpswww)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.RedirectTohttps" /> @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttps)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.Configuration" class="control-label"></label>
+                <input asp-for="DataConfig.Configuration" class="form-control" />
+                <span asp-validation-for="DataConfig.Configuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.LiveConfiguration" class="control-label"></label>
+                <input asp-for="DataConfig.LiveConfiguration" class="form-control" />
+                <span asp-validation-for="DataConfig.LiveConfiguration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.MailSender" class="control-label"></label>
+                <select asp-for="DataConfig.MailSender" class="form-control"></select>
+                <span asp-validation-for="DataConfig.MailSender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.OutlookServer" class="control-label"></label>
+                <input asp-for="DataConfig.OutlookServer" class="form-control" />
+                <span asp-validation-for="DataConfig.OutlookServer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.OutlookPort" class="control-label"></label>
+                <input asp-for="DataConfig.OutlookPort" class="form-control" />
+                <span asp-validation-for="DataConfig.OutlookPort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.OutlookUsername" class="control-label"></label>
+                <input asp-for="DataConfig.OutlookUsername" class="form-control" />
+                <span asp-validation-for="DataConfig.OutlookUsername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.OutlookSecurity" class="control-label"></label>
+                <input asp-for="DataConfig.OutlookSecurity" class="form-control" />
+                <span asp-validation-for="DataConfig.OutlookSecurity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.OutlookSenderEmail" class="control-label"></label>
+                <input asp-for="DataConfig.OutlookSenderEmail" class="form-control" />
+                <span asp-validation-for="DataConfig.OutlookSenderEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.OutlookSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.OutlookSSLEnable)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.OutlookUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.OutlookUseDefaultCredentials)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.GoogleServer" class="control-label"></label>
+                <input asp-for="DataConfig.GoogleServer" class="form-control" />
+                <span asp-validation-for="DataConfig.GoogleServer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.GooglePort" class="control-label"></label>
+                <input asp-for="DataConfig.GooglePort" class="form-control" />
+                <span asp-validation-for="DataConfig.GooglePort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.GoogleUsername" class="control-label"></label>
+                <input asp-for="DataConfig.GoogleUsername" class="form-control" />
+                <span asp-validation-for="DataConfig.GoogleUsername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.GoogleSecurity" class="control-label"></label>
+                <input asp-for="DataConfig.GoogleSecurity" class="form-control" />
+                <span asp-validation-for="DataConfig.GoogleSecurity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.GoogleSenderEmail" class="control-label"></label>
+                <input asp-for="DataConfig.GoogleSenderEmail" class="form-control" />
+                <span asp-validation-for="DataConfig.GoogleSenderEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.GoogleSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.GoogleSSLEnable)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.GoogleUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.GoogleUseDefaultCredentials)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.WebmailServer" class="control-label"></label>
+                <input asp-for="DataConfig.WebmailServer" class="form-control" />
+                <span asp-validation-for="DataConfig.WebmailServer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.WebmailPort" class="control-label"></label>
+                <input asp-for="DataConfig.WebmailPort" class="form-control" />
+                <span asp-validation-for="DataConfig.WebmailPort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.WebmailUsername" class="control-label"></label>
+                <input asp-for="DataConfig.WebmailUsername" class="form-control" />
+                <span asp-validation-for="DataConfig.WebmailUsername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.WebmailSecurity" class="control-label"></label>
+                <input asp-for="DataConfig.WebmailSecurity" class="form-control" />
+                <span asp-validation-for="DataConfig.WebmailSecurity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.WebmailSenderEmail" class="control-label"></label>
+                <input asp-for="DataConfig.WebmailSenderEmail" class="form-control" />
+                <span asp-validation-for="DataConfig.WebmailSenderEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.WebmailSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.WebmailSSLEnable)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DataConfig.WebmailUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.WebmailUseDefaultCredentials)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.CCmails" class="control-label"></label>
+                <input asp-for="DataConfig.CCmails" class="form-control" />
+                <span asp-validation-for="DataConfig.CCmails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.BBmails" class="control-label"></label>
+                <input asp-for="DataConfig.BBmails" class="form-control" />
+                <span asp-validation-for="DataConfig.BBmails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

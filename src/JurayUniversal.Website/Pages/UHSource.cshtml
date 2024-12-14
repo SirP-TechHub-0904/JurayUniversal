@@ -1,0 +1,778 @@
+﻿@page
+@*@page "/UHSource/{id}/{title}"*@
+@model JurayUniversal.Website.Pages.UHSourceModel
+@using System.Text.RegularExpressions;
+@using System.Globalization;
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+
+
+@{
+    ViewData["Title"] = Model.SuperSetting.ProductTitleHome;
+    ViewData["PageName"] = Model.SuperSetting.ProductTitleHome;
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+
+    @if (Model.Templatechoose == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = Model.SuperSetting.ProductTitleHome })
+
+
+@if (Model.Setting.ActivateProductsInHome == true || Model.Setting.ShowProductsInFooter == true)
+{
+    if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <div class="section-block-grey">
+                <div class="container">
+
+                    <div class="row">
+                        @foreach (var item in Model.Product)
+                        {
+                            <div class="col-md-4 col-sm-4 col-12">
+                                <div class="blog-grid">
+                                    <div class="blog-grid-img">
+                                        <img src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
+
+                                    </div>
+                                    <div class="blog-grid-text">
+                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                            <h4 style=" height: 54px;overflow:hidden;">@item.Title</h4>
+                                        </a>
+                                        <div class="choose-3-line">
+                                            <p style=" height: 107px; overflow: hidden;text-overflow:ellipsis !important;">
+                                                @item.ShortDescription
+                                            </p>
+                                        </div>
+                                        <div class="mt-20 left-holder" style="margin-top:5px;">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="primary-button button-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+            @section MainStyle {
+
+                <link href="~/Layout/RedBiz-template/css/product2.css" rel="stylesheet" />
+            }
+            <div class="container">
+                <div class="boxed-div">
+                    <div class="row">
+
+                        @foreach (var item in Model.Product)
+                        {
+                            <div class="col-md-4">
+                                <div class="box">
+                                    <div class="top">
+                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+
+
+                                            <img src="@item.ImageUrl" alt="@item.Title" />
+                                        </a>
+                                    </div>
+                                    <div class="bottom" style="margin-bottom:20px;">
+                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+
+                                            <h3 style="height:40px;">@item.Title</h3>
+                                        </a>
+                                        <p style="height: 125px; overflow: hidden; text-overflow: ellipsis; margin: 5px 0;">
+                                            @item.ShortDescription
+                                        </p>
+                                        <div class="">
+                                            <div class="row-feature-1">
+                                                @foreach (var list in item.ProductFeatures.Take(3))
+                                                {
+                                                    <div class="col-feature">
+                                                        <div>
+                                                            <span>@list.Title</span>
+                                                            <div><i class="@list.IconText"></i><span>@list.Description</span></div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="price">
+                                            @if (item.ProductCategory != null)
+                                            {
+                                                <span>@item.ProductCategory.Title</span>
+                                            }
+                                            @{
+                                                string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                            }
+
+                                            <span>@formattedAmount</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+
+                </div>
+            </div>
+        }
+
+    }
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <section class="custom-padding">
+                <!-- Main Container -->
+                <div class="container">
+                    <!-- Row -->
+                    <div class="row">
+                        <div class="clearfix"></div>
+                        <!-- Heading Area -->
+                        <div class="heading-panel">
+                            <div class="col-xs-12 col-md-12 col-sm-12 text-center">
+                                <!-- Main Title -->
+                                <h1>@Model.SuperSetting.ProductTitleHome @Model.TitleContent</h1>
+                                <!-- Short Description -->
+                            </div>
+                        </div>
+                        <!-- Middle Content Box -->
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <div class="posts-masonry">
+
+                                    @foreach (var item in Model.Product)
+                                    {
+                                        <div class="col-md-4 col-xs-12 col-sm-6">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;">
+                                                    <!-- Ad Status --><span class="ad-status"> @item.StatusNote </span>
+                                                    <!-- View Details --><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="view-details">View Details</a>
+                                                    <!-- Additional Info -->
+                                                    <div class="additional-information">
+                                                        @foreach (var list in item.ProductFeatures.Take(5))
+                                                        {
+                                                            <p>@list.Title : @list.Description</p>
+                                                        }
+
+                                                    </div>
+                                                    <!-- Additional Info End-->
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Category -->
+                                                    <div class="category-title"> <span><a class="list4width" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.MiniTitle</a></span> </div>
+                                                    <!-- Ad Title -->
+                                                    <h3 style=" height: 60px; text-overflow: ellipsis; overflow: hidden;"><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style=" height: 60px; text-overflow: ellipsis; overflow: hidden;">@item.Title </a></h3>
+                                                    <!-- Price -->
+                                                    @{
+                                                        string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                    }
+                                                    <div class="price">@formattedAmount</div>
+                                                </div>
+                                                <!-- Addition Info -->
+                                                <div class="ad-info">
+                                                    <ul>
+                                                        @foreach (var list in item.ProductFeatures.Take(3))
+                                                        {
+                                                            <li style="width: 33%; white-space: nowrap; overflow: hidden; "><i class="@list.IconText"></i>@list.Description</li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+
+    }
+
+
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <section class="blog-pg section-padding">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 offset-lg-1">
+                            <div class="posts">
+                                @foreach (var item in Model.Product)
+                                {
+                                    <div class="item mb-80">
+                                        <div class="img">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+
+
+                                                <img src="@item.ImageUrl" alt="@item.Title" />
+                                            </a>
+                                            <div class="info">
+                                                <div class="date">
+                                                    <h5>
+                                                        <a href="#0">
+                                                            <span class="num custom-font">06</span>
+                                                            <span>Aug</span>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-10 offset-lg-1">
+                                                <div class="content">
+                                                    <div class="tags">
+                                                        @{
+                                                            string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                        }
+
+                                                    </div>
+                                                    <h4 class="title">
+                                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                            <h4 style=" height: 54px;overflow:hidden;">@item.Title</h4>
+                                                        </a>
+                                                    </h4>
+                                                    <p>
+                                                        @item.ShortDescription
+                                                    </p>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="more">Read More</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <div id="rs-single-shop" class="rs-single-shop pt-100 pb-100 md-pt-80 sm-pb-60">
+                <div class="container">
+                    @foreach (var item in Model.Product)
+                    {
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 sm-mb-30">
+                                <div class="single-product-image">
+                                    <div class="images-single">
+                                        <img src="@item.ImageUrl" alt="@item.Title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="single-price-info pl-30 sm-pl-0">
+                                    <h4 class="product-title">@item.Title</h4>
+                                    <span class="single-price">
+                                        @{
+                                            string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                        }
+                                    </span>
+                                    <p class="some-text">
+                                        @item.ShortDescription
+                                    </p>
+                                    <form>
+                                        <input type="number" class="input-text" step="1" min="1" value="1">
+                                        <button class="add-btn ml-10" type="submit">Add To cart</button>
+                                    </form>
+                                    <div class="category"> <span><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.MiniTitle</a></span> </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <section id="section-blog" class="blog-section pad-bottom-70">
+                <div class="container">
+                    @foreach (var item in Model.Product)
+                    {
+                        <div class="blog-main-wrap blog-grid">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Col -->
+                                <div class="col-lg-8">
+                                    <!-- Row -->
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <!--Blog Inner-->
+                                            <div class="blog-inner box-shadow">
+                                                <!--Blog Thumb-->
+                                                <div class="blog-thumb o-hide relative">
+                                                    <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title" />
+                                                </div>
+                                                <div class="blog-details">
+                                                    <div class="blog-title">
+                                                        <h4 class="mb-3"> class="blog-name"<a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style=" height: 60px; text-overflow: ellipsis; overflow: hidden;">@item.Title </a></h4>
+                                                    </div>
+                                                    @{
+                                                        string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                    }
+
+                                                    <span>@formattedAmount</span>
+                                                    <div class="post-desc mt-3">
+                                                        <p class="mb-3">@item.ShortDescription</p>
+                                                        <div class="blog-link">
+                                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="link  font-w-500">Read More<i class="fa fa-angle-double-right pl-2"></i></a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Blog Inner Ends-->
+                                        </div>
+                                        <!-- Col -->
+                                        <!-- Col -->
+                                        <!-- Col -->
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- Col -->
+                                <div class="col-lg-4 pl-5 px-sm-15">
+
+
+                                    <!-- Search -->
+                                    <!-- Popular Post -->
+                                    <!-- Categories -->
+                                    <div class="widget category-widget mb-5">
+                                        <div class="widget-title">
+                                            <!-- Title -->
+                                            <h3 class="title mb-4 text-uppercase">Categories</h3>
+                                        </div>
+                                        @if (item.ProductCategory != null)
+                                        {
+                                            <span>@item.ProductCategory.Title</span>
+                                        }
+
+                                    </div>
+                                    <!-- Categories -->
+                                    <!-- CTA -->
+                                    <!-- Sidebar -->
+                                </div>
+                                <!-- Col -->
+                            </div>
+                            <!-- Row -->
+                        </div>
+                    }
+                </div>
+                <!-- Container -->
+            </section>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <section class="product_single">
+                <div class="container">
+                    @foreach (var item in Model.Product)
+                    {
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="product_image ">
+                                    <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="product_details">
+                                    <div class="product_header clearfix">
+                                        <div class="left">
+                                            <h2>@item.Title</h2>
+                                            <p><span class="icon-night"></span><span class="icon-night"></span><span class="icon-night"></span><span class="icon-night"></span><span class="icon-night"></span></p>
+                                        </div>
+                                        <div class="right">
+                                            <h6>
+                                                @{
+                                                    string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                }
+
+                                                <span>@formattedAmount</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="product_features">
+                                        <p>@item.ShortDescription</p>
+                                        <div class="quantity">
+                                            <h2>@item.MiniTitle</h2>
+
+                                        </div>
+                                        <div class="add_to_cart">
+                                            <ul>
+                                                <li>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="theme_btn">Read More</a>
+
+                                                </li>
+
+
+
+
+                                            </ul>
+
+                                        </div>
+                                        <div class="categories">
+
+                                            @if (item.ProductCategory != null)
+                                            {
+                                                <span>@item.ProductCategory.Title</span>
+                                            }
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach (var item in Model.Product)
+                            {
+                                <div class="blog-classic">
+                                    <div class="post">
+                                        <div class="post-image">
+                                            <img src="@item.ImageUrl" alt="@item.Title">
+                                            <div class="post-date">
+                                                @{
+                                                    string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                }
+
+                                                <span>@formattedAmount</span>
+                                            </div>
+                                        </div>
+                                        <div class="post-desc">
+                                            <div class="post-title">
+                                                <h5><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style=" height: 60px; text-overflow: ellipsis; overflow: hidden;">@item.Title </a></h5>
+                                            </div>
+                                            <p>@item.ShortDescription</p>
+                                        </div>
+                                        <div class="post-bottom">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
+
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
+
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <div class="issues-around-us-section style-01">
+                <div class="container">
+                    <div class="row">
+                        @foreach (var item in Model.Product)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="news-single-items-two">
+                                    <div class="thumbnail">
+                                        <img src="@item.ImageUrl" alt="@item.Title">
+                                        <span class="tag">@item.MiniTitle</span>
+                                    </div>
+                                    <div class="content">
+                                        <div class="post-meta">
+                                            <div class="author">
+
+                                            </div>
+                                            <div class="post-date">
+
+                                                <p class="date">
+                                                    @{
+                                                        string formattedAmount = item.Amount.ToString("C", new CultureInfo("en-NG"));
+                                                    }
+
+                                                    <span>@formattedAmount</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <h4 class="title">@item.Title</h4>
+                                        <p>@item.ShortDescription.</p>
+                                        <div class="btn-wrapper">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="boxed-btn event-btn"><i class="fas fa-arrow-right"></i>Read More</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+                                                                {
+
+                                                                }
+                                                            }
+                                                            else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+                                                            {
+                                                                if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+                                                                {
+
+                                                                }
+                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+                                                                {
+
+                                                                }
+                                                            }
+                                                             
+                                                        }
+
+

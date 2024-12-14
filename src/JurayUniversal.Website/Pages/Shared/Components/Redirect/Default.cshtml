@@ -1,0 +1,25 @@
+﻿
+@if (ViewBag.DataConfigs.RedirectTohttps == true)
+{
+    <script>
+        if (window.location.protocol !== "https:") {
+            var originalURL = window.location.href;
+            var urlWithoutProtocol = originalURL.replace(/^https?:\/\//i, "");
+
+            window.location.href = "https://" + urlWithoutProtocol;
+        }
+    </script>
+}
+
+
+@if (ViewBag.DataConfigs.RedirectTohttpswww == true)
+{
+    <script>
+        if (window.location.protocol !== "https:") {
+            var originalURL = window.location.href;
+            var urlWithoutProtocol = originalURL.replace(/^https?:\/\//i, "");
+
+            window.location.href = "https://www." + urlWithoutProtocol;
+        }
+    </script>
+}

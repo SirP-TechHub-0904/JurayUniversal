@@ -1,0 +1,105 @@
+﻿@page
+@model JurayUniversal.Website.Areas.JPTask.Pages.ProjectAct.UpdateTaskModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW PROJECT TASK</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="@Model.XProjectTask.Id" />
+                    <input type="hidden" asp-for="@Model.XProjectTask.XProjectSectionId" />
+
+                    <input type="hidden" asp-for="@Model.PreviouseApprover" value="@Model.XProjectTask.ApprovedById" />
+                    <input type="hidden" asp-for="@Model.PreviouseTester" value="@Model.XProjectTask.TestedById" />
+                    <input type="hidden" asp-for="@Model.PreviouseUser" value="@Model.XProjectTask.UserId" />
+
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Title" class="control-label"></label>
+                        <input asp-for="XProjectTask.Title" class="form-control" />
+                        <span asp-validation-for="XProjectTask.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Description" class="control-label"></label>
+                        <textarea asp-for="XProjectTask.Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="XProjectTask.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.StartDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.StartDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.FinishDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.FinishDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.FinishDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Status" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.XProjectTask.Status, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.ProjectTaskStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="XProjectTask.Status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.Priority" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.XProjectTask.Priority, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.Priority))), new { @class = "form-control" })
+                        <span asp-validation-for="XProjectTask.Priority" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.UserId" class="control-label"></label>
+                        <select asp-for="XProjectTask.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.TestDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.TestDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestFinishDate" class="control-label"></label>
+                        <input asp-for="XProjectTask.TestFinishDate" class="form-control" />
+                        <span asp-validation-for="XProjectTask.TestFinishDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestCriterial" class="control-label"></label>
+                        <textarea asp-for="XProjectTask.TestCriterial" class="form-control summernote"></textarea>
+                        <span asp-validation-for="XProjectTask.TestCriterial" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.TestedById" class="control-label"></label>
+                        <select asp-for="XProjectTask.TestedById" class="form-control" asp-items="ViewBag.TestedById"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="XProjectTask.ApprovedById" class="control-label"></label>
+                        <select asp-for="XProjectTask.ApprovedById" class="form-control" asp-items="ViewBag.ApprovedById"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

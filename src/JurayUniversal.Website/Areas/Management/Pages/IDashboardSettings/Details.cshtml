@@ -1,0 +1,356 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings.DetailsModel
+
+@{
+    ViewData["Title"] = "Details"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DashboardSetting</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivityProgramTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivityProgramTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ShowActivityProgram)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ShowActivityProgram)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.UserCustomDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.UserCustomDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.StatisticsDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.StatisticsDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ChartsDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ChartsDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ProjectsDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ProjectsDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.CommunicationDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.CommunicationDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.UsersDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.UsersDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.FinanceDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.FinanceDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.OrderDashboard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.OrderDashboard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProject)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateProject)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUserManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateUserManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateUser)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateRoles)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateRoles)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateAttendance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateAttendance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReport)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateReport)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTask)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateTask)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTrainings)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateTrainings)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSalaries)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateSalaries)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateJobReferrals)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateJobReferrals)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivatePaymentOnFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivatePaymentOnFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBudgetOnFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateBudgetOnFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateExpensesOnFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateExpensesOnFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateAccountsOnFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateAccountsOnFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReportOnFinanceManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateReportOnFinanceManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProposalManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateProposalManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateUserReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateUserReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateVisitorsReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateVisitorsReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProjectReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateProjectReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateCommunicationReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateCommunicationReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContentReportAndAnalysis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateContentReportAndAnalysis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContentManagement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateContentManagement)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivatePagesContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivatePagesContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBlogContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateBlogContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateProductContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateProductContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateFaqContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateFaqContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateTestimonyContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateTestimonyContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSliderContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateSliderContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContactInformationContent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateContactInformationContent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSiteMap)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateSiteMap)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateCommnunicationTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateCommnunicationTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateForumCommnunicationTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateForumCommnunicationTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateChatCommnunicationTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateChatCommnunicationTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateNoticeBoardCommnunicationTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateNoticeBoardCommnunicationTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateContactUsCommnunicationTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateContactUsCommnunicationTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateManagementTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateManagementTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSmsTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateSmsTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateEmailTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateEmailTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateNewsletterTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateNewsletterTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateBirthdayTools)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateBirthdayTools)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateSettings)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateSettings)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DashboardSetting.ActivateOfficeActivity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DashboardSetting.ActivateOfficeActivity)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.DashboardSetting.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

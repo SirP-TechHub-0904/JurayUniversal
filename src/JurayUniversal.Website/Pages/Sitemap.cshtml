@@ -1,0 +1,86 @@
+﻿@page
+@model JurayUniversal.Website.Pages.SitemapModel
+
+@{
+    ViewData["Title"] = "Sitemap";
+
+    ViewData["PageName"] = "Sitemap";
+    ViewData["Description"] = "Sitemap for our website, containing links to various sections and pages.";
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+}
+
+
+
+@if (Model.Templatechoose == "Layout1111")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout2222")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout3333")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout4444")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout5555")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout6666")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout7777")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout8888")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout9999")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout11111111")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+}
+else if (Model.Templatechoose == "Layout12121212")
+{
+    Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+}
+
+
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "Sitemap" })
+
+<section class="sitemap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sitemap-main white-bg p-5">
+                    <h6 class="title mb-4">Below is a list of all the pages available on the site</h6>
+
+                    @foreach (var category in (IDictionary<string, List<SitemapEntry>>)ViewData["GroupedEntries"])
+                    {
+                        <h2>@category.Key</h2>
+                        <ul>
+                            @foreach (var entry in category.Value)
+                            {
+                                <li><a href="@entry.Url">@entry.Title</a></li>
+                            }
+                        </ul>
+                    }
+
+                </div>
+            </div>
+             
+        </div>
+    </div>
+</section>
+  

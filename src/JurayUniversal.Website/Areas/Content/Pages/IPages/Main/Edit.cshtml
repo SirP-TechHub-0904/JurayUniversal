@@ -1,0 +1,125 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPages.Main.EditModel
+
+@{
+    ViewData["Title"] = "PAGE Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE WEBPAGE</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="WebPage.Id" />
+                    <input type="hidden" asp-for="WebPage.ImageUrl" />
+                    <input type="hidden" asp-for="WebPage.ImageKey" />
+                    <div class="form-group">
+                        <label asp-for="WebPage.Title" class="control-label"></label>
+                        <input asp-for="WebPage.Title" class="form-control" />
+                        <span asp-validation-for="WebPage.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebPage.PageCategoryId" class="control-label">Category</label>
+                        <select asp-for="WebPage.PageCategoryId" class="form-control" asp-items="ViewBag.PageCategoryId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebPage.SortOrder" class="control-label"></label>
+                        <input asp-for="WebPage.SortOrder" class="form-control" />
+                        <span asp-validation-for="WebPage.SortOrder" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.ShowInMainTop" /> @Html.DisplayNameFor(model => model.WebPage.ShowInMainTop)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.ShowInMenuDropDown" /> @Html.DisplayNameFor(model => model.WebPage.ShowInMenuDropDown)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebPage.MainPageId" class="control-label"></label>
+                        <select asp-for="WebPage.MainPageId" class="form-control" asp-items="ViewBag.WebPageId">
+                            <option value="">NILL</option>
+
+                        </select>
+                        <span asp-validation-for="WebPage.MainPageId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.ShowInMainMenu" /> @Html.DisplayNameFor(model => model.WebPage.ShowInMainMenu)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.ShowInFooter" /> @Html.DisplayNameFor(model => model.WebPage.ShowInFooter)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.SecurityPage" /> @Html.DisplayNameFor(model => model.WebPage.SecurityPage)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebPage.HomeSortFrom" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.WebPage.HomeSortFrom, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.HomeSortFrom))), new { @class = "form-control" })
+                        <span asp-validation-for="WebPage.HomeSortFrom" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.Publish" /> @Html.DisplayNameFor(model => model.WebPage.Publish)
+                        </label>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.WebPage.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Previouse Image</label><br />
+                            <img src="@Model.WebPage.ImageUrl" class="img-fluid" style="max-height:150px;" />
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label">Image Behind the Title</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="WebPage.DirectUrl" class="control-label"></label>
+                        <input asp-for="WebPage.DirectUrl" class="form-control" />
+                        <span asp-validation-for="WebPage.DirectUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="WebPage.EnableDirectUrl" /> @Html.DisplayNameFor(model => model.WebPage.EnableDirectUrl)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

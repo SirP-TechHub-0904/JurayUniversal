@@ -1,0 +1,112 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MIS.Pages.Main.TeamModel
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@Model.ProjectTitle Project Team</h3>
+
+        <a asp-page="./Details" asp-route-id="@Model.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+    </div>
+    <div class="card-header">
+        @foreach (var t in Model.ProjectTeam)
+        {
+            <div class="card direct-chat direct-chat-primary collapsed-card" style="margin-bottom: 0.4rem;">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-size:0.8rem;">@t.Title</h3>
+                    @{
+                        int co = t.ProjectUsers.Count();
+                      }
+                    <div class="card-tools">
+                        <span title="@co Members" class="badge badge-primary">@co Members </span>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                @{ int snx = 0;}
+                <div class="card-body" style="padding:20px;">
+                    @foreach(var user in t.ProjectUsers)
+                    {
+                        { snx++;}
+                    <h6>@snx -  @user.Profile.GetFullName() (@user.Profile.UserName)</h6>
+                }
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="card-body">
+
+
+        <div class="div-sec">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>NEW TEAM</h4>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Data.ProjectMainId" value="@Model.Id" type="hidden" />
+
+
+                        <div class="form-group">
+                            <label asp-for="Data.Title" class="control-label"></label>
+                            <input type="text" asp-for="Data.Title" class="form-control" />
+                            <span asp-validation-for="Data.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Data.Description" class="control-label"></label>
+                            <input type="text" asp-for="Data.Description" class="form-control" />
+                            <span asp-validation-for="Data.Description" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Add Team" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h4>NEW MEMBERS</h4>
+                    <form method="post" asp-page-handler="User">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Id" type="hidden" />
+
+
+                        <div class="form-group">
+                            <label asp-for="DataUser.ProjectTeamId" class="control-label"></label>
+                            <div class="">
+                                <select asp-for="DataUser.ProjectTeamId" class="form-control" asp-items="ViewBag.ProjectTeamId">
+                                    <option value="">Select Team</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DataUser.ProfileId" class="control-label"></label>
+                            <div class="">
+                                <select asp-for="DataUser.ProfileId" class="form-control" asp-items="ViewBag.ProfileId">
+                                    <option value="">Select Member</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Add Member" class="btn btn-warning" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts
+{
+
+}

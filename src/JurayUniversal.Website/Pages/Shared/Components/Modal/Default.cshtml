@@ -1,0 +1,103 @@
+﻿@using System.Text.RegularExpressions;
+
+@{
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+    Domain.Models.PostModal xmodal = ViewBag.modal;
+
+}
+ 
+@if (xmodal != null)
+{
+    <div class="modal fade" id="mainModal">
+        <div class="modal-dialog modal-md" style="width: 70% !important;">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    @if (xmodal.ShowOnlyImage == false)
+                    {
+
+
+
+                        @if (xmodal.ShowTitle == true)
+                        {
+                            <a asp-page="/Source" asp-route-id="@xmodal.ButtonLink" asp-route-title="@regex.Replace(xmodal.Title, "-")">
+                                <h3>@xmodal.Title</h3>
+                            </a>
+
+                        }
+                        @if (xmodal.ShowImage == true && xmodal.ShowOnlyImage == false)
+                        {
+                            <div style="margin:0 auto !important;text-align:center;">
+                                <a asp-page="/Source" asp-route-id="@xmodal.ButtonLink" asp-route-title="@regex.Replace(xmodal.Title, "-")">
+                                    <img src="@xmodal.ImageUrl" alt="@xmodal.Title" class="img-fluid img-responsive" style="margin:0 auto !important;text-align:center;" />
+
+                                </a>
+                            </div>
+                        }
+                        @if (xmodal.ShowDescription == true)
+                        {
+                            <div>
+                                <a asp-page="/Source" asp-route-id="@xmodal.ButtonLink" asp-route-title="@regex.Replace(xmodal.Title, "-")">
+
+                                    @Html.Raw(xmodal.Description)
+                                </a>
+                            </div>
+                        }
+                    }
+                    else if (xmodal.ShowOnlyImage == true)
+                    {
+                        <div style="margin:0 auto !important;text-align:center;">
+                            <a asp-page="/Source" asp-route-id="@xmodal.ButtonLink" asp-route-title="@regex.Replace(xmodal.Title, "-")">
+
+                                <img src="@xmodal.ImageUrl" alt="@xmodal.Title" class="img-fluid img-responsive" style="margin:0 auto !important;text-align:center;" />
+
+                            </a>
+                        </div>
+                    }
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <script>
+        //$(window).on('load', function () {
+        //    var hasModalShownToday = localStorage.getItem('modalShownToday');
+        //    if (!hasModalShownToday) {
+        //        $('#mainModal').modal('show');
+        //        localStorage.setItem('modalShownToday', 'true');
+        //    }
+        //});
+    </script>
+    <script>
+        $(window).on('load', function () {
+            var modalShownTime = localStorage.getItem('modalShownTime');
+            var currentTime = new Date().getTime();
+            var timeDifference = currentTime - parseInt(modalShownTime);
+
+            // Convert the time difference from milliseconds to minutes
+            var minutesDifference = Math.floor(timeDifference / (1000 * 60));
+
+            if (!modalShownTime || minutesDifference >= 60) {
+                $('#mainModal').modal('show');
+                localStorage.setItem('modalShownTime', currentTime.toString());
+            }
+        });
+    </script>
+
+
+    <script>
+                //$(window).on('load', function () {
+
+                //    $('#mainModal').modal('show');
+
+
+                //});
+    </script>
+
+}

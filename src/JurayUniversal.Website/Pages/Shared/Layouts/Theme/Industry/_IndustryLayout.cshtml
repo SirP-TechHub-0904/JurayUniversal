@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Component.InvokeAsync("WebTitle")
+    @await Component.InvokeAsync("Redirect")
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/Layout/industry/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Layout/industry/css/font-awesome.min.css">
+    <!-- Simple Line Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/Layout/industry/css/simple-line-icons.min.css">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="~/Layout/industry/css/themify-icons.css">
+    <!-- Owl Slider -->
+    <link rel="stylesheet" href="~/Layout/industry/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Layout/industry/css/owl.theme.default.min.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="~/Layout/industry/css/magnific-popup.css">
+    <!-- Revolution Slider -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/industry/rs-plugin/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="stylesheet" type="text/css" href="~/Layout/industry/rs-plugin/css/settings.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="~/Layout/industry/css/colors.css">
+    <link rel="stylesheet" href="~/Layout/industry/css/style.css" class="main-style">
+    <link href="~/customcss/maquee1.css" rel="stylesheet" />
+
+    @RenderSection("MainStyle", required: false)
+
+
+    @await Component.InvokeAsync("WebsiteCSS")
+
+</head>
+<body>
+    @await Component.InvokeAsync("Reloader")
+
+    @await Component.InvokeAsync("Menu")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer")
+    <!-- jQuery Lib -->
+    <script src="~/Layout/industry/js/jquery.min.js"></script>
+    <!-- Popper Js Support for Bootstrap -->
+    <script src="~/Layout/industry/js/popper.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="~/Layout/industry/js/bootstrap.min.js"></script>
+    <!-- Easing Js -->
+    <script src="~/Layout/industry/js/jquery.easing.min.js"></script>
+    <!-- Carousel Js Code -->
+    <script src="~/Layout/industry/js/owl.carousel.min.js"></script>
+    <!-- Paroller Js -->
+    <script src="~/Layout/industry/js/jquery.paroller.min.js"></script>
+    <!-- Isotope Js -->
+    <script src="~/Layout/industry/js/isotope.pkgd.min.js"></script>
+    <!-- Magnific Popup Js -->
+    <script src="~/Layout/industry/js/jquery.magnific-popup.min.js"></script>
+    <!-- Validator Js -->
+    <script src="~/Layout/industry/js/validator.min.js"></script>
+    <!-- Appear Js -->
+    <script src="~/Layout/industry/js/jquery.appear.min.js"></script>
+    <!-- Smart Resize Js -->
+    <script src="~/Layout/industry/js/smartresize.min.js"></script>
+    <!-- Theme Custom Js -->
+    <script src="~/Layout/industry/js/custom.js"></script>
+    <!-- REVOLUTION JS FILES -->
+    <script src="~/Layout/industry/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.slideanims.min.js"></script>
+
+
+    <script src="~/Layout/industry/rs-plugin/js/extensions/revolution.extension.video.min.js"></script>
+    <!-- REVOLUTION INTERNAL JS FILES -->
+    <script src="~/Layout/industry/rs-plugin/js/main-slider/main.slider.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/main-slider/home.slider-1.js"></script>
+    <script src="~/Layout/industry/rs-plugin/js/main-slider/home.slider-2.js"></script>
+
+    @await Component.InvokeAsync("Modal")
+    @await Component.InvokeAsync("CustomeJavascript")
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿
+@model ICollection<JurayUniversal.Domain.Models.XProjectMessage>
+
+<div class="card card-danger">
+    <div class="card-header">
+        <h3 class="card-title">PROJECT CHAT</h3>
+
+    </div>
+    <div class="card-body">
+        <!-- Conversations are loaded here -->
+        <div class="direct-chat-messages" style="height:500px;">
+
+            @foreach (var msg in Model)
+            {
+                <!-- Message. Default to the left -->
+                @if (msg.SenderId != ViewBag.userid)
+                {
+                    <div class="direct-chat-msg">
+                        <div class="direct-chat-infos clearfix">
+                            <span class="direct-chat-name float-left">@msg.Sender.FirstName</span>
+                            <span class="direct-chat-timestamp float-right">@msg.CreateDate.ToString("dd MMM hh:mm tt") </span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="~/dashboard/dist/img/user1-128x128.jpg" alt="message user image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                            @msg.Message
+                        </div>
+                        <!-- /.direct-chat-text -->
+                    </div>
+                }
+
+                @if (msg.SenderId == ViewBag.userid)
+                {
+
+                    <!-- /.direct-chat-msg -->
+                    <!-- Message to the right -->
+                    <div class="direct-chat-msg right">
+                        <div class="direct-chat-infos clearfix">
+                            <span class="direct-chat-name float-right">@msg.Sender.FirstName</span>
+                            <span class="direct-chat-timestamp float-left">@msg.CreateDate.ToString("dd MMM hh:mm tt")</span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="~/dashboard/dist/img/user3-128x128.jpg" alt="message user image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text" style="background-color: #808ba1;">
+                            @msg.Message
+                        </div>
+                        <!-- /.direct-chat-text -->
+                    </div>
+                    }
+                }
+              
+            </div>
+        
+    </div>
+
+    <div class="card-footer">
+        <form method="post" asp-page-handler="ChatMessage" asp-page="/ProjectAct/DetailTask" asp-area="JPTask">
+            <input type="hidden" name="id" value="@ViewBag.Id" />
+
+            <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IFaq.DetailsModel
+
+@{
+    ViewData["Title"] = "FAQ Details";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS FAQ</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Message)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Message)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.SortOrder)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.SortOrder)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Show)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Show)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>

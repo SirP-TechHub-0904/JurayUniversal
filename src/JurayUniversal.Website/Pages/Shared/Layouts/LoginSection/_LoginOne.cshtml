@@ -1,0 +1,84 @@
+﻿
+<html lang="">
+<head>
+
+    @await Component.InvokeAsync("WebTitle")
+     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/JurayUniversal.Website.styles.css" asp-append-version="true" />
+    <style>
+
+        .bg-111 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            /*z-index: -1;*/
+        }
+    </style>
+
+    @await Component.InvokeAsync("LoginCSS")
+
+</head>
+<body>
+
+
+    <!-- Section: Design Block -->
+    
+    <section class="background-radial-gradient overflow-hidden bg-111" style="background-image:url(@Model.SuperSetting.LoginBackgroundImageUrl)">
+
+        <div class="container px-4 py-5 px-md-5 text-lg-start my-5">
+            <div class="row gx-lg-5 align-items-center mb-5">
+                <div class="col-lg-6 mb-5 mb-lg-0 text-center " style="z-index: 10">
+                    <div style="margin:0 auto;text-align:center;">
+                        @if (Model.SuperSetting.UseNormalLogoInLogin == true)
+                        {
+                            <img src="@Model.SuperSetting.CompanyLogoUrl" style="margin:0 auto;text-align:center;" alt="@Model.SuperSetting.CompanyLogoUrl" class="img-fluid" />
+                        }
+                        else if (Model.SuperSetting.UseWhiteLogoInLogin == true)
+                        {
+                            <img src="@Model.SuperSetting.CompanyWhiteLogoUrl" style="margin:0 auto;text-align:center;" alt="@Model.SuperSetting.CompanyName" class="img-fluid" />
+                        }
+
+                    </div>
+                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                        @Html.Raw(Model.SuperSetting.LoginNoteTitle)
+                    </h1>
+                    <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        @Html.Raw(Model.SuperSetting.LoginNote)
+                    </p>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+
+
+                    <div class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    @await RenderSectionAsync("Scripts", required: false)
+     
+        <script>
+            function myFunction() {
+             var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+             } else {
+                x.type = "password";
+             }
+         }
+    </script> 
+</body>
+</html>

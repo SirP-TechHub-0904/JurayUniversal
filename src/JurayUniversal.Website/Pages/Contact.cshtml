@@ -1,0 +1,957 @@
+﻿@page
+@model JurayUniversal.Website.Pages.ContactModel
+@{
+    ViewData["Title"] = "CONTACT US";
+
+    ViewData["PageName"] = "CONTACT US";
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+
+    @if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "CONTACT US" })
+@if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+{
+
+
+    <div class="section-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-7 col-12">
+
+                    <div class="contact-form-box mt-30">
+                        <!-- Form START -->
+                        @if (TempData["error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <h4>@TempData["error"]</h4>
+                            </div>
+                        }
+                        @if (TempData["success"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <h4>@TempData["success"]</h4>
+                            </div>
+                        }
+                        <form class="contact-form" method="post" id="registrationForm">
+                            <input type="hidden" asp-for="FirstNumber" />
+                            <input type="hidden" asp-for="SecondNumber" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" asp-for="ClientRequest.Subject" placeholder="Subject" required="required">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <input type="text" asp-for="ClientRequest.Name" placeholder="Name" required="required">
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    <input type="email" asp-for="ClientRequest.Email" placeholder="E-mail" required="required">
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    <input type="text" asp-for="ClientRequest.Phone" placeholder="Phone" required="required">
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea asp-for="ClientRequest.Message" placeholder="Message" required="required"></textarea>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                </div>
+
+                                <div class="col-md-12 mb-30">
+                                    <div class="center-holder">
+                                        <input type="submit" class="btn btn-primary" value="Send Message" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Form END -->
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-sm-5 col-12">
+                    <div class="contact-info-box">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <div class="contact-info-section">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-2 col-4 center-holder">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 col-8">
+                                            <h4>Call Us</h4>
+                                            <p> @Model.Setting.PhoneOne</p>
+                                            <p> @Model.Setting.PhoneTwo</p>
+                                            <p> @Model.Setting.PhoneThree</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <div class="contact-info-section">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-2 col-4 center-holder">
+                                            <i class="fa fa-envelope-open"></i>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 col-8">
+                                            <h4>Message</h4>
+                                            <p> @Model.Setting.EmailOne</p>
+                                            <p> @Model.Setting.EmailTwo</p>
+                                            <p> @Model.Setting.EmailThree</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <div class="contact-info-section">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-2 col-4 center-holder">
+                                            <i class="fa fa-globe"></i>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 col-8">
+                                            <h4>Our Location</h4>
+                                            <p> @Model.Setting.AddressOne</p>
+                                            <p> @Model.Setting.AddressTwo</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <div class="contact-info-section">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-2 col-4 center-holder">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 col-8">
+                                            @if (!String.IsNullOrEmpty(Model.Setting.WorkingHour))
+                                            {
+
+                                                <h4>Working Hours</h4>
+                                                <p>
+                                                    @Html.Raw(Model.Setting.WorkingHour)
+                                                </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+{
+    <section class="section-padding gray">
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding commentForm">
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <h4>@TempData["error"]</h4>
+                        </div>
+                    }
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <form method="post">
+                            <input type="hidden" asp-for="FirstNumber" />
+                            <input type="hidden" asp-for="SecondNumber" />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Name" id="name" asp-for="ClientRequest.Name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" placeholder="Email" id="email" asp-for="ClientRequest.Email" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Phone" id="phone" asp-for="ClientRequest.Phone" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Subject" id="subject" asp-for="ClientRequest.Subject" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                        <textarea cols="12" rows="7" placeholder="Message..." id="message" asp-for="ClientRequest.Message" class="form-control" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button class="btn btn-theme" type="submit">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="contactInfo">
+                            <div class="singleContadds">
+                                <i class="fa fa-map-marker"></i>
+                                <p>
+                                    @Model.Setting.AddressOne
+                                    <br />
+                                    @Model.Setting.AddressTwo
+
+                                </p>
+                            </div>
+                            <div class="singleContadds phone">
+                                <i class="fa fa-phone"></i>
+                                <p>  @Model.Setting.PhoneOne </p>
+                                <p>  @Model.Setting.PhoneTwo </p>
+                                <p>  @Model.Setting.PhoneThree </p>
+                            </div>
+                            <div class="singleContadds">
+                                <i class="fa fa-envelope"></i>
+                                <a href="mailto:@Model.Setting.EmailOne">@Model.Setting.EmailOne</a>
+                                <a href="mailto:@Model.Setting.EmailTwo">@Model.Setting.EmailTwo</a>
+                                <a href="mailto:@Model.Setting.EmailThree">@Model.Setting.EmailThree</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Main Container End -->
+        </div>
+    </section>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+{
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+{
+    <section class="contact">
+        <div class="info bg-gray pt-80 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="item">
+                            <span class="icon pe-7s-phone"></span>
+                            <div class="cont">
+                                <h6 class="custom-font">Call Us</h6>
+                                <p>@Model.Setting.PhoneOne</p>
+                                <p>@Model.Setting.PhoneTwo</p>
+                                <p>@Model.Setting.PhoneThree</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="item">
+                            <span class="icon pe-7s-mail-open"></span>
+                            <div class="cont">
+                                <h6 class="custom-font">Email Us</h6>
+                                <p>@Model.Setting.EmailOne</p>
+                                <p>@Model.Setting.EmailTwo</p>
+                                <p>@Model.Setting.EmailThree</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="item">
+                            <span class="icon pe-7s-map"></span>
+                            <div class="cont">
+                                <h6 class="custom-font">Address</h6>
+                                <p>@Model.Setting.AddressOne</p>
+                                <p>@Model.Setting.AddressTwo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 map-box">
+                    <div class="map">
+                        @Html.Raw(Model.Setting.GoogleMap)
+                    </div>
+                </div>
+                <div class="col-lg-6 form">
+                    <form method="post">
+                        <input type="hidden" asp-for="FirstNumber" />
+                        <input type="hidden" asp-for="SecondNumber" />
+                        <div class="controls">
+
+                            <div class="form-group">
+                                <input id="form_name" type="text" asp-for="ClientRequest.Name" placeholder="Name" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input id="form_email" type="email" asp-for="ClientRequest.Email" placeholder="Email" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input id="form_phone" type="text" asp-for="ClientRequest.Phone" placeholder="Phone" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input id="form_subject" type="text" asp-for="ClientRequest.Subject" placeholder="Subject" required="required">
+                            </div>
+
+
+                            <div class="form-group">
+                                <textarea id="form_message" asp-for="ClientRequest.Message" placeholder="Message" rows="4"
+                                          required="required"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                            </div>
+                            <button type="submit" class="btn-curve btn-color"><span>Send Message</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+{
+    <div class="rs-contact main-home office-modify1 responsive pb-100 md-pb-70">
+        <div class="row margin-0">
+            <div class="col-lg-4 padding-0">
+                <div class="contact-map">
+                    @Html.Raw(Model.Setting.GoogleMap)
+                </div>
+            </div>
+            <div class="col-lg-5 padding-0">
+                <div class="contact-section">
+                    <div class="sec-title mb-60">
+                        <h2 class="title">
+                            Get in touch
+                        </h2>
+                    </div>
+                    <div class="contact-wrap">
+                        <form method="post">
+                            <input type="hidden" asp-for="FirstNumber" />
+                            <input type="hidden" asp-for="SecondNumber" />
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 mb-30">
+                                        <input class="from-control" type="text" id="name" asp-for="ClientRequest.Name"
+                                               placeholder="Name" required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 mb-30">
+                                        <input class="from-control" type="text" id="email" asp-for="ClientRequest.Email"
+                                               placeholder="E-Mail" required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 mb-30">
+                                        <input class="from-control" type="text" id="phone" asp-for="ClientRequest.Phone"
+                                               placeholder="Phone Number" required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 mb-30">
+                                        <input class="from-control" type="text" id="Subject" asp-for="ClientRequest.Subject"
+                                               placeholder="Your Subject" required="">
+                                    </div>
+
+                                    <div class="col-lg-12 mb-35">
+                                        <textarea class="from-control" id="message" asp-for="ClientRequest.Message"
+                                                  placeholder="Your message Here" required=""></textarea>
+                                    </div>
+                                    <div class="col-lg-12 mb-35">
+                                        <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                        <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                    </div>
+                                </div>
+
+                                <div class="btn-part">
+                                    <div class="form-group mb-0">
+                                        <input class="readon submit" type="submit" value="Submit Now">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 padding-0 office-buliding"></div>
+        </div>
+        <!-- Contact Icons Section End -->
+        <div class="rs-contact pt-100 md-pt-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 md-mb-30">
+                        <div class="contact-box">
+                            <div class="contact-icon">
+                                <img src="~/Layout/bizup/assets/images/contact/icons/1.png" alt="images">
+                            </div>
+                            <div class="content-text">
+                                <h2 class="title"><a href="#">Address</a></h2>
+                                <p class="services-txt">@Model.Setting.AddressOne  </p>
+                                <p class="services-txt">@Model.Setting.AddressTwo</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 sm-mb-30">
+                        <div class="contact-box">
+                            <div class="contact-icon">
+                                <img src="assets/images/contact/icons/3.png" alt="images">
+                            </div>
+                            <div class="content-text">
+                                <h2 class="title"><a href="#">Email us</a></h2>
+                                <a href="mailto:@Model.Setting.EmailTwo">@Model.Setting.EmailOne</a><br>
+                                <a href="mailto:@Model.Setting.EmailTwo">@Model.Setting.EmailTwo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="contact-box">
+                            <div class="contact-icon">
+                                <img src="assets/images/contact/icons/4.png" alt="images">
+                            </div>
+                            <div class="content-text">
+                                <h2 class="title"><a href="#">Call us</a></h2>
+                                <a href="@Model.Setting.PhoneOne">@Model.Setting.PhoneOne</a><br>
+                                <a href="@Model.Setting.PhoneTwo">@Model.Setting.PhoneTwo</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact Icons Section End -->
+    </div>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+{
+    <div class="content-wrapper pad-none">
+        <div class="content-inner">
+            <!-- Contact Section -->
+            <section id="contact-section" class="contact-section">
+                <div class="container">
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Col -->
+                        <div class="col-lg-8">
+                            <div class="title-wrap">
+                                <div class="section-title">
+                                    <h3 class="section-title text-uppercase">Get In Touch</h3>
+                                    <span class="border-bottom"></span>
+                                </div>
+
+                            </div>
+                            <!-- Contact Form -->
+                            <div class="contact-form-4 mt-5">
+                                <!-- Form -->
+                                <div class="contact-form-wrap">
+                                    <!-- form inputs -->
+                                    <form class="contact-form" method="post">
+                                        <input type="hidden" asp-for="FirstNumber" />
+                                        <input type="hidden" asp-for="SecondNumber" />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- form group -->
+                                                <div class="form-group">
+                                                    <input id="name" class="form-control" asp-for="ClientRequest.Name" placeholder="Your Name" type="text" />
+                                                </div>
+                                                <!-- form group -->
+                                                <div class="form-group">
+                                                    <input id="email" class="form-control" asp-for="ClientRequest.Email" placeholder="Email Address" type="email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- form group -->
+                                            <div class="form-group">
+                                                <input id="phone" class="form-control" asp-for="ClientRequest.Phone" placeholder="Phone" data-bv-field="phone" type="text">
+                                            </div>
+                                            <!-- form group -->
+                                            <div class="form-group">
+                                                <input id="subject" class="form-control" asp-for="ClientRequest.Subject" placeholder="Subject" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="contact-message">
+                                                <!-- form group -->
+                                                <div class="form-group">
+                                                    <textarea id="message" class="form-control textarea" rows="7" asp-for="ClientRequest.Message" placeholder="Message"></textarea>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                                </div>
+                                                <button type="submit" class="btn btn-default mt-0 theme-btn">Send Now</button>
+                                            </div>
+                                        </div>
+                                        <span class="clearfix"></span>
+                                    </form>
+                                </div>
+                                <!-- Form End-->
+                            </div>
+                            <!-- contact-form-7 -->
+                        </div>
+                        <!-- Col -->
+                        <!-- Col -->
+                        <div class="col-lg-4 pl-4 px-sm-15">
+                            <!-- contact info -->
+                            <div class="contact-info pad-30">
+                                <!-- contact info inner -->
+                                <div class="contact-info-inner bg-theme typo-white b-radius-10">
+                                    <!-- Feature List -->
+                                    <div class="feature-box-wrap f-list-4 mb-5">
+                                        <div class="feature-box-details">
+                                            <!-- Media -->
+                                            <div class="media">
+                                                <div class="feature-list-icon mr-3">
+                                                    <span class="fa fa-map-marker"></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="feature-content">
+                                                        <div class="feature-title">
+                                                            <h5 class="text-uppercase">Visit Us</h5>
+                                                        </div>
+                                                        <div class="feature-box-content">
+                                                            <p>@Model.Setting.AddressOne</p>
+                                                            <p>@Model.Setting.AddressTwo</p>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Media -->
+                                        </div>
+                                    </div>
+                                    <!-- Feature List -->
+                                    <!-- Feature List -->
+                                    <div class="feature-box-wrap f-list-4 mb-5">
+                                        <div class="feature-box-details">
+                                            <!-- Media -->
+                                            <div class="media">
+                                                <div class="feature-list-icon mr-3">
+                                                    <span class="fa fa-id-badge"></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="feature-content">
+                                                        <div class="feature-title">
+                                                            <h5 class="text-uppercase">Call Us</h5>
+                                                        </div>
+                                                        <div class="feature-box-content">
+                                                            <p>@Model.Setting.PhoneOne</p>
+                                                            <p>@Model.Setting.PhoneTwo</p>
+                                                            <p>@Model.Setting.PhoneThree</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Media -->
+                                        </div>
+                                    </div>
+                                    <!-- Feature List -->
+                                    <!-- Feature List -->
+                                    <div class="feature-box-wrap f-list-4">
+                                        <div class="feature-box-details">
+                                            <!-- Media -->
+                                            <div class="media">
+                                                <div class="feature-list-icon mr-3">
+                                                    <span class="fa fa-envelope-o"></span>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="feature-content">
+                                                        <div class="feature-title">
+                                                            <h5 class="text-uppercase">Mail Us</h5>
+                                                        </div>
+                                                        <div class="feature-box-content">
+                                                            <p> @Model.Setting.EmailOne</p>
+                                                            <p> @Model.Setting.EmailTwo</p>
+                                                            <p> @Model.Setting.EmailThree</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Media -->
+                                        </div>
+                                    </div>
+                                    <!-- Feature List -->
+                                </div>
+                                <!-- contact info inner -->
+                            </div>
+                            <!-- contact info -->
+                        </div>
+                        <!-- .col -->
+                    </div>
+                    <!-- Row -->
+                </div>
+                <!-- Container -->
+            </section>
+            <!-- Contact Section End -->
+            <!-- Contact Map -->
+            <section class="contact-map pad-none">
+                <!-- Screan Reader Text -->
+                <h2 class="screen-reader-text">Map</h2>
+                <!-- Container Fluid -->
+                <div class="container-fluid pad-none">
+                    <!-- Map -->
+                    <div class="map">
+                        <div id="site-google-map" style="width:100%;height:400px;" data-map-style="Silver"></div>
+                        @Html.Raw(Model.Setting.GoogleMap)
+                    </div>
+                    <!-- Map -->
+                </div>
+                <!-- Container Fluid -->
+            </section>
+            <!-- Contact Map End -->
+        </div>
+    </div>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+{
+    <div class="address address_type_two style_two">
+        <div class="container">
+
+            <div class="addres_box">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="address_inner side">
+                            <div class="heading_add clearfix">
+                                <span class="icon-place1 "></span>
+                                <h2>Visit Our Office</h2>
+                            </div>
+                            <p>@Model.Setting.AddressOne</p>
+                            <p>@Model.Setting.AddressTwo</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="address_inner mid">
+                            <div class="heading_add clearfix">
+                                <span class="icon-time-call"></span>
+                                <h2>Make a Call</h2>
+                            </div>
+                            <p>@Model.Setting.PhoneOne</p>
+                            <p>@Model.Setting.PhoneTwo</p>
+                            <p>@Model.Setting.PhoneThree</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="address_inner side">
+                            <div class="heading_add clearfix">
+                                <span class="icon-email"></span>
+                                <h2>Send Your Mail</h2>
+                            </div>
+                            <p>@Model.Setting.EmailOne</p>
+                            <p>@Model.Setting.EmailTwo</p>
+                            <p>@Model.Setting.EmailThree</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="form_contact">
+        <div class="container">
+            <div class="form_contact_inner">
+                <div class="row">
+                    <div class="col-md-8">
+                        @if (TempData["error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <h4>@TempData["error"]</h4>
+                            </div>
+                        }
+                        <form id="contact-form" method="post">
+                            <input type="hidden" asp-for="FirstNumber" />
+                            <input type="hidden" asp-for="SecondNumber" />
+                            <div class="controls">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" asp-for="ClientRequest.Name" placeholder="Your Name *" required="required" data-error="Enter Your Name">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" asp-for="ClientRequest.Email" required="required" placeholder="Email *" data-error="Enter Your Email">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" asp-for="ClientRequest.Phone" required="required" placeholder=" Phone (Optional)">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" asp-for="ClientRequest.Subject" placeholder="Subject *" required="required" data-error="Subject">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <textarea asp-for="ClientRequest.Message" placeholder="Message" rows="3" required="required" data-error="Please, leave us a message."></textarea>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-12">
+                                        <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                        <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                         
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="form-group mg_top apbtn">
+                                            <input class="theme_btn" type="submit" value="submit"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+                <div class="image_bg">
+                    <img src="img/contact-form-inner-bg.png" class="img-fluid" alt="cbg" />
+                </div>
+
+            </div>
+        </div>
+    </section>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+{
+    <section class="contact pb-lg-0 z-index-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="contact-main white-bg p-5">
+                        <h2 class="title mb-4">Contact Us</h2>
+                        <form method="post">
+                            <input type="hidden" asp-for="FirstNumber" />
+                            <input type="hidden" asp-for="SecondNumber" />
+                            <div class="form-group">
+                                <input id="form_name" type="text" asp-for="ClientRequest.Name" class="form-control" placeholder="Fullname" required="required" data-error="Fullname is required.">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="form_email" type="email" asp-for="ClientRequest.Email" class="form-control" placeholder="Email" required="required" data-error="Valid email is required.">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="form_phone" type="tel" asp-for="ClientRequest.Phone" class="form-control" placeholder="Phone" required="required" data-error="Phone is required">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <input id="form_phone" type="text" asp-for="ClientRequest.Subject" class="form-control" placeholder="Subject" required="required" data-error="Subject is required">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="form_message" asp-for="ClientRequest.Message" class="form-control" placeholder="Message" rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Submit">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 form-info mt-4">
+                    <h2 class="title">Get In <span>Touch!</span></h2>
+
+                    <ul class="contact-info list-unstyled mt-4">
+                        <li class="mb-4">
+                            <i class="flaticon-paper-plane"></i><span>Address:</span>
+                            <p>@Model.Setting.AddressOne</p>
+                            <p>@Model.Setting.AddressTwo</p>
+                        </li>
+                        <li class="mb-4">
+                            <i class="flaticon-phone-call"></i><span>Phone:</span>
+                            <a href="Model.Setting.PhoneOne">@Model.Setting.PhoneOne</a>
+                            <a href="@Model.Setting.PhoneTwo">@Model.Setting.PhoneTwo</a>
+                            <a href="@Model.Setting.PhoneThree">@Model.Setting.PhoneThree</a>
+
+                        </li>
+                        <li>
+                            <i class="flaticon-message"></i><span>Email</span>
+                            <a href="mailto:@Model.Setting.EmailOne">@Model.Setting.EmailOne</a>
+                            <a href="mailto:@Model.Setting.EmailTwo">@Model.Setting.EmailTwo</a>
+                            <a href="mailto:@Model.Setting.EmailThree">@Model.Setting.EmailThree</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+{
+    <div class="office-address-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h4 class="title wow animate__ animate__fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">Contact Us </h4>
+                        
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-testimonial-item-02 wow animate__animated animate__fadeInUp">
+
+                        <div class="icon style-01">
+                            <i class="icon-bridge"></i>
+                        </div>
+                        <div class="content">
+                            <h4 class="title">  <p>@Model.Setting.AddressOne</p></h4>
+                            <ul class="contact-info-list-02">
+                                <li class="single-info-item">
+                                    <div class="icon">
+                                        <i class="icon-location"></i>
+                                    </div>
+                                    <div class="details">
+
+                                        <p>@Model.Setting.AddressTwo</p>
+                                    </div>
+                                </li>
+                                <li class="single-info-item">
+                                    <div class="icon">
+                                        <i class="icon-phone"></i>
+                                    </div>
+                                    <div class="details">
+                                        <p>@Model.Setting.PhoneOne</p>
+                                        <p>@Model.Setting.PhoneTwo</p>
+                                        <p>@Model.Setting.PhoneThree</p>
+                                    </div>
+                                </li>
+                                <li class="single-info-item">
+                                    <div class="icon">
+                                        <i class="icon-envelope"></i>
+                                    </div>
+                                    <div class="details">
+                                        <p>@Model.Setting.EmailOne</p>
+                                        <p>@Model.Setting.EmailTwo</p>
+                                        <p>@Model.Setting.EmailThree</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                    <form class="contact-page-form" method="post">
+                        <input type="hidden" asp-for="FirstNumber" />
+                        <input type="hidden" asp-for="SecondNumber" />
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="ClientRequest.Name" placeholder="Name*" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="email" asp-for="ClientRequest.Email" placeholder="Email*" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="tel" asp-for="ClientRequest.Phone" placeholder="Phone Number*" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="ClientRequest.Subject" placeholder="Subject" class="form-control" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group style-01">
+                                    <textarea asp-for="ClientRequest.Message" id="msg" placeholder="Message" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="btn-wrapper desktop-center">
+                                    <input type="submit" value="Submit" class="boxed-btn political-btn style-01" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="map-section">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact_map">
+                        <iframe src="style=" border:0; width: 100%; height: 100%;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        @Html.Raw(Model.Setting.GoogleMap)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

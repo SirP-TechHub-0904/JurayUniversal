@@ -1,0 +1,105 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.ISettings.CreateModel
+
+@{
+    ViewData["Title"] = "SETTINGS Create"; Layout = "/Pages/Shared/Admin/_Management.cshtml";
+
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">NEW SETTINGS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Setting.Qoute" class="control-label"></label>
+                <input asp-for="Setting.Qoute" class="form-control" />
+                <span asp-validation-for="Setting.Qoute" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.FacebookPage" class="control-label"></label>
+                <input asp-for="Setting.FacebookPage" class="form-control" />
+                <span asp-validation-for="Setting.FacebookPage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.InstagramPage" class="control-label"></label>
+                <input asp-for="Setting.InstagramPage" class="form-control" />
+                <span asp-validation-for="Setting.InstagramPage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.TwitterPage" class="control-label"></label>
+                <input asp-for="Setting.TwitterPage" class="form-control" />
+                <span asp-validation-for="Setting.TwitterPage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.TiktokPage" class="control-label"></label>
+                <input asp-for="Setting.TiktokPage" class="form-control" />
+                <span asp-validation-for="Setting.TiktokPage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.YoutubeChannel" class="control-label"></label>
+                <input asp-for="Setting.YoutubeChannel" class="form-control" />
+                <span asp-validation-for="Setting.YoutubeChannel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.EmailOne" class="control-label"></label>
+                <input asp-for="Setting.EmailOne" class="form-control" />
+                <span asp-validation-for="Setting.EmailOne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.EmailTwo" class="control-label"></label>
+                <input asp-for="Setting.EmailTwo" class="form-control" />
+                <span asp-validation-for="Setting.EmailTwo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.EmailThree" class="control-label"></label>
+                <input asp-for="Setting.EmailThree" class="form-control" />
+                <span asp-validation-for="Setting.EmailThree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.PhoneOne" class="control-label"></label>
+                <input asp-for="Setting.PhoneOne" class="form-control" />
+                <span asp-validation-for="Setting.PhoneOne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.PhoneTwo" class="control-label"></label>
+                <input asp-for="Setting.PhoneTwo" class="form-control" />
+                <span asp-validation-for="Setting.PhoneTwo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.PhoneThree" class="control-label"></label>
+                <input asp-for="Setting.PhoneThree" class="form-control" />
+                <span asp-validation-for="Setting.PhoneThree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Setting.WorkingHour" class="control-label"></label>
+                <input asp-for="Setting.WorkingHour" class="form-control" />
+                <span asp-validation-for="Setting.WorkingHour" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

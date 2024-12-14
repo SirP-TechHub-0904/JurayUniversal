@@ -1,0 +1,126 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.TimeTablePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">TIMETABLE LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+        <a asp-page="./Timetableview" class="btn bg-gradient-warning btn-sm" style="float:right;">View Timetable</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TimeTable[0].Date)
+                        </th>
+                        <th>
+                            Event Date
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.TimeTable[0].Content)
+                        </th>
+                        <th>
+                            Moderator
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.TimeTable[0].EventType)
+                        </th>
+
+
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.TimeTable)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EventDate)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.EventTime)
+                            </td>
+                            <td style="word-break:break-all;">
+                                @Html.Raw(item.Content)
+                                @*@if (item.IsLecture == true)
+                                {
+                                    <a asp-page="./IsLecture" asp-route-id="@item.Id" target="_blank" class="btn btn-danger">Is Not Lecture</a>
+                                }
+                                else
+                                {
+                                    <a asp-page="./IsLecture" asp-route-id="@item.Id" target="_blank">Is Lecture</a>
+                                }*@
+                            </td>
+
+                            <td>
+                                <ul>
+                                    @foreach (var list in item.Moderators)
+                                    {
+                                        <li>
+                                            @if (list.User != null)
+                                            {
+                                                @list.User.FullnameX
+
+                                            }
+                                            else
+                                            {
+                                                @list.Fullname
+                                            } <span>(@list.Position)</span>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EventType)
+                            </td>
+
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

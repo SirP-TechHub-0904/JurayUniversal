@@ -1,0 +1,56 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IProduct.IFeatures.DetailsModel
+
+@{
+    ViewData["Title"] = string.Format("{0} FEATURE details", await Component.InvokeAsync("ProductTitle"));
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+
+    }
+    else
+    {
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
+
+    }
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS @await Component.InvokeAsync("ProductTitle") FEATURES</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductFeature.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductFeature.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Product)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.ProductFeature.Product.FullDescription)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>

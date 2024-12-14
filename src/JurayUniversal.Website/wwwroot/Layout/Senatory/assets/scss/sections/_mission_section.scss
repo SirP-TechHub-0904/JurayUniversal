@@ -1,0 +1,118 @@
+// Mission Section Styling Here
+.our-mission-section {
+    margin-top: 105px;
+    position: relative;
+    z-index: 0;
+    padding-bottom: 90px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 42%;
+        background: #EFEFF7;
+    }
+
+    .section-title {
+        .sub-title-02 {
+            color: var(--heading-color);
+        }
+    }
+}
+
+.mission-single-item {
+    background: #FFFFFF;
+    padding: 20px 30px 30px;
+    filter: drop-shadow(0px 10px 40px rgba(0, 0, 0, 0.12));
+    transition: .5s all ease;
+    margin-bottom: 30px;
+
+    &:hover {
+        background: var(--main-color-one);
+
+        .content {
+            .content-no {
+                color: $white;
+            }
+
+            .title {
+                color: $white;
+            }
+
+            p {
+                color: $white;
+            }
+        }
+
+        .progress-item {
+            .single-progressbar {
+                .percentCount {
+                    color: $white;
+                }
+
+                .progressbar {
+                    filter: drop-shadow(none);
+                    background: rgba(255, 255, 255, 0.3) !important;
+
+                    .proggress {
+                        background: $white !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .content {
+        .content-no {
+            font-size: 24px;
+            line-height: 1.5;
+            font-family: var(--heading-font);
+            font-weight: 700;
+            color: var(--main-color-one);
+            margin-bottom: 10px;
+            display: block;
+            transition: .5s all ease;
+        }
+
+        .title {
+            font-size: 24px;
+            line-height: 1.5;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 10px;
+            transition: .5s all ease;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 400;
+            color: #57575A;
+            margin-bottom: 46px;
+            transition: .5s all ease;
+        }
+    }
+
+    .progress-item {
+        .single-progressbar {
+            .percentCount {
+                top: -30px;
+                background: transparent;
+                color: var(--main-color-one);
+
+                &::after {
+                    display: none;
+                }
+            }
+
+            .progressbar {
+                border: none !important;
+                background-color: #fff !important;
+                filter: drop-shadow(0px 3px 20px rgba(221, 19, 26, 0.3));
+            }
+        }
+    }
+}

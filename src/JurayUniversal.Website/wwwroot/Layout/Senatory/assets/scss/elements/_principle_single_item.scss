@@ -1,0 +1,96 @@
+// Our Campaign Principle Start heade
+.our-principle-section {
+    margin-top: 106px;
+}
+.princilple-single-items {
+    display: flex;
+    &.style-01 {
+        align-items: center;
+        margin-bottom: 30px;
+        padding-left: 28px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    &:hover {
+        .icon {
+            &::after {
+                animation: round 6s linear infinite;
+            }
+        }
+    }
+    .icon {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        text-align: center;
+        background: transparent linear-gradient(215deg, #FEEDF0 0%, #FFFFFF 100%);
+        border-radius: 50%;
+        font-size: 36px;
+        color: var(--main-color-one);
+        margin-right: 30px;
+        position: relative;
+        &.style-01 {
+            width: 97px;
+            height: 97px;
+            line-height: 97px;
+            margin-right: 30px;
+        }
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='100' ry='100' stroke='%23CCCCCCFF' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='7' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 100px;
+            border-radius: 100px;
+            top: -8px;
+            left: 8px;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+    }
+    .content {
+        flex: 1;
+        .title {
+            font-size: 20px;
+            line-height: 28px;
+            font-family: var(--body-font);
+            font-weight: 700;
+            margin-bottom: 15px;
+            &.style-01 {
+                font-size: 24px;
+                line-height: 30px;
+                color: var(--heading-color);
+                margin-bottom: 10px;
+                transition: .3s all ease;
+                &:hover {
+                    color: var(--main-color-one);
+                }
+            }
+        }
+        p {
+            font-size: 16px;
+            line-height: 28px;
+            font-family: var(--body-font);
+            font-weight: 400;
+            max-width: 250px;
+            &.style-01 {
+                max-width: inherit;
+                color: #505050;
+            }
+        }
+    }
+}
+
+
+@keyframes round {
+    0%{
+      transform:rotate(0deg);
+    
+    }
+    100%{
+      transform:rotate(360deg);
+    }
+  }

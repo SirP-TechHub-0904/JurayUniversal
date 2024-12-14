@@ -1,0 +1,51 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users.UserPermissionModel
+@{
+}
+<div class="row">
+    <div class="card-columns mx-auto d-flex justify-content-center col-12">
+
+        <div class="card">
+            <div class="card-header">
+
+                <h3 class="card-title">
+                    User Permissions (@Model.Fullname)
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="">
+                    @foreach (var i in Model.UserRoles)
+                    {
+                        <button class="btn btn-primary">
+                            @i
+                        </button>
+                    }
+                </div>
+                <hr />
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Click to Remove Permision</h6>
+                            @foreach (var i in Model.UserRoles)
+                            {
+                                @await Component.InvokeAsync("RoleData", new { name = i, Userid = Model.UserInfo.Id, syle = "danger", fullname = Model.Fullname })
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Click to Add Permision</h6>
+                            @foreach (var i in Model.RemainingUserRoles)
+                            {
+                                @await Component.InvokeAsync("RoleData", new { name = i, Userid = Model.UserInfo.Id, syle = "warning", fullname = Model.Fullname })
+
+                            }
+                        </div>
+                    </div>
+
+
+                </div>
+                <a class="dropdown-item" asp-page="./Details" asp-route-id="@Model.UserInfo.Id">Details</a>
+
+            </div>
+        </div>
+    </div>
+</div>

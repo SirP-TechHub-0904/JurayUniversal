@@ -1,0 +1,86 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.QAs.QuestionListModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">QUESTIONS</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+    </div>
+</div>
+
+@foreach (var item in Model.Moderators)
+{
+    <div class="card">
+        <div class="card-header">
+            <h4>Moderator</h4>
+            <h6>
+                @if (item.User != null)
+                {
+
+                    <span>
+                        <strong>@item.User.FullnameX</strong>(@item.Position)
+                    </span>
+
+                }
+                else
+                {
+                    <span>
+
+
+                        <strong>@item.Fullname</strong>(@item.Position)
+                    </span>
+                }
+            </h6>
+            <br />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>@item.TimeTable.Date.ToString("ddd dd MMM, yyyy")</th>
+                    </tr>
+                    <tr>
+                        <th>Time</th>
+                        <th>@item.TimeTable.EventTime</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="card-body">
+            <h4>QUESTIONS</h4>
+            @{ int sn = 0;}
+            @if (item.QuestionAndAnswers.Count() > 0)
+            {
+                @foreach (var qq in item.QuestionAndAnswers)
+                {
+                    <div class="" style="padding:5px;margin:5px;border-bottom:2px solid grey;">
+                        <h6> @{ sn++;}  (QA @sn) @Html.Raw(qq.Question)</h6>
+                        @if (qq.User != null)
+                        {
+                            <p>
+                                <strong>
+
+                                    @qq.User.FullnameX
+
+                                </strong>
+                            </p>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Questions Yet</p>
+            }
+
+
+        </div>
+    </div>
+}

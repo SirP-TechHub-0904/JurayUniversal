@@ -1,0 +1,89 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IPrograms.Category.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PROGRAM CATEGORY LIST</h3>
+
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgramCategory[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgramCategory[0].Publish)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgramCategory[0].ShowInMenu)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompanyProgramCategory[0].ShowInDashboard)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.CompanyProgramCategory)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Publish)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShowInMenu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShowInDashboard)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

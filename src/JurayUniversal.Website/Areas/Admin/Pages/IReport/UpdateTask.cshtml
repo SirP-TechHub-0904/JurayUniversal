@@ -1,0 +1,83 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IReport.UpdateTaskModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE REPORT FOR @Model.Report.User.GetFullName()</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" style="height: auto;overflow: visible;">
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #007bff;">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">TASK</span>
+
+                            </div>
+
+                            <div class="direct-chat-text bg-primary">
+                                @if (!String.IsNullOrEmpty(Model.Report.TaskNote))
+                                {
+                                    @Html.Raw(Model.Report.TaskNote)
+                                }
+                                else
+                                {
+                                    <span>No Special Task Assigned to You</span>
+
+
+                                }
+
+
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        
+                    </div>
+                    <hr />
+                </div>
+                <!-- /.card-body -->
+
+
+
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Report.Id" />
+
+                    <div class="form-group">
+                        <label asp-for="Report.TaskNote" class="control-label"></label>
+                        <textarea asp-for="ReportNote" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Report.TaskNote" class="text-danger"></span>
+                    </div>
+                     
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

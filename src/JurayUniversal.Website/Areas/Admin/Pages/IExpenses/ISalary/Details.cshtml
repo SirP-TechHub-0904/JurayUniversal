@@ -1,0 +1,133 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.IExpenses.ISalary.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">DETAILS SALARY</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+<div>
+     <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.User.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.Amount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.Amount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.DefaulterCharge)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.DefaulterCharge)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.BonusAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.BonusAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.Balance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.Balance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.Month)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.Month)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.PaymentStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.PaymentStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByManager)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByManager)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ManagerNote)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ManagerNote)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByManagerDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByManagerDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByCEO)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByCEO)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.CeoNote)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.CeoNote)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByCeoDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByCeoDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByCFO)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByCFO)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.CfoNote)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.CfoNote)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary.ApprovedByCfoDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Salary.ApprovedByCfoDate)
+        </dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+            </div>
+        </div>
+    </div>

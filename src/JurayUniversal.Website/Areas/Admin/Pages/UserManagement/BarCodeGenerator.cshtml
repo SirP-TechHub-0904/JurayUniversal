@@ -1,0 +1,53 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Admin.Pages.UserManagement.BarCodeGeneratorModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title text-upper">BARCODE DETAILS @Model.UserDatas.GetFullName()</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                 <h4>@Model.UserDatas.GetFullName() BarCode</h4>
+                 <div style="padding:20px;background-color:white;">
+                    <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Image))" />
+
+                 </div>
+                 <div>
+
+                    <a href="data:application/octet-stream;base64,@(Convert.ToBase64String(Model.Image))" download="@Model.UserDatas.FirstName-Barcode.jpg" title="@Model.UserDatas.FirstName-Barcode">
+                        Download @Model.UserDatas.GetFullName() BarCode
+                    </a>
+
+                </div>
+            </div>
+            <hr />
+            <div class="col-md-12" style="margin-top:40px;">
+                <h4>@Model.SuperSetting.CompanyName BarCode</h4>
+                <div style="padding:20px;background-color:white;">
+                    <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.JurayImage))" />
+
+                </div>
+                <div>
+
+                    <a href="data:application/octet-stream;base64,@(Convert.ToBase64String(Model.JurayImage))" download="@Model.SuperSetting.CompanyName-Barcode.jpg" title="@Model.SuperSetting.CompanyName-Barcode-Barcode">
+                        Download @Model.SuperSetting.CompanyName BarCode
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>
+
+

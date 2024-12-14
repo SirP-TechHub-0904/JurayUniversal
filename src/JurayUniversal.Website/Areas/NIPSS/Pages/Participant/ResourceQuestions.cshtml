@@ -1,0 +1,63 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Participant.ResourceQuestionsModel
+@{
+}<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">QUESTIONS</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <h4>Topic: @Model.Moderator.TimeTable.Content</h4>
+        <h4>
+            Moderator: @if (Model.Moderator.User != null)
+            {<span>@Model.Moderator.User.FullnameX (@Model.Moderator.Position)</span>}
+        else
+        {
+
+            <span>@Model.Moderator.Fullname (@Model.Moderator.Position)</span>}
+        </h4>
+    </div>
+    <div class="card-body">
+        @{ int sn = 0;}
+        @foreach(var item in Model.QuestionAndAnswers)
+        {
+
+
+        <div class="btn bg-primary">
+            <p>@{sn++;}  (@sn) @item.Question</p>
+            <h6>@item.User.FullnameX.ToUpper()</h6>
+        </div>
+        }
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="QuestionAndAnswer.ModeratorId" value="@Model.MID" />
+                        @*<input type="hidden" asp-for="QuestionAndAnswer.UserId" value="@Model.UID" />*@
+
+                        <div class="form-group">
+                            <label asp-for="QuestionAndAnswer.Question" class="control-label"></label>
+                            <textarea asp-for="QuestionAndAnswer.Question" class="form-control"></textarea>
+                            <span asp-validation-for="QuestionAndAnswer.Question" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Ask" class="btn btn-primary" />
+                            <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+    </div>

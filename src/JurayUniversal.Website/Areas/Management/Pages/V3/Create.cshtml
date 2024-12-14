@@ -1,0 +1,110 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.V3.CreateModel
+
+@{
+    ViewData["Title"] = "JSSL SETTINGS Create";
+}
+
+<h1>Create</h1>
+
+<h4>SuperSetting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+       @* <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Dashboard" /> @Html.DisplayNameFor(model => model.SuperSetting.Dashboard)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Attendance" /> @Html.DisplayNameFor(model => model.SuperSetting.Attendance)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Blogs" /> @Html.DisplayNameFor(model => model.SuperSetting.Blogs)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Forum" /> @Html.DisplayNameFor(model => model.SuperSetting.Forum)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Expenses" /> @Html.DisplayNameFor(model => model.SuperSetting.Expenses)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.FAQ" /> @Html.DisplayNameFor(model => model.SuperSetting.FAQ)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Jobs" /> @Html.DisplayNameFor(model => model.SuperSetting.Jobs)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.MeetingsManagement" /> @Html.DisplayNameFor(model => model.SuperSetting.MeetingsManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.ManagePages" /> @Html.DisplayNameFor(model => model.SuperSetting.ManagePages)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Proposals" /> @Html.DisplayNameFor(model => model.SuperSetting.Proposals)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.ReportingSystem" /> @Html.DisplayNameFor(model => model.SuperSetting.ReportingSystem)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.ContactUsRequest" /> @Html.DisplayNameFor(model => model.SuperSetting.ContactUsRequest)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Settings" /> @Html.DisplayNameFor(model => model.SuperSetting.Settings)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.Sliders" /> @Html.DisplayNameFor(model => model.SuperSetting.Sliders)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.UserManagement" /> @Html.DisplayNameFor(model => model.SuperSetting.UserManagement)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.RoleManagement" /> @Html.DisplayNameFor(model => model.SuperSetting.RoleManagement)
+                </label>
+            </div>
+          
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>*@
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

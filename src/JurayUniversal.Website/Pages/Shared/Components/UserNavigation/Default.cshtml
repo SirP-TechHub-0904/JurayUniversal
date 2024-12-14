@@ -1,0 +1,1472 @@
+﻿@model JurayUniversal.Domain.Models.DashboardSetting
+
+@{
+    Domain.Models.Setting setting = ViewBag.setting;
+}
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+
+@if (ViewBag.xsetting.UserNipssArea == true)
+{
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+    {
+        <li class="nav-item">
+            <a asp-page="/Dashboard/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Dashboard
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ManageCourse/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Course
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/TimeTablePage/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    TimeTable
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Participants/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Evaluation
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/QAs/CourseList" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    QA
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EVoting/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    E-Voting
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EVP/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Evaluation Question
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Content
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Pages
+                        </p>
+                    </a>
+                </li>
+                @if (Model.ActivateProductContent == true)
+                {
+                    <li class="nav-item">
+                        <a asp-page="/IProduct/Main/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                @await Component.InvokeAsync("ProductTitle")
+                            </p>
+                        </a>
+                    </li>
+                }
+                @if (Model.ActivateBlogContent == true)
+                {
+                    <li class="nav-item">
+                        <a asp-page="/IBlogs/Post/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Blog
+                            </p>
+                        </a>
+                    </li>
+                }
+                @if (Model.ActivateSliderContent == true)
+                {
+                    <li class="nav-item">
+                        <a asp-page="/ISliders/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Banner Slider
+                            </p>
+                        </a>
+                    </li>
+                }
+                @if (Model.ActivateTestimonyContent == true)
+                {
+                    <li class="nav-item">
+                        <a asp-page="/ITestimony/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Testimony
+                            </p>
+                        </a>
+                    </li>
+                }
+                @if (Model.ActivateFaqContent == true)
+                {
+                    <li class="nav-item">
+                        <a asp-page="/IFaq/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                FAQ
+                            </p>
+                        </a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a asp-page="/IModal/Index" asp-area="Content" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Modal Notification
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    User Manager
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/ManagementStaff/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Management Staff
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/DirectingStaff/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Directing Staff
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/AdminStaff/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Admin Staff
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/Participants/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Participants
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Users/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Users
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/NutriValution/Evaluation" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Nutrition Evalution
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Settings
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a asp-page="/SettingPage/IAccomodation/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Accomodation
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/SettingPage/NameTitle/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Name Title
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NutriValution/Category/Index" asp-area="NIPSSADMIN" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Nutrition Evalution Setup
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Tools
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/Category/Index" asp-area="SMS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            SMS
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/SenderIdPage/Index" asp-area="SMS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Sender Id
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Account
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/TwoFactorAuthentication" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Two Factor Auth.
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Change Password
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+    }
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Participant"))
+    {
+
+
+        <li class="nav-item">
+            <a asp-page="/Dashboard/Index" asp-area="NIPSS" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                    Dashboard
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Index" asp-area="" target="_blank" class="nav-link">
+                <i class="nav-icon fas fa-globe"></i>
+                <p>
+                    Website
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Account/MealEvaluation" asp-area="NIPSS" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Nutrition Evaluation
+                </p>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a asp-page="/Account/Course" asp-area="NIPSS" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Course
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                    Account
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/Account/Profile" asp-area="NIPSS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Profile
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Account/Accomodation" asp-area="NIPSS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Accomodation
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Account/PrintRegistrationStatus" asp-area="NIPSS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Registration Slip
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/TwoFactorAuthentication" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Two Factor Auth.
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Change Password
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <li class="nav-item"><a asp-page="/Participant/AccountTimeTable" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-table"></i><p> TimeTable</p></a></li>
+        <li class="nav-item">
+            <a asp-page="/Participant/Election" asp-area="NIPSS" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    E-Voting
+                </p>
+            </a>
+        </li>
+        <li class="nav-item"><a asp-page="/Participant/Evaluation" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-book-open"></i><p> Evaluation</p></a></li>
+        <li class="nav-item"><a asp-page="/Participant/QA" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-book-open"></i><p> QA</p></a></li>
+        <li class="nav-item"><a asp-page="/Library/Index" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-book"></i><p> Library</p></a></li>
+        <li class="nav-item"><a asp-page="/Library/IPublications" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-book-reader"></i><p> Publications</p></a></li>
+        <li class="nav-item"><a asp-page="/VLE/Index" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-tv"></i><p> VLE</p></a></li>
+        <li class="nav-item"><a asp-page="/Administrator/DirectingStaff" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-users"></i><p> DirectingStaff</p></a></li>
+        <li class="nav-item"><a asp-page="/Participant/List" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-users"></i><p> Participants</p></a></li>
+        <li class="nav-item"><a asp-page="/Participant/IStudyGroups" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-layer-group"></i><p> Study Groups</p></a></li>
+        <li class="nav-item"><a asp-page="/Participant/ICommittee" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-users"></i><p> Committee</p></a></li>
+
+        <li class="nav-item"><a asp-page="/Participant/Tour" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-globe"></i><p> Tour</p></a></li>
+        <li class="nav-item"><a asp-page="/Notification/Index" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-globe"></i><p> Notification</p></a></li>
+
+
+        <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">TOOLS</li>
+
+        <li class="nav-item"><a asp-page="/ITools/Rapid" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-envelope"></i><p> <span>Rapid Test</span></p></a></li>
+        <li class="nav-item"><a asp-page="/ITools/Voting" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-envelope"></i><p> <span>Voting</span></p></a></li>
+        <li class="nav-item"><a asp-page="/Category/Index" asp-area="SMS" class="nav-link"><i class="nav-icon fa fa-envelope"></i><p> <span>SMS</span></p></a></li>
+        <li class="nav-item"><a asp-page="/ITools/ResearchTool" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-book"></i><p> <span>Research Tool</span></p></a></li>
+        <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">COMPLIAN/INQUIRY/GUIDE</li>
+
+        <li class="nav-item"><a asp-page="/MaintainancePage/Index" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-chart-area"></i><p> Tickets</p></a></li>
+
+        <li class="nav-item"><a asp-page="/MaintainancePage/Livechat" asp-area="NIPSS" class="nav-link"><i class="nav-icon fa fa-envelope-square"></i><p> <span>Live Chat </span></p></a></li>
+
+
+
+    }
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Directing") || User.IsInRole("Management"))
+    {
+
+
+        <li class="nav-item">
+            <a asp-page="/Dashboard/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Dashboard
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Index" asp-area="" target="_blank" class="nav-link">
+                <i class="nav-icon fas fa-globe"></i>
+                <p>
+                    Website
+                </p>
+            </a>
+        </li>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Nutrition"))
+        {
+            <li class="nav-item">
+                <a asp-page="/NutriValuation/Evaluation" asp-area="NIPSSADMIN" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Nutrition Evaluation
+                    </p>
+                </a>
+            </li>
+        }
+        <li class="nav-item">
+            <a asp-page="/ManageCourse/Index" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Course
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/TimeTablePage/Timetableview" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    TimeTable
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/QAs/CourseList" asp-area="NIPSSADMIN" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    QA
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Participant/Election" asp-area="NIPSS" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    E-Voting
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                    Account
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/Account/Profile" asp-area="NIPSS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Profile
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/Account/PrintRegistrationStatus" asp-area="NIPSS" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Registration Slip
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/TwoFactorAuthentication" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Two Factor Auth.
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Change Password
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+
+
+    }
+
+}
+else
+{
+
+    @if (ViewBag.dataitem == true)
+    {
+        @*<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>*@
+
+        <li class="nav-item">
+            <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Dashboard
+                </p>
+            </a>
+        </li>
+        @foreach (var item in ViewBag.Cmp)
+        {
+            <li class="nav-item">
+                <a asp-page="/CM/Index" asp-area="Admin" asp-route-id="@item.Id" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        @item.Title
+                    </p>
+                </a>
+            </li>
+        }
+
+        <li class="nav-item">
+            <a asp-page="/UserManagement/Index" asp-area="Admin" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Staff
+                </p>
+            </a>
+        </li>
+        @foreach (var item in ViewBag.userAccountCategory)
+        {
+            <li class="nav-item">
+                <a asp-page="/CH/Index" asp-area="Admin" asp-route-id="@item.Id" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        @item.Title
+                    </p>
+                </a>
+            </li>
+        }
+        <li class="nav-item">
+            <a asp-page="/ICareer/Index" asp-area="Admin" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Career
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Account
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/Profile" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Profile
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/TwoFactorAuthentication" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Two Factor Auth.
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Authv2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Change Password
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Customer Care") || User.IsInRole("Admin") || User.IsInRole("mSuperAdmin"))
+        {
+            <li class="nav-item">
+                <a asp-page="/IRequest/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th nav-icon"></i>
+                    <p class="uppercase">
+                        Contact Us Messages
+                    </p>
+                </a>
+            </li>
+        }
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+        {
+
+            @if (Model.ActivateUserManagement == true)
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            User Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (Model.ActivateUser == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/UserManagement/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateAttendance == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IAttendance/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Attendance
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateReport == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IReport/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Reports
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateTrainings == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/ITraining/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Training
+                                    </p>
+                                </a>
+                            </li>
+                        }
+
+
+                        @if (Model.ActivateSiteMap == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="" asp-area="" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        Site Map
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+
+            <li class="nav-item">
+                <a asp-page="/IProposalPage/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Proposal
+                    </p>
+                </a>
+            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Secretary") || User.IsInRole("mSuperAdmin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/IMeetings/Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Meeting
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+
+        if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("mSuperAdmin"))
+        {
+
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Content Mgt
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Pages
+                            </p>
+                        </a>
+                    </li>
+                    @if (Model.ActivateBlogContent == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/IBlogs/Post/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Blog
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateSliderContent == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/ISliders/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Banner Slider
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateTestimonyContent == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/ITestimony/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Testimony
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateFaqContent == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/IFaq/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    FAQ
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a asp-page="/IModal/Index" asp-area="Content" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Modal Notification
+                            </p>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+        }
+
+    }
+    else
+    {
+
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+        {
+
+            <li class="nav-item">
+                <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Dashboard
+                    </p>
+                </a>
+            </li>
+            @if (Model.ActivateUserManagement == true)
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            User Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (Model.ActivateUser == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/UserManagement/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateAttendance == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IAttendance/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Attendance
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateReport == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IReport/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Reports
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateTrainings == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/ITraining/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Training
+                                    </p>
+                                </a>
+                            </li>
+                        }
+
+
+                        @if (Model.ActivateSiteMap == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="" asp-area="" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        Site Map
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            <li class="nav-item">
+                <a asp-page="/ICareer/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Career
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-page="/IProposalPage/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Proposal
+                    </p>
+                </a>
+            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Secretary") || User.IsInRole("mSuperAdmin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/IMeetings/Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Meeting
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Customer Care") || User.IsInRole("Admin") || User.IsInRole("mSuperAdmin"))
+        {
+            <li class="nav-item">
+                <a asp-page="/IRequest/Index" asp-area="Admin" class="nav-link">
+                    <i class="nav-icon fas fa-th nav-icon"></i>
+                    <p class="uppercase">
+                        Client Request
+                    </p>
+                </a>
+            </li>
+        }
+        <li class="nav-item">
+            <a asp-page="/IFacilityPage/Index" asp-area="Admin" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p class="">
+                    Facility
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ProjectAct/Index" asp-area="JPTask" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Task
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/BD/Index" asp-area="UserBudget" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Budget
+                </p>
+            </a>
+        </li>
+        @if (Model.ActivateContentManagement == true)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("mSuperAdmin"))
+            {
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Content Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-page="/IPages/Main/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Pages
+                                </p>
+                            </a>
+                        </li>
+                        @if (Model.ActivateProductContent == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IProduct/Main/Index" asp-area="Content" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        @await Component.InvokeAsync("ProductTitle")
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateBlogContent == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IBlogs/Post/Index" asp-area="Content" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        Blog
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateSliderContent == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/ISliders/Index" asp-area="Content" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        Banner Slider
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateTestimonyContent == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/ITestimony/Index" asp-area="Content" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        Testimony
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (Model.ActivateFaqContent == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IFaq/Index" asp-area="Content" class="nav-link">
+                                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                                    <p class="uppercase">
+                                        FAQ
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a asp-page="/IModal/Index" asp-area="Content" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Modal Notification
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            }
+
+        }
+        @if (Model.ActivateFinanceManagement == true)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("CFO") || User.IsInRole("mSuperAdmin") || User.IsInRole("CEO") || User.IsInRole("Fund"))
+            {
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Finance Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item">
+                            <a asp-page="/IFunds/CompanyFunds/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Company Funds
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/IFunds/Source/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Source
+                                </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+            }
+        }
+
+        @if (Model.ActivateOfficeActivity == true)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+            {
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Office Activity
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a asp-page="/IOffice/Category/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Activities
+                                </p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a asp-page="/IOffice/Activity/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Outcome
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+
+
+        @if (Model.ActivateJobReferrals == true)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+            {
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Job Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a asp-page="/IJob/ICategoryPage/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Job Category
+                                </p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a asp-page="/IJob/IJobs/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Job
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+        @if (Model.ActivateFinanceManagement == true)
+        {
+
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Expenses Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a asp-page="/IExpenses/Category/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Category
+                                </p>
+                            </a>
+                        </li>
+                        @if (Model.ActivateSalaries == true)
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/IExpenses/ISalary/Index" asp-area="Admin" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p class="uppercase">
+                                        Salary
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a asp-page="/IExpenses/MainExpenses/Index" asp-area="Admin" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p class="uppercase">
+                                    Expenses
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+
+
+
+        @if (Model.ActivateManagementTools == true)
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Tools
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    @if (Model.ActivateSmsTools == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/Category/Index" asp-area="SMS" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    SMS
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/SenderIdPage/Index" asp-area="SMS" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Sender Id
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateEmailTools == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="" asp-area="" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    EMAIL
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateNewsletterTools == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="" asp-area="" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Newsletter
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateBirthdayTools == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="" asp-area="" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Birthdays
+                                </p>
+                            </a>
+                        </li>
+                    }
+                    @if (Model.ActivateNoticeBoardCommnunicationTools == true)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="" asp-area="" class="nav-link">
+                                <i class="nav-icon fas fa-circle nav-icon"></i>
+                                <p class="uppercase">
+                                    Notice Board
+                                </p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+
+
+
+
+
+
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+        {
+
+            <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">STAFF NAVIGATION</li>
+
+            <li class="nav-item">
+                <a asp-page="/Dashboard/Index" asp-area="Staff" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Dashboard
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Account
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    <li class="nav-item">
+                        <a asp-page="/Dashboard/Profile" asp-area="Staff" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Profile
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-page="/" asp-area="" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Two Factor Auth.
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-page="/Authv2/Auth/ChangePassword" asp-area="V2" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Change Password
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-page="/" asp-area="" class="nav-link">
+                            <i class="nav-icon fas fa-circle nav-icon"></i>
+                            <p class="uppercase">
+                                Activity Logging
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @if (Model.ActivateAttendance == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/UserAttendance" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Attendance
+                        </p>
+                    </a>
+                </li>
+            }
+
+            @if (Model.ActivateReport == true)
+            {
+
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/UserReport" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Reports
+                        </p>
+                    </a>
+                </li>
+            }
+            <li class="nav-item">
+                <a asp-page="/Dashboard/StaffMeeting" asp-area="Staff" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Meeting
+                    </p>
+                </a>
+            </li>
+            @if (Model.ActivateSalaries == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Salary
+                        </p>
+                    </a>
+                </li>
+            }
+
+            @if (Model.ActivateTrainings == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/StaffTraining" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Training
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateJobReferrals == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/JobList" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Job List
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Dashboard/ReferralPage" asp-area="Staff" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Referral Page
+                        </p>
+                    </a>
+                </li>
+            }
+            @if (Model.ActivateSiteMap == true)
+            {
+                <li class="nav-item">
+                    <a asp-page="" asp-area="" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p class="uppercase">
+                            Site Map
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+    }
+}

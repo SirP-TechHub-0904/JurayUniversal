@@ -1,0 +1,105 @@
+﻿@page
+@model JURAY.Web.Pages.ThankYouModel
+@{
+    ViewData["Title"] = "CONTACT US";
+
+    ViewData["PageName"] = "CONTACT US";
+    ViewData["Description"] = Model.SuperSetting.CompanyDescription;
+    ViewData["Image"] = Model.SuperSetting.CompanyLogoUrl;
+
+    @if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.Templatechoose == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+}
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "CONTACT US" })
+
+<style>
+    .back-box {
+        z-index: -999999;
+        background: #f9f9f9;
+        position: relative;
+        top: 10px;
+        padding: 10px;
+    }
+
+    .error-box-text {
+        z-index: 999;
+        position: relative;
+        top: 0;
+    }
+
+        .error-box-text h1 {
+            font-size: 100px;
+            color: #d21e2b;
+            line-height: 1;
+        }
+
+    .error-box h2 {
+        color: rgba(204, 204, 204, 0.2);
+        font-size: 50px;
+        font-weight: 600;
+        letter-spacing: 10px;
+        text-transform: uppercase;
+    }
+
+    .mt-30 {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+</style>
+<!-- 404 START -->
+<div class="error-box">
+    <div class="back-box">
+        <h2>THANK YOU</h2>
+    </div>
+    <div class="error-box-text">
+        <h1>THANK YOU</h1>
+        <h3>For Contacting Us</h3>
+        <h4>We will get back to you shortly.</h4>
+        <div class="mt-30">
+            <a href="/" class="dark-button button-md">Back Home</a>
+        </div>
+    </div>
+</div>
+<!-- 404 END -->
