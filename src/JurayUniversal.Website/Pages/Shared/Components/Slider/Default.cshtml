@@ -5035,7 +5035,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
             </div><!-- END REVOLUTION SLIDER -->
         </section>
 
-        
+
 
         <!-- Revolution Slider Section End -->
     }
@@ -6896,6 +6896,26 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 <a href="tel:@xsetting.PhoneOne.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneOne</a>
                                             </li>
                                         }
+                                        @{
+                                            IEnumerable<Domain.Models.WebPage> mainTopPage = ViewBag.pageMainTop;
+                                        }
+                                        @foreach (var item in mainTopPage.OrderBy(x => x.SortOrder))
+                                        {
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="list-inline-item">
+                                                    <a href="@item.DirectUrl">@item.Title</a>
+
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="list-inline-item">
+                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+
+                                                </li>
+                                            }
+                                        }
                                     </ul>
                                 </div>
                             }
@@ -6931,7 +6951,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                             <!-- Navbar -->
                             <nav class="navbar navbar-expand-lg">
                                 <a class="navbar-brand logo" href="/">
-                                    <img id="logo-img" class="img-fluid" src="@supersetting.CompanyLogoUrl" alt="@supersetting.CompanyName">
+                                    <img id="logo-img" class="img-fluid" src="@supersetting.CompanyWhiteLogoUrl" alt="@supersetting.CompanyName">
                                 </a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -7137,9 +7157,13 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                     <p class="lead text-white">
                                         @Html.Raw(item.Text)
                                     </p>
+                                    <p class="minititle text-white">
+                                        @Html.Raw(item.MiniTitle)
+                                    </p>
+
                                     @if (item.ButtonLink == "0")
                                     {
-                                        <a href="#" class="btn btn-theme btn-radius">@Html.Raw(item.ButtonText)</a>
+                                        @*<a href="#" class="btn btn-theme btn-radius">@Html.Raw(item.ButtonText)</a>*@
                                     }
                                     else if (item.ButtonLink == "000")
                                     {
@@ -7149,6 +7173,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                     {
                                         <a asp-page="/Source" asp-route-id="@item.ButtonLink" class="btn btn-theme btn-radius">@Html.Raw(item.ButtonText)</a>
                                     }
+
                                 }
                             </div>
                         </div>

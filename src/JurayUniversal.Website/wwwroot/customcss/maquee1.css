@@ -3,7 +3,7 @@
     position: relative;
     border: 1px solid #777;
     background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
-    font-family: 'Oswald',serif;
+    /*font-family: 'Oswald',serif;*/
 }
 
 .containerx, .containerx .headertext {
@@ -34,9 +34,9 @@
         }
 
 marquee a:hover, a:focus {
-    color: #222c46;
+   /* color: #222c46;
     font-weight: 900;
-    font-size: larger;
+    font-size: larger;*/
 }
 
 marquee {
