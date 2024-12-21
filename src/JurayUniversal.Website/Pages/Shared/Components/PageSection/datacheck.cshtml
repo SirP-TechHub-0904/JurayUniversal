@@ -15,7 +15,1748 @@
 }
 @foreach (var item in Model)
 {
-    if (item.TemplateKey == "36")
+
+    if (item.TemplateKey == "1")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 pe-12">
+                                <div class="about-img mb-0">
+                                    <img class="img-fluid" src="@item.ImageUrl" alt="@item.Title">
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-6 col-md-12 box-shadow white-bg p-md-4 p-3 mt-5 mt-lg-0">
+                            <h5>@list.Title</h5>
+                            <p class="line-h-3">@list.Description</p>
+
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "2")
+    {
+        <section class="dark-bg text-center @item.CustomClass">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0 text-white">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-xs-items="1" data-margin="30">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="item">
+                                    <div class="service-item">
+                                        <div class="service-images">
+                                            <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+
+                                        </div>
+                                        <div class="service-description">
+                                            <h4>@list.Title</h4>
+                                            <p>@Html.Raw(list.Description)</p>
+                                            @if (isHomePage == true)
+                                            {
+                                                if (item.ShowInHome == true && item.DisableButton == false)
+                                                {
+
+
+                                                    @if (list.ButtonLink == "0")
+                                                    {
+                                                        <a href="#"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
+                                                    }
+                                                    else if (list.ButtonLink == "Direct")
+                                                    {
+                                                        <a href="@list.DirectUrl"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
+                                                    }
+                                                    else if (item.ButtonLink == "00")
+                                                    {
+                                                        <a asp-page="/Contact"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
+                                                    }
+
+
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "3")
+    {
+        <section class="grey-bg pattern feuture-bottom white-overlay @item.CustomClass" data-bg-img="@item.ImageUrl" data-overlay="3">
+            <div class="container">
+                <div class="row g-0 align-items-center">
+                    <div class="col-lg-6 col-md-6 pe-lg-5 md-px-2 text-center">
+                        <div class="section-title mb-md-0">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="featured-item bottom-icon">
+                            <div class="featured-title text-uppercase">
+                                <h5>@item.MiniTitle</h5>
+                            </div>
+                            <div class="featured-desc">
+                                <p>@item.Qoute</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-3 col-md-6">
+                            <div class="featured-item bottom-icon">
+                                <div class="featured-title text-uppercase">
+                                    <h5>@list.Title</h5>
+                                </div>
+                                <div class="featured-desc">
+                                    <p>@list.Description</p>
+                                </div>
+                                <div class="featured-icon">
+                                    <i class="flaticon-chat-bubble"></i>
+                                </div> <span><i class="@list.IconText"></i></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "4")
+    {
+        <section class="grey-bg @item.CustomClass">
+            <div class="container">
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="counter">
+                                <i class="@list.IconText"></i>
+                                <span class="count-number" data-to="150" data-speed="10000">@list.Title</span>
+                                <label>@list.MiniTitle</label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "5")
+    {
+        <section class="dark-bg parallaxie @item.CustomClass" data-bg-img="@item.ImageUrl" data-overlay="9">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-8 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="owl-carousel" data-items="1" data-autoplay="true">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="item">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-10">
+                                            <div class="testimonial position-relative">
+                                                <div class="d-md-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="testimonial-avatar">
+                                                            <div class="testimonial-img">
+                                                                <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-md-5 mt-5 mt-md-0">
+                                                        <div class="testimonial-content">
+                                                            <span><i class="@list.IconText"></i></span>
+                                                            <p>@list.Description</p>
+                                                            <div class="testimonial-caption">
+                                                                <h6> @list.Title</h6>
+                                                                <label>@list.MiniTitle</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "6")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-12">
+                            <div class="team-member text-center">
+                                <div class="team-images">
+                                    <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+
+                                </div>
+                                <div class="team-description">
+                                    <h5>
+                                        @if (list.ButtonLink == "0")
+                                        {
+                                            <a href="#">@list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "Direct")
+                                        {
+                                            <a href="@list.DirectUrl"> @list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "00")
+                                        {
+                                            <a asp-page="/Contact">@list.Title</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                        }
+                                    </h5>
+                                    <span>@list.MiniTitle</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "7")
+    {
+        <section>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.MiniTitle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-12">
+                            <div class="post">
+                                <div class="post-image">
+                                    <img src="@list.ImageUrl" alt="@list.Title">
+                                    <div class="post-date">@list.MiniTitle</div>
+                                </div>
+                                <div class="post-desc">
+                                    <div class="post-title">
+                                        <h5>
+                                            @if (list.ButtonLink == "0")
+                                            {
+                                                <a href="#">@list.Title</a>
+                                            }
+                                            else if (list.ButtonLink == "Direct")
+                                            {
+                                                <a href="@list.DirectUrl"> @list.Title</a>
+                                            }
+                                            else if (list.ButtonLink == "00")
+                                            {
+                                                <a asp-page="/Contact">@list.Title</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <p>@list.Description</p>
+                                </div>
+                                <div class="post-bottom">
+
+                                    @if (isHomePage == true)
+                                    {
+                                        if (item.ShowInHome == true && item.DisableButton == false)
+                                        {
+
+
+                                            @if (list.ButtonLink == "0")
+                                            {
+                                                <a href="#" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else if (list.ButtonLink == "Direct")
+                                            {
+                                                <a href="@list.DirectUrl" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else if (item.ButtonLink == "000")
+                                            {
+                                                <a asp-page="/Contact" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+
+
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "8")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.MiniTitle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-md-12">
+                        <div class="about-img">
+                            <img class="img-fluid w-100" src="@item.ImageUrl" alt="@item.Title">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-12 mt-5 mt-lg-0">
+                        <div class="row g-0">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="featured-item text-center">
+                                        <div class="featured-icon">
+                                            <i class="@list.IconText"></i>
+                                        </div>
+                                        <div class="featured-title text-uppercase">
+                                            <h5>@list.Title</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>@list.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "9")
+    {
+        <section class="text-center pb-0 @item.CustomClass">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-xs-items="1" data-margin="30">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="item">
+                                    <div class="service-item">
+                                        <div class="service-images">
+                                            <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+                                            <div class="service-icon">
+                                                <i class="@list.IconText"></i>
+                                            </div>
+                                        </div>
+                                        <div class="service-description">
+                                            <h4>@list.Title</h4>
+                                            <p>@list.Description</p>
+                                            @if (isHomePage == true)
+                                            {
+                                                if (item.ShowInHome == true && item.DisableButton == false)
+                                                {
+
+
+                                                    @if (list.ButtonLink == "0")
+                                                    {
+                                                        <a href="#">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (list.ButtonLink == "Direct")
+                                                    {
+                                                        <a href="@list.DirectUrl">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (item.ButtonLink == "000")
+                                                    {
+                                                        <a asp-page="/Contact">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")" class="rd_more">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                                    }
+
+
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "10")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="owl-carousel no-pb" data-items="1" data-dots="false" data-margin="30" data-autoplay="true">
+                            <div class="item">
+                                <div class="testimonial style-3 mx-3 my-3">
+                                    <div class="testimonial-avatar">
+                                        <div class="testimonial-img">
+                                            <img class="img-fluid" src="@item.ImageUrl" alt="@item.Title">
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-content">
+
+                                        <p>@item.Description</p>
+                                        <div class="testimonial-caption">
+                                            <h6>@item.Title</h6>
+                                            <label>@item.MiniTitle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-6 col-md-12 mt-5 mt-lg-0">
+                            <div class="accordion" id="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            @list.Title
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">@list.Description</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "11")
+    {
+        <section class="dark-bg py-5 @item.CustomClass" data-bg-img="@item.ImageUrl" data-overlay="8">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8 col-sm-12">
+                        <h2 class="text-white">@item.Title</h2>
+                    </div>
+                    @if (isHomePage == true)
+                    {
+                        if (item.ShowInHome == true && item.DisableButton == false)
+                        {
+                            <div class="col-md-4 col-sm-12 text-md-end mt-3 mt-md-0">
+
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="btn btn-theme"><span>@item.ButtonText</span></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="btn btn-theme"> <span>@item.ButtonText</span></a>
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="btn btn-theme"> <span>@item.ButtonText</span></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn btn-theme"><span>@item.ButtonText</span></a>
+                                }
+
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "12")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel" data-items="3" data-sm-items="2" data-autoplay="true">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="item">
+                                    <div class="team-member text-center">
+                                        <div class="team-images">
+                                            <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+
+                                        </div>
+                                        <div class="team-description">
+                                            <h5>
+                                                @if (list.ButtonLink == "0")
+                                                {
+                                                    <a href="#">@list.Title</a>
+                                                }
+                                                else if (list.ButtonLink == "Direct")
+                                                {
+                                                    <a href="@list.DirectUrl"> @list.Title</a>
+                                                }
+                                                else if (list.ButtonLink == "00")
+                                                {
+                                                    <a asp-page="/Contact">@list.Title</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                                }
+                                            </h5>
+                                            <span>@list.MiniTitle</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "13")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="service-box">
+                                <div class="service-flip theme-bg">
+                                    <div class="service-flip-images service-flip-front" style="background-image: url(@item.ImageUrl);">
+                                        <div class="service-flip-title">
+                                            <h5>@list.Title</h5>
+                                        </div>
+                                        <div class="flip-icon">
+                                            <i class="@list.IconText"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-flip-desc service-flip-back">
+                                        <div class="service-flip-text">
+                                            <i class="@list.IconText"></i>
+                                            <p>@list.Description</p>
+                                            @if (isHomePage == true)
+                                            {
+                                                if (item.ShowInHome == true && item.DisableButton == false)
+                                                {
+
+
+                                                    @if (list.ButtonLink == "0")
+                                                    {
+                                                        <a href="#" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (list.ButtonLink == "Direct")
+                                                    {
+                                                        <a href="@list.DirectUrl" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (item.ButtonLink == "000")
+                                                    {
+                                                        <a asp-page="/Contact" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+
+
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "14")
+    {
+        <section class="grey-bg @item.CustomClass">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p>@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="owl-carousel box-shadow owl-theme no-pb" data-dots="false" data-nav="true" data-items="1" data-autoplay="true">
+                            <div class="item">
+                                <img class="img-fluid w-100" src="@item.ImageUrl" alt="@item.Title">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 mt-5 mt-lg-0">
+                        @foreach (var list in item.PageSectionLists)
+                        {
+                            <div class="accordion" id="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            @list.MiniTitle
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">@list.Description</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "15")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-12">
+                            <div class="team-member text-center style-2">
+                                <div class="team-images">
+                                    <img class="img-fluid" src="@list.ImageUrl" alt="">
+                                </div>
+                                <div class="team-description">
+                                    <span>@list.MiniTitle</span>
+                                    <h5>
+                                        @if (list.ButtonLink == "0")
+                                        {
+                                            <a href="#">@list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "Direct")
+                                        {
+                                            <a href="@list.DirectUrl"> @list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "00")
+                                        {
+                                            <a asp-page="/Contact">@list.Title</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                        }
+                                    </h5>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "16")
+    {
+        <section class="dark-bg position-relative @item.CustomClass">
+            <div class="side-background side-image">
+                <div class="row">
+                    <div class="col-lg-6 img-side img-left" style="background: url(@item.ImageUrl) no-repeat left center; background-size: cover;"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 ms-auto ps-lg-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-title mb-4">
+                                    <h2 class="title">@item.Title</h2>
+                                </div>
+                                <p class="line-h-3 text-white">@item.Description</p>
+                                <div class="row text-white mt-5">
+                                    @foreach (var list in item.PageSectionLists)
+                                    {
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="featured-item p-0">
+                                                <div class="featured-icon">
+                                                    <i class="@list.IconText"></i>
+                                                </div>
+                                                <div class="featured-title text-uppercase">
+                                                    <h5>@list.Title</h5>
+                                                </div>
+                                                <div class="featured-desc">
+                                                    <p>@list.Description</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "17")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    @foreach (var list in item.PageSectionLists.Take(1))
+                    {
+                        <div class="col-lg-5">
+                            <div class="post style-2">
+                                <div class="post-image">
+                                    <img src="@list.ImageUrl" alt="@list.Title">
+
+                                </div>
+                                <div class="post-desc">
+
+                                    <div class="post-title">
+
+                                        <h5>
+                                            @if (list.ButtonLink == "0")
+                                            {
+                                                <a href="#">@list.Title</a>
+                                            }
+                                            else if (list.ButtonLink == "Direct")
+                                            {
+                                                <a href="@list.DirectUrl"> @list.Title</a>
+                                            }
+                                            else if (list.ButtonLink == "00")
+                                            {
+                                                <a asp-page="/Contact">@list.Title</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <p>@list.Description</p>
+                                    @if (isHomePage == true)
+                                    {
+                                        if (item.ShowInHome == true && item.DisableButton == false)
+                                        {
+
+
+                                            @if (list.ButtonLink == "0")
+                                            {
+                                                <a href="#" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else if (list.ButtonLink == "Direct")
+                                            {
+                                                <a href="@list.DirectUrl" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else if (item.ButtonLink == "000")
+                                            {
+                                                <a asp-page="/Contact" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                            }
+
+
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @foreach (var list in item.PageSectionLists.Skip(1).Take(2))
+                    {
+                        <div class="col-lg-7 mt-5 mt-lg-0">
+                            <div class="post style-2">
+                                <div class="row g-0">
+                                    <div class="col-md-6">
+                                        <div class="post-image">
+                                            <img class="h-100" src="@list.ImageUrl" alt="">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-center white-bg">
+                                        <div>
+                                            <div class="post-desc">
+
+                                                <div class="post-title">
+                                                    <h5>
+                                                        @if (list.ButtonLink == "0")
+                                                        {
+                                                            <a href="#">@list.Title</a>
+                                                        }
+                                                        else if (list.ButtonLink == "Direct")
+                                                        {
+                                                            <a href="@list.DirectUrl"> @list.Title</a>
+                                                        }
+                                                        else if (list.ButtonLink == "00")
+                                                        {
+                                                            <a asp-page="/Contact">@list.Title</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                                        }
+                                                    </h5>
+                                                </div>
+                                                <p>@list.Description</p>
+                                                @if (isHomePage == true)
+                                                {
+                                                    if (item.ShowInHome == true && item.DisableButton == false)
+                                                    {
+
+
+                                                        @if (list.ButtonLink == "0")
+                                                        {
+                                                            <a href="#" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                        }
+                                                        else if (list.ButtonLink == "Direct")
+                                                        {
+                                                            <a href="@list.DirectUrl" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                        }
+                                                        else if (item.ButtonLink == "000")
+                                                        {
+                                                            <a asp-page="/Contact" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">@list.ButtonText<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                        }
+
+
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "18")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-md-8 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-12">
+                            <div class="testimonial style-2">
+                                <div class="testimonial-avatar">
+                                    <div class="testimonial-img">
+                                        <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+                                    </div>
+                                </div>
+                                <div class="testimonial-content">
+
+                                    <p>@list.Description</p>
+                                    <div class="testimonial-caption">
+                                        <h6>@list.Title</h6>
+                                        <label>@list.MiniTitle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "19")
+    {
+        <section class="dark-bg position-relative">
+            <div class="side-background side-image">
+                <div class="row">
+                    <div class="col-lg-6 img-side img-left" style="background: url(@item.ImageUrl) no-repeat left center; background-size: cover;"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 ms-auto ps-lg-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-title mb-4">
+                                    <h2 class="title">@item.Title</h2>
+                                </div>
+                                <p class="line-h-3 text-white">@item.Description</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var list in item.PageSectionLists)
+                                        {
+                                            <div class="ht-progress-bar">
+                                                <h4>@list.Title</h4>
+                                                <div class="progress" data-value="88">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated">
+                                                        <div class="progress-parcent">@list.MiniTitle</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="dark-bg position-relative">
+            <div class="side-background side-image">
+                <div class="row">
+                    <div class="col-lg-6 img-side img-left" style="background: url(@item.ImageUrl) no-repeat left center; background-size: cover;"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 ms-auto ps-lg-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-title mb-4">
+                                    <h2 class="title">@item.Title></h2>
+                                </div>
+                                <p class="line-h-3 text-white">@item.Description</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach (var list in item.PageSectionLists)
+                                        {
+                                            <div class="ht-progress-bar">
+                                                <h4>Contracting</h4>
+                                                <div class="progress" data-value="88">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated">
+                                                        <div class="progress-parcent">@list.Title</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+
+    else if (item.TemplateKey == "20")
+    {
+        <section class="overflow-hidden @item.CustomClass">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid p-0">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="owl-carousel popup-gallery no-pb" data-items="4" data-md-items="3" data-sm-items="2" data-dots="false" data-nav="true" data-autoplay="true">
+                            @foreach (var list in item.PageSectionLists.Where(x => x.Disable != true))
+                            {
+                                <div class="item">
+                                    <div class="portfolio-item">
+                                        <img src="@list.ImageUrl" alt="@item.Title">
+                                        <div class="portfolio-hover">
+                                            <div class="portfolio-title">
+                                                <span>@list.MiniTitle</span>
+                                                <h4>@list.Title</h4>
+                                                <p>@list.Description</p>
+                                            </div>
+                                            <div class="portfolio-icon">
+                                                @if (list.ButtonLink == "0")
+                                                {
+                                                    <a class="popup portfolio-link" target="_blank" href="#">Read More </a>
+                                                }
+                                                else if (list.ButtonLink == "Direct")
+                                                {
+                                                    <a class="popup portfolio-link" target="_blank" href="@list.DirectUrl">Read More</a>
+                                                }
+                                                else if (list.ButtonLink == "00")
+                                                {
+                                                    <a class="popup portfolio-link" target="_blank" asp-page="/Contact">Read More</a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="popup portfolio-link" target="_blank" asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">Read More</a>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "21")
+    {
+        <section class="dark-bg @item.CustomClass">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p class="mb-0 text-white">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-12">
+                            <div class="team-member style-3">
+                                <div class="team-images">
+                                    <img class="img-fluid" src="@list.ImageUrl" alt="@list.Title">
+                                </div>
+                                <div class="team-description">
+                                    <span>@list.MiniTitle</span>
+                                    <h5>
+                                        @if (list.ButtonLink == "0")
+                                        {
+                                            <a href="#">@list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "Direct")
+                                        {
+                                            <a href="@list.DirectUrl"> @list.Title</a>
+                                        }
+                                        else if (list.ButtonLink == "00")
+                                        {
+                                            <a asp-page="/Contact">@list.Title</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                        }
+                                    </h5>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (item.TemplateKey == "22")
+    {
+        <section>
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="owl-carousel no-pb" data-items="1" data-dots="false" data-nav="true">
+                            @foreach (var list in item.PageSectionLists)
+                            {<div class="item">
+                                    <img class="img-fluid w-100" src="@list.ImageUrl" alt="@list.Title">
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 mt-3 mt-lg-0">
+                        <h2 class="title">@item.Title</h2>
+                        <p class="lead text-black">@item.Description</p>
+                        @if (isHomePage == true)
+                        {
+                            if (item.ShowInHome == true && item.DisableButton == false)
+                            {
+
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2""fas fa-chevron-right"></i> </a>
+
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class="fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (item.TemplateKey == "23")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-12">
+                        <img class="img-fluid rounded w-75" src="@item.ImageUrl" alt="@item.Title">
+                        <div class="theme-bg rounded p-4 mt-n5 z-index-1 w-75 ms-auto">
+                            <div class="section-title mb-0">
+                                <h2 class="mb-0 font-w-5 text-white">@item.Qoute</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-12 mt-5 mt-lg-0">
+                        <div class="section-title">
+                            <h6>@item.MiniTitle</h6>
+                            <h2 class="title-2">@item.Title</h2>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                        <div class="row g-0">
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="featured-item left-icon">
+                                        <div class="featured-icon">
+                                            <i class="@list.IconText"></i>
+                                        </div>
+                                        <div class="featured-title text-uppercase">
+                                            <h5>@list.Title</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>@list.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (item.TemplateKey == "24")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-md-12">
+                        <div class="team-single">
+                            <div class="team-images">
+                                <img class="img-fluid w-100" src="@item.ImageUrl" alt="@item.Title">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-12 mt-3 mt-lg-0">
+                        <div class="team-description">
+                            <h6 class="text-theme text-uppercase">@item.MiniTitle</h6>
+                            <h2 class="title z-index-1 mb-4">@item.Title</h2>
+                            <p class="lead">@item.Description</p>
+                            @foreach (var list in item.PageSectionLists)
+                            {
+                                <div class="ht-progress-bar style-2">
+                                    <h4>@list.Title</h4>
+                                    <div class="progress" data-value="88">
+                                        <div class="progress-bar">
+                                            <div class="progress-parcent">@list.MiniTitle</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (item.TemplateKey == "25")
+    {
+        <section class="grey-bg py-5 @item.CustomClass">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8 col-sm-12">
+                        <h3 class="text-black">@item.Title</h3>
+                    </div>
+                    @if (isHomePage == true)
+                    {
+                        if (item.ShowInHome == true && item.DisableButton == false)
+                        {
+                            <div class="col-md-4 col-sm-12 text-md-end mt-3 mt-md-0">
+
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="btn btn-theme"><span>@item.ButtonText</span></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="btn btn-theme"> <span>@item.ButtonText</span></a>
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="btn btn-theme"> <span>@item.ButtonText</span></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn btn-theme"><span>@item.ButtonText</span></a>
+                                }
+
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </section>
+    }
+
+    else if (item.TemplateKey == "26")
+    {
+        <section class="pt-0 @item.CustomClass">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="theme-bg px-3 py-5 text-white">
+                            <div class="row">
+                                @foreach (var list in item.PageSectionLists)
+                                {
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="counter style-4">
+                                            <span class="count-number" data-to="150" data-speed="10000">@list.Title</span>
+                                            <label>@list.MiniTitle</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    }
+    else if (item.TemplateKey == "27")
+    {
+        <section class="feuture-main @item.CustomClass">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h3>@item.MiniTitle</h3>
+                            <h1 class="title"> @item.Title</h1>
+                            <p class="mb-0">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row g-0">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="featured-item text-center">
+                                <div class="featured-icon">
+                                    <i class="@list.IconText"></i>
+                                </div>
+                                <div class="featured-title text-uppercase">
+                                    <h5>@list.Title</h5>
+                                </div>
+                                @if (!String.IsNullOrEmpty(list.MiniTitle))
+                                {
+                                    <div class="feature-md">
+                                        <h5>@list.MiniTitle</h5>
+                                    </div>
+                                }
+                                <div class="featured-desc">
+                                    <p class="mb-3">@list.Description</p>
+                                    @if (isHomePage == true)
+                                    {
+                                        if (item.ShowInHome == true && item.DisableButton == false)
+                                        {
+
+
+                                            @if (list.ButtonLink == "0")
+                                            {
+                                                <a href="#" class="">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                            }
+                                            else if (list.ButtonLink == "Direct")
+                                            {
+                                                <a href="@list.DirectUrl">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                            }
+                                            else if (item.ButtonLink == "000")
+                                            {
+                                                <a asp-page="/Contact">@list.ButtonText<i class="fas fa-arrow-right"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")">@list.ButtonText<i class=" fas fa-arrow-right"></i></a>
+                                            }
+
+
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "28")
+    {
+        <section>
+            <div class="container @item.CustomClass">
+                <div class="row text-center">
+                    <div class="col-lg-12 mx-auto">
+                        <div class="section-title">
+                            <h2 class="title">@item.Title</h2>
+                            <p>@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var list in item.PageSectionLists)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="service-box">
+                                <div class="service-flip theme-bg">
+                                    <div class="service-flip-images service-flip-front" style="background-image: url(@list.ImageUrl);">
+                                        <div class="service-flip-title">
+                                            <h5>@list.Title</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="service-flip-desc service-flip-back">
+                                        <div class="service-flip-text">
+
+                                            <p>@list.Description</p>
+                                            @if (isHomePage == true)
+                                            {
+                                                if (item.ShowInHome == true && item.DisableButton == false)
+                                                {
+
+
+                                                    @if (list.ButtonLink == "0")
+                                                    {
+                                                        <a href="#" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (list.ButtonLink == "Direct")
+                                                    {
+                                                        <a href="@list.DirectUrl" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else if (item.ButtonLink == "000")
+                                                    {
+                                                        <a asp-page="/Contact" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn-simple">@list.ButtonText <i class="fas fa-arrow-right"></i></a>
+                                                    }
+
+
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "29")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-12 col-md-12 mt-3 mt-lg-0">
+                        <h2 class="title">@item.Title</h2>
+                        <div class="lead text-black">@Html.Raw(item.FullDescription)</div>
+                        @if (isHomePage == true)
+                        {
+                            if (item.ShowInHome == true && item.DisableButton == false)
+                            {
+
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2""fas fa-chevron-right"></i> </a>
+
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class="fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "30")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-12 col-md-12 mt-3 mt-lg-0">
+                        <h2 class="title">@item.Title</h2>
+                        <div class="lead text-black">@Html.Raw(item.FullDescription)</div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "31")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-6 col-md-12">
+                        <img class="img-fluid w-100" src="@item.ImageUrl" alt="@item.Title">
+
+                    </div>
+                    <div class="col-lg-6 col-md-12 mt-3 mt-lg-0">
+                        <h2 class="title">@item.Title</h2>
+                        <p class="lead text-black">@item.Description</p>
+                        @if (isHomePage == true)
+                        {
+                            if (item.ShowInHome == true && item.DisableButton == false)
+                            {
+
+                                @if (item.ButtonLink == "0")
+                                {
+                                    <a href="#" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else if (item.ButtonLink == "Direct")
+                                {
+                                    <a href="@item.DirectUrl" class="btn btn-sm btn-simple mt-2">@item.ButtonText<i class=fas fa-long-arrow-alt-right ms-2""fas fa-chevron-right"></i> </a>
+
+                                }
+                                else if (item.ButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class=fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="btn btn-sm btn-simple mt-2">@item.ButtonText <i class="fas fa-long-arrow-alt-right ms-2"></i></a>
+                                }
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "32")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <h2 class="title">@item.Title</h2>
+                <p class="lead text-black">@item.Description</p>
+                <div class="row align-items-center">
+
+
+                    <div class="col-lg-6 col-md-12 mt-3 mt-lg-0">
+                        @foreach (var list in item.PageSectionLists)
+                        {
+                            <div class="row align-items-center">
+                                <div class="col-md-8 col-sm-12">
+                                    <h3 class="text-black">@list.Title</h3>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 text-md-end mt-3 mt-md-0">
+
+
+                                    <a href="@list.ImageUrl" download="@list.Title" class="btn btn-theme"> <span>@list.ButtonText</span></a>
+
+
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "33")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <h2 class="title">@item.Title</h2>
+                <p class="lead text-black">@item.Description</p>
+                <div class="row align-items-center">
+
+
+                    <div class="col-lg-12 col-md-12 mt-3 mt-lg-0">
+                        @foreach (var list in item.PageSectionLists)
+                        {
+                            <div class="row align-items-center">
+                                <div class="col-md-8 col-sm-12">
+                                    <h3 class="text-black">@list.Title</h3>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 text-md-end mt-3 mt-md-0">
+
+
+                                    <a href="@list.ImageUrl" download="@list.Title" class="btn btn-theme"> <span>@list.ButtonText</span></a>
+
+
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "34")
+    {
+        <section class="@item.CustomClass">
+            <div class="container">
+                <h2 class="title">@item.Title</h2>
+                <p class="lead text-black">@item.Description</p>
+                <div class="row align-items-center">
+
+                    <div class="col-lg-6 col-md-12">
+                        <img class="img-fluid w-100" src="@item.ImageUrl" alt="@item.Title">
+
+                    </div>
+                    <div class="col-lg-6 col-md-12 mt-3 mt-lg-0">
+                        @foreach (var list in item.PageSectionLists)
+                        {
+                            <div class="row align-items-center">
+                                <div class="col-md-8 col-sm-12">
+                                    <h3 class="text-black">@list.Title</h3>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 text-md-end mt-3 mt-md-0">
+
+
+                                    <a href="@list.ImageUrl" download="@list.Title" class="btn btn-theme"> <span>@list.ButtonText</span></a>
+
+
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "35")
+    {
+
+
+        <section class="@item.CustomClass">
+
+            <div class="container">
+                <h2 class="title">@item.Title</h2>
+                <p class="lead text-black">@item.Description</p>
+
+                @foreach (var list in item.PageSectionLists)
+                {
+                    <div class="itemdownload">
+                        <i class="@list.IconText"></i>
+                        <div class="filename dwn-filename-p">
+                            <p>@list.Title</p>
+
+                        </div>
+
+
+                        @if (list.ButtonLink == "0")
+                        {
+                            <a href="@list.ImageUrl" class="btn btn-sm btn-simple mt-2">@list.ButtonText </a>
+                        }
+                        else if (list.ButtonLink == "Direct")
+                        {
+                            <a href="@list.DirectUrl" class="btn btn-sm btn-simple mt-2">@list.ButtonText </a>
+
+                        }
+                        else if (list.ButtonLink == "00")
+                        {
+                            <a asp-page="/Contact" class="btn btn-sm btn-simple mt-2">@list.ButtonText  </a>
+                        }
+                        else
+                        {
+                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")" class="btn btn-sm btn-simple mt-2">@list.ButtonText  </a>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+    }
+    else if (item.TemplateKey == "36")
     {
         <div class="section-full mobile-page-padding p-t100 p-b70 bg-white @item.CustomClass">
             <div class="container">
@@ -357,7 +2098,7 @@
                                         <div class="owl-stage" style="">
                                             @foreach (var list in item.PageSectionLists)
                                             {
-                                                <div class="owl-item" style="width: 337.2px; margin-right: 30px;">
+                                                <div class="owl-item">
                                                     <div class="col-one fadingcol item overflow-hide">
                                                         <div class="box-animation-one">
                                                             <img alt="" src="@list.ImageUrl">
@@ -498,9 +2239,54 @@
         </div>
 
     }
+    else if (item.TemplateKey == "40")
+    {
+
+        <section class="@item.CustomClass">
+            <div class="container">
+                <div class="prg-amt">
+
+
+                    <h2 class="title">@item.Title</h2>
+                    <p class="lead text-black">@item.Description</p>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="road-map-main">
+                                    @foreach (var list in item.PageSectionLists)
+                                    {
+                                        <div class="road-map-wrapper">
+                                            <div class="road-map-circle">
+                                                <span class="road-map-circle-text d-flex align-items-center justify-content-center">@list.ButtonText</span>
+                                            </div>
+                                            <div class="road-map-card">
+                                                <h4 class="card-head">@list.Title</h4>
+                                                <p class="card-text">
+                                                    @list.Description
+                                                </p>
+                                            </div>
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <link href="~/customcss/progress.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        </section>
+
+
+    }
 
 
 }
+
 @section Scripts {
 
 

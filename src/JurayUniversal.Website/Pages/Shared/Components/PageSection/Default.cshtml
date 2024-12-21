@@ -9436,7 +9436,7 @@ else if (ViewBag.themedata == "Layout8888")
                                             </div>
                                             <div class="service-description">
                                                 <h4>@list.Title</h4>
-                                                <p>@list.Description</p>
+                                                <p>@Html.Raw(list.Description)</p>
                                                 @if (isHomePage == true)
                                                 {
                                                     if (item.ShowInHome == true && item.DisableButton == false)
@@ -10760,6 +10760,11 @@ else if (ViewBag.themedata == "Layout8888")
                                     <div class="featured-title text-uppercase">
                                         <h5>@list.Title</h5>
                                     </div>
+                                    @if(!String.IsNullOrEmpty(list.MiniTitle)){
+                                    <div class="feature-md">
+                                        <h5>@list.MiniTitle</h5>
+                                    </div>
+                                    }
                                     <div class="featured-desc">
                                         <p class="mb-3">@list.Description</p>
                                         @if (isHomePage == true)
