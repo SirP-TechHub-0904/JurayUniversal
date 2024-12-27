@@ -1724,7 +1724,7 @@
                 <h2 class="title">@item.Title</h2>
                 <p class="lead text-black">@item.Description</p>
 
-                @foreach (var list in item.PageSectionLists)
+                @foreach (var list in item.PageSectionLists.OrderBy(x=>x.SortOrder))
                 {
                     <div class="itemdownload">
                         <i class="@list.IconText"></i>
