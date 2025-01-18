@@ -88,149 +88,151 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             string smtpUsername = "";
             string smtpPassword = "";
             var settingconfig = await _context.DataConfigs.FirstOrDefaultAsync();
+
+            PostmarkResponse response = new PostmarkResponse();
+            var message = new PostmarkMessage
+            {
+                From = "NIPSS <admin@nipssportal.com.ng>",
+                To = to,
+                Subject = subject,
+                HtmlBody = emailTemplate
+            };
+
             try
             {
-                if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
+                response = await _postmarkClient.SendMessageAsync(message);
+
+                
+                Console.WriteLine("Email sent successfully. Message ID: " + response.MessageID);
+                if(response.Status == PostmarkStatus.Success)
                 {
-                    smtpServer = settingconfig.OutlookServer;
-                    smtpPort = settingconfig.OutlookPort;
-                    smtpUsername = settingconfig.OutlookUsername;
-                    smtpPassword = settingconfig.OutlookSecurity;
-                }
-                else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
-                {
-                    smtpServer = settingconfig.GoogleServer;
-                    smtpPort = settingconfig.GooglePort;
-                    smtpUsername = settingconfig.GoogleUsername;
-                    smtpPassword = settingconfig.GoogleSecurity;
-                }
-                else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
-                {
-                    smtpServer = settingconfig.WebmailServer;
-                    smtpPort = settingconfig.WebmailPort;
-                    smtpUsername = settingconfig.WebmailUsername;
-                    smtpPassword = settingconfig.WebmailSecurity;
-                }
-
-
-                using (SmtpClient client = new SmtpClient(smtpServer, smtpPort))
-                {
-
-                    client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                    if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
-                    {
-                        client.EnableSsl = settingconfig.OutlookSSLEnable;
-                        client.UseDefaultCredentials = settingconfig.OutlookUseDefaultCredentials;
-
-                    }
-                    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
-                    {
-                        client.EnableSsl = settingconfig.GoogleSSLEnable;
-                        client.UseDefaultCredentials = settingconfig.GoogleUseDefaultCredentials;
-
-                    }
-                    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
-                    {
-                        client.EnableSsl = settingconfig.WebmailSSLEnable;
-                        client.UseDefaultCredentials = settingconfig.WebmailUseDefaultCredentials;
-                    }
-
-                    MailMessage message = new MailMessage();
-                    if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
-                    {
-                        message.From = new MailAddress(settingconfig.OutlookSenderEmail, settingconfig.DisplayName);
-                    }
-                    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
-                    {
-
-                        message.From = new MailAddress(settingconfig.GoogleSenderEmail, settingconfig.DisplayName);
-                    }
-                    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
-                    {
-                        message.From = new MailAddress(settingconfig.WebmailSenderEmail, settingconfig.DisplayName);
-                    }
-                    message.To.Add(new MailAddress(to));
-
-                    try
-                    {
-                        if (cc != null)
-                        {
-                            //cc emails
-                            string[] ccEmails = cc.Split(',');
-
-                            // Add CC recipients
-                            foreach (var ccEmail in ccEmails)
-                            {
-                                message.CC.Add(ccEmail.Trim());
-                            }
-                        }
-                    }
-                    catch (Exception c)
-                    {
-                        _logger.Log($" cc emails {settings.CompanyName} -  {c.ToString()}");
-                    }
-
-                    try
-                    {
-                        //bb emails
-                        if (bcc != null)
-                        {
-                            string[] bccEmails = bcc.Split(',');
-
-                            // Add CC recipients
-                            foreach (var bccEmail in bccEmails)
-                            {
-                                message.Bcc.Add(bccEmail.Trim());
-                            }
-                        }
-                    }
-                    catch (Exception c)
-                    {
-                        _logger.Log($" cc emails {settings.CompanyName} -  {c.ToString()}");
-                    }
-
-                    message.Subject = subject;
-                    message.Body = emailTemplate;
-                    message.IsBodyHtml = true;
-
-                    client.Send(message);
                     return true;
                 }
-
+                return true;
             }
-            catch (Exception c)
+            catch (Exception ex)
             {
-
-                _logger.Log($" {settings.CompanyName} -  {c.ToString()}");
-                return false;
+                Console.WriteLine("Error sending email: " + ex.Message);
+                return true;
             }
-
-
-            //using (var message = new MailMessage())
+            //try
             //{
-            //    message.To.Add(new MailAddress("cto@juray.ng", "receipient name"));
-            //    message.From = new MailAddress("noreply@juray.ng", "your name");
-            //    message.Subject = "My subject";
-            //    message.Body = "My message";
-            //    message.IsBodyHtml = false; // change to true if body msg is in html
-
-            //    using (var client = new SmtpClient("smtp.office365.com"))
+            //    if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
             //    {
-            //        client.UseDefaultCredentials = false;
-            //        client.Port = 587;
-            //        client.Credentials = new NetworkCredential("noreply@juray.ng", "Nation@123");
-            //        client.EnableSsl = true;
+            //        smtpServer = settingconfig.OutlookServer;
+            //        smtpPort = settingconfig.OutlookPort;
+            //        smtpUsername = settingconfig.OutlookUsername;
+            //        smtpPassword = settingconfig.OutlookSecurity;
+            //    }
+            //    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
+            //    {
+            //        smtpServer = settingconfig.GoogleServer;
+            //        smtpPort = settingconfig.GooglePort;
+            //        smtpUsername = settingconfig.GoogleUsername;
+            //        smtpPassword = settingconfig.GoogleSecurity;
+            //    }
+            //    else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
+            //    {
+            //        smtpServer = settingconfig.WebmailServer;
+            //        smtpPort = settingconfig.WebmailPort;
+            //        smtpUsername = settingconfig.WebmailUsername;
+            //        smtpPassword = settingconfig.WebmailSecurity;
+            //    }
+
+
+            //    using (SmtpClient client = new SmtpClient(smtpServer, smtpPort))
+            //    {
+
+            //        client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+            //        if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
+            //        {
+            //            client.EnableSsl = settingconfig.OutlookSSLEnable;
+            //            client.UseDefaultCredentials = settingconfig.OutlookUseDefaultCredentials;
+
+            //        }
+            //        else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
+            //        {
+            //            client.EnableSsl = settingconfig.GoogleSSLEnable;
+            //            client.UseDefaultCredentials = settingconfig.GoogleUseDefaultCredentials;
+
+            //        }
+            //        else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
+            //        {
+            //            client.EnableSsl = settingconfig.WebmailSSLEnable;
+            //            client.UseDefaultCredentials = settingconfig.WebmailUseDefaultCredentials;
+            //        }
+
+            //        MailMessage message = new MailMessage();
+            //        if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Outlook)
+            //        {
+            //            message.From = new MailAddress(settingconfig.OutlookSenderEmail, settingconfig.DisplayName);
+            //        }
+            //        else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Google)
+            //        {
+
+            //            message.From = new MailAddress(settingconfig.GoogleSenderEmail, settingconfig.DisplayName);
+            //        }
+            //        else if (settingconfig.MailSender == Domain.Enum.Enum.MailSender.Webmail)
+            //        {
+            //            message.From = new MailAddress(settingconfig.WebmailSenderEmail, settingconfig.DisplayName);
+            //        }
+            //        message.To.Add(new MailAddress(to));
 
             //        try
             //        {
-            //            await client.SendMailAsync(message); // Email sent
+            //            if (cc != null)
+            //            {
+            //                //cc emails
+            //                string[] ccEmails = cc.Split(',');
+
+            //                // Add CC recipients
+            //                foreach (var ccEmail in ccEmails)
+            //                {
+            //                    message.CC.Add(ccEmail.Trim());
+            //                }
+            //            }
             //        }
-            //        catch (Exception e)
+            //        catch (Exception c)
             //        {
-            //            // Email not sent, log exception
+            //            _logger.Log($" cc emails {settings.CompanyName} -  {c.ToString()}");
             //        }
+
+            //        try
+            //        {
+            //            //bb emails
+            //            if (bcc != null)
+            //            {
+            //                string[] bccEmails = bcc.Split(',');
+
+            //                // Add CC recipients
+            //                foreach (var bccEmail in bccEmails)
+            //                {
+            //                    message.Bcc.Add(bccEmail.Trim());
+            //                }
+            //            }
+            //        }
+            //        catch (Exception c)
+            //        {
+            //            _logger.Log($" cc emails {settings.CompanyName} -  {c.ToString()}");
+            //        }
+
+            //        message.Subject = subject;
+            //        message.Body = emailTemplate;
+            //        message.IsBodyHtml = true;
+
+            //        client.Send(message);
+            //        return true;
             //    }
+
             //}
+            //catch (Exception c)
+            //{
+
+            //    _logger.Log($" {settings.CompanyName} -  {c.ToString()}");
+            //    return false;
+            //}
+
+
 
         }
 
