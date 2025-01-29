@@ -43,41 +43,50 @@
         </div>
     </div>
 </div>
-@if (Model.UserAccomodation == null)
+
+@if (Model.ParticipantList.RemitaApproved == false)
 {
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="card-title">CHOOSE ANY OF THE ACCOMODATION</h6>
+                    <h6 class="card-title">@Model.Setting.RemitaTitle</h6>
+
+
+                </div>
+                <div class="card-body">
+                    <div>
+                        @Html.Raw(Model.Setting.RemitaInstruction)
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="daiv" style="margin-bottom:20px;">
                                 <div class="row">
-                                    @foreach (var item in Model.Accomodation)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="card" style="height:150px;">
-                                                <form method="post">
-                                                    <input type="hidden" name="id" value="@item.Id" />
-                                                    <input type="hidden" name="userId" value="@Model.UserDatas.Id" />
-                                                    <input type="hidden" asp-for="ParticipantId" />
-                                                    <div class="">
 
-                                                        <div class="card-header">
-                                                            <h4 class="text-center">@item.Name</h4> 
-                                                        </div>
-                                                        <div class="card-footer" style="padding:20px;">
-                                                            <input type="submit" class="btn btn-primary" value="Select Accomodation" style="width:100%;"/>
-                                                        </div>
+                                    <div class="col-md-12">
+                                        <div class="card" style="height:150px;">
+                                            <div class="">
+
+                                                <div class="card-footer" style="padding:20px;">
+                                                    <div class="form-group">
+                                                        <input type="file" id="remitaFile" />
                                                     </div>
 
-                                                </form>
+                                                    <div class="form-group">
+                                                        <button id="uploadButton" class="btn btn-primary" style="width:100%;">
+                                                            @Model.Setting.RemitaButton
+                                                        </button>
+                                                        <div id="uploadStatus" class="mt-2"></div>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    }
+                                    </div>
+
+
 
 
 
@@ -94,49 +103,177 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">My Accomodation</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="daiv" style="margin-bottom:20px;">
-                                <div class="row">
+    if (Model.UserAccomodation == null)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">CHOOSE ANY OF THE ACCOMODATION</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="daiv" style="margin-bottom:20px;">
+                                    <div class="row">
+                                        @foreach (var item in Model.Accomodation)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="card" style="height:150px;">
+                                                    <form method="post" asp-page-handler="AccomodationPost">
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                        <input type="hidden" name="userId" value="@Model.UserDatas.Id" />
+                                                        <input type="hidden" asp-for="ParticipantId" />
+                                                        <div class="">
 
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3>@Model.UserAccomodation.Name</h3> 
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    If you have encountered any faults, damages, or issues with your accommodation, please do not hesitate to let us know. Your feedback is invaluable in ensuring a satisfactory experience for all our participants.
-                                                </p>
-                                                <h6>
-                                                    To submit a complaint or report any concerns, kindly click on the button below:
-                                                </h6>
-                                                <a asp-page="/MaintainancePage/Index" asp-area="NIPSS" class="btn btn-primary">Submit a Complaint</a>
-                                                <p>
-                                                    Your input helps us address any issues promptly and enhance the quality of our services. We appreciate your cooperation and strive to make your stay as comfortable as possible. Thank you for keeping up.
+                                                            <div class="card-header">
+                                                                <h4 class="text-center">@item.Name</h4>
+                                                            </div>
+                                                            <div class="card-footer" style="padding:20px;">
+                                                                <input type="submit" class="btn btn-primary" value="Select Accomodation" style="width:100%;" />
+                                                            </div>
+                                                        </div>
 
-                                                </p>
-                                               
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+
+
+
                                     </div>
-
-
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">My Accomodation</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="daiv" style="margin-bottom:20px;">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3>@Model.UserAccomodation.Name</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>
+                                                        If you have encountered any faults, damages, or issues with your accommodation, please do not hesitate to let us know. Your feedback is invaluable in ensuring a satisfactory experience for all our participants.
+                                                    </p>
+                                                    <h6>
+                                                        To submit a complaint or report any concerns, kindly click on the button below:
+                                                    </h6>
+                                                    <a asp-page="/MaintainancePage/Index" asp-area="NIPSS" class="btn btn-primary">Submit a Complaint</a>
+                                                    <p>
+                                                        Your input helps us address any issues promptly and enhance the quality of our services. We appreciate your cooperation and strive to make your stay as comfortable as possible. Thank you for keeping up.
+
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+
+    @*<script>
+
+            $(document).ready(function () {
+                $("#xcourse").change(function () {
+                    console.log("check in");
+                    var courseId = $(this).val();
+                    console.log("check ID");
+                    console.log(courseId);
+                    $.ajax({
+                        type: "GET",
+                        url: "/NIPSSADMIN/Users/Course?handler=CourseInformation",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: { courseId: courseId },
+
+                        success: function (data) {
+                            $("#courseInformation").empty();
+                            $("#courseInformation").append(data);
+                            console.log(data);
+                        }
+
+                    });
+
+
+                    console.log("check out");
+                    console.log(courseId);
+                });
+            });
+
+        </script>*@
+
+    <script>
+    $(document).ready(function () {
+        $("#uploadButton").on('click', function () {
+            const fileInput = $('#remitaFile');
+            const uploadStatus = $('#uploadStatus');
+
+            // Check if fileInput exists and has a file
+            if (fileInput.length === 0 || fileInput[0].files.length === 0) {
+                uploadStatus.html('<span class="text-danger">Please select a file to upload.</span>');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('RemitaFile', fileInput[0].files[0]);
+            formData.append('xParticipantId', '@Model.ParticipantId'); // Pass the ParticipantId to the server
+
+            const url = '@Url.Page("/Account/Accomodation", new { area = "NIPSS", handler = "UploadFile" })';
+
+            $.ajax({
+                type: 'POST',
+                url: '/NIPSS/Account/Accomodation?handler=UploadFile',
+                data: formData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        uploadStatus.html('<span class="text-success">File uploaded successfully.</span>');
+                    } else {
+                        uploadStatus.html(`<span class="text-danger">${result.message}</span>`);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error uploading file:', error);
+                    uploadStatus.html('<span class="text-danger">An error occurred during upload. Please try again.</span>');
+                }
+            });
+        });
+    });
+    </script>
+
+
 }

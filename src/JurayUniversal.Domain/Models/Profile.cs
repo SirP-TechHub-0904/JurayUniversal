@@ -242,6 +242,7 @@ namespace JurayUniversal.Domain.Models
         public string? TempPass { get; set; }
 
         public bool HasAccomodation { get; set; }
+        public string? LastAccomodation { get; set; }
 
         public AccomodationUpdateStatus AccomodationUpdateStatus { get; set; }
 

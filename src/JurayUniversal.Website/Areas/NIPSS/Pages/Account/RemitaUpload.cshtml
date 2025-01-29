@@ -1,0 +1,22 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSS.Pages.Account.RemitaUploadModel
+@{
+    Layout = null;
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="ParticipantId" />
+    <div class="">
+
+        <div class="card-footer" style="padding:20px;">
+            <div class="form-group">
+                <input type="file" asp-for="RemitaFile" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="@Model.Setting.RemitaButton" style="width:100%;" />
+            </div>
+        </div>
+    </div>
+
+</form>
