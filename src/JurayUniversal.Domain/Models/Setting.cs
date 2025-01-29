@@ -252,5 +252,10 @@ namespace JurayUniversal.Domain.Models
         [Display(Name = "Ribon Position")]
 
         public RibonPosition RibonPosition { get; set; }
+
+
+        public string? RemitaTitle { get;set;}
+        public string? RemitaInstruction { get;set; }
+        public string? RemitaButton { get;set; }
     }
 }

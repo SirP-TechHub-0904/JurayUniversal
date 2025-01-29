@@ -29,11 +29,16 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Dashboard
         public int DirectingStaff { get; set; }
         public int ManagingStaff { get; set; }
         public int Staff { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(long id = 0)
         {
 
             
-            var list = _context.ParticipantLists.Include(x => x.User).Where(x=> x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active).AsEnumerable();
+            var list = _context.ParticipantLists
+                .Include(x => x.Course)
+                .Include(x => x.User)
+                .Where(x=>x.Course.CourseStatus == Domain.Enum.Enum.CourseStatus.Active)
+
+                .Where(x=> x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active).AsEnumerable();
 
             Male = list.Where(x => x.User.Gender == Domain.Enum.Enum.GenderStatus.Male).Count();
             Female = list.Where(x => x.User.Gender == Domain.Enum.Enum.GenderStatus.Female).Count();

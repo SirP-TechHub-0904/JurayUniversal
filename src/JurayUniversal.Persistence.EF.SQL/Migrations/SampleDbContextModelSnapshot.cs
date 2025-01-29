@@ -1871,6 +1871,15 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<int>("ParticipantStatus")
                         .HasColumnType("int");
 
+                    b.Property<bool>("RemitaApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RemitaKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitaUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
@@ -2940,6 +2949,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<long?>("JobDesignationId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("LastAccomodation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastLogin")
                         .HasColumnType("nvarchar(max)");
 
@@ -3995,6 +4007,15 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Qoute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitaButton")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitaInstruction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RemitaTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ReportCloseTime")

@@ -476,9 +476,21 @@
                         <span asp-validation-for="Setting.RibonPosition" class="text-danger"></span>
                     </div>
 
-
-
-
+                    <div class="form-group">
+                        <label asp-for="Setting.RemitaTitle" class="control-label"></label>
+                        <input asp-for="Setting.RemitaTitle" class="form-control" />
+                        <span asp-validation-for="Setting.RemitaTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Setting.RemitaInstruction" class="control-label"></label>
+                        <textarea asp-for="Setting.RemitaInstruction" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Setting.RemitaInstruction" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Setting.RemitaButton" class="control-label"></label>
+                        <input asp-for="Setting.RemitaButton" class="form-control" />
+                        <span asp-validation-for="Setting.RemitaButton" class="text-danger"></span>
+                    </div>
 
 
                     <div class="form-group">

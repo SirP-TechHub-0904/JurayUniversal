@@ -1,0 +1,42 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants.RemitaDetailsModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PARTICIPANT REMITA DETAILS ON @Model.Course.CourseCategory.Name (@Model.Course.CourseCategory.Abbreviation @Model.Course.SecNumber, @Model.Course.Year.ToString("yyyy"))</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+        <div>
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Fullname
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ParticipantList.User.FullnameX)
+                </dd>
+                <dt class="col-sm-2">
+                    Remita
+                </dt>
+                <dd class="col-sm-10">
+                    <a href="@Model.ParticipantList.RemitaUrl" target="_blank" class="btn btn-primary">View Remita</a>
+                </dd>
+
+            </dl>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <h5>Note: Make sure the remita shows paid successufully. it can be verified online.</h5>
+        <form method="post">
+            <input type="hidden" asp-for="ParticipantList.Id" />
+            <input type="submit" value="Approve Remita" class="btn btn-success" />
+            <a asp-page="./RemitaPage" class="btn btn-warning">Back to List</a>
+        </form>
+    </div>
+</div>

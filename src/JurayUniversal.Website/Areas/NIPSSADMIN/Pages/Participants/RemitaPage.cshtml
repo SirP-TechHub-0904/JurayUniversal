@@ -1,0 +1,90 @@
+﻿@page
+@model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants.RemitaPageModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PARTICIPANTS ON @Model.Course.CourseCategory.Name (@Model.Course.CourseCategory.Abbreviation @Model.Course.SecNumber, @Model.Course.Year.ToString("yyyy"))</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Fullname
+                        </th>
+
+                        <th>Reg. No.</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Remita Approved</th>
+                        <th>Remita Upload</th>
+                    </tr>
+                </thead>
+
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.ParticipantList)
+                    {
+                        <tr>
+
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="/Users/Info" asp-route-id="@item.UserId">
+                                    @Html.DisplayFor(modelItem => item.User.FullnameX)
+
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                            </td>
+                            <td>
+                                @if (item.RemitaApproved == true)
+                                {
+
+
+                                    <span class="bg-success btn">Approved</span>
+                                }
+                                else
+                                {
+                                    <span class="bg-danger btn">Pending</span>
+
+                                }
+                            </td>
+                            <td>
+                                @if (String.IsNullOrEmpty(item.RemitaKey))
+                                {
+                                    <span>---</span>
+                                }
+                                else
+                                {
+                                   <a asp-page="RemitaDetails" asp-route-id="@item.Id" class="btn btn-primary">View Upload</a>
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

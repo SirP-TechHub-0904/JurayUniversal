@@ -22,5 +22,10 @@ namespace JurayUniversal.Domain.Models.NIPSS
         public StudyGroup StudyGroup { get; set; }
         public ParticipantStatus ParticipantStatus { get; set; }
          
+
+        public string? RemitaUrl { get;set;}
+        public string? RemitaKey { get;set; }
+
+        public bool RemitaApproved { get;set;}
     }
 }
