@@ -1,6 +1,9 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using JurayUniversal.Application.Dtos.AwsDtos;
 using JurayUniversal.Application.Services.AWS;
 using JurayUniversal.Domain.Models;
+using JurayUniversal.Domain.Models.NIPSS;
+using JurayUniversal.Persistence.EF.SQL.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,6 +47,7 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
 
         public IList<AdditionalProfile> AdditionalProfile { get; set; }
         public IList<ProfileCategory> ProfileCategories { get; set; }
+        public Setting Setting { get; set; }
 
 
         [BindProperty]
@@ -118,8 +122,10 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
         [BindProperty]
         public string redirectttt { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string? id)
+        public bool UploadRemita { get; set; }
+        public async Task<IActionResult> OnGetAsync(string? id, bool remita = false)
         {
+            UploadRemita = remita;
             if (id != null)
             {
                 if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -146,7 +152,17 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
             ProfileCategories = await _context.ProfileCategories
                 .Include(x => x.ProfileCategoryLists).Where(x => x.ProfileId == UserDatas.Id).ToListAsync();
             ViewData["NameTitle"] = new SelectList(_context.TitleLists, "Title", "Title");
+            //
+            Setting = await _context.Settings.FirstOrDefaultAsync();
 
+            ParticipantList = await _context.ParticipantLists
+               .FirstOrDefaultAsync(x => x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active && x.UserId == UserDatas.Id);
+
+
+            if (ParticipantList == null)
+            {
+                return RedirectToPage("/Dashboard/Index");
+            }
             return Page();
         }
         [BindProperty]
@@ -355,7 +371,7 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
 
                 if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    return RedirectToPage("./Education", new {id = userinfo.Id});
+                    return RedirectToPage("./Education", new { id = userinfo.Id });
 
                 }
                 else
@@ -366,7 +382,7 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
             }
             catch (Exception c)
             {
-                var user = await _userManager.FindByIdAsync(Input.Id); 
+                var user = await _userManager.FindByIdAsync(Input.Id);
                 UserDatas = await _userManager.FindByIdAsync(user.Id);
 
                 if (UserDatas == null)
@@ -376,6 +392,9 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
                 AdditionalProfile = await _context.AdditionalProfiles.Where(x => x.ProfileId == UserDatas.Id).ToListAsync();
                 ProfileCategories = await _context.ProfileCategories
                     .Include(x => x.ProfileCategoryLists).Where(x => x.ProfileId == UserDatas.Id).ToListAsync();
+
+                //
+                Setting = await _context.Settings.FirstOrDefaultAsync();
                 return Page();
             }
         }
@@ -394,6 +413,75 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
             await _context.SaveChangesAsync();
             TempData["success"] = "Successfull";
             return Redirect("./UpdateProfile#" + redirectttt);
+        }
+
+        [BindProperty]
+        public IFormFile? imageremita { get; set; }
+
+        [BindProperty]
+        public string ParticipantId { get; set; }
+
+        public ParticipantList ParticipantList { get; set; }
+        public async Task<IActionResult> OnPostUploadRemitaAsync()
+        {
+
+            var participant = await _context.ParticipantLists
+                .FirstOrDefaultAsync(x => x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active && x.UserId == ParticipantId);
+
+
+            if (participant == null)
+            {
+                return RedirectToPage("/Dashboard/Index");
+            }
+
+            if (imageremita != null)
+            {
+                try
+                {
+                    // Process file
+                    await using var memoryStream = new MemoryStream();
+                    await imageremita.CopyToAsync(memoryStream);
+
+                    var fileExt = Path.GetExtension(imageremita.FileName);
+                    var docName = $"{Guid.NewGuid()}{fileExt}";
+                    // call server
+
+                    var s3Obj = new Application.Dtos.AwsDtos.S3Object()
+                    {
+                        BucketName = await _storageService.BucketName(),
+                        InputStream = memoryStream,
+                        Name = docName
+                    };
+
+                    var cred = new AwsCredentials()
+                    {
+                        AccessKey = _config["AwsConfiguration:AWSAccessKey"],
+                        SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+                    };
+
+                    var xresult = await _storageService.UploadFileReturnUrlAsync(s3Obj, cred, "");
+                    // 
+                    if (xresult.Message.Contains("200"))
+                    {
+                        participant.RemitaUrl = xresult.Url;
+                        participant.RemitaKey = xresult.Key;
+                    }
+                    else
+                    {
+                        TempData["error"] = "unable to upload image";
+                        //return Page();
+                    }
+                }
+                catch (Exception c)
+                {
+
+                }
+            }
+            _context.Attach(participant).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            TempData["success"] = "Successfull";
+            return RedirectToPage("./UpdateProfile", new { remita = true });
         }
 
 

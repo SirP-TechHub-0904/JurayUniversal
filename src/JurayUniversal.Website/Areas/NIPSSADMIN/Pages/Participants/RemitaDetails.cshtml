@@ -35,7 +35,9 @@
         <h5>Note: Make sure the remita shows paid successufully. it can be verified online.</h5>
         <form method="post">
             <input type="hidden" asp-for="ParticipantList.Id" />
+            @if(Model.ParticipantList.RemitaApproved == false) { 
             <input type="submit" value="Approve Remita" class="btn btn-success" />
+            }
             <a asp-page="./RemitaPage" class="btn btn-warning">Back to List</a>
         </form>
     </div>
