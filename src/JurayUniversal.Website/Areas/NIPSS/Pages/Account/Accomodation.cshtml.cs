@@ -108,6 +108,12 @@ namespace JurayUniversal.Website.Areas.NIPSS.Pages.Account
                 TempData["error"] = "Unable to fetch data";
                 return RedirectToPage("/Dashboard/Index");
             }
+
+            if(ParticipantList.RemitaApproved == false)
+            {
+                return RedirectToPage("./UpdateProfile", new {remita = true});
+            }
+
             ParticipantId = ParticipantList.Id;
 
             UserAccomodation = await _context.Accomodations.FirstOrDefaultAsync(x=>x.ParticipantListId == ParticipantList.Id);

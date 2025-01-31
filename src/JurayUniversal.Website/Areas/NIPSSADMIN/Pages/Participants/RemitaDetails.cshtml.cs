@@ -45,7 +45,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants
                 return NotFound();
             }
 
-            ParticipantList = await _context.ParticipantLists.FindAsync(id);
+            ParticipantList = await _context.ParticipantLists.FirstOrDefaultAsync(x=>x.Id == id);
 
             if (ParticipantList != null)
             {
@@ -54,7 +54,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Participants
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./RemitaDetails");
+            return RedirectToPage("./RemitaDetails", new {id = ParticipantList.Id});
         }
 
     }

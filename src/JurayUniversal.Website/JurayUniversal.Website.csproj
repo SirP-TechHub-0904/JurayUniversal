@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-JurayUniversal.Website-4c5034ff-665d-4b46-9fe7-d94f4a542df7</UserSecretsId>
-	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
-	  <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+	  <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+	  <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +41,7 @@
     <Content Remove="Areas\IPortfolio\Pages\_ViewImports.cshtml" />
     <Content Remove="Areas\IPortfolio\Pages\_ViewStart.cshtml" />
     <Content Remove="Areas\NIPSSADMIN\Pages\Users\UpdateUserPermission.cshtml" />
+    <Content Remove="Areas\NIPSS\Pages\Account\UpdateAccount.cshtml" />
     <Content Remove="Areas\SMS\Pages\Error.cshtml" />
     <Content Remove="Pages\Shared\Components\Slider\Datacheck.cshtml" />
     <Content Remove="Pages\Shared\Components\TestimonyHome\Default.cshtml" />
@@ -291,6 +292,7 @@
     <None Include="Areas\NIPSSADMIN\Pages\_ViewStart.cshtml" />
     <None Include="Areas\NIPSS\Pages\Account\Accomodation.cshtml" />
     <None Include="Areas\NIPSS\Pages\Account\Profile.cshtml" />
+    <None Include="Areas\NIPSS\Pages\Account\UpdateAccount.cshtml" />
     <None Include="Areas\NIPSS\Pages\Account\UpdateProfile.cshtml" />
     <None Include="Areas\NIPSS\Pages\Dashboard\Index.cshtml" />
     <None Include="Areas\NIPSS\Pages\Error.cshtml" />
