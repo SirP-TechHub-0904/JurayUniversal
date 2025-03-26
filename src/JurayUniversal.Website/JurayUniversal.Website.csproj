@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-JurayUniversal.Website-4c5034ff-665d-4b46-9fe7-d94f4a542df7</UserSecretsId>
-	  <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
-	  <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>-->
+	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+	  <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
   </PropertyGroup>
 
   <ItemGroup>
