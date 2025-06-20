@@ -283,7 +283,7 @@ public class TenantScopeMiddleware
 
                 return;
             }
-            else if (tenant.ToString().ToLower() == "mobp.exwhyzee.ng")
+            else if (tenant.ToString().ToLower() == "mobp.juray.ng")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);
