@@ -290,6 +290,20 @@ public class TenantScopeMiddleware
 
                 return;
             }
+            else if (tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
+            else if (tenant.ToString().ToLower() == "nprgs.juray.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
             //
             else
             {
