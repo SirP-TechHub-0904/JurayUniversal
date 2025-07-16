@@ -156,71 +156,8 @@ public class TenantScopeMiddleware
                 await _next(httpContext);
 
                 return;
-            }
-            else if (tenant.ToString().ToLower() == "poly.juray.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "health.juray.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "koboview.com")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "fan.juray.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "cic.juray.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "default.juray.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "14.1.22.213")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "health.gov.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "nipssportal.com.ng")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "nipsskuru.gov.ng")
+            }           
+                   else if (tenant.ToString().ToLower() == "nipsskuru.gov.ng")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);
