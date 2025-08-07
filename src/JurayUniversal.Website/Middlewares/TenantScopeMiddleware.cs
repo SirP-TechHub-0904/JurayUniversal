@@ -234,6 +234,14 @@ public class TenantScopeMiddleware
 
                 return;
             }
+            else if (tenant.ToString().ToLower() == "nationalplanning.gov.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
+            //
             else if (tenant.ToString().ToLower() == "nprgs.juray.ng")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
