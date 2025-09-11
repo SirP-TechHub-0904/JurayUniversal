@@ -156,14 +156,14 @@ public class TenantScopeMiddleware
                 await _next(httpContext);
 
                 return;
-            }           
-                   else if (tenant.ToString().ToLower() == "nipsskuru.gov.ng")
+            }
+            else if (tenant.ToString().ToLower() == "nipsskuru.gov.ng")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);
 
                 return;
-            } 
+            }
             else if (tenant.ToString().ToLower() == "sine-theta.com")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
@@ -249,7 +249,14 @@ public class TenantScopeMiddleware
 
                 return;
             }
-            //
+            else if (tenant.ToString().ToLower() == "nprgs.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
+            //http:///
             else
             {
                 //var matchedDomain = domains.FirstOrDefault(d => d.Domain.Equals(tenant, StringComparison.OrdinalIgnoreCase));
