@@ -256,6 +256,20 @@ public class TenantScopeMiddleware
 
                 return;
             }
+            else if (tenant.ToString().ToLower() == "ngama.exwhyzee.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
+            else if (tenant.ToString().ToLower() == "ifeanyingama.com.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
             //http:///
             else
             {

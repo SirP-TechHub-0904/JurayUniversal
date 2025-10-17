@@ -1,0 +1,50 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings.MoveFileModel
+@{
+    ViewData["Title"] = "Move File";
+}
+<h2>Move File</h2>
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+@if (!string.IsNullOrEmpty(Model.NewUrl))
+{
+    <b>File Preview:</b>
+    <div style="margin:10px 0;">
+        @if (Model.FileType == "image")
+        {
+            <img src="@Model.NewUrl" style="max-width:300px;max-height:200px;" />
+        }
+        else if (Model.FileType == "video")
+        {
+            <video src="@Model.NewUrl" controls style="max-width:300px;max-height:200px;"></video>
+        }
+        else if (Model.FileType == "pdf")
+        {
+            <a href="@Model.NewUrl" target="_blank"><img src="/images/pdf-icon.png" style="height:40px;" /> PDF File</a>
+        }
+        else if (Model.FileType == "doc")
+        {
+            <a href="@Model.NewUrl" target="_blank"><img src="/images/word-icon.png" style="height:40px;" /> Word File</a>
+        }
+        else
+        {
+            <a href="@Model.NewUrl" target="_blank">Download/View File</a>
+        }
+    </div>
+}
+<table class="table">
+    <tr><th>Entity</th><td>@Model.Entity</td></tr>
+    <tr><th>Entity ID</th><td>@Model.Id</td></tr>
+    <tr><th>Property</th><td>@Model.Property</td></tr>
+    <tr><th>Old Bucket</th><td>@Model.OldBucket</td></tr>
+    <tr><th>New Bucket</th><td>@Model.NewBucket</td></tr>
+    <tr><th>File Key</th><td>@Model.Key</td></tr>
+    <tr>
+        <th>New File URL</th>
+        <td>
+            <a href="@Model.NewUrl" target="_blank">@Model.NewUrl</a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,97 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings.AllFilesReconciliationModel
+@{
+
+    string GetFileTypeIcon(string propertyType, string url)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return "<span style='color:red;'>No URL</span>";
+        var ext = System.IO.Path.GetExtension(url)?.ToLower();
+        if (propertyType.ToLower().Contains("image") || (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif"))
+            return $"<img src='{url}' style='width:60px;max-height:60px;' />";
+        if (propertyType.ToLower().Contains("video") || ext == ".mp4" || ext == ".mov" || ext == ".avi" || ext == ".webm")
+            return $"<video src='{url}' controls style='width:80px;max-height:60px;'></video>";
+        if (ext == ".pdf")
+            return $"<a href='{url}' target='_blank'><img src='/images/pdf-icon.png' style='height:40px;'/> PDF</a>";
+        if (ext == ".docx" || ext == ".doc")
+            return $"<a href='{url}' target='_blank'><img src='/images/word-icon.png' style='height:40px;'/> DOC</a>";
+        return $"<a href='{url}' target='_blank'>File Link</a>";
+    }
+
+    @functions {
+        public string ExtractBucketName(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return "";
+            try
+            {
+                // Typical S3 URL: https://bucketname.s3.amazonaws.com/key
+                var uri = new Uri(url);
+                var host = uri.Host; // e.g. "bucketname.s3.amazonaws.com"
+                if (host.Contains(".s3"))
+                {
+                    return host.Substring(0, host.IndexOf(".s3"));
+                }
+                // For virtual-hosted–style, fallback
+                // e.g. s3.amazonaws.com/bucketname/key
+                var segments = uri.Segments;
+                if (segments.Length > 1) return segments[1].Trim('/');
+            }
+            catch { }
+            return "";
+        }
+    }
+}
+<h2>All Files Reconciliation</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Preview</th>
+                <th>File Key</th>
+                <th>Url</th>
+                <th>Bucket Name</th>
+                <th>Entity</th>
+                <th>Entity ID</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int sn = 0;}
+
+            @foreach (var entry in Model.FileEntries)
+            {
+                <tr>
+                    <td>
+                        @{sn++;}
+                        @sn
+                    </td>
+                    <td>
+                        <a href="@entry.Url" target="_blank">
+                            @Html.Raw(GetFileTypeIcon(entry.PropertyType, entry.Url))
+                        </a>
+                    </td>
+                    <td>@entry.Key</td>
+                    <td>
+                        <a href="@entry.Url" target="_blank">
+                            @ExtractBucketName(entry.Url)
+                        </a>
+                    </td>
+                    <td>@entry.BucketName</td>
+                    <td>@entry.EntityName</td>
+                    <td>@entry.EntityId</td>
+                    <td>@entry.PropertyType</td>
+                    <td>
+                        <form method="get" action="/Management/IDashboardSettings/MoveFile" target="_blank">
+                            <input type="hidden" name="entity" value="@entry.EntityName" />
+                            <input type="hidden" name="id" value="@entry.EntityId" />
+                            <input type="hidden" name="property" value="@entry.PropertyName" />
+                            <input type="hidden" name="key" value="@entry.Key" />
+                            <button type="submit" class="btn btn-sm btn-primary">Move</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
