@@ -347,7 +347,60 @@ namespace JurayUniversal.Application.Services.AWS
             response.Message = "error 500 file empty";
             return response;
         }
+        public async Task<string> MoveImageAndGetPresignedUrlAsync(string imageKey)
+        {
+            // 1. Determine new bucket name from DB or fallback to default
+            var newBucket = await BucketName(); // From your DB, or default
 
+            // 2. Set old bucket name (hardcoded default)
+            var oldBucket = "juray2023";
+
+            // 3. AWS Credentials
+            var cred = new AwsCredentials()
+            {
+                AccessKey = _config["AwsConfiguration:AWSAccessKey"],
+                SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+            };
+            var credentials = new BasicAWSCredentials(cred.AccessKey, cred.SecretKey);
+
+            var config = new AmazonS3Config()
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USEast1
+            };
+
+            using var client = new AmazonS3Client(credentials, config);
+
+            // 4. Copy the object from old bucket to new bucket
+            var copyRequest = new CopyObjectRequest
+            {
+                SourceBucket = oldBucket,
+                SourceKey = imageKey,
+                DestinationBucket = newBucket,
+                DestinationKey = imageKey,
+                CannedACL = S3CannedACL.NoACL
+            };
+
+            await client.CopyObjectAsync(copyRequest);
+
+            // 5. Delete the object from the old bucket (optional)
+            var deleteRequest = new DeleteObjectRequest
+            {
+                BucketName = oldBucket,
+                Key = imageKey
+            };
+            await client.DeleteObjectAsync(deleteRequest);
+
+            // 6. Generate presigned URL for the object in the new bucket
+            var preurl = new GetPreSignedUrlRequest
+            {
+                BucketName = newBucket,
+                Key = imageKey,
+                Expires = DateTime.UtcNow.AddYears(3)
+            };
+            var url = client.GetPreSignedURL(preurl);
+
+            return url;
+        }
         public Task<string> BucketName()
         {
             var supw = _context.SuperSettings.FirstOrDefault();
