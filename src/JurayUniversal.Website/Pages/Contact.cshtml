@@ -51,6 +51,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
     }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = "CONTACT US" })
 @if (Model.SuperSetting.TemplateLayoutKey == "Layout1111")
@@ -743,11 +747,11 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
                                     <div class="col-lg-8 col-md-8 col-sm-12">
                                         <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
                                         <input type="number" id="captcha" asp-for="Captcha" required="required">
-                                         
+
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group mg_top apbtn">
-                                            <input class="theme_btn" type="submit" value="submit"/>
+                                            <input class="theme_btn" type="submit" value="submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -846,10 +850,10 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
                 <div class="col-md-12">
                     <div class="section-title">
                         <h4 class="title wow animate__ animate__fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">Contact Us </h4>
-                        
+
                     </div>
                 </div>
-               
+
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6">
@@ -940,7 +944,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
             </div>
         </div>
     </div>
-    
+
     <div class="map-section">
         <div class="container">
 
@@ -954,4 +958,121 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
             </div>
         </div>
     </div>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+{
+    <section class="contact-info">
+        <div class="container">
+            <div class="row">
+                <!--Contact Two Single Start-->
+                <div class="col-xl-4 col-lg-4">
+                    <div class="contact-info__single">
+                        <div class="contact-info__icon">
+                            <span class="icon-call"></span>
+                        </div>
+                        <p>Contact Us</p>
+                        <h3>
+                            <a href="tel:@Model.Setting.PhoneOne">@Model.Setting.PhoneOne</a>
+                        </h3>
+                    </div>
+                </div>
+                <!--Contact Two Single End-->
+                <!--Contact Two Single Start-->
+                <div class="col-xl-4 col-lg-4">
+                    <div class="contact-info__single">
+                        <div class="contact-info__icon">
+                            <span class="icon-email"></span>
+                        </div>
+                        <p>Mail Us</p>
+                        <h3>
+                            <a href="mailto:@Model.Setting.EmailOne">@Model.Setting.EmailOne</a>
+                        </h3>
+                    </div>
+                </div>
+                <!--Contact Two Single End-->
+                <!--Contact Two Single Start-->
+                <div class="col-xl-4 col-lg-4">
+                    <div class="contact-info__single">
+                        <div class="contact-info__icon">
+                            <span class="icon-pin"></span>
+                        </div>
+                        <p>Our Office Location</p>
+                        <h3>
+                            @Model.Setting.AddressOne
+                        </h3>
+                        <h3>
+                            @Model.Setting.AddressTwo
+                        </h3>
+                    </div>
+                </div>
+                <!--Contact Two Single End-->
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-page">
+        <div class="container">
+            <div class="contact-page__inner">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="contact-page__left">
+                            @if (!string.IsNullOrEmpty(Model.Setting.GoogleMap))
+                            {
+                                @Html.Raw(Model.Setting.GoogleMap)
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="contact-page__right">
+                            <h3 class="contact-page__form-title">Get A Free Quote</h3>
+                            <form id="contact-form" class="contact-form-validated contact-page__form" method="post">
+                                <input type="hidden" asp-for="FirstNumber" />
+                                <input type="hidden" asp-for="SecondNumber" />
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="contact-page__input-box">
+                                            <input type="text" asp-for="ClientRequest.Name" placeholder="Your name" required="required" aria-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="contact-page__input-box">
+                                            <input type="email" asp-for="ClientRequest.Email" placeholder="Your Email" required="required" aria-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="contact-page__input-box">
+                                            <input type="text" asp-for="ClientRequest.Phone" placeholder="Phone" required="required" aria-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="contact-page__input-box">
+                                            <input type="text" asp-for="ClientRequest.Subject" placeholder="Subject">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="contact-page__input-box text-message-box">
+                                            <textarea asp-for="ClientRequest.Message" placeholder="Message"></textarea>
+                                        </div>
+                                        <div class="contact-page__input-box">
+                                            <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
+                                            <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                        </div>
+                                        <div class="main-slider__btn-box contact-page__btn-box">
+                                            <div class="main-slider__btn">
+                                                <button type="submit" class="thm-btn contact-page__btn" data-loading-text="Please wait...">
+                                                    <span class="thm-btn-text">Send A Message</span>
+                                                    <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="result"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 }

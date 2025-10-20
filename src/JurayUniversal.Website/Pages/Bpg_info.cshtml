@@ -59,6 +59,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
     }
+    else if (Model.Templatechoose == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = Model.Blog.Title })
 
@@ -576,4 +580,65 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
             </div>
         </div>
     </div>
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+{
+    <section class="blog-details">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="blog-details__content">
+                        <div class="blog-details__img-1">
+                            <div class="inner">
+                                <img src="@Model.Blog.ImageUrl" alt="@Model.Blog.Title">
+                            </div>
+                        </div>
+
+                        <div class="blog-details__content-meta-box">
+                            <ul class="list-unstyled">
+                                 
+                                <li>
+                                    <div class="icon">
+                                        <span class="icon-calendar"></span>
+                                    </div>
+
+                                    <div class="text-box">
+                                        <p>@Model.Blog.Date.ToString("dd MMM, yyyy")</p>
+                                    </div>
+                                </li>
+                                 
+                            </ul>
+                        </div>
+
+                        <div class="blog-details__content-text1">
+                            <h2>@Model.Blog.Title</h2>
+                            @Html.Raw(Model.Blog.FullDescription)
+                        </div>
+
+                          
+                    </div>
+                </div>
+
+                <!--Start Sidebar-->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="sidebar">
+                         
+                        <!--Start Sidebar Single-->
+                        <div class="sidebar__single sidebar__category wow fadeInUp animated" data-wow-delay=".1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                            <h3 class="sidebar__title">Categories</h3>
+                            <ul class="sidebar__category-list list-unstyled">
+                                @foreach (var item in Model.BlogCategories)
+                                {
+                                    <li> <a href=""> @item.Title <span>(@item.Blogs.Count())</span> </a> </li>
+                                }
+                                 
+                            </ul>
+                        </div>
+                       
+                    </div>
+                </div>
+                <!--End Sidebar-->
+            </div>
+        </div>
+    </section>
 }

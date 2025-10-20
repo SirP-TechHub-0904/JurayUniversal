@@ -270,6 +270,13 @@ public class TenantScopeMiddleware
 
                 return;
             }
+            else if (tenant.ToString().ToLower() == "urualla.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
             //http:///
             else
             {

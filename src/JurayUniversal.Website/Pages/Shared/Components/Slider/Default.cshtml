@@ -6987,8 +6987,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">@item.Title</a>
 
                                                 @*@{
-                                            IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
-                                        }*@
+                                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                                    }*@
                                                 @{
                                                     IEnumerable<Domain.Models.WebPage> itemlistxx = item.WebPages;
 
@@ -7117,13 +7117,13 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                             }
                                         }
                                         @*@foreach (var item in ViewBag.linkExternal)
-                                        {
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
 
-                                            </li>
+                                                </li>
 
-                                        }*@
+                                            }*@
 
                                         @if (xsetting.AddBlogToMenu == true)
                                         {
@@ -8922,7 +8922,80 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
     }
 
 }
+else if (supersetting.TemplateLayoutKey == "Layout13131313")
+{
 
+    if (supersetting.SliderTemplateKey == "Slider1111")
+    {
+        <section class="main-slider">
+            <div class="main-slider__carousel owl-carousel owl-theme">
+                @foreach (var item in Model)
+                {
+                    <!-- Slider 1 -->
+                    <div class="item">
+                        <div class="main-slider__bg" style="background-image: url(@item.Url);"></div>
+                        <div class="main-slider__overly"></div>
+                        <div class="main-slider__shape-1"></div>
+
+
+                        <div class="container">
+                            <div class="main-slider__content">
+                                <div class="main-slider__sub-title-box">
+                                    <div class="main-slider__sub-title-shape"></div>
+                                    <p class="main-slider__sub-title"> @Html.Raw(item.MiniTitle)</p>
+                                </div>
+                                <h2 class="main-slider__title">
+                                    @Html.Raw(item.Title)
+                                </h2>
+                                <p class="main-slider__text">
+                                    @Html.Raw(item.Text)
+                                </p>
+                                @if (item.ButtonLink != "XXXX")
+                                {
+                                    <div class="main-slider__btn-box">
+                                        <div class="main-slider__btn">
+                                            @if (item.ButtonLink == "0")
+                                            {
+                                                <a href="#" class="thm-btn">
+                                                    <span class="thm-btn-text">@Html.Raw(item.ButtonText)</span>
+                                                    <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                                </a>
+                                            }
+                                            else if (item.ButtonLink == "000")
+                                            {
+                                                <a asp-page="/Contact" class="thm-btn">
+                                                    <span class="thm-btn-text">@Html.Raw(item.ButtonText)</span>
+                                                    <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="/Source" asp-route-id="@item.ButtonLink" class="thm-btn">
+                                                    <span class="thm-btn-text">@Html.Raw(item.ButtonText)</span>
+                                                    <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                                </a>
+                                            }
+                                            @* Video Play Button (optional) *@
+                                            @if (!string.IsNullOrEmpty(item.YoutubeVideo))
+                                            {
+                                                <a class="video-play style-04 mfp-iframe" href="@item.YoutubeVideo">
+                                                    <i class="fas fa-play"></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- Slider 2 -->
+
+            </div>
+        </section>
+
+    }
+}
 @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.AfterSlider)
 {
     @await Component.InvokeAsync("NewsRibon")

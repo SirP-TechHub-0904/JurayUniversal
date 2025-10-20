@@ -1,7 +1,11 @@
 ﻿@model ICollection<JurayUniversal.Website.Pages.Shared.ViewComponents.RibonDto>
 
 
- 
+@using System.Text.RegularExpressions;
+
+@{
+      Regex regex = new Regex("[^a-zA-Z0-9]");
+}
 
 
 <div class="containerx custom-data">
@@ -28,11 +32,10 @@
                 else
                 {
 
-                    <a asp-page="@item.Path" asp-route-id="@item.Id" asp-route-title="@item.Title" style="">@item.Title</a>
+                    <a asp-page="@item.Path" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" style="">@item.Title</a>
 
                 }
             }
         </marquee>
     </div>
 </div>
- 
