@@ -1,0 +1,85 @@
+/*--------------------------------------------------------------
+# Brand One
+--------------------------------------------------------------*/
+.brand-one {
+    position: relative;
+    display: block;
+    border-top: 1px solid var(--judges-bdr-color);
+    border-bottom: 1px solid var(--judges-bdr-color);
+    padding: 29px 0 29px;
+    z-index: 1;
+}
+
+.brand-one.border-top-none {
+    border-top: none;
+}
+
+.brand-one__left {
+    position: relative;
+    display: block;
+}
+
+.brand-one__text {
+    font-size: 22px;
+    color: var(--judges-black);
+    font-weight: 500;
+    line-height: 1.5em;
+}
+
+.brand-one__text span {
+    color: var(--judges-base);
+    font-weight: 700;
+}
+
+.brand-one__right {
+    position: relative;
+    display: block;
+}
+
+.brand-one__carousel {
+    position: relative;
+    display: block;
+}
+
+.brand-one__single {
+    position: relative;
+    display: block;
+}
+
+.brand-one__img {
+    position: relative;
+    display: block;
+}
+
+.brand-one__img img {
+    width: auto !important;
+    margin: 0 auto;
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+    transform: scale(1);
+    filter: brightness(0.5);
+}
+
+.brand-one__img img:hover {
+    filter: brightness(0.9);
+    transform: scale(0.9);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# End
+--------------------------------------------------------------*/

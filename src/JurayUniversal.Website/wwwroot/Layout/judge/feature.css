@@ -1,0 +1,125 @@
+/*--------------------------------------------------------------
+# Feature One
+--------------------------------------------------------------*/
+.feature-one {
+    position: relative;
+    display: block;
+    padding: 0px 0px 0px;
+    counter-reset: count;
+    z-index: 1;
+}
+
+.feature-one__single {
+    position: relative;
+    display: block;
+    border: 1px solid var(--judges-bdr-color);
+    border-radius: var(--judges-bdr-radius);
+    padding: 30px 30px 22px;
+    margin-bottom: 30px;
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+
+.feature-one__single:hover {
+    box-shadow: 0px 20px 30px 0px rgba(16, 24, 40, 0.04);
+    transform: translateY(-10px);
+}
+
+.feature-one__count {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.feature-one__count:before {
+    position: relative;
+    display: block;
+    font-size: 60px;
+    line-height: .8em;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--judges-extra);
+    counter-increment: count;
+    content: "0"counter(count);
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+}
+
+.feature-one__single:hover .feature-one__count:before {
+    -webkit-text-stroke: 1px var(--judges-base);
+    color: var(--judges-base);
+}
+
+.feature-one__icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.feature-one__icon span {
+    position: relative;
+    display: inline-block;
+    font-size: 45px;
+    color: var(--judges-base);
+    transition-delay: 0.1s;
+    transition: all 500ms ease;
+}
+
+.feature-one__single:hover .feature-one__icon span {
+    transform: rotateY(180deg);
+    transition-delay: 0.1s;
+}
+
+.feature-one__title {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-top: 12px;
+    margin-bottom: 15px;
+}
+
+.feature-one__title a {
+    color: var(--judges-black);
+}
+
+.feature-one__title a:hover {
+    color: var(--judges-base);
+}
+
+.feature-one__text {
+    margin-bottom: 8px;
+}
+
+.feature-one__read-more {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--judges-base);
+}
+
+.feature-one__read-more span {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    top: 2px;
+}
+
+.feature-one__read-more:hover {
+    color: var(--judges-black);
+}
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# End
+--------------------------------------------------------------*/

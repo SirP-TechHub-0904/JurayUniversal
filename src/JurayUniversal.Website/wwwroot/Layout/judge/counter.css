@@ -1,0 +1,411 @@
+/*--------------------------------------------------------------
+# Counter One
+--------------------------------------------------------------*/
+.counter-one {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 120px 0 90px;
+    z-index: 1;
+}
+
+.counter-one__bg-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 530px;
+    background-color: var(--judges-black);
+    z-index: -1;
+}
+
+.counter-one__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: .10;
+    z-index: -1;
+}
+
+.counter-one__top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 62px;
+}
+
+.counter-one__top .section-title {
+    margin-bottom: 0;
+}
+
+.counter-one__top .section-title__title {
+    color: var(--judges-white);
+}
+
+.counter-one__btn-box {
+    position: relative;
+    display: block;
+}
+
+.counter-one__btn-box .thm-btn {
+    color: var(--judges-base);
+}
+
+.counter-one__bottom {
+    position: relative;
+    display: block;
+}
+
+.counter-one__single {
+    position: relative;
+    display: block;
+    margin-bottom: 30px;
+}
+
+.counter-one__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 115px;
+    width: 115px;
+    background-color: var(--judges-base);
+    box-shadow: 0px 10px 60px 0px rgb(0 0 0 / 7%);
+    border-radius: 50%;
+    margin: 0 auto -45px;
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+    z-index: 3;
+}
+
+.counter-one__single:hover .counter-one__icon {
+    background-color: var(--judges-white);
+    transition-delay: 500ms;
+}
+
+.counter-one__icon:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    border-radius: 50%;
+    background-color: var(--judges-white);
+    transform: scale(0);
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transition: all 0.4s cubic-bezier(0.62, 0.21, 0.45, 1.52);
+    z-index: -1;
+}
+
+.counter-one__single:hover .counter-one__icon:before {
+    transform: scaleX(1);
+}
+
+.counter-one__icon span {
+    position: relative;
+    display: inline-block;
+    font-size: 52px;
+    color: var(--judges-white);
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+}
+
+.counter-one__single:hover .counter-one__icon span {
+    color: var(--judges-base);
+    -webkit-animation-name: wobble-horizontal-hover;
+    animation-name: wobble-horizontal-hover;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+
+.counter-one__content {
+    position: relative;
+    display: block;
+    text-align: center;
+    background-color: var(--judges-white);
+    box-shadow: 0px 10px 60px 0px rgb(0 0 0 / 7%);
+    padding: 69px 20px 40px;
+    border-radius: var(--judges-bdr-radius);
+    transition: all 500ms ease;
+    z-index: 1;
+}
+
+.counter-one__count-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.counter-one__count-box h3 {
+    color: var(--judges-black);
+    font-size: 60px;
+    line-height: 60px !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--judges-font) !important;
+}
+
+.counter-one__count-box span {
+    color: var(--judges-black);
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--judges-font);
+}
+
+.counter-one__text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--judges-primary);
+    padding: 12px 25px 12px;
+    font-family: var(--judges-font-two);
+    text-transform: capitalize;
+    font-weight: 700;
+    color: var(--judges-black);
+    font-size: 20px;
+    line-height: 20px;
+    margin-top: 8px;
+    border-radius: var(--judges-bdr-radius);
+}
+
+/*--------------------------------------------------------------
+# Counter Two
+--------------------------------------------------------------*/
+.counter-two {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 180px 0 60px;
+    background-color: var(--judges-primary);
+    margin-top: -210px;
+    z-index: 1;
+}
+
+.counter-two__single {
+    position: relative;
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.counter-two__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    background-color: var(--judges-base);
+    box-shadow: 0px 10px 60px 0px rgb(0 0 0 / 7%);
+    border-radius: 50%;
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+    z-index: 3;
+}
+
+.counter-two__single:hover .counter-two__icon {
+    background-color: var(--judges-white);
+    transition-delay: 500ms;
+}
+
+.counter-two__icon:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    border-radius: 50%;
+    background-color: var(--judges-white);
+    transform: scale(0);
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transition: all 0.4s cubic-bezier(0.62, 0.21, 0.45, 1.52);
+    z-index: -1;
+}
+
+.counter-two__single:hover .counter-two__icon:before {
+    transform: scaleX(1);
+}
+
+.counter-two__icon span {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: var(--judges-white);
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+}
+
+.counter-two__single:hover .counter-two__icon span {
+    color: var(--judges-base);
+    -webkit-animation-name: wobble-horizontal-hover;
+    animation-name: wobble-horizontal-hover;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+
+.counter-two__content {
+    position: relative;
+    display: block;
+    flex: 1;
+    margin-left: 25px;
+    background-color: var(--judges-white);
+    box-shadow: 0px 10px 60px 0px rgb(0 0 0 / 7%);
+    padding: 20px 20px 20px;
+    border-radius: var(--judges-bdr-radius);
+    transition: all 500ms ease;
+    z-index: 1;
+}
+
+.counter-two__count-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.counter-two__count-box h3 {
+    color: var(--judges-black);
+    font-size: 30px;
+    line-height: 30px !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--judges-font) !important;
+}
+
+.counter-two__count-box span {
+    color: var(--judges-black);
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--judges-font);
+}
+
+.counter-two__text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--judges-font-two);
+    text-transform: capitalize;
+    font-weight: 700;
+    color: var(--judges-black);
+    font-size: 20px;
+    line-height: 20px;
+    margin-top: 4px;
+}
+
+/*--------------------------------------------------------------
+# Counter Three
+--------------------------------------------------------------*/
+.counter-three {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--judges-black);
+    padding: 60px 0 86px;
+    z-index: 1;
+}
+
+.counter-three__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: .10;
+    z-index: -1;
+}
+
+.counter-three__list {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.counter-three__list li {
+    position: relative;
+    display: block;
+}
+
+.counter-three__single {
+    position: relative;
+    display: block;
+}
+
+.counter-three__count-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.counter-three__count-box h3 span {
+    font-size: 60px;
+    color: var(--judges-white);
+    font-family: var(--judges-font-two) !important;
+    line-height: 1.1em;
+    font-weight: 700;
+}
+
+.counter-three__count-plus {
+    font-size: 60px;
+    color: var(--judges-white);
+    font-family: var(--judges-font-two);
+    line-height: 1.1em;
+    font-weight: 700;
+}
+
+.counter-three__text {
+    font-size: 25px;
+    line-height: 30px;
+    color: var(--judges-base);
+    font-weight: 700;
+    font-family: var(--judges-font-two);
+    text-transform: capitalize;
+    margin-top: 20px;
+}
+
+.counter-three__list .odometer-formatting-mark {
+    display: none;
+}
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# End
+--------------------------------------------------------------*/

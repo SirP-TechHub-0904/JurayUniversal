@@ -527,4 +527,65 @@
 
         }
     }
+    else if (supsetting.TemplateLayoutKey == "Layout13131313")
+    {
+
+        {
+            if (supsetting.BlogTemplateKey == "Blog1111")
+            {
+                <section class="blog-one custom-blog-01">
+
+                    <div class="container">
+                        <!-- Section Title -->
+                        <div class="section-title text-left sec-title-animation animation-style2">
+                            
+                            <h2 class="section-title__title title-animation" style="perspective:400px;">
+                                @xsetting.BlogDisplayTitle
+                            </h2>
+                        </div>
+
+                        <!-- Blog Carousel -->
+                        <div class="blog-one__carousel owl-carousel owl-theme">
+                            @foreach (var x in Model)
+                            {
+                                <div class="blog-one__single">
+                                    <div class="blog-one__img-box">
+                                        <div class="blog-one__img">
+                                            <img src="@x.ImageUrl" alt="@x.Title">
+                                            <div class="blog-one__tags">
+                                                <span>@(x.BlogCategory?.Title ?? "")</span>
+                                            </div>
+                                        </div>
+                                        <div class="blog-one__date">
+                                            <p>@x.Date.ToString("dd")</p>
+                                            <span>@x.Date.ToString("MMM")</span>
+                                        </div>
+                                    </div>
+                                    <div class="blog-one__content">
+                                         
+                                        <h3 class="blog-one__title">
+                                            <a asp-page="/Bpg_info" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")">
+                                                @x.Title
+                                            </a>
+                                        </h3>
+                                        <p class="blog-one__text">
+                                            @x.Description
+                                        </p> 
+                                        <a class="blog-one__read-more" asp-page="/Bpg_info" asp-route-id="@x.Id" asp-route-title="@regex.Replace(x.Title, "-")">
+                                            Read More <span class="fas fa-arrow-right"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+
+                        </div><!-- /.blog-one__carousel -->
+                    </div>
+                </section>
+
+            }
+
+        }
+    }
+
+
 }

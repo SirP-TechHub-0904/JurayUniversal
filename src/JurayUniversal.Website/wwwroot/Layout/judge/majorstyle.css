@@ -1,0 +1,116 @@
+﻿.about-one__points-icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 55px;
+    color: var(--judges-base);
+    transition: all 500ms ease;
+}
+.about-one__points li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid rgba(var(--judges-gray-rgb), .15);
+    padding-bottom: 33px;
+    margin-bottom: 33px;
+}
+.services-one__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 50px;
+    color: var(--judges-base);
+    transition-delay: 0.1s;
+    transition: all 500ms ease;
+}
+.services-one__single:hover .services-one__icon i {
+    transform: rotateY(180deg);
+    transition-delay: 0.1s;
+    color: var(--judges-white);
+}
+.why-choose-one__curved-circle {
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    bottom: 0;
+    right: 0;
+    color: var(--judges-white);
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: none !important;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    transform: rotate(0deg);
+    height: 210px !important;
+    font-family: var(--judges-font-two);
+}
+.why-choose-one__points li .icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 45px;
+    color: var(--judges-base);
+    transition-delay: 0.1s;
+    transition: all 500ms ease;
+}
+.process-one__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    color: var(--judges-base);
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+    transform: scale(1);
+}
+.services-two__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 45px;
+    color: var(--judges-base);
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+}
+.counter-one__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 52px;
+    color: var(--judges-white);
+    transition: all 500ms linear;
+    transition-delay: 0.1s;
+}
+.team-one__carousel .owl-nav .owl-next, .team-one__carousel .owl-nav .owl-prev
+ {
+    
+    background-color: #1e5431 !important;
+    
+}
+.feature-one__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 45px;
+    color: var(--judges-base);
+    transition-delay: 0.1s;
+    transition: all 500ms ease;
+}
+.services-three__icon i {
+    position: relative;
+    display: inline-block;
+    font-size: 50px;
+    color: var(--judges-white);
+    transition-delay: 0.1s;
+    transition: all 500ms ease;
+}
+ 
+.main-menu .main-menu__list > li.dropdown > a:after {
+    position: absolute;
+    top: 56%;
+    right: 0;
+    font-family: "Font Awesome 6 Free"; /* 👈 Updated */
+    content: "\f107"; /* This icon still exists in FA6 (angle-down) */
+    font-size: 14px;
+    color: var(--judges-black);
+    transform: translateY(-50%);
+    font-weight: 900; /* Font Awesome 6 Free solid icons use 900 */
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+    z-index: 1;
+}

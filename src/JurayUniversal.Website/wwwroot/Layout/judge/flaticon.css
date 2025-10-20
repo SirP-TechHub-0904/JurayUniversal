@@ -1,0 +1,225 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('icomoon.eot?orkqwr');
+  src: url('icomoon.eot?orkqwr#iefix') format('embedded-opentype'),
+    url('icomoon.ttf?orkqwr') format('truetype'),
+    url('icomoon.woff?orkqwr') format('woff'),
+    url('icomoon.svg?orkqwr#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+
+
+
+
+.icon-email-1:before {
+  content: "\e90e";
+}
+
+.icon-left-arrow:before {
+  content: "\e90f";
+}
+
+.icon-share:before {
+  content: "\e910";
+}
+
+.icon-star:before {
+  content: "\e911";
+}
+
+.icon-play-button-arrowhead:before {
+  content: "\e912";
+}
+
+.icon-user:before {
+  content: "\e913";
+}
+
+.icon-bubble-chat:before {
+  content: "\e914";
+}
+
+.icon-bubble-chat-1:before {
+  content: "\e915";
+}
+
+.icon-right-arrow-1:before {
+  content: "\e916";
+}
+
+.icon-left-arrow-1:before {
+  content: "\e917";
+}
+
+.icon-call:before {
+  content: "\e918";
+}
+
+.icon-email:before {
+  content: "\e919";
+}
+
+.icon-fund-raising:before {
+  content: "\e91a";
+}
+
+.icon-right-arrow:before {
+  content: "\e91b";
+}
+
+.icon-check:before {
+  content: "\e91c";
+}
+
+.icon-comment:before {
+  content: "\e91d";
+}
+
+.icon-clock:before {
+  content: "\e91e";
+}
+
+.icon-quote:before {
+  content: "\e91f";
+}
+
+.icon-search:before {
+  content: "\e920";
+}
+
+.icon-instagram:before {
+  content: "\e921";
+}
+
+.icon-shopping-cart:before {
+  content: "\e922";
+}
+
+.icon-trophy:before {
+  content: "\e923";
+}
+
+.icon-linkedin:before {
+  content: "\e924";
+}
+
+.icon-award:before {
+  content: "\e925";
+}
+
+.icon-review:before {
+  content: "\e926";
+}
+
+.icon-attorney:before {
+  content: "\e927";
+}
+
+.icon-hospital:before {
+  content: "\e928";
+}
+
+.icon-personal:before {
+  content: "\e929";
+}
+
+.icon-calendar:before {
+  content: "\e92a";
+}
+
+.icon-twitter:before {
+  content: "\e92b";
+}
+
+.icon-pinterest:before {
+  content: "\e92c";
+}
+
+.icon-pin:before {
+  content: "\e92d";
+}
+
+.icon-user-1:before {
+  content: "\e92e";
+}
+
+.icon-facebook-app-symbol:before {
+  content: "\e92f";
+}
+
+.icon-auction:before {
+  content: "\e900";
+}
+
+.icon-chess:before {
+  content: "\e901";
+}
+
+.icon-contract:before {
+  content: "\e902";
+}
+
+.icon-family:before {
+  content: "\e903";
+}
+
+.icon-umbrella:before {
+  content: "\e904";
+}
+
+.icon-shield:before {
+  content: "\e905";
+}
+
+.icon-play-button:before {
+  content: "\e906";
+}
+
+.icon-scale:before {
+  content: "\e907";
+}
+
+.icon-factory:before {
+  content: "\e908";
+}
+
+.icon-auction-1:before {
+  content: "\e909";
+}
+
+.icon-history:before {
+  content: "\e90a";
+}
+
+.icon-lawyer:before {
+  content: "\e90b";
+}
+
+.icon-discount:before {
+  content: "\e90c";
+}
+
+.icon-scales-of-justice:before {
+  content: "\e90d";
+}

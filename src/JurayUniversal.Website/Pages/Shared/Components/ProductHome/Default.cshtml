@@ -246,7 +246,7 @@
                                         <div class="post-image">
                                             <img src="@item.ImageUrl" alt="@item.Title">
                                         </div>
-                                        <div class="post-desc"> 
+                                        <div class="post-desc">
                                             <div class="post-title">
                                                 <h5><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
                                             </div>
@@ -268,4 +268,50 @@
             </div>
         </section>
     }
+
+    else if (supsetting.TemplateLayoutKey == "Layout13131313")
+    {
+        <section>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="section-title">
+                            <h1>@supsetting.ProductTitleHome</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-12">
+                        <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-margin="30" data-autoplay="true">
+
+                            @foreach (var item in Model)
+                            {
+                                <div class="item">
+                                    <div class="post style-3">
+                                        <div class="post-image">
+                                            <img src="@item.ImageUrl" alt="@item.Title">
+                                        </div>
+                                        <div class="post-desc">
+                                            <div class="post-title">
+                                                <h5><a title="@item.Title" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                            </div>
+                                            <p>@item.ShortDescription</p>
+                                        </div>
+                                        <div class="post-bottom">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
 }

@@ -1955,13 +1955,13 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                             }
                                         }
                                         @*@foreach (var item in ViewBag.linkExternal)
-                                        {
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
 
-                                            </li>
+                                                </li>
 
-                                        }*@
+                                            }*@
 
                                         @if (xsetting.AddBlogToMenu == true)
                                         {
@@ -2497,6 +2497,35 @@ else if (supersetting.TemplateLayoutKey == "Layout11111111")
 {
     if (supersetting.PageHeaderTemplateKey == "PageHeader1111")
     {
+
+    }
+    else if (supersetting.PageHeaderTemplateKey == "PageHeader2222")
+    {
+
+    }
+}
+else if (supersetting.TemplateLayoutKey == "Layout13131313")
+{
+    if (supersetting.PageHeaderTemplateKey == "PageHeader1111")
+    {
+        <section class="page-header">
+            <div class="page-header__bg"
+                 style='background-image: url("@murl")'>
+            </div>
+
+            <div class="container">
+                <div class="page-header__inner">
+                    <h2>@ViewBag.datataitle</h2>
+                    <div class="thm-breadcrumb__box">
+                        <ul class="thm-breadcrumb list-unstyled">
+                            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                            <li><span class="icon-right-arrow-1"></span></li>
+                            <li class="active">@ViewBag.datataitle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     }
     else if (supersetting.PageHeaderTemplateKey == "PageHeader2222")

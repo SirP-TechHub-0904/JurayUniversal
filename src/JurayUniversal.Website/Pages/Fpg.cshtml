@@ -49,6 +49,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
     }
+    else if (Model.Templatechoose == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = "FREQUENTLY ASKED QUESTIONS" })
 
@@ -225,7 +229,7 @@
 
                         </div>
                     </div>
-                     
+
                 </div>
             </div>
         </section>
@@ -264,7 +268,7 @@
                     <div class="col-lg-4">
                         <div class="help-single-item">
                             <div class="content">
-                                <h4 class="title">Frequently Asked  Questions</h4>
+                                <h4 class="title">Frequently Asked Questions</h4>
 
                             </div>
                         </div>
@@ -299,5 +303,51 @@
             </div>
         </section>
     }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+    {
+        <section class="faq-one major-faq-01">
+            <div class="container">
+                <div class="row">
 
+                    <!-- Left Column -->
+                    <div class="col-xl-5 col-lg-5 wow fadeInLeft" data-wow-delay="100ms">
+                        <div class="faq-one__left">
+                            <div class="section-title text-left sec-title-animation animation-style2">
+
+                                <h2 class="section-title__title">Frequently Asked  Questions</h2>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-xl-7 col-lg-7 wow fadeInRight" data-wow-delay="200ms">
+                        <div class="faq-one__right">
+                            <div class="accrodion-grp faq-one-accrodion" data-grp-name="faq-one-accrodion">
+                                @foreach (var ps in Model.FAQs)
+                                {
+
+                                    <!-- FAQ 1 -->
+                                    <div class="accrodion">
+                                        <div class="accrodion-title">
+                                            <h4>@ps.Title</h4>
+                                        </div>
+                                        <div class="accrodion-content">
+                                            <div class="inner">
+                                                <p>@Html.Raw(ps.Title)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div><!-- /.accrodion-grp -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+    }
 }

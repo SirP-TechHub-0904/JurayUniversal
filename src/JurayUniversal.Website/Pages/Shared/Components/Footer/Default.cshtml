@@ -1983,3 +1983,163 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
     }
 
 }
+else if (supersetting.TemplateLayoutKey == "Layout13131313")
+{
+    if (supersetting.FooterTemplateKey == "Footer1111")
+    {
+        <footer class="site-footer-two judeg-footer-01">
+
+            <div class="container">
+                <div class="site-footer-two__top">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+                            <div class="footer-widget-two__column footer-widget-two__about">
+                                <div class="footer-widget-two__logo">
+                                    <a href="/"><img src="@supersetting.CompanyLogoUrl" alt="@supersetting.CompanyName"></a>
+                                </div>
+                                <p class="footer-widget-two__about-text">
+                                    @ViewBag.setting.Qoute
+                                </p>
+                                <div class="site-footer-two__social">
+                                    <a href="@ViewBag.setting.FacebookPage"><i class="fab fa-facebook"></i></a>
+                                    <a href="@ViewBag.setting.YoutubeChannel"><i class="fab fa-youtube"></i></a>
+                                    <a href="@ViewBag.setting.TwitterPage"><i class="fab fa-x-twitter"></i></a>
+                                    <a href="@ViewBag.setting.InstagramPage"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
+                            <div class="footer-widget-two__column footer-widget-two__usefull-link">
+                                <div class="footer-widget-two__title-box">
+                                    <h4 class="footer-widget-two__title">Useful Links</h4>
+                                </div>
+                                <div class="footer-widget-two__link-box">
+                                    <ul class="footer-widget-two__link list-unstyled">
+                                        @foreach (var item in ViewBag.pages)
+                                        {
+                                            <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                        }
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
+                            <div class="footer-widget-two__column footer-widget-two__services">
+                                <div class="footer-widget-two__title-box">
+                                    <h4 class="footer-widget-two__title">Other Links</h4>
+                                </div>
+                                <ul class="footer-widget-two__link list-unstyled">
+                                    @if (ViewBag.setting.AddFaqToFooter == true)
+                                    {
+                                        <li class="menu-item"><a asp-page="/Fpg">FAQs</a></li>
+                                    }
+                                    @if (ViewBag.setting.AddTestimonyToFooter == true)
+                                    {
+                                        <li class="menu-item"><a asp-page="/Tpg">Testimony</a></li>
+                                    }
+                                    @if (ViewBag.setting.AddBlogToMenu == true)
+                                    {
+                                        <li class="menu-item">
+                                            <a asp-page="/Bpg">@ViewBag.setting.BlogDisplayTitle</a>
+
+                                        </li>
+                                    }
+                                    @if (ViewBag.setting.ShowProductsInFooter == true)
+                                    {
+                                        <li class="menu-item">
+                                            <a asp-page="/UHSource">@supersetting.ProductTitle</a>
+
+                                        </li>
+                                    }
+                                    @if (supersetting.ActivateProfilePortfolio == true && supersetting.ShowInFooterPortfolio == true)
+                                    {
+                                        <li class="menu-item">
+                                            <a asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
+
+                                        </li>
+                                    }
+                                    @if (xsetting.ShowContactUsFooter == true)
+                                    {
+                                        <li class="menu-item">
+                                            <a asp-page="/Contact">Contact Us</a>
+
+                                        </li>
+                                    }
+                                    @if (xsetting.AddCareerToFooter == true)
+                                    {
+                                        <li class="menu-item">
+                                            <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
+
+                                        </li>
+                                    }
+                                    @foreach (var item in ViewBag.linkExternal)
+                                    {
+                                        <li class="menu-item">
+                                            <a target="_blank" href="@item.DirectUrl">@item.Title</a>
+
+                                        </li>
+
+                                    }
+                                    @foreach (var item in ViewBag.SecPages)
+                                    {
+                                        <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                    }
+                                    @if (supersetting.ActivateLogin == true)
+                                    {
+                                        <li class="menu-item"><a asp-page="/AuthV2/Account/Login" asp-area="V2">Login</a></li>
+                                    }
+                                    <li class="menu-item"><a asp-page="/Sitemap">Sitemap</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInUp;">
+                            <div class="footer-widget-two__column footer-widget-two__instagram">
+                                @if (supersetting.ActivateDownloadOurAppFooter == true)
+                                {
+                                    <h4 class="footer-title">@Html.Raw(supersetting.TitleDownloadOurAppFooter)</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>@Html.Raw(supersetting.DescriptionDownloadOurAppFooter)</p>
+                                            <a href="@supersetting.PlayStoreLink">
+                                                <img src="@supersetting.PlayStoreImageUrl" class="gen-playstore-logo" alt="playstore">
+                                            </a>
+                                            <a href="@supersetting.AppStoreLink">
+                                                <img src="@supersetting.AppStoreImageUrl" class="gen-appstore-logo" alt="appstore">
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-footer-two__bottom">
+                <div class="container">
+                    <div class="site-footer-two__bottom-inner">
+                        <p class="site-footer-two__bottom-text">
+                            © Copywright @DateTime.UtcNow.Year @supersetting.CompanyName Developed by @if (supersetting.ShowMadeByXYZ == true)
+                            {
+                                <a href="https://www.exwhyzee.ng/" target="_blank" style="color:white;" class="devby">
+                                    Exwhyzee Technologies Limited.
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
+                                    Juray Smart Solutions Limited.
+                                </a>
+                            }
+                            All
+                            Rights Reserved.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+}

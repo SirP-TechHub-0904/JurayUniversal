@@ -52,6 +52,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
     }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = Model.Setting.CareerDisplayTitle })
 

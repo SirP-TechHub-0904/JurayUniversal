@@ -323,175 +323,175 @@
 else if (supersetting.TemplateLayoutKey == "Layout2222")
 {
     <!-- =-=-=-=-=-=-=  Header =-=-=-=-=-=-= -->
-<div class="colored-header">
-    @if (Model.DisableMainTopMenu == false)
-    {
-        if (xsetting.UseCustomMenuTop == true)
+    <div class="colored-header">
+        @if (Model.DisableMainTopMenu == false)
         {
-            @Html.Raw(xsetting.CustomMenuTop)
+            if (xsetting.UseCustomMenuTop == true)
+            {
+                @Html.Raw(xsetting.CustomMenuTop)
+            }
+            else
+            {
+                <!-- Top Bar -->
+                <div class="header-top">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Header Top Left -->
+                            <div class="header-top-left col-md-8 col-sm-6 col-xs-12 hidden-xs">
+                                <ul class="listnone">
+                                    @{
+                                        IEnumerable<Domain.Models.WebPage> topPages = ViewBag.topPages;
+                                    }
+                                    @foreach (var item in topPages)
+                                    {
+                                        <li>
+                                            <a style="color:white;" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-th"></i>@item.Title</a>
+
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Bar End -->
+            }
         }
-        else
+        @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.BeforeMenu)
         {
-            <!-- Top Bar -->
-            <div class="header-top">
+            @await Component.InvokeAsync("NewsRibon")
+        }
+        <!-- Navigation Menu -->
+        <div class="clearfix"></div>
+        <!-- menu start -->
+        <nav id="menu-1" class="mega-menu">
+            <!-- menu list items container -->
+            <section class="menu-list-items">
                 <div class="container">
                     <div class="row">
-                        <!-- Header Top Left -->
-                        <div class="header-top-left col-md-8 col-sm-6 col-xs-12 hidden-xs">
-                            <ul class="listnone">
+                        <div class="col-lg-12 col-md-12">
+                            <!-- menu logo -->
+                            <ul class="menu-logo">
+                                <li>
+                                    <a href="/"><img src="@supersetting.CompanyLogoUrl" alt="@supersetting.CompanyName" class="h-image"> </a>
+                                </li>
+                            </ul>
+                            <!-- menu links -->
+                            <ul class="menu-links">
                                 @{
-                                    IEnumerable<Domain.Models.WebPage> topPages = ViewBag.topPages;
+                                    IEnumerable<Domain.Models.PageCategory> catitemlist = ViewBag.pages;
+                                    IEnumerable<Domain.Models.WebPage> singlePages = ViewBag.singlePages;
                                 }
-                                @foreach (var item in topPages)
+
+                                @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                                {
+
+
+                                    <li>
+                                        <a href="javascript:void(0)">@item.Title <i class="fas fa-angle-down fa-indicator"></i></a>
+
+                                        @{
+                                            IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                        }
+                                        <ul class="drop-down-multilevel">
+
+                                            @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
+                                            {
+                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                            }
+
+                                        </ul>
+                                    </li>
+
+                                }
+                                @if (xsetting.ShowProductsInMenu == true)
                                 {
                                     <li>
-                                        <a style="color:white;" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-th"></i>@item.Title</a>
+                                        @{
+                                            IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
+                                        }
+                                        <a asp-page="/UHSource">
+                                            @supersetting.ProductTitle
+                                            @if (productpage.Count() > 0)
+                                            {
+                                                <i class="fas fa-angle-down fa-indicator"></i>
+                                            }
+                                        </a>
+                                        <ul class="drop-down-multilevel">
+                                            @foreach (var item in productpage)
+                                            {
+                                                <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                @foreach (var item in singlePages)
+                                {
+                                    <li>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
 
+                                    </li>
+
+                                }
+                                @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                                {
+                                    <li>
+                                        <a href="javascript:void(0)">@item.Title <i class="fas fa-angle-down fa-indicator"></i></a>
+
+                                        @{
+                                            IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                        }
+                                        <ul class="drop-down-multilevel">
+
+                                            @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
+                                            {
+                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                            }
+
+                                        </ul>
+                                    </li>
+
+                                }
+                                @if (xsetting.AddBlogToMenu == true)
+                                {
+                                    <li>
+                                        <a asp-page="/Bpg">@xsetting.BlogDisplayTitle</a>
+
+                                    </li>
+                                }
+                                @if (supersetting.ActivateProfilePortfolio == true)
+                                {
+                                    <li>
+                                        <a asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
+
+                                    </li>
+                                }
+                                @if (xsetting.ShowContactUsMenu == true)
+                                {
+                                    <li>
+                                        <a asp-page="/Contact">Contact Us</a>
+
+                                    </li>
+                                }
+                                @if (xsetting.AddCareerToMenu == true)
+                                {
+                                    <li>
+                                        <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
                                     </li>
                                 }
 
                             </ul>
+
                         </div>
-
-
                     </div>
                 </div>
-            </div>
-            <!-- Top Bar End -->
-        }
-    }
-    @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.BeforeMenu)
-    {
-        @await Component.InvokeAsync("NewsRibon")
-    }
-    <!-- Navigation Menu -->
-    <div class="clearfix"></div>
-    <!-- menu start -->
-    <nav id="menu-1" class="mega-menu">
-        <!-- menu list items container -->
-        <section class="menu-list-items">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <!-- menu logo -->
-                        <ul class="menu-logo">
-                            <li>
-                                <a href="/"><img src="@supersetting.CompanyLogoUrl" alt="@supersetting.CompanyName" class="h-image"> </a>
-                            </li>
-                        </ul>
-                        <!-- menu links -->
-                        <ul class="menu-links">
-                            @{
-                                IEnumerable<Domain.Models.PageCategory> catitemlist = ViewBag.pages;
-                                IEnumerable<Domain.Models.WebPage> singlePages = ViewBag.singlePages;
-                            }
-
-                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
-                            {
-
-
-                                <li>
-                                    <a href="javascript:void(0)">@item.Title <i class="fas fa-angle-down fa-indicator"></i></a>
-
-                                    @{
-                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
-                                    }
-                                    <ul class="drop-down-multilevel">
-
-                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
-                                        {
-                                            <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
-                                        }
-
-                                    </ul>
-                                </li>
-
-                            }
-                            @if (xsetting.ShowProductsInMenu == true)
-                            {
-                                <li>
-                                    @{
-                                        IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
-                                    }
-                                    <a asp-page="/UHSource">
-                                        @supersetting.ProductTitle
-                                        @if (productpage.Count() > 0)
-                                        {
-                                            <i class="fas fa-angle-down fa-indicator"></i>
-                                        }
-                                    </a>
-                                    <ul class="drop-down-multilevel">
-                                        @foreach (var item in productpage)
-                                        {
-                                            <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
-                                        }
-                                    </ul>
-                                </li>
-                            }
-                            @foreach (var item in singlePages)
-                            {
-                                <li>
-                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
-
-                                </li>
-
-                            }
-                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
-                            {
-                                <li>
-                                    <a href="javascript:void(0)">@item.Title <i class="fas fa-angle-down fa-indicator"></i></a>
-
-                                    @{
-                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
-                                    }
-                                    <ul class="drop-down-multilevel">
-
-                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
-                                        {
-                                            <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
-                                        }
-
-                                    </ul>
-                                </li>
-
-                            }
-                            @if (xsetting.AddBlogToMenu == true)
-                            {
-                                <li>
-                                    <a asp-page="/Bpg">@xsetting.BlogDisplayTitle</a>
-
-                                </li>
-                            }
-                            @if (supersetting.ActivateProfilePortfolio == true)
-                            {
-                                <li>
-                                    <a asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
-
-                                </li>
-                            }
-                            @if (xsetting.ShowContactUsMenu == true)
-                            {
-                                <li>
-                                    <a asp-page="/Contact">Contact Us</a>
-
-                                </li>
-                            }
-                            @if (xsetting.AddCareerToMenu == true)
-                            {
-                                <li>
-                                    <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
-                                </li>
-                            }
-
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    </nav>
-    <!-- menu end -->
-</div>
+            </section>
+        </nav>
+        <!-- menu end -->
+    </div>
     <div class="clearfix"></div>
     <!-- =-=-=-=-=-=-= Primary Header End =-=-=-=-=-=-= -->
 }
@@ -906,7 +906,673 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
     </header>
 
 }
+else if (supersetting.TemplateLayoutKey == "Layout13131313")
+{
+    if (Model.DisableMainTopMenu == false)
+    {
+        if (xsetting.UseCustomMenuTop == true)
+        {
+            @Html.Raw(xsetting.CustomMenuTop)
+        }
 
+    }
+    @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.BeforeMenu)
+    {
+        @await Component.InvokeAsync("NewsRibon")
+    }
+
+
+    <header class="main-header">
+        @if (xsetting.DisableMainTopMenu == false)
+        {
+
+            <div class="main-menu__top">
+
+                <div class="main-menu__top-inner">
+
+                    <ul class="list-unstyled main-menu__contact-list">
+                        @if (xsetting.ShowEmailOneInTop == true)
+                        {
+
+                            <li>
+                                <div class="icon">
+
+                                    <i class="fas fa-envelope">
+                                    </i>
+
+                                </div>
+
+                                <div class="text">
+
+                                    <p>
+
+                                        <a href="mailto:@xsetting.EmailOne">
+                                            @xsetting.EmailOne
+                                        </a>
+
+                                    </p>
+
+                                </div>
+
+                            </li>
+                        }
+                        @if (xsetting.ShowAddressOneInTop == true)
+                        {
+
+                            <li>
+
+                                <div class="icon">
+
+                                    <i class="icon-pin">
+                                    </i>
+
+                                </div>
+
+                                <div class="text">
+
+                                    <p>
+                                        @xsetting.AddressOne
+                                    </p>
+
+                                </div>
+
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="main-menu__top-right">
+
+
+                        <div class="main-menu__social">
+
+                            <a href="@xsetting.YoutubeChannel">
+                                <i class="fab fa-youtube">
+                                </i>
+                            </a>
+                            <a href="@xsetting.TwitterPage">
+                                <i class="fab fa-twitter">
+                                </i>
+                            </a>
+
+                            <a href="@xsetting.FacebookPage">
+                                <i class="fab fa-facebook">
+                                </i>
+                            </a>
+
+
+                            <a href="@xsetting.InstagramPage">
+                                <i class="fab fa-instagram">
+                                </i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+        <nav class="main-menu">
+
+            <div class="main-menu__wrapper">
+
+                <div class="main-menu__wrapper-inner">
+
+                    <div class="main-menu__left">
+
+                        <div class="main-menu__logo">
+
+                            <a href="/">
+                                <img src="@supersetting.CompanyLogoUrl" class="main-logo" alt="@supersetting.CompanyName">
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="main-menu__main-menu-box">
+
+                        <a href="#" class="mobile-nav__toggler">
+                            <i class="fas fa-bars">
+                            </i>
+                        </a>
+
+                        <ul class="main-menu__list">
+
+                            @{
+                                IEnumerable<Domain.Models.PageCategory> catitemlist = ViewBag.pages;
+                                IEnumerable<Domain.Models.WebPage> singlePages = ViewBag.singlePages;
+                            }
+                            <!-- Single pages at TOP position -->
+                            @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                            {
+                                if (item.EnableDirectUrl == true)
+                                {
+                                    <li>
+                                        <a href="@item.DirectUrl">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                    </li>
+                                }
+                            }
+
+                            <!-- Categories at TOP position -->
+                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                            {
+                                <li class="dropdown">
+                                    <a href="#">@item.Title</a>
+                                    @{
+                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                    }
+                                    <ul class="shadow-box">
+                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                        {
+                                            if (xitem.EnableDirectUrl == true)
+                                            {
+                                                <li>
+                                                    <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            @*product*@
+                            @if (xsetting.ShowProductsInMenu == true)
+                            {
+                                <li class="dropdown">
+                                    @{
+                                        IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
+                                    }
+                                    <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+
+                                    @if (productpage.Count() > 0)
+                                    {
+                                        <ul class="shadow-box">
+                                            @foreach (var item in productpage)
+                                            {
+                                                <li>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+                                </li>
+                            }
+
+
+                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                            {
+                                <li class="dropdown">
+                                    <a href="#">@item.Title</a>
+                                    @{
+                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                    }
+                                    <ul class="shadow-box">
+                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                        {
+                                            if (xitem.EnableDirectUrl == true)
+                                            {
+                                                <li>
+                                                    <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                            {
+                                if (item.EnableDirectUrl == true)
+                                {
+                                    <li>
+                                        <a href="@item.DirectUrl">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                    </li>
+                                }
+                            }
+
+                            @foreach (var item in ViewBag.linkExternalDropdown)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            @if (xsetting.AddBlogToMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Bpg">@xsetting.BlogDisplayTitle</a>
+
+                                </li>
+                            }
+                            @if (supersetting.ActivateProfilePortfolio == true)
+                            {
+                                <li>
+                                    <a asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
+
+                                </li>
+                            }
+                            @if (xsetting.ShowContactUsMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Contact">Contact Us</a>
+
+                                </li>
+                            }
+                            @if (xsetting.AddCareerToMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
+                                </li>
+                            }
+                            @if (supersetting.ActivateLoginInMenu == true)
+                            {
+                                <li><a class="nav-link" asp-page="/AuthV2/Account/Login" asp-area="V2">Login</a></li>
+                            }
+
+
+                        </ul>
+
+                    </div>
+                    @if (supersetting.SpecialMenuButtonActivate == true)
+                    {
+                        <div class="main-menu__right">
+
+
+                            <div class="main-menu__btn-box">
+                                @if (supersetting.SpecialMenuButtonLink == "0")
+                                {
+                                    <a href="#" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+
+                                else if (supersetting.SpecialMenuButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@regex.Replace(supersetting.SpecialMenuButtonText, "-")" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <div class="stricky-header stricked-menu main-menu">
+
+        <div class="sticky-header__content">
+
+            <div class="main-menu__wrapper">
+
+                <div class="main-menu__wrapper-inner">
+
+                    <div class="main-menu__left">
+
+                        <div class="main-menu__logo">
+
+                            <a href="/">
+                                <img src="@supersetting.CompanyLogoUrl" class="mobile-logo" alt="@supersetting.CompanyName">
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="main-menu__main-menu-box">
+
+                        <a href="#" class="mobile-nav__toggler">
+                            <i class="fa fa-bars">
+                            </i>
+                        </a>
+
+                        <ul class="main-menu__list">
+
+ 
+                            <!-- Single pages at TOP position -->
+                            @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                            {
+                                if (item.EnableDirectUrl == true)
+                                {
+                                    <li>
+                                        <a href="@item.DirectUrl">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                    </li>
+                                }
+                            }
+
+                            <!-- Categories at TOP position -->
+                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                            {
+                                <li class="dropdown">
+                                    <a href="#">@item.Title</a>
+                                    @{
+                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                    }
+                                    <ul class="shadow-box">
+                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                        {
+                                            if (xitem.EnableDirectUrl == true)
+                                            {
+                                                <li>
+                                                    <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            @*product*@
+                            @if (xsetting.ShowProductsInMenu == true)
+                            {
+                                <li class="dropdown">
+                                    @{
+                                        IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
+                                    }
+                                    <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+
+                                    @if (productpage.Count() > 0)
+                                    {
+                                        <ul class="shadow-box">
+                                            @foreach (var item in productpage)
+                                            {
+                                                <li>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+                                </li>
+                            }
+
+
+                            @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                            {
+                                <li class="dropdown">
+                                    <a href="#">@item.Title</a>
+                                    @{
+                                        IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                    }
+                                    <ul class="shadow-box">
+                                        @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                        {
+                                            if (xitem.EnableDirectUrl == true)
+                                            {
+                                                <li>
+                                                    <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                            {
+                                if (item.EnableDirectUrl == true)
+                                {
+                                    <li>
+                                        <a href="@item.DirectUrl">@item.Title</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                    </li>
+                                }
+                            }
+
+                            @foreach (var item in ViewBag.linkExternalDropdown)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            @if (xsetting.AddBlogToMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Bpg">@xsetting.BlogDisplayTitle</a>
+
+                                </li>
+                            }
+                            @if (supersetting.ActivateProfilePortfolio == true)
+                            {
+                                <li>
+                                    <a asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
+
+                                </li>
+                            }
+                            @if (xsetting.ShowContactUsMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Contact">Contact Us</a>
+
+                                </li>
+                            }
+                            @if (xsetting.AddCareerToMenu == true)
+                            {
+                                <li>
+                                    <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
+                                </li>
+                            }
+                            @if (supersetting.ActivateLoginInMenu == true)
+                            {
+                                <li><a class="nav-link" asp-page="/AuthV2/Account/Login" asp-area="V2">Login</a></li>
+                            }
+
+
+
+                        </ul>
+
+                    </div>
+
+                    <div class="main-menu__right">
+
+                        <div class="main-menu__nav-sidebar-icon">
+
+                            <a class="navSidebar-button" href="#">
+
+                                <span class="icon-dots-menu-one">
+                                </span>
+
+                                <span class="icon-dots-menu-two">
+                                </span>
+
+                                <span class="icon-dots-menu-three">
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="main-menu__btn-box">
+
+                            @if (supersetting.SpecialMenuButtonActivate == true)
+                            {
+                                @if (supersetting.SpecialMenuButtonLink == "0")
+                                {
+                                    <a href="#" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+
+                                else if (supersetting.SpecialMenuButtonLink == "00")
+                                {
+                                    <a asp-page="/Contact" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@regex.Replace(supersetting.SpecialMenuButtonText, "-")" class="thm-btn">
+
+                                        <span class="thm-btn-text">
+                                            @supersetting.SpecialMenuButtonText
+                                        </span>
+
+                                        <span class="thm-btn-icon-box">
+                                            <i class="fas fa-arrow-right">
+                                            </i>
+                                        </span>
+
+                                    </a>
+                                }
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.sticky-header__content -->
+
+    </div>
+
+
+
+    <div class="mobile-nav__wrapper">
+
+        <div class="mobile-nav__overlay mobile-nav__toggler">
+        </div>
+
+        <!-- /.mobile-nav__overlay -->
+
+        <div class="mobile-nav__content">
+
+            <span class="mobile-nav__close mobile-nav__toggler">
+                <i class="fa fa-times">
+                </i>
+            </span>
+
+
+            <div class="logo-box">
+
+                <a href="/" aria-label="logo image">
+                    <img src="@supersetting.CompanyLogoUrl" style="padding: 5px; background-color: white; height: 50px; " alt="@supersetting.CompanyName">
+                </a>
+
+            </div>
+
+            <!-- /.logo-box -->
+
+            <div class="mobile-nav__container">
+
+                <ul class="main-menu__list">
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- /.mobile-nav__content -->
+
+    </div>
+
+}
 @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.AfterMenu)
 {
     @await Component.InvokeAsync("NewsRibon")

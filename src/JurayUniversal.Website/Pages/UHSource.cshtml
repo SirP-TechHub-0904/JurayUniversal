@@ -54,6 +54,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
     }
+    else if (Model.Templatechoose == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = Model.SuperSetting.ProductTitleHome })
 
@@ -723,56 +727,95 @@
 
                 </div>
             </div>
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
 
-                                                                }
-                                                            }
-                                                            else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
-                                                            {
-                                                                if (Model.SuperSetting.ProductTemplateKey == "Product1111")
-                                                                {
+        }
+    }
+    else if (Model.SuperSetting.TemplateLayoutKey == "Layout11111111")
+    {
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product2222")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product3333")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product4444")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product5555")
+        {
 
-                                                                }
-                                                                else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
-                                                                {
+        }
+        else if (Model.SuperSetting.ProductTemplateKey == "Product6666")
+        {
 
-                                                                }
-                                                            }
-                                                             
-                                                        }
+        }
+    }
+    if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+    {
+
+        if (Model.SuperSetting.ProductTemplateKey == "Product1111")
+        {
+            <div class="section-block-grey">
+                <div class="container">
+
+                    <div class="row">
+                        @foreach (var item in Model.Product)
+                        {
+                            <div class="col-md-4 col-sm-4 col-12">
+                                <div class="blog-grid">
+                                    <div class="blog-grid-img">
+                                        <img src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
+
+                                    </div>
+                                    <div class="blog-grid-text">
+                                        <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                            <h4 style=" height: 54px;overflow:hidden;">@item.Title</h4>
+                                        </a>
+                                        <div class="choose-3-line">
+                                            <p style=" height: 107px; overflow: hidden;text-overflow:ellipsis !important;">
+                                                @item.ShortDescription
+                                            </p>
+                                        </div>
+                                        <div class="mt-20 left-holder" style="margin-top:5px;">
+                                            <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="primary-button button-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+ 
+    }
+
+}
 
 

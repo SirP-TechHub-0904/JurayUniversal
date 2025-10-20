@@ -60,6 +60,10 @@
     {
         Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
     }
+    else if (Model.Templatechoose == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
 @await Component.InvokeAsync("BreadcrumOthers", new { data = Model.Setting.BlogDisplayTitle })
 
@@ -600,4 +604,47 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
         </div>
     }
 
+}
+else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+{
+    if (Model.SuperSetting.BlogTemplateKey == "Blog1111")
+    {
+        <section>
+            <div class="container">
+                <div class="title-custom-page">
+                    <h4>@Model.BlogCategory.Title</h4>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-12">
+                        <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="1" data-margin="30" data-autoplay="true">
+
+                            @foreach (var item in Model.Blogs)
+                            {
+                                <div class="item">
+                                    <div class="post style-3">
+                                        <div class="post-image">
+                                            <img src="@item.ImageUrl" alt="@item.Title">
+                                        </div>
+                                        <div class="post-desc">
+                                            <div class="post-title">
+                                                <h5><a title="@item.Title" asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                            </div>
+                                            <p>@item.Description</p>
+                                        </div>
+                                        <div class="post-bottom">
+                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
 }

@@ -317,7 +317,31 @@
                         </th>
                     </tr>
                 }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin") || User.IsInRole("SubAdmin") || Model.SuperSetting.TemplateLayoutKey == "Layout12121212")
+                {
 
+                    <tr>
+                        <th>Judge</th>
+                        <th>
+                            Layout13131313
+                        </th>
+                        <th>
+                            <a asp-page="/SectionPage/JudgeSection" asp-area="UI">Section List</a>
+                        </th>
+                        <th>
+                            <span id="origin11"></span>--------------
+                        </th>
+                        <th>
+                            <a href="https://weblayoutpro.com/judges/index" target="_blank">https://weblayoutpro.com/judges/index</a>
+                        </th>
+                        <th>
+                            @if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
+                            {
+                                <span>Active</span>
+                            }
+                        </th>
+                    </tr>
+                }
             </table>
         </main>
     </div>

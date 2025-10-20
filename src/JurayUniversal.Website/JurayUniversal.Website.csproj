@@ -118,6 +118,7 @@
     <Folder Include="Areas\Tools\Pages\Deliveries\" />
     <Folder Include="Areas\Tools\Pages\Subscribers\" />
     <Folder Include="Pages\Shared\Components\Navigation\" />
+    <Folder Include="Pages\Shared\Layouts\Theme\NewFolder\" />
     <Folder Include="wwwroot\Layout\Alina\" />
     <Folder Include="wwwroot\Layout\carspot\uploads\" />
     <Folder Include="wwwroot\templatesample\senatory\" />
