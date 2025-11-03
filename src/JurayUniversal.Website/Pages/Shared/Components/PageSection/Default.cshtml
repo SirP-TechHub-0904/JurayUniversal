@@ -9435,7 +9435,26 @@ else if (ViewBag.themedata == "Layout8888")
 
                                             </div>
                                             <div class="service-description">
-                                                <h4>@list.Title</h4>
+                                                <h4>
+
+                                                    @if (list.ButtonLink == "0")
+                                                    {
+                                                        <a href="#">@list.Title</a>
+                                                    }
+                                                    else if (list.ButtonLink == "Direct")
+                                                    {
+                                                        <a href="@list.DirectUrl">@list.Title</a>
+                                                    }
+                                                    else if (list.ButtonLink == "00")
+                                                    {
+                                                        <a asp-page="/Contact">@list.Title</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")">@list.Title</a>
+                                                    }
+
+                                                </h4>
                                                 <p>@Html.Raw(list.Description)</p>
                                                 @if (isHomePage == true)
                                                 {
@@ -9451,13 +9470,13 @@ else if (ViewBag.themedata == "Layout8888")
                                                         {
                                                             <a href="@list.DirectUrl"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
                                                         }
-                                                        else if (item.ButtonLink == "00")
+                                                        else if (list.ButtonLink == "00")
                                                         {
                                                             <a asp-page="/Contact"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
                                                         }
                                                         else
                                                         {
-                                                            <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
+                                                            <a asp-page="/Source" asp-route-id="@list.ButtonLink" asp-route-title="@regex.Replace(list.Title, "-")"><i class="fas fa-arrow-right"></i>@list.ButtonText</a>
                                                         }
 
 
@@ -11829,9 +11848,38 @@ else if (ViewBag.themedata == "Layout9999")
                                             <i class="icon-star"></i>
                                         </div>
                                     </div>
-                                    <h4 class="title wow animate__animated animate__fadeInUp">@item.Title</h4>
+                                    <h4 class="title wow animate__animated animate__fadeInUp">
+
+
+                                        @if (item.ButtonLink == "0")
+                                        {
+                                            <a href="#" class="boxed-btn btn-sanatory style-02">
+                                                @item.Title
+                                            </a>
+                                        }
+                                        else if (item.ButtonLink == "Direct")
+                                        {
+                                            <a href="@item.DirectUrl" class="boxed-btn btn-sanatory style-02">
+                                                @item.Title
+                                            </a>
+
+                                        }
+                                        else if (item.ButtonLink == "00")
+                                        {
+                                            <a asp-page="/Contact" class="boxed-btn btn-sanatory style-02">
+                                                @item.Title
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@regex.Replace(item.Title, "-")" class="boxed-btn btn-sanatory style-02">
+                                                @item.Title
+                                            </a>
+                                        }
+                                    </h4>
                                     <p class="description wow animate__animated animate__fadeInUp">
                                         @item.Description
+
                                     </p>
 
                                 </div>
@@ -17516,8 +17564,8 @@ else if (ViewBag.themedata == "Layout13131313")
                     </div>
                     @{
                         //var all = (item?.PageSectionLists ?? new List<PageSectionList>()).Take(4).ToList();
-                       // var all = (item?.PageSectionLists != null ? item.PageSectionLists.Take(4).ToList() : new List<PageSectionList>());
-                        
+                        // var all = (item?.PageSectionLists != null ? item.PageSectionLists.Take(4).ToList() : new List<PageSectionList>());
+
                         var all = ((item?.PageSectionLists as IEnumerable<JurayUniversal.Domain.Models.PageSectionList>) ?? Enumerable.Empty<JurayUniversal.Domain.Models.PageSectionList>()).Take(4).ToList();
 
                         var firstOne = all.Count > 0 ? all[0] : null;
