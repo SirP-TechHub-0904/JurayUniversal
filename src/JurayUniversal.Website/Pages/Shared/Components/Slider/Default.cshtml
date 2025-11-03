@@ -5999,6 +5999,12 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 <a href="tel:@xsetting.PhoneOne.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneOne</a>
                                             </li>
                                         }
+                                        @if (xsetting.ShowPhoneTwoInTop == true)
+                                        {
+                                            <li class="list-inline-item">
+                                                <a href="tel:@xsetting.PhoneTwo.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneTwo</a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </div>
@@ -6349,6 +6355,12 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                         {
                                             <li class="list-inline-item">
                                                 <a href="tel:@xsetting.PhoneOne.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneOne</a>
+                                            </li>
+                                        }
+                                        @if (xsetting.ShowPhoneTwoInTop == true)
+                                        {
+                                            <li class="list-inline-item">
+                                                <a href="tel:@xsetting.PhoneTwo.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneTwo</a>
                                             </li>
                                         }
                                     </ul>
@@ -6894,6 +6906,12 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                         {
                                             <li class="list-inline-item">
                                                 <a href="tel:@xsetting.PhoneOne.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneOne</a>
+                                            </li>
+                                        }
+                                        @if (xsetting.ShowPhoneTwoInTop == true)
+                                        {
+                                            <li class="list-inline-item">
+                                                <a href="tel:@xsetting.PhoneTwo.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneTwo</a>
                                             </li>
                                         }
                                         @{
@@ -7668,6 +7686,12 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                     {
                                         <li class="list-inline-item">
                                             <a href="tel:@xsetting.PhoneOne.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneOne</a>
+                                        </li>
+                                    }
+                                    @if (xsetting.ShowPhoneTwoInTop == true)
+                                    {
+                                        <li class="list-inline-item">
+                                            <a href="tel:@xsetting.PhoneTwo.Replace(" ", "").Replace(")", "").Replace("(", "").Replace("-", "")"> <i class="fas fa-mobile-alt"></i>@xsetting.PhoneTwo</a>
                                         </li>
                                     }
                                 </ul>
