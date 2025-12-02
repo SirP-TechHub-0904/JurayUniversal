@@ -46,7 +46,7 @@ namespace JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings
                 return Page();
             }
 
-            // Get buckets
+            // Get buckets 
             OldBucket = "juray2023";
             NewBucket = _context.SuperSettings.FirstOrDefault()?.BucketName ?? "juray2023";
 

@@ -87,7 +87,7 @@ else if (User.Identity.IsAuthenticated && User.IsInRole("Editor"))
                 <a asp-page="/IProduct/Main/Index" asp-area="Content" class="nav-link">
                     <i class="nav-icon fas fa-circle nav-icon"></i>
                     <p class="uppercase">
-                        Product
+                        @await Component.InvokeAsync("ProductTitle")
                     </p>
                 </a>
             </li>

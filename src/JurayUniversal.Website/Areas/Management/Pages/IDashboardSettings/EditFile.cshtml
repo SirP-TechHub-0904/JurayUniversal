@@ -1,0 +1,36 @@
+﻿
+@page
+@model JurayUniversal.Website.Areas.Management.Pages.IDashboardSettings.EditFileModel
+@{
+    ViewData["Title"] = "Edit File Key & URL";
+}
+
+<h2>Edit File</h2>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-success">@TempData["msg"]</div>
+}
+
+<div class="card p-4">
+    <form method="post">
+
+        <input type="hidden" asp-for="Entity" />
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Property" />
+
+        <div class="mb-3">
+            <label class="form-label">Key</label>
+            <input asp-for="Key" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">URL</label>
+            <input asp-for="Url" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="/Management/IDashboardSettings/AllFilesReconciliation" class="btn btn-secondary">Cancel</a>
+
+    </form>
+</div>

@@ -45,7 +45,6 @@
     <Content Remove="Areas\SMS\Pages\Error.cshtml" />
     <Content Remove="Pages\Shared\Components\Slider\Datacheck.cshtml" />
     <Content Remove="Pages\Shared\Components\TestimonyHome\Default.cshtml" />
-    <Content Remove="web.config" />
   </ItemGroup>
 
   <ItemGroup>

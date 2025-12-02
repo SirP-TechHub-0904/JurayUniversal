@@ -102,6 +102,15 @@
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
 
 
+    <div id="productTitleContainer" style="display:none;">
+        @await Component.InvokeAsync("ProductTitle")
+    </div>
+    <script>
+     let title = document.getElementById("productTitleContainer").innerText.trim();
+     console.log(title);
+
+  </script>
+
 
     <script>
         document.querySelectorAll('.lightgallery').forEach((el) => {
