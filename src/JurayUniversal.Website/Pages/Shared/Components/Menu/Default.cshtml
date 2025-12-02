@@ -5,6 +5,9 @@
     Domain.Models.Setting xsetting = ViewBag.setting;
     Domain.Models.SuperSetting supersetting = ViewBag.supersetting;
     Regex regex = new Regex("[^a-zA-Z0-9]");
+
+   
+
 }
 
 @if (xsetting.EnableBreakingNewsRibon == true && xsetting.RibonPosition == Domain.Enum.Enum.RibonPosition.Top)

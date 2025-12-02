@@ -89,6 +89,22 @@
                             <input type="hidden" name="key" value="@entry.Key" />
                             <button type="submit" class="btn btn-sm btn-primary">Move</button>
                         </form>
+                        <form method="get" action="/Management/IDashboardSettings/GetNewUrl" target="_blank">
+                            <input type="hidden" name="entity" value="@entry.EntityName" />
+                            <input type="hidden" name="id" value="@entry.EntityId" />
+                            <input type="hidden" name="property" value="@entry.PropertyName" />
+                            <input type="hidden" name="key" value="@entry.Key" />
+                            <button type="submit" class="btn btn-sm btn-success">Get New Url</button>
+                        </form>
+                        <form method="get" action="/Management/IDashboardSettings/EditFile">
+                            <input type="hidden" name="entity" value="@entry.EntityName" />
+                            <input type="hidden" name="id" value="@entry.EntityId" />
+                            <input type="hidden" name="property" value="@entry.PropertyName" />
+                            <input type="hidden" name="key" value="@entry.Key" />
+                            <input type="hidden" name="newUrl" value="@entry.Url" />
+                            <button type="submit" class="btn btn-sm btn-warning">Edit</button>
+                        </form>
+
                     </td>
                 </tr>
             }

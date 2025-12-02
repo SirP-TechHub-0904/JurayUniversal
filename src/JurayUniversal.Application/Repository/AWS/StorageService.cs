@@ -415,5 +415,31 @@ namespace JurayUniversal.Application.Services.AWS
 
             return Task.FromResult("juray2023");
         }
+
+        public async Task<FileReturnResponseDto> GetUrlAsync(AwsCredentials awsCredentialsValues, string key)
+        {
+            var credentials = new BasicAWSCredentials(awsCredentialsValues.AccessKey, awsCredentialsValues.SecretKey);
+
+            var config = new AmazonS3Config()
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USEast1
+            };
+            var response = new FileReturnResponseDto();
+            // initialise client
+            using var client = new AmazonS3Client(credentials, config);
+
+            var preurl = new GetPreSignedUrlRequest
+            {
+                BucketName = await BucketName(),
+                Key = key,
+                Expires = DateTime.UtcNow.AddYears(3)
+            };
+
+            var url = client.GetPreSignedURL(preurl);
+            response.Message = "200";
+            response.Key = key;
+            response.Url = url;
+            return response;
+        }
     }
 }

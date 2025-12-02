@@ -4,6 +4,13 @@
     Domain.Models.Setting xsetting = ViewBag.setting;
     Domain.Models.SuperSetting supersetting = ViewBag.superx;
     Regex regex = new Regex("[^a-zA-Z0-9]");
+
+
+    var htmlContent = await Component.InvokeAsync("ProductTitle");
+
+    using var writer = new System.IO.StringWriter();
+    htmlContent.WriteTo(writer, System.Text.Encodings.Web.HtmlEncoder.Default);
+    string title = writer.ToString().Trim();
 }
 
 
@@ -1471,7 +1478,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -1675,7 +1682,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -1973,7 +1980,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -2177,7 +2184,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -2465,7 +2472,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -2676,7 +2683,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -2899,7 +2906,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -3113,7 +3120,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -3399,7 +3406,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -3617,7 +3624,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -3913,7 +3920,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="sub-menu">
@@ -4116,7 +4123,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 @{
                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                 }
-                                <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                 @if (productpage.Count() > 0)
                                 {
                                     <ul class="sub-menu">
@@ -4448,7 +4455,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="dropdown-menu">
@@ -4827,7 +4834,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                         @{
                                                             IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                         }
-                                                        <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                        <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                         @if (productpage.Count() > 0)
                                                         {
                                                             <ul class="dropdown-menu">
@@ -5250,7 +5257,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a class="nav-link link_hd first-child" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a class="nav-link link_hd first-child" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="dropdown-menu">
@@ -5523,7 +5530,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a class="nav-link link_hd first-child" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a class="nav-link link_hd first-child" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="dropdown-menu">
@@ -5828,7 +5835,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a class="nav-link link_hd first-child" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a class="nav-link link_hd first-child" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="dropdown-menu">
@@ -6087,7 +6094,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                 }
-                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                 @if (productpage.Count() > 0)
                                                 {
                                                     <ul class="dropdown-menu">
@@ -6521,7 +6528,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                 }
-                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title" asp-route-title="@await Component.InvokeAsync("ProductTitle")">@await Component.InvokeAsync("ProductTitle")</a>
                                                 @if (productpage.Count() > 0)
                                                 {
                                                     <ul class="dropdown-menu">
@@ -7103,8 +7110,12 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                             <li class="nav-item dropdown">
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
+
+                                                   
                                                 }
-                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
+
+
                                                 @if (productpage.Count() > 0)
                                                 {
                                                     <ul class="dropdown-menu">
@@ -7538,7 +7549,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                 }
-                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                 @if (productpage.Count() > 0)
                                                 {
                                                     <ul class="dropdown-menu">
@@ -7773,7 +7784,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                                 }
-                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                                 @if (productpage.Count() > 0)
                                                 {
                                                     <ul class="dropdown-menu">
@@ -8030,7 +8041,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="sub-menu">
@@ -8254,7 +8265,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="sub-menu">
@@ -8466,7 +8477,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     @{
                                         IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
                                     }
-                                    <a asp-page="/UHSource">@await Component.InvokeAsync("ProductTitle")</a>
+                                    <a asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
                                     @if (productpage.Count() > 0)
                                     {
                                         <ul class="sub-menu">
@@ -9024,3 +9035,5 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
 {
     @await Component.InvokeAsync("NewsRibon")
 }
+
+ 

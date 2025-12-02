@@ -22,7 +22,7 @@ namespace JurayUniversal.Website.Pages
          public Setting Setting { get; set; }
         public string Templatechoose { get; set; }
         public string TitleContent { get; set; }
-        public async Task<IActionResult> OnGetAsync(long? id)
+        public async Task<IActionResult> OnGetAsync(long? id, string? title)
         {
             var httpContext = HttpContext;
             VerificationWebDto setting = await _settingsService.ValidateWeb(httpContext);
