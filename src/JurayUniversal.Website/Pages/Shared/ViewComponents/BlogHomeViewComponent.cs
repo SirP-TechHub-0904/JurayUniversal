@@ -20,7 +20,7 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            var blog = await _context.Blogs.Where(x => x.Publish == true).OrderByDescending(x=>x.Date).ThenBy(x=>x.SortOrder).Take(3).ToListAsync();
+            var blog = await _context.Blogs.Where(x => x.Publish == true).OrderByDescending(x=>x.Date).ThenBy(x=>x.SortOrder).Take(6).ToListAsync();
             var setting = await _context.Settings.FirstOrDefaultAsync();
             var suppersetting = await _context.SuperSettings.FirstOrDefaultAsync();
             ViewBag.sxt = setting;

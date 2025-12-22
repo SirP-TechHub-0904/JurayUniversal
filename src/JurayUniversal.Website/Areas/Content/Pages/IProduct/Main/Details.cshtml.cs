@@ -52,6 +52,7 @@ namespace JurayUniversal.Website.Areas.Content.Pages.IProduct.Main
             }
 
             Product = await _context.Products
+                .Include(x => x.ProductCategory)
                 .Include(x => x.ProductFeatures)
                 .Include(x => x.ProductSamples)
                 .FirstOrDefaultAsync(m => m.Id == id);

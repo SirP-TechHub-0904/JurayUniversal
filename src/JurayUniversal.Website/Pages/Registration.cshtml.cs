@@ -54,7 +54,7 @@ namespace JurayUniversal.Website.Pages
 
         [BindProperty]
         public long? CourseId { get;set;}
-        public async Task<IActionResult> OnGetAsync(long? mx, long? sec)
+        public async Task<IActionResult> OnGetAsync(long? mx, long? sec, Guid? vml)
         {
 
             var httpContext = HttpContext;
