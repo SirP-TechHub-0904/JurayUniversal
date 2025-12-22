@@ -15,11 +15,39 @@
             <a asp-page="./UpdateStatus" asp-route-id="@Model.Course.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Update Status</a>
             <a href="#studygroup" class="btn bg-gradient-success btn-sm" style="float:right;">Study Group</a>
         }
+
         <a asp-page="./Index" class="btn bg-gradient-primary btn-sm" style="float:right;">Back</a>
 
     </div>
     <!-- /.card-header -->
+    <div class="card-body">
+        <h3>REGISTRATION LINK</h3>
+        <br />
+        <div class="input-group">
+            <!-- Generate the same URL in a copyable textbox -->
+            <input id="regLink"
+                   type="text"
+                   class="form-control"
+                   readonly
+                   value="@Url.Page("/Registration", null, new { mx = Model.Course.Id, sec = Model.Course.SecNumber, vml = Guid.NewGuid() }, Request.Scheme)"
+                   onclick="this.select();" />
 
+            <div class="input-group-append">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        title="Copy link"
+                        onclick="copyRegLink()">
+                    <!-- Copy SVG icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M10 1.5H4A1.5 1.5 0 0 0 2.5 3v7A1.5 1.5 0 0 0 4 11.5h6A1.5 1.5 0 0 0 11.5 10V3A1.5 1.5 0 0 0 10 1.5zM4 2.5h6A.5.5 0 0 1 10.5 3v7a.5.5 0 0 1-.5.5H4a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5z" />
+                        <path d="M13.5 5v8A1.5 1.5 0 0 1 12 14.5H6a.5.5 0 0 1 0-1h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <small id="copyMsg" class="text-success d-none mt-2">Copied!</small>
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -180,7 +208,7 @@
                                     <a asp-page="./StudyGroups" asp-route-id="@item.Id" class="btn btn-primary btn-xs" style="float:right;">Manage</a>
 
                                 }
-                                </form>
+                            </form>
                         </div>
 
                     }
@@ -229,4 +257,32 @@
         </div>
     </div>
 
+}
+
+
+@section Scripts {
+
+
+    <script>
+        function copyRegLink() {
+            const input = document.getElementById("regLink");
+            const msg = document.getElementById("copyMsg");
+            const text = input.value;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => showCopied());
+            } else {
+                // fallback
+                input.focus();
+                input.select();
+                document.execCommand("copy");
+                showCopied();
+            }
+
+            function showCopied() {
+                msg.classList.remove("d-none");
+                setTimeout(() => msg.classList.add("d-none"), 1200);
+            }
+        }
+    </script>
 }
