@@ -83,7 +83,16 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
+
+            var db = await _context.SuperSettings
+       .IgnoreQueryFilters()
+       .FirstOrDefaultAsync(x => x.Id == SuperSetting.Id);
+
+            if (db == null)
+                return NotFound();
+
+
+
             if (imagelogin != null)
             {
                 try
@@ -113,8 +122,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.LoginBackgroundImageUrl = xresult.Url;
-                        SuperSetting.LoginBackgroundImageKey = xresult.Key;
+                        db.LoginBackgroundImageUrl = xresult.Url;
+                        db.LoginBackgroundImageKey = xresult.Key;
                     }
                     else
                     {
@@ -156,8 +165,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.CompanyLogoUrl = xresult.Url;
-                        SuperSetting.CompanyLogoKey = xresult.Key;
+                        db.CompanyLogoUrl = xresult.Url;
+                        db.CompanyLogoKey = xresult.Key;
                     }
                     else
                     {
@@ -199,8 +208,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.CompanyWhiteLogoUrl = xresult.Url;
-                        SuperSetting.CompanyWhiteLogoKey = xresult.Key;
+                        db.CompanyWhiteLogoUrl = xresult.Url;
+                        db.CompanyWhiteLogoKey = xresult.Key;
                     }
                     else
                     {
@@ -244,8 +253,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.CompanyIconUrl = xresult.Url;
-                        SuperSetting.CompanyIconKey = xresult.Key;
+                        db.CompanyIconUrl = xresult.Url;
+                        db.CompanyIconKey = xresult.Key;
                     }
                     else
                     {
@@ -288,8 +297,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.PortfolioImageOneUrl = xresult.Url;
-                        SuperSetting.PortfolioImageOneKey = xresult.Key;
+                        db.PortfolioImageOneUrl = xresult.Url;
+                        db.PortfolioImageOneKey = xresult.Key;
                     }
                     else
                     {
@@ -332,8 +341,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.PortfolioImageTwoUrl = xresult.Url;
-                        SuperSetting.PortfolioImageTwoKey = xresult.Key;
+                        db.PortfolioImageTwoUrl = xresult.Url;
+                        db.PortfolioImageTwoKey = xresult.Key;
                     }
                     else
                     {
@@ -376,8 +385,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.PortfolioBreacrumImageUrl = xresult.Url;
-                        SuperSetting.PortfolioBreacrumImageKey = xresult.Key;
+                        db.PortfolioBreacrumImageUrl = xresult.Url;
+                        db.PortfolioBreacrumImageKey = xresult.Key;
                     }
                     else
                     {
@@ -419,8 +428,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.ReloaderIconUrl = xresult.Url;
-                        SuperSetting.ReloaderIconKey = xresult.Key;
+                        db.ReloaderIconUrl = xresult.Url;
+                        db.ReloaderIconKey = xresult.Key;
                     }
                     else
                     {
@@ -463,8 +472,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.AppStoreImageUrl = xresult.Url;
-                        SuperSetting.AppStoreImageKey = xresult.Key;
+                        db.AppStoreImageUrl = xresult.Url;
+                        db.AppStoreImageKey = xresult.Key;
                     }
                     else
                     {
@@ -507,8 +516,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.PlayStoreImageUrl = xresult.Url;
-                        SuperSetting.PlayStoreImageKey = xresult.Key;
+                        db.PlayStoreImageUrl = xresult.Url;
+                        db.PlayStoreImageKey = xresult.Key;
                     }
                     else
                     {
@@ -550,8 +559,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.ReloaderIconUrl = xresult.Url;
-                        SuperSetting.ReloaderIconKey = xresult.Key;
+                        db.ReloaderIconUrl = xresult.Url;
+                        db.ReloaderIconKey = xresult.Key;
                     }
                     else
                     {
@@ -593,8 +602,8 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                     // 
                     if (xresult.Message.Contains("200"))
                     {
-                        SuperSetting.EncryptionUrl = xresult.Url;
-                        SuperSetting.EncryptionKey = xresult.Key;
+                        db.EncryptionUrl = xresult.Url;
+                        db.EncryptionKey = xresult.Key;
                     }
                     else
                     {
@@ -608,21 +617,80 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
                 }
             }
 
-            _context.Attach(SuperSetting).State = EntityState.Modified;
+            //_context.Attach(SuperSetting).State = EntityState.Modified;
 
 
-            //           var dataConfig = await _context.DataConfigs.FirstOrDefaultAsync();
+            // BASIC
+            db.BucketName = SuperSetting.BucketName;
+            db.MaximumUsers = SuperSetting.MaximumUsers;
 
-            //dataConfig.DashboardCSS = DataConfig.DashboardCSS;
-            //dataConfig.LayoutCSS = DataConfig.LayoutCSS;
-            //dataConfig.LoginCSS = DataConfig.LoginCSS;
-            //dataConfig.Configuration = DataConfig.Configuration;
-            //dataConfig.RedirectTohttpswww = DataConfig.RedirectTohttpswww;
-            //dataConfig.RedirectTohttps = DataConfig.RedirectTohttps;
-            //dataConfig.LiveConfiguration = DataConfig.LiveConfiguration;
+            // FLAGS
+            db.UserNipssArea = SuperSetting.UserNipssArea;
+            db.ActivateLoginInMenu = SuperSetting.ActivateLoginInMenu;
+            db.ActivateLogin = SuperSetting.ActivateLogin;
+            db.JustWebsite = SuperSetting.JustWebsite;
+            db.ActivateOnlyAuthorizedDevice = SuperSetting.ActivateOnlyAuthorizedDevice;
+            db.ActivateSMS = SuperSetting.ActivateSMS;
+            db.ActivateComingSoon = SuperSetting.ActivateComingSoon;
 
-            //            _context.Attach(dataConfig).State = EntityState.Modified;
+            // TEMPLATES
+            db.TemplateLayoutKey = SuperSetting.TemplateLayoutKey;
+            db.LoginTemplateKey = SuperSetting.LoginTemplateKey;
+            db.ColorTemplateKey = SuperSetting.ColorTemplateKey;
+            db.SliderTemplateKey = SuperSetting.SliderTemplateKey;
+            db.ProductTemplateKey = SuperSetting.ProductTemplateKey;
+            db.BlogTemplateKey = SuperSetting.BlogTemplateKey;
+            db.ReloaderTemplateKey = SuperSetting.ReloaderTemplateKey;
+            db.PageHeaderTemplateKey = SuperSetting.PageHeaderTemplateKey;
+            db.FooterTemplateKey = SuperSetting.FooterTemplateKey;
 
+            // COMPANY
+            db.CompanyName = SuperSetting.CompanyName;
+            db.CompanyNameAbbreviation = SuperSetting.CompanyNameAbbreviation;
+            db.CompanyWebsiteLink = SuperSetting.CompanyWebsiteLink;
+            db.CompanyDescription = SuperSetting.CompanyDescription;
+
+            // TITLES
+            db.WebsiteTitle = SuperSetting.WebsiteTitle;
+            db.DashboardTitle = SuperSetting.DashboardTitle;
+            db.ProductTitle = SuperSetting.ProductTitle;
+            db.ProductTitleHome = SuperSetting.ProductTitleHome;
+
+            // LOGIN
+            db.LoginTitle = SuperSetting.LoginTitle;
+            db.LoginNoteTitle = SuperSetting.LoginNoteTitle;
+            db.LoginNote = SuperSetting.LoginNote;
+            db.LoginNoteFooter = SuperSetting.LoginNoteFooter;
+            db.UseNormalLogoInLogin = SuperSetting.UseNormalLogoInLogin;
+            db.UseWhiteLogoInLogin = SuperSetting.UseWhiteLogoInLogin;
+
+            // COMMUNICATION
+            db.EmailTemplate = SuperSetting.EmailTemplate;
+            db.SMSTemplate = SuperSetting.SMSTemplate;
+
+            // FOOTER / MENU
+            db.ShowMadeByJuray = SuperSetting.ShowMadeByJuray;
+            db.ShowMadeByXYZ = SuperSetting.ShowMadeByXYZ;
+            db.SpecialMenuButtonActivate = SuperSetting.SpecialMenuButtonActivate;
+            db.SpecialMenuButtonLink = SuperSetting.SpecialMenuButtonLink;
+            db.SpecialMenuButtonText = SuperSetting.SpecialMenuButtonText;
+            db.ActivateWorkWithUsFooter = SuperSetting.ActivateWorkWithUsFooter;
+            db.ActivateDownloadOurAppFooter = SuperSetting.ActivateDownloadOurAppFooter;
+            db.TitleDownloadOurAppFooter = SuperSetting.TitleDownloadOurAppFooter;
+            db.DescriptionDownloadOurAppFooter = SuperSetting.DescriptionDownloadOurAppFooter;
+
+            // SUBSCRIBE
+            db.ActivateSubscribeFormOnFooter = SuperSetting.ActivateSubscribeFormOnFooter;
+            db.ActivateProfilePortfolio = SuperSetting.ActivateProfilePortfolio;
+
+            if (db.ActivateProfilePortfolio)
+            {
+                db.PortfolioTitle = SuperSetting.PortfolioTitle;
+                db.PortfolioMiniTitle = SuperSetting.PortfolioMiniTitle;
+                db.PortfolioDescription = SuperSetting.PortfolioDescription;
+                db.ShowInMenuPortfolio = SuperSetting.ShowInMenuPortfolio;
+                db.ShowInFooterPortfolio = SuperSetting.ShowInFooterPortfolio;
+            }
             try
             {
                 await _context.SaveChangesAsync();
