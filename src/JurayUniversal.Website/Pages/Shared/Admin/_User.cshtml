@@ -375,7 +375,7 @@
                 "autoWidth": false,
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 "responsive": false,
-                "scrollX": true, 
+                "scrollX": true,
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
                 "paging": true,
@@ -462,12 +462,33 @@
 
 
 
-    <script>
+    @*<script>
         $(document).ready(function () {
             $('.summernote').summernote();
         });
 
 
+    </script>*@
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['insert', ['picture', 'link']],
+                    ['view', ['codeview']]
+                ],
+                callbacks: {
+                    onImageUpload: function (files) {
+                        alert('File uploads are disabled. Please use an image URL.');
+                    },
+                    onDrop: function (e) {
+                        e.preventDefault();
+                        alert('Drag-and-drop uploads are disabled.');
+                    }
+                }
+            });
+        });
     </script>
     <script>
         $(document).ready(function () {
