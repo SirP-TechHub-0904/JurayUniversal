@@ -65,6 +65,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
         <tr>
             <td style=""background-color: #333333; color: #ffffff; padding: 10px; text-align: center;"">
                 <p>&copy; //Date// //CompanyName// | Contact us at: <a href=""mailto://CompanyEmail//"" style=""color: #ffffff; text-decoration: none;"">//CompanyEmail//</a></p>
+                <p><a href=""https://nipsskuru.gov.ng/"" style=""color: #ffffff; text-decoration: none;"">unsubscribe</a></p>
             </td>
         </tr>
     </table>
@@ -92,7 +93,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             PostmarkResponse response = new PostmarkResponse();
             var message = new PostmarkMessage
             {
-                From = "NIPSS <admin@nipssportal.com.ng>",
+                From = "NIPSS <admin@nipsskuru.gov.ng>",
                 To = to,
                 Subject = subject,
                 HtmlBody = emailTemplate
@@ -507,7 +508,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             PostmarkResponse response = new PostmarkResponse();
             var message = new PostmarkMessage
             {
-                From = "NIPSS <admin@nipssportal.com.ng>",
+                From = "NIPSS <admin@nipsskuru.gov.ng>",
                 To = to,
                 Subject = subject,
                 HtmlBody = emailTemplate
@@ -584,7 +585,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             PostmarkResponse response = new PostmarkResponse();
             var message = new PostmarkMessage
             {
-                From = "NIPSS <admin@nipssportal.com.ng>",
+                From = "NIPSS <admin@nipsskuru.gov.ng>",
                 To = to,
                 Subject = subject,
                 HtmlBody = emailTemplate
