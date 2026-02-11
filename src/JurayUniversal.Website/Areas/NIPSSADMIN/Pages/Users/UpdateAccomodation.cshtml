@@ -57,7 +57,17 @@
                             Current Accomodation:
                             @if (Model.ParticipantList.Accomodation != null)
                             {
-                                @Model.ParticipantList.Accomodation.Name
+
+                                <span class="badge badge-info">@Model.ParticipantList.Accomodation.Name</span>
+
+                                <form method="post" asp-page-handler="Remove" style="display:inline-block; margin-left:10px;">
+                                    <input type="hidden" asp-for="UserData.Id" />
+                                    <button type="submit" class="btn btn-danger btn-xs"
+                                            onclick="return confirm('Are you sure you want to remove this participant from this accommodation?')">
+                                        Remove Participant
+                                    </button>
+                                </form>
+
                             }
                             else
                             {
@@ -73,7 +83,7 @@
 
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="UserData.Id" />
-                            
+
 
                             <div class="form-group">
                                 <label class="form-label">Choose Accomodation</label>
@@ -82,7 +92,7 @@
                                 </select>
 
                             </div>
-                           
+
 
                             <div class="form-group">
                                 <input type="submit" value="Update" class="btn btn-primary" />

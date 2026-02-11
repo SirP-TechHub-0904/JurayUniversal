@@ -1,17 +1,19 @@
-﻿using System;
+﻿using JurayUniversal.Application.Services;
+using JurayUniversal.Domain.Models;
+using JurayUniversal.Persistence.EF.SQL;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PostmarkEmailService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using JurayUniversal.Persistence.EF.SQL;
-using Microsoft.EntityFrameworkCore;
+using System.Web.Helpers;
 using static JurayUniversal.Domain.Enum.Enum;
-using JurayUniversal.Application.Services;
-using JurayUniversal.Domain.Models;
-using Microsoft.AspNetCore.Identity;
-using PostmarkEmailService;
 
 
 namespace JurayUniversal.Application.Repository.NotifyRegister
@@ -90,31 +92,52 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             string smtpPassword = "";
             var settingconfig = await _context.DataConfigs.FirstOrDefaultAsync();
 
-            PostmarkResponse response = new PostmarkResponse();
-            var message = new PostmarkMessage
-            {
-                From = "NIPSS <admin@nipsskuru.gov.ng>",
-                To = to,
-                Subject = subject,
-                HtmlBody = emailTemplate
-            };
+            //PostmarkResponse response = new PostmarkResponse();
+            //var message = new PostmarkMessage
+            //{
+            //    From = "NIPSS <admin@nipsskuru.gov.ng>",
+            //    To = to,
+            //    Subject = subject,
+            //    HtmlBody = emailTemplate
+            //};
 
             try
             {
-                response = await _postmarkClient.SendMessageAsync(message);
+                //response = await _postmarkClient.SendMessageAsync(message);
 
-                
-                Console.WriteLine("Email sent successfully. Message ID: " + response.MessageID);
-                if(response.Status == PostmarkStatus.Success)
+                try
                 {
+                    MailMessage mail = new MailMessage();
+
+                    //set the addresses 
+                    mail.From = new MailAddress("noreply@nipsskuru.gov.ng"); //IMPORTANT: This must be same as your smtp authentication address.
+                    mail.To.Add(to);
+
+                    //set the content 
+
+                    mail.Subject = subject;
+                    mail.IsBodyHtml = true;
+                    mail.Body = emailTemplate;
+                    //send the message 
+                    SmtpClient smtp = new SmtpClient("mail.nipsskuru.gov.ng");
+
+                    //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
+                    NetworkCredential Credentials = new NetworkCredential("noreply@nipsskuru.gov.ng", "[REDACTED_SMTP_PASSWORD]");
+                    smtp.Credentials = Credentials;
+                    smtp.Send(mail);
                     return true;
                 }
-                return true;
+                catch (Exception ex)
+                {
+                   return false;
+                }
+
+                 
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error sending email: " + ex.Message);
-                return true;
+                return false;
             }
             //try
             //{

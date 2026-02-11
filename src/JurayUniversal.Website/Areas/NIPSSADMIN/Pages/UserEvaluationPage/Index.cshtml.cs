@@ -48,7 +48,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.UserEvaluationPage
 
            Course = await _context.Courses
                 .Include(x => x.CourseCategory).OrderByDescending(x => x.Year.Year)
-                .FirstOrDefaultAsync(x => x.CourseCategoryId == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (Course == null)
             {
                 return NotFound();
