@@ -1,66 +1,130 @@
 ﻿@page
 @model JurayUniversal.Website.Areas.NIPSSADMIN.Pages.UserEvaluationPage.ViewEvaluationResultModel
 @{
+    string resourceName = Model.Moderator.User?.FullnameX ?? Model.Moderator.Fullname;
 }
 
 <div class="card">
-     
+    <div class="card-header">
+        <button onclick="generatePDF()" class="btn btn-primary float-right">
+            <i class="fa fa-download"></i> Download PDF Report
+        </button>
+    </div>
+    <div id="printableArea" style="padding:0 20px; background: #fff;">
+             <div class="row">
+                <div class="col-md-12" style="text-align:center;margin:0 auto !important">
+                    <div class="" style="text-align:center;margin:0 auto;">
+                        <img src="~/images/logo.png" style="text-align:center;margin:0 auto;height:70px;" />
+                    </div>
 
-    <div class="row">
+                    <h4 class="center">
+                        <span style="font-weight:800;"> RESOURCE PERSON'S EVALUATION FORM</span>
+                    </h4>
+                    <h5 class="center">
+                        <span style="font-weight:800;">National Institute for Policy and Strategic Studies, Kuru</span>
+                    </h5>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="padding: 0 0.4rem; ">Date</th>
+                        <td style="padding: 0 0.4rem; ">@Model.Moderator.TimeTable.Date.ToString("ddd dd MMM, yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th style="padding: 0 0.4rem; ">Topic discussed</th>
+                        <td style="padding: 0 0.4rem; ">@Model.Moderator.TimeTable.Content</td>
+                    </tr>
+                    <tr>
+                        <th style="padding: 0 0.4rem; ">Resource Person</th>
+
+                        <td style="padding: 0 0.4rem; ">
+                            @if (Model.Moderator.User != null)
+                            {
+                                @Model.Moderator.User.FullnameX
+                            }
+                            else
+                            {
+                                @Model.Moderator.Fullname
+                            }
+
+
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+             
         <div class="row">
+
             <div class="col-md-12" style="text-align:center;margin:0 auto !important">
-                <div class="" style="text-align:center;margin:0 auto;">
-                    <img src="~/images/logo.png" style="text-align:center;margin:0 auto;height:100px;" />
+                <h3>Response Distribution</h3>
+                <style>
+                    /* This style only applies to the PDF/Print output */
+                    @@media print {
+                        #chartContainer {
+                            width: 70% !important;  /*Reduces width */
+                            margin: 0 auto !important;
+                            height: 200px !important;  /*Reduces height */
+                        }
+
+                        canvas {
+                            width: 100% !important;
+                            height: 250px !important;
+                        }
+                    }
+                    #printableArea {
+                        width: 800px; /* Standard A4 pixel width at 96dpi */
+                        margin: 0 auto;
+                        background: #fff;
+                    }
+                     
+                </style>
+
+                <div id="chartContainer">
+                    <canvas id="responseChart"></canvas>
                 </div>
 
-                <h4 class="center">
-                    <span style="font-weight:800;"> RESOURCE PERSON'S EVALUATION FORM</span>
-                </h4>
-                <h5 class="center">
-                    <span style="font-weight:800;">National Institute for Policy and Strategic Studies, Kuru</span>
-                </h5>
-                
+            </div>
+
+        </div>
+        <div class="row mt-5" style="margin-top: 1rem !important;">
+            <div class="col-md-12">
+                <h3 style="text-align:center;">Evaluation Summary Statistics (%)</h3>
+                <table class="table table-bordered table-sm text-center">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Category</th>
+                            <th class="text-danger">Strongly Disagree</th>
+                            <th class="text-primary">Disagree</th>
+                            <th class="text-secondary">Neutral</th>
+                            <th class="text-warning">Agree</th>
+                            <th class="text-success">Strongly Agree</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var question in Model.QuestionResponseCounts)
+                        {
+                            var total = question.Value.Values.Sum();
+                            <tr>
+                                <td class="text-left"><strong>@question.Key</strong></td>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    var count = question.Value.ContainsKey(i) ? question.Value[i] : 0;
+                                    var percentage = total > 0 ? (double)count / total * 100 : 0;
+                                    <td>@percentage.ToString("N1")%</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="row">
-
-            <table class="table table-bordered">
-                <tr>
-                    <th>Date</th>
-                    <td>@Model.Moderator.TimeTable.Date.ToString("ddd dd MMM, yyyy")</td>
-                </tr>
-                <tr>
-                    <th>Topic discussed</th>
-                    <td>@Model.Moderator.TimeTable.Content</td>
-                </tr>
-                <tr>
-                    <th>Name of the Resource Person</th>
-
-                    <td>
-                        @if (Model.Moderator.User != null)
-                        {
-                            @Model.Moderator.User.FullnameX
-                        }
-                        else
-                        {
-                            @Model.Moderator.Fullname
-                        }
 
 
-
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-
-    </div>
-    <div class="row">
-
-        <div class="col-md-8" style="text-align:center;margin:0 auto !important">
-            <h2>Response Distribution</h2>
-            <canvas id="responseChart" width="400" height="200"></canvas>
-        </div>
 
     </div>
     <!-- /.card-header -->
@@ -77,7 +141,7 @@
                         }
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @for (int i = 0; i < Model.ParticipantEvaluations.Count; i++)
                     {
@@ -99,11 +163,39 @@
 
 
 
- 
+
 
 @section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+
+   function generatePDF() {
+    const element = document.getElementById('printableArea');
+
+    // Evaluates the filename correctly using parentheses for Razor
+    const fileName = 'Evaluation_@(resourceName.Replace(" ", "_")).pdf';
+
+    const opt = {
+        margin:       [0.4, 0.4, 0.4, 0.4], // Smaller margins for bigger content
+        filename:     fileName,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  {
+            scale: 2,
+            useCORS: true,
+            width: element.scrollWidth // Ensures it captures the full width
+        },
+        jsPDF: {
+            unit: 'in',
+            format: 'a4',
+            orientation: 'portrait'
+        }
+    };
+
+    // This line MUST be active for the download to happen
+    html2pdf().set(opt).from(element).save();
+}
+
         document.addEventListener("DOMContentLoaded", function () {
             var ctx = document.getElementById('responseChart').getContext('2d');
             var chartData = {

@@ -40,7 +40,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
 
         [BindProperty]
         public Profile UserData { get; set; }
-        public ParticipantList ParticipantList { get; set; } 
+        public ParticipantList ParticipantList { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -52,12 +52,12 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
             UserData = user;
             //
             ParticipantList = await _context.ParticipantLists.Include(x => x.Course).ThenInclude(x => x.CourseCategory)
-                .Include(x=>x.Accomodation)
+                .Include(x => x.Accomodation)
                 .FirstOrDefaultAsync(x => x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active && x.UserId == user.Id);
 
- 
-            ViewData["AccomodationId"] = new SelectList(_context.Accomodations.Where(x=>x.ParticipantListId == null), "Id", "Name");
-             return Page();
+
+            ViewData["AccomodationId"] = new SelectList(_context.Accomodations.Where(x => x.ParticipantListId == null), "Id", "Name");
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -76,7 +76,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
             _context.Attach(ParticipantList).State = EntityState.Modified;
 
             var existingAccomodation = await _context.Accomodations.FirstOrDefaultAsync(x => x.ParticipantListId == ParticipantList.Id);
-            if(existingAccomodation != null)
+            if (existingAccomodation != null)
             {
                 existingAccomodation.ParticipantListId = null;
                 _context.Attach(existingAccomodation).State = EntityState.Modified;
@@ -89,11 +89,43 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
             await _context.SaveChangesAsync();
 
             TempData["success"] = "Successful";
-        
-            return RedirectToPage("./UpdateAccomodation", new { id = user.Id
-    });
-        }
 
+            return RedirectToPage("./UpdateAccomodation", new
+            {
+                id = user.Id
+            });
+        }
+        public async Task<IActionResult> OnPostRemoveAsync()
+        {
+            var user = await _userManager.FindByIdAsync(UserData.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Find the current accommodation assigned to this participant
+            var participantList = await _context.ParticipantLists
+                .FirstOrDefaultAsync(x => x.ParticipantStatus == Domain.Enum.Enum.ParticipantStatus.Active && x.UserId == user.Id);
+
+            if (participantList != null)
+            {
+                // Find the accommodation record linked to this participant
+                var existingAccomodation = await _context.Accomodations
+                    .FirstOrDefaultAsync(x => x.ParticipantListId == participantList.Id);
+
+                if (existingAccomodation != null)
+                {
+                    // Set the foreign key to null to "free up" the room
+                    existingAccomodation.ParticipantListId = null;
+                    _context.Attach(existingAccomodation).State = EntityState.Modified;
+
+                    await _context.SaveChangesAsync();
+                    TempData["success"] = "Accommodation removed successfully";
+                }
+            }
+
+            return RedirectToPage("./UpdateAccomodation", new { id = user.Id });
+        }
 
     }
 }
