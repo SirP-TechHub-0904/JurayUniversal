@@ -172,7 +172,7 @@
                                 <div class="contact-info-section">
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2 col-4 center-holder">
-                                            <i class="fa fa-clock-o"></i>
+                                            <i class="fa fa-clock"></i>
                                         </div>
                                         <div class="col-md-10 col-sm-10 col-8">
                                             @if (!String.IsNullOrEmpty(Model.Setting.WorkingHour))
@@ -190,6 +190,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="map-view">
+
+                @if (!string.IsNullOrEmpty(Model.Setting.GoogleMap))
+                {
+                    @Html.Raw(Model.Setting.GoogleMap)
+                }
             </div>
         </div>
     </div>

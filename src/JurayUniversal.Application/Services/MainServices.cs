@@ -16,8 +16,8 @@ using System.Threading.Tasks;
 namespace JurayUniversal.Application.Services
 {
     public class MainServices
-    { 
-       
+    {
+
 
 
         //public static string BucketName(IServiceScopeFactory scopeFactory)
@@ -79,14 +79,14 @@ namespace JurayUniversal.Application.Services
             if (!String.IsNullOrEmpty(input))
             {
 
-            
-            // Remove HTML tags
-            string noHtmlTags = Regex.Replace(input, @"<[^>]+>|&nbsp;", string.Empty);
 
-            // Remove CSS properties
-            string noCssProperties = Regex.Replace(noHtmlTags, @"\sstyle\s*=\s*""[^""]*""", string.Empty);
+                // Remove HTML tags
+                string noHtmlTags = Regex.Replace(input, @"<[^>]+>|&nbsp;", string.Empty);
 
-            return noCssProperties;
+                // Remove CSS properties
+                string noCssProperties = Regex.Replace(noHtmlTags, @"\sstyle\s*=\s*""[^""]*""", string.Empty);
+
+                return noCssProperties;
             }
             return "BIOGRAPHY";
         }
@@ -101,6 +101,27 @@ namespace JurayUniversal.Application.Services
 
         //    return string.Empty;
         //}
+
+
+        public static string GenerateSlug(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return "";
+
+            // Convert to lowercase
+            string slug = title.ToLower();
+
+            // Replace non-alphanumeric characters with hyphen
+            slug = Regex.Replace(slug, @"[^a-z0-9]+", "-");
+
+            // Remove multiple hyphens
+            slug = Regex.Replace(slug, @"-+", "-");
+
+            // Trim hyphens from start and end
+            slug = slug.Trim('-');
+
+            return slug;
+        }
     }
 
 

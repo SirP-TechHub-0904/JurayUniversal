@@ -1,12 +1,13 @@
 ﻿@model JurayUniversal.Domain.Models.Setting
 @using System.Text.RegularExpressions;
+@using JurayUniversal.Application.Services;
 
 @{
     Domain.Models.Setting xsetting = ViewBag.setting;
     Domain.Models.SuperSetting supersetting = ViewBag.supersetting;
     Regex regex = new Regex("[^a-zA-Z0-9]");
 
-   
+
 
 }
 
@@ -67,12 +68,14 @@
                                         <li>
                                             <i class="fas fa-phone"></i>@ViewBag.setting.PhoneOne
                                         </li>
-                                    } @if (xsetting.ShowPhoneTwoInTop == true)
+                                    }
+             @if (xsetting.ShowPhoneTwoInTop == true)
                                     {
                                         <li>
                                             <i class="fas fa-phone"></i>@ViewBag.setting.PhoneTwo
                                         </li>
-                                    } @if (xsetting.ShowPhoneThreeInTop == true)
+                                    }
+             @if (xsetting.ShowPhoneThreeInTop == true)
                                     {
                                         <li>
                                             <i class="fas fa-phone"></i>@ViewBag.setting.PhoneThree
@@ -90,7 +93,7 @@
                                         else
                                         {
                                             <li>
-                                                <a class="top-class" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-th"></i>@item.Title</a>
+                                                <a class="top-class" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><i class="fas fa-th"></i>@item.Title</a>
 
                                             </li>
                                         }
@@ -148,7 +151,7 @@
                         else
                         {
                             <li>
-                                <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                             </li>
                         }
@@ -185,7 +188,7 @@
                                                     else
                                                     {
                                                         <li>
-                                                            <a asp-page="/Source" asp-route-id="@litem.Id" asp-route-title="@regex.Replace(litem.Title, "-")">@litem.Title</a>
+                                                            <a asp-page="/Source" asp-route-id="@litem.Id" asp-route-title="@MainServices.GenerateSlug(litem.Title)">@litem.Title</a>
 
                                                         </li>
                                                     }
@@ -197,7 +200,7 @@
                                     else
                                     {
                                         <li>
-                                            <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
 
                                         </li>
                                     }
@@ -220,7 +223,7 @@
                                 <ul class="nav-dropdown">
                                     @foreach (var item in productpage)
                                     {
-                                        <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                        <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                     }
                                 </ul>
                             }
@@ -228,7 +231,7 @@
                         </li>
                     }
 
-                    @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                    @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
                     {
                         <li>
                             <a href="#">@item.Title</a>
@@ -250,7 +253,7 @@
                                     else
                                     {
                                         <li>
-                                            <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
 
                                         </li>
                                     }
@@ -260,7 +263,7 @@
                         </li>
 
                     }
-                    @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                    @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
                     {
                         if (item.EnableDirectUrl == true)
                         {
@@ -272,7 +275,7 @@
                         else
                         {
                             <li>
-                                <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                             </li>
                         }
@@ -313,6 +316,58 @@
                             <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
                         </li>
                     }
+                    @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                    {
+                        <li>
+                            <a href="#">@item.Title</a>
+
+                            @{
+                                IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                            }
+                            <ul class="nav-dropdown">
+
+                                @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
+                                {
+                                    if (xitem.EnableDirectUrl == true)
+                                    {
+                                        <li>
+                                            <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
+
+                                        </li>
+                                    }
+                                }
+
+                            </ul>
+                        </li>
+
+                    }
+                    @{
+                        var menuIndex = 1;
+                    }
+                    @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                    {
+                        if (item.EnableDirectUrl == true)
+                        {
+                            <li class="md-@menuIndex-style">
+                                <a href="@item.DirectUrl">@item.Title</a>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="md-@menuIndex-style">
+                                <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
+
+                            </li>
+                        }
+                    }
                     @if (supersetting.ActivateLoginInMenu == true)
                     {
                         <li class="nav-item"><a class="nav-link" asp-page="/AuthV2/Account/Login" asp-area="V2">Login</a></li>
@@ -348,7 +403,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                     @foreach (var item in topPages)
                                     {
                                         <li>
-                                            <a style="color:white;" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-th"></i>@item.Title</a>
+                                            <a style="color:white;" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><i class="fas fa-th"></i>@item.Title</a>
 
                                         </li>
                                     }
@@ -403,7 +458,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
 
                                             @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
                                             {
-                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a></li>
                                             }
 
                                         </ul>
@@ -426,7 +481,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                         <ul class="drop-down-multilevel">
                                             @foreach (var item in productpage)
                                             {
-                                                <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                <li><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                             }
                                         </ul>
                                     </li>
@@ -434,7 +489,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                 @foreach (var item in singlePages)
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                                     </li>
 
@@ -451,7 +506,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
 
                                             @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
                                             {
-                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                                <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a></li>
                                             }
 
                                         </ul>
@@ -528,7 +583,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                     @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                            <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                         </li>
 
@@ -546,7 +601,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
 
                                 @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
                                 {
-                                    <a class="dropdown-item" asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                    <a class="dropdown-item" asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                 }
 
                             </div>
@@ -566,7 +621,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                                 <div class="dropdown-menu">
                                     @foreach (var item in productpage)
                                     {
-                                        <a class="dropdown-item" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a class="dropdown-item" asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                     }
                                 </div>
                             }
@@ -586,7 +641,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
 
                                 @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
                                 {
-                                    <a class="dropdown-item" asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                    <a class="dropdown-item" asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                 }
 
                             </div>
@@ -597,7 +652,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                     @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                            <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                         </li>
 
@@ -708,7 +763,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                             else
                                             {
                                                 <li class="menu-item">
-                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                                                 </li>
                                             }
@@ -735,7 +790,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                         else
                                                         {
                                                             <li class="menu-item">
-                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
 
                                                             </li>
                                                         }
@@ -758,7 +813,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                     <ul class="sub-menu">
                                                         @foreach (var item in productpage)
                                                         {
-                                                            <li class="menu-item"><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                            <li class="menu-item"><a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                                         }
                                                     </ul>
                                                 }
@@ -787,7 +842,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                         else
                                                         {
                                                             <li class="menu-item">
-                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
 
                                                             </li>
                                                         }
@@ -809,7 +864,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                             else
                                             {
                                                 <li class="menu-item">
-                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
 
                                                 </li>
                                             }
@@ -884,7 +939,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                         }
                                         else
                                         {
-                                            <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@regex.Replace(supersetting.SpecialMenuButtonText, "-")" class="gen-button">
+                                            <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@MainServices.GenerateSlug(supersetting.SpecialMenuButtonText)" class="gen-button">
 
                                                 <div class="gen-button-block">
                                                     <span class="gen-button-line-left"></span>
@@ -1059,7 +1114,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 else
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                     </li>
                                 }
                             }
@@ -1084,7 +1139,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             else
                                             {
                                                 <li>
-                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                                 </li>
                                             }
                                         }
@@ -1106,7 +1161,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             @foreach (var item in productpage)
                                             {
                                                 <li>
-                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                                 </li>
                                             }
 
@@ -1135,7 +1190,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             else
                                             {
                                                 <li>
-                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                                 </li>
                                             }
                                         }
@@ -1154,7 +1209,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 else
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                     </li>
                                 }
                             }
@@ -1240,7 +1295,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 }
                                 else
                                 {
-                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@regex.Replace(supersetting.SpecialMenuButtonText, "-")" class="thm-btn">
+                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@MainServices.GenerateSlug(supersetting.SpecialMenuButtonText)" class="thm-btn">
 
                                         <span class="thm-btn-text">
                                             @supersetting.SpecialMenuButtonText
@@ -1295,7 +1350,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
 
                         <ul class="main-menu__list">
 
- 
+
                             <!-- Single pages at TOP position -->
                             @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
                             {
@@ -1308,7 +1363,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 else
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                     </li>
                                 }
                             }
@@ -1333,7 +1388,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             else
                                             {
                                                 <li>
-                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                                 </li>
                                             }
                                         }
@@ -1355,7 +1410,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             @foreach (var item in productpage)
                                             {
                                                 <li>
-                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                    <a asp-page="/UHSource_Info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                                 </li>
                                             }
 
@@ -1384,7 +1439,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                             else
                                             {
                                                 <li>
-                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                    <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@MainServices.GenerateSlug(xitem.Title)">@xitem.Title</a>
                                                 </li>
                                             }
                                         }
@@ -1403,7 +1458,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 else
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a>
                                     </li>
                                 }
                             }
@@ -1508,7 +1563,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 }
                                 else
                                 {
-                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@regex.Replace(supersetting.SpecialMenuButtonText, "-")" class="thm-btn">
+                                    <a asp-page="/Source" asp-route-id="@supersetting.SpecialMenuButtonLink" asp-route-title="@MainServices.GenerateSlug(supersetting.SpecialMenuButtonText)" class="thm-btn">
 
                                         <span class="thm-btn-text">
                                             @supersetting.SpecialMenuButtonText

@@ -1,4 +1,5 @@
 ﻿@model ICollection<JurayUniversal.Domain.Models.Blog>
+@using JurayUniversal.Application.Services;
 
 @using System.Text.RegularExpressions;
 
@@ -21,7 +22,7 @@
                         <h3>@xsetting.BlogDisplayTitle</h3>
                     </div>
                     <div class="row">
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Take(3))
                         {
                             <div class="col-md-4 col-sm-4 col-12">
                                 <div class="blog-grid">
@@ -44,7 +45,7 @@
                                             </p>
                                         </div>
                                         <div class="mt-20 left-holder" style="margin-top:5px;">
-                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="primary-button button-sm">Read More</a>
+                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="primary-button button-sm">Read More</a>
                                         </div>
                                     </div>
                                 </div>
@@ -105,13 +106,13 @@
                                         <div class="col-md-4 col-sm-6 col-xs-12">
                                             <div class="blog-post">
                                                 <div class="post-img">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"> <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;"> </a>
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"> <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;"> </a>
 
                                                 </div>
                                                 <div class="post-info"> <a href="">Aug 30, 2017</a>  </div>
-                                                <h3 class="post-title"> <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"> @item.Title </a> </h3>
+                                                <h3 class="post-title"> <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"> @item.Title </a> </h3>
                                                 <p class="post-excerpt">
-                                                    @item.Description  																						<a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><strong>Read More</strong></a>
+                                                    @item.Description  																						<a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><strong>Read More</strong></a>
                                                 </p>
                                             </div>
                                         </div>
@@ -198,13 +199,13 @@
                                         <div class="col-md-6">
                                             <div class="item mb-80">
                                                 <div class="img">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
                                                         <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
                                                     </a>
                                                     <div class="info">
                                                         <div class="date">
                                                             <h5>
-                                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
                                                                     <span class="num custom-font">@item.Date.ToString("dd")</span>
                                                                     <span>@item.Date.ToString("MMM")</span>
                                                                 </a>
@@ -224,7 +225,7 @@
                                                             <p>
                                                                 @item.Description
                                                             </p>
-                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="more">Read More</a>
+                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="more">Read More</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,7 +263,7 @@
                                         <div class="col-lg-4 col-md-4 mb-50">
                                             <div class="blog-item">
                                                 <div class="blog-img">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
                                                         <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
                                                     </a>
 
@@ -287,7 +288,7 @@
                                                         @item.Description
                                                     </div>
                                                     <div class="blog-button">
-                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="blog-btn">Continue Reading</a>
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="blog-btn">Continue Reading</a>
 
                                                     </div>
                                                 </div>
@@ -322,7 +323,7 @@
                                     <div class="col-lg-6 col-md-12 mb-50">
                                         <div class="blog-item">
                                             <div class="blog-img">
-                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
                                                     <img src="@item.ImageUrl"
                                                          alt="@item.Title">
                                                 </a>
@@ -330,7 +331,7 @@
                                             </div>
                                             <div class="blog-content">
                                                 <h3 class="blog-title">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
                                                         @item.Title
                                                     </a>
                                                 </h3>
@@ -348,7 +349,7 @@
                                                     @item.Description
                                                 </div>
                                                 <div class="blog-button">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="blog-btn">Continue Reading</a>
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="blog-btn">Continue Reading</a>
 
                                                 </div>
                                             </div>
@@ -391,10 +392,10 @@
                                                 </div>
                                                 <div class="content_inner">
                                                     <div class="tag">
-                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">><span class="icon-folder"></span>@item.BlogCategory</a>
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">><span class="icon-folder"></span>@item.BlogCategory</a>
                                                     </div>
                                                     <h2>
-                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">>@item.Title </a>
+                                                        <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">>@item.Title </a>
                                                     </h2>
                                                     <ul>
                                                         <li><span class="icon-calendar"></span>@item.Date.ToString("MMM dd, yyyy")</li>
@@ -403,7 +404,7 @@
 
                                                     <ul class="bottom_box">
                                                         <li>
-                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="theme_btn">Read More</a>
+                                                            <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="theme_btn">Read More</a>
                                                         </li>
 
 
@@ -460,12 +461,12 @@
                                                 <div class="post-desc">
                                                     <div class="post-date"><i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")</div>
                                                     <div class="post-title">
-                                                        <h5><a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                                        <h5><a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></h5>
                                                     </div>
                                                     <p>@item.Description</p>
                                                 </div>
                                                 <div class="post-bottom">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -497,12 +498,12 @@
                                                 <div class="post-desc">
                                                     <div class="post-date"><i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")</div>
                                                     <div class="post-title">
-                                                        <h5><a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></h5>
+                                                        <h5><a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></h5>
                                                     </div>
                                                     <p>@item.Description</p>
                                                 </div>
                                                 <div class="post-bottom">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="post-btn">Read More<i class="ms-2 fas fa-long-arrow-alt-right"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -549,7 +550,7 @@
                                             <h4 class="title">@item.Title</h4>
                                             <p>@item.Description</p>
                                             <div class="btn-wrapper">
-                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")" class="boxed-btn event-btn"><i class="fas fa-arrow-right"></i>Read More</a>
+                                                <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="boxed-btn event-btn"><i class="fas fa-arrow-right"></i>Read More</a>
 
                                             </div>
                                         </div>
@@ -608,7 +609,7 @@
                                         <p class="blog-one__text">
                                             @x.Description
                                         </p>
-                                        <a class="blog-one__read-more" asp-page="/Bpg_info" asp-route-id="@x.Id" asp-route-title="@regex.Replace(x.Title, "-")">
+                                        <a class="blog-one__read-more" asp-page="/Bpg_info" asp-route-id="@x.Id" asp-route-title="@MainServices.GenerateSlug(x.Title)">
                                             Read More <span class="fas fa-arrow-right"></span>
                                         </a>
                                     </div>

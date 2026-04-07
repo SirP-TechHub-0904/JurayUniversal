@@ -63,7 +63,7 @@ namespace JurayUniversal.Website.V2.Pages.Authv2.Account
         [BindProperty]
         public SuperSetting SuperSetting { get; set; }
         [BindProperty]
-        public Setting Setting { get; set; }
+        public Setting Setting { get; set; } 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
