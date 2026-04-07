@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions;
+@using JurayUniversal.Application.Services;
 
 @{
     Regex regex = new Regex("[^a-zA-Z0-9]");
@@ -48,7 +49,7 @@
                         <ul class="footer-list">
                             @foreach (var item in ViewBag.pages)
                             {
-                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                             }
 
                         </ul>
@@ -111,7 +112,7 @@
                             }
                             @foreach (var item in ViewBag.SecPages)
                             {
-                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                             }
                             @if (supersetting.ActivateLogin == true)
                             {
@@ -254,7 +255,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                 <ul>
                                     @foreach (var item in ViewBag.pages)
                                     {
-                                        <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                        <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                     }
 
                                 </ul>
@@ -318,7 +319,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                     }
                                     @foreach (var item in ViewBag.SecPages)
                                     {
-                                        <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                        <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                     }
                                     @if (supersetting.ActivateLogin == true)
                                     {
@@ -420,7 +421,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                             <ul>
                                 @foreach (var item in ViewBag.pages)
                                 {
-                                    <li><i class="fas fa-chevron-right"></i><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                    <li><i class="fas fa-chevron-right"></i><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                 }
                             </ul>
                         </div>
@@ -490,7 +491,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                                 }
                                 @foreach (var item in ViewBag.SecPages)
                                 {
-                                    <li><i class="fas fa-chevron-right"></i> <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                    <li><i class="fas fa-chevron-right"></i> <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                 }
                                 @if (supersetting.ActivateLogin == true)
                                 {
@@ -641,7 +642,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                             <ul class="site-map">
                                 @foreach (var item in ViewBag.pages)
                                 {
-                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                 }
                                 @if (ViewBag.setting.AddTestimonyToFooter == true)
                                 {
@@ -752,7 +753,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                 @foreach (var item in ViewBag.SecPages)
                                 {
-                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                 }
 
                             </ul>
@@ -828,7 +829,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                 <!-- List Items -->
                                                 @foreach (var item in ViewBag.pages)
                                                 {
-                                                    <li class="pb-3"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                    <li class="pb-3"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                                 }
 
                                             </ul>
@@ -890,7 +891,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                 }
                                                 @foreach (var item in ViewBag.SecPages)
                                                 {
-                                                    <li class="pb-3"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                    <li class="pb-3"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                                 }
                                                 @if (supersetting.ActivateLogin == true)
                                                 {
@@ -1051,7 +1052,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                         <ul>
                                             @foreach (var item in ViewBag.pages)
                                             {
-                                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                             }
 
                                         </ul>
@@ -1110,7 +1111,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                             }
                                             @foreach (var item in ViewBag.SecPages)
                                             {
-                                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                             }
                                             @if (supersetting.ActivateLogin == true)
                                             {
@@ -1260,7 +1261,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
 
                                 @foreach (var item in ViewBag.pages)
                                 {
-                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title <i class="fas fa-angle-right"></i></a></li>
+                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title <i class="fas fa-angle-right"></i></a></li>
                                 }
 
                             </ul>
@@ -1321,7 +1322,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 }
                                 @foreach (var item in ViewBag.SecPages)
                                 {
-                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-angle-right"></i> @item.Title</a></li>
+                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><i class="fas fa-angle-right"></i> @item.Title</a></li>
                                 }
                                 @if (supersetting.ActivateLogin == true)
                                 {
@@ -1405,7 +1406,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 @foreach (var item in ViewBag.pages)
                                 {
                                     <li>
-                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-angle-right"></i> @item.Title</a>
+                                        <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><i class="fas fa-angle-right"></i> @item.Title</a>
                                     </li>
                                 }
                             </ul>
@@ -1465,7 +1466,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 }
                                 @foreach (var item in ViewBag.SecPages)
                                 {
-                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-angle-right"></i> @item.Title</a></li>
+                                    <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"><i class="fas fa-angle-right"></i> @item.Title</a></li>
                                 }
                                 @if (supersetting.ActivateLogin == true)
                                 {
@@ -1578,7 +1579,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     <ul>
                                         @foreach (var item in ViewBag.pages)
                                         {
-                                            <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                            <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                         }
                                     </ul>
                                 </div>
@@ -1649,7 +1650,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                         }
                                         @foreach (var item in ViewBag.SecPages)
                                         {
-                                            <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                            <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                         }
                                         @if (supersetting.ActivateLogin == true)
                                         {
@@ -1848,7 +1849,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                         <ul class="menu">
                                             @foreach (var item in ViewBag.pages)
                                             {
-                                                <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                             }
                                         </ul>
                                     </div>
@@ -1912,7 +1913,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                             }
                                             @foreach (var item in ViewBag.SecPages)
                                             {
-                                                <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                             }
                                             @if (supersetting.ActivateLogin == true)
                                             {
@@ -2017,7 +2018,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                     <ul class="footer-widget-two__link list-unstyled">
                                         @foreach (var item in ViewBag.pages)
                                         {
-                                            <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                            <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                         }
                                     </ul>
 
@@ -2083,7 +2084,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                     }
                                     @foreach (var item in ViewBag.SecPages)
                                     {
-                                        <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                        <li class="menu-item"><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title</a></li>
                                     }
                                     @if (supersetting.ActivateLogin == true)
                                     {

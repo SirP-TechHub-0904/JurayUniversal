@@ -27,16 +27,16 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
             var Pages = await _context.PageCategories.Include(x=>x.WebPages).Where(x => x.Publish == true).OrderBy(x=>x.MenuSortOrder).ToListAsync();
             ViewBag.pages = Pages;
 
-            var singlePages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainMenu == true).ToListAsync();
+            var singlePages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainMenu == true).OrderBy(x => x.SortOrder).ToListAsync();
             ViewBag.singlePages = singlePages;
 
-            var topPages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainTop == true).ToListAsync();
+            var topPages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainTop == true).OrderBy(x => x.SortOrder).ToListAsync();
             ViewBag.topPages = topPages;
 
-            var linkExternal = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainMenu == true && x.EnableDirectUrl == true).ToListAsync();
+            var linkExternal = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainMenu == true && x.EnableDirectUrl == true).OrderBy(x => x.SortOrder).ToListAsync();
             ViewBag.linkExternal = linkExternal;
 
-            var linkExternalDropdown = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMenuDropDown == true && x.EnableDirectUrl == true).ToListAsync();
+            var linkExternalDropdown = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMenuDropDown == true && x.EnableDirectUrl == true).OrderBy(x => x.SortOrder).ToListAsync();
             ViewBag.linkExternalDropdown = linkExternalDropdown;
 
 
