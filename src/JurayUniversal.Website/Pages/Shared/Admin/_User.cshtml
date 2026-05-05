@@ -104,7 +104,7 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            padding: 18px;
+            padding: 7px;
         }
 
         .juray-card-section .card-header {
@@ -142,6 +142,40 @@
         .secdaiv {
             padding: 30px 10px !important;
         }
+
+        .date-search-form {
+            width: 100%;
+        }
+
+        .date-search-box {
+            display: flex;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+            .date-search-box input {
+                flex: 1;
+                border: none;
+                padding: 8px 10px;
+                font-size: 14px;
+                outline: none;
+            }
+
+            .date-search-box button {
+                background: #28a745; /* green */
+                color: #fff;
+                border: none;
+                padding: 0 16px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .date-search-box button:hover {
+                    background: #218838;
+                }
     </style>
 
 </head>
@@ -199,18 +233,23 @@
                         @await Component.InvokeAsync("UserDashboardData")
                     </div>
                 </div>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <!-- SidebarSearch Form -->
+                    <form method="get" asp-page="/IQuery/Search" asp-area="Content">
 
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
+                        <div class="form-inline">
+                            <div class="input-group">
+                                <input class="form-control form-control-sidebar" name="query" type="text" placeholder="Search anything">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sidebar">
+                                        <i class="fas fa-search fa-fw"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                }
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -219,7 +258,8 @@
                         @await Component.InvokeAsync("UserNavigation")
                         <li class="nav-item" style="margin-bottom:70px;">
                             <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <!-- Logout -->
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Logout
                                 </p>
@@ -240,7 +280,10 @@
             <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
+
                 <div class="container-fluid" style="margin-top:10px;">
+                    @* @await Html.PartialAsync("_SearchForm") *@
+
                     @RenderBody()
 
                 </div><!-- /.container-fluid -->
@@ -303,7 +346,7 @@
         }
 
         /*#loadingModal .modal-content {
-           background: none;*/ /* Remove the default white background */
+                                           background: none;*/ /* Remove the default white background */
         /*}*/
     </style>
     <div class="modal" id="loading1234Modal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

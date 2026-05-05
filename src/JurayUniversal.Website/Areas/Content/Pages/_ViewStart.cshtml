@@ -1,12 +1,12 @@
 ﻿@{
-    if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+    if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
     {
-        Layout = "/Pages/Shared/Admin/_User.cshtml";
-
+        Layout = "/Pages/Shared/Admin/_Main.cshtml";
     }
     else
     {
-        Layout = "/Pages/Shared/Admin/_Main.cshtml";
+        
+        Layout = "/Pages/Shared/Admin/_User.cshtml";
 
     }
 }

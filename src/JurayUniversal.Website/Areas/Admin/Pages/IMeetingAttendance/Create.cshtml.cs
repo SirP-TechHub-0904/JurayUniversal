@@ -26,7 +26,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.IMeetingAttendance
 
         public async Task<IActionResult> OnGet(long? id)
         {
-         ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "Fullname");
+            await LoadUsers();
 
             Meeting = await _context.Meetings.FirstOrDefaultAsync(x=>x.Id == id);
             if(Meeting == null)
@@ -44,7 +44,35 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.IMeetingAttendance
 
         [BindProperty]
         public MeetingAttendance MeetingAttendance { get; set; }
+        private async Task LoadUsers()
+        {
+            var excludedRoles = new List<string> { "mSuperAdmin", "SubAdmin" };
 
+            var users = await _userManager.Users.ToListAsync();
+
+            var filteredUsers = new List<SelectListItem>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                // skip excluded roles
+                if (roles.Any(r => excludedRoles.Contains(r)))
+                    continue;
+
+                var fullname = (user.FirstName + " " + user.MiddleName + " " + user.LastName).Trim();
+
+                filteredUsers.Add(new SelectListItem
+                {
+                    Value = user.Id,
+                    Text = string.IsNullOrWhiteSpace(fullname) ? user.Email ?? user.UserName : fullname
+                });
+            }
+
+            ViewData["UserId"] = filteredUsers
+                .OrderBy(x => x.Text)
+                .ToList();
+        }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
@@ -56,7 +84,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.IMeetingAttendance
                     TempData["success"] = "Error Invalid Meeting.";
                     return RedirectToPage("/IMeetings/Index");
                 }
-                ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "Fullname");
+                await LoadUsers();
                 TempData["error"] = "Date not in range";
                 return Page();
             }
@@ -68,7 +96,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.IMeetingAttendance
                     TempData["success"] = "Error Invalid Meeting.";
                     return RedirectToPage("/IMeetings/Index");
                 }
-                ViewData["UserId"] = new SelectList(_userManager.Users, "Id", "Fullname");
+                await LoadUsers();
                 TempData["error"] = "Time not in range";
                 return Page();
             }

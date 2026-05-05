@@ -1,0 +1,144 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Staff.Pages.Dashboard.UserSalaryModel
+
+@{
+    ViewData["Title"] = "UserSalary";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">@Model.Title</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <div class="">
+                               
+
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>MONTH</th>
+                                                <th>AMOUNT</th>
+                                                <th>BONUS</th>
+                                                <th>CHARGE</th>
+                                                <th>BALANCE</th>
+                                                <th>PAYMENT STATUS</th>
+                                                <th>ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            int sn = 0;
+                                        }
+                                        <tbody>
+                                            @foreach (var item in Model.SalaryHistory)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @{
+                                                            sn++;
+                                                        }
+                                                        @sn
+                                                    </td>
+                                                    <td>@item.Month</td>
+                                                    <td>@item.Amount.ToString("N2")</td>
+                                                    <td>@item.BonusAmount.ToString("N2")</td>
+                                                    <td>@item.DefaulterCharge.ToString("N2")</td>
+                                                    <td>@item.Balance.ToString("N2")</td>
+                                                    <td>@item.PaymentStatus</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#salaryModal_@item.Id">
+                                                            Details
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+                                                <div class="modal fade" id="salaryModal_@item.Id" tabindex="-1" role="dialog" aria-labelledby="salaryModalLabel_@item.Id" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-primary">
+                                                                <h5 class="modal-title" id="salaryModalLabel_@item.Id" style="color:#fff;">
+                                                                    Salary Details - @item.Month
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true" style="color:#fff;">&times;</span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <p><strong>Month:</strong> @item.Month</p>
+                                                                        <p><strong>Amount:</strong> @item.Amount.ToString("N2")</p>
+                                                                        <p><strong>Bonus Amount:</strong> @item.BonusAmount.ToString("N2")</p>
+                                                                        <p><strong>Defaulter Charge:</strong> @item.DefaulterCharge.ToString("N2")</p>
+                                                                        <p><strong>Balance:</strong> @item.Balance.ToString("N2")</p>
+                                                                        <p><strong>Payment Status:</strong> @item.PaymentStatus</p>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <p><strong>Approved By Manager:</strong> @(item.ApprovedByManager ? "Yes" : "No")</p>
+                                                                        <p><strong>Approved By CEO:</strong> @(item.ApprovedByCEO ? "Yes" : "No")</p>
+                                                                        <p><strong>Approved By CFO:</strong> @(item.ApprovedByCFO ? "Yes" : "No")</p>
+
+                                                                        <p><strong>Manager Approval Date:</strong> @(item.ApprovedByManagerDate == DateTime.MinValue ? "---" : item.ApprovedByManagerDate.ToString("dd MMM yyyy"))</p>
+                                                                        <p><strong>CEO Approval Date:</strong> @(item.ApprovedByCeoDate == DateTime.MinValue ? "---" : item.ApprovedByCeoDate.ToString("dd MMM yyyy"))</p>
+                                                                        <p><strong>CFO Approval Date:</strong> @(item.ApprovedByCfoDate == DateTime.MinValue ? "---" : item.ApprovedByCfoDate.ToString("dd MMM yyyy"))</p>
+                                                                    </div>
+
+                                                                    <div class="col-md-12">
+                                                                        <hr />
+                                                                        <p><strong>General Note:</strong></p>
+                                                                        <div class="alert alert-light">
+                                                                            @(string.IsNullOrWhiteSpace(item.Note) ? "No note available." : item.Note)
+                                                                        </div>
+
+                                                                        <p><strong>Manager Note:</strong></p>
+                                                                        <div class="alert alert-info">
+                                                                            @(string.IsNullOrWhiteSpace(item.ManagerNote) ? "No manager note." : item.ManagerNote)
+                                                                        </div>
+
+                                                                        <p><strong>CEO Note:</strong></p>
+                                                                        <div class="alert alert-warning">
+                                                                            @(string.IsNullOrWhiteSpace(item.CeoNote) ? "No CEO note." : item.CeoNote)
+                                                                        </div>
+
+                                                                        <p><strong>CFO Note:</strong></p>
+                                                                        <div class="alert alert-success">
+                                                                            @(string.IsNullOrWhiteSpace(item.CfoNote) ? "No CFO note." : item.CfoNote)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    @if (!Model.SalaryHistory.Any())
+                                    {
+                                        <div class="alert alert-warning">
+                                            No salary history found.
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>

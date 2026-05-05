@@ -37,7 +37,29 @@
 
 
             <div>
-                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Generate Client Admin</button>
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Generate Client</button>
+            </div>
+
+        </form>
+    }
+</div>
+<br />
+<br />
+
+<div class=" ">
+    @if (Model.Profile3 != null)
+    {
+        <h4>Email: @Model.Profile3.Email</h4>
+        <h4>[REDACTED_BOOTSTRAP_PASSWORD]</h4>
+    }
+    else
+    {
+
+        <form id="account" method="post" asp-page-handler="SupNewAcc">
+
+
+            <div>
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Generate Super Admin</button>
             </div>
 
         </form>

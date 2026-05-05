@@ -2492,6 +2492,99 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("PageSectionLists");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.Payment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<decimal>("AmountPaid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DatePaid")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fullname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PaymentCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PaymentReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentCategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.PaymentCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompulsory")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentCategories");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.Plan", b =>
                 {
                     b.Property<long>("Id")
@@ -3739,6 +3832,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Impact")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IssuesAndChallenges")
                         .HasColumnType("nvarchar(max)");
 
@@ -3762,6 +3858,18 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
 
                     b.Property<int>("TaskNoteStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("Time10to12")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time1to3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time3to5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time8to10")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -4429,6 +4537,12 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<string>("CompanyWhiteLogoUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CurrencyCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrencySymbol")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DashboardTitle")
                         .HasColumnType("nvarchar(max)");
 
@@ -4477,7 +4591,25 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<int>("MaximumUsers")
                         .HasColumnType("int");
 
+                    b.Property<string>("OrganizationDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationPaymentNote")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PageHeaderTemplateKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PaymentModuleActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PaystackCallbackUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaystackPublicKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaystackSecretKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlayStoreImageKey")
@@ -5761,6 +5893,25 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .HasForeignKey("PageSectionId");
 
                     b.Navigation("PageSection");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.Payment", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.PaymentCategory", "PaymentCategory")
+                        .WithMany()
+                        .HasForeignKey("PaymentCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaymentCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.Plan", b =>

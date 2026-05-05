@@ -30,10 +30,12 @@
                 </p>
 
             </div>
-            @*<div class="col-md-6" style="">
-                <a asp-page="./AttendanceQuery" class="btn bg-gradient-warning btn-sm" style="float:right;">Attendance Query</a>
+            <div class="col-md-6" style="">
+                <a asp-page="./TakeAttendance" class="btn btn-primary btn-sm" style="float:right;">
+                    Take Attendance
+                </a>
+            </div>
 
-            </div>*@
         </div>
     </div>
     <div class="card-body">
@@ -72,10 +74,10 @@
                                         @Html.DisplayFor(modelItem => item.ArivalPeriodStatus)
                                     </span>
                                 }
-                            <a>
-                                <i class="fas fa-clock"></i>
-                            </a>
-                               
+                                <a>
+                                    <i class="fas fa-clock"></i>
+                                </a>
+
                             </td>
                             <td>
                                 @if (item.CloseTime != null)
@@ -94,24 +96,24 @@
 
                             </td>
                             <td>
-                              
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-success">Action</button>
 
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-                                                @if (User.Identity.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
-                                                {
-                                                    <a class="dropdown-item" asp-page="./UpdateTime" asp-route-id="@item.Id">Update Time</a>
-                                                    <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                                                    <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
-                                                }
-                                            </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+                                            @if (User.Identity.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("mSuperAdmin"))
+                                            {
+                                                <a class="dropdown-item" asp-page="./UpdateTime" asp-route-id="@item.Id">Update Time</a>
+                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                            }
                                         </div>
                                     </div>
-                                 @if (item.Date.Date == DateTime.UtcNow.Date)
+                                </div>
+                                @if (item.Date.Date == DateTime.UtcNow.Date)
                                 { }
                                 else if (item.Date.Date > DateTime.UtcNow.Date)
                                 {

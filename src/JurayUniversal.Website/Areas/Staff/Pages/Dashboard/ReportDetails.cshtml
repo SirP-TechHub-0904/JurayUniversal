@@ -6,7 +6,7 @@
 }
 
 <style>
-    p, h4, h3, h2, h1, h5, h6{
+    p, h4, h3, h2, h1, h5, h6 {
         margin-bottom: 0;
         padding-bottom: 0;
     }
@@ -45,7 +45,7 @@
 
                                 }
 
-                                
+
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>
@@ -57,10 +57,10 @@
                             </div>
 
                             <div class="direct-chat-text bg-success">
-                               
+
                                 @if (!String.IsNullOrEmpty(Model.Report.Achievement))
                                 {
-                                     @Html.Raw(Model.Report.Achievement)
+                                    @Html.Raw(Model.Report.Achievement)
                                 }
                                 else
                                 {
@@ -79,7 +79,7 @@
                             </div>
 
                             <div class="direct-chat-text bg-danger">
-                                 @if (!String.IsNullOrEmpty(Model.Report.IssuesAndChallenges))
+                                @if (!String.IsNullOrEmpty(Model.Report.IssuesAndChallenges))
                                 {
                                     @Html.Raw(Model.Report.IssuesAndChallenges)
                                 }
@@ -100,10 +100,10 @@
                             </div>
 
                             <div class="direct-chat-text bg-info">
-                                 
+
                                 @if (!String.IsNullOrEmpty(Model.Report.PlansForNextDay))
                                 {
-                                   @Html.Raw(Model.Report.PlansForNextDay)
+                                    @Html.Raw(Model.Report.PlansForNextDay)
                                 }
                                 else
                                 {
@@ -112,6 +112,87 @@
 
                                 }
                             </div>
+                            <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #6610f2;">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Impact</span>
+                                </div>
+
+                                <div class="direct-chat-text bg-purple">
+                                    @if (!String.IsNullOrEmpty(Model.Report.Impact))
+                                    {
+                                        @Html.Raw(Model.Report.Impact)
+                                    }
+                                    else
+                                    {
+                                        <span>No Impact Recorded</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #6f42c1;">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Time 8am - 10am</span>
+                                </div>
+
+                                <div class="direct-chat-text bg-purple">
+                                    @if (!String.IsNullOrEmpty(Model.Report.Time8to10))
+                                    {
+                                        @Html.Raw(Model.Report.Time8to10)
+                                    }
+                                    else
+                                    {
+                                        <span>No Activity Recorded</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #20c997;">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Time 10am - 12pm</span>
+                                </div>
+
+                                <div class="direct-chat-text bg-teal">
+                                    @if (!String.IsNullOrEmpty(Model.Report.Time10to12))
+                                    {
+                                        @Html.Raw(Model.Report.Time10to12)
+                                    }
+                                    else
+                                    {
+                                        <span>No Activity Recorded</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #343a40;">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Time 3pm - 5pm</span>
+                                </div>
+
+                                <div class="direct-chat-text bg-dark">
+                                    @if (!String.IsNullOrEmpty(Model.Report.Time3to5))
+                                    {
+                                        @Html.Raw(Model.Report.Time3to5)
+                                    }
+                                    else
+                                    {
+                                        <span>No Activity Recorded</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="direct-chat-msg card" style="padding: 10px;box-shadow: 1px 1px 1px 2px #fd7e14;">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Time 1pm - 3pm</span>
+                                </div>
+
+                                <div class="direct-chat-text bg-orange">
+                                    @if (!String.IsNullOrEmpty(Model.Report.Time1to3))
+                                    {
+                                        @Html.Raw(Model.Report.Time1to3)
+                                    }
+                                    else
+                                    {
+                                        <span>No Activity Recorded</span>
+                                    }
+                                </div>
+                            </div>
+
                             <!-- /.direct-chat-text -->
                         </div>
                         <!-- /.direct-chat-msg -->
@@ -187,7 +268,30 @@
                                 <textarea class="form-control summernote" asp-for="NewReport.PlansForNextDay"></textarea>
                             </div>
 
+                            <div class="form-group">
+                                <label asp-for="NewReport.Impact"></label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Impact"></textarea>
+                            </div>
 
+                            <div class="form-group">
+                                <label asp-for="NewReport.Time8to10"></label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Time8to10"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NewReport.Time10to12"></label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Time10to12"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NewReport.Time1to3"></label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Time1to3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NewReport.Time3to5"></label>
+                                <textarea class="form-control summernote" asp-for="NewReport.Time3to5"></textarea>
+                            </div>
                         </div>
                         <!-- /.card-body -->
 
@@ -201,61 +305,33 @@
             </div>
         </div>
     </div>
-  
-    </div>
-    <style>
+
+</div>
+<style>
     #form {
-                display: none;
+        display: none;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', () => {
+            const form = document.getElementById('form');
+
+            if (form.style.display === 'none') {
+                // 👇️ this SHOWS the form
+                form.style.display = 'block';
+            } else {
+                // 👇️ this HIDES the form
+                form.style.display = 'none';
             }
-    </style>
-
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
-
-        <script>
-            const btn = document.getElementById('btn');
-
-            btn.addEventListener('click', () => {
-                const form = document.getElementById('form');
-
-                if (form.style.display === 'none') {
-                    // 👇️ this SHOWS the form
-                    form.style.display = 'block';
-                } else {
-                    // 👇️ this HIDES the form
-                    form.style.display = 'none';
-                }
-            });
-        </script>
-        @*    <script>
-    var checkbox = document.getElementById("showForm");
-    var checkbox2 = document.getElementById("showForm2");
-    var form = document.getElementById("myForm");
-    var form2 = document.getElementById("myForm2");
-    const myButton = document.querySelector('#showForm');
-    myButton.addEventListener('click', function () {
-    if (this.checked) {
-    form.style.display = "block";
-    form2.style.display = "none";
-    } else {
-    form.style.display = "none";
-    form2.style.display = "block";
-    }
-    });
-
-    const toggleButton = document.querySelector('#toggleButton');
-    let isToggled = false;
-
-    toggleButton.addEventListener('click', function () {
-    if (isToggled) {
-    form.style.display = "block";
-    } else {
-    form.style.display = "none";
-    }
-    isToggled = !isToggled;
-    });
+        });
     </script>
-    *@
-    }
+
+}

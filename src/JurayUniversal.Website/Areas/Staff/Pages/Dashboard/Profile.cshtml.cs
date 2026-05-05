@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using JurayUniversal.Application.Services;
 
 namespace JurayUniversal.Website.Areas.Staff.Pages.Dashboard
 {   
@@ -29,6 +30,12 @@ namespace JurayUniversal.Website.Areas.Staff.Pages.Dashboard
             if (UserDatas == null)
             {
                 return NotFound();
+            }
+            // ✅ CREATE REF CODE IF NULL
+            if (string.IsNullOrWhiteSpace(UserDatas.RefCode))
+            {
+                UserDatas.RefCode = MainServices.GenerateRefCode();
+                await _userManager.UpdateAsync(UserDatas);
             }
             AdditionalProfile = await _context.AdditionalProfiles.Where(x=>x.ProfileId == UserDatas.Id).ToListAsync();
             ProfileCategories = await _context.ProfileCategories

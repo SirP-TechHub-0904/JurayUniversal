@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using JurayUniversal.Application.Services;
 
 namespace JurayUniversal.Website.Areas.Admin.Pages.UserManagement
 {
@@ -47,7 +48,8 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.UserManagement
                 FirstName = UserDatas.FirstName,
                 LastName = UserDatas.LastName,
                 Date = DateTime.UtcNow,
-                RefCode = ""
+                RefCode = MainServices.GenerateRefCode(),
+                UserStatus = Domain.Enum.Enum.UserStatus.Active
             };
 
 

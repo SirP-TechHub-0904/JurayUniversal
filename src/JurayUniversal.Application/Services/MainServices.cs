@@ -40,7 +40,14 @@ namespace JurayUniversal.Application.Services
         //    }
         //}
 
+        public static string GenerateRefCode()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
 
+            return new string(Enumerable.Repeat(chars, 7)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public static string SelectColor()
         {
             string xcolor = "";

@@ -141,6 +141,8 @@
             <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
+                @await Html.PartialAsync("_SearchForm")
+
                 <div class="container-fluid">
                     @RenderBody()
 

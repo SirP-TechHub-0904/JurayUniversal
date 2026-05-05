@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace JurayUniversal.Website.Areas.Admin.Pages.IAttendance
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "mSuperAdmin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Manager,Admin,mSuperAdmin")]
 
     public class CreateModel : PageModel
     {

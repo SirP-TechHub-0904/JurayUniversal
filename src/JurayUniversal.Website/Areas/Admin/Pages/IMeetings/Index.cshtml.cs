@@ -10,7 +10,7 @@ using JurayUniversal.Domain.Models;
 
 namespace JurayUniversal.Website.Areas.Admin.Pages.IMeetings
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "mSuperAdmin,Secretary")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,mSuperAdmin,Secretary")]
 
     public class IndexModel : PageModel
     {

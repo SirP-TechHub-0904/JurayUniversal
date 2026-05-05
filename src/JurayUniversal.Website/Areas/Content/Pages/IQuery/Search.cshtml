@@ -1,0 +1,90 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Content.Pages.IQuery.SearchModel
+@{
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">ADVANCE SEARCH QUERY</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <h2>Search Results for '@Request.Query["query"]'</h2>
+        <p>Total Matches: @Model.TotalMatches &nbsp;|&nbsp;
+        Page @Model.CurrentPage of @Model.TotalPages</p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Open</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="@result.Path" target="_blank">View</a>
+                        </td>
+                        <td>@result.EntityType</td>
+                        <td>@result.PathText</td>
+                        <td>@result.Field</td>
+                        <td>@Html.Raw(result.Value)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Model.TotalPages > 1)
+        {
+            <nav aria-label="Search pagination">
+                <ul class="pagination justify-content-center flex-wrap">
+
+                   @*  {{!-- Previous --}} *@
+                    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link"
+                           href="?query=@Request.Query["query"]&page=@(Model.CurrentPage - 1)">
+                            &laquo; Prev
+                        </a>
+                    </li>
+
+                    @* {{!-- Page numbers --}} *@
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               href="?query=@Request.Query["query"]&page=@i">@i</a>
+                        </li>
+                    }
+
+                    @* {{!-- Next --}} *@
+                    <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link"
+                           href="?query=@Request.Query["query"]&page=@(Model.CurrentPage + 1)">
+                            Next &raquo;
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        }
+    </div>
+</div>
+<style>
+    .highlight {
+        background-color: yellow;
+        color: black;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+</style>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

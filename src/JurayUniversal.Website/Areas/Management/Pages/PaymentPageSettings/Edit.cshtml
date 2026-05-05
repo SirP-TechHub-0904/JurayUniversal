@@ -1,0 +1,68 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.PaymentPageSettings.EditModel
+
+@{
+    ViewData["Title"] = "Payment Settings";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">PAYMENT SETTINGS</h3>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" asp-for="SuperSetting.Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="SuperSetting.PaystackPublicKey" class="control-label"></label>
+                <input asp-for="SuperSetting.PaystackPublicKey" class="form-control" />
+                <span asp-validation-for="SuperSetting.PaystackPublicKey" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SuperSetting.PaystackSecretKey" class="control-label"></label>
+                <input asp-for="SuperSetting.PaystackSecretKey" class="form-control" />
+                <span asp-validation-for="SuperSetting.PaystackSecretKey" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SuperSetting.PaystackCallbackUrl" class="control-label"></label>
+                <input asp-for="SuperSetting.PaystackCallbackUrl" class="form-control" />
+                <span asp-validation-for="SuperSetting.PaystackCallbackUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SuperSetting.CurrencySymbol" class="control-label"></label>
+                <input asp-for="SuperSetting.CurrencySymbol" class="form-control" />
+                <span asp-validation-for="SuperSetting.CurrencySymbol" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SuperSetting.CurrencyCode" class="control-label"></label>
+                <input asp-for="SuperSetting.CurrencyCode" class="form-control" />
+                <span asp-validation-for="SuperSetting.CurrencyCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input asp-for="SuperSetting.PaymentModuleActive" class="form-check-input" />
+                    <label asp-for="SuperSetting.PaymentModuleActive" class="form-check-label"></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

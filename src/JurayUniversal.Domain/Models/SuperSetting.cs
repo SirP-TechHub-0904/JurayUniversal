@@ -223,7 +223,14 @@ namespace JurayUniversal.Domain.Models
         public string? EncryptionUrl { get; set; }
         public string? EncryptionKey { get; set; }
 
-
+        public string? PaystackPublicKey { get; set; }
+        public string? PaystackSecretKey { get; set; }
+        public string? PaystackCallbackUrl { get; set; }
+        public bool PaymentModuleActive { get; set; }
+        public string? CurrencySymbol { get; set; }
+        public string? CurrencyCode { get; set; }
+        public string? OrganizationDisplayName { get; set; }
+        public string? OrganizationPaymentNote { get; set; }
 
     }
 }
