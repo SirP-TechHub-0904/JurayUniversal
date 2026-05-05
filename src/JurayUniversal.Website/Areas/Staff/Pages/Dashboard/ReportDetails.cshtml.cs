@@ -65,6 +65,50 @@ namespace JurayUniversal.Web.Areas.Staff.Pages.Dashboard
             reportdata.PlansForNextDay = reportdata.PlansForNextDay + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on " + DateTime.UtcNow.AddHours(1) + "<br>"+ NewReport.PlansForNextDay;
 
             }
+            if (NewReport.Impact != null)
+            {
+                reportdata.Impact = reportdata.Impact
+                    + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on "
+                    + DateTime.UtcNow.AddHours(1)
+                    + "<br>"
+                    + NewReport.Impact;
+            }
+
+            if (NewReport.Time8to10 != null)
+            {
+                reportdata.Time8to10 = reportdata.Time8to10
+                    + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on "
+                    + DateTime.UtcNow.AddHours(1)
+                    + "<br>"
+                    + NewReport.Time8to10;
+            }
+
+            if (NewReport.Time10to12 != null)
+            {
+                reportdata.Time10to12 = reportdata.Time10to12
+                    + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on "
+                    + DateTime.UtcNow.AddHours(1)
+                    + "<br>"
+                    + NewReport.Time10to12;
+            }
+
+            if (NewReport.Time1to3 != null)
+            {
+                reportdata.Time1to3 = reportdata.Time1to3
+                    + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on "
+                    + DateTime.UtcNow.AddHours(1)
+                    + "<br>"
+                    + NewReport.Time1to3;
+            }
+
+            if (NewReport.Time3to5 != null)
+            {
+                reportdata.Time3to5 = reportdata.Time3to5
+                    + "<hr style=\"border:2px solid white; margin:0;padding:0;\">@updated on "
+                    + DateTime.UtcNow.AddHours(1)
+                    + "<br>"
+                    + NewReport.Time3to5;
+            }
             reportdata.ReportStatus = Domain.Enum.Enum.ReportStatus.Submitted;
             reportdata.ReportPeriodStatus = Domain.Enum.Enum.ReportPeriodStatus.Ontime;
             _context.Attach(reportdata).State = EntityState.Modified;

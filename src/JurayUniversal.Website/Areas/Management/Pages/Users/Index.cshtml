@@ -54,6 +54,7 @@
                         <input type="hidden" name="UserId" value="@user.Id" />
                         <button type="submit" class="btn btn-primary">Update Roles</button>
                     </form>
+                    <a asp-page="./Delete" asp-route-id="@user.Id">Delete Permanently</a>
                 </td>
             </tr>
         }

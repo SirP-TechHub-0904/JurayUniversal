@@ -43,26 +43,15 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
         public string ReturnUrl { get; set; }
         public Profile Profile { get; set; }
         public Profile Profile2 { get; set; }
+        public Profile Profile3 { get; set; }
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Profile = await _userManager.FindByEmailAsync("admin@platform.io");
-            Profile2 = await _userManager.FindByEmailAsync("dashboard@platform.io");
-
-            //var userss = _userManager.Users.ToList();
-            //foreach (var i in userss)
-            //{
-            //    try
-            //    {
-            //        await _userManager.AddToRoleAsync(i, "User");
-            //    }
-            //    catch (Exception c)
-            //    {
-
-            //    }
-            //}
-
+            Profile = await _userManager.FindByEmailAsync("admin@platform.xyz");
+            Profile2 = await _userManager.FindByEmailAsync("user@platform.xyz");
+            Profile3 = await _userManager.FindByEmailAsync("majoradmin@platform.xyz");
+ 
             return Page();
         }
         public async Task<IActionResult> OnPostReconcileRoles(string returnUrl = null, string refxid = null)
@@ -141,8 +130,8 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
             //{
             var user = new Profile
             {
-                UserName = "admin@platform.io",
-                Email = "admin@platform.io",
+                UserName = "admin@platform.xyz",
+                Email = "admin@platform.xyz",
                 PhoneNumber = "000",
 
                 EmailConfirmed = true,
@@ -166,51 +155,6 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
                 await _userManager.AddToRoleAsync(user, "Manager");
                 await _userManager.AddToRoleAsync(user, "SubAdmin");
                 await _userManager.AddToRoleAsync(user, "Security");
-
-                //return LocalRedirect(returnUrl);
-
-            }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            //}
-
-            return RedirectToPage("./Admin");
-        }
-        public async Task<IActionResult> OnPostNewAcc(string returnUrl = null, string refxid = null)
-        {
-
-            //if (ModelState.IsValid)
-            //{
-            var user = new Profile
-            {
-                UserName = "dashboard@platform.io",
-                Email = "dashboard@platform.io",
-                PhoneNumber = "000",
-
-                EmailConfirmed = true,
-                LockoutEnabled = false,
-                UserStatus = Domain.Enum.Enum.UserStatus.Active
-
-
-            };
-
-
-
-            user.Id = Guid.NewGuid().ToString();
-            var result = await _userManager.CreateAsync(user, "qwe@321");
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User created a new account with password.");
-
-
-                await _userManager.AddToRoleAsync(user, "User");
-                await _userManager.AddToRoleAsync(user, "Admin");
-                await _userManager.AddToRoleAsync(user, "Editor");
-                await _userManager.AddToRoleAsync(user, "Manager");
-                await _userManager.AddToRoleAsync(user, "Security");
-
                 //
                 IdentityRole Managerf = new IdentityRole("Finance");
                 var checkManagerf = await _role.FindByNameAsync("Finance");
@@ -231,6 +175,83 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
             return RedirectToPage("./Admin");
         }
+        public async Task<IActionResult> OnPostNewAcc(string returnUrl = null, string refxid = null)
+        {
 
+            //if (ModelState.IsValid)
+            //{
+            var user = new Profile
+            {
+                UserName = "user@platform.xyz",
+                Email = "user@platform.xyz",
+                PhoneNumber = "000",
+
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                UserStatus = Domain.Enum.Enum.UserStatus.Active
+
+
+            };
+
+
+
+            user.Id = Guid.NewGuid().ToString();
+            var result = await _userManager.CreateAsync(user, "qwe@321");
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+
+
+                await _userManager.AddToRoleAsync(user, "User"); 
+                 
+
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            //}
+
+            return RedirectToPage("./Admin");
+        }
+        public async Task<IActionResult> OnPostSupNewAcc(string returnUrl = null, string refxid = null)
+        {
+
+            //if (ModelState.IsValid)
+            //{
+            var user = new Profile
+            {
+                UserName = "majoradmin@platform.xyz",
+                Email = "majoradmin@platform.xyz",
+                PhoneNumber = "000",
+
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                UserStatus = Domain.Enum.Enum.UserStatus.Active
+
+
+            };
+
+
+
+            user.Id = Guid.NewGuid().ToString();
+            var result = await _userManager.CreateAsync(user, "major@321");
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+
+
+                await _userManager.AddToRoleAsync(user, "mSuperAdmin");
+
+
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            //}
+
+            return RedirectToPage("./Admin");
+        }
     }
 }

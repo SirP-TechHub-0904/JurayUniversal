@@ -177,7 +177,8 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
 
 
 
-
+    public DbSet<PaymentCategory> PaymentCategories { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
 
     public DashboardDbContext(DbContextOptions options, ITenantProvider tenantProvider) : base(options)

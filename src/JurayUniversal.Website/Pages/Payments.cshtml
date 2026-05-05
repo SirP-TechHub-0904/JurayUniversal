@@ -1,0 +1,58 @@
+﻿@page
+@model JurayUniversal.Website.Pages.PaymentsModel
+
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<div class="container mt-4">
+    <h3 class="mb-3">Payments</h3>
+
+    <form method="get" class="row mb-3">
+        <div class="col-md-3">
+            <input type="number" name="Year" value="@Model.Year" class="form-control" placeholder="Year" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
+
+    @if (Model.Categories != null && Model.Categories.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Year</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Year</td>
+                            <td>
+                                <a asp-page="/Pay"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-success btn-sm">
+                                    Pay
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            No payment categories found for @Model.Year
+        </div>
+    }
+</div>

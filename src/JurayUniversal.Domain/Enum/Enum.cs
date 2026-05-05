@@ -392,7 +392,12 @@ namespace JurayUniversal.Domain.Enum
             [Description("Deleted")]
             Deleted = 6,
         }
-
+        public enum PaymentStatus
+        {
+            Pending = 0,
+            Success = 1,
+            Failed = 2
+        }
         public enum PagePosition
         {
             [Description("None")]
@@ -416,6 +421,8 @@ namespace JurayUniversal.Domain.Enum
 
             [Description("Absent")]
             Absent = 3,
+            [Description("Late")]
+            Late = 4
         }
         public enum PeriodStatus
         {

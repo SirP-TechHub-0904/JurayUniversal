@@ -1,0 +1,235 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.Users.DeleteModel
+@{
+}
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- ── Header ─────────────────────────────────────── -->
+    <div class="d-flex align-items-center mb-4 gap-3">
+        <div class="bg-danger rounded-circle d-flex align-items-center
+                    justify-content-center" style="width:52px;height:52px">
+            <i class="bi bi-person-x-fill text-white fs-4"></i>
+        </div>
+        <div>
+            <h3 class="mb-0 fw-bold text-danger">Delete User Account</h3>
+            <small class="text-muted">This action is permanent and cannot be undone.</small>
+        </div>
+    </div>
+
+    <!-- ── User Info Card ─────────────────────────────── -->
+    <div class="card border-danger mb-4 shadow-sm">
+        <div class="card-header bg-danger text-white fw-semibold">
+            <i class="bi bi-person-fill me-2"></i> User Targeted for Deletion
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3 text-center">
+                    @if (!string.IsNullOrEmpty(Model.UserDatas?.PassportFilePathUrl))
+                    {
+                        <img src="@Model.UserDatas.PassportFilePathUrl"
+                             class="rounded-circle border border-danger"
+                             style="width:90px;height:90px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <div class="rounded-circle bg-secondary d-inline-flex
+                                        align-items-center justify-content-center text-white fw-bold"
+                             style="width:90px;height:90px;font-size:2rem;">
+                            @Model.UserDatas?.FirstName?.Substring(0, 1)
+                        </div>
+                    }
+                </div>
+                <div class="col-md-9">
+                    <table class="table table-sm table-borderless mb-0">
+                        <tr>
+                            <th style="width:160px">Full Name</th>
+                            <td>@Model.UserDatas?.FirstName @Model.UserDatas?.LastName</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.UserDatas?.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Username</th>
+                            <td>@Model.UserDatas?.UserName</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>@Model.UserDatas?.PhoneNumber</td>
+                        </tr>
+                        <tr>
+                            <th>User ID</th>
+                            <td><code>@Model.UserDatas?.Id</code></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Related Data Summary ───────────────────────── -->
+    <div class="card mb-4 shadow-sm border-warning">
+        <div class="card-header bg-warning text-dark fw-semibold">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Data linked to this user —
+            <strong>@Model.RelatedData.Total total records</strong> will be permanently deleted
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Module</th>
+                        <th class="text-center">Records</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        void Row(string module, int count, string icon)
+                        {
+                            <tr>
+                                <td><i class="bi @icon me-2 text-secondary"></i>@module</td>
+                                <td class="text-center">
+                                    <span class="badge @(count > 0 ? "bg-danger" : "bg-success")">
+                                        @count
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (count > 0)
+                                    {
+                                        <span class="text-danger small">
+                                            <i class="bi bi-trash"></i> Will be deleted
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-success small">
+                                            <i class="bi bi-check-circle"></i> No records
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        ;
+                        }
+                    }
+                    @{
+                        Row("Additional Profile", Model.RelatedData.AdditionalProfileCount, "bi-person-badge");
+                    }
+                    @{
+                        Row("Attendance", Model.RelatedData.AttendanceCount, "bi-calendar-check");
+                    }
+                    @{
+                        Row("Budget Categories", Model.RelatedData.BudgetCount, "bi-cash-stack");
+                    }
+                    @{
+                        Row("Chat Messages", Model.RelatedData.ChatMessageCount, "bi-chat-dots");
+                    }
+                    @{
+                        Row("Company Expenses", Model.RelatedData.CompanyExpensesCount, "bi-receipt");
+                    }
+                    @{
+                        Row("Fund Sources", Model.RelatedData.FundSourceCount, "bi-bank");
+                    }
+                    @{
+                        Row("Meeting Attendance", Model.RelatedData.MeetingAttendanceCount, "bi-people");
+                    }
+                    @{
+                        Row("NIPSS Records", Model.RelatedData.NipssCount, "bi-journal-text");
+                    }
+                    @{
+                        Row("Office Activity", Model.RelatedData.OfficeCount, "bi-building");
+                    }
+                    @{
+                        Row("Portfolio", Model.RelatedData.PortfolioCount, "bi-briefcase");
+                    }
+                    @{
+                        Row("Projects", Model.RelatedData.ProjectCount, "bi-kanban");
+                    }
+                    @{
+                        Row("Proposals", Model.RelatedData.ProposalCount, "bi-file-earmark-text");
+                    }
+                    @{
+                        Row("Reports", Model.RelatedData.ReportCount, "bi-file-bar-graph");
+                    }
+                    @{
+                        Row("Salary Records", Model.RelatedData.SalaryCount, "bi-wallet2");
+                    }
+                    @{
+                        Row("Training", Model.RelatedData.TrainingCount, "bi-mortarboard");
+                    }
+                    @{
+                        Row("Voting", Model.RelatedData.VotingCount, "bi-check2-square");
+                    }
+                    @{
+                        Row("XProject Messages/Tasks", Model.RelatedData.XProjectCount, "bi-diagram-3");
+                    }
+                </tbody>
+                <tfoot class="table-dark">
+                    <tr>
+                        <th>Total Records</th>
+                        <th class="text-center">
+                            <span class="badge bg-danger fs-6">@Model.RelatedData.Total</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- ── Confirmation Form ──────────────────────────── -->
+    <div class="card border-danger shadow">
+        <div class="card-header bg-danger text-white fw-bold fs-5">
+            <i class="bi bi-shield-lock-fill me-2"></i> Authorization Required
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-danger d-flex align-items-start gap-3" role="alert">
+                <i class="bi bi-exclamation-octagon-fill fs-4 mt-1"></i>
+                <div>
+                    <strong>You are about to permanently delete this user and all @Model.RelatedData.Total linked records.</strong><br />
+                    This <u>cannot be undone</u>. To authorize this action, type
+                    <strong class="text-danger fs-5">&nbsp;walata&nbsp;</strong> in the box below.
+                </div>
+            </div>
+
+            <form method="post">
+                <input type="hidden" asp-for="UserId" value="@Model.UserDatas?.Id" />
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPhrase" class="form-label fw-semibold">
+                        Confirmation Phrase
+                    </label>
+                    <input asp-for="ConfirmPhrase"
+                           class="form-control form-control-lg border-danger"
+                           placeholder='Type "walata" to confirm'
+                           autocomplete="off" />
+                    <span asp-validation-for="ConfirmPhrase" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit"
+                            class="btn btn-danger btn-lg px-5"
+                            onclick="return confirm('Final warning: Delete this user permanently?')">
+                        <i class="bi bi-trash3-fill me-2"></i> Permanently Delete User
+                    </button>
+                    <a asp-page="./Index" class="btn btn-outline-secondary btn-lg px-5">
+                        <i class="bi bi-arrow-left me-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

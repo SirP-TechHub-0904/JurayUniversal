@@ -12,19 +12,17 @@
 
 
 
-                    <div class="content-header" style="padding:1px 0;padding-top:20px;">
+                    <div class="content-header" style="padding:1px 0;padding-top:20px;margin-bottom:10px;">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6" style="padding-left:0;">
                                     <h5 class="m-0" style="font-weight:900;">ATTENDANCE REOPRT FOR @TempData["title"]</h5>
                                 </div>
                                 <div class="col-sm-6" style="padding-left:0;">
-                                    <form method="get">
-                                        <div class="input-group input-group-sm" style="margin-bottom:7px;">
-                                            <input type="date" name="searchdate" class="form-control" placeholder="@TempData["date"]">
-                                            <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-success btn-flat">Search</button>
-                                            </span>
+                                    <form method="get" class="date-search-form">
+                                        <div class="date-search-box">
+                                            <input type="date" name="searchdate" placeholder="dd/mm/yyyy" />
+                                            <button type="submit">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -192,8 +190,6 @@
 
                 <div class="card-body">
                     <div class="card-header">
-
-
                     </div>
                     <div class="card-body">
                         <div class="card">
@@ -219,7 +215,7 @@
                                                 <th style="width: 30%">
                                                     Team Members
                                                 </th>
-                                                 <th style="width: 8%" class="text-center">
+                                                <th style="width: 8%" class="text-center">
                                                     Status
                                                 </th>
                                                 <th style="width: 8%" class="text-center">
@@ -234,7 +230,7 @@
                                         <tbody>
                                             @foreach (var item in Model.XProjectTask)
                                             {
-                                                
+
 
                                                 <tr>
                                                     <td>
@@ -263,7 +259,7 @@
                                                                 {
                                                                     <span> @item.FinishDate.ToString("dd.MM.yyyy")</span>
                                                                 }
-                                                                else
+                                                                                                                        else
                                                                 {
                                                                     <span>--.--.----</span>
                                                                 }
@@ -331,7 +327,7 @@
 
 
                                                     </td>
-                                                   
+
                                                     <td class="project-state">
                                                         <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>
                                                     </td>

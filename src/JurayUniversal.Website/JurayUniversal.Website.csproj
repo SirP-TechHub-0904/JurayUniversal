@@ -31,7 +31,6 @@
     <Content Remove="Areas\Admin\Pages\AC\NewUser.cshtml" />
     <Content Remove="Areas\Admin\Pages\UserManagement\Data.cshtml" />
     <Content Remove="Areas\Admin\Pages\UserManagement\UpdateUserPermissionAdmin.cshtml" />
-    <Content Remove="Areas\Content\Pages\Advance\Search.cshtml" />
     <Content Remove="Areas\EmailJS\Pages\Error.cshtml" />
     <Content Remove="Areas\EmailJS\Pages\_ValidationScriptsPartial.cshtml" />
     <Content Remove="Areas\EmailJS\Pages\_ViewImports.cshtml" />
@@ -227,7 +226,6 @@
     <None Include="Areas\Admin\Pages\ITraining\Edit.cshtml" />
     <None Include="Areas\Admin\Pages\ITraining\Index.cshtml" />
     <None Include="Areas\Admin\Pages\UserManagement\BarCodeGenerator.cshtml" />
-    <None Include="Areas\Admin\Pages\UserManagement\Delete.cshtml" />
     <None Include="Areas\Admin\Pages\UserManagement\Details.cshtml" />
     <None Include="Areas\Admin\Pages\UserManagement\Data.cshtml" />
     <None Include="Areas\Admin\Pages\UserManagement\Edit.cshtml" />
@@ -243,7 +241,6 @@
     <None Include="Areas\Admin\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Admin\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Admin\Pages\_ViewStart.cshtml" />
-    <None Include="Areas\Content\Pages\Advance\Search.cshtml" />
     <None Include="Areas\EmailJS\Pages\Error.cshtml" />
     <None Include="Areas\EmailJS\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\EmailJS\Pages\_ViewImports.cshtml" />
@@ -894,14 +891,6 @@
     <None Include="wwwroot\portfoliotheme\themejohn\assest\js\util.js.download" />
     <None Include="wwwroot\portfoliotheme\themejohn\assest\js\validator.min.js.download" />
     <None Include="wwwroot\portfoliotheme\themejohn\assest\js\wow.min.js.download" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Content\Pages\Advance\Search.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Areas\Content\Pages\Advance\Search.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

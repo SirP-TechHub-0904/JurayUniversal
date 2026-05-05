@@ -1,0 +1,39 @@
+﻿@page
+@model JurayUniversal.Website.Areas.Management.Pages.PaymentPageSettings.IndexModel
+
+@{
+    ViewData["Title"] = "Payment Settings";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">PAYMENT SETTINGS</h3>
+    </div>
+
+    <div class="card-body">
+        @if (Model.SuperSetting != null)
+        {
+            <dl class="row">
+                <dt class="col-sm-3">Paystack Public Key</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.PaystackPublicKey</dd>
+
+                <dt class="col-sm-3">Paystack Secret Key</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.PaystackSecretKey</dd>
+
+                <dt class="col-sm-3">Paystack Callback Url</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.PaystackCallbackUrl</dd>
+
+                <dt class="col-sm-3">Currency Symbol</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.CurrencySymbol</dd>
+
+                <dt class="col-sm-3">Currency Code</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.CurrencyCode</dd>
+
+                <dt class="col-sm-3">Payment Active</dt>
+                <dd class="col-sm-9">@Model.SuperSetting.PaymentModuleActive</dd>
+            </dl>
+        }
+
+        <a asp-page="./Edit" class="btn btn-primary btn-sm">Update Payment Settings</a>
+    </div>
+</div>

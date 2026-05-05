@@ -27,7 +27,7 @@ namespace JurayUniversal.Website.Areas.Management.Pages.Users
         {
             var users = await _userManager.Users.ToListAsync();
             UsersWithRoles = new List<UserWithRoles>();
-            AllRoles = await _roleManager.Roles.Where(x => x.Name != "mSuperAdmin" || x.Name != "JAdmin").Select(r => r.Name).ToListAsync();
+            AllRoles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
 
             foreach (var user in users)
             {
