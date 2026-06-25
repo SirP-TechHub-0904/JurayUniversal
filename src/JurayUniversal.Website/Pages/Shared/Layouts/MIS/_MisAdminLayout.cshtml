@@ -1,0 +1,429 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+@using System.Security.Claims
+@inject Microsoft.AspNetCore.Identity.UserManager<JurayUniversal.Domain.Models.Profile> _userManager
+
+@{
+    var superSetting = _context.SuperSettings.FirstOrDefault();
+    
+    // Identity fields
+    string userFullName = User.Identity?.Name ?? "User";
+    string userEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "user@example.com";
+    string userInitials = string.IsNullOrEmpty(userFullName) ? "U" : userFullName.Substring(0, 1).ToUpper();
+
+    var appUser = await _userManager.GetUserAsync(User);
+    var userRoles = appUser != null ? await _userManager.GetRolesAsync(appUser) : new List<string>();
+
+    var pendingNotifications = new List<JurayUniversal.Domain.Models.MisNotification>();
+    if (appUser != null)
+    {
+        pendingNotifications = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync(_context.MisNotifications.Where(n => n.UserId == appUser.Id && !n.IsRead).OrderByDescending(n => n.CreatedAt));
+    }
+
+    var hasAdminRole = User.IsInRole("Admin") || User.IsInRole("mSuperAdmin") || User.IsInRole("Administrator") || User.IsInRole("Editor");
+    
+    if (!hasAdminRole && appUser != null)
+    {
+        hasAdminRole = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AnyAsync(_context.MisUserFeatureRoles, r => r.ProfileId == appUser.Id && r.IsActive).Result;
+    }
+
+    // Determine current sidebar context (User Platform vs Admin Dashboard)
+    bool isPlatform = ViewContext.RouteData.Values["page"]?.ToString().Contains("/Platform/") == true;
+}
+
+
+
+
+<!DOCTYPE html>
+<!-- saved from url=(0039) https://seantheme.com/studio/index.html-->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<partial name="~/Pages/Shared/Layouts/MIS/_MisHeadTitle.cshtml" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- ================== BEGIN core-css ================== -->
+	<link href="~/layout/misasset/vendor.min.css" rel="stylesheet">
+	<link href="~/layout/misasset/app.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/dashboard/plugins/toastr/toastr.min.css">
+	<link rel="stylesheet" href="~/dashboard/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<!-- ================== END core-css ================== -->
+
+	<!-- FontAwesome, Bootstrap Icons, Material Design Icons and Google Fonts (Inter) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@mdi/font@7.4.47/css/materialdesignicons.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+	<style>
+		:root {
+			/* Material Design 3 CSS Theme Variables */
+			--md-primary: #4F46E5;
+			--md-surface: #F9FAFB;
+			--md-surface-container: #F3F4F6;
+			--md-on-surface: #111827;
+			--md-shadow-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+			--md-shadow-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1.5px 3px 0px rgba(0, 0, 0, 0.3);
+			--md-shadow-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Global Typography */
+		body, .app, .form-control, .btn, .card, .dropdown-item, .table {
+			font-family: 'Inter', sans-serif !important;
+		}
+
+		/* Material Design Cards & Widgets */
+		.card {
+			border: none !important;
+			border-radius: 16px !important;
+			box-shadow: var(--md-shadow-1) !important;
+			transition: transform 0.22s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.22s cubic-bezier(0.2, 0, 0, 1) !important;
+		}
+		.card:hover {
+			transform: translateY(-2px) !important;
+			box-shadow: var(--md-shadow-2) !important;
+		}
+
+		/* Buttons & Search Controls */
+		.btn:not(.btn-link) {
+			border-radius: 100px !important; /* Material pill shape */
+			padding: 0.5rem 1.5rem !important;
+			font-weight: 500 !important;
+			transition: background-color 0.15s, box-shadow 0.15s !important;
+		}
+		.btn:not(.btn-link):hover {
+			box-shadow: var(--md-shadow-1) !important;
+		}
+		.form-control {
+			border-radius: 8px !important;
+			padding: 0.6rem 1rem !important;
+			border: 1px solid rgba(0, 0, 0, 0.12) !important;
+			transition: border-color 0.15s, box-shadow 0.15s !important;
+		}
+		.form-control:focus {
+			border-color: var(--md-primary) !important;
+			box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.2) !important;
+		}
+
+		/* Material Dropdown Menus */
+		.dropdown-menu {
+			border: none !important;
+			border-radius: 12px !important;
+			box-shadow: var(--md-shadow-3) !important;
+			padding: 8px !important;
+			margin-top: 4px !important;
+		}
+		.dropdown-item {
+			border-radius: 8px !important;
+			padding: 10px 16px !important;
+			font-size: 14px !important;
+			font-weight: 500 !important;
+			transition: background-color 0.15s, color 0.15s !important;
+		}
+		.dropdown-item:hover, .dropdown-item:focus {
+			background-color: rgba(103, 80, 164, 0.08) !important;
+			color: var(--md-primary) !important;
+		}
+
+		/* Material Tables */
+		.table {
+			border-collapse: separate !important;
+			border-spacing: 0 !important;
+			width: 100% !important;
+		}
+		.table th {
+			font-weight: 600 !important;
+			text-transform: uppercase !important;
+			font-size: 11px !important;
+			letter-spacing: 0.8px !important;
+			padding: 14px 18px !important;
+			color: rgba(0, 0, 0, 0.6) !important;
+			border-bottom: 2px solid rgba(0, 0, 0, 0.08) !important;
+			border-top: none !important;
+		}
+		.table td {
+			padding: 14px 18px !important;
+			vertical-align: middle !important;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+			border-top: none !important;
+			font-size: 14px !important;
+		}
+		.table tbody tr:hover {
+			background-color: rgba(103, 80, 164, 0.02) !important;
+		}
+
+		/* Sidebar Dropdown Submenu Generic Icon (Option A) */
+		.menu-submenu .menu-link {
+			display: flex !important;
+			align-items: center !important;
+		}
+		.menu-submenu .menu-link::before {
+			content: '\f10c' !important; /* Unicode for far fa-circle */
+			font-family: 'Font Awesome 6 Free' !important;
+			font-weight: 400 !important; /* Outline circle */
+			font-size: 6px !important;
+			margin-right: 10px !important;
+			display: inline-block !important;
+			vertical-align: middle !important;
+			opacity: 0.4 !important;
+			transition: opacity 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+		}
+		.menu-submenu .menu-link:hover::before {
+			opacity: 1 !important;
+			color: var(--md-primary) !important;
+			transform: scale(1.2) !important;
+		}
+	</style>
+	<link href="~/css/mis-datatables.css" rel="stylesheet">
+	<partial name="~/Pages/Shared/Layouts/MIS/_MisDashboardCSS.cshtml" />
+</head>
+<body class="pace-done ">
+	<div class="pace pace-inactive">
+		<div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+			<div class="pace-progress-inner"></div>
+		</div>
+		<div class="pace-activity"></div>
+	</div>
+	<!-- BEGIN #app -->
+	<div id="app" class="app">
+		<!-- BEGIN #header -->
+		<div id="header" class="app-header">
+			<!-- BEGIN mobile-toggler -->
+			<div class="mobile-toggler">
+				<button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
+					<span class="bar"></span>
+					<span class="bar"></span>
+				</button>
+			</div>
+			<!-- END mobile-toggler -->
+			<!-- BEGIN brand -->
+			<div class="brand">
+				<div class="desktop-toggler">
+					<button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+						<span class="bar"></span>
+						<span class="bar"></span>
+					</button>
+				</div>
+
+				<a href="" class="brand-logo">
+					<partial name="~/Pages/Shared/Layouts/MIS/_MisLogo.cshtml" />
+				</a>
+			</div>
+			<!-- END brand -->
+			<!-- BEGIN menu -->
+			<div class="menu">
+				
+				<!-- Spacer to push everything to the right -->
+				<div class="ms-auto"></div>
+
+				<div class="menu-item dropdown d-flex align-items-center me-2">
+					<a href="#" data-bs-toggle="dropdown" data-display="static" class="btn btn-light btn-sm rounded-pill d-flex align-items-center justify-content-center border shadow-sm position-relative" style="width: 38px; height: 38px;">
+						<i class="fa fa-bell text-dark"></i>
+						@if (pendingNotifications.Any())
+						{
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+								@pendingNotifications.Count
+							</span>
+						}
+					</a>
+					<div class="dropdown-menu dropdown-menu-end dropdown-notification" style="width: 320px; max-height: 400px; overflow-y: auto;">
+						<h6 class="dropdown-header text-body-emphasis mb-1">Notifications</h6>
+						@if (pendingNotifications.Any())
+						{
+							foreach (var note in pendingNotifications)
+							{
+								<a href="@note.ActionUrl" class="dropdown-item p-3 border-bottom text-wrap">
+									<div class="d-flex w-100 justify-content-between mb-1">
+										<strong class="text-dark">@note.Title</strong>
+										<small class="text-muted">@note.CreatedAt.ToString("MMM dd")</small>
+									</div>
+									<p class="mb-1 fs-7 text-muted">@note.Message</p>
+								</a>
+							}
+						}
+						else
+						{
+							<div class="p-3 text-center text-muted fs-7">
+								No new notifications
+							</div>
+						}
+					</div>
+				</div>
+
+				@if (hasAdminRole)
+				{
+					<div class="menu-item dropdown d-flex align-items-center me-2">
+						@if (isPlatform)
+						{
+							<a asp-area="MisUserManagement" asp-page="/Dashboard/Index" class="btn btn-outline-primary btn-sm rounded-pill d-flex align-items-center fw-bold shadow-sm" style="height: 38px; padding-left: 1rem; padding-right: 1rem;">
+								<i class="bi bi-arrow-repeat me-1"></i> Switch to Admin View
+							</a>
+						}
+						else
+						{
+							<a asp-area="MisUserManagement" asp-page="/Platform/Index" class="btn btn-outline-success btn-sm rounded-pill d-flex align-items-center fw-bold shadow-sm" style="height: 38px; padding-left: 1rem; padding-right: 1rem;">
+								<i class="bi bi-person-badge me-1"></i> Switch to User View
+							</a>
+						}
+					</div>
+				}
+
+				<div class="menu-item dropdown d-flex align-items-center ms-1 me-3">
+					<a href="#" data-bs-toggle="dropdown" data-display="static" class="btn btn-light btn-sm rounded-pill d-flex align-items-center fw-bold text-dark border shadow-sm" aria-expanded="false" style="height: 38px; padding: 0.25rem 0.75rem 0.25rem 0.25rem;">
+						<div class="me-2 d-flex align-items-center justify-content-center bg-primary text-white rounded-circle" style="width: 28px; height: 28px; font-size: 0.8rem;">
+							@userInitials
+						</div>
+						<span class="fs-7">@userEmail</span>
+                        <i class="fa fa-chevron-down ms-2 text-muted" style="font-size: 0.65rem;"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end mt-2">
+						<a class="dropdown-item d-flex align-items-center" asp-area="MisUserManagement" asp-page="/Platform/MyProfile">My Profile <i class="fa fa-user-circle fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<a class="dropdown-item d-flex align-items-center" asp-area="MisUserManagement" asp-page="/Platform/ChangePassword">Security & 2FA <i class="fa fa-shield-alt fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<div class="dropdown-divider"></div>
+						
+                        <!-- User Roles Card inside Dropdown -->
+                        @if (userRoles.Any())
+                        {
+                            <div class="px-3 py-2 text-muted">
+                                <span class="d-block text-uppercase fw-bold" style="font-size: 0.65rem;">My Access Roles</span>
+                                <div class="mt-1 d-flex flex-wrap gap-1">
+                                    @foreach (var role in userRoles)
+                                    {
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25" style="font-size: 0.65rem;">@role</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                        }
+
+						<form class="m-0 p-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+							<button type="submit" class="dropdown-item d-flex align-items-center text-danger">Log Out <i class="fa fa-sign-out-alt fa-fw ms-auto text-danger text-opacity-50"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- END menu -->
+		</div>
+		<!-- END #header -->
+		<!-- BEGIN #sidebar -->
+		<div id="sidebar" class="app-sidebar">
+			<!-- BEGIN scrollbar -->
+			<div class="app-sidebar-content ps ps--active-y" data-scrollbar="true" data-height="100%" style="height: 100%;">
+				<!-- BEGIN menu -->
+				<div class="menu">
+					
+@if (isPlatform)
+        {
+            <partial name="~/Pages/Shared/Layouts/MIS/_MisUserSidebar.cshtml" />
+        }
+        else
+        {
+            <partial name="~/Pages/Shared/Layouts/MIS/_MisAdminSidebar.cshtml" />
+        }
+
+
+					<div class="p-3 px-4 mt-auto hide-on-minified">
+						<a href="/MisManual/Index" class="btn btn-secondary d-block w-100 fw-600 rounded-pill">
+							<i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Documentation
+						</a>
+					</div>
+				</div>
+				<!-- END menu -->
+				<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 985px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 984px;"></div></div>
+			</div>
+			<!-- END scrollbar -->
+			<!-- BEGIN mobile-sidebar-backdrop -->
+			<button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
+			<!-- END mobile-sidebar-backdrop -->
+		</div>
+		<!-- END #sidebar -->
+		<!-- BEGIN #content -->
+		<div id="content" class="app-content">
+			<!-- Custom page header omitted for cleaner dashboard feel -->
+
+			
+            @RenderBody()
+		</div>
+		<!-- END #content -->
+		<!-- BEGIN btn-scroll-top -->
+		<a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+		<!-- END btn-scroll-top -->
+		<!-- BEGIN theme-panel -->
+		<div class="theme-panel">
+			<a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
+			<div class="theme-panel-content">
+				<ul class="theme-list clearfix">
+					<li><a href="javascript:;" class="bg-red" data-theme="theme-red" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-pink" data-theme="theme-pink" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-orange" data-theme="theme-orange" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-yellow" data-theme="theme-yellow" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-lime" data-theme="theme-lime" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-green" data-theme="theme-green" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-teal" data-theme="theme-teal" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Teal" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-cyan" data-theme="theme-cyan" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Aqua" data-original-title="" title="">&nbsp;</a></li>
+					<li class="active"><a href="javascript:;" class="bg-blue" data-theme="" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Default" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-purple" data-theme="theme-purple" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-indigo" data-theme="theme-indigo" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-gray-600" data-theme="theme-gray-600" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Gray" data-original-title="" title="">&nbsp;</a></li>
+				</ul>
+				<hr class="mb-0">
+				<div class="row mt-10px pt-3px">
+					<div class="col-9 control-label text-body-emphasis fw-bold">
+						<div class="d-flex">Dark Mode <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px d-flex align-items-center">NEW</span></div>
+						<div class="lh-sm fs-13px fw-semibold">
+							<small class="text-body-emphasis opacity-50">
+								Adjust the appearance to reduce glare and give your eyes a break.
+							</small>
+						</div>
+					</div>
+					<div class="col-3 d-flex">
+						<div class="form-check form-switch ms-auto mb-0">
+							<input type="checkbox" class="form-check-input" name="app-theme-dark-mode" id="appThemeDarkMode" value="1">
+							<label class="form-check-label" for="appThemeDarkMode"></label>
+						</div>
+					</div>
+				</div>
+				<hr class="mb-0">
+				<div class="row mt-10px pt-3px">
+					<div class="col-9">
+						<div class="fw-bold text-body d-flex">
+							RTL Support <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px d-flex align-items-center">NEW</span>
+						</div>
+						<div class="lh-sm fs-13px fw-semibold">
+							<small class="text-body-emphasis opacity-50">Easily switch to right-to-left layout for Arabic, Hebrew, and other RTL languages.</small>
+						</div>
+					</div>
+					<div class="col-3 d-flex">
+						<div class="form-check form-switch ms-auto mb-0">
+							<input type="checkbox" class="form-check-input" name="app-theme-rtl-mode" id="appThemeRtl" value="1">
+							<label class="form-check-label" for="appThemeRtlMode"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END theme-panel -->
+
+		
+	</div>
+	<!-- END #app -->
+	<!-- ================== BEGIN core-js ================== -->
+ 	<script src="~/layout/misasset/vendor.min.js" type="text/javascript"></script>
+	<script src="~/layout/misasset/app.min.js" type="text/javascript"></script>
+	<!-- ================== END core-js ================== -->
+	<!-- ================== BEGIN page-js ================== -->
+	<script src="~/layout/misasset/apexcharts.min.js" type="text/javascript"></script>
+	<script src="~/layout/misasset/dashboard.demo.js" type="text/javascript"></script>
+	<!-- ================== END page-js ================== -->
+
+    <!-- Interactive User Manual Offcanvas -->
+    <partial name="Layouts/MIS/_MisContextualHelp" />
+
+    <partial name="Layouts/MIS/_MisScript" />
+    <script src="~/dashboard/plugins/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="~/dashboard/js/demo/dashboard.demo.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

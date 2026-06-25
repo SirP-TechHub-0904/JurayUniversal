@@ -1,0 +1,44 @@
+@using System.Security.Claims
+
+@{
+    string userFullName = User.Identity?.Name ?? "User";
+    if (userFullName.Contains("@"))
+    {
+        userFullName = userFullName.Split('@')[0];
+    }
+}
+
+<!-- WIDGET: Welcome / Quick Start -->
+<div class="card" id="welcome-widget">
+    <div class="card-body p-4 text-white rounded-4 bg-gradient-custom-indigo" style="background: linear-gradient(135deg, #4A148C 0%, var(--md-primary) 100%);">
+        <div class="d-flex align-items-start justify-content-between">
+            <div>
+                <h4 class="fw-800 text-white mb-2">Hi, @userFullName.</h4>
+                <p class="text-white text-opacity-80 fs-13px mb-4">Here's what's happening across your workspace today. You have 25 active modules running.</p>
+            </div>
+            <button class="btn btn-link text-white text-opacity-70 p-0 fs-14px" onclick="document.getElementById('welcome-widget').classList.add('d-none')"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="d-flex flex-column gap-3 mb-4">
+            <a href="javascript:;" class="text-white d-flex align-items-center gap-3 text-decoration-none fs-13px hover-opacity">
+                <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <div class="fw-700 text-white">Getting started with MIS</div>
+                    <div class="text-white text-opacity-60 fs-11px">Understand key administrative setup flows</div>
+                </div>
+            </a>
+            <a href="javascript:;" class="text-white d-flex align-items-center gap-3 text-decoration-none fs-13px hover-opacity">
+                <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="fw-700 text-white">Permissions Roles Matrix</div>
+                    <div class="text-white text-opacity-60 fs-11px">Check what staff and members can access</div>
+                </div>
+            </a>
+        </div>
+        <button class="btn btn-yellow w-100 text-dark fw-700" style="background-color: #FFC107; border-color: #FFC107;" onclick="typeof openQuickGuide === 'function' ? openQuickGuide() : null">Open Onboarding Wizard</button>
+    </div>
+</div>

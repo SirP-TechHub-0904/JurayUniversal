@@ -1,0 +1,97 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.ParticipantsModel
+@{
+    ViewData["Title"] = "Manage Participants";
+    ViewData["ActiveMenu"] = "MisReports";
+    ViewData["ActiveSubMenu"] = "Schemas";
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>Participants: @Model.Schema.Name</h3>
+            <p class="text-subtitle text-muted">Manage which staff members are required to submit this report.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <a asp-page="./Index" class="btn btn-secondary btn-sm rounded-pill">
+                <i class="bi bi-arrow-left me-1"></i> Back to Schemas
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row g-4">
+        <!-- Add Participant Form -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 sticky-top" style="top: 20px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Add Required User</h5>
+                    <form method="post" asp-page-handler="Add" asp-route-id="@Model.Schema.Id">
+                        <div class="mb-3">
+                            <label class="form-label">Select User Account</label>
+                            <select asp-for="NewParticipantId" class="form-select select2" asp-items="ViewBag.UserProfileId" required>
+                                <option value="">-- Choose User --</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill"><i class="bi bi-person-plus me-1"></i> Add to Schema</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Participants List -->
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">Staff Member</th>
+                                    <th>Status</th>
+                                    <th class="pe-4 text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Participants)
+                                {
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                    <span class="fw-bold fs-6">@item.UserProfile?.FirstName?.Substring(0, 1)</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 fw-bold">@item.UserProfile?.FirstName @item.UserProfile?.LastName</h6>
+                                                    <span class="text-muted fs-8">@item.UserProfile?.Email</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Enrolled</span></td>
+                                        <td class="pe-4 text-end">
+                                            <form method="post" asp-page-handler="Remove" asp-route-id="@Model.Schema.Id" asp-route-participantId="@item.Id" onsubmit="return confirm('Remove this user from the reporting schedule?');">
+                                                <button type="submit" class="btn btn-light btn-sm text-danger rounded-circle"><i class="bi bi-x-lg"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.Participants.Any())
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center py-5">
+                                            <i class="bi bi-people text-muted fs-1 mb-3 d-block"></i>
+                                            <h6 class="fw-bold text-muted">No participants assigned yet.</h6>
+                                            <p class="text-muted fs-8">Use the form to the left to add staff to this reporting schedule.</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

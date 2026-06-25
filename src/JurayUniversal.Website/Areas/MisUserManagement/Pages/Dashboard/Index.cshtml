@@ -1,0 +1,335 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "User Management Dashboard";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="container-fluid px-0">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 fw-800 mb-1">User Management & KPIs</h1>
+            <p class="text-muted fs-14px mb-0">Overview of system users, roles, and security configurations.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+            <a asp-page="./UserManual" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-book me-1"></i> User Manual</a>
+            @if (!Model.IsReadOnly)
+            {
+                <a asp-page="./List" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-person-plus me-1"></i> Manage Users</a>
+            }
+        </div>
+    </div>
+
+    <!-- Date Range Filter -->
+    <div class="card mb-4 border-0 shadow-sm rounded-4">
+        <div class="card-body p-3">
+            <form method="get" class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center fw-600 text-muted fs-14px">
+                    <i class="bi bi-funnel-fill me-2 text-primary fs-5"></i>
+                    Filter Analytics
+                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill ms-3">
+                        @(Model.StartDate.HasValue && Model.EndDate.HasValue ? $"{Model.StartDate.Value.ToString("dddd dd MMMM, yyyy")} - {Model.EndDate.Value.ToString("dddd dd MMMM, yyyy")}" : "All Time")
+                    </span>
+                </div>
+                
+                <div class="d-flex align-items-stretch shadow-sm" style="max-width: 500px; flex-grow: 1; border-radius: 50px;">
+                    <div class="d-flex align-items-center flex-grow-1 bg-white border border-primary border-opacity-25 border-end-0" style="border-radius: 50px 0 0 50px;">
+                        <input type="hidden" name="DateRange" id="DateRangeValue" value="@Model.DateRange" />
+                        <input type="text" id="DateRangeDisplay" value="@(Model.StartDate.HasValue && Model.EndDate.HasValue ? $"{Model.StartDate.Value.ToString("dddd dd MMMM, yyyy")} - {Model.EndDate.Value.ToString("dddd dd MMMM, yyyy")}" : "")" class="border-0 shadow-none bg-transparent py-2 px-4 w-100" placeholder="Search by date range..." style="font-size: 14px; font-weight: 500; outline: none; cursor: pointer;" readonly="readonly" />
+                        @if (!string.IsNullOrEmpty(Model.DateRange))
+                        {
+                            <a href="?DateRange=" class="text-danger px-3 d-flex align-items-center" title="Clear Date Filter" style="text-decoration: none;">
+                                <i class="bi bi-x-circle-fill fs-5"></i>
+                            </a>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4 m-0 d-flex align-items-center justify-content-center" style="border-radius: 0 50px 50px 0 !important; font-weight: 600; border: 1px solid var(--md-primary); z-index: 1;">
+                        <i class="bi bi-search me-2"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Key Metrics Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./List" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="fw-600 text-muted mb-0">Total Users</h6>
+                        <div class="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                            <i class="bi bi-people fs-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-800 text-dark mb-0">@Model.TotalUsers</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./List" asp-route-status="Active" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="fw-600 text-muted mb-0">Active Accounts</h6>
+                        <div class="bg-success bg-opacity-10 text-success rounded d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                            <i class="bi bi-person-check fs-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-800 text-success mb-0">@Model.ActiveUsers</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./List" asp-route-status="Pending" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="fw-600 text-muted mb-0">Pending Setup</h6>
+                        <div class="bg-warning bg-opacity-10 text-warning rounded d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                            <i class="bi bi-hourglass-split fs-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-800 text-warning mb-0">@Model.PendingUsers</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./List" asp-route-status="Suspended" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="fw-600 text-muted mb-0">Suspended</h6>
+                        <div class="bg-danger bg-opacity-10 text-danger rounded d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                            <i class="bi bi-person-x fs-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-800 text-danger mb-0">@Model.SuspendedUsers</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Demographics Strip -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 d-flex flex-wrap align-items-center gap-4">
+                    <h5 class="fw-700 mb-0 me-md-4">Demographics</h5>
+                    
+                    <div class="flex-grow-1" style="min-width: 200px;">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted fw-600">Male</span>
+                            <span class="fw-800 text-primary">@Model.MaleCount</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: @(Model.TotalUsers == 0 ? 0 : (Model.MaleCount * 100 / Model.TotalUsers))%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-grow-1" style="min-width: 200px;">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted fw-600">Female</span>
+                            <span class="fw-800 text-danger">@Model.FemaleCount</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: @(Model.TotalUsers == 0 ? 0 : (Model.FemaleCount * 100 / Model.TotalUsers))%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Quick Links & Actions -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-white border-bottom pt-4 pb-3">
+                    <h5 class="fw-700 mb-0">Directory Management</h5>
+                </div>
+                <div class="list-group list-group-flush rounded-bottom-4">
+                    <a asp-page="./List" class="list-group-item list-group-item-action p-3 d-flex align-items-center gap-3">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                            <i class="bi bi-journal-richtext fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-700 mb-0">User Directory</h6>
+                            <small class="text-muted">View and search all registered members</small>
+                        </div>
+                    </a>
+
+                    <a asp-page="./KpiSettings" class="list-group-item list-group-item-action p-3 d-flex align-items-center gap-3">
+                        <div class="bg-teal bg-opacity-10 text-teal rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                            <i class="bi bi-bar-chart-steps fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-700 mb-0">KPI Settings</h6>
+                            <small class="text-muted">Configure metrics and performance parameters</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Security Hub (2FA) -->
+            <div class="card border-0 shadow-sm rounded-4 bg-gradient-custom-indigo text-white mb-4" style="background: linear-gradient(135deg, #2b3252 0%, #3e4b77 100%);">
+                <div class="card-body p-4">
+                    @if (Model.Is2FAEnabled)
+                    {
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <i class="bi bi-shield-lock-fill fs-2 text-success"></i>
+                            <h5 class="fw-700 mb-0 text-white">MIS Security Hub</h5>
+                        </div>
+                        <p class="text-white text-opacity-80 fs-13px mb-4">Your MIS Administrator access is currently protected with Two-Factor Authentication (2FA).</p>
+                        <a asp-page="/Auth/MisTwoFactorAuthentication" asp-area="MisAuth" class="btn btn-success w-100 fw-700 rounded-pill">Manage 2FA Settings</a>
+                    }
+                    else
+                    {
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <i class="bi bi-shield-exclamation fs-2 text-warning"></i>
+                            <h5 class="fw-700 mb-0 text-white">MIS Security Hub</h5>
+                        </div>
+                        <p class="text-white text-opacity-80 fs-13px mb-4">Set up Two-Factor Authentication (2FA) specifically for your MIS Administrator access. This is isolated from the main website portal.</p>
+                        <a asp-page="/Auth/MisTwoFactorAuthentication" asp-area="MisAuth" class="btn btn-warning w-100 fw-700 rounded-pill">Configure 2FA & Recovery</a>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Graphs Area -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-bottom pt-4 pb-3 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-700 mb-0">User Growth Trends</h5>
+                    <select class="form-select form-select-sm w-auto rounded-pill border-light bg-light">
+                        <option>@(Model.StartDate.HasValue && Model.EndDate.HasValue ? $"{Model.StartDate.Value.ToString("dddd dd MMMM, yyyy")} - {Model.EndDate.Value.ToString("dddd dd MMMM, yyyy")}" : "All Time")</option>
+                    </select>
+                </div>
+                <div class="card-body p-4">
+                    <div id="usersChart" style="height: 350px;"></div>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="card border-0 shadow-sm rounded-4 mt-4">
+                <div class="card-header bg-white border-bottom pt-4 pb-3">
+                    <h5 class="fw-700 mb-0">Recent Activity</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.RecentActivities.Any())
+                    {
+                        <div class="timeline position-relative ps-4" style="border-left: 2px solid #eef2f7;">
+                            @foreach (var activity in Model.RecentActivities)
+                            {
+                                <div class="d-flex mb-4 position-relative">
+                                    <div class="position-absolute" style="left: -43px; top: 0;">
+                                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width:32px; height:32px; border: 4px solid #fff;">
+                                            <i class="bi bi-activity fs-14px"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-700 mb-1">@activity.ActionType</h6>
+                                        <p class="text-muted fs-13px mb-1">@activity.Description</p>
+                                        <small class="text-muted"><i class="bi bi-clock me-1"></i> @activity.Date.ToString("MMM dd, yyyy h:mm tt")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-journal-x fs-1 d-block mb-3 opacity-50"></i>
+                            <h6>No recent activity found</h6>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- DateRangePicker dependencies -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script>
+        $(function() {
+            $('#DateRangeDisplay').daterangepicker({
+                autoUpdateInput: false,
+                opens: 'left',
+                @if(Model.StartDate.HasValue && Model.EndDate.HasValue)
+                {
+                    <text>
+                    startDate: '@Model.StartDate.Value.ToString("yyyy-MM-dd")',
+                    endDate: '@Model.EndDate.Value.ToString("yyyy-MM-dd")',
+                    </text>
+                }
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'dddd DD MMMM, YYYY'
+                }
+            });
+
+            $('#DateRangeDisplay').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('dddd DD MMMM, YYYY') + ' - ' + picker.endDate.format('dddd DD MMMM, YYYY'));
+                $('#DateRangeValue').val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('#DateRangeDisplay').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#DateRangeValue').val('');
+            });
+        });
+    </script>
+
+    <!-- ApexCharts Mock Script -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var options = {
+                series: [{
+                    name: 'New Users',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.GraphNewUsers))
+                }, {
+                    name: 'Suspended',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.GraphSuspendedUsers))
+                }],
+                chart: {
+                    height: 350,
+                    type: 'area',
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false }
+                },
+                colors: ['#009688', '#F44336'],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                xaxis: {
+                    categories: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.GraphLabels)),
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100]
+                    }
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#usersChart"), options);
+            chart.render();
+        });
+    </script>
+}

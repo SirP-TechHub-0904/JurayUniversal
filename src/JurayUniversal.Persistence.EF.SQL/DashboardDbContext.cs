@@ -1,4 +1,4 @@
-﻿using JurayUniversal.Domain;
+using JurayUniversal.Domain;
 using JurayUniversal.Domain.Models;
 using JurayUniversal.Infrastructure.TenantSupport;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,9 +6,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using JurayUniversal.Domain.Models.NIPSS;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
-namespace JurayUniversal.Persistence.EF.SQL;
 
+namespace JurayUniversal.Persistence.EF.SQL
+{
 public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, string>
 {
     private readonly ITenantProvider _tenantProvider;
@@ -24,6 +30,7 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     public DbSet<DialCode> DialCodes { get; set; } = null!;
     public DbSet<PriceSetting> PriceSettings { get; set; } = null!;
     public DbSet<SuperSetting> SuperSettings { get; set; } = null!;
+    public DbSet<MisSetting> MisSettings { get; set; } = null!;
     public DbSet<EnableDevice> EnableDevices { get; set; } = null!;
     public DbSet<TemplateCategory> TemplateCategories { get; set; } = null!;
     public DbSet<TemplateType> TemplateTypes { get; set; } = null!;
@@ -180,10 +187,118 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     public DbSet<PaymentCategory> PaymentCategories { get; set; }
     public DbSet<Payment> Payments { get; set; }
 
+    // --- MIS: User Management Feature ---
+    public DbSet<MisUserCategory> MisUserCategories { get; set; }
+    public DbSet<MisKpiIndicator> MisKpiIndicators { get; set; }
+    public DbSet<MisKpiUserScore> MisKpiUserScores { get; set; }
+    public DbSet<MisUserFeatureRole> MisUserFeatureRoles { get; set; }
+    public DbSet<MisUserNote> MisUserNotes { get; set; }
+    public DbSet<MisActivityLog> MisActivityLogs { get; set; }
 
-    public DashboardDbContext(DbContextOptions options, ITenantProvider tenantProvider) : base(options)
+    // --- MIS: Committees & Groups Feature ---
+    public DbSet<MisGroup> MisGroups { get; set; }
+    public DbSet<MisGroupMember> MisGroupMembers { get; set; }
+    public DbSet<MisGroupPost> MisGroupPosts { get; set; }
+    public DbSet<MisGroupFile> MisGroupFiles { get; set; }
+    public DbSet<MisAlumniProfile> MisAlumniProfiles { get; set; }
+    public DbSet<MisAlumniPost> MisAlumniPosts { get; set; }
+
+    public DbSet<MisForm> MisForms { get; set; }
+    public DbSet<MisFormResponse> MisFormResponses { get; set; }
+
+
+    // --- MIS: Dynamic Interval Reporting ---
+    public DbSet<MisReportSchema> MisReportSchemas { get; set; }
+    public DbSet<MisReportParticipant> MisReportParticipants { get; set; }
+    public DbSet<MisReportSubmission> MisReportSubmissions { get; set; }
+    public DbSet<MisReportTimeLog> MisReportTimeLogs { get; set; }
+
+    // Interactive User Manual Models
+    public DbSet<MisManual> MisManuals { get; set; }
+    public DbSet<MisManualPage> MisManualPages { get; set; }
+    public DbSet<MisManualElement> MisManualElements { get; set; }
+
+    // --- MIS: Management & Billing Feature ---
+    public DbSet<MisFeature> MisFeatures { get; set; }
+    public DbSet<MisFeatureInvoice> MisFeatureInvoices { get; set; }
+
+    // --- MIS: Global Notifications ---
+    public DbSet<MisNotification> MisNotifications { get; set; }
+
+
+    private readonly Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+
+    public DashboardDbContext(DbContextOptions options, ITenantProvider tenantProvider, Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor = null) : base(options)
     {
         _tenantProvider = tenantProvider;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var auditedEntities = new[] { typeof(UserCategory), typeof(MisUserFeatureRole), typeof(MisKpiUserScore), typeof(MisUserNote) };
+
+        var entries = ChangeTracker.Entries()
+            .Where(e => (e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted)
+                        && auditedEntities.Contains(e.Entity.GetType()))
+            .ToList();
+
+        if (entries.Any())
+        {
+            var user = _httpContextAccessor?.HttpContext?.User;
+            var userId = user?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var userName = user?.Identity?.Name ?? "System";
+
+            var logs = new List<MisActivityLog>();
+
+            foreach (var entry in entries)
+            {
+                string actionType = entry.State.ToString();
+
+                var log = new MisActivityLog
+                {
+                    ActionType = actionType,
+                    Description = $"{actionType} a record.",
+                    PerformedByProfileId = userId,
+                    PerformedByFullName = userName,
+                    Module = "User Management",
+                    Date = DateTime.UtcNow
+                };
+
+                if (entry.Entity is UserCategory cat)
+                {
+                    log.ActionType = $"{actionType} Category";
+                    log.Description = $"{actionType} Category: {cat.Title}";
+                }
+                else if (entry.Entity is MisUserFeatureRole role)
+                {
+                    log.ActionType = $"{actionType} Role";
+                    log.Description = $"{actionType} Role '{role.ActionRole}' for module '{role.FeatureAreaKey}'.";
+                    log.TargetProfileId = role.ProfileId;
+                }
+                else if (entry.Entity is MisUserNote note)
+                {
+                    log.ActionType = $"{actionType} Note";
+                    log.Description = $"{actionType} HR Note (Private: {note.IsPrivate}).";
+                    log.TargetProfileId = note.ProfileId;
+                }
+                else if (entry.Entity is MisKpiUserScore score)
+                {
+                    log.ActionType = $"{actionType} KPI";
+                    log.Description = $"{actionType} KPI Score for Period: {score.Period}.";
+                    log.TargetProfileId = score.ProfileId;
+                }
+
+                logs.Add(log);
+            }
+
+            if (logs.Any())
+            {
+                MisActivityLogs.AddRange(logs);
+            }
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -235,6 +350,9 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
         //   .HasForeignKey<Accomodation>(a => a.ParticipantListId);
         base.OnModelCreating(modelBuilder);
 
+        // Seed the User Manual
+        modelBuilder.SeedMisManuals();
+
         // ConfigureCustomer(modelBuilder);
     }
 
@@ -248,4 +366,6 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     //        table.HasKey(p => p.CustomerId).HasName("PK_CustomerId");
     //    });
     //}
+}
+
 }

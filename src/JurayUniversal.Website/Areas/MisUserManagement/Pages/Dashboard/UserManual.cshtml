@@ -1,0 +1,104 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.UserManualModel
+@{
+    ViewData["Title"] = "User Manual";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "UserManual";
+}
+
+<div class="container-fluid px-0">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8 col-12">
+            <h3 class="fw-800 mb-1">User Management Manual</h3>
+            <p class="text-muted fs-14px">Learn how to navigate, search, and manage the user directory.</p>
+        </div>
+        <div class="col-md-4 col-12 text-md-end">
+            <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Manual Content -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-journal-bookmark me-2 text-primary"></i> Introduction</h4>
+                    <p class="text-muted">
+                        Welcome to the User Management module. This feature acts as the central directory for your entire organization, allowing you to track users, evaluate key performance indicators (KPIs), and control which feature modules each person can access.
+                    </p>
+
+                    <hr class="my-4" />
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-search me-2 text-info"></i> How to Search the Directory</h5>
+                    <p class="text-muted">
+                        You can search for any registered member by navigating to the <strong>User Directory</strong> link on the dashboard or sidebar. Use the Search bar to look up users by their First Name, Last Name, or Email address. You can also narrow down results using the Category Filter or the Status Filter.
+                    </p>
+
+                    <hr class="my-4" />
+
+                    @if (!Model.IsReadOnly)
+                    {
+                        <div class="alert alert-primary bg-primary bg-opacity-10 border-0 rounded-4 p-4 mb-4">
+                            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-pencil-square me-2"></i> How to Edit User Profiles</h5>
+                            <p class="text-dark mb-0">
+                                As an Editor, you can modify user details. In the User Directory list, click the <strong>Manage</strong> button next to a user's name and select <strong>Edit Profile</strong>. You can update their names, contact info, and category. Click Save once complete.
+                            </p>
+                        </div>
+
+                        <div class="alert alert-success bg-success bg-opacity-10 border-0 rounded-4 p-4 mb-4">
+                            <h5 class="fw-bold text-success mb-3"><i class="bi bi-shield-lock me-2"></i> How to Assign Feature Roles</h5>
+                            <p class="text-dark mb-2">
+                                To grant someone access to a specific feature module (e.g., Committees or Fleet):
+                            </p>
+                            <ol class="text-dark mb-0">
+                                <li>Navigate to the User Directory.</li>
+                                <li>Click <strong>Manage -> Feature Roles</strong> for the target user.</li>
+                                <li>In the Assignment form, select the Feature Module from the dropdown.</li>
+                                <li>Select the Action Role (Global Editor, Feature Editor, or Read Only).</li>
+                                <li>Click <strong>Assign Role</strong>.</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="alert alert-warning bg-warning bg-opacity-10 border-0 rounded-4 p-4 mb-4">
+                            <h5 class="fw-bold text-warning mb-3"><i class="bi bi-gear me-2"></i> How to Add KPI Indicators</h5>
+                            <p class="text-dark mb-0">
+                                To define what parameters users are evaluated on, navigate to <strong>KPI Settings</strong>. Fill out the "Add KPI Indicator" form with a title, description, max score, and display order. Set it to active and save.
+                            </p>
+                        </div>
+                    }
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-clipboard-data me-2 text-purple"></i> How to View KPI Results</h5>
+                    <p class="text-muted">
+                        KPI results are tracked over time. To view a user's performance, go to the User Directory, click Manage on a user, and select <strong>Evaluate KPIs</strong>. This will display their scoring history.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Info -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 bg-light mb-4">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm" style="width: 60px; height: 60px;">
+                        <i class="bi bi-person-badge fs-2 text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Your Access Level</h5>
+                    @if (Model.IsReadOnly)
+                    {
+                        <span class="badge bg-secondary mb-2 fs-6 px-3 py-2 rounded-pill">Read Only</span>
+                        <p class="text-muted fs-13px mb-0">
+                            You can view the directory and search for users, but you cannot edit profiles, assign roles, or change KPI settings.
+                        </p>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success mb-2 fs-6 px-3 py-2 rounded-pill">Feature Editor</span>
+                        <p class="text-muted fs-13px mb-0">
+                            You have full management capabilities over the User Directory, Roles, and KPI configurations.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

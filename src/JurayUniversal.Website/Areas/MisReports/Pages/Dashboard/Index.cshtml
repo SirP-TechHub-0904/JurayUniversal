@@ -1,0 +1,311 @@
+@page
+@model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Reports Dashboard";
+    ViewData["ActiveMenu"] = "MisReports";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<style>
+    .premium-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+        transition: all 0.3s ease;
+        border-radius: 1rem;
+    }
+    .premium-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.08);
+    }
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    .gradient-primary { background: linear-gradient(135deg, #4e54c8, #8f94fb); color: white; }
+    .gradient-warning { background: linear-gradient(135deg, #ff9966, #ff5e62); color: white; }
+    .gradient-success { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+    .gradient-info { background: linear-gradient(135deg, #00c6ff, #0072ff); color: white; }
+</style>
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">Reporting & Analytics Dashboard</h3>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+        @if (await MisAuth.CanEditAsync(User, "MisReports"))
+        {
+            <a asp-page="./Schemas/Index" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-gear-fill me-1"></i> Manage Report Schemas</a>
+        }
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <!-- KPI Cards Row -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./Schemas/Index" class="card premium-card h-100 text-decoration-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="fw-600 text-muted mb-1 text-uppercase" style="letter-spacing: 0.5px; font-size: 0.85rem;">Active Schemas</h6>
+                            <h2 class="fw-800 text-dark mb-0">@Model.TotalSchemas</h2>
+                        </div>
+                        <div class="icon-box gradient-primary shadow-sm">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a asp-page="./Submissions" class="card premium-card h-100 text-decoration-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="fw-600 text-muted mb-1 text-uppercase" style="letter-spacing: 0.5px; font-size: 0.85rem;">Total Submissions</h6>
+                            <h2 class="fw-800 text-info mb-0">@Model.TotalSubmissionsAllTime</h2>
+                        </div>
+                        <div class="icon-box gradient-info shadow-sm">
+                            <i class="bi bi-files"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card premium-card h-100 text-decoration-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="fw-600 text-muted mb-1 text-uppercase" style="letter-spacing: 0.5px; font-size: 0.85rem;">Submissions (7 Days)</h6>
+                            <h2 class="fw-800 text-success mb-0">@Model.SubmissionsLast7Days</h2>
+                        </div>
+                        <div class="icon-box gradient-success shadow-sm">
+                            <i class="bi bi-calendar-week"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card premium-card h-100 text-decoration-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="fw-600 text-muted mb-1 text-uppercase" style="letter-spacing: 0.5px; font-size: 0.85rem;">On-Time Rate (7 Days)</h6>
+                            <h2 class="fw-800 text-warning mb-0">@Model.OnTimeRate7Days%</h2>
+                        </div>
+                        <div class="icon-box gradient-warning shadow-sm">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="row g-4 mb-4">
+        <!-- Submission Trend Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card premium-card h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-dark">Submission Trends (Last 7 Days)</h5>
+                    <div style="height: 300px;">
+                        <canvas id="reportsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Schema Distribution Pie -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card premium-card h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-dark">Submissions by Schema</h5>
+                    <div style="height: 300px; display:flex; align-items:center; justify-content:center;">
+                        <canvas id="schemaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="row g-4 mb-4">
+        <!-- Top Reporters Bar Chart -->
+        <div class="col-xl-6">
+            <div class="card premium-card h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-dark">Top Active Reporters</h5>
+                    <div style="height: 350px;">
+                        <canvas id="reportersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Submissions Feed -->
+        <div class="col-xl-6">
+            <div class="card premium-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0 text-dark">Recent Submissions</h5>
+                        <a asp-page="./Submissions" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm">View All</a>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-borderless align-middle mb-0">
+                            <tbody>
+                                @foreach (var sub in Model.RecentSubmissions)
+                                {
+                                    <tr class="border-bottom border-light">
+                                        <td style="width: 50px;">
+                                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px; height:40px;">
+                                                @(string.IsNullOrEmpty(sub.UserProfile?.FirstName) ? "U" : sub.UserProfile.FirstName.Substring(0,1))
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h6 class="mb-1 fw-bold text-dark">@(sub.UserProfile?.FirstName ?? "Unknown") @(sub.UserProfile?.LastName ?? "")</h6>
+                                            <p class="text-muted small mb-0">Submitted <strong>@(sub.MisReportSchema?.Name)</strong></p>
+                                        </td>
+                                        <td class="text-end text-muted small fw-500">
+                                            @if (sub.Status == "Late")
+                                            {
+                                                <span class="badge bg-warning rounded-pill px-2">Late</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-success rounded-pill px-2">On-Time</span>
+                                            }
+                                            <div class="mt-1">@sub.SubmittedAt.ToString("MMM dd")</div>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.RecentSubmissions.Any())
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-5">
+                                            <i class="bi bi-inbox fs-2 d-block mb-2 opacity-50"></i>
+                                            No recent activity found.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
+            Chart.defaults.color = '#6c757d';
+            
+            // 1. Stacked Bar Chart for 7-Day Trend
+            var ctx = document.getElementById('reportsChart').getContext('2d');
+            
+            var chartLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartLabels));
+            var onTimeData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.OnTimeData));
+            var lateData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LateData));
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [
+                        {
+                            label: 'On-Time Submissions',
+                            data: onTimeData,
+                            backgroundColor: 'rgba(17, 153, 142, 0.85)',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Late Submissions',
+                            data: lateData,
+                            backgroundColor: 'rgba(255, 153, 102, 0.85)',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true, grid: { display: false } },
+                        y: { stacked: true, beginAtZero: true, grid: { color: '#f0f0f0' }, border: { dash: [5, 5] }, ticks: { precision: 0 } }
+                    },
+                    plugins: { legend: { position: 'top' } }
+                }
+            });
+
+            // 2. Schema Distribution Pie Chart
+            var schemaCtx = document.getElementById('schemaChart').getContext('2d');
+            new Chart(schemaCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SchemaLabels)),
+                    datasets: [{
+                        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SchemaData)),
+                        backgroundColor: ['#4e54c8', '#11998e', '#ff9966', '#00c6ff', '#dc3545'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 15 } }
+                    }
+                }
+            });
+
+            // 3. Top Reporters Bar Chart
+            var topRepCtx = document.getElementById('reportersChart').getContext('2d');
+            var repLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopReporters.Select(r => r.Name)));
+            var repData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopReporters.Select(r => r.Count)));
+            
+            new Chart(topRepCtx, {
+                type: 'bar',
+                data: {
+                    labels: repLabels,
+                    datasets: [{
+                        label: 'Total Submissions',
+                        data: repData,
+                        backgroundColor: 'rgba(0, 198, 255, 0.8)',
+                        borderRadius: 6,
+                        borderWidth: 0,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { color: '#f0f0f0' }, border: { dash: [5, 5] }, ticks: { stepSize: 1 } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+        });
+    </script>
+}

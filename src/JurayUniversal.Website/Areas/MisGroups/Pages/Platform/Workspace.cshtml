@@ -1,0 +1,162 @@
+@page
+@model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.WorkspaceModel
+@{
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+    ViewData["Title"] = Model.MisGroup?.Title ?? "Workspace";
+    ViewData["ActiveMenu"] = "MisGroups";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">@Model.MisGroup.Title Workspace</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to My Groups</a>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+    <p class="text-muted mb-0">Role: <span class="badge bg-primary rounded-pill">@(Model.CurrentMembership.RolePosition ?? "Member")</span></p>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row g-4">
+        <!-- Sidebar: Directory -->
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 pb-0">
+                    <h5 class="fw-bold"><i class="bi bi-people me-2"></i>Directory</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var m in Model.Members)
+                        {
+                            <li class="list-group-item px-0 border-0 d-flex align-items-center">
+                                <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width:36px; height:36px;">
+                                    <strong>@(m.UserProfile?.FirstName?.Substring(0, 1))</strong>
+                                </div>
+                                <div>
+                                    <div class="fw-600 fs-7">@m.UserProfile?.FirstName @m.UserProfile?.LastName</div>
+                                    <div class="text-muted fs-8">@(m.RolePosition ?? "Member")</div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content: Posts & Files -->
+        <div class="col-md-9">
+            <ul class="nav nav-pills mb-4" id="workspaceTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active rounded-pill px-4" id="posts-tab" data-bs-toggle="pill" data-bs-target="#posts" type="button" role="tab">Discussions</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-4 ms-2" id="files-tab" data-bs-toggle="pill" data-bs-target="#files" type="button" role="tab">Shared Files</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="workspaceTabsContent">
+                <!-- Discussions Tab -->
+                <div class="tab-pane fade show active" id="posts" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="AddPost" asp-route-id="@Model.MisGroup.Id">
+                                <div class="mb-3">
+                                    <textarea asp-for="NewPostContent" class="form-control form-control-lg bg-light border-0" rows="3" placeholder="Share an update or ask a question..." required></textarea>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-send me-2"></i>Post</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    @foreach (var post in Model.Posts)
+                    {
+                        <div class="card border-0 shadow-sm rounded-4 mb-3">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:40px; height:40px;">
+                                        <strong>@(post.UserProfile?.FirstName?.Substring(0, 1))</strong>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">@post.UserProfile?.FirstName @post.UserProfile?.LastName</div>
+                                        <div class="text-muted fs-7">@post.CreatedAt.ToString("MMM dd, yyyy h:mm tt")</div>
+                                    </div>
+                                </div>
+                                <p class="mb-0 text-dark">@post.Content</p>
+                            </div>
+                        </div>
+                    }
+                    @if (!Model.Posts.Any())
+                    {
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-chat-dots fs-1 d-block mb-3"></i>
+                            No discussions yet. Be the first to post!
+                        </div>
+                    }
+                </div>
+
+                <!-- Files Tab -->
+                <div class="tab-pane fade" id="files" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" asp-page-handler="AddFile" asp-route-id="@Model.MisGroup.Id" class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label fw-600">File Title</label>
+                                    <input asp-for="FileTitle" class="form-control bg-light border-0" placeholder="e.g. Q3 Financial Report" required />
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label fw-600">Select File</label>
+                                    <input type="file" asp-for="Upload" class="form-control bg-light border-0" required />
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-success w-100 rounded-pill"><i class="bi bi-upload me-1"></i> Add File</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        @foreach (var f in Model.Files)
+                        {
+                            string ext = System.IO.Path.GetExtension(f.FileUrl ?? f.FileName).ToLower();
+                            string icon = "bi-file-earmark-text";
+                            string color = "text-secondary";
+                            if (ext == ".pdf") { icon = "bi-file-earmark-pdf"; color = "text-danger"; }
+                            else if (ext == ".doc" || ext == ".docx") { icon = "bi-file-earmark-word"; color = "text-primary"; }
+                            else if (ext == ".xls" || ext == ".xlsx" || ext == ".csv") { icon = "bi-file-earmark-excel"; color = "text-success"; }
+                            else if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif" || ext == ".webp") { icon = "bi-file-earmark-image"; color = "text-info"; }
+                            else if (ext == ".zip" || ext == ".rar") { icon = "bi-file-earmark-zip"; color = "text-warning"; }
+
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm rounded-4 h-100">
+                                    <div class="card-body p-4 d-flex align-items-center">
+                                        <div class="bg-light @color rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px; height:48px;">
+                                            <i class="bi @icon fs-4"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="fw-bold mb-1">@f.FileName</h6>
+                                            <div class="text-muted fs-8 mb-2">Uploaded by @f.UploadedByUser?.FirstName on @f.UploadedAt.ToString("MMM dd, yyyy")</div>
+                                            <div class="d-flex gap-2">
+                                                <a href="@f.FileUrl" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill py-0 fs-8"><i class="bi bi-eye me-1"></i> View</a>
+                                                <a href="@f.FileUrl" download class="btn btn-primary btn-sm rounded-pill py-0 fs-8"><i class="bi bi-download me-1"></i> Download</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!Model.Files.Any())
+                        {
+                            <div class="col-12 text-center text-muted py-5">
+                                <i class="bi bi-folder-x fs-1 d-block mb-3"></i>
+                                No files have been shared yet.
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.29")
+                .HasAnnotation("ProductVersion", "6.0.35")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -933,6 +933,12 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<int>("MailSender")
                         .HasColumnType("int");
 
+                    b.Property<string>("MisDashboardCSS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MisLayoutJavaScript")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OutlookPort")
                         .HasColumnType("int");
 
@@ -1539,6 +1545,1877 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Message");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisActivityLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ActionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Module")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PerformedByFullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PerformedByProfileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TargetFullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TargetProfileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisActivityLogs");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisAlumniPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisAlumniPosts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisAlumniProfile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Bio")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Company")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrentProfession")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("ExitYear")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAvailableForMentorship")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkedInUrl")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VerificationStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisAlumniProfiles");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFeature", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("BillingDuration")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("CostPerDuration")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeatureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GracePeriodDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModuleFolder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NextBillingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisFeatures");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFeatureInvoice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<decimal>("AmountDue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisFeatureId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisFeatureId");
+
+                    b.ToTable("MisFeatureInvoices");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisForm", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireLogin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SchemaJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisForms");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFormResponse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("MisFormId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ResponsesJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisFormId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisFormResponses");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisGroups");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupFile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UploadedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisGroupId");
+
+                    b.HasIndex("UploadedByUserId");
+
+                    b.ToTable("MisGroupFiles");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupMember", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateJoined")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MembershipStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RolePosition")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisGroupId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisGroupMembers");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("MisGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisGroupId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisGroupPosts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiIndicator", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("MaxScore")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisKpiIndicators");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiUserScore", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EvaluatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisKpiIndicatorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Period")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Score")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisKpiIndicatorId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("MisKpiUserScores");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManual", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ModuleFolder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Overview")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisManuals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ModuleFolder = "MisUserManagement",
+                            Overview = "This module controls the entire platform's user base. It allows you to register members, assign them to categories, monitor their Key Performance Indicators (KPIs), and tightly control what features they can access via granular roles.",
+                            Title = "User Management & Directory Guide"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ModuleFolder = "MisGroups",
+                            Overview = "This module provides isolated, private workspaces where specific teams can discuss, collaborate, and share files. It is highly flexible and can be adapted for Committees, Chapters, Squads, or any organizational sub-group.",
+                            Title = "Committees & Groups Guide"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ModuleFolder = "MisAlumni",
+                            Overview = "The Alumni Networking Directory allows past members to connect, find mentorship, and share business opportunities in a secure environment. Users can maintain professional profiles, flag their mentorship availability, and post on a community bulletin board.",
+                            Title = "Alumni Network Guide"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            ModuleFolder = "MisReports",
+                            Overview = "Dynamic Interval Reporting enforces strict submission deadlines for required staff reports, enabling administrators to track compliance automatically. Using advanced Template Flags, admins can dynamically build reports requiring hourly logs, file uploads, achievements, and challenges.",
+                            Title = "Dynamic Reports Guide"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            ModuleFolder = "MisForms",
+                            Overview = "The Form Builder module allows administrators to create custom surveys, registration forms, or feedback modules using a drag-and-drop interface, with built-in analytical tracking for submissions.",
+                            Title = "Form Builder & Surveys Guide"
+                        });
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualElement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ElementName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ElementType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisManualPageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RequiredRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisManualPageId");
+
+                    b.ToTable("MisManualElements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Description = "Click on any of the metric cards (Total, Active, Pending, Suspended) to instantly filter the user directory for that specific status.",
+                            ElementName = "User Status Metrics",
+                            ElementType = "Card",
+                            MisManualPageId = 1L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Description = "Navigates to the detailed tabular list of all users where you can filter, search, and perform bulk actions.",
+                            ElementName = "Manage Users Button",
+                            ElementType = "Button",
+                            MisManualPageId = 1L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Description = "Allows you to slice the demographic and registration data by a specific date range.",
+                            ElementName = "Filter Analytics Date Picker",
+                            ElementType = "Form",
+                            MisManualPageId = 1L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Description = "Allows you to modify the user's basic profile information, contact details, and category.",
+                            ElementName = "Edit User Icon",
+                            ElementType = "Button",
+                            MisManualPageId = 2L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Description = "Immediately revokes or restores a user's ability to log into the platform.",
+                            ElementName = "Suspend/Activate Account",
+                            ElementType = "Toggle",
+                            MisManualPageId = 2L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Description = "Opens the comprehensive 360-degree view of the user, including their assigned assets, roles, and KPIs.",
+                            ElementName = "View Profile Details",
+                            ElementType = "Button",
+                            MisManualPageId = 2L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Description = "Crucial security function: Grants this specific user access to a platform module (like Ticketing or AI Studio) with a specific permission level (e.g. GlobalViewer or SystemAdmin).",
+                            ElementName = "Assign Feature Role",
+                            ElementType = "Form",
+                            MisManualPageId = 3L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Description = "Allows administrators to attach internal notes to the user's profile. Checking 'Is Private' ensures the user cannot see this note.",
+                            ElementName = "Add HR Note",
+                            ElementType = "Form",
+                            MisManualPageId = 3L,
+                            RequiredRole = "RecordManager"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Description = "Records a performance evaluation score for the user for a specific period.",
+                            ElementName = "Update KPI Score",
+                            ElementType = "Form",
+                            MisManualPageId = 3L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Description = "Redirects you to the security settings to update your login credentials and enable 2-Factor Authentication.",
+                            ElementName = "Change Password",
+                            ElementType = "Button",
+                            MisManualPageId = 4L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Description = "Allows you to see your historical performance scores and reviews entered by your managers.",
+                            ElementName = "View My KPIs",
+                            ElementType = "Tab",
+                            MisManualPageId = 4L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Description = "Logs you securely out of the platform across all your devices.",
+                            ElementName = "Log Out",
+                            ElementType = "Button",
+                            MisManualPageId = 4L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Description = "Creates a new category grouping that users can be assigned to.",
+                            ElementName = "Add New Category",
+                            ElementType = "Button",
+                            MisManualPageId = 5L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            Description = "Quickly find a category by its title or description.",
+                            ElementName = "Search Category",
+                            ElementType = "Input",
+                            MisManualPageId = 5L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            Description = "Define a new performance metric (e.g., 'Punctuality', 'Sales Targets') and its maximum possible score.",
+                            ElementName = "Create Indicator",
+                            ElementType = "Button",
+                            MisManualPageId = 6L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            Description = "Modify or remove an existing performance indicator.",
+                            ElementName = "Manage Indicators",
+                            ElementType = "Action",
+                            MisManualPageId = 6L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            Description = "Input the numerical score achieved by the user for each active KPI.",
+                            ElementName = "Score Inputs",
+                            ElementType = "Form",
+                            MisManualPageId = 7L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            Description = "Save the evaluation to the user's permanent performance record.",
+                            ElementName = "Submit Evaluation",
+                            ElementType = "Button",
+                            MisManualPageId = 7L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            Description = "Filter the leaderboard to view rankings for a specific month, quarter, or year.",
+                            ElementName = "Select Evaluation Period",
+                            ElementType = "Dropdown",
+                            MisManualPageId = 8L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            Description = "Displays the cumulative score for each user alongside manager remarks.",
+                            ElementName = "Leaderboard Table",
+                            ElementType = "Table",
+                            MisManualPageId = 8L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            Description = "A historical list of every performance review you have received since joining.",
+                            ElementName = "Evaluation History",
+                            ElementType = "List",
+                            MisManualPageId = 9L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            Description = "Select a platform module (e.g. Asset Management) and assign a permission level (e.g. GlobalViewer, RecordCreator, SystemAdmin).",
+                            ElementName = "Grant Permission",
+                            ElementType = "Form",
+                            MisManualPageId = 10L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            Description = "Instantly strip this user's access to a specific module.",
+                            ElementName = "Revoke Role",
+                            ElementType = "Button",
+                            MisManualPageId = 10L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            Description = "Displays a grid of every feature you can access and exactly what actions you are authorized to take.",
+                            ElementName = "Permissions Matrix",
+                            ElementType = "Table",
+                            MisManualPageId = 11L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 25L,
+                            Description = "Change your login password. You must know your current password to set a new one.",
+                            ElementName = "Update Password",
+                            ElementType = "Form",
+                            MisManualPageId = 12L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 26L,
+                            Description = "Scan the QR code with Google Authenticator or Authy to add a secondary security layer to your account.",
+                            ElementName = "Setup 2FA",
+                            ElementType = "QR Code",
+                            MisManualPageId = 12L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 27L,
+                            Description = "Enter the 6-digit code from your app to finalize the 2FA setup.",
+                            ElementName = "Verify & Enable",
+                            ElementType = "Button",
+                            MisManualPageId = 12L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            Description = "Provides an analytical overview of active groups and memberships.",
+                            ElementName = "Dashboard Metrics",
+                            ElementType = "Card",
+                            MisManualPageId = 13L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            Description = "Creates a new group/committee and sets its title and description.",
+                            ElementName = "Create Group",
+                            ElementType = "Button",
+                            MisManualPageId = 14L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            Description = "Searches the user directory to add a member to this group with a specific role.",
+                            ElementName = "Add Member",
+                            ElementType = "Form",
+                            MisManualPageId = 15L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 31L,
+                            Description = "Review any pending invitations to join a new group. You can choose to Accept or Decline.",
+                            ElementName = "Pending Invites",
+                            ElementType = "Card",
+                            MisManualPageId = 16L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            Description = "A list of all groups you are an active member of. Click on any group to enter its private workspace.",
+                            ElementName = "Active Groups",
+                            ElementType = "List",
+                            MisManualPageId = 16L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            Description = "Post a new message to the group's discussion board.",
+                            ElementName = "New Discussion Post",
+                            ElementType = "Form",
+                            MisManualPageId = 17L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 34L,
+                            Description = "Upload a document or file to share with the group.",
+                            ElementName = "Upload File",
+                            ElementType = "Button",
+                            MisManualPageId = 17L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 35L,
+                            Description = "Fill out the required information to initialize a new group.",
+                            ElementName = "Create Form",
+                            ElementType = "Form",
+                            MisManualPageId = 18L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 36L,
+                            Description = "Modify the fundamental details of this group.",
+                            ElementName = "Edit Form",
+                            ElementType = "Form",
+                            MisManualPageId = 19L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            Description = "Accept the invitation to join this group. You will either be granted immediate access or be placed in a pending queue for admin approval.",
+                            ElementName = "Join Request",
+                            ElementType = "Button",
+                            MisManualPageId = 20L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            Description = "Click any analytical card to immediately navigate to a filtered view of the alumni roster.",
+                            ElementName = "Analytics Cards",
+                            ElementType = "Card",
+                            MisManualPageId = 21L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 39L,
+                            Description = "Review a pending user's request to join the Alumni network and grant them official access.",
+                            ElementName = "Verify Status",
+                            ElementType = "Button",
+                            MisManualPageId = 22L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 40L,
+                            Description = "Select an existing active user and explicitly grant them access to the Alumni Network.",
+                            ElementName = "Flag Alumni",
+                            ElementType = "Form",
+                            MisManualPageId = 23L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 41L,
+                            Description = "Quickly navigate to the searchable directory or the opportunities board.",
+                            ElementName = "Welcome Actions",
+                            ElementType = "Button",
+                            MisManualPageId = 24L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 42L,
+                            Description = "Toggle this to only see members who have explicitly stated they are open to mentoring others.",
+                            ElementName = "Mentors Only Filter",
+                            ElementType = "Toggle",
+                            MisManualPageId = 25L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 43L,
+                            Description = "Click to view the user's public LinkedIn profile in a new tab.",
+                            ElementName = "LinkedIn Connect",
+                            ElementType = "Button",
+                            MisManualPageId = 25L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 44L,
+                            Description = "Filter the bulletin board to only show specific types of posts, like Job Openings.",
+                            ElementName = "Post Filters",
+                            ElementType = "Button",
+                            MisManualPageId = 26L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 45L,
+                            Description = "Draft a new business or networking opportunity to share with the entire alumni community.",
+                            ElementName = "Create Post",
+                            ElementType = "Form",
+                            MisManualPageId = 26L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 46L,
+                            Description = "Update your graduation year, current company, and professional title.",
+                            ElementName = "Profile Details",
+                            ElementType = "Form",
+                            MisManualPageId = 27L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 47L,
+                            Description = "Enable this switch to let other alumni know you are willing to mentor them.",
+                            ElementName = "Mentorship Toggle",
+                            ElementType = "Toggle",
+                            MisManualPageId = 27L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 48L,
+                            Description = "Visual representation of staff compliance over the last 7 days. Green indicates on-time submissions, yellow indicates late.",
+                            ElementName = "Submission Trends Chart",
+                            ElementType = "Chart",
+                            MisManualPageId = 28L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 49L,
+                            Description = "Toggle to immediately disable this report schema. Staff will no longer be required to submit it.",
+                            ElementName = "Active Toggle",
+                            ElementType = "Toggle",
+                            MisManualPageId = 29L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 50L,
+                            Description = "Add a staff member to the mandatory reporting list for this specific schema.",
+                            ElementName = "Enroll Staff",
+                            ElementType = "Form",
+                            MisManualPageId = 30L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 51L,
+                            Description = "View the full details of a submission, including time logs, file attachments, achievements, and challenges.",
+                            ElementName = "View Submission Modal",
+                            ElementType = "Button",
+                            MisManualPageId = 31L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 52L,
+                            Description = "Leave official feedback or a performance review directly on the user's report submission. The user will be able to see this comment.",
+                            ElementName = "Manager Comments Box",
+                            ElementType = "Form",
+                            MisManualPageId = 31L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 53L,
+                            Description = "A prominent card highlighting a report you must submit today to avoid a late penalty.",
+                            ElementName = "Pending Report Alert",
+                            ElementType = "Card",
+                            MisManualPageId = 32L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 54L,
+                            Description = "Your historical log of previously submitted reports.",
+                            ElementName = "My History",
+                            ElementType = "Table",
+                            MisManualPageId = 32L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 55L,
+                            Description = "Write and file your report. Based on the admin template, this form may dynamically ask you to upload a file or fill out an hourly log table.",
+                            ElementName = "Dynamic Submit Form",
+                            ElementType = "Form",
+                            MisManualPageId = 33L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 56L,
+                            Description = "Check this box when creating a schema to force users to fill out an hourly breakdown of their activities.",
+                            ElementName = "Require Time Log Flag",
+                            ElementType = "Toggle",
+                            MisManualPageId = 29L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 57L,
+                            Description = "Check this box to require users to upload a PDF or Excel document alongside their report.",
+                            ElementName = "Require File Upload Flag",
+                            ElementType = "Toggle",
+                            MisManualPageId = 29L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 58L,
+                            Description = "A powerful shortcut to instantly assign a newly created report schema to every single active user in the organization.",
+                            ElementName = "Assign to All Active Users",
+                            ElementType = "Toggle",
+                            MisManualPageId = 29L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 59L,
+                            Description = "Creates a new form definition that you can subsequently build out using the drag-and-drop interface.",
+                            ElementName = "New Form",
+                            ElementType = "Button",
+                            MisManualPageId = 34L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 60L,
+                            Description = "Draggable input fields like Textboxes, Checkboxes, and Date Pickers that you can drop onto the canvas.",
+                            ElementName = "Builder Toolbar",
+                            ElementType = "Panel",
+                            MisManualPageId = 36L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 61L,
+                            Description = "Generates the structural JSON payload and saves the entire layout to the database.",
+                            ElementName = "Save Form Layout",
+                            ElementType = "Button",
+                            MisManualPageId = 36L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 62L,
+                            Description = "Makes the form immediately available to the public or logged-in users depending on your security settings.",
+                            ElementName = "Publish Form",
+                            ElementType = "Button",
+                            MisManualPageId = 36L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 63L,
+                            Description = "Dynamically unpacks the complex JSON responses into clear, readable column headers matching your custom labels.",
+                            ElementName = "Dynamic Response Table",
+                            ElementType = "Table",
+                            MisManualPageId = 37L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 64L,
+                            Description = "Select a form from this dashboard to enter the dynamic submission interface.",
+                            ElementName = "Fill Form",
+                            ElementType = "Button",
+                            MisManualPageId = 38L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 65L,
+                            Description = "Automatically packages your dynamic form inputs into a secure JSON string and saves it to the database.",
+                            ElementName = "Submit JSON Payload",
+                            ElementType = "Button",
+                            MisManualPageId = 39L,
+                            RequiredRole = ""
+                        });
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualPage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("MisManualId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PageDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RouteKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisManualId");
+
+                    b.ToTable("MisManualPages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            MisManualId = 1L,
+                            PageDescription = "The high-level command center for the User Management module. This page gives you demographic statistics, quick analytics on active/suspended accounts, and shortcuts to manage users.",
+                            PageTitle = "User Directory Dashboard",
+                            RouteKey = "/MisUserManagement/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            MisManualId = 1L,
+                            PageDescription = "The comprehensive table view of all users in the organization. It supports deep filtering by status, category, and advanced search.",
+                            PageTitle = "Full User Roster",
+                            RouteKey = "/MisUserManagement/Dashboard/List"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            MisManualId = 1L,
+                            PageDescription = "The detailed individual record for a specific user. This is where administrators manage a user's specific access rights, private HR notes, and performance scores.",
+                            PageTitle = "User 360 Profile (Admin View)",
+                            RouteKey = "/MisUserManagement/Dashboard/Detail"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            MisManualId = 1L,
+                            PageDescription = "The self-service portal where a regular user can view their own information, update their password, and check their performance scores.",
+                            PageTitle = "My Personal Details",
+                            RouteKey = "/MisUserManagement/Platform/MyProfile"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            MisManualId = 1L,
+                            PageDescription = "Manage the various categories, departments, or cohorts that users can be grouped into.",
+                            PageTitle = "Category Directory",
+                            RouteKey = "/MisUserManagement/Dashboard/Categories/Index"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            MisManualId = 1L,
+                            PageDescription = "Define the core metrics and criteria by which users in the organization are evaluated.",
+                            PageTitle = "KPI Indicators Settings",
+                            RouteKey = "/MisUserManagement/Dashboard/KpiSettings"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            MisManualId = 1L,
+                            PageDescription = "The evaluation panel where managers rate an individual user's performance against the established KPIs for a specific period.",
+                            PageTitle = "KPI Evaluation Panel",
+                            RouteKey = "/MisUserManagement/Dashboard/KpiAssign"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            MisManualId = 1L,
+                            PageDescription = "A competitive or analytical view ranking the overall performance scores of all evaluated users during a specific period.",
+                            PageTitle = "KPI Leaderboard",
+                            RouteKey = "/MisUserManagement/Dashboard/KpiResults"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            MisManualId = 1L,
+                            PageDescription = "Your personal performance dashboard. Review your evaluations, scores, and manager remarks over time.",
+                            PageTitle = "My KPI Scores",
+                            RouteKey = "/MisUserManagement/Platform/MyKpis"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            MisManualId = 1L,
+                            PageDescription = "The security control center for a user. Strictly control what modules they can access and their exact permission level.",
+                            PageTitle = "Manage Access Permissions",
+                            RouteKey = "/MisUserManagement/Dashboard/Roles"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            MisManualId = 1L,
+                            PageDescription = "A transparent, read-only view of your active access rights and permission levels across all platform modules.",
+                            PageTitle = "My Permissions Matrix",
+                            RouteKey = "/MisUserManagement/Platform/MyRoles"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            MisManualId = 1L,
+                            PageDescription = "Keep your account secure by changing your password regularly and enabling Two-Factor Authentication (2FA).",
+                            PageTitle = "Security Settings & 2FA",
+                            RouteKey = "/MisUserManagement/Platform/ChangePassword"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            MisManualId = 2L,
+                            PageDescription = "The high-level command center for groups. Shows total groups, active groups, and total memberships.",
+                            PageTitle = "Groups Overview",
+                            RouteKey = "/MisGroups/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            MisManualId = 2L,
+                            PageDescription = "The comprehensive list of all groups in the organization where you can add new ones or manage existing ones.",
+                            PageTitle = "Group Directory",
+                            RouteKey = "/MisGroups/Dashboard/List"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            MisManualId = 2L,
+                            PageDescription = "The administration panel for a specific group where you can add or remove members and set their roles.",
+                            PageTitle = "Manage Group Members",
+                            RouteKey = "/MisGroups/Dashboard/Detail"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            MisManualId = 2L,
+                            PageDescription = "Your personal dashboard showing only the groups you are a member of.",
+                            PageTitle = "My Groups",
+                            RouteKey = "/MisGroups/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            MisManualId = 2L,
+                            PageDescription = "The private collaboration space for a group. You can post messages, share files, and view other members.",
+                            PageTitle = "Group Workspace",
+                            RouteKey = "/MisGroups/Platform/Workspace"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            MisManualId = 2L,
+                            PageDescription = "A form to create a new organizational group.",
+                            PageTitle = "Create Group",
+                            RouteKey = "/MisGroups/Dashboard/Create"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            MisManualId = 2L,
+                            PageDescription = "A form to update the details of an existing group.",
+                            PageTitle = "Edit Group",
+                            RouteKey = "/MisGroups/Dashboard/Edit"
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            MisManualId = 2L,
+                            PageDescription = "An invitation landing page where users can accept invites to join a group.",
+                            PageTitle = "Join Group",
+                            RouteKey = "/MisGroups/Platform/Join"
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            MisManualId = 3L,
+                            PageDescription = "Administrative overview of the alumni network, displaying total members and available mentors.",
+                            PageTitle = "Alumni Dashboard",
+                            RouteKey = "/MisAlumni/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            MisManualId = 3L,
+                            PageDescription = "Admin view to verify pending alumni or revoke access.",
+                            PageTitle = "Alumni Directory (Admin)",
+                            RouteKey = "/MisAlumni/Dashboard/List"
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            MisManualId = 3L,
+                            PageDescription = "A form to manually flag an existing user as an Alumni.",
+                            PageTitle = "Add Alumni",
+                            RouteKey = "/MisAlumni/Dashboard/Create"
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            MisManualId = 3L,
+                            PageDescription = "The welcome dashboard for the Alumni Network showing recent posts and featured mentors.",
+                            PageTitle = "Network Welcome",
+                            RouteKey = "/MisAlumni/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 25L,
+                            MisManualId = 3L,
+                            PageDescription = "A searchable grid of all verified Alumni. You can filter by profession or mentorship availability.",
+                            PageTitle = "Member Directory",
+                            RouteKey = "/MisAlumni/Platform/Directory"
+                        },
+                        new
+                        {
+                            Id = 26L,
+                            MisManualId = 3L,
+                            PageDescription = "The central bulletin board for business opportunities and networking requests.",
+                            PageTitle = "Opportunities Board",
+                            RouteKey = "/MisAlumni/Platform/Opportunities"
+                        },
+                        new
+                        {
+                            Id = 27L,
+                            MisManualId = 3L,
+                            PageDescription = "Your personal portal to update your employment history and mentorship status.",
+                            PageTitle = "My Alumni Profile",
+                            RouteKey = "/MisAlumni/Platform/MyProfile"
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            MisManualId = 4L,
+                            PageDescription = "Graphical dashboard showing On-Time versus Late submission trends over the last 7 days. Helps management quickly identify reporting bottlenecks.",
+                            PageTitle = "Reports Analytics",
+                            RouteKey = "/MisReports/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            MisManualId = 4L,
+                            PageDescription = "Manage the definitions, deadlines, and Dynamic Templates for different reports. Toggle on/off features like Hourly Logs or File Uploads to shape exactly what staff must submit.",
+                            PageTitle = "Manage Schemas",
+                            RouteKey = "/MisReports/Dashboard/Schemas/Index"
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            MisManualId = 4L,
+                            PageDescription = "Assign specific staff members who must submit this report. Only these enrolled participants will see the report on their platform dashboard.",
+                            PageTitle = "Required Participants",
+                            RouteKey = "/MisReports/Dashboard/Schemas/Participants"
+                        },
+                        new
+                        {
+                            Id = 31L,
+                            MisManualId = 4L,
+                            PageDescription = "The master ledger displaying all historical report submissions and their timing status. Click into any submission to read the full report, download attachments, and leave Manager Comments.",
+                            PageTitle = "Submissions Ledger",
+                            RouteKey = "/MisReports/Dashboard/Submissions"
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            MisManualId = 4L,
+                            PageDescription = "Your personal queue of reports that are due today or in the near future. Keep an eye on the deadline to avoid late flags.",
+                            PageTitle = "My Pending Reports",
+                            RouteKey = "/MisReports/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            MisManualId = 4L,
+                            PageDescription = "The dynamic form where you write and file your required report before the deadline. The fields you see are strictly defined by the Admin's template flags.",
+                            PageTitle = "Submit Report",
+                            RouteKey = "/MisReports/Platform/Submit"
+                        },
+                        new
+                        {
+                            Id = 40L,
+                            MisManualId = 4L,
+                            PageDescription = "Your dedicated workspace for this specific report schedule. View monthly analytics, check the visual calendar, and submit or edit your reports.",
+                            PageTitle = "Report Workspace",
+                            RouteKey = "/MisReports/Platform/SchemaDetails"
+                        },
+                        new
+                        {
+                            Id = 41L,
+                            MisManualId = 4L,
+                            PageDescription = "Detailed view of your filed report submission, detailing times logs, achievements, challenges, and attachments.",
+                            PageTitle = "Report Details",
+                            RouteKey = "/MisReports/Platform/Details"
+                        },
+                        new
+                        {
+                            Id = 42L,
+                            MisManualId = 4L,
+                            PageDescription = "Update your submitted report data and active time logs before the daily submission deadline cut-off.",
+                            PageTitle = "Edit Report Submission",
+                            RouteKey = "/MisReports/Platform/Edit"
+                        },
+                        new
+                        {
+                            Id = 34L,
+                            MisManualId = 5L,
+                            PageDescription = "The master list of all custom forms and surveys. You can track whether they are currently published or in draft mode.",
+                            PageTitle = "Forms Directory",
+                            RouteKey = "/MisForms/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 35L,
+                            MisManualId = 5L,
+                            PageDescription = "Initial setup page to define a new form's basic details like title, description, and whether it requires a user login.",
+                            PageTitle = "Create Form",
+                            RouteKey = "/MisForms/Dashboard/Create"
+                        },
+                        new
+                        {
+                            Id = 36L,
+                            MisManualId = 5L,
+                            PageDescription = "The visual Drag-and-Drop Form Builder interface. Drag elements from the panel to construct the exact data schema you want to collect.",
+                            PageTitle = "Drag-and-Drop Builder",
+                            RouteKey = "/MisForms/Dashboard/Builder"
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            MisManualId = 5L,
+                            PageDescription = "A dynamically generated table that unpacks user JSON responses and displays them in a readable format matching your custom form labels.",
+                            PageTitle = "Form Responses Ledger",
+                            RouteKey = "/MisForms/Dashboard/Responses"
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            MisManualId = 5L,
+                            PageDescription = "The user-facing dashboard displaying all active, published forms they are eligible to fill out.",
+                            PageTitle = "Available Forms",
+                            RouteKey = "/MisForms/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 39L,
+                            MisManualId = 5L,
+                            PageDescription = "The dynamic form-filling interface. It instantly translates the Admin's drag-and-drop schema into a functional HTML form.",
+                            PageTitle = "Submit Form",
+                            RouteKey = "/MisForms/Platform/Submit"
+                        });
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNotification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ActionUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Module")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNotifications");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportParticipant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("MisReportSchemaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisReportSchemaId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisReportParticipants");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSchema", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<TimeSpan?>("BreakEndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("BreakStartTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeadlineDayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DeadlineDayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("DeadlineTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Frequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("RequireAchievements")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireChallenges")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireFileUpload")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireNextDayPlan")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequireTimeLog")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TimeLogIntervalHours")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Use24HourFormat")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeSpan?>("WorkEndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("WorkStartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisReportSchemas");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSubmission", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Achievements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Challenges")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Impact")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisReportSchemaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("PeriodDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PlansForNextPeriod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TaskAssigned")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisReportSchemaId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisReportSubmissions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportTimeLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ActivityDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<long>("MisReportSubmissionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisReportSubmissionId");
+
+                    b.ToTable("MisReportTimeLogs");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSetting", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AlumniAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EnableListDownload")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("GroupAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubCategoryAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisSettings");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisUserCategories");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserFeatureRole", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("ActionRole")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AssignedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FeatureAreaKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("MisUserFeatureRoles");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserNote", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("MisUserNotes");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.NewsLetter", b =>
@@ -4702,6 +6579,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<string>("TitleWorkWithUsFooter")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("UseNewMISDashboard")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("UseNormalLogoInLogin")
                         .HasColumnType("bit");
 
@@ -5613,6 +7493,238 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisAlumniPost", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisAlumniProfile", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFeatureInvoice", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisFeature", "MisFeature")
+                        .WithMany()
+                        .HasForeignKey("MisFeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisFeature");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFormResponse", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisForm", "MisForm")
+                        .WithMany("Responses")
+                        .HasForeignKey("MisFormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisForm");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupFile", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisGroup", "MisGroup")
+                        .WithMany("Files")
+                        .HasForeignKey("MisGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UploadedByUser")
+                        .WithMany()
+                        .HasForeignKey("UploadedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisGroup");
+
+                    b.Navigation("UploadedByUser");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupMember", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisGroup", "MisGroup")
+                        .WithMany("Members")
+                        .HasForeignKey("MisGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisGroup");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupPost", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisGroup", "MisGroup")
+                        .WithMany("Posts")
+                        .HasForeignKey("MisGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisGroup");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiUserScore", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisKpiIndicator", "MisKpiIndicator")
+                        .WithMany("MisKpiUserScores")
+                        .HasForeignKey("MisKpiIndicatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisKpiIndicator");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualElement", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisManualPage", "MisManualPage")
+                        .WithMany("MisManualElements")
+                        .HasForeignKey("MisManualPageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisManualPage");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualPage", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisManual", "MisManual")
+                        .WithMany("MisManualPages")
+                        .HasForeignKey("MisManualId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisManual");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNotification", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportParticipant", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisReportSchema", "MisReportSchema")
+                        .WithMany("Participants")
+                        .HasForeignKey("MisReportSchemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisReportSchema");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSubmission", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisReportSchema", "MisReportSchema")
+                        .WithMany("Submissions")
+                        .HasForeignKey("MisReportSchemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisReportSchema");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportTimeLog", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisReportSubmission", "MisReportSubmission")
+                        .WithMany("TimeLogs")
+                        .HasForeignKey("MisReportSubmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisReportSubmission");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserFeatureRole", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserNote", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.NIPSS.Accomodation", b =>
                 {
                     b.HasOne("JurayUniversal.Domain.Models.NIPSS.ParticipantList", "ParticipantList")
@@ -6457,6 +8569,47 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
             modelBuilder.Entity("JurayUniversal.Domain.Models.Meeting", b =>
                 {
                     b.Navigation("MeetingAttendances");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisForm", b =>
+                {
+                    b.Navigation("Responses");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroup", b =>
+                {
+                    b.Navigation("Files");
+
+                    b.Navigation("Members");
+
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiIndicator", b =>
+                {
+                    b.Navigation("MisKpiUserScores");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManual", b =>
+                {
+                    b.Navigation("MisManualPages");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualPage", b =>
+                {
+                    b.Navigation("MisManualElements");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSchema", b =>
+                {
+                    b.Navigation("Participants");
+
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSubmission", b =>
+                {
+                    b.Navigation("TimeLogs");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.NIPSS.Course", b =>

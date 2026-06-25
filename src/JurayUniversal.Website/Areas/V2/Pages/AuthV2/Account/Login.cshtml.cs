@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -216,6 +216,17 @@ namespace JurayUniversal.Website.V2.Pages.Authv2.Account
                     {
                         return NotFound();
                     }
+                    if (superSettingdata.UseNewMISDashboard)
+                    {
+                        if (adminrole.Equals(true) || administrator.Equals(true) || superrole.Equals(true) || editorrole.Equals(true))
+                        {
+                            return RedirectToPage("/Dashboard/Index", new { area = "MIS" });
+                        }
+                        else
+                        {
+                            return RedirectToPage("/Platform/Index", new { area = "MIS" });
+                        }
+                    }
                     if (superSettingdata.UserNipssArea == true)
                     {
                         if (user.UpdateProfile == true)
@@ -294,11 +305,16 @@ namespace JurayUniversal.Website.V2.Pages.Authv2.Account
                     }
                     else
                     {
-
-
                         if (adminrole.Equals(true) || administrator.Equals(true) || superrole.Equals(true) || editorrole.Equals(true))
                         {
-                            return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+                            if (superSettingdata.UseNewMISDashboard)
+                            {
+                                return RedirectToPage("/Dashboard/Index", new { area = "MIS" });
+                            }
+                            else
+                            {
+                                return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+                            }
                         }
                         else if (useracc.Equals(true))
                         {

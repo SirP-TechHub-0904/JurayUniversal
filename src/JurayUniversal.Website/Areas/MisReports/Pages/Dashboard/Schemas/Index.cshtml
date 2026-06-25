@@ -1,0 +1,114 @@
+@page
+@model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.IndexModel
+@{
+    ViewData["Title"] = "Manage Report Schemas";
+    ViewData["ActiveMenu"] = "MisReports";
+    ViewData["ActiveSubMenu"] = "Schemas";
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">Manage Report Schemas</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="../Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
+        <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> New Schema</a>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card mis-card shadow-sm border-0">
+        <div class="card-body mis-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Report Name</th>
+                            <th>Frequency</th>
+                            <th>Deadline Time</th>
+                            <th>Assigned Users</th>
+                            <th>Status</th>
+                            <th class="pe-4 text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Schemas)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <h6 class="mb-1 fw-bold">@item.Name</h6>
+                                    <div class="text-muted fs-8 text-truncate" style="max-width: 300px;">@item.Description</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3">@item.Frequency</span>
+                                </td>
+                                <td>
+                                    <span class="fw-medium">@DateTime.Today.Add(item.DeadlineTime).ToString("hh:mm tt")</span>
+                                    @if (item.Frequency == "Weekly" && item.DeadlineDayOfWeek.HasValue)
+                                    {
+                                        <div class="text-muted fs-8">Every @item.DeadlineDayOfWeek.Value.ToString()</div>
+                                    }
+                                    @if (item.Frequency == "Monthly" && item.DeadlineDayOfMonth.HasValue)
+                                    {
+                                        <div class="text-muted fs-8">Day @item.DeadlineDayOfMonth.Value of month</div>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3">
+                                        @(item.Participants?.Count ?? 0) Users
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="badge bg-success rounded-pill px-3">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger rounded-pill px-3">Disabled</span>
+                                    }
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm rounded-circle" type="button" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                            <li>
+                                                <a asp-page="./Participants" asp-route-id="@item.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="dropdown-item"><i class="bi bi-people me-2 text-primary"></i> Manage Participants</a>
+                                            </li>
+                                            <li>
+                                                <a asp-page="./Edit" asp-route-id="@item.Id" class="dropdown-item"><i class="bi bi-pencil-square me-2 text-warning"></i> Edit Schema</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <form method="post" asp-page-handler="ToggleActive" asp-route-id="@item.Id">
+                                                    @if (item.IsActive)
+                                                    {
+                                                        <button class="dropdown-item text-danger"><i class="bi bi-power me-2"></i> Disable Schema</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="dropdown-item text-success"><i class="bi bi-power me-2"></i> Enable Schema</button>
+                                                    }
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.Schemas.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <i class="bi bi-file-earmark-bar-graph text-muted fs-1 mb-3 d-block"></i>
+                                    <h5 class="fw-bold">No report schemas created yet.</h5>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

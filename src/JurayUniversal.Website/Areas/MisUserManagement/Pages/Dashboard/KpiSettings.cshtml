@@ -1,0 +1,172 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.KpiSettingsModel
+@{
+    ViewData["Title"] = "KPI Settings";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "KpiSettings";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>KPI Indicators Settings</h3>
+            <p class="text-subtitle text-muted">Create and manage performance criteria indicators used for rating users.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <!-- KPI Indicators List -->
+        <div class="col-12 col-md-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header border-bottom bg-transparent py-3">
+                    <h5 class="mb-0 text-dark"><i class="bi bi-bar-chart-steps me-1 text-success"></i> Active KPI Indicators</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="px-4 py-3">Indicator Title</th>
+                                    <th class="py-3">Description</th>
+                                    <th class="py-3 text-center">Max Score</th>
+                                    <th class="py-3 text-center">Order</th>
+                                    <th class="px-4 py-3 text-end" style="width: 150px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Indicators.Count == 0)
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5 text-muted">
+                                            <i class="bi bi-bar-chart-line fs-2 d-block mb-2"></i>
+                                            No KPI indicators defined yet. Use the form on the right to add one.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var ind in Model.Indicators)
+                                    {
+                                        <tr>
+                                            <td class="px-4 py-3">
+                                                <div class="text-dark fw-bold">@ind.Title</div>
+                                            </td>
+                                            <td class="py-3 text-muted fs-7">
+                                                @ind.Description
+                                            </td>
+                                            <td class="py-3 text-center fw-bold text-primary">
+                                                @ind.MaxScore
+                                            </td>
+                                            <td class="py-3 text-center text-muted">
+                                                @ind.SortOrder
+                                            </td>
+                                            <td class="px-4 py-3 text-end">
+                                                @if (!Model.IsReadOnly)
+                                                {
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <a asp-page="/Dashboard/KpiSettings" asp-route-editId="@ind.Id" class="btn btn-sm btn-outline-warning">
+                                                            Edit
+                                                        </a>
+                                                        <form method="post" asp-page-handler="Delete" asp-route-id="@ind.Id">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this indicator? This will remove all user scores associated with it.')">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted fst-italic fs-12px"><i class="bi bi-lock"></i> Read-only</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit Form -->
+        <div class="col-12 col-md-4">
+            @if (!Model.IsReadOnly)
+            {
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header border-bottom bg-transparent py-3">
+                        <h5 class="mb-0 text-dark">
+                            <i class="bi bi-pencil-square me-1 text-primary"></i> 
+                            @(Model.IndicatorInput.Id > 0 ? "Edit KPI Indicator" : "Add KPI Indicator")
+                        </h5>
+                    </div>
+                    <div class="card-body py-4">
+                        <form method="post">
+                            <input type="hidden" asp-for="IndicatorInput.Id" />
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="IndicatorInput.Title">Indicator Title</label>
+                                <input type="text" asp-for="IndicatorInput.Title" class="form-control" required placeholder="e.g. Attendance & Punctuality" />
+                                <span asp-validation-for="IndicatorInput.Title" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="IndicatorInput.Description">Description</label>
+                                <textarea asp-for="IndicatorInput.Description" class="form-control" rows="3" placeholder="Define the scoring rubric..."></textarea>
+                                <span asp-validation-for="IndicatorInput.Description" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="IndicatorInput.MaxScore">Maximum Score</label>
+                                <input type="number" step="0.01" asp-for="IndicatorInput.MaxScore" class="form-control" required min="1" max="1000" />
+                                <span asp-validation-for="IndicatorInput.MaxScore" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="IndicatorInput.SortOrder">Sort Order</label>
+                                <input type="number" asp-for="IndicatorInput.SortOrder" class="form-control" required />
+                                <span asp-validation-for="IndicatorInput.SortOrder" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input asp-for="IndicatorInput.IsActive" type="checkbox" class="form-check-input" id="isActiveCheck">
+                                    <label class="form-check-label text-muted fs-7" for="isActiveCheck">
+                                        Active indicator (visible during scoring)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary flex-grow-1 py-2">
+                                    <i class="bi bi-save me-1"></i> Save
+                                </button>
+                                @if (Model.IndicatorInput.Id > 0)
+                                {
+                                    <a asp-page="/Dashboard/KpiSettings" class="btn btn-light py-2">Cancel</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm border-0 mb-4 bg-light">
+                    <div class="card-body py-4 text-center">
+                        <i class="bi bi-lock-fill fs-1 text-muted mb-2 d-block"></i>
+                        <h5 class="text-dark">Read-Only Access</h5>
+                        <p class="text-muted fs-13px mb-0">You do not have permission to add or edit KPI Indicators.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

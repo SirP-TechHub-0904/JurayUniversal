@@ -1,4 +1,852 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MIS.Pages.Dashboard.IndexModel
 @{
+    ViewData["Title"] = "Console Home | Universal MIS";
 }
+
+<!-- Hide Layout Template Header to Render Custom Dynamic Console Header -->
+<style>
+    .page-header {
+        display: none !important;
+    }
+    
+    .console-bg-gradient {
+        background: linear-gradient(135deg, rgba(103, 80, 164, 0.05) 0%, rgba(0, 150, 136, 0.05) 100%);
+    }
+
+    .widget-header-drag {
+        cursor: grab;
+    }
+
+    .feature-card {
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-radius: 12px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .feature-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: var(--md-shadow-2) !important;
+        border-color: rgba(103, 80, 164, 0.3) !important;
+    }
+
+    .fav-star {
+        cursor: pointer;
+        transition: color 0.15s ease;
+        color: rgba(0, 0, 0, 0.15);
+    }
+    .fav-star.active {
+        color: #FFC107 !important;
+    }
+
+    .recent-service-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.15s ease;
+    }
+    .recent-service-link:hover {
+        background-color: rgba(103, 80, 164, 0.06);
+    }
+
+    .nav-pills .nav-link {
+        border-radius: 20px !important;
+        padding: 6px 16px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: rgba(0, 0, 0, 0.6) !important;
+        background-color: rgba(0, 0, 0, 0.04) !important;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        border: none !important;
+        transition: all 0.15s ease;
+    }
+    .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+        background-color: var(--md-primary) !important;
+        color: #fff !important;
+    }
+
+    .badge-status {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    .timeline-item {
+        border-left: 2px solid rgba(103, 80, 164, 0.15);
+        padding-left: 15px;
+        position: relative;
+        padding-bottom: 12px;
+    }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--md-primary);
+    }
+</style>
+
+<div class="container-fluid px-0 console-bg-gradient py-3 rounded-4">
+    <!-- Header Controls -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 pb-3 border-bottom px-3">
+        <div>
+            <h1 class="h3 fw-800 text-dark mb-1">Console Home <span class="badge bg-secondary bg-opacity-10 text-secondary fs-12px ms-2">Info</span></h1>
+            <p class="text-muted fs-14px mb-0">Launch, configure, and monitor your 25 universal system modules.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+            <button class="btn btn-outline-secondary btn-sm" onclick="resetLayout()">
+                <i class="fas fa-undo me-2"></i>Reset to default layout
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="addWidgetBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-plus me-2"></i>Add widgets
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addWidgetBtn">
+                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('recent-visited-widget', true)">Recently Visited</a></li>
+                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', true)">Applications Hub</a></li>
+                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', true)">Financials Chart</a></li>
+                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('health-widget', true)">System Health Alert</a></li>
+                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('ai-widget', true)">AI Assistant Status</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid Workspace -->
+    <div class="row px-3">
+        <!-- LEFT COLUMN: 8 Cols on Large, 12 on Mobile -->
+        <div class="col-xl-8 col-lg-7 d-flex flex-column gap-4">
+            
+            <!-- WIDGET 1: Recently Visited -->
+            <div class="card" id="recent-visited-widget">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-history text-primary"></i>
+                            <h5 class="card-title fw-700 mb-0">Recently Visited</h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" id="recentDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-danger" href="javascript:;" onclick="clearRecentlyVisited()">Clear history</a></li>
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('recent-visited-widget', false)">Hide widget</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-2" id="recent-list-container">
+                        <!-- Loaded dynamically via script -->
+                    </div>
+                    <div class="text-end mt-2">
+                        <a href="#applications-section" class="text-primary fw-600 fs-13px text-decoration-none">View all services <i class="fas fa-chevron-right ms-1 fs-11px"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET 2: Applications Hub -->
+            <div class="card" id="applications-widget">
+                <div class="card-body p-4" id="applications-section">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-th text-teal"></i>
+                            <h5 class="card-title fw-700 mb-0">Applications & Modules Hub <span class="text-muted fw-400 fs-14px" id="modules-count">(25)</span></h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" id="appWidgetDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', false)">Hide widget</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Search Panel -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-7">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0"><i class="fas fa-search text-muted"></i></span>
+                                <input type="text" id="searchFeatures" class="form-control border-start-0 py-2" placeholder="Search features (e.g. directory, ticketing, AI)..." onkeyup="filterFeatures()">
+                            </div>
+                        </div>
+                        <div class="col-md-5 text-md-end d-flex align-items-center justify-content-md-end gap-2">
+                            <select class="form-select border rounded-pill py-1 fs-13px" style="width: auto;" id="statusFilter" onchange="filterFeatures()">
+                                <option value="all">All States</option>
+                                <option value="Active">Active</option>
+                                <option value="Setup Pending">Pending Setup</option>
+                            </select>
+                            <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="triggerCreateFeature()">
+                                <i class="fas fa-plus me-1"></i> New Module
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category Pills -->
+                    <div class="d-flex flex-wrap mb-4" id="category-tabs-container">
+                        <button class="nav-link active" id="tab-all" onclick="setCategory('all')">All</button>
+                        <button class="nav-link" id="tab-core" onclick="setCategory('core')">Core & People</button>
+                        <button class="nav-link" id="tab-reports" onclick="setCategory('reports')">Reports & Docs</button>
+                        <button class="nav-link" id="tab-financials" onclick="setCategory('financials')">Financials</button>
+                        <button class="nav-link" id="tab-operations" onclick="setCategory('operations')">Operations</button>
+                        <button class="nav-link" id="tab-tech" onclick="setCategory('tech')">Comms & Tech</button>
+                        <button class="nav-link" id="tab-compliance" onclick="setCategory('compliance')">Compliance</button>
+                    </div>
+
+                    <!-- Features Dynamic Grid -->
+                    <div class="row g-3" id="features-grid">
+                        <!-- Loaded dynamically via script -->
+                    </div>
+
+                    <!-- Pagination / Footer link -->
+                    <div class="d-flex align-items-center justify-content-between border-top pt-3 mt-4 fs-13px">
+                        <span class="text-muted" id="showing-summary">Showing 25 of 25 features</span>
+                        <a href="https://seantheme.com/studio/documentation/index.html" class="text-primary text-decoration-none fw-600">Go to myApplications <i class="fas fa-external-link-alt ms-1 fs-11px"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET 3: Solutions & Recipes Templates -->
+            <div class="card mb-4" id="solutions-widget">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="fas fa-lightbulb text-warning"></i>
+                        <h5 class="card-title fw-700 mb-0">Solutions & Action Recipes <span class="badge bg-primary bg-opacity-10 text-primary fs-11px">Ready</span></h5>
+                    </div>
+                    <p class="text-muted fs-13px mb-4">Select a pre-designed action flow to deploy standard assets instantly.</p>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded-3 h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h6 class="fw-700 mb-0">Survey Data Collector</h6>
+                                        <span class="badge bg-success bg-opacity-10 text-success fs-10px">1-Click</span>
+                                    </div>
+                                    <p class="text-muted fs-12px mb-3">Generate a Drag-and-Drop survey linked to dynamic graphic reports.</p>
+                                </div>
+                                <a href="javascript:;" onclick="runActionRecipe('Survey Data Collector')" class="btn btn-outline-primary btn-sm text-center w-100 rounded-pill">Deploy recipe</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded-3 h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h6 class="fw-700 mb-0">Secure Election Setup</h6>
+                                        <span class="badge bg-warning bg-opacity-10 text-warning fs-10px">Secure</span>
+                                    </div>
+                                    <p class="text-muted fs-12px mb-3">Setup secure digital balloting lists and configure automatic tabulations.</p>
+                                </div>
+                                <a href="javascript:;" onclick="runActionRecipe('Election Setup')" class="btn btn-outline-primary btn-sm text-center w-100 rounded-pill">Deploy recipe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: 4 Cols on Large, 12 on Mobile -->
+        <div class="col-xl-4 col-lg-5 d-flex flex-column gap-4">
+            
+            <!-- WIDGET 4: Welcome / Quick Start -->
+            <partial name="~/Pages/Shared/Layouts/MIS/_DashboardWelcome.cshtml" />
+
+            <!-- WIDGET 5: Health & Notifications -->
+            <div class="card" id="health-widget">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-heartbeat text-danger"></i>
+                            <h5 class="card-title fw-700 mb-0">System Health & Alert Hub</h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" id="healthDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('health-widget', false)">Hide widget</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Health Status Indicator -->
+                    <div class="d-flex align-items-center justify-content-between mb-4 p-3 border rounded-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+                            <div>
+                                <div class="fw-700 fs-13px text-dark">Services Healthy</div>
+                                <div class="text-muted fs-11px">All 25 modules responsive</div>
+                            </div>
+                        </div>
+                        <span class="badge bg-success bg-opacity-10 text-success">Healthy</span>
+                    </div>
+
+                    <!-- System Data Feeds (connected to backing DB repository counts) -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <div class="p-2 border rounded text-center">
+                                <div class="text-muted fs-11px mb-1">Total Users</div>
+                                <h4 class="fw-800 text-primary mb-0">@Model.TotalUsers</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded text-center">
+                                <div class="text-muted fs-11px mb-1">Active Users</div>
+                                <h4 class="fw-800 text-success mb-0">@Model.ActiveUsers</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded text-center">
+                                <div class="text-muted fs-11px mb-1">Pending Users</div>
+                                <h4 class="fw-800 text-warning mb-0">@Model.PendingUsers</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-2 border rounded text-center">
+                                <div class="text-muted fs-11px mb-1">Suspended</div>
+                                <h4 class="fw-800 text-danger mb-0">@Model.SuspendedUsers</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Timeline -->
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-700 fs-13px">Dynamic Interval Reports Due</span>
+                                <span class="text-muted fs-11px">2h ago</span>
+                            </div>
+                            <p class="text-muted fs-12px mb-0">2 Scheduled Category Reports are pending user input updates.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-700 fs-13px">Anonymous Whistleblowing Alert</span>
+                                <span class="text-muted fs-11px">1d ago</span>
+                            </div>
+                            <p class="text-muted fs-12px mb-0">1 encrypted anonymous whistleblower report submitted (Finance category).</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-700 fs-13px">Visitor Gate Request</span>
+                                <span class="text-muted fs-11px">Just now</span>
+                            </div>
+                            <p class="text-muted fs-12px mb-0">Security desk registered visitor: Arrived for interview (Host notified).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET 6: Financials & Cost/Usage Equivalent -->
+            <div class="card" id="financials-widget">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-coins text-warning"></i>
+                            <h5 class="card-title fw-700 mb-0">Financials & Monetization</h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" id="financialDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', false)">Hide widget</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Metrics row -->
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="fs-12px text-muted">Current Month intake</div>
+                            <h3 class="fw-800 text-dark mb-0">$14,285.50</h3>
+                            <div class="text-success fs-11px fw-600"><i class="fas fa-caret-up me-1"></i>12.4% increase</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="fs-12px text-muted">Forecasted Month End</div>
+                            <h3 class="fw-800 text-secondary mb-0">$18,450.00</h3>
+                            <div class="text-success fs-11px fw-600"><i class="fas fa-caret-up me-1"></i>4.6% increase</div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Chart Container (Instantiated by ApexCharts) -->
+                    <div id="revenue-chart" style="min-height: 250px;"></div>
+
+                    <div class="text-center mt-3">
+                        <a href="javascript:;" class="text-primary fw-600 fs-13px text-decoration-none">Go to Billing and Dues Management</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET 7: BYOK AI Engine Key Status -->
+            <div class="card" id="ai-widget">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-brain text-purple"></i>
+                            <h5 class="card-title fw-700 mb-0">BYOK AI Integration</h5>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" id="aiDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('ai-widget', false)">Hide widget</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Status Indicator -->
+                    <div class="p-3 border rounded-3 mb-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="fs-12px fw-600 text-muted">Gemini API status</span>
+                            <span class="badge bg-success bg-opacity-10 text-success">Active & Healthy</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="fs-12px fw-600 text-muted">Claude API status</span>
+                            <span class="badge bg-warning bg-opacity-10 text-warning">Setup Pending</span>
+                        </div>
+                    </div>
+
+                    <div class="progress mb-2" style="height: 6px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted fs-11px mb-3">
+                        <span>BYOK Monthly Token limit</span>
+                        <span>65,482 / 100,000 tokens used</span>
+                    </div>
+
+                    <button class="btn btn-outline-primary btn-sm w-100 rounded-pill" onclick="openAIConfig()">Configure API Keys</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================== SCRIPTS BLOCK ================== -->
+<script type="text/javascript">
+    // 25 Application Modules Mock Data List
+    const initialModules = [
+        { id: 1, name: "User Directory & KPIs", icon: "fa-users", category: "core", status: "Active", desc: "Manage staff, members, attendance, and record custom Key Performance Indicators (KPIs).", link: "/MIS/UserManagement" },
+        { id: 2, name: "Committees & Groups", icon: "fa-sitemap", category: "core", status: "Active", desc: "Private collaboration workspaces, file shares, and discussion zones for specialized teams.", link: "/MIS/Committees" },
+        { id: 3, name: "Alumni Directory", icon: "fa-graduation-cap", category: "core", status: "Active", desc: "Searchable network portal for past members, mentorship programs, and business boards.", link: "/MIS/Alumni" },
+        
+        { id: 4, name: "Dynamic Interval Reporting", icon: "fa-clock", category: "reports", status: "Active", desc: "Create submission schedules (daily, weekly) and track user latency automatically.", link: "/MIS/IntervalReports" },
+        { id: 5, name: "Interactive User Manual", icon: "fa-book-open", category: "reports", status: "Active", desc: "Integrated guidebook detailing platform features, user roles, and system workflows.", link: "/MIS/UserManual" },
+        { id: 6, name: "Form Builder & Surveys", icon: "fa-poll-h", category: "reports", status: "Active", desc: "Drag-and-drop questionnaire designer for custom forms and survey feedback.", link: "/MIS/FormBuilder" },
+        { id: 7, name: "Survey Analytics", icon: "fa-chart-pie", category: "reports", status: "Active", desc: "Real-time graphic data tabulation, charts, and bar diagrams for custom forms.", link: "/MIS/SurveyAnalytics" },
+        
+        { id: 8, name: "Event & Concert Ticketing", icon: "fa-ticket-alt", category: "financials", status: "Active", desc: "Event engine supporting paid/free entry, limits, barcodes, and QR scanning apps.", link: "/MIS/Ticketing" },
+        { id: 9, name: "Financials & Dues Management", icon: "fa-file-invoice-dollar", category: "financials", status: "Active", desc: "Subscription tracker for recurring fees, member dues, and automated reminders.", link: "/MIS/Dues" },
+        { id: 10, name: "Donations & Contributions", icon: "fa-hand-holding-usd", category: "financials", status: "Active", desc: "Charity gateway for tithes, free-will gifts, and instant tax-deductible receipts.", link: "/MIS/Donations" },
+        { id: 11, name: "Grant & Proposal Tracking", icon: "fa-briefcase", category: "financials", status: "Setup Pending", desc: "External funding pipelines, milestone tasks, and direct donor progress reports.", link: "/MIS/Grants" },
+        
+        { id: 12, name: "Recruitment & ATS", icon: "fa-user-plus", category: "operations", status: "Setup Pending", desc: "Hiring boards, CV pipelines, interview selectors, and candidates scoring sheets.", link: "/MIS/Recruitment" },
+        { id: 13, name: "Elections & E-Voting", icon: "fa-vote-yea", category: "operations", status: "Active", desc: "Tamper-proof digital ballots ensuring one-user-one-vote with real-time tabulation.", link: "/MIS/Voting" },
+        { id: 14, name: "Fleet & Equipment Lifecycle", icon: "fa-truck-monster", category: "operations", status: "Setup Pending", desc: "Logs hardware details, maintenance cycles, lease durations, and depreciation values.", link: "/MIS/Fleet" },
+        { id: 15, name: "Company Asset Ledger", icon: "fa-building", category: "operations", status: "Active", desc: "Corporate assets register for property, machinery, and balance sheet valuations.", link: "/MIS/Assets" },
+        { id: 16, name: "Project & Task Boards", icon: "fa-tasks", category: "operations", status: "Active", desc: "Agile task assigner, board workflows, and team performance tracking charts.", link: "/MIS/Projects" },
+        
+        { id: 17, name: "BYOK AI Engine", icon: "fa-brain", category: "tech", status: "Active", desc: "Bring-your-own-key portal for Claude, ChatGPT, and Gemini APIs at direct costs.", link: "/MIS/AI" },
+        { id: 18, name: "Direct Messaging", icon: "fa-comments", category: "tech", status: "Active", desc: "Instant direct communication channel for users, with typing alerts and push alerts.", link: "/MIS/DirectChat" },
+        { id: 19, name: "Group Channels (Slack-like)", icon: "fa-users-cog", category: "tech", status: "Active", desc: "Multi-user channels for project rooms, announcements, and casual chats.", link: "/MIS/GroupChat" },
+        { id: 20, name: "Mass Communication", icon: "fa-bullhorn", category: "tech", status: "Active", desc: "Targeted broadcast engine for mass emails, automated news, and SMS campaigns.", link: "/MIS/MassComm" },
+        { id: 21, name: "Anonymous Whistleblowing", icon: "fa-user-secret", category: "tech", status: "Active", desc: "Secure encrypted dropboxes for employees and members to report misconduct.", link: "/MIS/Whistleblowing" },
+        { id: 22, name: "Helpdesk & IT Tickets", icon: "fa-life-ring", category: "tech", status: "Active", desc: "Support ticket registry, SLA clocks, and technical resolution boards.", link: "/MIS/Helpdesk" },
+        
+        { id: 23, name: "Document Vault (DMS)", icon: "fa-folder-open", category: "compliance", status: "Active", desc: "Version-controlled official documents, policies, protocols, and access audit logs.", link: "/MIS/DMS" },
+        { id: 24, name: "Learning Management (LMS)", icon: "fa-university", category: "compliance", status: "Active", desc: "Hosting compliance videos, course slides, dynamic quizzes, and completion certificates.", link: "/MIS/LMS" },
+        { id: 25, name: "Visitor & Gate Control", icon: "fa-id-badge", category: "compliance", status: "Active", desc: "Register reception arrivals, logs badges, photos, and triggers host notifications.", link: "/MIS/VisitorManagement" }
+    ];
+
+    let currentCategory = 'all';
+    let starredIds = [];
+    let recentlyVisitedIds = [];
+
+    // Initialize Page State
+    document.addEventListener("DOMContentLoaded", function () {
+        // Load settings from localStorage
+        initSettings();
+        
+        // Render Widgets
+        renderRecentlyVisited();
+        renderFeatures();
+        
+        // Initialize ApexCharts
+        initRevenueChart();
+    });
+
+    function initSettings() {
+        // Starred IDs defaults
+        const storedStars = localStorage.getItem('mis_starred_ids');
+        if (storedStars) {
+            starredIds = JSON.parse(storedStars);
+        } else {
+            starredIds = [1, 4, 8, 17, 23]; // Default Favorites
+            localStorage.setItem('mis_starred_ids', JSON.stringify(starredIds));
+        }
+
+        // Recently Visited defaults
+        const storedVisited = localStorage.getItem('mis_recent_ids');
+        if (storedVisited) {
+            recentlyVisitedIds = JSON.parse(storedVisited);
+        } else {
+            recentlyVisitedIds = [1, 8, 17, 9, 23, 13]; // Default presets
+            localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
+        }
+
+        // Load hidden widgets states
+        const widgetStates = localStorage.getItem('mis_widget_states');
+        if (widgetStates) {
+            const states = JSON.parse(widgetStates);
+            for (const [widgetId, visible] of Object.entries(states)) {
+                toggleWidgetElement(widgetId, visible);
+            }
+        }
+    }
+
+    // Toggle widget view
+    function toggleWidget(widgetId, visible) {
+        toggleWidgetElement(widgetId, visible);
+
+        // Store configuration state
+        let states = {};
+        const storedStates = localStorage.getItem('mis_widget_states');
+        if (storedStates) states = JSON.parse(storedStates);
+        states[widgetId] = visible;
+        localStorage.setItem('mis_widget_states', JSON.stringify(states));
+    }
+
+    function toggleWidgetElement(widgetId, visible) {
+        const el = document.getElementById(widgetId);
+        if (el) {
+            if (visible) {
+                el.classList.remove('d-none');
+            } else {
+                el.classList.add('d-none');
+            }
+        }
+    }
+
+    function resetLayout() {
+        localStorage.removeItem('mis_starred_ids');
+        localStorage.removeItem('mis_recent_ids');
+        localStorage.removeItem('mis_widget_states');
+        
+        // Reset local variables
+        starredIds = [1, 4, 8, 17, 23];
+        recentlyVisitedIds = [1, 8, 17, 9, 23, 13];
+        
+        // Make all widgets visible
+        const allWidgets = ['recent-visited-widget', 'applications-widget', 'financials-widget', 'health-widget', 'ai-widget', 'welcome-widget', 'solutions-widget'];
+        allWidgets.forEach(w => toggleWidgetElement(w, true));
+
+        // Re-render
+        renderRecentlyVisited();
+        renderFeatures();
+        
+        showToast("Dashboard widgets reset to default settings.");
+    }
+
+    // Render Recently Visited List
+    function renderRecentlyVisited() {
+        const container = document.getElementById('recent-list-container');
+        if (!container) return;
+
+        container.innerHTML = '';
+        
+        if (recentlyVisitedIds.length === 0) {
+            container.innerHTML = '<div class="col-12 py-3 text-center text-muted fs-13px">No features visited yet. Start launching modules below!</div>';
+            return;
+        }
+
+        const itemsToRender = initialModules.filter(m => recentlyVisitedIds.includes(m.id));
+        
+        // Maintain the order of recentlyVisitedIds
+        itemsToRender.sort((a, b) => recentlyVisitedIds.indexOf(a.id) - recentlyVisitedIds.indexOf(b.id));
+
+        itemsToRender.forEach(m => {
+            const cardHtml = `
+                <div class="col-6 col-md-4">
+                    <a href="${m.link}" onclick="visitModule(${m.id})" class="recent-service-link border">
+                        <div class="d-flex align-items-center gap-2 text-truncate">
+                            <span class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                                <i class="fas ${m.icon} fs-16px"></i>
+                            </span>
+                            <span class="fw-700 fs-13px text-dark text-truncate">${m.name}</span>
+                        </div>
+                    </a>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHtml);
+        });
+    }
+
+    // Render All Features list
+    function renderFeatures() {
+        const grid = document.getElementById('features-grid');
+        if (!grid) return;
+
+        grid.innerHTML = '';
+
+        // Filter and Search parameters
+        const searchQuery = document.getElementById('searchFeatures').value.toLowerCase();
+        const statusQuery = document.getElementById('statusFilter').value;
+
+        // Apply filters
+        let filtered = initialModules.filter(m => {
+            // Category match
+            const matchesCategory = currentCategory === 'all' || m.category === currentCategory;
+            // Search match
+            const matchesSearch = m.name.toLowerCase().includes(searchQuery) || m.desc.toLowerCase().includes(searchQuery);
+            // Status match
+            const matchesStatus = statusQuery === 'all' || m.status === statusQuery;
+
+            return matchesCategory && matchesSearch && matchesStatus;
+        });
+
+        // Sort starred items to front, then name
+        filtered.sort((a, b) => {
+            const isAStarred = starredIds.includes(a.id);
+            const isBStarred = starredIds.includes(b.id);
+            if (isAStarred && !isBStarred) return -1;
+            if (!isAStarred && isBStarred) return 1;
+            return a.name.localeCompare(b.name);
+        });
+
+        // Update count summaries
+        document.getElementById('modules-count').innerText = `(${filtered.length})`;
+        document.getElementById('showing-summary').innerText = `Showing ${filtered.length} of 25 features`;
+
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="col-12 py-5 text-center text-muted fs-14px"><i class="fas fa-search-minus fa-3x mb-3 text-muted text-opacity-50"></i><br>No modules match your filter settings.</div>';
+            return;
+        }
+
+        filtered.forEach(m => {
+            const isStarred = starredIds.includes(m.id);
+            const statusClass = m.status === 'Active' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning';
+            
+            const cardHtml = `
+                <div class="col-12 col-md-6 col-xl-4 feature-item" data-category="${m.category}">
+                    <div class="card feature-card h-100">
+                        <div class="card-body p-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <!-- Header: Icon + Star -->
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-3 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                            <i class="fas ${m.icon} fs-16px"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-800 text-dark mb-0 fs-13px">${m.name}</h6>
+                                            <span class="badge badge-status ${statusClass}">${m.status}</span>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-star fav-star ${isStarred ? 'active' : ''}" onclick="toggleStar(${m.id}, event)"></i>
+                                </div>
+                                <p class="text-muted fs-12px mb-3 line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 36px;">
+                                    ${m.desc}
+                                </p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="${m.link}" onclick="visitModule(${m.id})" class="btn btn-primary btn-sm flex-fill rounded-pill py-1 fs-11px text-center">Dashboard</a>
+                                <a href="javascript:;" onclick="configureModule('${m.name}')" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+                                    <i class="fas fa-cog"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', cardHtml);
+        });
+    }
+
+    function visitModule(id) {
+        // Move to top of recently visited
+        recentlyVisitedIds = recentlyVisitedIds.filter(x => x !== id);
+        recentlyVisitedIds.unshift(id);
+        
+        // Cap at 6 items
+        if (recentlyVisitedIds.length > 6) {
+            recentlyVisitedIds = recentlyVisitedIds.slice(0, 6);
+        }
+
+        localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
+        renderRecentlyVisited();
+    }
+
+    function toggleStar(id, event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (starredIds.includes(id)) {
+            starredIds = starredIds.filter(x => x !== id);
+        } else {
+            starredIds.push(id);
+        }
+
+        localStorage.setItem('mis_starred_ids', JSON.stringify(starredIds));
+        renderFeatures();
+        showToast("Favorites checklist updated successfully.");
+    }
+
+    function clearRecentlyVisited() {
+        recentlyVisitedIds = [];
+        localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
+        renderRecentlyVisited();
+        showToast("Visited services history cleared.");
+    }
+
+    function setCategory(category) {
+        currentCategory = category;
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('#category-tabs-container .nav-link');
+        tabs.forEach(t => t.classList.remove('active'));
+
+        // Add to current tab
+        document.getElementById(`tab-${category}`).classList.add('active');
+
+        renderFeatures();
+    }
+
+    function filterFeatures() {
+        renderFeatures();
+    }
+
+    // ApexCharts Financial Setup
+    function initRevenueChart() {
+        const chartElement = document.querySelector("#revenue-chart");
+        if (!chartElement) return;
+
+        const options = {
+            series: [{
+                name: 'Dues Collected',
+                data: [12400, 14900, 17800, 13900, 21500, 24800]
+            }, {
+                name: 'Ticket Sales',
+                data: [4800, 8100, 11400, 6900, 14800, 18500]
+            }, {
+                name: 'Donations',
+                data: [2900, 3900, 5800, 4900, 7800, 10200]
+            }],
+            chart: {
+                type: 'bar',
+                height: 250,
+                stacked: true,
+                toolbar: {
+                    show: false
+                },
+                fontFamily: 'Inter, sans-serif'
+            },
+            colors: ['#6750A4', '#009688', '#FF9800'],
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    borderRadius: 6
+                },
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                labels: {
+                    style: {
+                        colors: 'rgba(0,0,0,0.6)',
+                        fontSize: '11px',
+                        fontWeight: 500
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: 'rgba(0,0,0,0.6)',
+                        fontSize: '11px'
+                    }
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '11px',
+                labels: {
+                    colors: 'rgba(0,0,0,0.7)'
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            tooltip: {
+                theme: 'light',
+                y: {
+                    formatter: function (val) {
+                        return "$" + val.toLocaleString();
+                    }
+                }
+            }
+        };
+
+        const chart = new ApexCharts(chartElement, options);
+        chart.render();
+    }
+
+    // Event Handler Placeholders for interactive UI alerts
+    function configureModule(name) {
+        showToast(`Configuration panel for [${name}] Area is opening...`);
+    }
+
+    function triggerCreateFeature() {
+        showToast("Module initialization wizard launched.");
+    }
+
+    function runActionRecipe(recipeName) {
+        showToast(`Action recipe [${recipeName}] launched successfully in dry run mode!`);
+    }
+
+    function openAIConfig() {
+        showToast("BYOK AI billing configurations loaded.");
+    }
+
+    function openQuickGuide() {
+        showToast("Onboarding wizard loaded.");
+    }
+
+    // Helper Toast notification simulator
+    function showToast(message) {
+        // Check if toast container exists, if not create one
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'position-fixed bottom-0 end-0 p-3';
+            container.style.zIndex = '9999';
+            document.body.appendChild(container);
+        }
+
+        const toastId = 'toast_' + Date.now();
+        const toastHtml = `
+            <div id="${toastId}" class="toast align-items-center text-white bg-dark border-0 shadow-lg show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body fs-13px fw-500">
+                        <i class="fas fa-check-circle text-success me-2"></i> ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', toastHtml);
+
+        // Remove toast automatically after 3 seconds
+        setTimeout(() => {
+            const toastEl = document.getElementById(toastId);
+            if (toastEl) {
+                toastEl.classList.remove('show');
+                setTimeout(() => toastEl.remove(), 300);
+            }
+        }, 3000);
+    }
+</script>

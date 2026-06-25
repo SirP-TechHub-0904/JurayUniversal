@@ -3,6 +3,7 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using JurayUniversal.Application.Dtos.AwsDtos;
+using JurayUniversal.Persistence.EF.SQL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,10 +20,10 @@ namespace JurayUniversal.Application.Services.AWS
     public class StorageService : IStorageService
     {
         private readonly IConfiguration _config;
-        private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
+        private readonly DashboardDbContext _context;
 
         //private readonly IAmazonS3 _client;
-        public StorageService(IConfiguration config/*, IAmazonS3 client*/, Persistence.EF.SQL.DashboardDbContext context)
+        public StorageService(IConfiguration config/*, IAmazonS3 client*/, DashboardDbContext context)
         {
             _config = config;
             _context = context;

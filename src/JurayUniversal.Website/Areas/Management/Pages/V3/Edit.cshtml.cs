@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -626,6 +626,7 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
 
             // FLAGS
             db.UserNipssArea = SuperSetting.UserNipssArea;
+            db.UseNewMISDashboard = SuperSetting.UseNewMISDashboard;
             db.ActivateLoginInMenu = SuperSetting.ActivateLoginInMenu;
             db.ActivateLogin = SuperSetting.ActivateLogin;
             db.JustWebsite = SuperSetting.JustWebsite;

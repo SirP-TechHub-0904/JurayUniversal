@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.Management.Pages.V3.IndexModel
 
 @{
@@ -511,10 +511,12 @@
                     <dd class="col-sm-10">
                         @Html.DisplayFor(model => model.SuperSetting.UserNipssArea)
                     </dd>
-
-
-
-
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.SuperSetting.UseNewMISDashboard)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.SuperSetting.UseNewMISDashboard)
+                    </dd>
 
                     <dt class="col-sm-2">
                         @Html.DisplayNameFor(model => model.SuperSetting.EncryptionUrl)

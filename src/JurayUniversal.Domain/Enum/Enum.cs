@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -554,6 +554,51 @@ namespace JurayUniversal.Domain.Enum
             [Description("Female")]
             Female = 2,
 
+        }
+
+        /// <summary>
+        /// MIS: Defines the action level a user has within a specific feature Area.
+        /// GlobalEditor = full CRUD rights across all features they are assigned to.
+        /// FeatureEditor = full CRUD rights only within a specific feature.
+        /// Readonly = can view data only — all Create/Edit/Delete buttons are hidden.
+        /// </summary>
+        public enum MisActionRole
+        {
+            [Description("Global Editor")]
+            GlobalEditor = 1,
+
+            [Description("Feature Editor")]
+            FeatureEditor = 2,
+
+            [Description("Read Only")]
+            Readonly = 3,
+        }
+
+        public enum FeatureBillingDuration
+        {
+            [Description("Monthly")]
+            Monthly = 1,
+
+            [Description("Yearly")]
+            Yearly = 2,
+
+            [Description("One-Time")]
+            OneTime = 3,
+            
+            [Description("Free")]
+            Free = 4
+        }
+
+        public enum FeatureBillingStatus
+        {
+            [Description("Disabled")]
+            Disabled = 0,
+
+            [Description("Active")]
+            Active = 1,
+
+            [Description("Suspended")]
+            Suspended = 2
         }
     }
 }

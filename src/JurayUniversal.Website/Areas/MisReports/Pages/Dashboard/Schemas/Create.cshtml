@@ -1,0 +1,229 @@
+@page
+@model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.CreateModel
+@{
+    ViewData["Title"] = "Create Report Schema";
+    ViewData["ActiveMenu"] = "MisReports";
+    ViewData["ActiveSubMenu"] = "Schemas";
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>Create Report Schema</h3>
+            <p class="text-subtitle text-muted">Define a new required report and its strict submission intervals.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <a asp-page="./Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Schemas
+            </a>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Schema.Name" class="form-label fw-bold">Report Title</label>
+                            <input asp-for="Schema.Name" class="form-control" placeholder="e.g. Daily Facility Audit" required />
+                            <span asp-validation-for="Schema.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Schema.Description" class="form-label fw-bold">Instructions / Description</label>
+                            <textarea asp-for="Schema.Description" class="form-control" rows="3" placeholder="Provide instructions on what this report should contain..."></textarea>
+                            <span asp-validation-for="Schema.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Schema.Frequency" class="form-label fw-bold">Submission Frequency</label>
+                            <select asp-for="Schema.Frequency" class="form-select" id="frequencySelect" required onchange="toggleFrequencyFields()">
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
+                            <span asp-validation-for="Schema.Frequency" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" id="divDayOfWeek" style="display:none;">
+                        <div class="form-group">
+                            <label asp-for="Schema.DeadlineDayOfWeek" class="form-label fw-bold">Target Day</label>
+                            <select asp-for="Schema.DeadlineDayOfWeek" class="form-select">
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                                <option value="0">Sunday</option>
+                            </select>
+                            <span asp-validation-for="Schema.DeadlineDayOfWeek" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" id="divDayOfMonth" style="display:none;">
+                        <div class="form-group">
+                            <label asp-for="Schema.DeadlineDayOfMonth" class="form-label fw-bold">Target Date (1-28)</label>
+                            <input asp-for="Schema.DeadlineDayOfMonth" type="number" min="1" max="28" class="form-control" />
+                            <span asp-validation-for="Schema.DeadlineDayOfMonth" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Schema.DeadlineTime" class="form-label fw-bold">Deadline Time</label>
+                            <input asp-for="Schema.DeadlineTime" type="time" class="form-control" required />
+                            <span asp-validation-for="Schema.DeadlineTime" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-check form-switch mt-2">
+                            <input asp-for="Schema.IsActive" class="form-check-input" type="checkbox" role="switch" id="activeSwitch" checked>
+                            <label asp-for="Schema.IsActive" class="form-check-label ms-2" for="activeSwitch">
+                                Active (Enforce submissions immediately)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="form-check form-switch mt-1">
+                            <input asp-for="AssignToAllActiveUsers" class="form-check-input" type="checkbox" role="switch" id="assignAllSwitch" checked>
+                            <label asp-for="AssignToAllActiveUsers" class="form-check-label ms-2" for="assignAllSwitch">
+                                Assign to All Active Users
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-ui-checks-grid me-2 text-primary"></i> Report Template Fields</h5>
+                        <div class="card bg-white border">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input asp-for="Schema.RequireTimeLog" class="form-check-input" type="checkbox" role="switch" id="requireTimeLogSwitch" onchange="toggleTimeLogFields()">
+                                            <label asp-for="Schema.RequireTimeLog" class="form-check-label fw-bold ms-2">
+                                                Require Hourly Time Log
+                                            </label>
+                                        </div>
+                                        
+                                        <!-- Auto Time Log Settings Section -->
+                                        <div class="card bg-light border-0 rounded-3 shadow-sm" id="timeLogSettings" style="display:none;">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold mb-3"><i class="bi bi-clock-history me-1 text-primary"></i> Time Log Configuration</h6>
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label asp-for="Schema.WorkStartTime" class="form-label small fw-bold">Work Start Time</label>
+                                                        <input asp-for="Schema.WorkStartTime" type="time" class="form-control form-control-sm" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label asp-for="Schema.WorkEndTime" class="form-label small fw-bold">Work End Time</label>
+                                                        <input asp-for="Schema.WorkEndTime" type="time" class="form-control form-control-sm" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label asp-for="Schema.BreakStartTime" class="form-label small fw-bold">Break Start Time</label>
+                                                        <input asp-for="Schema.BreakStartTime" type="time" class="form-control form-control-sm" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label asp-for="Schema.BreakEndTime" class="form-label small fw-bold">Break End Time</label>
+                                                        <input asp-for="Schema.BreakEndTime" type="time" class="form-control form-control-sm" />
+                                                    </div>
+                                                    <div class="col-md-3 mt-3">
+                                                        <label asp-for="Schema.TimeLogIntervalHours" class="form-label small fw-bold">Interval (Hours)</label>
+                                                        <select asp-for="Schema.TimeLogIntervalHours" class="form-select form-select-sm">
+                                                            <option value="1">1 Hour</option>
+                                                            <option value="2">2 Hours</option>
+                                                            <option value="3">3 Hours</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mt-4 pt-3">
+                                                        <div class="form-check form-switch">
+                                                            <input asp-for="Schema.Use24HourFormat" class="form-check-input" type="checkbox" role="switch">
+                                                            <label asp-for="Schema.Use24HourFormat" class="form-check-label small fw-bold ms-1">Use 24h Format</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Schema.RequireAchievements" class="form-check-input" type="checkbox" role="switch">
+                                            <label asp-for="Schema.RequireAchievements" class="form-check-label ms-2">
+                                                Require Achievements & Impact Textbox
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Schema.RequireChallenges" class="form-check-input" type="checkbox" role="switch">
+                                            <label asp-for="Schema.RequireChallenges" class="form-check-label ms-2">
+                                                Require Issues & Challenges Textbox
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Schema.RequireNextDayPlan" class="form-check-input" type="checkbox" role="switch">
+                                            <label asp-for="Schema.RequireNextDayPlan" class="form-check-label ms-2">
+                                                Require Plans for Next Period Textbox
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input asp-for="Schema.RequireFileUpload" class="form-check-input" type="checkbox" role="switch">
+                                            <label asp-for="Schema.RequireFileUpload" class="form-check-label ms-2">
+                                                Require File Attachment (PDF, Excel, etc.)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-1"></i> Save Schema</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function toggleFrequencyFields() {
+            var val = document.getElementById("frequencySelect").value;
+            document.getElementById("divDayOfWeek").style.display = val === 'Weekly' ? 'block' : 'none';
+            document.getElementById("divDayOfMonth").style.display = val === 'Monthly' ? 'block' : 'none';
+        }
+        
+        function toggleTimeLogFields() {
+            var isChecked = document.getElementById("requireTimeLogSwitch").checked;
+            document.getElementById("timeLogSettings").style.display = isChecked ? 'block' : 'none';
+        }
+
+        // Initialize on load
+        toggleFrequencyFields();
+        toggleTimeLogFields();
+    </script>
+}

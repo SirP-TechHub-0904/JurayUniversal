@@ -1,0 +1,67 @@
+@page
+@model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.CreateModel
+@{
+    ViewData["Title"] = "Add New " + Model.GroupAlias;
+    ViewData["ActiveMenu"] = "MisGroups";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>Add New @Model.GroupAlias</h3>
+            <p class="text-subtitle text-muted">Create a new organizational sub-group.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <button class="btn btn-outline-info btn-sm rounded-pill me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+            <a asp-page="./List" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label asp-for="MisGroup.Title" class="form-label fw-bold"></label>
+                        <input asp-for="MisGroup.Title" class="form-control" />
+                        <span asp-validation-for="MisGroup.Title" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label asp-for="MisGroup.Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="MisGroup.Description" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="MisGroup.Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" asp-for="MisGroup.IsActive" id="flexSwitchCheckDefault">
+                            <label class="form-check-label fw-bold" for="flexSwitchCheckDefault">Active Status</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">Create @Model.GroupAlias</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

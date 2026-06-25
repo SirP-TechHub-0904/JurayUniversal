@@ -1,0 +1,1100 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+@using System.Security.Claims
+
+@{
+    var superSetting = _context.SuperSettings.FirstOrDefault();
+    var hasAdminRole = User.IsInRole("Admin") || User.IsInRole("mSuperAdmin") || User.IsInRole("Administrator") || User.IsInRole("Editor");
+    
+    // Identity fields
+    string userFullName = User.Identity?.Name ?? "User";
+    string userEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "user@example.com";
+    string userInitials = string.IsNullOrEmpty(userFullName) ? "U" : userFullName.Substring(0, 1).ToUpper();
+
+    // Determine current sidebar context (User Platform vs Admin Dashboard)
+    bool isPlatform = ViewContext.RouteData.Values["page"]?.ToString().Contains("/Platform/") == true;
+}
+
+
+
+
+<!DOCTYPE html>
+<!-- saved from url=(0039) https://seantheme.com/studio/index.html-->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<partial name="~/Pages/Shared/Layouts/MIS/_MisHeadTitle.cshtml" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- ================== BEGIN core-css ================== -->
+	<link href="~/layout/misasset/vendor.min.css" rel="stylesheet">
+	<link href="~/layout/misasset/app.min.css" rel="stylesheet">
+	<!-- ================== END core-css ================== -->
+
+	<!-- FontAwesome and Google Fonts (Inter) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+	<style>
+		:root {
+			/* Material Design 3 CSS Theme Variables */
+			--md-primary: #6750A4;
+			--md-surface: #FEF7FF;
+			--md-surface-container: #F3EDF7;
+			--md-on-surface: #1D1B20;
+			--md-shadow-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+			--md-shadow-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1.5px 3px 0px rgba(0, 0, 0, 0.3);
+			--md-shadow-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Global Typography */
+		body, .app, .form-control, .btn, .card, .dropdown-item, .table {
+			font-family: 'Inter', sans-serif !important;
+		}
+
+		/* Material Design Cards & Widgets */
+		.card {
+			border: none !important;
+			border-radius: 16px !important;
+			box-shadow: var(--md-shadow-1) !important;
+			transition: transform 0.22s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.22s cubic-bezier(0.2, 0, 0, 1) !important;
+		}
+		.card:hover {
+			transform: translateY(-2px) !important;
+			box-shadow: var(--md-shadow-2) !important;
+		}
+
+		/* Buttons & Search Controls */
+		.btn:not(.btn-link) {
+			border-radius: 100px !important; /* Material pill shape */
+			padding: 0.5rem 1.5rem !important;
+			font-weight: 500 !important;
+			transition: background-color 0.15s, box-shadow 0.15s !important;
+		}
+		.btn:not(.btn-link):hover {
+			box-shadow: var(--md-shadow-1) !important;
+		}
+		.form-control {
+			border-radius: 8px !important;
+			padding: 0.6rem 1rem !important;
+			border: 1px solid rgba(0, 0, 0, 0.12) !important;
+			transition: border-color 0.15s, box-shadow 0.15s !important;
+		}
+		.form-control:focus {
+			border-color: var(--md-primary) !important;
+			box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.2) !important;
+		}
+
+		/* Material Dropdown Menus */
+		.dropdown-menu {
+			border: none !important;
+			border-radius: 12px !important;
+			box-shadow: var(--md-shadow-3) !important;
+			padding: 8px !important;
+			margin-top: 4px !important;
+		}
+		.dropdown-item {
+			border-radius: 8px !important;
+			padding: 10px 16px !important;
+			font-size: 14px !important;
+			font-weight: 500 !important;
+			transition: background-color 0.15s, color 0.15s !important;
+		}
+		.dropdown-item:hover, .dropdown-item:focus {
+			background-color: rgba(103, 80, 164, 0.08) !important;
+			color: var(--md-primary) !important;
+		}
+
+		/* Material Tables */
+		.table {
+			border-collapse: separate !important;
+			border-spacing: 0 !important;
+			width: 100% !important;
+		}
+		.table th {
+			font-weight: 600 !important;
+			text-transform: uppercase !important;
+			font-size: 11px !important;
+			letter-spacing: 0.8px !important;
+			padding: 14px 18px !important;
+			color: rgba(0, 0, 0, 0.6) !important;
+			border-bottom: 2px solid rgba(0, 0, 0, 0.08) !important;
+			border-top: none !important;
+		}
+		.table td {
+			padding: 14px 18px !important;
+			vertical-align: middle !important;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+			border-top: none !important;
+			font-size: 14px !important;
+		}
+		.table tbody tr:hover {
+			background-color: rgba(103, 80, 164, 0.02) !important;
+		}
+
+		/* Sidebar Dropdown Submenu Generic Icon (Option A) */
+		.menu-submenu .menu-link {
+			display: flex !important;
+			align-items: center !important;
+		}
+		.menu-submenu .menu-link::before {
+			content: '\f10c' !important; /* Unicode for far fa-circle */
+			font-family: 'Font Awesome 6 Free' !important;
+			font-weight: 400 !important; /* Outline circle */
+			font-size: 6px !important;
+			margin-right: 10px !important;
+			display: inline-block !important;
+			vertical-align: middle !important;
+			opacity: 0.4 !important;
+			transition: opacity 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+		}
+		.menu-submenu .menu-link:hover::before {
+			opacity: 1 !important;
+			color: var(--md-primary) !important;
+			transform: scale(1.2) !important;
+		}
+	</style>
+	<partial name="~/Pages/Shared/Layouts/MIS/_MisDashboardCSS.cshtml" />
+</head>
+<body class="pace-done ">
+	<div class="pace pace-inactive">
+		<div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+			<div class="pace-progress-inner"></div>
+		</div>
+		<div class="pace-activity"></div>
+	</div>
+	<!-- BEGIN #app -->
+	<div id="app" class="app">
+		<!-- BEGIN #header -->
+		<div id="header" class="app-header">
+			<!-- BEGIN mobile-toggler -->
+			<div class="mobile-toggler">
+				<button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
+					<span class="bar"></span>
+					<span class="bar"></span>
+				</button>
+			</div>
+			<!-- END mobile-toggler -->
+			<!-- BEGIN brand -->
+			<div class="brand">
+				<div class="desktop-toggler">
+					<button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+						<span class="bar"></span>
+						<span class="bar"></span>
+					</button>
+				</div>
+
+				<a href="" class="brand-logo">
+					<partial name="~/Pages/Shared/Layouts/MIS/_MisLogo.cshtml" />
+				</a>
+			</div>
+			<!-- END brand -->
+			<!-- BEGIN menu -->
+			<div class="menu">
+				<form class="menu-search" method="POST" name="header_search_form">
+					<div class="menu-search-icon"><i class="fa fa-search"></i></div>
+					<div class="menu-search-input">
+						<input type="text" class="form-control" placeholder="Search menu...">
+					</div>
+				</form>
+				<div class="menu-item dropdown">
+					<a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
+						<div class="menu-icon"><i class="fa fa-bell nav-icon"></i></div>
+						<div class="menu-label">3</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end dropdown-notification">
+						<h6 class="dropdown-header text-body-emphasis mb-1">Notifications</h6>
+						<a href="#" class="dropdown-notification-item">
+							<div class="dropdown-notification-icon">
+								<i class="fa fa-receipt fa-lg fa-fw text-success"></i>
+							</div>
+							<div class="dropdown-notification-info">
+								<div class="title">Your store has a new order for 2 items totaling $1,299.00</div>
+								<div class="time">just now</div>
+							</div>
+							<div class="dropdown-notification-arrow">
+								<i class="fa fa-chevron-right"></i>
+							</div>
+						</a>
+						<a href="#" class="dropdown-notification-item">
+							<div class="dropdown-notification-icon">
+								<i class="far fa-user-circle fa-lg fa-fw text-muted"></i>
+							</div>
+							<div class="dropdown-notification-info">
+								<div class="title">3 new customer account is created</div>
+								<div class="time">2 minutes ago</div>
+							</div>
+							<div class="dropdown-notification-arrow">
+								<i class="fa fa-chevron-right"></i>
+							</div>
+						</a>
+						<a href="#" class="dropdown-notification-item">
+							<div class="dropdown-notification-icon">
+								<img src="~/layout/misasset/android.svg" alt="" width="26">
+							</div>
+							<div class="dropdown-notification-info">
+								<div class="title">Your android application has been approved</div>
+								<div class="time">5 minutes ago</div>
+							</div>
+							<div class="dropdown-notification-arrow">
+								<i class="fa fa-chevron-right"></i>
+							</div>
+						</a>
+						<a href="#" class="dropdown-notification-item">
+							<div class="dropdown-notification-icon">
+								<img src="~/layout/misasset/paypal.svg" alt="" width="26">
+							</div>
+							<div class="dropdown-notification-info">
+								<div class="title">Paypal payment method has been enabled for your store</div>
+								<div class="time">10 minutes ago</div>
+							</div>
+							<div class="dropdown-notification-arrow">
+								<i class="fa fa-chevron-right"></i>
+							</div>
+						</a>
+						<div class="p-2 text-center mb-n1">
+							<a href="#" class="text-body-emphasis text-opacity-50 text-decoration-none">See all</a>
+						</div>
+					</div>
+				</div>
+				<div class="menu-item dropdown">
+					<a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link" aria-expanded="false">
+						<div class="menu-img online">
+							<img src="~/layout/misasset/user.jpg" alt="" class="ms-100 mh-100 rounded-circle">
+						</div>
+						<div class="menu-text">johnsmith@studio.com</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end me-lg-3" style="">
+						<a class="dropdown-item d-flex align-items-center" href="https://seantheme.com/studio/profile.html">Edit Profile <i class="fa fa-user-circle fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<a class="dropdown-item d-flex align-items-center" href="https://seantheme.com/studio/email_inbox.html">Inbox <i class="fa fa-envelope fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<a class="dropdown-item d-flex align-items-center" href="https://seantheme.com/studio/calendar.html">Calendar <i class="fa fa-calendar-alt fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<a class="dropdown-item d-flex align-items-center" href="https://seantheme.com/studio/settings.html">Setting <i class="fa fa-wrench fa-fw ms-auto text-body text-opacity-50"></i></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item d-flex align-items-center" href="https://seantheme.com/studio/page_login.html">Log Out <i class="fa fa-toggle-off fa-fw ms-auto text-body text-opacity-50"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- END menu -->
+		</div>
+		<!-- END #header -->
+		<!-- BEGIN #sidebar -->
+		<div id="sidebar" class="app-sidebar">
+			<!-- BEGIN scrollbar -->
+			<div class="app-sidebar-content ps ps--active-y" data-scrollbar="true" data-height="100%" style="height: 100%;">
+				<!-- BEGIN menu -->
+				<div class="menu">
+					
+@if (isPlatform)
+        {
+            <partial name="~/Pages/Shared/Layouts/MIS/_MisUserSidebar.cshtml" />
+        }
+        else
+        {
+            <partial name="~/Pages/Shared/Layouts/MIS/_MisAdminSidebar.cshtml" />
+        }
+
+
+					<div class="p-3 px-4 mt-auto hide-on-minified">
+						<a href="https://seantheme.com/studio/documentation/index.html" class="btn btn-secondary d-block w-100 fw-600 rounded-pill">
+							<i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Documentation
+						</a>
+					</div>
+				</div>
+				<!-- END menu -->
+				<div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 985px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 984px;"></div></div>
+			</div>
+			<!-- END scrollbar -->
+			<!-- BEGIN mobile-sidebar-backdrop -->
+			<button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
+			<!-- END mobile-sidebar-backdrop -->
+		</div>
+		<!-- END #sidebar -->
+		<!-- BEGIN #content -->
+		<div id="content" class="app-content">
+			<h1 class="page-header mb-3">
+				Hi, Sean. <small>here's what's happening with your store today.</small>
+			</h1>
+
+			<!-- BEGIN row -->
+			<div class="row">
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6 mb-3">
+					<!-- BEGIN card -->
+					<div class="card h-100 overflow-hidden">
+						<!-- BEGIN card-img-overlay -->
+						<div class="card-img-overlay d-block d-lg-none bg-blue rounded"></div>
+						<!-- END card-img-overlay -->
+						<!-- BEGIN card-img-overlay -->
+						<div class="card-img-overlay d-none d-md-block bg-blue rounded mb-n1 mx-n1" style="background-image: url(assets/img/bg/wave-bg.png); background-position: right bottom; background-repeat: no-repeat; background-size: 100%;"></div>
+						<!-- END card-img-overlay -->
+						<!-- BEGIN card-img-overlay -->
+						<div class="card-img-overlay d-none d-md-block bottom-0 top-auto">
+							<div class="row">
+								<div class="col-md-8 col-xl-6"></div>
+								<div class="col-md-4 col-xl-6 mb-n2">
+									<img src="~/layout/misasset/dashboard.svg" alt="" class="d-block ms-n3 mb-5" style="max-height: 310px">
+								</div>
+							</div>
+						</div>
+						<!-- END card-img-overlay -->
+						<!-- BEGIN card-body -->
+						<div class="card-body position-relative text-white text-opacity-70">
+							<!-- BEGIN row -->
+							<div class="row">
+								<!-- BEGIN col-8 -->
+								<div class="col-md-8">
+									<!-- stat-top -->
+									<div class="d-flex">
+										<div class="me-auto">
+											<h5 class="text-white text-opacity-80 mb-3">Weekly Earning</h5>
+											<h3 class="text-white mt-n1 mb-1">$2,999.80</h3>
+											<p class="mb-1 text-white text-opacity-60 text-truncate">
+												<i class="fa fa-caret-up"></i> <b>32%</b> increase compare to last week
+											</p>
+										</div>
+									</div>
+
+									<hr class="bg-white bg-opacity-75 mt-3 mb-3">
+
+									<!-- stat-bottom -->
+									<div class="row">
+										<div class="col-6 col-lg-5">
+											<div class="mt-1">
+												<i class="fa fa-fw fa-shopping-bag fs-28px text-black text-opacity-50"></i>
+											</div>
+											<div class="mt-1">
+												<div>Store Sales</div>
+												<div class="fw-600 text-white">$1,629.80</div>
+											</div>
+										</div>
+										<div class="col-6 col-lg-5">
+											<div class="mt-1">
+												<i class="fa fa-fw fa-retweet fs-28px text-black text-opacity-50"></i>
+											</div>
+											<div class="mt-1">
+												<div>Referral Sales</div>
+												<div class="fw-600 text-white">$700.00</div>
+											</div>
+										</div>
+									</div>
+
+									<hr class="bg-white bg-opacity-75 mt-3 mb-3">
+
+									<div class="mt-3 mb-2">
+										<a href="#" class="btn btn-yellow btn-rounded btn-sm ps-5 pe-5 pt-2 pb-2 fs-14px fw-600"><i class="fa fa-wallet me-2 ms-n2"></i> Withdraw money</a>
+									</div>
+									<p class="fs-12px">
+										It usually takes 3-5 business days for transferring the earning to your bank account.
+									</p>
+								</div>
+								<!-- END col-8 -->
+								<!-- BEGIN col-4 -->
+								<div class="col-md-4 d-none d-md-block" style="min-height: 380px;"></div>
+								<!-- END col-4 -->
+							</div>
+							<!-- END row -->
+						</div>
+						<!-- END card-body -->
+					</div>
+					<!-- END card -->
+				</div>
+				<!-- END col-6 -->
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6">
+					<!-- BEGIN row -->
+					<div class="row">
+						<!-- BEGIN col-6 -->
+						<div class="col-sm-6">
+							<!-- BEGIN card -->
+							<div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-orange" style="min-height: 199px;">
+								<!-- BEGIN card-img-overlay -->
+								<div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+									<img src="~/layout/misasset/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 105px">
+								</div>
+								<!-- END card-img-overlay -->
+								<!-- BEGIN card-body -->
+								<div class="card-body position-relative">
+									<h5 class="text-white text-opacity-80 mb-3 fs-16px">New Orders</h5>
+									<h3 class="text-white mt-n1">56</h3>
+									<div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+										<div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+									</div>
+									<div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i> 16% increase <br>compare to last week</div>
+									<div><a href="#" class="text-white d-flex align-items-center text-decoration-none">View report <i class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a></div>
+								</div>
+								<!-- BEGIN card-body -->
+							</div>
+							<!-- END card -->
+							<!-- BEGIN card -->
+							<div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-teal" style="min-height: 199px;">
+								<!-- BEGIN card-img-overlay -->
+								<div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+									<img src="~/layout/misasset/visitor.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 105px">
+								</div>
+								<!-- END card-img-overlay -->
+								<!-- BEGIN card-body -->
+								<div class="card-body position-relative">
+									<h5 class="text-white text-opacity-80 mb-3 fs-16px">Page Visitors</h5>
+									<h3 class="text-white mt-n1">60.5k</h3>
+									<div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+										<div class="progrss-bar progress-bar-striped bg-white" style="width: 50%"></div>
+									</div>
+									<div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i> 33% increase <br>compare to last week</div>
+									<div><a href="#" class="text-white d-flex align-items-center text-decoration-none">View report <i class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a></div>
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+						</div>
+						<!-- END col-6 -->
+						<!-- BEGIN col-6 -->
+						<div class="col-sm-6">
+							<!-- BEGIN card -->
+							<div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-pink" style="min-height: 199px;">
+								<!-- BEGIN card-img-overlay -->
+								<div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+									<img src="~/layout/misasset/email.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 105px">
+								</div>
+								<!-- END card-img-overlay -->
+								<!-- BEGIN card-body -->
+								<div class="card-body position-relative">
+									<h5 class="text-white text-opacity-80 mb-3 fs-16px">Unread email</h5>
+									<h3 class="text-white mt-n1">30</h3>
+									<div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+										<div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+									</div>
+									<div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-down"></i> 5% decrease <br>compare to last week</div>
+									<div><a href="#" class="text-white d-flex align-items-center text-decoration-none">View report <i class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a></div>
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+							<!-- BEGIN card -->
+							<div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-indigo" style="min-height: 199px;">
+								<!-- BEGIN card-img-overlay -->
+								<div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+									<img src="~/layout/misasset/browser.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 105px">
+								</div>
+								<!-- end card-img-overlay -->
+								<!-- BEGIN card-body -->
+								<div class="card-body position-relative">
+									<h5 class="text-white text-opacity-80 mb-3 fs-16px">Page Views</h5>
+									<h3 class="text-white mt-n1">320.4k</h3>
+									<div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+										<div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+									</div>
+									<div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i> 20% increase <br>compare to last week</div>
+									<div><a href="#" class="text-white d-flex align-items-center text-decoration-none">View report <i class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a></div>
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+						</div>
+						<!-- BEGIN col-6 -->
+					</div>
+					<!-- END row -->
+				</div>
+				<!-- END col-6 -->
+			</div>
+			<!-- END row -->
+			<!-- BEGIN row -->
+			<div class="row">
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6">
+					<!-- BEGIN row -->
+					<div class="row">
+						<!-- BEGIN col-6 -->
+						<div class="col-sm-6 mb-3 d-flex flex-column">
+							<!-- BEGIN card -->
+							<div class="card mb-3 flex-1">
+								<!-- BEGIN card-body -->
+								<div class="card-body">
+									<div class="d-flex mb-3">
+										<div class="flex-grow-1">
+											<h5 class="mb-1">Total Users</h5>
+											<div>Store user account registration</div>
+										</div>
+										<a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
+									</div>
+
+									<div class="d-flex">
+										<div class="flex-grow-1">
+											<h3 class="mb-1">184,593</h3>
+											<div class="text-success fw-600 fs-13px">
+												<i class="fa fa-caret-up"></i> +3.59%
+											</div>
+										</div>
+										<div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center">
+											<i class="fa fa-user fa-lg text-primary"></i>
+										</div>
+									</div>
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+							<!-- BEGIN card -->
+							<div class="card">
+								<!-- BEGIN card-body -->
+								<div class="card-body">
+									<div class="d-flex mb-3">
+										<div class="flex-grow-1">
+											<h5 class="mb-1">Social Media</h5>
+											<div>Facebook page stats overview</div>
+										</div>
+										<a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
+									</div>
+
+									<!-- BEGIN row -->
+									<div class="row">
+										<!-- BEGIN col-6 -->
+										<div class="col-6 text-center">
+											<div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center mb-2 ms-auto me-auto">
+												<i class="fa fa-thumbs-up fa-lg text-primary"></i>
+											</div>
+											<div class="fw-600 text-body">306.5k</div>
+											<div class="fs-13px">Likes</div>
+										</div>
+										<!-- END col-6 -->
+										<!-- BEGIN col-6 -->
+										<div class="col-6 text-center">
+											<div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center mb-2 ms-auto me-auto">
+												<i class="fa fa-comments fa-lg text-primary"></i>
+											</div>
+											<div class="fw-600 text-body">27.5k</div>
+											<div class="fs-13px">Comments</div>
+										</div>
+										<!-- END col-6 -->
+									</div>
+									<!-- END row -->
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+						</div>
+						<!-- END col-6 -->
+						<!-- BEGIN col-6 -->
+						<div class="col-sm-6 mb-3">
+							<!-- BEGIN card -->
+							<div class="card h-100">
+								<!-- BEGIN card-body -->
+								<div class="card-body">
+									<div class="d-flex mb-3">
+										<div class="flex-grow-1">
+											<h5 class="mb-1">Web Traffic</h5>
+											<div class="fs-13px">Traffic source and category</div>
+										</div>
+										<a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
+									</div>
+
+									<div class="mb-4">
+										<h3 class="mb-1">320,958</h3>
+										<div class="text-success fs-13px fw-600">
+											<i class="fa fa-caret-up"></i> +20.9%
+										</div>
+									</div>
+
+									<div class="progress mb-4" style="height: 10px;">
+										<div class="progress-bar bg-primary" style="width: 42.66%"></div>
+										<div class="progress-bar bg-teal" style="width: 36.80%"></div>
+										<div class="progress-bar bg-yellow" style="width: 15.34%"></div>
+										<div class="progress-bar bg-pink" style="width: 9.20%"></div>
+										<div class="progress-bar bg-gray-200" style="width: 5.00%"></div>
+									</div>
+
+									<div class="fs-13px">
+										<div class="d-flex align-items-center mb-2">
+											<div class="flex-grow-1 d-flex align-items-center">
+												<i class="fa fa-circle fs-9px fa-fw text-primary me-2"></i> Direct visit
+											</div>
+											<div class="fw-600 text-body">42.66%</div>
+										</div>
+										<div class="d-flex align-items-center mb-2">
+											<div class="flex-grow-1 d-flex align-items-center">
+												<i class="fa fa-circle fs-9px fa-fw text-teal me-2"></i> Organic Search
+											</div>
+											<div class="fw-600 text-body">36.80%</div>
+										</div>
+										<div class="d-flex align-items-center mb-2">
+											<div class="flex-grow-1 d-flex align-items-center">
+												<i class="fa fa-circle fs-9px fa-fw text-warning me-2"></i> Referral Website
+											</div>
+											<div class="fw-600 text-body">15.34%</div>
+										</div>
+										<div class="d-flex align-items-center mb-2">
+											<div class="flex-grow-1 d-flex align-items-center">
+												<i class="fa fa-circle fs-9px fa-fw text-danger me-2"></i> Social Networks
+											</div>
+											<div class="fw-600 text-body">9.20%</div>
+										</div>
+										<div class="d-flex align-items-center mb-15px">
+											<div class="flex-grow-1 d-flex align-items-center">
+												<i class="fa fa-circle fs-9px fa-fw text-gray-200 me-2"></i> Others
+											</div>
+											<div class="fw-600 text-body">5.00%</div>
+										</div>
+										<div class="fs-12px text-end">
+											<span class="fs-10px">powered by </span>
+											<span class="d-inline-flex fw-600">
+												<span class="text-primary">G</span>
+												<span class="text-danger">o</span>
+												<span class="text-warning">o</span>
+												<span class="text-primary">g</span>
+												<span class="text-green">l</span>
+												<span class="text-danger">e</span>
+											</span>
+											<span class="fs-10px">Analytics API</span>
+										</div>
+									</div>
+								</div>
+								<!-- END card-body -->
+							</div>
+							<!-- END card -->
+						</div>
+						<!-- END col-6 -->
+					</div>
+					<!-- END row -->
+				</div>
+				<!-- END col-6 -->
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6 mb-3">
+					<!-- BEGIN card -->
+					<div class="card h-100">
+						<!-- BEGIN card-body -->
+						<div class="card-body">
+							<div class="d-flex mb-3">
+								<div class="flex-grow-1">
+									<h5 class="mb-1">Sales Analytics</h5>
+									<div class="fs-13px">Weekly sales performance chart</div>
+								</div>
+								<a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
+							</div>
+							<div id="chart" class="apexcharts-tooltip-active" style="min-height: 271px;">
+								<div id="apexchartsd7el2v4f" class="apexcharts-canvas apexchartsd7el2v4f apexcharts-theme-light" style="width: 682px; height: 256px;">
+									<svg xmlns="http://www.w3.org/2000/svg" class="apexcharts-svg apexcharts-zoomable hovering-zoom" xmlns:data="ApexChartsNS" transform="translate(0, 0)" width="682" height="256" role="application" aria-label="line chart with 1 data series" tabindex="0">
+										<foreignobject x="0" y="0" width="682" height="256">
+											<style type="text/css">
+												.apexcharts-flip-y {
+													transform: scaleY(-1) translateY(-100%);
+													transform-origin: top;
+													transform-box: fill-box;
+												}
+
+												.apexcharts-flip-x {
+													transform: scaleX(-1);
+													transform-origin: center;
+													transform-box: fill-box;
+												}
+
+												.apexcharts-legend {
+													display: flex;
+													overflow: auto;
+													padding: 0 10px;
+												}
+
+													.apexcharts-legend.apexcharts-legend-group-horizontal {
+														flex-direction: column;
+													}
+
+												.apexcharts-legend-group {
+													display: flex;
+												}
+
+												.apexcharts-legend-group-vertical {
+													flex-direction: column-reverse;
+												}
+
+												.apexcharts-legend.apx-legend-position-bottom, .apexcharts-legend.apx-legend-position-top {
+													flex-wrap: wrap
+												}
+
+												.apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+													flex-direction: column;
+													bottom: 0;
+												}
+
+												.apexcharts-legend.apx-legend-position-bottom.apexcharts-align-left, .apexcharts-legend.apx-legend-position-top.apexcharts-align-left, .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+													justify-content: flex-start;
+													align-items: flex-start;
+												}
+
+												.apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center, .apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+													justify-content: center;
+													align-items: center;
+												}
+
+												.apexcharts-legend.apx-legend-position-bottom.apexcharts-align-right, .apexcharts-legend.apx-legend-position-top.apexcharts-align-right {
+													justify-content: flex-end;
+													align-items: flex-end;
+												}
+
+												.apexcharts-legend-series {
+													cursor: pointer;
+													line-height: normal;
+													display: flex;
+													align-items: center;
+												}
+
+												.apexcharts-legend-text {
+													position: relative;
+													font-size: 14px;
+												}
+
+													.apexcharts-legend-text *, .apexcharts-legend-marker * {
+														pointer-events: none;
+													}
+
+												.apexcharts-legend-marker {
+													position: relative;
+													display: flex;
+													align-items: center;
+													justify-content: center;
+													cursor: pointer;
+													margin-right: 1px;
+												}
+
+												.apexcharts-legend-series.apexcharts-no-click {
+													cursor: auto;
+												}
+
+												.apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {
+													display: none !important;
+												}
+
+												.apexcharts-inactive-legend {
+													opacity: 0.45;
+												}
+											</style>
+										</foreignobject>
+										<g class="apexcharts-inner apexcharts-graphical" transform="translate(65.640625, 30)">
+											<defs><clippath id="gridRectMaskd7el2v4f"><rect x="-4.5" y="-4.5" width="595.359375" height="200.8" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clippath><clippath id="gridRectBarMaskd7el2v4f"><rect x="-4.5" y="-4.5" width="595.359375" height="200.8" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clippath><clippath id="gridRectMarkerMaskd7el2v4f"><rect x="-4.5" y="0" width="595.359375" height="191.8" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clippath><clippath id="forecastMaskd7el2v4f"></clippath><clippath id="nonForecastMaskd7el2v4f"></clippath></defs><line stroke="#b6b6b6" stroke-dasharray="3" stroke-linecap="butt" class="apexcharts-xcrosshairs apexcharts-active" x="-0.5" y="0" y2="191.8" width="1" height="191.8" fill="#B1B9C4" filter="none" fill-opacity="0.9" stroke-width="1" x1="-0.5" x2="-0.5"></line><line x1="0" y1="190.8" x2="0" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="90.57631501093805" y1="190.8" x2="90.57631501093805" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="181.1526300218761" y1="190.8" x2="181.1526300218761" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="271.7289450328141" y1="190.8" x2="271.7289450328141" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="362.3052600437522" y1="190.8" x2="362.3052600437522" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="452.88157505469024" y1="190.8" x2="452.88157505469024" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><line x1="543.4578900656282" y1="190.8" x2="543.4578900656282" y2="196.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-xaxis-tick"></line><g class="apexcharts-grid"><g class="apexcharts-gridlines-horizontal"><line x1="0" y1="63.93333333333334" x2="586.359375" y2="63.93333333333334" stroke="rgba(33,40,55, .15)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line x1="0" y1="127.86666666666667" x2="586.359375" y2="127.86666666666667" stroke="rgba(33,40,55, .15)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line></g><g class="apexcharts-gridlines-vertical"></g><line x1="0" y1="191.8" x2="586.359375" y2="191.8" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line><line x1="0" y1="1" x2="0" y2="191.8" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line></g><g class="apexcharts-grid-borders"><line x1="0" y1="0" x2="586.359375" y2="0" stroke="rgba(33,40,55, .15)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line x1="0" y1="191.8" x2="586.359375" y2="191.8" stroke="rgba(33,40,55, .15)" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line x1="0" y1="190.8" x2="586.359375" y2="190.8" stroke="rgba(33,40,55, .25)" stroke-dasharray="0" stroke-width="1" stroke-linecap="butt"></line></g><g class="apexcharts-line-series apexcharts-plot-series">
+												<g class="apexcharts-series" zIndex="0" seriesName="series-1" data:longestSeries="true" rel="1" data:realIndex="0">
+													<path d="M 0 178.1182666666666 L 2173.8315602625134 175.43306666666672 L 4347.663120525027 176.20026666666672 L 6521.49468078754 170.702 L 8695.326241050054 148.32533333333322 L 15216.820921837592 137.7123999999999 L 17390.652482100108 137.7123999999999 L 19564.48404236262 126.07653333333337 L 21738.315602625134 130.29613333333327 L 23912.147162887646 129.52893333333327 L 30433.641843675185 127.09946666666656 L 32607.4734039377 111.75546666666673 L 34781.304964200215 106.38506666666672 L 36955.13652446272 114.82426666666674 L 39128.96808472524 114.18493333333322 L 45650.46276551278 126.33226666666656 L 47824.29432577529 128.37813333333338 L 49998.12588603781 115.07999999999993 L 52171.95744630032 79.14946666666674 L 54345.78900656283 20.45866666666666" fill="none" fill-opacity="1" stroke="rgba(31,107,255,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="5" stroke-dasharray="0" class="apexcharts-line" index="0" clip-path="url(#gridRectMaskd7el2v4f)" pathTo="M 0 178.1182666666666 L 2173.8315602625134 175.43306666666672 L 4347.663120525027 176.20026666666672 L 6521.49468078754 170.702 L 8695.326241050054 148.32533333333322 L 15216.820921837592 137.7123999999999 L 17390.652482100108 137.7123999999999 L 19564.48404236262 126.07653333333337 L 21738.315602625134 130.29613333333327 L 23912.147162887646 129.52893333333327 L 30433.641843675185 127.09946666666656 L 32607.4734039377 111.75546666666673 L 34781.304964200215 106.38506666666672 L 36955.13652446272 114.82426666666674 L 39128.96808472524 114.18493333333322 L 45650.46276551278 126.33226666666656 L 47824.29432577529 128.37813333333338 L 49998.12588603781 115.07999999999993 L 52171.95744630032 79.14946666666674 L 54345.78900656283 20.45866666666666" pathFrom="M 393.48133054018547 178.1182666666666 L 2738.9188305401854 175.43306666666672 L 5084.356330540185 176.20026666666672 L 7429.793830540185 170.702 L 9775.231330540184 148.32533333333322 L 16811.543830540184 137.7123999999999 L 19156.981330540184 137.7123999999999 L 21502.418830540184 126.07653333333337 L 23847.856330540184 130.29613333333327 L 26193.293830540184 129.52893333333327 L 33229.606330540184 127.09946666666656 L 35575.043830540184 111.75546666666673 L 37920.481330540184 106.38506666666672 L 40265.918830540184 114.82426666666674 L 42611.356330540184 114.18493333333322 L 49647.668830540184 126.33226666666656 L 51993.106330540184 128.37813333333338 L 54338.543830540184 115.07999999999993 L 56683.981330540184 79.14946666666674 L 59029.418830540184 20.45866666666666" fill-rule="evenodd"></path><g class="apexcharts-series-markers-wrap apexcharts-hidden-element-shown" data:realIndex="0">
+														<g class="apexcharts-series-markers">
+															<path d="M 0, 178.1182666666666
+           m -6, 0
+           a 6,6 0 1,0 12,0
+           a 6,6 0 1,0 -12,0" fill="#1f6bff" fill-opacity="1" stroke="#fff" stroke-opacity="0.9" stroke-linecap="butt" stroke-width="2" stroke-dasharray="0" cx="0" cy="0" shape="circle" class="apexcharts-marker wbf74m1df no-pointer-events" default-marker-size="0"></path>
+														</g>
+													</g>
+												</g><g class="apexcharts-datalabels" data:realIndex="0"></g>
+											</g><line x1="0" y1="0" x2="586.359375" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" stroke-linecap="butt" class="apexcharts-ycrosshairs"></line><line x1="0" y1="0" x2="586.359375" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="0" stroke-linecap="butt" class="apexcharts-ycrosshairs-hidden"></line><g class="apexcharts-xaxis" transform="translate(0, 0)"><g class="apexcharts-xaxis-texts-g" transform="translate(0, -4)"><text x="0" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>23:00</tspan><title>23:00</title></text><text x="90.57631501093805" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="600" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>13 Nov</tspan><title>13 Nov</title></text><text x="181.1526300218761" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>01:00</tspan><title>01:00</title></text><text x="271.7289450328141" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>02:00</tspan><title>02:00</title></text><text x="362.3052600437522" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>03:00</tspan><title>03:00</title></text><text x="452.88157505469024" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>04:00</tspan><title>04:00</title></text><text x="543.4578900656282" y="218.8" text-anchor="middle" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-xaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>05:00</tspan><title>05:00</title></text></g></g><g class="apexcharts-yaxis-annotations apexcharts-hidden-element-shown"><line x1="0" y1="166.2266666666667" x2="586.359375" y2="166.2266666666667" stroke="#640DF3" stroke-dasharray="1" stroke-width="1" stroke-linecap="butt"></line><rect x="542.8218994140625" y="147.62664794921875" width="49.470703125" height="16" rx="2" ry="2" opacity="1" stroke-width="1" stroke="#640DF3" stroke-dasharray="0" fill="#640DF3"></rect><text x="586.359375" y="160.2266666666667" text-anchor="end" dominant-baseline="auto" font-size="11px" font-family="Helvetica, Arial, sans-serif" font-weight="400" fill="#FFFFFF" class="apexcharts-text apexcharts-yaxis-annotation-label  " rel="0" style="font-family: Helvetica, Arial, sans-serif;">Support</text><rect x="0" y="63.93333333333334" width="586.359375" height="51.146666666666675" rx="0" ry="0" opacity="0.1" stroke-width="1" stroke="none" stroke-dasharray="1" fill="#fefefe" class="apexcharts-annotation-rect" clip-path="url(#gridRectMaskd7el2v4f)"></rect><rect x="546.8843994140625" y="46.133331298828125" width="44.50625228881836" height="15.199999809265137" rx="2" ry="2" opacity="1" stroke-width="1" stroke="#FFCC00" stroke-dasharray="0" fill="#FFCC00"></rect><text x="586.359375" y="57.93333333333334" text-anchor="end" dominant-baseline="auto" font-size="10px" font-family="Helvetica, Arial, sans-serif" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-yaxis-annotation-label  " rel="1" style="font-family: Helvetica, Arial, sans-serif;">Earning</text></g><g class="apexcharts-xaxis-annotations apexcharts-hidden-element-shown"><rect x="586.359375" y="0" width="0" height="191.8" rx="0" ry="0" opacity="0.4" stroke-width="1" stroke="#c2c2c2" stroke-dasharray="1" fill="#20c997" class="apexcharts-annotation-rect" clip-path="url(#gridRectMaskd7el2v4f)"></rect></g><g class="apexcharts-point-annotations apexcharts-hidden-element-shown"></g>
+										</g>
+										<rect x="0" y="0" width="0" height="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect>
+										<g class="apexcharts-yaxis" rel="0" transform="translate(27.640625, 0)"><g class="apexcharts-yaxis-texts-g"><text x="20" y="30" text-anchor="end" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-yaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>9500</tspan><title>9500</title></text><text x="20" y="93.93333333333334" text-anchor="end" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-yaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>9000</tspan><title>9000</title></text><text x="20" y="157.86666666666667" text-anchor="end" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-yaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>8500</tspan><title>8500</title></text><text x="20" y="221.8" text-anchor="end" dominant-baseline="auto" font-size="0.875rem" font-family="system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,&quot;Noto Sans&quot;,&quot;Liberation Sans&quot;,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;,&quot;Noto Color Emoji&quot;" font-weight="400" fill="#212837" class="apexcharts-text apexcharts-yaxis-label apexcharts-xaxis-label" style="font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;"><tspan>8000</tspan><title>8000</title></text></g></g>
+										<title>Chart</title>
+										<rect x="0" y="0" width="0" height="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-zoom-rect"></rect>
+										<rect x="0" y="0" width="0" height="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-selection-rect"></rect>
+									</svg><div class="apexcharts-legend" style="max-height: 128px;"></div><div class="apexcharts-tooltip apexcharts-theme-light apexcharts-active" role="tooltip" aria-live="polite" aria-atomic="true" style="left: 76.6406px; top: 159.4px;"><div class="apexcharts-tooltip-title" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">12 Nov</div><div class="apexcharts-tooltip-series-group apexcharts-tooltip-series-group-0 apexcharts-active" style="order: 1; display: flex;"><span class="apexcharts-tooltip-marker" shape="circle" style="color: rgb(31, 107, 255);"></span><div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-y-label">series-1: </span><span class="apexcharts-tooltip-text-y-value">8107</span></div><div class="apexcharts-tooltip-goals-group"><span class="apexcharts-tooltip-text-goals-label"></span><span class="apexcharts-tooltip-text-goals-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-xaxistooltip apexcharts-xaxistooltip-bottom apexcharts-theme-light apexcharts-active" style="left: 35.8281px; top: 223.8px;"><div class="apexcharts-xaxistooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px; min-width: 35.753px;">12 Nov</div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light"><div class="apexcharts-yaxistooltip-text"></div></div>
+								</div>
+							</div>
+						</div>
+						<!-- END card-body -->
+					</div>
+					<!-- END card -->
+				</div>
+				<!-- END col-6 -->
+			</div>
+			<!-- END row -->
+			<!-- BEGIN row -->
+			<div class="row">
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6 mb-3">
+					<!-- BEGIN card -->
+					<div class="card h-100">
+						<!-- BEGIN card-body -->
+						<div class="card-body">
+							<div class="d-flex align-items-center mb-4">
+								<div class="flex-grow-1">
+									<h5 class="mb-1">Bestseller</h5>
+									<div class="fs-13px">Top 3 product sales this week</div>
+								</div>
+								<a href="#" class="text-decoration-none">See All</a>
+							</div>
+
+							<!-- product-1 -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+									<img src="~/layout/misasset/product-1.jpg" alt="" class="ms-100 mh-100">
+								</div>
+								<div class="flex-grow-1">
+									<div>
+										<div class="text-primary fs-10px fw-600">TOP SALES</div>
+										<div class="text-body fw-600">iPhone 11 Pro Max (256GB)</div>
+										<div class="fs-13px">$1,099</div>
+									</div>
+								</div>
+								<div class="ps-3 text-center">
+									<div class="text-body fw-600">382</div>
+									<div class="fs-13px">sales</div>
+								</div>
+							</div>
+
+							<!-- product-2 -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+									<img src="~/layout/misasset/product-2.jpg" alt="" class="ms-100 mh-100">
+								</div>
+								<div class="flex-grow-1">
+									<div>
+										<div class="text-body fw-600">Macbook Pro 13 inch (2026)</div>
+										<div class="fs-13px">$1,120</div>
+									</div>
+								</div>
+								<div class="ps-3 text-center">
+									<div class="text-body fw-600">102</div>
+									<div class="fs-13px">sales</div>
+								</div>
+							</div>
+
+							<!-- product-3 -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+									<img src="~/layout/misasset/product-3.jpg" alt="" class="ms-100 mh-100">
+								</div>
+								<div class="flex-grow-1">
+									<div>
+										<div class="text-body fw-600">Apple Watch Series 4(2026)</div>
+										<div class="fs-13px">$349</div>
+									</div>
+								</div>
+								<div class="ps-3 text-center">
+									<div class="text-body fw-600">75</div>
+									<div class="fs-13px">sales</div>
+								</div>
+							</div>
+
+							<!-- product-4 -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+									<img src="~/layout/misasset/product-4.jpg" alt="" class="ms-100 mh-100">
+								</div>
+								<div class="flex-grow-1">
+									<div>
+										<div class="text-body fw-600">12.9-inch iPad Pro (256GB)</div>
+										<div class="fs-13px">$1,099</div>
+									</div>
+								</div>
+								<div class="ps-3 text-center">
+									<div class="text-body fw-600">62</div>
+									<div class="fs-13px">sales</div>
+								</div>
+							</div>
+
+							<!-- product-5 -->
+							<div class="d-flex align-items-center">
+								<div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+									<img src="~/layout/misasset/product-5.jpg" alt="" class="ms-100 mh-100">
+								</div>
+								<div class="flex-grow-1">
+									<div>
+										<div class="text-body fw-600">iPhone 11 (128gb)</div>
+										<div class="fs-13px">$799</div>
+									</div>
+								</div>
+								<div class="ps-3 text-center">
+									<div class="text-body fw-600">59</div>
+									<div class="fs-13px">sales</div>
+								</div>
+							</div>
+						</div>
+						<!-- END card-body -->
+					</div>
+					<!-- END card -->
+				</div>
+				<!-- END col-6 -->
+				<!-- BEGIN col-6 -->
+				<div class="col-xl-6 mb-3">
+					<!-- BEGIN card -->
+					<div class="card h-100">
+						<!-- BEGIN card-body -->
+						<div class="card-body">
+							<div class="d-flex align-items-center mb-2">
+								<div class="flex-grow-1">
+									<h5 class="mb-1">Transaction</h5>
+									<div class="fs-13px">Latest transaction history</div>
+								</div>
+								<a href="#" class="text-decoration-none">See All</a>
+							</div>
+
+							<!-- BEGIN table-responsive -->
+							<div class="table-responsive mb-n2">
+								<table class="table table-borderless mb-0">
+									<thead>
+										<tr class="text-body">
+											<th class="ps-0">No</th>
+											<th>Order Details</th>
+											<th class="text-center">Status</th>
+											<th class="text-end pe-0">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="ps-0">1.</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="w-40px h-40px">
+														<img src="~/layout/misasset/paypal2.svg" alt="" class="ms-100 mh-100">
+													</div>
+													<div class="ms-3 flex-grow-1">
+														<div class="fw-600 text-body">Macbook Pro 15 inch</div>
+														<div class="fs-13px">5 minutes ago</div>
+													</div>
+												</div>
+											</td>
+											<td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Success</span></td>
+											<td class="text-end pe-0">$1,699.00</td>
+										</tr>
+										<tr>
+											<td class="ps-0">2.</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="w-40px h-40px rounded">
+														<img src="~/layout/misasset/mastercard.svg" alt="" class="ms-100 mh-100">
+													</div>
+													<div class="ms-3 flex-grow-1">
+														<div class="fw-600 text-body">Apple Watch 5 Series</div>
+														<div class="fs-13px">5 minutes ago</div>
+													</div>
+												</div>
+											</td>
+											<td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Success</span></td>
+											<td class="text-end pe-0">$699.00</td>
+										</tr>
+										<tr>
+											<td class="ps-0">3.</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="w-40px h-40px rounded">
+														<img src="~/layout/misasset/visa.svg" alt="" class="ms-100 mh-100">
+													</div>
+													<div class="ms-3 flex-grow-1">
+														<div class="fw-600 text-body">iPhone 11 Pro Max</div>
+														<div class="fs-13px">12 minutes ago</div>
+													</div>
+												</div>
+											</td>
+											<td class="text-center"><span class="badge bg-warning bg-opacity-20 text-warning" style="min-width: 60px;">Pending</span></td>
+											<td class="text-end pe-0">$1,299.00</td>
+										</tr>
+										<tr>
+											<td class="ps-0">4.</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="w-40px h-40px rounded">
+														<img src="~/layout/misasset/paypal2.svg" alt="" class="ms-100 mh-100">
+													</div>
+													<div class="ms-3 flex-grow-1">
+														<div class="fw-600 text-body">Apple Magic Keyboard</div>
+														<div class="fs-13px">15 minutes ago</div>
+													</div>
+												</div>
+											</td>
+											<td class="text-center"><span class="badge text-body text-opacity-50 bg-dark bg-opacity-10" style="min-width: 60px;">Cancelled</span></td>
+											<td class="text-end pe-0">$199.00</td>
+										</tr>
+										<tr>
+											<td class="ps-0">5.</td>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="w-40px h-40px rounded">
+														<img src="~/layout/misasset/mastercard.svg" alt="" class="ms-100 mh-100">
+													</div>
+													<div class="ms-3 flex-grow-1">
+														<div class="fw-600 text-body">iPad Pro 15 inch</div>
+														<div class="fs-13px">15 minutes ago</div>
+													</div>
+												</div>
+											</td>
+											<td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Cancelled</span></td>
+											<td class="text-end pe-0">$1,099.00</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- END table-responsive -->
+						</div>
+						<!-- END card-body -->
+					</div>
+					<!-- END card -->
+				</div>
+				<!-- END col-6 -->
+			</div>
+			<!-- END row -->
+		</div>
+		<!-- END #content -->
+		<!-- BEGIN btn-scroll-top -->
+		<a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+		<!-- END btn-scroll-top -->
+		<!-- BEGIN theme-panel -->
+		<div class="theme-panel">
+			<a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
+			<div class="theme-panel-content">
+				<ul class="theme-list clearfix">
+					<li><a href="javascript:;" class="bg-red" data-theme="theme-red" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-pink" data-theme="theme-pink" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-orange" data-theme="theme-orange" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-yellow" data-theme="theme-yellow" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-lime" data-theme="theme-lime" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-green" data-theme="theme-green" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-teal" data-theme="theme-teal" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Teal" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-cyan" data-theme="theme-cyan" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Aqua" data-original-title="" title="">&nbsp;</a></li>
+					<li class="active"><a href="javascript:;" class="bg-blue" data-theme="" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Default" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-purple" data-theme="theme-purple" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-indigo" data-theme="theme-indigo" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo" data-original-title="" title="">&nbsp;</a></li>
+					<li><a href="javascript:;" class="bg-gray-600" data-theme="theme-gray-600" data-click="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Gray" data-original-title="" title="">&nbsp;</a></li>
+				</ul>
+				<hr class="mb-0">
+				<div class="row mt-10px pt-3px">
+					<div class="col-9 control-label text-body-emphasis fw-bold">
+						<div class="d-flex">Dark Mode <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px d-flex align-items-center">NEW</span></div>
+						<div class="lh-sm fs-13px fw-semibold">
+							<small class="text-body-emphasis opacity-50">
+								Adjust the appearance to reduce glare and give your eyes a break.
+							</small>
+						</div>
+					</div>
+					<div class="col-3 d-flex">
+						<div class="form-check form-switch ms-auto mb-0">
+							<input type="checkbox" class="form-check-input" name="app-theme-dark-mode" id="appThemeDarkMode" value="1">
+							<label class="form-check-label" for="appThemeDarkMode"></label>
+						</div>
+					</div>
+				</div>
+				<hr class="mb-0">
+				<div class="row mt-10px pt-3px">
+					<div class="col-9">
+						<div class="fw-bold text-body d-flex">
+							RTL Support <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px d-flex align-items-center">NEW</span>
+						</div>
+						<div class="lh-sm fs-13px fw-semibold">
+							<small class="text-body-emphasis opacity-50">Easily switch to right-to-left layout for Arabic, Hebrew, and other RTL languages.</small>
+						</div>
+					</div>
+					<div class="col-3 d-flex">
+						<div class="form-check form-switch ms-auto mb-0">
+							<input type="checkbox" class="form-check-input" name="app-theme-rtl-mode" id="appThemeRtl" value="1">
+							<label class="form-check-label" for="appThemeRtlMode"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END theme-panel -->
+
+		@RenderBody()
+	</div>
+	<!-- END #app -->
+	<!-- ================== BEGIN core-js ================== -->
+ 	<script src="~/layout/misasset/vendor.min.js" type="text/javascript"></script>
+	<script src="~/layout/misasset/app.min.js" type="text/javascript"></script>
+	<!-- ================== END core-js ================== -->
+	<!-- ================== BEGIN page-js ================== -->
+	<script src="~/layout/misasset/apexcharts.min.js" type="text/javascript"></script>
+	<script src="~/layout/misasset/dashboard.demo.js" type="text/javascript"></script>
+	<!-- ================== END page-js ================== -->
+	 
+	<partial name="~/Pages/Shared/Layouts/MIS/_MisScript.cshtml" />
+</body>
+</html>

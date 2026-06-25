@@ -1,0 +1,114 @@
+@page "{id?}"
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.KpiAssignModel
+@{
+    ViewData["Title"] = "Evaluate KPIs";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "Users";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>KPI Performance Evaluation</h3>
+            <p class="text-subtitle text-muted">Assign performance ratings and remarks for @Model.UserProfile.GetFullName().</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <button class="btn btn-outline-info btn-sm rounded-pill me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+            <a asp-page="/Dashboard/Detail" asp-route-id="@Model.UserProfile.Id" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <!-- Period Configuration Card -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form method="get">
+                <label class="form-label text-muted fw-semibold">Evaluation Period</label>
+                <div class="d-flex flex-column flex-md-row gap-3 mb-2">
+                    <div class="position-relative flex-grow-1">
+                        <i class="bi bi-calendar-event position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                        <input type="text" asp-for="Period" class="form-control ps-5" style="padding-left: 2.5rem !important;" placeholder="e.g. Q1 2026, Q2 2026, June 2026..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-arrow-repeat"></i> Change Period / Refresh Sheet
+                    </button>
+                </div>
+                <small class="text-muted fs-7">Tip: Submitting scores will create or update ratings for this specific period.</small>
+            </form>
+        </div>
+    </div>
+
+    <!-- Evaluation Scoresheet Card -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header border-bottom bg-transparent py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-dark">
+                <i class="bi bi-clipboard-check text-success me-1"></i> 
+                Scoresheet for Period: <span class="text-success">@Model.Period</span>
+            </h5>
+            <span class="badge bg-light-primary text-primary px-3 py-2">
+                User: @Model.UserProfile.GetFullName()
+            </span>
+        </div>
+        <div class="card-body py-4">
+            @if (Model.ScoreSheet.Count == 0)
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-exclamation-triangle fs-2 d-block mb-2"></i>
+                    No active KPI indicators are currently configured. 
+                    <a asp-page="/Dashboard/KpiSettings" class="btn btn-sm btn-primary ms-2">Configure Indicators First</a>
+                </div>
+            }
+            else
+            {
+                <form method="post">
+                    <!-- Maintain Period parameter -->
+                    <input type="hidden" name="Period" value="@Model.Period" />
+
+                    <div class="d-flex flex-column gap-4 mb-4">
+                        @for (int i = 0; i < Model.ScoreSheet.Count; i++)
+                        {
+                            <div class="p-3 border rounded bg-light-alt">
+                                <!-- Hidden Bindings -->
+                                <input type="hidden" asp-for="ScoreSheet[i].Id" />
+                                <input type="hidden" asp-for="ScoreSheet[i].ProfileId" />
+                                <input type="hidden" asp-for="ScoreSheet[i].Period" />
+                                <input type="hidden" asp-for="ScoreSheet[i].MisKpiIndicatorId" />
+                                <input type="hidden" asp-for="ScoreSheet[i].IndicatorTitle" />
+                                <input type="hidden" asp-for="ScoreSheet[i].MaxScore" />
+
+                                <div class="row align-items-center g-3">
+                                    <div class="col-12 col-md-5">
+                                        <h6 class="mb-1 text-dark fw-bold">@Model.ScoreSheet[i].IndicatorTitle</h6>
+                                        <span class="text-muted fs-7">Maximum possible score: <strong>@Model.ScoreSheet[i].MaxScore</strong></span>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label text-muted fs-7 mb-1">Score Given</label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="number" step="0.01" min="0" max="@Model.ScoreSheet[i].MaxScore" asp-for="ScoreSheet[i].Score" class="form-control fw-bold text-success text-center" style="width: 120px;" required />
+                                            <span class="ms-2 text-muted fw-bold">/ @Model.ScoreSheet[i].MaxScore</span>
+                                        </div>
+                                        <span asp-validation-for="ScoreSheet[i].Score" class="text-danger fs-7"></span>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label text-muted fs-7 mb-1">Remarks / Feedback</label>
+                                        <input type="text" asp-for="ScoreSheet[i].Remarks" class="form-control fs-7" placeholder="Add optional remarks..." />
+                                        <span asp-validation-for="ScoreSheet[i].Remarks" class="text-danger fs-7"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-check-circle-fill me-1"></i> Save Evaluations & Submit Ratings
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,447 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+@inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
+@{
+    var misSetting = _context.MisSettings.FirstOrDefault();
+    string categoryAlias = misSetting?.CategoryAlias ?? "Category";
+    string alumniAlias = misSetting?.AlumniAlias ?? "Alumni";
+
+    string activeMenu = ViewData["ActiveMenu"] as string ?? "";
+    string activeSubMenu = ViewData["ActiveSubMenu"] as string ?? "";
+
+    string GetActiveMenu(string menu) => activeMenu == menu ? "active" : "";
+    string GetActiveSubMenu(string subMenu) => activeSubMenu == subMenu ? "active" : "";
+    string GetSubMenuIcon(string subMenu) => activeSubMenu == subMenu ? "<i class=\"fa fa-play text-primary\" style=\"font-size: 10px; margin-right: 8px;\"></i>" : "";
+
+    var activeFeatures = _context.MisFeatures.Where(x => x.Status != JurayUniversal.Domain.Enum.Enum.FeatureBillingStatus.Disabled).Select(x => x.ModuleFolder).ToList();
+
+    async Task<bool> ShouldShow(string featureKey)
+    {
+        if (activeFeatures.Contains(featureKey))
+        {
+            return await MisAuth.HasAccessAsync(User, featureKey);
+        }
+        return false;
+    }
+
+    bool showUserMgmt = await ShouldShow("MisUserManagement");
+    bool showCommittees = await ShouldShow("MisGroups");
+    bool showAlumni = await ShouldShow("MisAlumni");
+    bool showReports = await ShouldShow("MisReports");
+    bool showForms = await ShouldShow("MisForms");
+    bool showSurveys = await ShouldShow("MisSurveys");
+    bool showManual = await ShouldShow("MisManual");
+    bool showDues = await ShouldShow("MisDues");
+    bool showTicketing = await ShouldShow("MisTicketing");
+    bool showDonations = await ShouldShow("MisDonations");
+    bool showGrants = await ShouldShow("MisGrants");
+    bool showRecruitment = await ShouldShow("MisRecruitment");
+    bool showVoting = await ShouldShow("MisVoting");
+    bool showAssets = await ShouldShow("MisAssets");
+    bool showProjects = await ShouldShow("MisProjects");
+    bool showChat = await ShouldShow("MisChat");
+    bool showMassComm = await ShouldShow("MisMassComm");
+    bool showAI = await ShouldShow("MisAI");
+    bool showHelpdesk = await ShouldShow("MisHelpdesk");
+    bool showWhistleblowing = await ShouldShow("MisWhistleblowing");
+    bool showDMS = await ShouldShow("MisDMS");
+    bool showLMS = await ShouldShow("MisLMS");
+    bool showVisitor = await ShouldShow("MisVisitorManagement");
+}
+<!-- CORE & ADMINISTRATION CATEGORY -->
+<div class="menu-header">Core & Administration</div>
+
+<div class="menu-item @(string.IsNullOrEmpty(activeMenu) || activeMenu == "ConsoleHome" ? "active" : "")">
+    <a href="/MIS/Dashboard/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-laptop text-primary"></i></span>
+        <span class="menu-text">Console Home</span>
+    </a>
+</div>
+
+<div class="menu-item @GetActiveMenu("MisSettings")">
+    <a href="/MisSetting/Dashboard/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-cogs text-primary"></i></span>
+        <span class="menu-text">MIS Settings</span>
+    </a>
+</div>
+
+@if (User.IsInRole("mSuperAdmin"))
+{
+    <div class="menu-item @GetActiveMenu("MisManagement")">
+        <a href="/MisManagement/Index" class="menu-link">
+            <span class="menu-icon"><i class="fa fa-layer-group text-primary"></i></span>
+            <span class="menu-text">Features & Billing Mgmt</span>
+        </a>
+    </div>
+}
+
+@if (showUserMgmt)
+{
+<div class="menu-item has-sub @GetActiveMenu("UserManagement")">
+    <a href="javascript:;" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-users text-primary"></i></span>
+        <span class="menu-text">User Directory & KPIs</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item @GetActiveSubMenu("Dashboard")">
+            <a href="/MisUserManagement/Dashboard/Index" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Dashboard"))
+                <span class="menu-text">User Management Hub</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("Categories")">
+            <a href="/MisUserManagement/Dashboard/Categories/Index" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Categories"))
+                <span class="menu-text">Manage @(categoryAlias)s</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("KpiSettings")">
+            <a href="/MisUserManagement/Dashboard/KpiSettings" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("KpiSettings"))
+                <span class="menu-text">KPI Setup & Parameters</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("KpiResults")">
+            <a href="/MisUserManagement/Dashboard/KpiResults" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("KpiResults"))
+                <span class="menu-text">KPI Ranks & Best Staff</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showCommittees)
+{
+<div class="menu-item @GetActiveMenu("MisGroups")">
+    <a href="/MisGroups/Dashboard/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-sitemap text-primary"></i></span>
+        <span class="menu-text">Committees & Groups</span>
+    </a>
+</div>
+}
+
+@if (showAlumni)
+{
+<div class="menu-item has-sub @GetActiveMenu("MisAlumni")">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-graduation-cap text-primary"></i></span>
+        <span class="menu-text">@alumniAlias Directory</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item @GetActiveSubMenu("Dashboard")">
+            <a href="/MisAlumni/Dashboard/Index" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Dashboard"))
+                <span class="menu-text">Overview Dashboard</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("List")">
+            <a href="/MisAlumni/Dashboard/List" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("List"))
+                <span class="menu-text">Manage @alumniAlias</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showReports || showSurveys || showManual)
+{
+<div class="menu-divider"></div>
+
+<!-- REPORTS & SURVEYS CATEGORY -->
+<div class="menu-header">Reports & Surveys</div>
+
+@if (showReports)
+{
+<div class="menu-item has-sub @GetActiveMenu("MisReports")">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-clock text-teal"></i></span>
+        <span class="menu-text">Interval Reports</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item @GetActiveSubMenu("Dashboard")">
+            <a href="/MisReports/Dashboard/Index" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Dashboard"))
+                <span class="menu-text">Analytics Dashboard</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("Schemas")">
+            <a href="/MisReports/Dashboard/Schemas/Index" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Schemas"))
+                <span class="menu-text">Manage Schemas</span>
+            </a>
+        </div>
+        <div class="menu-item @GetActiveSubMenu("Submissions")">
+            <a href="/MisReports/Dashboard/Submissions" class="menu-link">
+                @Html.Raw(GetSubMenuIcon("Submissions"))
+                <span class="menu-text">Submission Ledger</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showForms)
+{
+    <div class="menu-item @GetActiveMenu("MisForms")">
+        <a href="/MisForms/Dashboard/Index" class="menu-link">
+            <span class="menu-icon"><i class="bi bi-ui-checks fs-4 text-primary"></i></span>
+            <span class="menu-text">Form Builder & Surveys</span>
+        </a>
+    </div>
+}
+
+@if (showSurveys)
+{
+<div class="menu-item has-sub">
+    <a href="javascript:;" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-poll-h text-teal"></i></span>
+        <span class="menu-text">Custom Surveys & Forms</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item">
+            <a href="/MIS/FormBuilder" class="menu-link">
+                <span class="menu-text">Form Builder</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="/MIS/SurveyAnalytics" class="menu-link">
+                <span class="menu-text">Survey Analytics Reports</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showManual)
+{
+<div class="menu-item">
+    <a href="/MisUserManagement/Dashboard/UserManual" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-book-open text-teal"></i></span>
+        <span class="menu-text">Interactive User Manual</span>
+    </a>
+</div>
+}
+}
+
+@if (showDues || showTicketing || showDonations || showGrants)
+{
+<div class="menu-divider"></div>
+
+<!-- FINANCIALS & MONETIZATION CATEGORY -->
+<div class="menu-header">Financials & Monetization</div>
+
+@if (showDues)
+{
+<div class="menu-item">
+    <a href="/MIS/Dues" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-file-invoice-dollar text-warning"></i></span>
+        <span class="menu-text">Dues & Subscriptions</span>
+    </a>
+</div>
+}
+
+@if (showTicketing)
+{
+<div class="menu-item">
+    <a href="/MIS/Ticketing" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-ticket-alt text-warning"></i></span>
+        <span class="menu-text">Event & Ticket Engine</span>
+    </a>
+</div>
+}
+
+@if (showDonations)
+{
+<div class="menu-item">
+    <a href="/MIS/Donations" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-hand-holding-usd text-warning"></i></span>
+        <span class="menu-text">Contributions & Donations</span>
+    </a>
+</div>
+}
+
+@if (showGrants)
+{
+<div class="menu-item">
+    <a href="/MIS/Grants" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-briefcase text-warning"></i></span>
+        <span class="menu-text">Grant & Proposal Pipelines</span>
+    </a>
+</div>
+}
+}
+
+@if (showRecruitment || showVoting || showAssets || showProjects)
+{
+<div class="menu-divider"></div>
+
+<!-- OPERATIONS & WORKFLOW CATEGORY -->
+<div class="menu-header">Operations & Workflow</div>
+
+@if (showRecruitment)
+{
+<div class="menu-item">
+    <a href="/MIS/Recruitment" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-user-plus text-danger"></i></span>
+        <span class="menu-text">Recruitment & ATS</span>
+    </a>
+</div>
+}
+
+@if (showVoting)
+{
+<div class="menu-item">
+    <a href="/MIS/Voting" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-vote-yea text-danger"></i></span>
+        <span class="menu-text">Elections & E-Voting</span>
+    </a>
+</div>
+}
+
+@if (showAssets)
+{
+<div class="menu-item has-sub">
+    <a href="javascript:;" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-boxes text-danger"></i></span>
+        <span class="menu-text">Asset Trackers</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item">
+            <a href="/MIS/Assets" class="menu-link">
+                <span class="menu-text">Company Asset Ledger</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="/MIS/Fleet" class="menu-link">
+                <span class="menu-text">Fleet & Equipment Lifecycle</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showProjects)
+{
+<div class="menu-item">
+    <a href="/MIS/Projects" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-tasks text-danger"></i></span>
+        <span class="menu-text">Project & Task Boards</span>
+    </a>
+</div>
+}
+}
+
+@if (showChat || showMassComm || showAI || showHelpdesk || showWhistleblowing)
+{
+<div class="menu-divider"></div>
+
+<!-- COMMUNICATIONS & TECH INTEGRATIONS CATEGORY -->
+<div class="menu-header">Comms & Tech Integration</div>
+
+@if (showChat)
+{
+<div class="menu-item has-sub">
+    <a href="javascript:;" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-comments text-purple"></i></span>
+        <span class="menu-text">Chats & Channels</span>
+        <span class="menu-caret"><b class="caret"></b></span>
+    </a>
+    <div class="menu-submenu">
+        <div class="menu-item">
+            <a href="/MIS/DirectChat" class="menu-link">
+                <span class="menu-text">Direct Messages (1-on-1)</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="/MIS/GroupChat" class="menu-link">
+                <span class="menu-text">Team Group Channels</span>
+            </a>
+        </div>
+    </div>
+</div>
+}
+
+@if (showMassComm)
+{
+<div class="menu-item">
+    <a href="/MIS/MassComm" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-bullhorn text-purple"></i></span>
+        <span class="menu-text">Mass Broadcast (Email/SMS)</span>
+    </a>
+</div>
+}
+
+@if (showAI)
+{
+<div class="menu-item">
+    <a href="/MIS/AI" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-brain text-purple"></i></span>
+        <span class="menu-text">BYOK AI Studio</span>
+    </a>
+</div>
+}
+
+@if (showHelpdesk)
+{
+<div class="menu-item">
+    <a href="/MIS/Helpdesk" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-life-ring text-purple"></i></span>
+        <span class="menu-text">Helpdesk Support Tickets</span>
+    </a>
+</div>
+}
+
+@if (showWhistleblowing)
+{
+<div class="menu-item">
+    <a href="/MIS/Whistleblowing" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-user-secret text-purple"></i></span>
+        <span class="menu-text">Anonymous Whistleblowing</span>
+    </a>
+</div>
+}
+}
+
+@if (showDMS || showLMS || showVisitor)
+{
+<div class="menu-divider"></div>
+
+<!-- COMPLIANCE & GATE SECURITY CATEGORY -->
+<div class="menu-header">Compliance & Gate Security</div>
+
+@if (showDMS)
+{
+<div class="menu-item">
+    <a href="/MIS/DMS" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-folder-open text-info"></i></span>
+        <span class="menu-text">Document Vault (DMS)</span>
+    </a>
+</div>
+}
+
+@if (showLMS)
+{
+<div class="menu-item">
+    <a href="/MIS/LMS" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-university text-info"></i></span>
+        <span class="menu-text">Learning Portal (LMS)</span>
+    </a>
+</div>
+}
+
+@if (showVisitor)
+{
+<div class="menu-item">
+    <a href="/MIS/VisitorManagement" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-id-badge text-info"></i></span>
+        <span class="menu-text">Visitor & Gate Security</span>
+    </a>
+</div>
+}
+}

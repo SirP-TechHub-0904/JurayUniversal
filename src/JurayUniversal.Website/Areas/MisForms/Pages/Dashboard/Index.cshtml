@@ -1,0 +1,91 @@
+@page
+@model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Custom Forms & Surveys";
+}
+
+<div class="mis-page-header d-flex justify-content-between align-items-center">
+    <h3 class="mis-page-title mb-0">Custom Forms & Surveys</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-lg me-1"></i> Create New Form</a>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            @if (Model.Forms.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Form Title</th>
+                                <th>Status</th>
+                                <th>Short Link</th>
+                                <th>Responses</th>
+                                <th>Created</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var form in Model.Forms)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="fw-bold">@form.Title</div>
+                                        <div class="text-muted fs-8">@form.Description</div>
+                                    </td>
+                                    <td>
+                                        @if (form.IsPublished)
+                                        {
+                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill">Published</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">Draft</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (form.IsPublished)
+                                        {
+                                            <a href="~/f/@form.ShortCode" target="_blank" class="btn btn-sm btn-outline-info rounded-pill">
+                                                /f/@form.ShortCode <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fs-8">Not Published</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-page="./Responses" asp-route-id="@form.Id" class="badge bg-primary rounded-pill text-decoration-none px-3 py-2">
+                                            @form.Responses?.Count Responses
+                                        </a>
+                                    </td>
+                                    <td class="text-muted">
+                                        @form.CreatedAt.ToString("MMM dd, yyyy")
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <a asp-page="./Builder" asp-route-id="@form.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i> Builder</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-clipboard-data text-muted opacity-50 mb-3 d-block" style="font-size: 4rem;"></i>
+                    <h4 class="fw-bold text-muted">No Forms Created Yet</h4>
+                    <p class="text-muted">Use the Form Builder to create surveys, questionnaires, and data collection forms.</p>
+                    <a asp-page="./Create" class="btn btn-primary rounded-pill px-4 mt-3"><i class="bi bi-plus-lg me-1"></i> Create First Form</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

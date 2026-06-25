@@ -1,0 +1,100 @@
+@page
+@model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.DirectoryModel
+@{
+    ViewData["Title"] = Model.AlumniAlias + " Directory";
+    ViewData["ActiveMenu"] = "MisAlumni";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">@Model.AlumniAlias Directory</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Network</a>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <!-- Search Bar -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+            <form method="get" class="row g-3">
+                <div class="col-md-7">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                        <input asp-for="SearchQuery" class="form-control border-start-0" placeholder="Search by name, profession, or company..." />
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-center">
+                    <div class="form-check form-switch ms-md-3">
+                        <input asp-for="MentorsOnly" class="form-check-input" type="checkbox" role="switch" onchange="this.form.submit()">
+                        <label asp-for="MentorsOnly" class="form-check-label fw-bold">Mentors Only</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Directory Grid -->
+    <div class="row g-4">
+        @foreach (var profile in Model.Profiles)
+        {
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="card border-0 shadow-sm rounded-4 h-100 position-relative overflow-hidden">
+                    @if (profile.IsAvailableForMentorship)
+                    {
+                        <div class="position-absolute top-0 end-0 bg-success text-white px-3 py-1 fw-bold fs-9 rounded-bottom-start shadow-sm" style="z-index:10;">Mentor</div>
+                    }
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mt-2" style="width: 80px; height: 80px;">
+                            <span class="fw-bold fs-2">@profile.UserProfile?.FirstName?.Substring(0, 1)</span>
+                        </div>
+                        <h5 class="fw-bold mb-1">@profile.UserProfile?.FirstName @profile.UserProfile?.LastName</h5>
+                        <p class="text-muted fs-8 mb-2">Class of @profile.ExitYear</p>
+                        
+                        <div class="mb-3">
+                            <div class="fw-medium text-dark">@profile.CurrentProfession</div>
+                            <div class="text-muted fs-8">@profile.Company</div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(profile.Bio))
+                        {
+                            <p class="text-muted fs-8 fst-italic mb-3" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                "@profile.Bio"
+                            </p>
+                        }
+
+                        <div class="mt-auto">
+                            @if (!string.IsNullOrEmpty(profile.LinkedInUrl))
+                            {
+                                <a href="@profile.LinkedInUrl" target="_blank" class="btn btn-outline-primary rounded-pill w-100 mb-2"><i class="bi bi-linkedin me-1"></i> Connect on LinkedIn</a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-light rounded-pill w-100 mb-2 disabled" disabled>No LinkedIn Provded</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        
+        @if (!Model.Profiles.Any())
+        {
+            <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-4 py-5 text-center">
+                    <i class="bi bi-search text-muted fs-1 mb-3 d-block"></i>
+                    <h5 class="fw-bold text-muted">No @Model.AlumniAlias found matching your search.</h5>
+                    @if (!string.IsNullOrEmpty(Model.SearchQuery) || Model.MentorsOnly)
+                    {
+                        <a asp-page="./Directory" class="btn btn-link mt-2">Clear Filters</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

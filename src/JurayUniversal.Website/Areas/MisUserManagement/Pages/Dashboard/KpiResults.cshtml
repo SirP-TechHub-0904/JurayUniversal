@@ -1,0 +1,159 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.KpiResultsModel
+@{
+    ViewData["Title"] = "KPI Leaderboard";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "KpiResults";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>KPI Performance Leaderboard</h3>
+            <p class="text-subtitle text-muted">View ranked user performances across evaluation periods.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <!-- Period Selector Card -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form method="get" class="row align-items-end g-3" id="periodForm">
+                <div class="col-12 col-md-9">
+                    <label class="form-label text-muted fw-semibold">Select Evaluation Period</label>
+                    <select asp-for="SelectedPeriod" class="form-select" onchange="document.getElementById('periodForm').submit();">
+                        @if (Model.Periods.Count == 0)
+                        {
+                            <option value="">No evaluation periods recorded yet</option>
+                        }
+                        else
+                        {
+                            @foreach (var period in Model.Periods)
+                            {
+                                <option value="@period">@period</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-arrow-repeat"></i> Load Leaderboard
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Leaderboard Results Card -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header border-bottom bg-transparent py-3">
+            <h5 class="mb-0 text-dark">
+                <i class="bi bi-trophy text-warning me-1"></i> 
+                Rankings for Period: <span class="text-primary">@(Model.SelectedPeriod ?? "None")</span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="px-4 py-3 text-center" style="width: 80px;">Rank</th>
+                            <th class="py-3">User</th>
+                            <th class="py-3 text-center">Score Ratio</th>
+                            <th class="py-3 text-center">Percentage</th>
+                            <th class="px-4 py-3 text-end" style="width: 150px;">Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Leaderboard.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    <i class="bi bi-trophy fs-2 d-block mb-2"></i>
+                                    No evaluations have been submitted for this period yet.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var rank in Model.Leaderboard)
+                            {
+                                <tr>
+                                    <td class="px-4 py-3 text-center">
+                                        @if (rank.Rank == 1)
+                                        {
+                                            <span class="badge bg-warning text-dark border border-warning shadow-sm rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 35px; height: 35px; font-weight: 900;">
+                                                <i class="bi bi-trophy-fill fs-6"></i>
+                                            </span>
+                                        }
+                                        else if (rank.Rank == 2)
+                                        {
+                                            <span class="badge bg-light-secondary text-dark border border-secondary shadow-sm rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 35px; height: 35px; font-weight: 900; background-color: #e2e8f0 !important;">
+                                                2
+                                            </span>
+                                        }
+                                        else if (rank.Rank == 3)
+                                        {
+                                            <span class="badge bg-light-danger text-dark border border-danger shadow-sm rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 35px; height: 35px; font-weight: 900; background-color: #fed7aa !important; border-color: #f97316 !important; color: #ea580c !important;">
+                                                3
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fw-bold">@rank.Rank</span>
+                                        }
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="d-flex align-items-center">
+                                            @if (!string.IsNullOrEmpty(rank.PassportUrl))
+                                            {
+                                                <img src="@rank.PassportUrl" class="rounded-circle border border-2" style="width: 40px; height: 40px; object-fit: cover;" alt="Avatar">
+                                            }
+                                            else
+                                            {
+                                                <div class="rounded-circle bg-light-primary text-primary d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                                    @((string.IsNullOrWhiteSpace(rank.FullName) ? "?" : rank.FullName[0].ToString()))
+                                                </div>
+                                            }
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 text-dark fw-bold">@rank.FullName</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-center fw-semibold text-dark">
+                                        @rank.TotalScore <span class="text-muted">/ @rank.MaxPossibleScore</span>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        @if (rank.Percentage >= 75)
+                                        {
+                                            <span class="badge bg-success px-3 py-2 rounded-pill">@rank.Percentage%</span>
+                                        }
+                                        else if (rank.Percentage >= 50)
+                                        {
+                                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">@rank.Percentage%</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger px-3 py-2 rounded-pill">@rank.Percentage%</span>
+                                        }
+                                    </td>
+                                    <td class="px-4 py-3 text-end">
+                                        <a asp-page="/Dashboard/Detail" asp-route-id="@rank.ProfileId" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            View Profile
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

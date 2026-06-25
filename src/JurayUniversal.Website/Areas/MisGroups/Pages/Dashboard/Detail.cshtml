@@ -1,0 +1,133 @@
+@page
+@model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.DetailModel
+@inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
+@{
+    ViewData["Title"] = "Manage " + Model.GroupAlias;
+    ViewData["ActiveMenu"] = "MisGroups";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">Manage @Model.GroupAlias: @Model.MisGroup.Title</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./List" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4">
+    <div class="row g-4">
+        <!-- Members List -->
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 pb-0">
+                    <h5 class="fw-bold"><i class="bi bi-people me-2 text-primary"></i>Members & Invites</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Members)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width:40px; height:40px;">
+                                                    <strong>@(item.UserProfile?.FirstName?.Substring(0, 1))</strong>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold">@item.UserProfile?.FirstName @item.UserProfile?.LastName</div>
+                                                    <div class="text-muted fs-7">@item.UserProfile?.Email</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>@item.RolePosition</td>
+                                        <td>
+                                            @if (item.MembershipStatus == "Active")
+                                            {
+                                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Active</span>
+                                            }
+                                            else if (item.MembershipStatus == "Pending")
+                                            {
+                                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">Invite Pending</span>
+                                            }
+                                        </td>
+                                        <td>@item.DateJoined.ToString("MMM dd, yyyy")</td>
+                                        <td class="text-end">
+                                            @if (await MisAuth.CanEditAsync(User, "MisGroups"))
+                                            {
+                                                <form method="post" asp-page-handler="Remove" asp-route-memberId="@item.Id" asp-route-id="@Model.MisGroup.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to remove this member?');">
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">Remove</button>
+                                                </form>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.Members.Any())
+                                {
+                                    <tr><td colspan="5" class="text-center text-muted py-4">No members or pending invites.</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invite Panel -->
+        <div class="col-md-4">
+            <div class="card mis-card shadow-sm border-0 mb-4">
+                <div class="card-body mis-card-body">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-link-45deg text-primary me-2"></i> Shareable Invite Link</h6>
+                    <div class="input-group input-group-sm">
+                        <input type="text" id="inviteLinkInput" class="form-control bg-light" value="@Url.Page("/Platform/Join", null, new { area = "MisGroups", code = Model.MisGroup.Id }, Request.Scheme)" readonly />
+                        <button class="btn btn-outline-primary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('inviteLinkInput').value); alert('Copied to clipboard!')"><i class="bi bi-clipboard"></i> Copy</button>
+                    </div>
+                    <div class="form-text fs-8 text-muted mt-1">Anyone with this link can request to join this group.</div>
+                </div>
+            </div>
+
+            <div class="card mis-card shadow-sm border-0">
+                <div class="card-body mis-card-body">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-person-plus text-success me-2"></i> Send Direct Invite</h6>
+                </div>
+                <div class="card-body">
+                    @if (await MisAuth.CanEditAsync(User, "MisGroups"))
+                    {
+                        <form method="post" asp-page-handler="Invite" asp-route-id="@Model.MisGroup.Id">
+                            <div class="mb-3">
+                                <label class="form-label fw-600">Select User</label>
+                                <select asp-for="SelectedUserId" class="form-select form-select-lg" required>
+                                    <option value="">-- Choose User --</option>
+                                    @foreach (var u in Model.AvailableUsers)
+                                    {
+                                        <option value="@u.Id">@u.FirstName @u.LastName (@u.Email)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-600">Assign Role</label>
+                                <input asp-for="RolePosition" class="form-control form-control-lg" placeholder="e.g. Member, Secretary, Chairman" />
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill"><i class="bi bi-send me-2"></i>Send Invitation</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">You do not have permission to invite members.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

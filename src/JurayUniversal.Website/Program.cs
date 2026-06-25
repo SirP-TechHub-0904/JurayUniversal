@@ -22,6 +22,8 @@ using JurayUniversal.Application.Repository.DomainServices;
 using System.Web.Mvc;
 using JurayUniversal.Application.Services;
 using PostmarkEmailService;
+using JurayUniversal.Application.Repository.MIS.UserManagement;
+using JurayUniversal.Application.Repository.MIS.UserManagement;
 
 namespace JurayUniversal.Website
 {
@@ -42,7 +44,10 @@ namespace JurayUniversal.Website
                         .AddEntityFrameworkStores<DashboardDbContext>()
                         .AddDefaultTokenProviders();
 
-            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages().AddMvcOptions(options =>
+            {
+                options.Filters.Add(typeof(JurayUniversal.Website.Filters.MisFeatureAccessFilter));
+            });
             //builder.Services.addser();
             builder.Services.AddTransient<IStorageService, StorageService>();
             builder.Services.AddTransient<INotifyRegisterService, NotifyRegisterService>();
@@ -59,6 +64,10 @@ namespace JurayUniversal.Website
             builder.Services.AddTransient<IDomainRepository, DomainRepository>();
             builder.Services.AddTransient<IEmailSendService, EmailSendService>();
             builder.Services.AddTransient<ISmsSendService, SmsSendService>();
+
+            // --- MIS Feature Repositories ---
+            builder.Services.AddScoped<JurayUniversal.Website.Services.IMisAuthorizationService, JurayUniversal.Website.Services.MisAuthorizationService>();
+            builder.Services.AddTransient<IMisUserManagementRepository, MisUserManagementRepository>();
             builder.Services.AddSingleton<IServiceProvider>(provider => provider);
             // Add registration for LoggerLibrary
  
@@ -69,15 +78,26 @@ namespace JurayUniversal.Website
                 return new LoggerLibrary(wwwRootPath);
             });
 
-            //builder.Services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("MaxUserPolicy", policy =>
-            //    {
-            //        //policy.Requirements.Add(new MaxUserRequirement(builder.Services.BuildServiceProvider().GetRequiredService<ISettingsService>().GetMaxUserCount().Result));
-            //    });
-            //});
+            builder.Services.AddAuthorization(options =>
+            {
+                // User Management
+                options.AddPolicy("MisUserManagementViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisUserManagement", "GlobalViewer")));
+                options.AddPolicy("MisUserManagementEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisUserManagement", "GlobalEditor")));
+                
+                // Groups
+                options.AddPolicy("MisGroupsViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisGroups", "GlobalViewer")));
+                options.AddPolicy("MisGroupsEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisGroups", "GlobalEditor")));
+                
+                // Alumni
+                options.AddPolicy("MisAlumniViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisAlumni", "GlobalViewer")));
+                options.AddPolicy("MisAlumniEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisAlumni", "GlobalEditor")));
+                
+                // Reports
+                options.AddPolicy("MisReportsViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisReports", "GlobalViewer")));
+                options.AddPolicy("MisReportsEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisReports", "GlobalEditor")));
+            });
 
-            //builder.Services.AddTransient<IAuthorizationHandler, MaxUserHandler>();
+            builder.Services.AddTransient<IAuthorizationHandler, JurayUniversal.Website.Filters.MisAuthorizationHandler>();
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -131,6 +151,7 @@ namespace JurayUniversal.Website
             app.UseStaticFiles();
             app.UseTenantScopeMiddleware();
             //app.UseTokenMiddleware();
+            
             app.UseRouting();
 
             app.UseAuthentication();
