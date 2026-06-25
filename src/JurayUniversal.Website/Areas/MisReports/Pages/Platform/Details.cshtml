@@ -1,0 +1,168 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisReports.Pages.Platform.DetailsModel
+@{
+    ViewData["Title"] = "Report Details";
+    ViewData["ActiveMenu"] = "MisReports";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>Report Details: @Model.Submission.MisReportSchema?.Name</h3>
+            <p class="text-subtitle text-muted">Submitted on @Model.Submission.SubmittedAt.ToString("g")</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+            @if (Model.CanEdit)
+            {
+                <a asp-page="./Edit" asp-route-id="@Model.Submission.Id" class="btn btn-warning rounded-pill px-4 me-2">
+                    <i class="bi bi-pencil-square"></i> Edit Report
+                </a>
+            }
+            <button class="btn btn-outline-info rounded-pill px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-white border rounded-3 shadow-xs">
+                                <span class="fs-8 fw-semibold text-muted d-block uppercase">Submission Status</span>
+                                @if (Model.Submission.Status == "OnTime")
+                                {
+                                    <span class="badge bg-success rounded-pill px-3 py-2 mt-1"><i class="bi bi-check-circle me-1"></i> On-Time</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2 mt-1"><i class="bi bi-exclamation-triangle me-1"></i> Late</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-white border rounded-3 shadow-xs">
+                                <span class="fs-8 fw-semibold text-muted d-block uppercase">Submission Period</span>
+                                <span class="fw-bold mt-1 d-block text-primary">@Model.Submission.PeriodDate.ToString("MMMM dd, yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Submission.MisReportSchema?.RequireTimeLog == true && Model.Submission.TimeLogs.Any())
+                    {
+                        <div class="mb-5">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i> Hourly Time Log</h5>
+                            <div class="table-responsive bg-white rounded-3 border">
+                                <table class="table table-hover table-borderless align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th width="20%" class="ps-4">Time Window</th>
+                                            <th width="80%" class="pe-4">Activity Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var log in Model.Submission.TimeLogs.OrderBy(l => l.StartTime))
+                                        {
+                                            var displayStart = Model.Submission.MisReportSchema.Use24HourFormat ? log.StartTime.ToString(@"hh\:mm") : DateTime.Today.Add(log.StartTime).ToString("hh:mm tt");
+                                            var displayEnd = Model.Submission.MisReportSchema.Use24HourFormat ? log.EndTime.ToString(@"hh\:mm") : DateTime.Today.Add(log.EndTime).ToString("hh:mm tt");
+                                            
+                                            <tr class="border-bottom @(log.ActivityDescription == "Official Break Time" ? "bg-light" : "")">
+                                                <td class="ps-4 fw-bold text-muted">@displayStart - @displayEnd</td>
+                                                <td class="pe-4">
+                                                    @if (log.ActivityDescription == "Official Break Time")
+                                                    {
+                                                        <span class="text-muted fw-bold"><i class="bi bi-cup-hot me-2 text-danger"></i> @log.ActivityDescription</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @log.ActivityDescription
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-card-text me-2 text-primary"></i> General Report Content</label>
+                        <div class="bg-white p-4 rounded-3 border">
+                            @Html.Raw(Model.Submission.Content.Replace("\n", "<br/>"))
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        @if (Model.Submission.MisReportSchema?.RequireAchievements == true)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold text-success"><i class="bi bi-trophy me-1"></i> Achievements & Impact</label>
+                                    <div class="bg-white p-4 rounded-3 border border-success border-opacity-25" style="min-height: 120px;">
+                                        @Html.Raw(Model.Submission.Achievements?.Replace("\n", "<br/>") ?? "<span class='text-muted'>None</span>")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Submission.MisReportSchema?.RequireChallenges == true)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold text-danger"><i class="bi bi-exclamation-triangle me-1"></i> Issues & Challenges</label>
+                                    <div class="bg-white p-4 rounded-3 border border-danger border-opacity-25" style="min-height: 120px;">
+                                        @Html.Raw(Model.Submission.Challenges?.Replace("\n", "<br/>") ?? "<span class='text-muted'>None</span>")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Submission.MisReportSchema?.RequireNextDayPlan == true)
+                        {
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold text-primary"><i class="bi bi-calendar-check me-1"></i> Plans for Next Period</label>
+                                    <div class="bg-white p-4 rounded-3 border border-primary border-opacity-25" style="min-height: 90px;">
+                                        @Html.Raw(Model.Submission.PlansForNextPeriod?.Replace("\n", "<br/>") ?? "<span class='text-muted'>None</span>")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Submission.AttachmentUrl))
+                    {
+                        <div class="form-group mb-5">
+                            <label class="form-label fw-bold"><i class="bi bi-paperclip me-2 text-primary"></i> Attachment</label>
+                            <div class="mt-2">
+                                <a href="@Model.Submission.AttachmentUrl" target="_blank" class="btn btn-outline-primary rounded-pill px-4">
+                                    <i class="bi bi-download me-2"></i> Download Submitted File
+                                </a>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Submission.ManagerComment))
+                    {
+                        <div class="form-group mt-5">
+                            <label class="form-label fw-bold text-warning"><i class="bi bi-chat-left-quote me-2"></i> Manager Feedback</label>
+                            <div class="bg-warning bg-opacity-10 text-dark p-4 rounded-3 border border-warning">
+                                <span class="fst-italic">"@Html.Raw(Model.Submission.ManagerComment.Replace("\n", "<br/>"))"</span>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />

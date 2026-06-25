@@ -1,0 +1,120 @@
+@page
+@using JurayUniversal.Domain.Enum
+@model JurayUniversal.Website.Areas.MisManagement.Pages.CreateModel
+@{
+    ViewData["Title"] = "Add New Feature";
+    ViewData["ActiveMenu"] = "MisManagement";
+}
+
+<div class="page-heading mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="mb-1"><i class="bi bi-plus-square me-2"></i> Configure New Feature</h3>
+            <p class="text-muted">Register a feature module and define its billing parameters.</p>
+        </div>
+        <a asp-page="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <form method="post">
+                <div class="row g-4">
+                    <div class="col-12 mb-2">
+                        <label class="form-label fw-bold text-primary">Predefined Feature Wizard (Optional)</label>
+                        <select id="predefinedFeature" class="form-select border-primary bg-primary bg-opacity-10">
+                            <option value="">-- Custom / Type Manually --</option>
+                            <option value="MisUserManagement" data-name="User Management" data-desc="Manage user directory, categories, and KPIs.">User Management</option>
+                            <option value="MisGroups" data-name="Committees & Groups" data-desc="Manage committees and working groups.">Committees & Groups</option>
+                            <option value="MisAlumni" data-name="Alumni Network Portal" data-desc="Alumni network and portal management.">Alumni Network Portal</option>
+                            <option value="MisReports" data-name="Dynamic Interval Reports" data-desc="Create and schedule dynamic interval reports.">Dynamic Interval Reports</option>
+                            <option value="MisSurveys" data-name="Custom Surveys & Forms" data-desc="Form builder and survey analytics.">Custom Surveys & Forms</option>
+                            <option value="MisManual" data-name="Interactive User Manual" data-desc="Platform interactive user manual.">Interactive User Manual</option>
+                            <option value="MisDues" data-name="Dues & Subscriptions" data-desc="Manage platform dues and member subscriptions.">Dues & Subscriptions</option>
+                            <option value="MisTicketing" data-name="Event & Ticket Engine" data-desc="Event management and ticket engine.">Event & Ticket Engine</option>
+                            <option value="MisDonations" data-name="Contributions & Donations" data-desc="Manage contributions and donations.">Contributions & Donations</option>
+                            <option value="MisGrants" data-name="Grant & Proposal Pipelines" data-desc="Grant applications and proposal pipelines.">Grant & Proposal Pipelines</option>
+                            <option value="MisRecruitment" data-name="Recruitment & ATS" data-desc="Job applications and applicant tracking.">Recruitment & ATS</option>
+                            <option value="MisVoting" data-name="Elections & E-Voting" data-desc="Platform elections and e-voting system.">Elections & E-Voting</option>
+                            <option value="MisAssets" data-name="Asset Trackers" data-desc="Company asset ledger and fleet management.">Asset Trackers</option>
+                            <option value="MisProjects" data-name="Project & Task Boards" data-desc="Project and task boards.">Project & Task Boards</option>
+                            <option value="MisChat" data-name="Chats & Channels" data-desc="Direct messaging and team group channels.">Chats & Channels</option>
+                            <option value="MisMassComm" data-name="Mass Broadcast (Email/SMS)" data-desc="Mass broadcast via email and SMS.">Mass Broadcast (Email/SMS)</option>
+                            <option value="MisAI" data-name="BYOK AI Studio" data-desc="Bring your own key AI studio.">BYOK AI Studio</option>
+                            <option value="MisHelpdesk" data-name="Helpdesk Support Tickets" data-desc="Helpdesk support ticketing system.">Helpdesk Support Tickets</option>
+                            <option value="MisWhistleblowing" data-name="Anonymous Whistleblowing" data-desc="Anonymous whistleblowing.">Anonymous Whistleblowing</option>
+                            <option value="MisDMS" data-name="Document Vault (DMS)" data-desc="Document management system and vault.">Document Vault (DMS)</option>
+                            <option value="MisLMS" data-name="Learning Portal (LMS)" data-desc="Learning management system portal.">Learning Portal (LMS)</option>
+                            <option value="MisVisitorManagement" data-name="Visitor & Gate Security" data-desc="Visitor management and gate security.">Visitor & Gate Security</option>
+                        </select>
+                        <small class="text-muted">Select a standard module to autofill the details below, or type your own custom details.</small>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="MisFeature.FeatureName" class="form-label fw-bold"></label>
+                        <input asp-for="MisFeature.FeatureName" class="form-control" placeholder="e.g. User Management" />
+                        <span asp-validation-for="MisFeature.FeatureName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="MisFeature.ModuleFolder" class="form-label fw-bold"></label>
+                        <input asp-for="MisFeature.ModuleFolder" class="form-control" placeholder="e.g. MisUserManagement" />
+                        <span asp-validation-for="MisFeature.ModuleFolder" class="text-danger"></span>
+                        <small class="text-muted">The exact route path that will be intercepted.</small>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="MisFeature.Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="MisFeature.Description" class="form-control" rows="2" placeholder="Brief explanation of this feature"></textarea>
+                    </div>
+
+                    <h5 class="mt-5 mb-2 text-primary border-bottom pb-2">Billing & Pricing Plan</h5>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.BillingDuration" class="form-label fw-bold"></label>
+                        <select asp-for="MisFeature.BillingDuration" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.FeatureBillingDuration>()"></select>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.CostPerDuration" class="form-label fw-bold"></label>
+                        <div class="input-group">
+                            <span class="input-group-text">&#8358;</span>
+                            <input asp-for="MisFeature.CostPerDuration" class="form-control" type="number" step="0.01" />
+                        </div>
+                        <span asp-validation-for="MisFeature.CostPerDuration" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.GracePeriodDays" class="form-label fw-bold"></label>
+                        <div class="input-group">
+                            <input asp-for="MisFeature.GracePeriodDays" class="form-control" type="number" />
+                            <span class="input-group-text">Days</span>
+                        </div>
+                        <small class="text-muted">Days allowed after expiry before suspending.</small>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-5"><i class="bi bi-save me-1"></i> Register Feature Config</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#predefinedFeature').change(function () {
+                var selected = $(this).find('option:selected');
+                if (selected.val()) {
+                    $('#MisFeature_ModuleFolder').val(selected.val());
+                    $('#MisFeature_FeatureName').val(selected.data('name'));
+                    $('#MisFeature_Description').val(selected.data('desc'));
+                }
+            });
+        });
+    </script>
+}

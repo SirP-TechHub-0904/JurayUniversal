@@ -1,0 +1,27 @@
+@page
+@model JurayUniversal.Website.Areas.MisManagement.Pages.SuspendedFeatureModel
+@{
+    ViewData["Title"] = "Service Suspended";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml"; // Show in user layout, not admin layout
+}
+
+<div class="d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 500px;">
+        <div class="card-body text-center p-5">
+            <div class="mb-4">
+                <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 4rem;"></i>
+            </div>
+            <h2 class="fw-bold mb-3">Service Suspended</h2>
+            <p class="text-muted fs-5 mb-4">
+                Access to <strong>@Model.FeatureName</strong> has been suspended due to an overdue billing cycle.
+            </p>
+            <div class="alert alert-danger bg-opacity-10 py-3 mb-4 text-start">
+                <h6 class="fw-bold text-danger mb-1"><i class="bi bi-receipt me-1"></i> Payment Required</h6>
+                <span class="text-dark fs-7">Please contact the system administrator to clear the pending invoice and restore access to this module.</span>
+            </div>
+            <a asp-area="MIS" asp-page="/Platform/Index" class="btn btn-primary rounded-pill px-4 py-2 fw-bold w-100 shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i> Return to Dashboard
+            </a>
+        </div>
+    </div>
+</div>

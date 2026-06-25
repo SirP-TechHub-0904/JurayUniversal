@@ -1,0 +1,152 @@
+@page
+@model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.SubmissionsModel
+@{
+    ViewData["Title"] = "Master Ledger";
+    ViewData["ActiveMenu"] = "MisReports";
+    ViewData["ActiveSubMenu"] = "Submissions";
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">Submission Master Ledger</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills mb-4" id="ledgerTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active rounded-pill px-4" id="received-tab" data-bs-toggle="tab" data-bs-target="#received" type="button" role="tab" aria-controls="received" aria-selected="true">
+                <i class="bi bi-file-earmark-check me-2"></i>Received Submissions (@Model.Submissions.Count)
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link text-danger rounded-pill px-4 ms-md-2" id="missed-tab" data-bs-toggle="tab" data-bs-target="#missed" type="button" role="tab" aria-controls="missed" aria-selected="false">
+                <i class="bi bi-exclamation-octagon me-2"></i>Missed Reports (@Model.MissedReports.Count)
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="ledgerTabsContent">
+        <!-- Received Submissions Tab -->
+        <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">Date/Time</th>
+                                    <th>Report Type</th>
+                                    <th>Staff Member</th>
+                                    <th>Period For</th>
+                                    <th>Status</th>
+                                    <th class="pe-4 text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Submissions)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-medium">@item.SubmittedAt.ToString("MMM dd, yyyy HH:mm")</td>
+                                        <td><span class="fw-bold">@item.MisReportSchema?.Name</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                                                    <span class="fw-bold fs-7">@item.UserProfile?.FirstName?.Substring(0, 1)</span>
+                                                </div>
+                                                <span>@item.UserProfile?.FirstName @item.UserProfile?.LastName</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-secondary bg-opacity-10 text-secondary">@item.PeriodDate.ToString("MMM dd, yyyy")</span></td>
+                                        <td>
+                                            @if (item.Status == "OnTime")
+                                            {
+                                                <span class="badge bg-success rounded-pill px-3"><i class="bi bi-check-circle me-1"></i> On-Time</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark rounded-pill px-3"><i class="bi bi-exclamation-triangle me-1"></i> Late</span>
+                                            }
+                                        </td>
+                                        <td class="pe-4 text-end">
+                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-light btn-sm rounded-circle text-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.Submissions.Any())
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="bi bi-folder2-open text-muted fs-1 mb-3 d-block"></i>
+                                            <h6 class="fw-bold text-muted">No reports submitted yet.</h6>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Missed Reports Tab -->
+        <div class="tab-pane fade" id="missed" role="tabpanel" aria-labelledby="missed-tab">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">Missed Date</th>
+                                    <th>Report Type</th>
+                                    <th>Staff Member</th>
+                                    <th>Deadline Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MissedReports)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-medium text-danger">@item.Date.ToString("MMM dd, yyyy")</td>
+                                        <td><span class="fw-bold">@item.SchemaName</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                                                    <span class="fw-bold fs-7">@item.UserFullName?.Substring(0, 1)</span>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-bold d-block text-dark">@item.UserFullName</span>
+                                                    <span class="text-muted small">@item.UserEmail</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-danger bg-opacity-10 text-danger">@item.Deadline.ToString("h:mm tt")</span></td>
+                                        <td>
+                                            <span class="badge bg-danger rounded-pill px-3"><i class="bi bi-x-circle me-1"></i> Missed</span>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.MissedReports.Any())
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5">
+                                            <i class="bi bi-check-circle-fill text-success fs-1 mb-3 d-block"></i>
+                                            <h6 class="fw-bold text-success">Excellent Compliance!</h6>
+                                            <p class="text-muted mb-0">No missed reports in the last 14 days.</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

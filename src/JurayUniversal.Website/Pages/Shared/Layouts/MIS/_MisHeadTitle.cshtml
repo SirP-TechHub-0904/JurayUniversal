@@ -1,0 +1,14 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+
+@{
+    var superSetting = _context.SuperSettings.FirstOrDefault();
+    string title = ViewData["Title"]?.ToString();
+    string uppercaseTitle = title?.ToUpper();
+    var isUserPlatform = Context.Request.Path.Value?.Contains("/Platform/", StringComparison.OrdinalIgnoreCase) == true;
+    string category = isUserPlatform ? "PLATFORM" : "DASHBOARD";
+}
+
+<title id="page-title-j">@uppercaseTitle | @category | @(superSetting?.CompanyName)</title>
+<link rel="shortcut icon" href="@(superSetting?.CompanyIconUrl)" type="image/x-icon" />
+<meta name="description" content="@(superSetting?.CompanyDescription ?? "")">
+<meta name="author" content="@(superSetting?.CompanyName ?? "")">

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.Management.Pages.V3.EditModel
 
 @{
@@ -72,6 +72,11 @@
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="SuperSetting.UserNipssArea" /> @Html.DisplayNameFor(model => model.SuperSetting.UserNipssArea)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SuperSetting.UseNewMISDashboard" /> @Html.DisplayNameFor(model => model.SuperSetting.UseNewMISDashboard)
                 </label>
             </div>
 

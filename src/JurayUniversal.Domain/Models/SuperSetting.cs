@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -59,6 +59,9 @@ namespace JurayUniversal.Domain.Models
         [Display(Name = "Company Logo")]
         public string? CompanyLogoUrl { get; set; }
         public string? CompanyLogoKey { get; set; }
+
+        [Display(Name = "Use New MIS Dashboard")]
+        public bool UseNewMISDashboard { get; set; }
 
         [Display(Name = "Company White Logo")]
         public string? CompanyWhiteLogoUrl { get; set; }

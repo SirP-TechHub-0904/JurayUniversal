@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 using static JurayUniversal.Domain.Enum.Enum;
 using Microsoft.EntityFrameworkCore;
 using JurayUniversal.Domain.Models;
+using JurayUniversal.Persistence.EF.SQL;
 
 namespace JurayUniversal.Application.Repository.NotifyRegister
 {
     public class NotifyRegisterService : INotifyRegisterService
     {
-        private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
+        private readonly DashboardDbContext _context;
 
-        public NotifyRegisterService(JurayUniversal.Persistence.EF.SQL.DashboardDbContext context)
+        public NotifyRegisterService(DashboardDbContext context)
         {
             _context = context;
         }

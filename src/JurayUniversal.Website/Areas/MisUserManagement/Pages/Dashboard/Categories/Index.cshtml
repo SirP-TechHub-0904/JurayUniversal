@@ -1,0 +1,120 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.IndexModel
+@{
+    ViewData["Title"] = Model.CategoryAlias + " Management";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "Categories";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">@Model.CategoryAlias Directory</h3>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+        @if (await MisAuth.CanEditAsync(User, "MisUserManagement"))
+        {
+            <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> Add New @Model.CategoryAlias</a>
+        }
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <!-- Filter Card -->
+    <div class="card mis-card mis-filter-card">
+        <div class="card-body mis-card-body">
+            @Html.AntiForgeryToken()
+            <form method="get" class="row gx-4 gy-3 align-items-end" id="filterForm">
+                <div class="col-12 col-md-4">
+                    <label class="mis-filter-label">Search @Model.CategoryAlias</label>
+                    <input type="text" id="SearchString" name="SearchString" class="form-control mis-search-input" placeholder="Search by title or description...">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Category Directory List Card -->
+    <div class="card mis-card mis-table-card">
+        <div class="card-body mis-card-body">
+            <div class="table-responsive">
+                <table id="categoryDirectoryTable" class="table table-borderless align-middle w-100 m-0">
+                    <thead>
+                        <tr>
+                            <th class="mis-table-th" style="width: 50px;">s/n</th>
+                            <th class="mis-table-th">title <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                            <th class="mis-table-th">description <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                            <th class="mis-table-th">publish <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                            <th class="mis-table-th">show in menu <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                            <th class="mis-table-th">show in dashboard <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                            <th class="text-center mis-table-th" style="width: 100px;">action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border-top: 0;">
+                        <!-- Data will be populated by DataTables -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- DataTables Bootstrap 5 dependencies -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#categoryDirectoryTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "responsive": false,
+                "ajax": {
+                    "url": "?handler=Data",
+                    "type": "POST",
+                    "headers": {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    "data": function (d) {
+                        d.SearchString = $('#SearchString').val();
+                    }
+                },
+                "columns": [
+                    { "data": "sn", "className": "text-muted", "orderable": false, "searchable": false },
+                    { "data": "title" },
+                    { "data": "description" },
+                    { "data": "publish", "orderable": false },
+                    { "data": "showinmenu", "orderable": false },
+                    { "data": "showindashboard", "orderable": false },
+                    { "data": "manage", "className": "text-center", "orderable": false, "searchable": false }
+                ],
+                "order": [[1, "asc"]],
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pageLength": 10,
+                "language": {
+                    "search": "",
+                    "searchPlaceholder": "Search...",
+                    "lengthMenu": "_MENU_ per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "paginate": {
+                        "previous": "<i class='bi bi-chevron-left'></i>",
+                        "next": "<i class='bi bi-chevron-right'></i>"
+                    }
+                }
+            });
+
+            let searchTimeout = null;
+            $('#SearchString').on('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(function() {
+                    table.ajax.reload();
+                }, 400);
+            });
+
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault(); 
+            });
+        });
+    </script>
+}

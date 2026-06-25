@@ -1,0 +1,10 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+
+@{
+    var superSetting = _context.SuperSettings.FirstOrDefault();
+}
+@if (superSetting != null && !string.IsNullOrEmpty(superSetting.CompanyLogoUrl))
+{
+    <img src="@superSetting.CompanyLogoUrl" class="invert-dark" alt="Logo" height="20" style="max-height: 20px; object-fit: contain;">
+}
+

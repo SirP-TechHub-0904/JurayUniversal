@@ -1,0 +1,82 @@
+@page
+@model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.ListModel
+@{
+    ViewData["Title"] = Model.GroupAlias + " Directory";
+    ViewData["ActiveMenu"] = "MisGroups";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">@Model.GroupAlias Directory</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+        @if (await MisAuth.CanEditAsync(User, "MisGroups"))
+        {
+            <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> Add New @Model.GroupAlias</a>
+        }
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card mis-card shadow-sm border-0">
+        <div class="card-body mis-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mis-table mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MisGroups)
+                        {
+                            <tr>
+                                <td class="fw-bold">@item.Title</td>
+                                <td>
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    }
+                                </td>
+                                <td>@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                <td class="text-end">
+                                    <div class="btn-group">
+                                        <a asp-page="./Detail" asp-route-id="@item.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="btn btn-sm btn-outline-primary" title="Manage Members">
+                                            <i class="bi bi-people"></i> Manage
+                                        </a>
+                                        @if (await MisAuth.CanEditAsync(User, "MisGroups"))
+                                        {
+                                            <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        
+                        @if (!Model.MisGroups.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                    No @Model.GroupAlias.ToLower()s found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+@page
+@model JurayUniversal.Website.Areas.MisReports.Pages.Platform.IndexModel
+@{
+    ViewData["Title"] = "My Reports";
+    ViewData["ActiveMenu"] = "MisReports";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">My Reports Dashboard</h3>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    
+    <!-- Enrolled Workspaces Section -->
+    <div class="row g-4 mb-5">
+        <div class="col-12">
+            <h5 class="fw-bold mb-4"><i class="bi bi-journal-check me-2 text-primary"></i> My Reporting Workspaces</h5>
+            @if (Model.EnrolledSchemas.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var schema in Model.EnrolledSchemas)
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card shadow-sm border-0 rounded-4 border-start border-4 @(
+                                schema.TodayStatus == "Pending" ? "border-warning" :
+                                schema.TodayStatus == "Missed" ? "border-danger" :
+                                schema.TodayStatus.StartsWith("Submitted") ? "border-success" : "border-secondary")">
+                                <div class="card-body p-4 d-flex flex-column h-100" style="min-height: 220px;">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="fw-bold text-dark mb-0">@schema.Name</h6>
+                                        <span class="badge bg-light text-dark border rounded-pill px-2 small">@schema.Frequency</span>
+                                    </div>
+                                    <p class="text-muted fs-8 mb-4 flex-grow-1 text-truncate-2">@schema.Description</p>
+                                    
+                                    <div class="mt-auto border-top pt-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div>
+                                                <span class="fs-8 fw-semibold text-muted d-block">Today's Status</span>
+                                                @if (schema.TodayStatus == "Pending")
+                                                {
+                                                    <span class="badge bg-warning text-dark rounded-pill px-2.5 py-1 small">
+                                                        <i class="bi bi-clock me-1"></i> Due Today
+                                                    </span>
+                                                }
+                                                else if (schema.TodayStatus == "Missed")
+                                                {
+                                                    <span class="badge bg-danger rounded-pill px-2.5 py-1 small">
+                                                        <i class="bi bi-x-circle me-1"></i> Missed
+                                                    </span>
+                                                }
+                                                else if (schema.TodayStatus == "Submitted (On-Time)")
+                                                {
+                                                    <span class="badge bg-success rounded-pill px-2.5 py-1 small">
+                                                        <i class="bi bi-check-circle me-1"></i> On-Time
+                                                    </span>
+                                                }
+                                                else if (schema.TodayStatus == "Submitted (Late)")
+                                                {
+                                                    <span class="badge bg-warning text-dark rounded-pill px-2.5 py-1 small">
+                                                        <i class="bi bi-exclamation-triangle me-1"></i> Late
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary rounded-pill px-2.5 py-1 small">
+                                                        <i class="bi bi-calendar-event me-1"></i> Not Due
+                                                    </span>
+                                                }
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="fs-8 fw-semibold text-muted d-block">Deadline</span>
+                                                <span class="fw-bold text-dark">@DateTime.Today.Add(schema.DeadlineTime).ToString("h:mm tt")</span>
+                                            </div>
+                                        </div>
+                                        <a asp-page="./SchemaDetails" asp-route-schemaId="@schema.SchemaId" class="btn btn-primary w-100 rounded-pill py-2">
+                                            <i class="bi bi-folder2-open me-2"></i> Open Workspace
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-5 text-center">
+                        <i class="bi bi-journals text-muted fs-1 mb-3 d-block"></i>
+                        <h5 class="fw-bold">No Reporting Schedules Enrolled</h5>
+                        <p class="text-muted mb-0">You are not currently enrolled in any reporting schedules. Please contact administration.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Recent Actual Activity Feed -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-0">
+                    <div class="p-4 border-bottom">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-clock-history me-2 text-primary"></i> My Recent Activity Feed</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">Submitted Date/Time</th>
+                                    <th>Report Name</th>
+                                    <th>Period Date</th>
+                                    <th>Status</th>
+                                    <th class="pe-4 text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MyRecentSubmissions)
+                                {
+                                    <tr>
+                                        <td class="ps-4">@item.SubmittedAt.ToString("MMM dd, yyyy HH:mm")</td>
+                                        <td class="fw-bold">@item.MisReportSchema?.Name</td>
+                                        <td>@item.PeriodDate.ToString("MMM dd, yyyy")</td>
+                                        <td>
+                                            @if (item.Status == "OnTime")
+                                            {
+                                                <span class="badge bg-success rounded-pill px-3"><i class="bi bi-check-circle me-1"></i> On-Time</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark rounded-pill px-3"><i class="bi bi-exclamation-triangle me-1"></i> Late</span>
+                                            }
+                                        </td>
+                                        <td class="pe-4 text-end">
+                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-light btn-sm rounded-circle text-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.MyRecentSubmissions.Any())
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5 text-muted">
+                                            <i class="bi bi-inbox fs-2 mb-2 d-block opacity-50"></i>
+                                            No recent submission history found.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

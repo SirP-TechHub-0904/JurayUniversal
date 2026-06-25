@@ -1,0 +1,12 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+
+@{
+    var dataConfig = _context.DataConfigs.FirstOrDefault();
+}
+
+@if (dataConfig != null && !string.IsNullOrEmpty(dataConfig.MisDashboardCSS))
+{
+    <style>
+        @Html.Raw(dataConfig.MisDashboardCSS)
+    </style>
+}

@@ -1,0 +1,118 @@
+@page
+@model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.BuilderModel
+@{
+    ViewData["Title"] = "Form Builder - " + Model.Form.Title;
+}
+
+<style>
+    /* formBuilder basic overrides to match bootstrap 5 */
+    .form-wrap.form-builder .frmb .form-elements {
+        background: #f8f9fa !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.5rem;
+    }
+    .form-wrap.form-builder .cb-wrap {
+        border-radius: 0.5rem;
+    }
+</style>
+
+<div class="mis-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h3 class="mis-page-title mb-0">Builder: @Model.Form.Title</h3>
+        <span class="text-muted fs-8">/f/@Model.Form.ShortCode</span>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back</a>
+        
+        <form method="post" asp-page-handler="TogglePublish" asp-route-id="@Model.Form.Id" class="d-inline">
+            @if (Model.Form.IsPublished)
+            {
+                <button type="submit" class="btn btn-warning btn-sm rounded-pill"><i class="bi bi-eye-slash me-1"></i> Unpublish Form</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-success btn-sm rounded-pill"><i class="bi bi-globe me-1"></i> Publish Publicly</button>
+            }
+        </form>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card border-0 rounded-4 mb-4 shadow" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)); backdrop-filter: blur(10px);">
+        <div class="card-body p-4 p-md-5">
+            <div class="alert rounded-3 border-0 shadow-sm d-flex align-items-center mb-5" style="background: linear-gradient(90deg, rgba(13,110,253,0.1), rgba(13,110,253,0.05)); border-left: 5px solid #0d6efd !important;">
+                <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+                <div>
+                    <h6 class="fw-bold mb-1">Drag and Drop Builder</h6>
+                    <p class="mb-0 fs-8">Drag fields from the right panel into the canvas area. Click on a field to edit its label and placeholder. Ensure you click the <strong>Save Form Layout</strong> button below when finished.</p>
+                </div>
+            </div>
+
+            <div id="fb-editor"></div>
+            
+            <div class="mt-4 text-end">
+                <button id="save-builder-btn" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"><i class="bi bi-save me-1"></i> Save Form Layout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <!-- formBuilder requires jQuery UI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var schemaData = '@Html.Raw(Model.Form.SchemaJson)';
+            var parsedData = [];
+            try {
+                if (schemaData && schemaData !== '[]') {
+                    parsedData = JSON.parse(schemaData);
+                }
+            } catch (e) {
+                console.error("Failed to parse existing schema", e);
+            }
+
+            var options = {
+                disabledActionButtons: ['data', 'save', 'clear'],
+                defaultFields: parsedData,
+                disableFields: ['hidden', 'button', 'autocomplete'],
+                controlPosition: 'left'
+            };
+
+            var formBuilder = $('#fb-editor').formBuilder(options);
+
+            $('#save-builder-btn').click(function() {
+                var $btn = $(this);
+                var originalText = $btn.html();
+                $btn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...');
+                $btn.prop('disabled', true);
+
+                var jsonResult = formBuilder.actions.getData('json');
+
+                $.ajax({
+                    url: '?handler=UpdateSchema&id=@Model.Form.Id',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ SchemaJson: jsonResult }),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (result) {
+                        toastr.success('Form layout saved successfully!');
+                        $btn.html(originalText);
+                        $btn.prop('disabled', false);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error('Failed to save form layout. Please try again.');
+                        $btn.html(originalText);
+                        $btn.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+}

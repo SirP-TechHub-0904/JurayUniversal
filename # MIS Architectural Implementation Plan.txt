@@ -1,0 +1,77 @@
+# MIS Architectural Implementation Plan
+
+This document outlines the architectural blueprint for your universal SaaS platform. It addresses the Role-Based Access Control (RBAC) hierarchy, handles how users toggle between their "User" and "Admin" views, details the new UI Partial strategy, and explains the Universal Administration application setup.
+
+## 1. Role-Based Access Control (RBAC) Hierarchy
+
+The system will use a strict, three-tier identity architecture to separate global configuration from daily operations and end-user actions.
+
+### Tier 1: System Administration (The Master App)
+*   **Who they are:** You (the platform owner).
+*   **What they do:** Manage the connection strings for all tenant databases, set global subscription prices for features, and force-activate or suspend entire tenant websites.
+*   **Where they work:** In a completely separate ASP.NET Core project (e.g., `JurayUniversal.SystemAdmin`).
+
+### Tier 2: Superadmin (The Tenant Owner)
+*   **Who they are:** The primary owner of a specific tenant's database (e.g., the Head Pastor, the NGO Director).
+*   **What they do:** They possess the `Global Admin` role. They buy subscriptions, select the website theme, and assign Feature Roles (like "Elections") to their staff members.
+*   **Where they work:** In the `JurayUniversal.Website` project, specifically within high-level setting pages.
+
+### Tier 3: Admin / Staff / Users (The Operators & Public)
+*   **Who they are:** Regular staff members or community members.
+*   **What they do:** Their access is entirely dictated by the **Feature Matrix** we discussed earlier. 
+    *   If they have no roles, they are a basic **User** (can only pay their own dues, vote, edit their own profile).
+    *   If they are assigned `[Ticketing, Editor]`, they become an **Admin** but *only* within the Ticketing Area.
+
+---
+
+## 2. Context Switching (Solving the "User vs Admin" dilemma)
+
+> [!IMPORTANT]
+> You asked: *"If I am a user who also has an admin role, how do I manage my personal user activities versus my admin activities?"*
+
+We will solve this using a **Context Switch (Portal Toggle)**.
+
+If a person is just a basic user, they log in and are immediately taken to their **User Portal**.
+However, if a user has *any* Feature Role assigned to them (e.g., they are the Ticketing Manager), they will have a toggle button at the top right of their screen (next to their profile picture) that says: **"Switch to Admin View" / "Switch to User View"**.
+
+*   **User View:** The dashboard shows their personal information. "My Tickets", "My Paid Dues", "My Job Applications." The navigation menu hides all management tools.
+*   **Admin View:** When they click the toggle, the UI changes. The sidebar populates with the specific features they manage (e.g., the Ticketing management dashboard). They are now acting on behalf of the organization.
+
+This keeps the system clean and prevents them from accidentally modifying global data when they just wanted to update their own profile picture.
+
+---
+
+## 3. The UI Strategy: Partials vs. ViewComponents
+
+> [!TIP]
+> You requested: *"I would love to make use of import so a single cshtml file and do import instead of component for this mis."*
+
+This is a great, lightweight approach. Instead of creating massive ViewComponents with complex C# backing classes, we will rely heavily on ASP.NET Core **Partial Views**.
+
+*   **How it works:** We will create a `Pages/Shared/Partials/` folder. Inside, we will store modular UI blocks (e.g., `_TicketCard.cshtml`, `_ElectionChart.cshtml`, `_DailyReportTable.cshtml`).
+*   **Implementation:** Inside your main Area dashboards, instead of calling `@await Component.InvokeAsync("...")`, we will simply use the modern Tag Helper: 
+    ```html
+    <partial name="Partials/_TicketCard" model="Model.TicketData" />
+    ```
+*   **Benefit:** This is much faster to develop. It relies directly on the PageModel (`.cshtml.cs`) of the page you are currently viewing to supply the data, rather than requiring a separate database call inside a ViewComponent class.
+
+---
+
+## 4. Universal Administration Setup
+
+To create the separate master application without duplicating code:
+
+1.  **Create New Project:** Add a new ASP.NET Core Web App (MVC or Razor Pages) to the solution named `JurayUniversal.SystemAdmin`.
+2.  **Add References:** Right-click the new project -> Add Project Reference -> Select `JurayUniversal.Domain`, `JurayUniversal.Application`, and `JurayUniversal.Infrastructure`.
+3.  **The Registry Database:** We will create a small, central database for the SystemAdmin app. Its only job is to store a table called `TenantRegistries` which contains columns for `TenantName`, `DomainUrl`, and `DbConnectionString`.
+4.  **The Loop:** The SystemAdmin dashboard will loop through `TenantRegistries`. For each row, it will dynamically inject the `DbConnectionString` into your `DashboardDbContext` from the Infrastructure layer to pull live stats from that tenant's database.
+
+---
+
+## Open Questions for You
+
+Before we proceed to execution, please review and answer the following:
+
+1.  **Context Toggle:** Are you happy with the "Switch to Admin View" toggle button concept for users who hold management roles?
+2.  **Partial Views:** Do you want to migrate existing UI pieces to Partial Views immediately, or only use Partials for the *new* MIS features going forward?
+3.  **Database Strategy:** Are you ready to create the `JurayUniversal.SystemAdmin` project now, or should we focus on building out the first MIS Feature Area (like Elections or Ticketing) in the main website first?

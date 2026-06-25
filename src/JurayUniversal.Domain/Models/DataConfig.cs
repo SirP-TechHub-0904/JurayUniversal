@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,6 +27,12 @@ namespace JurayUniversal.Domain.Models
 
         [Display(Name = "Dashboard CSS")]
         public string? DashboardCSS { get; set; }
+
+        [Display(Name = "MIS Dashboard CSS")]
+        public string? MisDashboardCSS { get; set; }
+
+        [Display(Name = "MIS Layout Javascript")]
+        public string? MisLayoutJavaScript { get; set; }
 
         [Display(Name = "Redirect To https//www.")]
         public bool RedirectTohttpswww { get; set; }

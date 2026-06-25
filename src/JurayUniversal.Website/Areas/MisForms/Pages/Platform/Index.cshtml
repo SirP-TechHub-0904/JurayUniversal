@@ -1,0 +1,58 @@
+@page
+@model JurayUniversal.Website.Areas.MisForms.Pages.Platform.IndexModel
+@{
+    ViewData["Title"] = "Available Forms";
+    ViewData["ActiveMenu"] = "MisForms";
+}
+
+<div class="page-heading mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3 class="fw-bold mb-1">Available Forms</h3>
+            <p class="text-muted fs-7 mb-0">Select a form below to fill it out and submit your response.</p>
+        </div>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4 rounded-4 shadow-sm" style="min-height: 80vh;">
+    <div class="row g-4">
+        @if (Model.Forms.Any())
+        {
+            @foreach (var form in Model.Forms)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                        <div class="position-absolute top-0 start-0 w-100 bg-primary opacity-25" style="height: 6px;"></div>
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-ui-checks-grid text-primary fs-4"></i>
+                                </div>
+                                <h5 class="fw-bold mb-0 text-dark">@form.Title</h5>
+                            </div>
+                            
+                            <p class="text-muted fs-7 mb-4 flex-grow-1">@form.Description</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="badge bg-light text-muted border px-2 py-1"><i class="bi bi-clock me-1"></i> @form.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                <a asp-page="./Submit" asp-route-id="@form.Id" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                                    Fill Form <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3" style="width: 80px; height: 80px;">
+                    <i class="bi bi-inbox text-muted fs-1"></i>
+                </div>
+                <h5 class="fw-bold text-muted">No Available Forms</h5>
+                <p class="text-muted">There are currently no active forms available for you to fill out.</p>
+            </div>
+        }
+    </div>
+</div>

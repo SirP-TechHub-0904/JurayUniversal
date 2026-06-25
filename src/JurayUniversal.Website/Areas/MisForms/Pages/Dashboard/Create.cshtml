@@ -1,0 +1,56 @@
+@page
+@model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.CreateModel
+@{
+    ViewData["Title"] = "Create New Form";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">Create New Form</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Forms</a>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.Title" class="form-label fw-bold"></label>
+                            <input asp-for="Input.Title" class="form-control form-control-lg bg-light" placeholder="e.g. End of Year Staff Survey" />
+                            <span asp-validation-for="Input.Title" class="text-danger fs-8"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.Description" class="form-label fw-bold"></label>
+                            <textarea asp-for="Input.Description" class="form-control bg-light" rows="3" placeholder="Briefly describe the purpose of this form..."></textarea>
+                            <span asp-validation-for="Input.Description" class="text-danger fs-8"></span>
+                        </div>
+
+                        <div class="mb-5 bg-light p-4 rounded-3 border">
+                            <div class="form-check form-switch d-flex align-items-center gap-3">
+                                <input asp-for="Input.RequireLogin" class="form-check-input" type="checkbox" role="switch" style="width: 3rem; height: 1.5rem;" />
+                                <div>
+                                    <label asp-for="Input.RequireLogin" class="form-check-label fw-bold d-block">Require User Login</label>
+                                    <small class="text-muted">If checked, only logged-in users can fill out this form. If unchecked, it will be fully public.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">Create & Continue to Builder <i class="bi bi-arrow-right ms-1"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

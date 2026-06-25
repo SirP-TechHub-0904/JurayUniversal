@@ -1,0 +1,68 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisForms.Pages.Platform.SubmitModel
+@{
+    ViewData["Title"] = Model.Form.Title;
+    ViewData["ActiveMenu"] = "MisForms";
+}
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="mb-5 text-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                            <i class="bi bi-journal-text text-primary fs-3"></i>
+                        </div>
+                        <h2 class="fw-bold mb-2">@Model.Form.Title</h2>
+                        <p class="text-muted fs-6">@Model.Form.Description</p>
+                    </div>
+
+                    <form method="post" id="dynamicForm">
+                        <input type="hidden" asp-for="ResponsesJson" id="ResponsesJson" />
+                        
+                        <div id="fb-render" class="mb-4"></div>
+
+                        <div class="text-center mt-5">
+                            <button type="button" id="submitBtn" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-bold">
+                                <i class="bi bi-send me-2"></i> Submit Form
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://formbuilder.online/assets/js/form-render.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var schemaData = '@Html.Raw(Model.Form.SchemaJson)';
+            var parsedData = [];
+            try {
+                if (schemaData && schemaData !== '[]') {
+                    parsedData = JSON.parse(schemaData);
+                }
+            } catch (e) {
+                console.error("Failed to parse schema", e);
+            }
+
+            var formRenderInstance = $('#fb-render').formRender({
+                formData: parsedData
+            });
+
+            $('#submitBtn').click(function() {
+                var userData = formRenderInstance.userData;
+                $('#ResponsesJson').val(JSON.stringify(userData));
+                $('#dynamicForm').submit();
+            });
+        });
+    </script>
+}

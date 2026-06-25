@@ -1,0 +1,158 @@
+@page "{schemaId:long}"
+@model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SubmitModel
+@{
+    ViewData["Title"] = "Submit Report";
+    ViewData["ActiveMenu"] = "MisReports";
+}
+
+<div class="page-heading">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>Submit Report: @Model.Schema.Name</h3>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">Cancel</a>
+            <button class="btn btn-outline-info rounded-pill px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+                <i class="bi bi-question-circle me-1"></i> Help & Guide
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-5">
+                    
+                    <div class="alert alert-info border-0 rounded-3 mb-4 d-flex">
+                        <i class="bi bi-info-circle-fill fs-4 me-3 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Instructions</h6>
+                            <p class="mb-0 fs-7">@Model.Schema.Description</p>
+                            <hr />
+                            <small class="fw-bold">Deadline: @DateTime.Today.Add(Model.Schema.DeadlineTime).ToString("h:mm tt") today.</small>
+                        </div>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="SchemaId" />
+                        
+                        @if (Model.Schema.RequireTimeLog && Model.TimeLogs.Any())
+                        {
+                            <div class="form-group mb-5">
+                                <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i> Hourly Time Log</h5>
+                                <div class="table-responsive bg-white rounded-3 border">
+                                    <table class="table table-hover table-borderless align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th width="15%" class="ps-4">Start Time</th>
+                                                <th width="15%">End Time</th>
+                                                <th width="70%" class="pe-4">Activity Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < Model.TimeLogs.Count; i++)
+                                            {
+                                                var slot = Model.TimeLogs[i];
+                                                var displayStart = Model.Schema.Use24HourFormat ? slot.StartTime.ToString(@"hh\:mm") : DateTime.Today.Add(slot.StartTime).ToString("hh:mm tt");
+                                                var displayEnd = Model.Schema.Use24HourFormat ? slot.EndTime.ToString(@"hh\:mm") : DateTime.Today.Add(slot.EndTime).ToString("hh:mm tt");
+                                                
+                                                if (slot.IsBreak)
+                                                {
+                                                    <tr class="border-bottom bg-light">
+                                                        <td class="ps-4 fw-bold text-muted">@displayStart</td>
+                                                        <td class="fw-bold text-muted">@displayEnd</td>
+                                                        <td class="pe-4 pb-3">
+                                                            <input type="hidden" asp-for="TimeLogs[i].StartTime" />
+                                                            <input type="hidden" asp-for="TimeLogs[i].EndTime" />
+                                                            <input type="hidden" asp-for="TimeLogs[i].IsBreak" />
+                                                            <div class="alert alert-secondary mt-2 mb-0 py-2 text-center text-muted fw-bold border-0">
+                                                                <i class="bi bi-cup-hot me-2"></i> Official Break Time
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr class="border-bottom">
+                                                        <td class="ps-4 fw-bold text-muted">@displayStart</td>
+                                                        <td class="fw-bold text-muted">@displayEnd</td>
+                                                        <td class="pe-4 pb-3">
+                                                            <input type="hidden" asp-for="TimeLogs[i].StartTime" />
+                                                            <input type="hidden" asp-for="TimeLogs[i].EndTime" />
+                                                            <input type="hidden" asp-for="TimeLogs[i].IsBreak" />
+                                                            <textarea asp-for="TimeLogs[i].ActivityDescription" class="form-control form-control-sm mt-2" rows="2" placeholder="What did you do during this time?" required></textarea>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Submission.Content" class="form-label fw-bold">General Report Content</label>
+                            <textarea asp-for="Submission.Content" class="form-control bg-light" rows="6" placeholder="Write the main body of your report here..." required></textarea>
+                            <span asp-validation-for="Submission.Content" class="text-danger"></span>
+                        </div>
+
+                        <div class="row g-4 mb-4">
+                            @if (Model.Schema.RequireAchievements)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Submission.Achievements" class="form-label fw-bold text-success"><i class="bi bi-trophy me-1"></i> Achievements & Impact</label>
+                                        <textarea asp-for="Submission.Achievements" class="form-control border-success border-opacity-25" rows="4" placeholder="List any achievements or impact made..." required></textarea>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.Schema.RequireChallenges)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Submission.Challenges" class="form-label fw-bold text-danger"><i class="bi bi-exclamation-triangle me-1"></i> Issues & Challenges</label>
+                                        <textarea asp-for="Submission.Challenges" class="form-control border-danger border-opacity-25" rows="4" placeholder="List any issues faced..." required></textarea>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.Schema.RequireNextDayPlan)
+                            {
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label asp-for="Submission.PlansForNextPeriod" class="form-label fw-bold text-primary"><i class="bi bi-calendar-check me-1"></i> Plans for Next Period</label>
+                                        <textarea asp-for="Submission.PlansForNextPeriod" class="form-control border-primary border-opacity-25" rows="3" placeholder="What are your goals for the next period?" required></textarea>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Model.Schema.RequireFileUpload)
+                        {
+                            <div class="form-group mb-4">
+                                <label class="form-label fw-bold">Attachment <span class="text-danger">*</span></label>
+                                <input type="file" name="attachmentFile" class="form-control" required />
+                                <small class="text-muted">A file attachment is required for this report.</small>
+                            </div>
+                        }
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5">
+                                <i class="bi bi-send me-2"></i> Submit Report
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

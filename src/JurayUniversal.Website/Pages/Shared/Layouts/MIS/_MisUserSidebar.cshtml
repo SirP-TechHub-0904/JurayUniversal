@@ -1,0 +1,251 @@
+@using JurayUniversal.Persistence.EF.SQL
+@using JurayUniversal.Domain.Enum
+@inject DashboardDbContext _context
+@{
+    var currentPath = ViewContext.HttpContext.Request.Path.Value?.ToLower() ?? "";
+    var activeFeatures = _context.MisFeatures.Where(x => x.Status != JurayUniversal.Domain.Enum.Enum.FeatureBillingStatus.Disabled).Select(x => x.ModuleFolder).ToList();
+    var settings = _context.MisSettings.FirstOrDefault();
+    string groupAlias = settings?.GroupAlias ?? "Committees & Groups";
+    string alumniAlias = settings?.AlumniAlias ?? "Alumni";
+
+    bool showUserMgmt = activeFeatures.Contains("MisUserManagement");
+    bool showCommittees = activeFeatures.Contains("MisGroups");
+    bool showAlumni = activeFeatures.Contains("MisAlumni");
+    bool showReports = activeFeatures.Contains("MisReports");
+    bool showSurveys = activeFeatures.Contains("MisSurveys");
+    bool showManual = activeFeatures.Contains("MisManual");
+    bool showDues = activeFeatures.Contains("MisDues");
+    bool showTicketing = activeFeatures.Contains("MisTicketing");
+    bool showDonations = activeFeatures.Contains("MisDonations");
+    bool showRecruitment = activeFeatures.Contains("MisRecruitment");
+    bool showVoting = activeFeatures.Contains("MisVoting");
+    bool showAssets = activeFeatures.Contains("MisAssets");
+    bool showProjects = activeFeatures.Contains("MisProjects");
+    bool showChat = activeFeatures.Contains("MisChat");
+    bool showHelpdesk = activeFeatures.Contains("MisHelpdesk");
+}
+
+<div class="menu-header">Core & User Space</div>
+
+<div class="menu-item @(currentPath.EndsWith("/misusermanagement/platform/index") || currentPath.EndsWith("/misusermanagement/platform") ? "active" : "")">
+    <a asp-area="MisUserManagement" asp-page="/Platform/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-laptop"></i></span>
+        <span class="menu-text">Platform Home</span>
+    </a>
+</div>
+
+@if (showUserMgmt)
+{
+    <div class="menu-item has-sub @(currentPath.Contains("/platform/my") ? "active" : "")">
+        <a href="#" class="menu-link">
+            <span class="menu-icon"><i class="fa fa-user-circle"></i></span>
+            <span class="menu-text">My Profile & KPIs</span>
+            <span class="menu-caret"><b class="caret"></b></span>
+        </a>
+        <div class="menu-submenu">
+            <div class="menu-item @(currentPath.Contains("/platform/myprofile") ? "active" : "")">
+                <a asp-area="MisUserManagement" asp-page="/Platform/MyProfile" class="menu-link">
+                    <span class="menu-text">My Details</span>
+                </a>
+            </div>
+            <div class="menu-item @(currentPath.Contains("/platform/mykpis") ? "active" : "")">
+                <a asp-area="MisUserManagement" asp-page="/Platform/MyKpis" class="menu-link">
+                    <span class="menu-text">My KPI Scores</span>
+                </a>
+            </div>
+            <div class="menu-item @(currentPath.Contains("/platform/myroles") ? "active" : "")">
+                <a asp-area="MisUserManagement" asp-page="/Platform/MyRoles" class="menu-link">
+                    <span class="menu-text">My Access Roles</span>
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (showCommittees)
+{
+<div class="menu-item @(currentPath.Contains("/misgroups/platform") ? "active" : "")">
+    <a href="/MisGroups/Platform/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-users"></i></span>
+        <span class="menu-text">@groupAlias Directory</span>
+    </a>
+</div>
+}
+
+@if (showAlumni)
+{
+<div class="menu-item @(currentPath.Contains("/misalumni") ? "active" : "")">
+    <a href="/MisAlumni/Platform/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-graduation-cap"></i></span>
+        <span class="menu-text">@alumniAlias Network</span>
+    </a>
+</div>
+}
+
+@if (showReports || showSurveys || showManual)
+{
+<div class="menu-divider"></div>
+
+<div class="menu-header">Reports & Surveys</div>
+
+@if (showReports)
+{
+<div class="menu-item @(currentPath.Contains("/misreports") ? "active" : "")">
+    <a href="/MisReports/Platform/Index" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-clock text-teal"></i></span>
+        <span class="menu-text">My Interval Reports</span>
+    </a>
+</div>
+}
+
+@if (showSurveys)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-clipboard-list"></i></span>
+        <span class="menu-text">Take Surveys & Forms</span>
+    </a>
+</div>
+}
+
+@if (showManual)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-book"></i></span>
+        <span class="menu-text">Interactive User Manual</span>
+    </a>
+</div>
+}
+}
+
+@if (showDues || showTicketing || showDonations)
+{
+<div class="menu-divider"></div>
+
+<div class="menu-header">Financials & Monetization</div>
+
+@if (showDues)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-file-invoice-dollar"></i></span>
+        <span class="menu-text">Pay Dues & Subscriptions</span>
+    </a>
+</div>
+}
+
+@if (showTicketing)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-ticket-alt"></i></span>
+        <span class="menu-text">My Tickets & Events</span>
+    </a>
+</div>
+}
+
+@if (showDonations)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-hand-holding-usd"></i></span>
+        <span class="menu-text">My Contributions</span>
+    </a>
+</div>
+}
+}
+
+@if (showRecruitment || showVoting || showAssets || showProjects)
+{
+<div class="menu-divider"></div>
+
+<div class="menu-header">Operations & Workflow</div>
+
+@if (showRecruitment)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-briefcase"></i></span>
+        <span class="menu-text">Job Applications</span>
+    </a>
+</div>
+}
+
+@if (showVoting)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-vote-yea"></i></span>
+        <span class="menu-text">Vote in Elections</span>
+    </a>
+</div>
+}
+
+@if (showAssets)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-boxes"></i></span>
+        <span class="menu-text">My Assigned Assets</span>
+    </a>
+</div>
+}
+
+@if (showProjects)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-tasks"></i></span>
+        <span class="menu-text">My Project Tasks</span>
+    </a>
+</div>
+}
+}
+
+@if (showChat || showHelpdesk)
+{
+<div class="menu-divider"></div>
+
+<div class="menu-header">Comms & Tech Integration</div>
+
+@if (showChat)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-comments"></i></span>
+        <span class="menu-text">Chats & Channels</span>
+    </a>
+</div>
+}
+
+@if (showHelpdesk)
+{
+<div class="menu-item">
+    <a href="#" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-life-ring"></i></span>
+        <span class="menu-text">Helpdesk & Support</span>
+    </a>
+</div>
+}
+}
+
+<div class="menu-divider"></div>
+
+<div class="menu-header">Security</div>
+
+<div class="menu-item @(currentPath.Contains("/platform/changepassword") ? "active" : "")">
+    <a asp-area="MisUserManagement" asp-page="/Platform/ChangePassword" class="menu-link">
+        <span class="menu-icon"><i class="fa fa-key"></i></span>
+        <span class="menu-text">Change Password & 2FA</span>
+    </a>
+</div>
+
+<div class="menu-item">
+    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+        <button type="submit" class="menu-link text-danger border-0 bg-transparent w-100 text-start">
+            <span class="menu-icon"><i class="fa fa-sign-out-alt"></i></span>
+            <span class="menu-text">Log Out</span>
+        </button>
+    </form>
+</div>

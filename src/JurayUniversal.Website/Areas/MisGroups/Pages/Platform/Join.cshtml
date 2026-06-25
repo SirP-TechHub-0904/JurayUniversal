@@ -1,0 +1,50 @@
+@page
+@model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.JoinModel
+@{
+    ViewData["Title"] = "Join " + Model.GroupAlias;
+}
+
+<div class="position-absolute top-0 end-0 p-3 mt-5">
+    <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+        <i class="bi bi-question-circle me-1"></i> Help & Guide
+    </button>
+</div>
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-people-fill fs-1"></i>
+                        </div>
+                    </div>
+                    
+                    <h3 class="fw-bold mb-2">You've been invited!</h3>
+                    <p class="text-muted mb-4">You have been invited to join the <strong>@Model.MisGroup.Title</strong> @Model.GroupAlias.ToLower().</p>
+
+                    @if (Model.ExistingMembership != null && Model.ExistingMembership.MembershipStatus == "Pending")
+                    {
+                        <div class="alert alert-warning mb-0">
+                            <i class="bi bi-hourglass-split me-2"></i> You have already requested to join this @Model.GroupAlias.ToLower(). An administrator will review your request soon.
+                        </div>
+                        <div class="mt-4">
+                            <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill w-100">Return to Directory</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <form method="post">
+                            <input type="hidden" name="code" value="@Model.MisGroup.Id" />
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100 mb-3 shadow-sm">
+                                Request to Join @Model.GroupAlias
+                            </button>
+                            <a asp-page="./Index" class="btn btn-light rounded-pill w-100">Cancel</a>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform.MyProfileModel
+@{
+    ViewData["Title"] = "My Profile Details";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "MyProfile";
+}
+
+<div class="page-heading">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1 fw-bold">My Personal Details</h2>
+        <p class="text-muted mb-0">Manage your profile, view roles, and update preferences.</p>
+    </div>
+    <div>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+</div>
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <h3>My Profile</h3>
+            <p class="text-subtitle text-muted">View or update your personal account details.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end">
+            <a asp-page="/Platform/Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row g-4">
+        
+        <!-- Personal Details Form (Full Width) -->
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header border-bottom bg-transparent py-3">
+                    <h5 class="mb-0 text-dark"><i class="bi bi-person-fill text-primary me-1"></i> Personal Account Details</h5>
+                </div>
+                <div class="card-body py-4">
+                    <form method="post">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label text-muted fw-semibold" asp-for="FirstName">First Name</label>
+                                <input type="text" asp-for="FirstName" class="form-control" required />
+                                <span asp-validation-for="FirstName" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label text-muted fw-semibold" asp-for="LastName">Last Name</label>
+                                <input type="text" asp-for="LastName" class="form-control" required />
+                                <span asp-validation-for="LastName" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label text-muted fw-semibold" asp-for="Address">Contact Address</label>
+                                <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="Address" class="text-danger fs-7"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label text-muted fw-semibold">User Category</label>
+                                <input type="text" class="form-control" value="@(Model.UserProfile?.UserCategory?.Title ?? "None Assigned")" disabled />
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label text-muted fw-semibold">Account Status</label>
+                                <input type="text" class="form-control" value="@(Model.UserProfile?.UserStatus.ToString() ?? "Unknown")" disabled />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 mt-4">
+                            <i class="bi bi-check-circle-fill me-1"></i> Update Profile Details
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Separate Email Form -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom bg-transparent py-3">
+                    <h5 class="mb-0 text-dark">
+                        <i class="bi bi-envelope-fill text-primary me-1"></i> 
+                        @(Model.IsEmailOtpSent ? "Verify Email OTP" : "Update Email Address")
+                    </h5>
+                </div>
+                <div class="card-body py-4">
+                    @if (Model.IsEmailOtpSent)
+                    {
+                        <div class="alert alert-info py-2 fs-7 mb-3">
+                            <i class="bi bi-info-circle-fill me-1"></i> An OTP has been sent to <strong>@Model.NewEmail</strong>.
+                        </div>
+                        <form method="post" asp-page-handler="VerifyEmailOtp">
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="OtpCode">Enter 6-Digit OTP</label>
+                                <input type="text" asp-for="OtpCode" class="form-control text-center fw-bold letter-spacing-2" placeholder="123456" required autofocus />
+                                <span asp-validation-for="OtpCode" class="text-danger fs-7"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mt-2">
+                                <i class="bi bi-check-circle me-1"></i> Verify & Change Email
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-page-handler="UpdateEmail">
+                            <div class="mb-3">
+                                <label class="form-label text-muted fw-semibold" asp-for="NewEmail">Email Address</label>
+                                <input type="email" asp-for="NewEmail" class="form-control" required />
+                                <span asp-validation-for="NewEmail" class="text-danger fs-7"></span>
+                                <div class="form-text">Changing your email will also update your login username.</div>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary w-100 mt-2">
+                                <i class="bi bi-envelope-check me-1"></i> Save New Email
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Separate Phone Form -->
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom bg-transparent py-3">
+                    <h5 class="mb-0 text-dark"><i class="bi bi-telephone-fill text-primary me-1"></i> Update Phone Number</h5>
+                </div>
+                <div class="card-body py-4">
+                    <form method="post" asp-page-handler="UpdatePhone">
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold" asp-for="NewPhoneNumber">Phone Number</label>
+                            <input type="tel" asp-for="NewPhoneNumber" class="form-control" />
+                            <span asp-validation-for="NewPhoneNumber" class="text-danger fs-7"></span>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary w-100 mt-2">
+                            <i class="bi bi-phone-vibrate me-1"></i> Save New Phone
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,85 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.DeleteModel
+@{
+    ViewData["Title"] = "Delete " + Model.CategoryAlias;
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "Categories";
+}
+
+<div class="mis-page-header">
+    <div>
+        <h3 class="mis-page-title text-danger">Delete @Model.CategoryAlias</h3>
+        <p class="text-muted fs-14px mb-0">Are you sure you want to delete this @Model.CategoryAlias.ToLower()?</p>
+    </div>
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card mis-card border-danger border-opacity-25">
+        <div class="card-body p-4 p-md-5">
+            <div class="alert alert-danger bg-danger bg-opacity-10 border-0 mb-4 d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-danger"></i>
+                <div>
+                    <h5 class="fw-bold mb-1 text-danger">Warning: Permanent Deletion</h5>
+                    <p class="mb-0 fs-14px text-danger text-opacity-75">This action cannot be undone. All properties of this @Model.CategoryAlias.ToLower() will be removed.</p>
+                </div>
+            </div>
+
+            <div class="row max-w-800px">
+                <div class="col-12 col-md-6 mb-3">
+                    <p class="text-muted fs-13px mb-1 fw-bold">Title</p>
+                    <h5 class="fw-bold text-dark">@Model.UserCategory.Title</h5>
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+                    <p class="text-muted fs-13px mb-1 fw-bold">Description</p>
+                    <p class="text-dark">@(string.IsNullOrEmpty(Model.UserCategory.Description) ? "N/A" : Model.UserCategory.Description)</p>
+                </div>
+
+                <div class="col-12 col-md-4 mb-3">
+                    <p class="text-muted fs-13px mb-1 fw-bold">Publish</p>
+                    @if (Model.UserCategory.Publish)
+                    {
+                        <span class="badge bg-success">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </div>
+
+                <div class="col-12 col-md-4 mb-3">
+                    <p class="text-muted fs-13px mb-1 fw-bold">Show In Menu</p>
+                    @if (Model.UserCategory.ShowInMenu)
+                    {
+                        <span class="badge bg-info">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </div>
+
+                <div class="col-12 col-md-4 mb-3">
+                    <p class="text-muted fs-13px mb-1 fw-bold">Show In Dashboard</p>
+                    @if (Model.UserCategory.ShowInDashboard)
+                    {
+                        <span class="badge bg-primary">Yes</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">No</span>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <form method="post">
+                    <input type="hidden" asp-for="UserCategory.Id" />
+                    <button type="submit" class="btn btn-danger px-5 rounded-pill fw-bold"><i class="bi bi-trash me-2"></i> Confirm Delete</button>
+                    <a asp-page="./Index" class="btn btn-light ms-2 px-4 rounded-pill">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

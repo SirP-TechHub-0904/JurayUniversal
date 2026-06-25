@@ -1,0 +1,65 @@
+# Comprehensive MIS Feature Proposals (Updated)
+
+Here is the updated list of potential features (modules) for your universal platform, incorporating your latest additions. Every major numbered feature here represents a dedicated ASP.NET Core Area.
+
+## Core Administration & People
+1. **User Management & Performance (KPIs)**
+   A robust directory for all staff/members. Admins can manually add custom Key Performance Indicators (KPIs) to evaluate users. It tracks attendance and ranks profiles to help identify the "best staff".
+2. **Committees & Sub-Groups**
+   Private, isolated spaces for specific teams (like a Finance Committee) to share files and discuss.
+3. **Alumni Networking Directory**
+   A searchable portal for past members to connect, offer mentorship, and post business opportunities.
+
+## Reports & Documentation
+4. **Dynamic Interval Reporting**
+   Admins can create report categories (e.g., "Daily Staff Report") and set strict time intervals. The system automatically flags "lateness" or missed submissions.
+5. **Interactive User Manual**
+   A dedicated help module built into the system. It breaks down every feature and explains exactly what each user role is supposed to do and what specific buttons do.
+6. **Custom Form Builder & Surveys**
+   A dynamic tool exactly like Google Forms. Admins can drag and drop different types of questions (multiple choice, text, checkboxes) to create questionnaires, data collection forms, or internal surveys.
+7. **Survey Analytics & Graphical Reporting**
+   The companion to the Form Builder. When users fill out the custom forms, the Admin dashboard automatically generates pie charts, bar graphs, and graphical representations of the answers.
+
+## Financials & Monetization
+8. **Event & Concert Ticketing**
+   A comprehensive ticketing engine for concerts, seminars, or community gatherings. It handles paid and free ticket generation, RSVP limits, and barcode/QR code scanning.
+9. **Financials & Dues Management**
+   Handles the collection of mandatory subscriptions and recurring membership dues. It tracks defaulters and automates payment reminders.
+10. **Donations & Free-Will Contributions**
+    Tailored for NGOs/Ministries to accept tithes or cause-based funding and issue automated tax receipts.
+11. **Grant & Proposal Management**
+    Crucial for NGOs and Agencies to track external funding, disbursement milestones, and donor reporting deadlines.
+
+## Operations & Workflow
+12. **Recruitment & Applicant Tracking (ATS)**
+    Manages the full hiring lifecycle from job postings to virtual/physical interview scheduling and candidate scoring.
+13. **Elections & E-Voting**
+    Highly secure digital balloting system guaranteeing one-user-one-vote with real-time result tabulation.
+14. **Fleet & Equipment Lifecycle Management**
+    An advanced tracking system specifically for tech gadgets, heavy equipment, or vehicles. It logs exactly when an item was bought, tracks duration of use, logs maintenance history, and calculates depreciation.
+15. **Company Asset Management**
+    A broader ledger for tracking high-level assets owned by the company (like real estate, intellectual property, or fixed corporate assets) ensuring everything is properly accounted for and valued on the balance sheet.
+16. **Project & Task Tracking**
+    Breaks initiatives into assignable tasks and provides leadership with visual completion dashboards.
+
+## Communication & Tech Integrations
+17. **Bring-Your-Own-Key (BYOK) Artificial Intelligence**
+    A powerful module allowing clients to input their own API keys for Gemini, Claude, or ChatGPT. It unlocks AI capabilities (e.g., AI drafting newsletters) at no extra AI cost to you.
+18. **Direct Messaging (1-on-1 Chat)**
+    A secure internal chat system allowing staff or members to message each other directly without leaving the MIS.
+19. **Group & Team Channels (Team Chat)**
+    The companion to Direct Messaging. This acts like Slack or Microsoft Teams, allowing admins to create group channels (e.g., "General", "Management", "Event Planning") for collaborative, real-time team discussions.
+20. **Mass Communication (Newsletter/SMS)**
+    Built-in broadcast engine for targeted emails or urgent text alerts, complete with open-rate tracking.
+21. **Anonymous Whistleblowing & Feedback**
+    An untraceable portal for staff/members to submit sensitive complaints or suggestions securely.
+22. **Helpdesk & Ticketing System**
+    A structured way for users to request support or report bugs, tracking staff resolution times.
+
+## Compliance & Development
+23. **Document Management System (DMS)**
+    A secure vault for official policies and board minutes, featuring strict access logs and version control.
+24. **Learning Management System (LMS)**
+    Hosts internal training videos and compliance tests, issuing digital certificates upon completion.
+25. **Visitor & Gate Management**
+    A digital logbook for security desks to register guests, capture photos, and notify hosts of arrivals.

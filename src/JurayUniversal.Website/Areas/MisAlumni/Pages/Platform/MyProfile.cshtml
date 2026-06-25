@@ -1,0 +1,97 @@
+@page
+@model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.MyProfileModel
+@{
+    ViewData["Title"] = "My " + Model.AlumniAlias + " Profile";
+    ViewData["ActiveMenu"] = "MisAlumni";
+}
+
+<div class="mis-page-header">
+    <h3 class="mis-page-title">My @Model.AlumniAlias Profile</h3>
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Network</a>
+        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
+            <i class="bi bi-question-circle me-1"></i> Help & Guide
+        </button>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="row justify-content-center g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="AlumniProfile.Id" />
+                        <input type="hidden" asp-for="AlumniProfile.UserProfileId" />
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AlumniProfile.ExitYear" class="form-label fw-bold">Exit / Graduation Year</label>
+                                    <input asp-for="AlumniProfile.ExitYear" class="form-control" type="number" min="1900" max="2100" required />
+                                    <span asp-validation-for="AlumniProfile.ExitYear" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AlumniProfile.LinkedInUrl" class="form-label fw-bold">LinkedIn URL</label>
+                                    <input asp-for="AlumniProfile.LinkedInUrl" class="form-control" placeholder="https://linkedin.com/in/..." />
+                                    <span asp-validation-for="AlumniProfile.LinkedInUrl" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AlumniProfile.CurrentProfession" class="form-label fw-bold">Current Profession</label>
+                                    <input asp-for="AlumniProfile.CurrentProfession" class="form-control" />
+                                    <span asp-validation-for="AlumniProfile.CurrentProfession" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AlumniProfile.Company" class="form-label fw-bold">Current Company</label>
+                                    <input asp-for="AlumniProfile.Company" class="form-control" />
+                                    <span asp-validation-for="AlumniProfile.Company" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="AlumniProfile.Bio" class="form-label fw-bold">Short Biography</label>
+                                    <textarea asp-for="AlumniProfile.Bio" class="form-control" rows="4" placeholder="Tell the network what you've been up to since you left..."></textarea>
+                                    <span asp-validation-for="AlumniProfile.Bio" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card bg-light border-0">
+                                    <div class="card-body">
+                                        <div class="form-check form-switch mt-2">
+                                            <input asp-for="AlumniProfile.IsAvailableForMentorship" class="form-check-input" type="checkbox" role="switch" id="mentorSwitch">
+                                            <label asp-for="AlumniProfile.IsAvailableForMentorship" class="form-check-label ms-2 fw-bold" for="mentorSwitch">
+                                                I am available for Mentorship
+                                            </label>
+                                        </div>
+                                        <div class="form-text mt-2">If enabled, you will be publicly featured in the Directory as an available Mentor. Users may reach out to you via email.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary px-4 rounded-pill"><i class="bi bi-save me-1"></i> Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

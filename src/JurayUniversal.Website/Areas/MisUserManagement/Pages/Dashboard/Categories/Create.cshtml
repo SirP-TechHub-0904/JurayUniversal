@@ -1,0 +1,78 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.CreateModel
+@{
+    ViewData["Title"] = "Create " + Model.CategoryAlias;
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "Categories";
+}
+
+<div class="mis-page-header">
+    <div>
+        <h3 class="mis-page-title">Create @Model.CategoryAlias</h3>
+        <p class="text-muted fs-14px mb-0">Fill in the form to add a new @Model.CategoryAlias.ToLower().</p>
+    </div>
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <div class="card mis-card">
+        <div class="card-body p-4 p-md-5">
+            <form method="post" class="row g-4 max-w-800px">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                
+                <div class="col-12 col-md-6">
+                    <label asp-for="UserCategory.Title" class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+                    <input asp-for="UserCategory.Title" class="form-control" required placeholder="e.g., Administrator, Basic User, Department Name" />
+                    <span asp-validation-for="UserCategory.Title" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="UserCategory.Description" class="form-label fw-bold">Description</label>
+                    <textarea asp-for="UserCategory.Description" class="form-control" rows="3" placeholder="Brief description of this category"></textarea>
+                    <span asp-validation-for="UserCategory.Description" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <div class="card border border-light bg-light rounded-4">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-3">Visibility Settings</h6>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" asp-for="UserCategory.Publish">
+                                <label class="form-check-label" asp-for="UserCategory.Publish">
+                                    <strong>Publish</strong><br />
+                                    <small class="text-muted">Make this category active and visible to users.</small>
+                                </label>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" asp-for="UserCategory.ShowInMenu">
+                                <label class="form-check-label" asp-for="UserCategory.ShowInMenu">
+                                    <strong>Show In Menu</strong><br />
+                                    <small class="text-muted">Display this category as a quick link in the navigation menu.</small>
+                                </label>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" asp-for="UserCategory.ShowInDashboard">
+                                <label class="form-check-label" asp-for="UserCategory.ShowInDashboard">
+                                    <strong>Show In Dashboard</strong><br />
+                                    <small class="text-muted">Display summary metrics for this category on the main dashboard.</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-5">
+                    <button type="submit" class="btn btn-primary px-5 rounded-pill fw-bold"><i class="bi bi-save me-2"></i> Save @Model.CategoryAlias</button>
+                    <a asp-page="./Index" class="btn btn-light ms-2 px-4 rounded-pill">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

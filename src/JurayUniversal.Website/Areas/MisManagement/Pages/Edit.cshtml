@@ -1,0 +1,76 @@
+@page
+@using JurayUniversal.Domain.Enum
+@model JurayUniversal.Website.Areas.MisManagement.Pages.EditModel
+@{
+    ViewData["Title"] = "Edit Feature config";
+    ViewData["ActiveMenu"] = "MisManagement";
+}
+
+<div class="page-heading mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="mb-1"><i class="bi bi-pencil-square me-2"></i> Edit Feature Config</h3>
+            <p class="text-muted">Update billing parameters for this module.</p>
+        </div>
+        <a asp-page="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <form method="post">
+                <input type="hidden" asp-for="MisFeature.Id" />
+                <input type="hidden" asp-for="MisFeature.Status" />
+                <input type="hidden" asp-for="MisFeature.NextBillingDate" />
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="MisFeature.FeatureName" class="form-label fw-bold"></label>
+                        <input asp-for="MisFeature.FeatureName" class="form-control" readonly />
+                        <span asp-validation-for="MisFeature.FeatureName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="MisFeature.ModuleFolder" class="form-label fw-bold"></label>
+                        <input asp-for="MisFeature.ModuleFolder" class="form-control" readonly />
+                        <span asp-validation-for="MisFeature.ModuleFolder" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="MisFeature.Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="MisFeature.Description" class="form-control" rows="2" readonly></textarea>
+                    </div>
+
+                    <h5 class="mt-5 mb-2 text-primary border-bottom pb-2">Billing & Pricing Plan</h5>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.BillingDuration" class="form-label fw-bold"></label>
+                        <select asp-for="MisFeature.BillingDuration" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.FeatureBillingDuration>()"></select>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.CostPerDuration" class="form-label fw-bold"></label>
+                        <div class="input-group">
+                            <span class="input-group-text">&#8358;</span>
+                            <input asp-for="MisFeature.CostPerDuration" class="form-control" type="number" step="0.01" />
+                        </div>
+                        <span asp-validation-for="MisFeature.CostPerDuration" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="MisFeature.GracePeriodDays" class="form-label fw-bold"></label>
+                        <div class="input-group">
+                            <input asp-for="MisFeature.GracePeriodDays" class="form-control" type="number" />
+                            <span class="input-group-text">Days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-5"><i class="bi bi-save me-1"></i> Update Configuration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
