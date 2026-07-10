@@ -1,0 +1,248 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Dashboard.Applicants.DetailsModel
+@{
+    ViewData["Title"] = "Review Candidate";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
+}
+
+<div class="container-fluid max-w-1000 mx-auto">
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1">@Model.MisJobApplicant.FirstName @Model.MisJobApplicant.LastName</h4>
+                            <p class="text-muted small mb-2"><i class="bi bi-envelope me-1"></i> @Model.MisJobApplicant.Email &nbsp;&nbsp;|&nbsp;&nbsp; <i class="bi bi-telephone me-1"></i> @Model.MisJobApplicant.Phone</p>
+                        </div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary border rounded-pill px-3 py-2">
+                            Applied: @Model.MisJobApplicant.CreatedAt.ToString("MMM dd, yyyy")
+                        </span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.ProfessionalSummary))
+                    {
+                        <div class="p-3 bg-light rounded-3 mb-4">
+                            <h6 class="fw-bold text-dark mb-2">Professional Summary</h6>
+                            <p class="mb-0 text-muted">@Model.MisJobApplicant.ProfessionalSummary</p>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.WorkExperience))
+                    {
+                        <h6 class="fw-bold text-dark mb-3 border-bottom pb-2">Work Experience</h6>
+                        <div class="mb-4 text-muted">
+                            @Html.Raw(Model.MisJobApplicant.WorkExperience.Replace("\n", "<br />"))
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.Education))
+                    {
+                        <h6 class="fw-bold text-dark mb-3 border-bottom pb-2">Education</h6>
+                        <div class="mb-4 text-muted">
+                            @Html.Raw(Model.MisJobApplicant.Education.Replace("\n", "<br />"))
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.Skills))
+                    {
+                        <h6 class="fw-bold text-dark mb-3 border-bottom pb-2">Skills</h6>
+                        <div class="mb-4 text-muted">
+                            @Model.MisJobApplicant.Skills
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm rounded-4 mt-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-calendar-event text-success me-2"></i> Interviews & Scoring</h5>
+                    <div>
+                    @if (Model.MisJobApplicant.Status != JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Employed)
+                    {
+                        <form method="post" asp-page-handler="Employ" class="d-inline">
+                            <input type="hidden" name="id" value="@Model.MisJobApplicant.Id" />
+                            <button type="submit" class="btn btn-success fw-bold me-2" onclick="return confirm('Are you sure you want to officially EMPLOY this candidate? This will automatically create a System Profile for them using their application email and generate a default password.');">
+                                <i class="bi bi-briefcase-fill me-1"></i> Employ Candidate
+                            </button>
+                        </form>
+                    }
+                    
+                    <button type="button" class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                        <i class="bi bi-calendar-plus me-1"></i> Schedule Interview
+                    </button>
+                </div>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.MisJobApplicant.Interviews == null || !Model.MisJobApplicant.Interviews.Any())
+                    {
+                        <div class="text-center py-4 text-muted">
+                            <p>No interviews scheduled yet.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Link/Location</th>
+                                        <th>Score</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var interview in Model.MisJobApplicant.Interviews.OrderByDescending(i => i.InterviewDate))
+                                    {
+                                        <tr>
+                                            <td>@interview.InterviewDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                            <td><span class="badge bg-secondary">@interview.InterviewType</span></td>
+                                            <td><a href="@interview.LocationOrLink" target="_blank" class="text-truncate d-inline-block" style="max-width: 150px;">@interview.LocationOrLink</a></td>
+                                            <td class="fw-bold @(interview.Score >= 70 ? "text-success" : interview.Score < 50 ? "text-danger" : "text-warning")">
+                                                @(interview.Score?.ToString() ?? "N/A")
+                                            </td>
+                                            <td class="text-end">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#scoreModal-@interview.Id">
+                                                    Score
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Score Modal -->
+                                        <div class="modal fade text-start" id="scoreModal-@interview.Id" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content border-0 shadow rounded-4">
+                                                    <div class="modal-header border-0 pb-0">
+                                                        <h5 class="fw-bold mb-0">Score Interview</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body p-4">
+                                                        <form method="post" action="/MisRecruitment/Dashboard/Interviews/Score">
+                                                            <input type="hidden" name="interviewId" value="@interview.Id" />
+                                                            <input type="hidden" name="applicantId" value="@Model.MisJobApplicant.Id" />
+                                                            
+                                                            <div class="mb-3">
+                                                                <label class="form-label fw-600">Score (0-100)</label>
+                                                                <input type="number" name="score" value="@interview.Score" class="form-control" min="0" max="100" />
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label class="form-label fw-600">Admin Feedback</label>
+                                                                <textarea name="feedback" class="form-control" rows="4">@interview.AdminFeedback</textarea>
+                                                            </div>
+                                                            
+                                                            <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold">Save Score</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3 border-bottom pb-2">Status Progression</h6>
+                    
+                    <form method="post" asp-page-handler="ChangeStatus" class="mb-3">
+                        <input type="hidden" name="applicantId" value="@Model.MisJobApplicant.Id" />
+                        <div class="input-group">
+                            <select name="status" class="form-select border-primary" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.ApplicationStatus>()">
+                                <option value="@Model.MisJobApplicant.Status" selected style="display:none;">@Model.MisJobApplicant.Status</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="spinner-grow spinner-grow-sm text-primary me-2" role="status"></div>
+                        <span class="fw-bold text-primary">Current: @Model.MisJobApplicant.Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 text-center">
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.PassportFileUrl))
+                    {
+                        <img src="@Model.MisJobApplicant.PassportFileUrl" alt="Passport" class="rounded-circle mb-3 border border-3 border-light shadow-sm" style="width: 120px; height: 120px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-circle text-muted display-1 mb-3 d-block opacity-25"></i>
+                    }
+                    <h6 class="fw-bold mb-3 border-top pt-3">Original Resume</h6>
+                    @if (!string.IsNullOrEmpty(Model.MisJobApplicant.ResumeFileUrl))
+                    {
+                        <a href="@Model.MisJobApplicant.ResumeFileUrl" target="_blank" class="btn btn-outline-danger rounded-pill w-100 fw-bold mb-3">
+                            <i class="bi bi-file-earmark-pdf me-1"></i> View Main Resume
+                        </a>
+                    }
+                    else
+                    {
+                        <p class="text-muted small fst-italic mb-3">No resume uploaded.</p>
+                    }
+
+                    @if (Model.MisJobApplicant.Documents != null && Model.MisJobApplicant.Documents.Any())
+                    {
+                        <h6 class="fw-bold mb-3 border-top pt-3 text-start">Other Documents</h6>
+                        <ul class="list-group list-group-flush text-start mb-0">
+                            @foreach (var doc in Model.MisJobApplicant.Documents)
+                            {
+                                <li class="list-group-item px-0 border-0 bg-transparent py-1">
+                                    <a href="@doc.FileUrl" target="_blank" class="text-decoration-none small text-truncate d-inline-block w-100">
+                                        <i class="bi bi-paperclip me-1 text-primary"></i> @doc.Title
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="fw-bold mb-0">Schedule Interview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form method="post" action="/MisRecruitment/Dashboard/Interviews/Schedule">
+                    <input type="hidden" name="applicantId" value="@Model.MisJobApplicant.Id" />
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-600">Interview Date & Time</label>
+                        <input type="datetime-local" name="interviewDate" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-600">Type</label>
+                        <select name="interviewType" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.InterviewType>()"></select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-600">Location or Meeting Link</label>
+                        <input type="text" name="locationOrLink" class="form-control" placeholder="Zoom link or Physical address" required />
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold">Send Invite & Schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

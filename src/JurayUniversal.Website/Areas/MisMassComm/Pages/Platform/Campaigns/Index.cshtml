@@ -1,0 +1,81 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Platform.Campaigns.IndexModel
+@{
+    ViewData["Title"] = "My SMS Campaigns";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a href="/MisMassComm/Platform/Campaigns/Create" class="btn btn-primary"><i class="fa fa-paper-plane"></i> New Campaign</a>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Sender ID</th>
+                        <th>Status</th>
+                        <th>Scheduled For</th>
+                        <th>Recipients</th>
+                        <th>Cost</th>
+                        <th>Date Created</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Campaigns.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <i class="fa fa-bullhorn fa-3x text-muted mb-3 d-block"></i>
+                                <h5 class="text-muted">No campaigns found</h5>
+                                <a href="/MisMassComm/Platform/Campaigns/Create" class="btn btn-sm btn-primary mt-2">Start your first Campaign</a>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.Campaigns)
+                    {
+                        <tr>
+                            <td class="font-weight-bold">@item.Subject</td>
+                            <td>@item.SenderId</td>
+                            <td>
+                                @if (item.Status == JurayUniversal.Domain.Enum.Enum.MisSmsCampaignStatus.Draft)
+                                {
+                                    <span class="badge bg-secondary">Draft</span>
+                                }
+                                else if (item.Status == JurayUniversal.Domain.Enum.Enum.MisSmsCampaignStatus.Scheduled)
+                                {
+                                    <span class="badge bg-info">Scheduled</span>
+                                }
+                                else if (item.Status == JurayUniversal.Domain.Enum.Enum.MisSmsCampaignStatus.Sending)
+                                {
+                                    <span class="badge bg-warning">Sending...</span>
+                                }
+                                else if (item.Status == JurayUniversal.Domain.Enum.Enum.MisSmsCampaignStatus.Completed)
+                                {
+                                    <span class="badge bg-success">Completed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Failed</span>
+                                }
+                            </td>
+                            <td>@(item.ScheduledDate?.ToString("MMM dd, yyyy HH:mm") ?? "--")</td>
+                            <td>@item.TotalRecipients</td>
+                            <td class="text-danger">&#8358;@item.CostIncurred.ToString("N2")</td>
+                            <td>@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                            <td class="text-end">
+                                <a href="javascript:;" class="btn btn-sm btn-outline-primary" title="View Details"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

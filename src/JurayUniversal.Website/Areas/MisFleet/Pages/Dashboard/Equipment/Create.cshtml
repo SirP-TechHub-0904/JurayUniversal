@@ -1,0 +1,89 @@
+@page
+@model JurayUniversal.Website.Areas.MisFleet.Pages.Dashboard.Equipment.CreateModel
+@{
+    ViewData["Title"] = "Register Asset";
+    ViewData["Subtitle"] = "Authentication and security access.";
+}
+
+<div class="card shadow-sm border-0 max-w-900 mx-auto">
+    <div class="card-header bg-primary text-white p-4 d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 text-white"><i class="bi bi-box-seam me-2"></i> Register New Asset</h4>
+        
+    </div>
+    <div class="card-body p-4 p-md-5">
+        <form method="post">
+            <h5 class="fw-bold mb-3 text-primary border-bottom pb-2">Basic Identification</h5>
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.Name" class="form-label fw-bold"></label>
+                    <input asp-for="Asset.Name" class="form-control form-control-lg" required placeholder="e.g. MacBook Pro M2" />
+                    <span asp-validation-for="Asset.Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.MisEquipmentCategoryId" class="form-label fw-bold"></label>
+                    <select asp-for="Asset.MisEquipmentCategoryId" class="form-select form-select-lg" asp-items="Model.CategoryList" required>
+                        <option value="">-- Select Category --</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.SerialNumber" class="form-label fw-bold"></label>
+                    <input asp-for="Asset.SerialNumber" class="form-control" placeholder="Optional SN or VIN" />
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-3 text-primary border-bottom pb-2 mt-5">Financials & Depreciation</h5>
+            <div class="row mb-4 bg-light p-4 rounded-4">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.PurchaseDate" class="form-label fw-bold"></label>
+                    <input asp-for="Asset.PurchaseDate" type="date" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.LifespanMonths" class="form-label fw-bold"></label>
+                    <div class="input-group">
+                        <input asp-for="Asset.LifespanMonths" type="number" class="form-control" required value="36" />
+                        <span class="input-group-text bg-white">Months</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.PurchasePrice" class="form-label fw-bold"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">₦</span>
+                        <input asp-for="Asset.PurchasePrice" type="number" step="0.01" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Asset.SalvageValue" class="form-label fw-bold"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">₦</span>
+                        <input asp-for="Asset.SalvageValue" type="number" step="0.01" class="form-control" required value="0.00" />
+                    </div>
+                    <div class="form-text">Estimated value at the end of its lifespan.</div>
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-3 text-primary border-bottom pb-2 mt-5">Additional Specifications</h5>
+            <div class="mb-5">
+                <p class="text-muted small mb-2">Use this area to add custom specifications, engine types, memory size, or any details that don't fit into standard labels.</p>
+                <textarea asp-for="Asset.AdditionalDetails" class="form-control summernote"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-between mt-5">
+                <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold btn-lg">Register Asset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Assuming summernote is globally available in _MisLayout -->
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 250,
+                placeholder: 'Enter detailed specifications, notes, or features here...'
+            });
+        });
+    </script>
+}
+

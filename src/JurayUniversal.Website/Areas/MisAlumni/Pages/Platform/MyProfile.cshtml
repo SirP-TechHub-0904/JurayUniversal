@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.MyProfileModel
 @{
     ViewData["Title"] = "My " + Model.AlumniAlias + " Profile";
@@ -6,12 +6,10 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">My @Model.AlumniAlias Profile</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Network</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
     </div>
 </div>
 
@@ -95,3 +93,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

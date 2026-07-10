@@ -1,0 +1,60 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Platform.PhoneBooks.IndexModel
+@{
+    ViewData["Title"] = "My Phone Books";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a href="/MisMassComm/Platform/PhoneBooks/Create" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create New Phone Book</a>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Total Contacts</th>
+                        <th>Created Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.PhoneBooks.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="fa fa-address-book fa-3x text-muted mb-3 d-block"></i>
+                                <h5 class="text-muted">No phone books found</h5>
+                                <a href="/MisMassComm/Platform/PhoneBooks/Create" class="btn btn-sm btn-primary mt-2">Create your first Phone Book</a>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.PhoneBooks)
+                    {
+                        <tr>
+                            <td class="font-weight-bold">
+                                <a href="/MisMassComm/Platform/PhoneBooks/Contacts?id=@item.Id">@item.Name</a>
+                            </td>
+                            <td>@item.Name</td>
+                            <td>
+                                <span class="badge bg-info">@item.Contacts.Count contacts</span>
+                            </td>
+                            <td>@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                            <td class="text-end">
+                                <a href="/MisMassComm/Platform/PhoneBooks/Import?id=@item.Id" class="btn btn-sm btn-success me-1" title="Import Contacts"><i class="fa fa-upload"></i></a>
+                                <a href="/MisMassComm/Platform/PhoneBooks/Contacts?id=@item.Id" class="btn btn-sm btn-primary me-1" title="View Contacts"><i class="fa fa-users"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

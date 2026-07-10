@@ -1,4 +1,5 @@
-﻿using System;
+using JurayUniversal.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +14,16 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
     public class CreateRoleModel : PageModel
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public CreateRoleModel(RoleManager<IdentityRole> roleManager)
+        public CreateRoleModel(RoleManager<AppRole> roleManager)
         {
 
             _roleManager = roleManager;
 
         }
         [BindProperty]
-        public IdentityRole Role { get; set; }
+        public AppRole Role { get; set; }
         public IActionResult OnGet()
         {
             return Page();

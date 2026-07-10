@@ -37,6 +37,17 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Dashboard
             if (form == null) return NotFound();
 
             form.SchemaJson = request.SchemaJson;
+            
+            // Update Title and Description if provided
+            if (!string.IsNullOrWhiteSpace(request.Title))
+            {
+                form.Title = request.Title;
+            }
+            if (request.Description != null) // Description can be empty
+            {
+                form.Description = request.Description;
+            }
+
             await _context.SaveChangesAsync();
 
             return new JsonResult(new { success = true });
@@ -57,6 +68,8 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Dashboard
         public class UpdateSchemaRequest
         {
             public string SchemaJson { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
         }
     }
 }

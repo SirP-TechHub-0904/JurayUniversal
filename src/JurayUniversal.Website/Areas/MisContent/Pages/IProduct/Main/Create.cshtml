@@ -1,0 +1,132 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IProduct.Main.CreateModel
+
+@{
+    ViewData["Title"] = "PRODUCT CREATE";
+    ViewData["BackUrl"] = "./Index";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.Title" class="control-label"></label>
+                        <input asp-for="Product.Title" class="form-control" />
+                        <span asp-validation-for="Product.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.ProductCategoryId" class="control-label"></label>
+                        <select asp-for="Product.ProductCategoryId" class="form-control" asp-items="ViewBag.ProductCategoryId">
+                            <option value="">NO CATEGORY</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.ShortDescription" class="control-label"></label>
+                        <textarea asp-for="Product.ShortDescription" class="form-control"></textarea>
+                        <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.FullDescription" class="control-label"></label>
+                        <textarea asp-for="Product.FullDescription" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Product.FullDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-4">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowInDropdown" /> @Html.DisplayNameFor(model => model.Product.ShowInDropdown)
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowInHome" /> @Html.DisplayNameFor(model => model.Product.ShowInHome)
+                        </label>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.MiniTitle" class="control-label"></label>
+                        <input asp-for="Product.MiniTitle" class="form-control" />
+                        <span asp-validation-for="Product.MiniTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.Amount" class="control-label"></label>
+                        <input asp-for="Product.Amount" class="form-control" />
+                        <span asp-validation-for="Product.Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-4">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.DisableAmount" /> @Html.DisplayNameFor(model => model.Product.DisableAmount)
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.ShowSamples" /> @Html.DisplayNameFor(model => model.Product.ShowSamples)
+                        </label>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.StatusNote" class="control-label"></label>
+                        <input asp-for="Product.StatusNote" class="form-control" />
+                        <span asp-validation-for="Product.StatusNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Product.ButtonText" class="control-label"></label>
+                        <input asp-for="Product.ButtonText" class="form-control" />
+                        <span asp-validation-for="Product.ButtonText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="control-label">Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group mb-4">
+                        <label class="control-label">Video</label><br />
+                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                    </div>
+
+
+                    <div class="form-group mb-4">
+                        <label class="control-label">Title Background Image</label><br />
+                        <input type="file" class="control-label" asp-for="bgfile" accept="image/*" />
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+

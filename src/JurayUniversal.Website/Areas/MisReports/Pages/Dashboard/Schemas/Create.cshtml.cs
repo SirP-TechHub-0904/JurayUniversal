@@ -31,6 +31,8 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // ModelState.Remove("MisReportSchema.Participants");
+            // ModelState.Remove("MisReportSchema.Submissions");
             // if (!ModelState.IsValid)
             // {
             //     return Page();

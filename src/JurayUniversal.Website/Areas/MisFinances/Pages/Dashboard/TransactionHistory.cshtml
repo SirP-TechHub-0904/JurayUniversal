@@ -1,0 +1,123 @@
+﻿@page "/MisFinances/Dashboard/TransactionHistory"
+@model JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard.TransactionHistoryModel
+@{
+    ViewData["Title"] = "Transaction History";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="mis-page-header d-flex justify-content-between align-items-center">
+    
+    
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+
+    @if (Model.Users.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        <label for="userSelect" class="form-label fw-semibold">Filter by Member / Donor</label>
+                        <select id="userSelect" class="form-select rounded-pill" onchange="location = this.value;">
+                            @if (Model.SelectedUserId == null)
+                            {
+                                <option value="/MisFinances/Dashboard/TransactionHistory" selected="selected">All Users</option>
+                            }
+                            else
+                            {
+                                <option value="/MisFinances/Dashboard/TransactionHistory">All Users</option>
+                            }
+                            @foreach (var u in Model.Users)
+                            {
+                                @if (Model.SelectedUserId == u.Id)
+                                {
+                                    <option value="/MisFinances/Dashboard/TransactionHistory?userId=@u.Id" selected="selected">@u.FirstName @u.LastName (@u.Email)</option>
+                                }
+                                else
+                                {
+                                    <option value="/MisFinances/Dashboard/TransactionHistory?userId=@u.Id">@u.FirstName @u.LastName (@u.Email)</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.SelectedUserId))
+                    {
+                        <div class="col-md-auto">
+                            <a href="/MisFinances/Dashboard/TransactionHistory" class="btn btn-outline-secondary rounded-pill btn-sm">
+                                <i class="bi bi-x-circle me-1"></i> Clear Filter
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    @await Html.PartialAsync("_TransactionTable", Model.Transactions)
+
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.7.0/css/colReorder.bootstrap5.min.css" />
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Export plugins -->
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    
+    <!-- ColReorder -->
+    <script src="https://cdn.datatables.net/colreorder/1.7.0/js/dataTables.colReorder.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#transactionTable').DataTable({
+                "order": [[6, "desc"]], // Sort by Date column descending by default
+                "lengthMenu": [[10, 25, 50, 100, 300, -1], [10, 25, 50, 100, 300, "All"]],
+                "pageLength": 25,
+                "colReorder": true,
+                "dom": "<'row mb-3'<'col-md-6'l><'col-md-6 d-flex justify-content-end'f>>" +
+                       "<'row mb-3'<'col-12 d-flex justify-content-end'B>>" +
+                       "<'row'<'col-sm-12'tr>>" +
+                       "<'row mt-3'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                "buttons": [
+                    {
+                        extend: 'colvis',
+                        className: 'btn btn-outline-secondary btn-sm rounded-pill me-2',
+                        text: '<i class="bi bi-layout-three-columns me-1"></i> Columns'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-outline-success btn-sm rounded-pill me-2',
+                        text: '<i class="bi bi-file-earmark-excel me-1"></i> Excel',
+                        exportOptions: { columns: ':visible:not(.text-end)' } // Exclude action column
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-outline-danger btn-sm rounded-pill me-2',
+                        text: '<i class="bi bi-file-earmark-pdf me-1"></i> PDF',
+                        exportOptions: { columns: ':visible:not(.text-end)' }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn btn-outline-primary btn-sm rounded-pill',
+                        text: '<i class="bi bi-printer me-1"></i> Print',
+                        exportOptions: { columns: ':visible:not(.text-end)' }
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+

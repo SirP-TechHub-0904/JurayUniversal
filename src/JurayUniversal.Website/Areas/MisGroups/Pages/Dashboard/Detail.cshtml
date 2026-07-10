@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.DetailModel
 @inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
 @{
@@ -7,12 +7,10 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">Manage @Model.GroupAlias: @Model.MisGroup.Title</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./List" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
     </div>
 </div>
 
@@ -131,3 +129,5 @@
         </div>
     </div>
 </div>
+
+

@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.CreateModel
 @{
     ViewData["Title"] = "Add New " + Model.GroupAlias;
@@ -6,22 +6,11 @@
     ViewData["ActiveSubMenu"] = "Dashboard";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Add New @Model.GroupAlias</h3>
-            <p class="text-subtitle text-muted">Create a new organizational sub-group.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <button class="btn btn-outline-info btn-sm rounded-pill me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-                <i class="bi bi-question-circle me-1"></i> Help & Guide
-            </button>
-            <a asp-page="./List" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="./List" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to List
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content">
     <div class="card shadow-sm border-0 mb-4">
@@ -65,3 +54,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

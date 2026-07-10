@@ -1,0 +1,90 @@
+@page
+@model JurayUniversal.Website.Areas.MisProposals.Pages.Platform.IndexModel
+@{
+    ViewData["Title"] = "My Proposals & Pitches";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a asp-page="Submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                <i class="bi bi-journal-plus me-1"></i> Pitch New Idea
+            </a>
+}
+
+<div class="container-fluid">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Title & Details</th>
+                            <th>Date Submitted</th>
+                            <th>Status</th>
+                            <th>Attachments</th>
+                            <th class="pe-4 text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Proposals.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    <i class="bi bi-folder2-open display-4 d-block mb-3 opacity-50"></i>
+                                    You haven't submitted any proposals yet.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.Proposals)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">@item.Title</div>
+                                    <div class="small text-muted text-truncate" style="max-width: 250px;">
+                                        @item.Description
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        @(item.DateSubmitted?.ToString("MMM dd, yyyy") ?? "Not Submitted")
+                                    </div>
+                                </td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Draft:
+                                            <span class="badge bg-secondary rounded-pill px-3">Draft</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Submitted:
+                                            <span class="badge bg-primary rounded-pill px-3">Submitted</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.UnderReview:
+                                            <span class="badge bg-warning text-dark rounded-pill px-3">Under Review</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Approved:
+                                            <span class="badge bg-success rounded-pill px-3">Approved</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Rejected:
+                                            <span class="badge bg-danger rounded-pill px-3">Rejected</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="bi bi-paperclip me-1"></i> @item.ProposalFiles.Count Files
+                                    </span>
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">
+                                        View Details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

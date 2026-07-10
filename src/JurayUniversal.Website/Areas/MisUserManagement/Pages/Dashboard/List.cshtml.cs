@@ -144,8 +144,11 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             long? categoryId = !string.IsNullOrEmpty(categoryIdStr) ? Convert.ToInt64(categoryIdStr) : null;
             UserStatus? status = !string.IsNullOrEmpty(statusStr) && Enum.TryParse<UserStatus>(statusStr, out var parsedStatus) ? parsedStatus : null;
 
+            var superAdminRoleIds = await _context.Roles.Where(r => r.Name == "mSuperAdmin" || r.Name == "SuperAdmin").Select(r => r.Id).ToListAsync();
+            var superAdminUserIds = await _context.UserRoles.Where(ur => superAdminRoleIds.Contains(ur.RoleId)).Select(ur => ur.UserId).ToListAsync();
+
             var query = _context.Users.OfType<Profile>()
-                .Where(u => u.UserName != "superadmin" && u.UserName != "msuperadmin" && u.Email != "superadmin@juray.ng")
+                .Where(u => !superAdminUserIds.Contains(u.Id))
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchValue))
@@ -204,9 +207,12 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             long? categoryId = !string.IsNullOrEmpty(categoryIdStr) ? Convert.ToInt64(categoryIdStr) : null;
             UserStatus? status = !string.IsNullOrEmpty(statusStr) && Enum.TryParse<UserStatus>(statusStr, out var parsedStatus) ? parsedStatus : null;
 
+            var superAdminRoleIds = await _context.Roles.Where(r => r.Name == "mSuperAdmin" || r.Name == "SuperAdmin").Select(r => r.Id).ToListAsync();
+            var superAdminUserIds = await _context.UserRoles.Where(ur => superAdminRoleIds.Contains(ur.RoleId)).Select(ur => ur.UserId).ToListAsync();
+
             var query = _context.Users.OfType<Profile>()
                 .Include(u => u.UserCategory)
-                .Where(u => u.UserName != "superadmin" && u.UserName != "msuperadmin" && u.Email != "superadmin@juray.ng")
+                .Where(u => !superAdminUserIds.Contains(u.Id))
                 .AsQueryable();
 
             // Apply global DataTables search

@@ -1,25 +1,18 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.CreateModel
 @{
     ViewData["Title"] = "Create Report Schema";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Schemas";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Create Report Schema</h3>
-            <p class="text-subtitle text-muted">Define a new required report and its strict submission intervals.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Index" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to Schemas
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <section class="section">
     <div class="card shadow-sm border-0">
@@ -227,3 +220,5 @@
         toggleTimeLogFields();
     </script>
 }
+
+

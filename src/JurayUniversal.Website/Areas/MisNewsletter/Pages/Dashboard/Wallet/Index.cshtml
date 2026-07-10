@@ -1,0 +1,191 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Wallet.IndexModel
+@{
+    ViewData["Title"] = "Global Newsletter Wallet";
+    ViewData["Subtitle"] = "Manage the global email quota for newsletters and campaigns.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Wallet";
+}
+
+@section HeaderActions {
+    <a asp-page="/Dashboard/Index" class="btn btn-outline-secondary rounded-pill fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+    </a>
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <!-- Global Quota Card -->
+        <div class="col-md-5 col-lg-4 mb-4">
+            <div class="card bg-primary text-white border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-envelope-paper-heart fs-1 text-white opacity-75 mb-3 d-block"></i>
+                    <h5 class="text-white opacity-75">Global Quota Balance</h5>
+                    <h1 class="display-5 fw-bold text-white mb-1">
+                        @Model.Settings?.GlobalNewsletterQuota.ToString("N0")
+                    </h1>
+                    <p class="mb-4 opacity-75">Available Emails</p>
+                    
+                    <div class="bg-white bg-opacity-10 rounded-3 p-3 text-start mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fs-14px">Expiry Date:</span>
+                            <span class="fw-bold">@(Model.Settings?.GlobalNewsletterQuotaExpiry?.ToString("MMM dd, yyyy") ?? "N/A")</span>
+                        </div>
+                    </div>
+
+                    <a asp-area="MisNewsletter" asp-page="/Dashboard/Plans/Index" class="btn btn-light w-100 rounded-pill fw-bold text-primary py-2 shadow-sm">
+                        <i class="bi bi-cart-plus me-1"></i> Buy More Quota
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Share Quota Form -->
+        <div class="col-md-7 col-lg-8 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-share me-2 text-primary"></i> Share Quota to User</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-danger border-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                            <div>@TempData["error"]</div>
+                        </div>
+                    }
+                    @if (TempData["success"] != null)
+                    {
+                        <div class="alert alert-success border-0 d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+                            <div>@TempData["success"]</div>
+                        </div>
+                    }
+
+                    <form method="post" asp-page-handler="ShareQuota">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select Staff Member</label>
+                            <select asp-for="SelectedUserId" asp-items="Model.UserList" class="form-select form-select-lg shadow-none" required>
+                                <option value="">-- Choose User --</option>
+                            </select>
+                            <div class="form-text">The user who will receive the email quota.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Amount to Share</label>
+                            <div class="input-group input-group-lg">
+                                <input asp-for="ShareAmount" type="number" min="1" max="@Model.Settings?.GlobalNewsletterQuota" class="form-control shadow-none" placeholder="e.g. 5000" required />
+                                <span class="input-group-text bg-light text-muted">Emails</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 fw-bold">
+                            <i class="bi bi-send me-2"></i> Transfer Quota
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Quota Purchase History -->
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i> Global Quota Purchase History</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Date</th>
+                            <th>Plan Name</th>
+                            <th>Amount Paid</th>
+                            <th>Quota Added</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var purchase in Model.GlobalPurchases)
+                        {
+                            <tr>
+                                <td class="ps-4">@purchase.CreatedAt.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td><span class="fw-bold">@purchase.MisNewsletterPlan?.Name</span></td>
+                                <td>&#8358;@purchase.Amount.ToString("N0")</td>
+                                <td><span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">+@purchase.Quota.ToString("N0")</span></td>
+                                <td>
+                                    @if (purchase.Status == JurayUniversal.Domain.Enum.Enum.PaymentStatus.Success)
+                                    {
+                                        <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Success</span>
+                                    }
+                                    else if (purchase.Status == JurayUniversal.Domain.Enum.Enum.PaymentStatus.Pending)
+                                    {
+                                        <span class="text-warning fw-bold"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger fw-bold"><i class="bi bi-exclamation-circle-fill me-1"></i> @purchase.Status</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.GlobalPurchases.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">No purchase history found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quota Transfer History -->
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-arrow-left-right me-2 text-primary"></i> Quota Transfer History</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Date</th>
+                            <th>Staff Member</th>
+                            <th>Amount Shared</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var transfer in Model.QuotaShares)
+                        {
+                            <tr>
+                                <td class="ps-4">@transfer.Date.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person-circle fs-5 me-2 text-primary"></i>
+                                        <span>@(transfer.MisNewsletterWallet?.User?.FullName ?? "Unknown")</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">-@transfer.Amount.ToString("N0")</span></td>
+                                <td class="text-muted">@transfer.Description</td>
+                            </tr>
+                        }
+                        @if (!Model.QuotaShares.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">No quota transfers yet.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

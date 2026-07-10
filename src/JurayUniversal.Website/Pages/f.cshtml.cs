@@ -37,6 +37,17 @@ namespace JurayUniversal.Website.Pages
                 return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = $"/f/{code}" });
             }
 
+            if (User.Identity.IsAuthenticated && !Form.AllowMultipleSubmissions)
+            {
+                var userId = _userManager.GetUserId(User);
+                bool hasSubmitted = await _context.MisFormResponses.AnyAsync(r => r.MisFormId == Form.Id && r.UserProfileId == userId);
+                if (hasSubmitted)
+                {
+                    TempData["ErrorMessage"] = "You have already submitted a response for this form. Multiple submissions are not allowed.";
+                    return RedirectToPage("/Index");
+                }
+            }
+
             return Page();
         }
 
@@ -52,9 +63,48 @@ namespace JurayUniversal.Website.Pages
                 return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = $"/f/{code}" });
             }
 
+            if (User.Identity.IsAuthenticated && !form.AllowMultipleSubmissions)
+            {
+                var currentUserId = _userManager.GetUserId(User);
+                bool hasSubmitted = await _context.MisFormResponses.AnyAsync(r => r.MisFormId == form.Id && r.UserProfileId == currentUserId);
+                if (hasSubmitted)
+                {
+                    return BadRequest("You have already submitted this form.");
+                }
+            }
+
             // Capture raw JSON payload
             using var reader = new StreamReader(Request.Body);
             var responsesJson = await reader.ReadToEndAsync();
+
+            // Validate Captcha from JSON
+            var misSetting = await _context.MisSettings.FirstOrDefaultAsync();
+            if (misSetting != null && misSetting.ActiveCaptcha != Domain.Enum.Enum.CaptchaType.None)
+            {
+                int? firstNumber = null;
+                int? secondNumber = null;
+                int? captcha = null;
+                string recaptchaResponse = null;
+
+                try
+                {
+                    using (var doc = System.Text.Json.JsonDocument.Parse(responsesJson))
+                    {
+                        var root = doc.RootElement;
+                        if (root.TryGetProperty("FirstNumber", out var fn)) firstNumber = int.Parse(fn.GetString() ?? "0");
+                        if (root.TryGetProperty("SecondNumber", out var sn)) secondNumber = int.Parse(sn.GetString() ?? "0");
+                        if (root.TryGetProperty("Captcha", out var c)) captcha = int.Parse(c.GetString() ?? "0");
+                        if (root.TryGetProperty("g-recaptcha-response", out var rr)) recaptchaResponse = rr.GetString();
+                    }
+                }
+                catch { }
+
+                bool isCaptchaValid = await JurayUniversal.Website.Helpers.CaptchaValidator.ValidateCaptchaAsync(misSetting, firstNumber, secondNumber, captcha, recaptchaResponse);
+                if (!isCaptchaValid)
+                {
+                    return BadRequest("Security Check Failed. Please try again.");
+                }
+            }
 
             string userId = null;
             if (User.Identity.IsAuthenticated)

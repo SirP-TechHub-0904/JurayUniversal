@@ -1,0 +1,77 @@
+@page
+@model JurayUniversal.Website.Areas.MisGrants.Pages.Dashboard.ManageModel
+@{
+    ViewData["Title"] = Model.MisGrant.Id == 0 ? "Create New Grant" : "Edit Grant";
+}
+
+<div class="container-fluid max-w-4xl mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form method="post">
+                <input type="hidden" asp-for="MisGrant.Id" />
+                <input type="hidden" asp-for="MisGrant.CreatedAt" />
+
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <label asp-for="MisGrant.Title" class="form-label fw-600">Grant Title / Project Name <span class="text-danger">*</span></label>
+                        <input asp-for="MisGrant.Title" class="form-control form-control-lg bg-light" placeholder="e.g., Water Sanitization Initiative 2026" required />
+                        <span asp-validation-for="MisGrant.Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisGrant.MisDonorId" class="form-label fw-600">Donor / Agency <span class="text-danger">*</span></label>
+                        <select asp-for="MisGrant.MisDonorId" asp-items="Model.DonorsList" class="form-select form-select-lg bg-light" required>
+                            <option value="">-- Select a Donor --</option>
+                        </select>
+                        <span asp-validation-for="MisGrant.MisDonorId" class="text-danger small"></span>
+                        <div class="form-text mt-1">If the donor is not listed, <a asp-page="./Donors/Manage" target="_blank">click here to add a new donor</a>.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisGrant.TotalAwardAmount" class="form-label fw-600">Total Award Amount <span class="text-danger">*</span></label>
+                        <input asp-for="MisGrant.TotalAwardAmount" type="number" step="0.01" class="form-control form-control-lg bg-light" required />
+                        <span asp-validation-for="MisGrant.TotalAwardAmount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisGrant.Currency" class="form-label fw-600">Currency <span class="text-danger">*</span></label>
+                        <input asp-for="MisGrant.Currency" class="form-control form-control-lg bg-light" placeholder="NGN, USD, EUR" required />
+                        <span asp-validation-for="MisGrant.Currency" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisGrant.StartDate" class="form-label fw-600">Start Date <span class="text-danger">*</span></label>
+                        <input asp-for="MisGrant.StartDate" type="date" class="form-control form-control-lg bg-light" required />
+                        <span asp-validation-for="MisGrant.StartDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisGrant.EndDate" class="form-label fw-600">End Date (Optional)</label>
+                        <input asp-for="MisGrant.EndDate" type="date" class="form-control form-control-lg bg-light" />
+                        <span asp-validation-for="MisGrant.EndDate" class="text-danger small"></span>
+                        <div class="form-text">Leave blank if the grant is ongoing indefinitely.</div>
+                    </div>
+
+                    <div class="col-12 mt-4 pt-3 border-top">
+                        <div class="form-check form-switch fs-5">
+                            <input class="form-check-input" type="checkbox" role="switch" asp-for="MisGrant.IsActive">
+                            <label class="form-check-label fw-600 ms-2" asp-for="MisGrant.IsActive">Grant is Active</label>
+                        </div>
+                        <p class="text-muted small ms-5 mb-0">Inactive grants are considered closed and will not appear in current tracking views.</p>
+                    </div>
+
+                    <div class="col-12 mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm w-100 w-md-auto">
+                            @(Model.MisGrant.Id == 0 ? "Create Grant" : "Save Changes")
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

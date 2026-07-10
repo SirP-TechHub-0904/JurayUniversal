@@ -203,6 +203,18 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
 
+                @if (User.IsInRole("mSuperAdmin"))
+                {
+                    <li class="nav-item">
+                        <form action="/api/mis-toggle/toggle" method="post" class="m-0 p-0 mr-3 mt-1">
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                            <button type="submit" class="btn btn-outline-warning btn-sm font-weight-bold shadow-sm">
+                                <i class="fas fa-exchange-alt mr-1"></i> Switch to New MIS
+                            </button>
+                        </form>
+                    </li>
+                }
+
                 <li class="nav-item">
                     <a class="nav-link" asp-page="/QueryPage/Index" asp-area="Content">
                         <i class="fas fa-search"></i>

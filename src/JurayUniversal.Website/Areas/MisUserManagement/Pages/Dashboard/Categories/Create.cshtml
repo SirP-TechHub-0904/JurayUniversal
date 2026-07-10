@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.CreateModel
 @{
     ViewData["Title"] = "Create " + Model.CategoryAlias;
@@ -8,10 +8,13 @@
 
 <div class="mis-page-header">
     <div>
-        <h3 class="mis-page-title">Create @Model.CategoryAlias</h3>
+        
         <p class="text-muted fs-14px mb-0">Fill in the form to add a new @Model.CategoryAlias.ToLower().</p>
     </div>
-    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+    <div class="d-flex gap-2">
+        
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+    </div>
 </div>
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
@@ -76,3 +79,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

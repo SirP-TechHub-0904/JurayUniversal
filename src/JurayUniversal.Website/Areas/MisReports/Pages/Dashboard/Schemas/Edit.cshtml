@@ -1,25 +1,18 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.EditModel
 @{
     ViewData["Title"] = "Edit Report Schema";
+    ViewData["Subtitle"] = "Modify the details of this record.";
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Schemas";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Edit Report Schema</h3>
-            <p class="text-subtitle text-muted">Modify the report schema and its settings.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Index" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to Schemas
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <section class="section">
     <div class="card shadow-sm border-0">
@@ -221,3 +214,5 @@
         toggleTimeLogFields();
     </script>
 }
+
+

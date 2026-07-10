@@ -104,36 +104,31 @@ namespace JurayUniversal.Website.Areas.MisManagement.Pages
 
         public class PredefinedFeature
         {
-            public string Name { get; set; }
             public string ModuleFolder { get; set; }
+            public string Name { get; set; }
             public string Icon { get; set; }
             public string Description { get; set; }
+            public string Category { get; set; }
+            public string Link { get; set; }
         }
 
         public static readonly List<PredefinedFeature> AvailableFeatures = new List<PredefinedFeature>
         {
-            new PredefinedFeature { ModuleFolder = "MisUserManagement", Name = "User Management", Icon = "fa-users", Description = "Manage user directory, categories, and KPIs." },
-            new PredefinedFeature { ModuleFolder = "MisGroups", Name = "Committees & Groups", Icon = "fa-sitemap", Description = "Manage committees and working groups." },
-            new PredefinedFeature { ModuleFolder = "MisAlumni", Name = "Alumni Network Portal", Icon = "fa-graduation-cap", Description = "Alumni network and portal management." },
-            new PredefinedFeature { ModuleFolder = "MisReports", Name = "Dynamic Interval Reports", Icon = "fa-clock", Description = "Create and schedule dynamic interval reports." },
-            new PredefinedFeature { ModuleFolder = "MisSurveys", Name = "Custom Surveys & Forms", Icon = "fa-poll-h", Description = "Form builder and survey analytics." },
-            new PredefinedFeature { ModuleFolder = "MisManual", Name = "Interactive User Manual", Icon = "fa-book-open", Description = "Platform interactive user manual." },
-            new PredefinedFeature { ModuleFolder = "MisDues", Name = "Dues & Subscriptions", Icon = "fa-file-invoice-dollar", Description = "Manage platform dues and member subscriptions." },
-            new PredefinedFeature { ModuleFolder = "MisTicketing", Name = "Event & Ticket Engine", Icon = "fa-ticket-alt", Description = "Event management and ticket engine." },
-            new PredefinedFeature { ModuleFolder = "MisDonations", Name = "Contributions & Donations", Icon = "fa-hand-holding-usd", Description = "Manage contributions and donations." },
-            new PredefinedFeature { ModuleFolder = "MisGrants", Name = "Grant & Proposal Pipelines", Icon = "fa-briefcase", Description = "Grant applications and proposal pipelines." },
-            new PredefinedFeature { ModuleFolder = "MisRecruitment", Name = "Recruitment & ATS", Icon = "fa-user-plus", Description = "Job applications and applicant tracking." },
-            new PredefinedFeature { ModuleFolder = "MisVoting", Name = "Elections & E-Voting", Icon = "fa-vote-yea", Description = "Platform elections and e-voting system." },
-            new PredefinedFeature { ModuleFolder = "MisAssets", Name = "Asset Trackers", Icon = "fa-building", Description = "Company asset ledger and fleet management." },
-            new PredefinedFeature { ModuleFolder = "MisProjects", Name = "Project & Task Boards", Icon = "fa-tasks", Description = "Project and task boards." },
-            new PredefinedFeature { ModuleFolder = "MisChat", Name = "Chats & Channels", Icon = "fa-comments", Description = "Direct messaging and team group channels." },
-            new PredefinedFeature { ModuleFolder = "MisMassComm", Name = "Mass Broadcast (Email/SMS)", Icon = "fa-bullhorn", Description = "Mass broadcast via email and SMS." },
-            new PredefinedFeature { ModuleFolder = "MisAI", Name = "BYOK AI Studio", Icon = "fa-brain", Description = "Bring your own key AI studio." },
-            new PredefinedFeature { ModuleFolder = "MisHelpdesk", Name = "Helpdesk Support Tickets", Icon = "fa-life-ring", Description = "Helpdesk support ticketing system." },
-            new PredefinedFeature { ModuleFolder = "MisWhistleblowing", Name = "Anonymous Whistleblowing", Icon = "fa-user-secret", Description = "Anonymous whistleblowing." },
-            new PredefinedFeature { ModuleFolder = "MisDMS", Name = "Document Vault (DMS)", Icon = "fa-folder-open", Description = "Document management system and vault." },
-            new PredefinedFeature { ModuleFolder = "MisLMS", Name = "Learning Portal (LMS)", Icon = "fa-university", Description = "Learning management system portal." },
-            new PredefinedFeature { ModuleFolder = "MisVisitorManagement", Name = "Visitor & Gate Security", Icon = "fa-id-badge", Description = "Visitor management and gate security." }
+            new PredefinedFeature { ModuleFolder = "MisUserManagement", Name = "User Management", Icon = "fa-users", Description = "Manage user directory, categories, and KPIs.", Category = "core", Link = "/MisUserManagement/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisGroups", Name = "Committees & Groups", Icon = "fa-sitemap", Description = "Manage committees and working groups.", Category = "operations", Link = "/MisGroups/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisAlumni", Name = "Alumni Network Portal", Icon = "fa-graduation-cap", Description = "Alumni network and portal management.", Category = "operations", Link = "/MisAlumni/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisReports", Name = "Dynamic Interval Reports", Icon = "fa-clock", Description = "Create and schedule dynamic interval reports.", Category = "reports", Link = "/MisReports/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisForms", Name = "Form Builder & Surveys", Icon = "fa-poll", Description = "Create custom surveys, registration forms, and feedback modules.", Category = "tech", Link = "/MisForms/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisFinances", Name = "Dues & Donations", Icon = "fa-file-invoice-dollar", Description = "Complete guide for managing compulsory dues and voluntary donations.", Category = "financials", Link = "/MisFinances/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisTicketing", Name = "Event & Ticket Engine", Icon = "fa-ticket-alt", Description = "Event management and ticket engine.", Category = "operations", Link = "/MisTicketing/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisGrants", Name = "Grant Ledger & Funding", Icon = "fa-hand-holding-usd", Description = "Track awarded external funding and milestones.", Category = "financials", Link = "/MisGrants/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisProposals", Name = "Proposal Pipeline", Icon = "fa-file-signature", Description = "Internal pitches and external grant proposals.", Category = "operations", Link = "/MisProposals/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisRecruitment", Name = "Recruitment & ATS", Icon = "fa-user-plus", Description = "Job applications and applicant tracking.", Category = "core", Link = "/MisRecruitment/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisVoting", Name = "Elections & E-Voting", Icon = "fa-vote-yea", Description = "Platform elections and e-voting system.", Category = "operations", Link = "/MisVoting/Dashboard/Elections/Index" },
+            new PredefinedFeature { ModuleFolder = "MisFleet", Name = "Fleet & Equipment Tracker", Icon = "fa-building", Description = "Company asset ledger and fleet management.", Category = "operations", Link = "/MisFleet/Dashboard/Equipment/Index" },
+            new PredefinedFeature { ModuleFolder = "MisProjects", Name = "Project and Task Board", Icon = "fa-tasks", Description = "Project and task boards.", Category = "operations", Link = "/MisProjects/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisMassComm", Name = "SMS Mass Comm", Icon = "fa-comment-alt", Description = "Mass broadcast via SMS.", Category = "tech", Link = "/MisMassComm/Dashboard/Index" },
+            new PredefinedFeature { ModuleFolder = "MisNewsletter", Name = "Email Newsletter", Icon = "fa-paper-plane", Description = "Newsletter subscriptions and campaigns.", Category = "tech", Link = "/MisNewsletter/Dashboard/Wallet/Index" }
         };
     }
 }

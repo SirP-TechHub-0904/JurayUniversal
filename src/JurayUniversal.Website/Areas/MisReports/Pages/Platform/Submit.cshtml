@@ -1,23 +1,14 @@
-@page "{schemaId:long}"
+﻿@page "{schemaId:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SubmitModel
 @{
     ViewData["Title"] = "Submit Report";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
     ViewData["ActiveMenu"] = "MisReports";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Submit Report: @Model.Schema.Name</h3>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">Cancel</a>
-            <button class="btn btn-outline-info rounded-pill px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-                <i class="bi bi-question-circle me-1"></i> Help & Guide
-            </button>
-        </div>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">Cancel</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="row justify-content-center">
@@ -156,3 +147,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

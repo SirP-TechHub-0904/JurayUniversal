@@ -1,13 +1,17 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform.IndexModel
 @{
     ViewData["Title"] = "My Account Dashboard";
+    ViewData["Subtitle"] = "High-level overview and analytics.";
     ViewData["ActiveMenu"] = "UserManagement";
 }
 
-<div class="page-heading">
-    <h3>Account Directory</h3>
-    <p class="text-subtitle text-muted">Manage your profile, view KPI performance logs, check access roles, and change password.</p>
+<div class="page-heading d-flex justify-content-between align-items-center">
+    <div>
+        <h3>Account Directory</h3>
+        <p class="text-subtitle text-muted">Manage your profile, view KPI performance logs, check access roles, and change password.</p>
+    </div>
+    
 </div>
 
 <div class="page-content">
@@ -103,3 +107,4 @@
         </div>
     </div>
 </div>
+

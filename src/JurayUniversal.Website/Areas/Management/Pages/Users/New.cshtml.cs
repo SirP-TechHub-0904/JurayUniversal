@@ -15,10 +15,10 @@ namespace JurayUniversal.Website.Areas.Management.Pages.Users
     public class NewModel : PageModel
     {
         private readonly UserManager<Profile> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IUserStore<Profile> _userStore;
         private readonly IUserEmailStore<Profile> _emailStore;
-        public NewModel(UserManager<Profile> userManager, RoleManager<IdentityRole> roleManager, IUserStore<Profile> userStore, IUserEmailStore<Profile> emailStore)
+        public NewModel(UserManager<Profile> userManager, RoleManager<AppRole> roleManager, IUserStore<Profile> userStore, IUserEmailStore<Profile> emailStore)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -69,7 +69,7 @@ namespace JurayUniversal.Website.Areas.Management.Pages.Users
         }
 
 
-        public List<IdentityRole> Roles { get; set; }
+        public List<AppRole> Roles { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {

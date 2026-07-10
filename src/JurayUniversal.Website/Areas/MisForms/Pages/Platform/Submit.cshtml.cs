@@ -34,6 +34,17 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Platform
                 return Redirect($"/Identity/Account/Login?ReturnUrl=/MisForms/Platform/Submit/{id}");
             }
 
+            if (User.Identity.IsAuthenticated && !Form.AllowMultipleSubmissions)
+            {
+                var userId = _userManager.GetUserId(User);
+                bool hasSubmitted = await _context.MisFormResponses.AnyAsync(r => r.MisFormId == Form.Id && r.UserProfileId == userId);
+                if (hasSubmitted)
+                {
+                    TempData["ErrorMessage"] = "You have already submitted a response for this form. Multiple submissions are not allowed.";
+                    return RedirectToPage("./Index");
+                }
+            }
+
             return Page();
         }
 
@@ -45,6 +56,16 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Platform
             if (form.RequireLogin && !User.Identity.IsAuthenticated)
             {
                 return Redirect($"/Identity/Account/Login?ReturnUrl=/MisForms/Platform/Submit/{id}");
+            }
+
+            if (User.Identity.IsAuthenticated && !form.AllowMultipleSubmissions)
+            {
+                var currentUserId = _userManager.GetUserId(User);
+                bool hasSubmitted = await _context.MisFormResponses.AnyAsync(r => r.MisFormId == form.Id && r.UserProfileId == currentUserId);
+                if (hasSubmitted)
+                {
+                    return BadRequest("You have already submitted this form.");
+                }
             }
 
             string userId = null;

@@ -29,18 +29,30 @@ namespace JurayUniversal.Website
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Warning() // Don't log Information to avoid huge files, Warning/Error/Fatal only
+                .Enrich.FromLogContext()
+                .WriteTo.Map("Tenant", "System", (tenant, wt) => 
+                    wt.File(Path.Combine("wwwroot", "logs", tenant.ToString(), "syslog-.txt"), 
+                        rollingInterval: RollingInterval.Day,
+                        retainedFileCountLimit: 30))
+                .CreateLogger();
 
-            // Add services to the container.
+            try
+            {
+                var builder = WebApplication.CreateBuilder(args);
+                builder.Host.UseSerilog();
+
+                // Add services to the container.
 
             builder.Services.AddAWSService<IAmazonS3>();
             builder.Services
                 .AddTenantSupport(builder.Configuration)
                 .AddEntityFrameworkSqlServer<DashboardDbContext>();
 
-            builder.Services.AddIdentity<Profile, IdentityRole>()
+            builder.Services.AddIdentity<Profile, AppRole>()
                         .AddEntityFrameworkStores<DashboardDbContext>()
                         .AddDefaultTokenProviders();
 
@@ -64,6 +76,10 @@ namespace JurayUniversal.Website
             builder.Services.AddTransient<IDomainRepository, DomainRepository>();
             builder.Services.AddTransient<IEmailSendService, EmailSendService>();
             builder.Services.AddTransient<ISmsSendService, SmsSendService>();
+            builder.Services.AddTransient<IZeptoMailService, ZeptoMailService>();
+            builder.Services.AddHttpClient<IPaymentService, PixelPayService>();
+            builder.Services.AddHttpClient<PaystackService>();
+            builder.Services.AddHttpClient<JurayUniversal.Website.Services.IMisSmartAssistService, JurayUniversal.Website.Services.MisSmartAssistService>();
 
             // --- MIS Feature Repositories ---
             builder.Services.AddScoped<JurayUniversal.Website.Services.IMisAuthorizationService, JurayUniversal.Website.Services.MisAuthorizationService>();
@@ -95,6 +111,10 @@ namespace JurayUniversal.Website
                 // Reports
                 options.AddPolicy("MisReportsViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisReports", "GlobalViewer")));
                 options.AddPolicy("MisReportsEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisReports", "GlobalEditor")));
+                
+                // Grants
+                options.AddPolicy("MisGrantsViewer", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisGrants", "GlobalViewer")));
+                options.AddPolicy("MisGrantsEditor", policy => policy.Requirements.Add(new JurayUniversal.Website.Filters.MisFeatureRequirement("MisGrants", "GlobalEditor")));
             });
 
             builder.Services.AddTransient<IAuthorizationHandler, JurayUniversal.Website.Filters.MisAuthorizationHandler>();
@@ -121,9 +141,28 @@ namespace JurayUniversal.Website
                 options.LogoutPath = $"/V2/AuthV2/Account/Logout";
                 options.AccessDeniedPath = $"/V2/AuthV2/Account/AccessDenied";
             });
+
+            builder.Services.AddAuthentication()
+                .AddCookie("ApplicantAuth", options =>
+                {
+                    options.LoginPath = "/MisRecruitment/Platform/Auth/Login";
+                    options.LogoutPath = "/MisRecruitment/Platform/Auth/Logout";
+                    options.AccessDeniedPath = "/MisRecruitment/Platform/Auth/Login";
+                });
             builder.Services.AddTransient<PostmarkClient>(_ => new PostmarkClient(builder.Configuration.GetSection("PostmarkSettings")["ServerToken"]));
 
             builder.Services.AddHttpClient();
+
+            // Payment services — each registered by concrete type so Checkout can use both
+            builder.Services.AddHttpClient<JurayUniversal.Application.Services.PixelPayService>();
+            builder.Services.AddHttpClient<JurayUniversal.Application.Services.PaystackService>();
+            
+            // Mass Comm SMS Scheduler Background Service
+            builder.Services.AddHostedService<JurayUniversal.Application.Services.SmsSchedulerBackgroundService>();
+            builder.Services.AddHostedService<JurayUniversal.Application.Services.NewsletterSchedulerBackgroundService>();
+
+            // Email Background Worker for ZeptoMail Retries and Pruning
+            builder.Services.AddHostedService<JurayUniversal.Application.Services.EmailBackgroundWorker>();
 
             var app = builder.Build();
 
@@ -147,6 +186,18 @@ namespace JurayUniversal.Website
             }
 
             app.UseHttpsRedirection();
+
+            app.Use(async (context, next) =>
+            {
+                var host = context.Request.Host.Value;
+                // Sanitize host for folder creation (Windows doesn't allow colons)
+                host = host.Replace(":", "_");
+                using (Serilog.Context.LogContext.PushProperty("Tenant", host))
+                {
+                    await next();
+                }
+            });
+
             //app.UseHttpsRedirectMiddleware();
             app.UseStaticFiles();
             app.UseTenantScopeMiddleware();
@@ -157,9 +208,25 @@ namespace JurayUniversal.Website
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.MapControllers(); // enables PixelPayWebhookController at POST /api/pixelpay-webhook
             app.MapRazorPages();
 
+            // Seed MisFinances help content on startup
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<JurayUniversal.Persistence.EF.SQL.DashboardDbContext>();
+            }
+
             app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }

@@ -1,0 +1,105 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Campaigns.DetailsModel
+@{
+    ViewData["Title"] = $"Campaign: {Model.Campaign.Subject}";
+    ViewData["Subtitle"] = $"Status: {Model.Campaign.Status} | Created: {Model.Campaign.CreatedAt.ToString("g")}";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Campaigns";
+}
+
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Back to Campaigns
+    </a>
+}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success">Total Sent</h5>
+                <h2>@Model.TotalSent</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-danger">Total Failed</h5>
+                <h2>@Model.TotalFailed</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Total Pending</h5>
+                <h2>@Model.TotalPending</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h4 class="card-title mb-0">Recipient Delivery Logs</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.EmailLogs.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email Address</th>
+                            <th>Status</th>
+                            <th>Sent Date</th>
+                            <th>Error Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in Model.EmailLogs)
+                        {
+                            <tr>
+                                <td>@log.EmailAddress</td>
+                                <td>
+                                    @if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Sent)
+                                    {
+                                        <span class="badge bg-success">Sent</span>
+                                    }
+                                    else if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Failed)
+                                    {
+                                        <span class="badge bg-danger">Failed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                </td>
+                                <td>@log.SentDatetime.ToString("g")</td>
+                                <td>
+                                    @if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Failed && !string.IsNullOrEmpty(log.ErrorMessage))
+                                    {
+                                        <div class="alert alert-danger mb-0 py-1 px-2" style="font-size: 0.85rem;">
+                                            <i class="bx bx-error-circle"></i> @log.ErrorMessage
+                                        </div>
+                                    }
+                                    else if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Sent)
+                                    {
+                                        <span class="text-success"><i class="bx bx-check-circle"></i> Delivered</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No email logs generated for this campaign yet.
+            </div>
+        }
+    </div>
+</div>

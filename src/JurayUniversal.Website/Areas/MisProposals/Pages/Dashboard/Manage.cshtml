@@ -1,0 +1,76 @@
+@page
+@model JurayUniversal.Website.Areas.MisProposals.Pages.Dashboard.ManageModel
+@{
+    ViewData["Title"] = Model.MisProposal.Id == 0 ? "Draft New Proposal" : "Edit Proposal";
+}
+
+<div class="container-fluid max-w-4xl mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form method="post">
+                <input type="hidden" asp-for="MisProposal.Id" />
+                
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.Title" class="form-label fw-600">Proposal Title <span class="text-danger">*</span></label>
+                        <input asp-for="MisProposal.Title" class="form-control form-control-lg bg-light" placeholder="Enter a descriptive title" required />
+                        <span asp-validation-for="MisProposal.Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.Description" class="form-label fw-600">Brief Description</label>
+                        <textarea asp-for="MisProposal.Description" class="form-control bg-light" rows="3" placeholder="Provide a short summary of the proposal..."></textarea>
+                        <span asp-validation-for="MisProposal.Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisProposal.ProjectStartDate" class="form-label fw-600">Expected Start Date</label>
+                        <input asp-for="MisProposal.ProjectStartDate" type="date" class="form-control bg-light" />
+                        <span asp-validation-for="MisProposal.ProjectStartDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisProposal.ProjectEndDate" class="form-label fw-600">Expected End Date</label>
+                        <input asp-for="MisProposal.ProjectEndDate" type="date" class="form-control bg-light" />
+                        <span asp-validation-for="MisProposal.ProjectEndDate" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.ExecutionDuration" class="form-label fw-600">Execution Duration</label>
+                        <input asp-for="MisProposal.ExecutionDuration" class="form-control bg-light" placeholder="e.g., 6 Months, 2 Years" />
+                        <span asp-validation-for="MisProposal.ExecutionDuration" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.Address" class="form-label fw-600">Project Location / Address</label>
+                        <input asp-for="MisProposal.Address" class="form-control bg-light" placeholder="Where will this be executed?" />
+                        <span asp-validation-for="MisProposal.Address" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.TypedProposal" class="form-label fw-600">Full Proposal Content</label>
+                        <textarea asp-for="MisProposal.TypedProposal" class="form-control bg-light" rows="10" placeholder="Type the full proposal details here..."></textarea>
+                        <span asp-validation-for="MisProposal.TypedProposal" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisProposal.Note" class="form-label fw-600">Additional Notes / Remarks</label>
+                        <textarea asp-for="MisProposal.Note" class="form-control bg-light" rows="2" placeholder="Internal notes..."></textarea>
+                        <span asp-validation-for="MisProposal.Note" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm w-100 w-md-auto">
+                            @(Model.MisProposal.Id == 0 ? "Save Draft Proposal" : "Save Changes")
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

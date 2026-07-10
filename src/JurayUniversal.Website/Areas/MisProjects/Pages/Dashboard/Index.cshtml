@@ -1,0 +1,104 @@
+@page
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Agile Analytics Dashboard";
+    ViewData["Subtitle"] = "High-level overview and analytics.";
+}
+
+@section HeaderActions {
+    <a asp-page="../Projects/Index" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-diagram-3 me-1"></i> Manage Projects
+        </a>
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Total Projects</h6>
+                    <i class="bi bi-folder fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.TotalProjects</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-success text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Active Sprints</h6>
+                    <i class="bi bi-activity fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.ActiveSprints</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-info text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Total Work Items</h6>
+                    <i class="bi bi-list-task fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.TotalTasks</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-warning text-dark">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Items Done</h6>
+                    <i class="bi bi-check-circle fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.CompletedTasks</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom pt-4 pb-3">
+                <h5 class="fw-700 mb-0">Global Task Status</h5>
+            </div>
+            <div class="card-body p-4">
+                <div id="statusChart" class="w-100"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 d-flex align-items-center justify-content-center py-5">
+            <img src="/img/illustrations/dashboard.svg" style="max-height: 200px; opacity: 0.6;" onerror="this.style.display='none'">
+            <h4 class="fw-bold mt-4">Agile Workspace Ready</h4>
+            <p class="text-muted text-center px-4">Create projects, plan sprints in the backlog, and execute work on the Azure-style Kanban boards.</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var statusOptions = {
+                series: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StatusData)),
+                chart: {
+                    type: 'donut',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                },
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StatusLabels)),
+                colors: ['#6c757d', '#0d6efd', '#ffc107', '#198754'],
+                plotOptions: {
+                    pie: { donut: { size: '70%' } }
+                },
+                dataLabels: { enabled: false },
+                legend: { position: 'bottom' }
+            };
+            var statusChart = new ApexCharts(document.querySelector("#statusChart"), statusOptions);
+            statusChart.render();
+        });
+    </script>
+}

@@ -1,0 +1,163 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Lists.DetailsModel
+@{
+    ViewData["Title"] = "List Details";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Lists";
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>@TempData["error"]</div>
+        </div>
+    }
+    @if (TempData["success"] != null)
+    {
+        <div class="alert alert-success border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+            <div>@TempData["success"]</div>
+        </div>
+    }
+
+    <div class="row g-4 mb-4">
+        <!-- Import via CSV -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-filetype-csv me-2 text-primary"></i> Import from CSV</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted">Upload a CSV file containing your contacts. The format must be <code>Name, Email</code>.</p>
+                    <form method="post" asp-page-handler="ImportCsv" enctype="multipart/form-data" class="d-flex align-items-end gap-2">
+                        <input type="hidden" name="id" value="@Model.NewsletterList.Id" />
+                        <div class="flex-grow-1">
+                            <input type="file" name="csvFile" class="form-control form-control-lg shadow-none" accept=".csv" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">
+                            <i class="bi bi-cloud-upload me-1"></i> Import
+                        </button>
+                    </form>
+                    <div class="mt-3 fs-13px text-muted">
+                        <strong>Example format:</strong><br />
+                        John Doe, john@example.com<br />
+                        Jane Smith, jane@example.com
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Single Contact -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-person-plus me-2 text-success"></i> Add Single Contact</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted">Manually add a single subscriber to this mailing list.</p>
+                    <form method="post" asp-page-handler="AddSingle">
+                        <input type="hidden" name="id" value="@Model.NewsletterList.Id" />
+                        <div class="row g-2 mb-3">
+                            <div class="col-sm-5">
+                                <input type="text" name="name" class="form-control" placeholder="Full Name" required />
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="email" name="email" class="form-control" placeholder="Email Address" required />
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold">
+                                <i class="bi bi-plus-circle me-1"></i> Add Subscriber
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts Table -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">Subscribers (@Model.Contacts.Count)</h5>
+            <div class="input-group" style="width: 250px;">
+                <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                <input type="text" id="contactSearch" class="form-control bg-light border-0 shadow-none" placeholder="Search contacts...">
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                <table class="table table-hover align-middle mb-0" id="contactsTable">
+                    <thead class="bg-light sticky-top">
+                        <tr>
+                            <th class="ps-4">Name</th>
+                            <th>Email Address</th>
+                            <th>Date Added</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contact in Model.Contacts)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark contact-name">@contact.Name</td>
+                                <td class="contact-email">@contact.Email</td>
+                                <td>@contact.DateAdded.ToString("MMM dd, yyyy")</td>
+                                <td class="text-end pe-4">
+                                    <form method="post" asp-page-handler="DeleteContact" onsubmit="return confirm('Remove this contact from the list?');" class="d-inline">
+                                        <input type="hidden" name="id" value="@Model.NewsletterList.Id" />
+                                        <input type="hidden" name="contactId" value="@contact.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                            <i class="bi bi-trash"></i> Remove
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        
+                        @if (!Model.Contacts.Any())
+                        {
+                            <tr id="noContactsRow">
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <i class="bi bi-person-x fs-1 d-block mb-3"></i>
+                                    <h5>No Contacts Found</h5>
+                                    <p>Import a CSV or add contacts manually to get started.</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple client-side search filtering
+        document.getElementById('contactSearch').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#contactsTable tbody tr:not(#noContactsRow)');
+            
+            rows.forEach(row => {
+                let name = row.querySelector('.contact-name').textContent.toLowerCase();
+                let email = row.querySelector('.contact-email').textContent.toLowerCase();
+                
+                if (name.includes(filter) || email.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}
+

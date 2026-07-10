@@ -70,12 +70,13 @@ namespace JurayUniversal.Website.Pages
             var httpContext = HttpContext;
             VerificationWebDto setting = await _settingsService.ValidateWeb(httpContext);
             SuperSetting = setting.SuperSetting;
-            if (FirstNumber + SecondNumber != Captcha)
+            var misSetting = await _context.MisSettings.FirstOrDefaultAsync();
+            string recaptchaResponse = Request.Form["g-recaptcha-response"];
+            bool isCaptchaValid = await JurayUniversal.Website.Helpers.CaptchaValidator.ValidateCaptchaAsync(misSetting, FirstNumber, SecondNumber, Captcha, recaptchaResponse);
+            
+            if (!isCaptchaValid)
             {
-
-
-
-                TempData["error"] = "Invalid Submission";
+                TempData["error"] = "Security Check Failed. Please try again.";
                 return Page();
             }
 

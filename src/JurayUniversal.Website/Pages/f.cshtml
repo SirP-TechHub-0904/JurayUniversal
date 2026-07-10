@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@Model.Form.Title</title>
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
@@ -44,6 +44,10 @@
             margin-bottom: 0.5rem;
             color: #495057;
         }
+        /* Hide all formBuilder default field labels */
+        .rendered-form label[class^="formbuilder-"][class$="-label"] {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -63,8 +67,14 @@
                     
                     <hr class="my-4" />
                     
-                    <div class="d-grid">
-                        <button type="submit" id="submit-btn" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">Submit Responses</button>
+                    @await Html.PartialAsync("_Captcha")
+                      <div class="d-flex justify-content-center">
+                          <button type="button" onclick="document.getElementById('public-form').reset();" class="btn btn-outline-secondary btn-lg rounded-pill fw-bold py-3 px-5 mr-3 me-3">
+                            <i class="bi bi-eraser me-2"></i> Clear Form
+                        </button>
+                        <button type="submit" id="submit-btn" class="btn btn-primary btn-lg rounded-pill fw-bold py-3 px-5">
+                            <i class="bi bi-send me-2"></i> Submit Responses
+                        </button>
                     </div>
                 </form>
             </div>
@@ -108,13 +118,14 @@
                 // Form Builder names fields like 'text-168123', we'll store them exactly like that, 
                 // but if there are multiple values (checkboxes), we make it an array
                 $.each(formDataArray, function() {
-                    if (responseObj[this.name] !== undefined) {
-                        if (!responseObj[this.name].push) {
-                            responseObj[this.name] = [responseObj[this.name]];
+                    var fieldName = this.name.endsWith('[]') ? this.name.slice(0, -2) : this.name;
+                    if (responseObj[fieldName] !== undefined) {
+                        if (!Array.isArray(responseObj[fieldName])) {
+                            responseObj[fieldName] = [responseObj[fieldName]];
                         }
-                        responseObj[this.name].push(this.value || '');
+                        responseObj[fieldName].push(this.value || '');
                     } else {
-                        responseObj[this.name] = this.value || '';
+                        responseObj[fieldName] = this.value || '';
                     }
                 });
 
@@ -141,3 +152,4 @@
     </script>
 </body>
 </html>
+

@@ -1,0 +1,304 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Campaigns.CreateModel
+@{
+    ViewData["Title"] = "Campaign Builder";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Campaigns";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.2/css/grapes.min.css">
+<style>
+    /* Custom GrapesJS editor height */
+    #gjs {
+        height: 600px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    @if (!Model.IsEmailConfigured)
+    {
+        <div class="alert alert-warning border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-octagon-fill fs-4 me-3 text-warning"></i>
+            <div>
+                <strong>Missing Configuration:</strong> ZeptoMail is not configured. 
+                You can save campaigns as drafts, but you will not be able to <strong>Send</strong> or <strong>Schedule</strong> them until ZeptoMail is enabled in <a asp-area="MisConfiguration" asp-page="/Dashboard/MisSettings/Index" class="alert-link">MIS Settings</a>.
+            </div>
+        </div>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>@TempData["error"]</div>
+        </div>
+    }
+
+    <form method="post" id="campaignForm">
+        <input type="hidden" asp-for="Campaign.Id" />
+        <input type="hidden" asp-for="Campaign.HtmlBody" id="HtmlBodyInput" />
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-gear me-2 text-primary"></i> Campaign Settings</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Subject Line</label>
+                            <input asp-for="Campaign.Subject" class="form-control" placeholder="Enter compelling subject..." required />
+                            <span asp-validation-for="Campaign.Subject" class="text-danger fs-12px"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mailing List</label>
+                            <select asp-for="SelectedListId" asp-items="Model.Lists" class="form-select shadow-none">
+                                <option value="0">-- Choose Recipients --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Or Manual Entry (Bulk Typing)</label>
+                            <textarea asp-for="ManualEmails" class="form-control" rows="3" placeholder="john@example.com
+Jane Doe, jane@example.com"></textarea>
+                            <div class="form-text">Paste emails separated by commas or newlines. Overrides the mailing list if provided.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Schedule (Optional)</label>
+                            <input asp-for="Campaign.ScheduledDate" type="datetime-local" class="form-control" />
+                            <div class="form-text">Leave blank to send immediately.</div>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="command" value="Draft" class="btn btn-outline-secondary rounded-pill fw-bold" onclick="return saveHtmlBody();">
+                                <i class="bi bi-save me-1"></i> Save Draft
+                            </button>
+                            <button type="submit" name="command" value="Schedule" class="btn btn-info text-white rounded-pill fw-bold" onclick="return saveHtmlBody();">
+                                <i class="bi bi-calendar-check me-1"></i> Schedule
+                            </button>
+                            <button type="submit" name="command" value="SendNow" class="btn btn-primary rounded-pill fw-bold" onclick="return saveHtmlBody();"
+                                    title="Campaigns are queued and sent automatically by the background processor.">
+                                <i class="bi bi-send-check me-1"></i> Send Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-palette me-2 text-success"></i> Email Designer</h5>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-outline-primary fw-bold me-2" data-bs-toggle="modal" data-bs-target="#templatesModal">
+                                <i class="bi bi-layout-text-window-reverse me-1"></i> Templates
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-info fw-bold" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+                                <i class="bi bi-question-circle me-1"></i> Help
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="gjs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Instructions Modal -->
+<div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold" id="instructionsModalLabel"><i class="bi bi-info-circle-fill text-info me-2"></i> How to use the Email Designer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong><i class="bi bi-grid-3x3-gap-fill text-secondary me-2"></i> Open Blocks:</strong> 
+                Click the 4-squares icon in the top right of the designer to reveal draggable blocks (Text, Images, Buttons).
+            </li>
+            <li class="list-group-item">
+                <strong><i class="bi bi-arrows-move text-secondary me-2"></i> Drag & Drop:</strong> 
+                Drag any block from the right panel directly onto the white canvas area.
+            </li>
+            <li class="list-group-item">
+                <strong><i class="bi bi-cursor-text text-secondary me-2"></i> Edit Text:</strong> 
+                Double-click any text element on the canvas to edit its contents directly.
+            </li>
+            <li class="list-group-item">
+                <strong><i class="bi bi-braces text-secondary me-2"></i> Personalization:</strong> 
+                You can type <code>{{Name}}</code> or <code>{{Email}}</code> anywhere in your text, and it will be replaced with the recipient's real details when sent!
+            </li>
+        </ul>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-pill fw-bold" data-bs-dismiss="modal">Got it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Templates Modal -->
+<div class="modal fade" id="templatesModal" tabindex="-1" aria-labelledby="templatesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold" id="templatesModalLabel"><i class="bi bi-layout-text-window-reverse text-primary me-2"></i> Choose a Template</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-light">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card h-100 cursor-pointer template-card" onclick="loadTemplate('welcome')" data-bs-dismiss="modal">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-hand-wave text-primary" style="font-size: 3rem;"></i>
+                        <h6 class="fw-bold mt-3">Welcome Email</h6>
+                        <p class="text-muted small mb-0">Greet new subscribers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cursor-pointer template-card" onclick="loadTemplate('newsletter')" data-bs-dismiss="modal">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-newspaper text-success" style="font-size: 3rem;"></i>
+                        <h6 class="fw-bold mt-3">Standard Newsletter</h6>
+                        <p class="text-muted small mb-0">Weekly or monthly updates.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cursor-pointer template-card" onclick="loadTemplate('promo')" data-bs-dismiss="modal">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-tags text-danger" style="font-size: 3rem;"></i>
+                        <h6 class="fw-bold mt-3">Promotional Offer</h6>
+                        <p class="text-muted small mb-0">Sales and discounts.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 cursor-pointer template-card" onclick="loadTemplate('event')" data-bs-dismiss="modal">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-calendar-event text-warning" style="font-size: 3rem;"></i>
+                        <h6 class="fw-bold mt-3">Event Invitation</h6>
+                        <p class="text-muted small mb-0">Invite users to a webinar/event.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 cursor-pointer template-card" onclick="loadTemplate('announcement')" data-bs-dismiss="modal">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-megaphone text-info" style="font-size: 3rem;"></i>
+                        <h6 class="fw-bold mt-3">System Announcement</h6>
+                        <p class="text-muted small mb-0">Important updates or notices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .template-card:hover { border-color: #0d6efd; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); transition: all 0.2s; }
+    .cursor-pointer { cursor: pointer; }
+</style>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.2/grapes.min.js"></script>
+    <script src="https://unpkg.com/grapesjs-preset-newsletter"></script>
+    
+        <script>
+        // Initialize GrapesJS Editor
+        const editor = grapesjs.init({
+            container: '#gjs',
+            fromElement: true,
+            height: '600px',
+            width: 'auto',
+            plugins: ['gjs-preset-newsletter'],
+            storageManager: {
+                type: 'none'
+            }
+        });
+
+        // Open Blocks panel by default
+        editor.on('load', function() {
+            const pn = editor.Panels;
+            pn.getButton('views', 'open-blocks').set('active', true);
+        });
+
+        // Load existing content if editing
+        var existingContent = @Html.Raw(Json.Serialize(Model.Campaign?.HtmlBody ?? ""));
+        if(existingContent && existingContent.length > 5) { // more than just spaces
+            editor.setComponents(existingContent);
+        } else {
+            // Always show the default template on fresh load
+            loadTemplate('newsletter', true);
+        }
+
+        async function loadTemplate(templateName, isInitialLoad = false) {
+            if (!isInitialLoad) {
+                if (!confirm("Are you sure you want to load this template? This will replace your current design!")) {
+                    return;
+                }
+            }
+            
+            try {
+                console.log("Loading template: " + templateName);
+                const response = await fetch('/email-templates/' + templateName + '.html');
+                const htmlString = await response.text();
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlString, 'text/html');
+                
+                const bodyHtml = doc.body.innerHTML;
+                
+                let cssString = '';
+                const styleTags = doc.head.querySelectorAll('style');
+                styleTags.forEach(tag => {
+                    cssString += tag.innerHTML;
+                });
+
+                // Crucial fix: Clear the editor FIRST before injecting new components
+                editor.DomComponents.clear();
+                editor.Css.clear();
+
+                // Inject components and CSS
+                editor.setComponents(bodyHtml);
+                editor.Css.addRules(cssString);
+                
+            } catch (error) {
+                if(!isInitialLoad) alert("Failed to load template.");
+                console.error(error);
+            }
+        }
+        
+        function saveHtmlBody() {
+            var htmlContent = editor.getHtml();
+            var cssContent = editor.getCss();
+            var fullHtml = "<style>" + cssContent + "</style>" + htmlContent;
+
+            if (fullHtml.indexOf('{{UnsubscribeLink}}') === -1) {
+                fullHtml += "<br><br><p style='text-align:center; font-size:12px; color:#888;'>To stop receiving these emails, <a href='{{UnsubscribeLink}}'>Unsubscribe here</a>.</p>";
+            }
+
+            document.getElementById('HtmlBodyInput').value = fullHtml;
+            return true;
+        }
+    </script>
+}

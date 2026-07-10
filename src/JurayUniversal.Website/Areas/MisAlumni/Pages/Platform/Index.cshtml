@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.IndexModel
 @{
     ViewData["Title"] = Model.AlumniAlias + " Network";
@@ -6,11 +6,9 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">The @Model.AlumniAlias Network</h3>
+    
     <div class="d-flex gap-2">
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         @if (Model.IsAlumni)
         {
             <a asp-page="./MyProfile" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-person-badge me-1"></i> My Profile</a>
@@ -113,3 +111,4 @@
         </div>
     </div>
 </div>
+

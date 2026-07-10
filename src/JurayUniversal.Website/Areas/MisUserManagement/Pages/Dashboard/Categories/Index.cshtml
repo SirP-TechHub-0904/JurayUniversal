@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.IndexModel
 @{
     ViewData["Title"] = Model.CategoryAlias + " Management";
@@ -7,11 +7,9 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">@Model.CategoryAlias Directory</h3>
+    
     <div class="d-flex gap-2">
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         @if (await MisAuth.CanEditAsync(User, "MisUserManagement"))
         {
             <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> Add New @Model.CategoryAlias</a>
@@ -118,3 +116,5 @@
         });
     </script>
 }
+
+

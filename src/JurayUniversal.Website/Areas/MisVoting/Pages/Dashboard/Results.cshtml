@@ -1,0 +1,414 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.ResultsModel
+@{
+    ViewData["Title"] = "Election Results - " + Model.Election.Title;
+}
+<style>
+    /* Prevent page breaks inside important elements during PDF export */
+    #winnersSection .col-md-6, #winnersSection .col-lg-4, 
+    #liveSection .col-md-6, #liveSection .col-lg-4,
+    .card {
+        page-break-inside: avoid !important;
+    }
+</style>
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-dark text-white rounded-top-4 p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h4 class="card-title fw-bold mb-1 text-white">Live Results: @Model.Election?.Title</h4>
+            <div class="text-white-50 small">
+                <i class="bi bi-broadcast text-danger me-1"></i> Real-time Analytics & Tabulation
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-page="./Elections/Index" class="btn btn-sm btn-outline-light rounded-pill px-4">Back</a>
+        </div>
+    </div>
+    
+    <!-- Time Machine Filter Form -->
+    <div class="bg-light border-bottom p-3">
+        <form method="get" class="row g-3 align-items-center justify-content-center">
+            <div class="col-auto fw-bold text-muted">
+                <i class="bi bi-clock-history me-1"></i> Time Filter:
+            </div>
+            <div class="col-auto">
+                <input type="datetime-local" asp-for="StartDate" class="form-control form-control-sm rounded-pill px-3" />
+            </div>
+            <div class="col-auto text-muted">to</div>
+            <div class="col-auto">
+                <input type="datetime-local" asp-for="EndDate" class="form-control form-control-sm rounded-pill px-3" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-sm btn-dark rounded-pill px-4">Apply Filter</button>
+                <a asp-page="./Results" asp-route-id="@Model.Election.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-3 ms-2">Reset (All Time)</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-body p-0 bg-light">
+        <!-- Tabs Nav -->
+        <ul class="nav nav-tabs nav-fill bg-white pt-2 px-3 border-bottom-0 shadow-sm" id="resultsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold py-3 text-dark" id="live-tab" data-bs-toggle="tab" data-bs-target="#live" type="button" role="tab" aria-selected="true">
+                    <i class="bi bi-broadcast text-danger me-2"></i> Live Standings
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold py-3 text-dark" id="analytics-tab" data-bs-toggle="tab" data-bs-target="#analytics" type="button" role="tab" aria-selected="false">
+                    <i class="bi bi-graph-up me-2 text-primary"></i> Data & Analytics
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold py-3 text-dark" id="winners-tab" data-bs-toggle="tab" data-bs-target="#winners" type="button" role="tab" aria-selected="false">
+                    <i class="bi bi-award-fill me-2 text-warning"></i> Official Winners
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tabs Content -->
+        <div class="tab-content p-4 p-md-5" id="resultsTabContent">
+            
+            <!-- SECTION 1: LIVE STANDINGS -->
+            <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Broadcast Results</h5>
+                    <button onclick="exportToPdf('liveSection', 'Live_Standings.pdf')" class="btn btn-sm btn-outline-danger bg-white text-danger fw-bold rounded-pill px-4 shadow-sm"><i class="bi bi-file-earmark-pdf me-2"></i> Download Visual PDF</button>
+                </div>
+
+                <div id="liveSection">
+                    <div class="row mb-5">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                                <div class="card-body text-center">
+                                    <h6 class="text-muted text-uppercase fw-bold">Total Votes Cast</h6>
+                                    <h2 class="display-5 fw-bold text-primary mb-0">
+                                        @Model.Election.MisVoteCategories.Sum(c => c.MisCandidates.Sum(cand => cand.MisUserVotes?.Count() ?? 0))
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                                <div class="card-body text-center">
+                                    <h6 class="text-muted text-uppercase fw-bold">Total Candidates</h6>
+                                    <h2 class="display-5 fw-bold text-success mb-0">@Model.Election.MisVoteCategories.Sum(c => c.MisCandidates.Count())</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                                <div class="card-body text-center">
+                                    <h6 class="text-muted text-uppercase fw-bold">Voting Status</h6>
+                                    <h2 class="display-6 fw-bold text-info mb-0 mt-2">@Model.Election.VotingStatus</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @foreach (var category in Model.Election.MisVoteCategories.OrderBy(x => x.SortOrder))
+                    {
+                        var totalVotesInCategory = category.MisCandidates.Sum(c => c.MisUserVotes?.Count() ?? 0);
+                        var sortedCandidates = category.MisCandidates.OrderByDescending(x => x.MisUserVotes?.Count() ?? 0).ToList();
+                        int maxVotes = sortedCandidates.FirstOrDefault()?.MisUserVotes?.Count() ?? 0;
+
+                        <div class="card border-0 shadow-sm rounded-4 mb-5 overflow-hidden">
+                            <div class="card-header bg-dark text-white p-3">
+                                <h4 class="fw-bold mb-0 text-center text-uppercase">@category.Title</h4>
+                                <div class="text-center small mt-1 text-white-50">Total Valid Votes: @totalVotesInCategory</div>
+                            </div>
+                            <div class="card-body p-4 bg-white">
+                                <div class="row g-4">
+                                    @{ int rank = 1; }
+                                    @foreach (var candidate in sortedCandidates)
+                                    {
+                                        var candidateVotes = candidate.MisUserVotes?.Count() ?? 0;
+                                        var percentage = totalVotesInCategory > 0 ? Math.Round((double)candidateVotes / totalVotesInCategory * 100, 1) : 0;
+                                        bool isLeading = rank == 1 && candidateVotes > 0;
+                                        bool isWinner = isLeading && (Model.Election.VotingStatus != JurayUniversal.Domain.Enum.Enum.MisVotingStatus.Active);
+                                        var margin = rank == 1 ? "" : (candidateVotes - maxVotes).ToString("+0;-#");
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="card h-100 border-0 shadow-sm rounded-4 bg-light">
+                                                <div class="card-body text-center p-4">
+                                                    @if (isWinner)
+                                                    {
+                                                        <span class="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle rounded-pill px-3 py-2 fw-bold shadow"><i class="bi bi-trophy-fill me-1"></i> WINNER</span>
+                                                    }
+                                                    else if (isLeading)
+                                                    {
+                                                        <span class="badge bg-success position-absolute top-0 start-50 translate-middle rounded-pill px-3 py-2 fw-bold shadow">LEADING</span>
+                                                    }
+                                                    else if (candidateVotes > 0)
+                                                    {
+                                                        <span class="badge bg-danger position-absolute top-0 start-50 translate-middle rounded-pill px-3 py-2 shadow">TRAILING @margin</span>
+                                                    }
+
+                                                    <div class="mb-3 mt-2">
+                                                        @if (!string.IsNullOrEmpty(candidate.CandidateImageUrl))
+                                                        {
+                                                            <img src="@candidate.CandidateImageUrl" alt="@candidate.Title" class="rounded-circle object-fit-cover shadow border border-3 @(isLeading ? "border-success" : "border-white")" style="width: 130px; height: 130px;" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow border border-3 @(isLeading ? "border-success" : "border-white")" style="width: 130px; height: 130px;">
+                                                                <i class="bi bi-person fs-1"></i>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    
+                                                    <h5 class="fw-bold text-dark mb-3">@candidate.Title</h5>
+                                                    
+                                                    <!-- Progress Bar UI -->
+                                                    <div class="d-flex justify-content-between mb-1 small fw-bold">
+                                                        <span class="@(isLeading ? "text-success" : "text-muted")">@candidateVotes Votes</span>
+                                                        <span class="@(isLeading ? "text-success" : "text-muted")">@percentage%</span>
+                                                    </div>
+                                                    <div class="progress rounded-pill bg-white shadow-sm border" style="height: 20px;">
+                                                        <div class="progress-bar progress-bar-striped @(isLeading ? "bg-success progress-bar-animated" : "bg-secondary")" role="progressbar" style="width: @percentage%;" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        rank++;
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- SECTION 2: DATA & ANALYTICS -->
+            <div class="tab-pane fade" id="analytics" role="tabpanel" aria-labelledby="analytics-tab">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Analytics & Trends</h5>
+                    <div class="d-flex gap-2">
+                        <button onclick="exportToWord('analyticsSection', 'Election_Analytics.doc')" class="btn btn-sm btn-outline-primary bg-white text-primary fw-bold rounded-pill px-4 shadow-sm"><i class="bi bi-file-earmark-word me-2"></i> Word Report</button>
+                        <button onclick="exportToExcel()" class="btn btn-sm btn-outline-success bg-white text-success fw-bold rounded-pill px-4 shadow-sm"><i class="bi bi-file-earmark-excel me-2"></i> Raw Data (Excel)</button>
+                    </div>
+                </div>
+
+                <div id="analyticsSection">
+                    @foreach (var category in Model.Election.MisVoteCategories.OrderBy(x => x.SortOrder))
+                    {
+                        <div class="card border-0 shadow-sm rounded-4 mb-5">
+                            <div class="card-header bg-white border-bottom p-4">
+                                <h5 class="fw-bold mb-0 text-primary">@category.Title - Analysis</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4 mb-lg-0 border-end">
+                                        <h6 class="fw-bold mb-3 text-muted text-center">Vote Distribution</h6>
+                                        <div id="pie-@category.Id" class="w-100 d-flex justify-content-center"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h6 class="fw-bold mb-3 text-muted text-center">Winning Momentum (Votes Over Time)</h6>
+                                        <div id="time-@category.Id" style="height: 320px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- SECTION 3: OFFICIAL WINNERS ROSTER -->
+            <div class="tab-pane fade" id="winners" role="tabpanel" aria-labelledby="winners-tab">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Official Winners</h5>
+                    <button onclick="exportToPdf('winnersSection', 'Official_Winners_Certificate.pdf')" class="btn btn-sm btn-warning fw-bold rounded-pill px-4 shadow-sm"><i class="bi bi-award-fill me-2"></i> Download Certificate</button>
+                </div>
+
+                <div id="winnersSection" class="p-4 bg-white rounded-4 shadow-sm border border-2 border-warning">
+                    <div class="text-center mb-5 border-bottom pb-4">
+                        @if(!string.IsNullOrEmpty(Model.Election.ElectionBannerUrl))
+                        {
+                            <img src="@Model.Election.ElectionBannerUrl" class="img-fluid rounded-3 mb-4" style="max-height: 150px;" />
+                        }
+                        <h2 class="fw-bold text-uppercase text-dark">Certificate of Results</h2>
+                        <h4 class="text-muted">@Model.Election.Title</h4>
+                        <div class="mt-2 text-muted small">
+                            Generated on: @DateTime.UtcNow.ToString("f") UTC <br/>
+                            @if(!string.IsNullOrEmpty(Model.FilteredRangeString))
+                            {
+                                <strong>Filtered Range: </strong> @Model.FilteredRangeString
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row g-5 justify-content-center">
+                        @foreach (var category in Model.Election.MisVoteCategories.OrderBy(x => x.SortOrder))
+                        {
+                            var winner = category.MisCandidates.OrderByDescending(x => x.MisUserVotes?.Count() ?? 0).FirstOrDefault();
+                            var winnerVotes = winner?.MisUserVotes?.Count() ?? 0;
+                            var totalVotesInCategory = category.MisCandidates.Sum(c => c.MisUserVotes?.Count() ?? 0);
+                            var percentage = totalVotesInCategory > 0 ? Math.Round((double)winnerVotes / totalVotesInCategory * 100, 1) : 0;
+
+                            if (winner != null && winnerVotes > 0)
+                            {
+                                <div class="col-md-6 col-lg-4 text-center">
+                                    <h5 class="text-muted text-uppercase fw-bold mb-3 border-bottom pb-2">@category.Title</h5>
+                                    <div class="position-relative d-inline-block mb-3">
+                                        @if (!string.IsNullOrEmpty(winner.CandidateImageUrl))
+                                        {
+                                            <img src="@winner.CandidateImageUrl" alt="@winner.Title" class="rounded-circle object-fit-cover shadow-lg border border-5 border-warning" style="width: 160px; height: 160px;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg border border-5 border-warning" style="width: 160px; height: 160px;">
+                                                <i class="bi bi-person-check-fill display-3"></i>
+                                            </div>
+                                        }
+                                        <div class="position-absolute bottom-0 end-0 bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 45px; height: 45px;">
+                                            <i class="bi bi-star-fill fs-5"></i>
+                                        </div>
+                                    </div>
+                                    <h3 class="fw-bold text-dark mb-1">@winner.Title</h3>
+                                    <div class="badge bg-light text-dark border px-3 py-2 fw-bold fs-6 mt-2">
+                                        @winnerVotes Votes (@percentage%)
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Table for Clean Excel Export -->
+<div style="display: none;">
+    <table id="exportTable">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Candidate</th>
+                <th>Total Votes</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody id="exportTableBody">
+            <!-- Populated via JS from JSON -->
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var pieData = @Html.Raw(Model.PieChartDataJson);
+            var timeSeriesData = @Html.Raw(Model.TimeSeriesDataJson);
+            var exportData = @Html.Raw(Model.ExportTableDataJson);
+
+            // Populate Excel Table
+            var tbody = document.getElementById('exportTableBody');
+            exportData.forEach(function(row) {
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td>' + row.Category + '</td>' +
+                               '<td>' + row.Candidate + '</td>' +
+                               '<td>' + row.Votes + '</td>' +
+                               '<td>' + row.Percentage + '</td>';
+                tbody.appendChild(tr);
+            });
+
+            // Render Charts for each Category
+            Object.keys(pieData).forEach(function(catId) {
+                
+                // 1. Render Pie Chart
+                var pieOptions = {
+                    series: pieData[catId].series,
+                    labels: pieData[catId].labels,
+                    chart: { type: 'donut', height: 320, fontFamily: 'Inter, sans-serif' },
+                    plotOptions: { pie: { donut: { size: '65%' } } },
+                    dataLabels: { enabled: true, formatter: function (val) { return val.toFixed(1) + "%" } },
+                    legend: { position: 'bottom' }
+                };
+                
+                // Only render if there's data
+                if (pieData[catId].series.reduce((a, b) => a + b, 0) > 0) {
+                    new ApexCharts(document.querySelector("#pie-" + catId), pieOptions).render();
+                } else {
+                    document.querySelector("#pie-" + catId).innerHTML = "<p class='text-muted mt-5'>No votes yet to display chart.</p>";
+                }
+
+                // 2. Render Time-Series Chart
+                var timeOptions = {
+                    series: timeSeriesData[catId],
+                    chart: { 
+                        type: 'stepline', 
+                        height: 300, 
+                        fontFamily: 'Inter, sans-serif',
+                        animations: { enabled: false }, // disable animations for clean PDF export
+                        toolbar: { show: false }
+                    },
+                    stroke: { curve: 'stepline', width: 3 },
+                    dataLabels: { enabled: false },
+                    xaxis: { type: 'datetime' },
+                    yaxis: { min: 0, labels: { formatter: function(val) { return Math.floor(val); } } },
+                    legend: { position: 'top' },
+                    tooltip: { x: { format: 'dd MMM yyyy HH:mm' } }
+                };
+
+                var timeDataCount = timeSeriesData[catId].reduce((acc, series) => acc + series.data.length, 0);
+                if (timeDataCount > 0) {
+                    new ApexCharts(document.querySelector("#time-" + catId), timeOptions).render();
+                } else {
+                    document.querySelector("#time-" + catId).innerHTML = "<p class='text-muted text-center mt-5'>No votes yet to track momentum.</p>";
+                }
+            });
+        });
+
+        function exportToExcel() {
+            var table = document.getElementById("exportTable");
+            var html = table.outerHTML;
+            var url = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(html);
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            downloadLink.href = url;
+            downloadLink.download = 'Election_Results.xls';
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        function exportToWord(elementId, filename) {
+            var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Election Results</title></head><body>";
+            var postHtml = "</body></html>";
+            var element = document.getElementById(elementId);
+            if(!element) return;
+            var html = preHtml + element.innerHTML + postHtml;
+
+            var blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            if(navigator.msSaveOrOpenBlob ){
+                navigator.msSaveOrOpenBlob(blob, filename);
+            }else{
+                downloadLink.href = url;
+                downloadLink.download = filename;
+                downloadLink.click();
+            }
+            document.body.removeChild(downloadLink);
+        }
+
+        function exportToPdf(elementId, filename) {
+            var element = document.getElementById(elementId);
+            if(!element) return;
+            
+            var opt = {
+              margin:       [0.5, 0.3, 0.5, 0.3],
+              filename:     filename,
+              image:        { type: 'jpeg', quality: 1.0 },
+              html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 },
+              jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+              pagebreak:    { mode: ['css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+}

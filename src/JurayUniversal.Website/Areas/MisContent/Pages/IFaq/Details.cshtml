@@ -1,0 +1,64 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IFaq.DetailsModel
+
+@{
+    ViewData["Title"] = "FAQ Details";
+    ViewData["BackUrl"] = "./Index";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Message)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Message)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.SortOrder)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.SortOrder)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FAQ.Show)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FAQ.Show)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+

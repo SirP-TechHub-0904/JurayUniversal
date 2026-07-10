@@ -1,18 +1,13 @@
-@page "{id:long}"
+﻿@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.DetailsModel
 @{
     ViewData["Title"] = "Report Details";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
     ViewData["ActiveMenu"] = "MisReports";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Report Details: @Model.Submission.MisReportSchema?.Name</h3>
-            <p class="text-subtitle text-muted">Submitted on @Model.Submission.SubmittedAt.ToString("g")</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-secondary rounded-pill px-4 me-2">
                 <i class="bi bi-arrow-left"></i> Back to Dashboard
             </a>
             @if (Model.CanEdit)
@@ -21,12 +16,7 @@
                     <i class="bi bi-pencil-square"></i> Edit Report
                 </a>
             }
-            <button class="btn btn-outline-info rounded-pill px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-                <i class="bi bi-question-circle me-1"></i> Help & Guide
-            </button>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="row justify-content-center">
@@ -166,3 +156,5 @@
 </div>
 
 <partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+
+

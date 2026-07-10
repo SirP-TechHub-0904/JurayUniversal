@@ -34,6 +34,12 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Dashboard
 
             [Display(Name = "Require users to be logged in?")]
             public bool RequireLogin { get; set; }
+
+            [Display(Name = "Allow users to submit multiple times?")]
+            public bool AllowMultipleSubmissions { get; set; } = true;
+
+            [Display(Name = "Allow users to view their responses?")]
+            public bool AllowUserToViewResponses { get; set; } = false;
         }
 
         public void OnGet()
@@ -42,6 +48,7 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Dashboard
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // ModelState.Remove("MisForm.Responses");
             // if (!ModelState.IsValid)
             // {
             //     return Page();
@@ -52,6 +59,8 @@ namespace JurayUniversal.Website.Areas.MisForms.Pages.Dashboard
                 Title = Input.Title,
                 Description = Input.Description,
                 RequireLogin = Input.RequireLogin,
+                AllowMultipleSubmissions = Input.AllowMultipleSubmissions,
+                AllowUserToViewResponses = Input.AllowUserToViewResponses,
                 ShortCode = GenerateShortCode(),
                 SchemaJson = "[]", // Empty builder schema initially
                 IsPublished = false,

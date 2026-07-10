@@ -1,7 +1,8 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.ListModel
 @{
     ViewData["Title"] = "User Directory";
+    ViewData["Subtitle"] = "Overview and management of all records.";
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "Users";
 }
@@ -9,11 +10,9 @@
 
 
 <div class="mis-page-header d-flex justify-content-between align-items-center">
-    <h3 class="mis-page-title mb-0">User Directory</h3>
+    
     <div class="d-flex gap-2">
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         @if (Model.EnableListDownload)
         {
             <!-- Action button can go here if needed -->
@@ -357,7 +356,7 @@
                 });
             };
 
-            // ── Column Name Map for Export ──────────────────────────────
+            // â”€â”€ Column Name Map for Export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             var columnNameMap = {
                 0: 'checkbox',
                 1: 'sn',
@@ -395,3 +394,5 @@
         });
     </script>
 }
+
+

@@ -1,0 +1,10 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Platform.Auth.LogoutModel
+@{
+    ViewData["Title"] = "Logging out...";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<script>
+    window.location.href = '@Url.Content("~/MisRecruitment/Platform/JobBoard")';
+</script>

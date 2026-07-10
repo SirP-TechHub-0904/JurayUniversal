@@ -1,0 +1,186 @@
+@page
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Elections.IndexModel
+@{
+    ViewData["Title"] = "Elections Management";
+    ViewData["Subtitle"] = "Overview and management of all records.";
+}
+
+@section HeaderActions {
+    <a asp-page="./Create" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg me-1"></i> New Election
+        </a>
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-xl-4 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Total Elections</h6>
+                    <i class="bi bi-box fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.TotalElections</h2>
+                <p class="mb-0 mt-2 small opacity-75">Hosted on platform</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-success text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Total Votes Cast</h6>
+                    <i class="bi bi-envelope-paper fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.TotalVotesCast</h2>
+                <p class="mb-0 mt-2 small opacity-75">Platform-wide</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100 bg-info text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-600 mb-0 opacity-75">Accredited Voters</h6>
+                    <i class="bi bi-person-check fs-3 opacity-50"></i>
+                </div>
+                <h2 class="fw-800 mb-0 display-5">@Model.TotalAccreditedVoters</h2>
+                <p class="mb-0 mt-2 small opacity-75">For closed elections</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom pt-4 pb-3">
+                <h5 class="fw-700 mb-0">Recent Elections Turnout</h5>
+            </div>
+            <div class="card-body p-4">
+                <div id="turnoutChart" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom pt-4 pb-3">
+                <h5 class="fw-700 mb-0">Election Status</h5>
+            </div>
+            <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                <div id="statusChart" class="w-100"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white border-bottom p-4">
+        <h5 class="mb-0 fw-bold">Elections Directory</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Elections)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.Title</td>
+                            <td>
+                                @if(item.ElectionType == Domain.Enum.Enum.MisElectionType.Open)
+                                {
+                                    <span class="badge bg-success">Open (Pool)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Closed (Accreditation)</span>
+                                }
+                            </td>
+                            <td>@item.VotingStatus</td>
+                            <td>@item.StartDate.ToString("MMM dd, yyyy")</td>
+                            <td>@item.EndDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white rounded-pill">Manage</a>
+                                <a asp-page="../Results" asp-route-id="@item.Id" class="btn btn-sm btn-primary rounded-pill ms-1"><i class="bi bi-bar-chart"></i> Results</a>
+                                @if (item.ElectionType == Domain.Enum.Enum.MisElectionType.Closed)
+                                {
+                                    <a asp-page="./Accreditation" asp-route-id="@item.Id" class="btn btn-sm btn-secondary rounded-pill ms-1">Checklist</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Turnout Chart (Bar Chart)
+            var turnoutOptions = {
+                series: [{
+                    name: 'Total Votes Cast',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ElectionVotesData))
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 4,
+                        columnWidth: '50%',
+                    }
+                },
+                colors: ['#0d6efd'],
+                dataLabels: {
+                    enabled: false
+                },
+                xaxis: {
+                    categories: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ElectionLabels)),
+                }
+            };
+            var turnoutChart = new ApexCharts(document.querySelector("#turnoutChart"), turnoutOptions);
+            turnoutChart.render();
+
+            // Status Chart (Donut)
+            var statusOptions = {
+                series: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StatusData)),
+                chart: {
+                    type: 'donut',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                },
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StatusLabels)),
+                colors: ['#ffc107', '#198754', '#0d6efd', '#dc3545'],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '70%'
+                        }
+                    }
+                },
+                dataLabels: { enabled: false },
+                legend: {
+                    position: 'bottom'
+                }
+            };
+            var statusChart = new ApexCharts(document.querySelector("#statusChart"), statusOptions);
+            statusChart.render();
+        });
+    </script>
+}

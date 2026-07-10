@@ -1,0 +1,34 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Platform.Wallet.VerifyFundModel
+@{
+    ViewData["Title"] = "Verify Payment";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 text-center">
+        @if (Model.IsSuccessful)
+        {
+            <div class="card border-success border-2 shadow">
+                <div class="card-body py-5">
+                    <i class="fa fa-check-circle fa-5x text-success mb-4"></i>
+                    <h3 class="text-success">Payment Verified!</h3>
+                    <p class="lead">@Model.StatusMessage</p>
+                    <a href="/MisMassComm/Platform/Wallet/Index" class="btn btn-primary mt-3 btn-lg">Return to Wallet</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card border-danger border-2 shadow">
+                <div class="card-body py-5">
+                    <i class="fa fa-times-circle fa-5x text-danger mb-4"></i>
+                    <h3 class="text-danger">Payment Failed</h3>
+                    <p class="lead">@Model.StatusMessage</p>
+                    <a href="/MisMassComm/Platform/Wallet/Fund" class="btn btn-outline-danger mt-3 btn-lg">Try Again</a>
+                    <a href="/MisMassComm/Platform/Wallet/Index" class="btn btn-outline-secondary mt-3 btn-lg ms-2">Back to Wallet</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

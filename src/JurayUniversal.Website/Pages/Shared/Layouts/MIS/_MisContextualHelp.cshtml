@@ -17,46 +17,84 @@
         .Include(p => p.MisManual)
         .FirstOrDefaultAsync(p => p.RouteKey == currentPath);
 
+    // If not found, try appending /Index (common convention for Razor Pages routing)
+    if (manualPage == null && !string.IsNullOrEmpty(currentPath) && !currentPath.EndsWith("/Index", StringComparison.OrdinalIgnoreCase))
+    {
+        string fallbackPath = currentPath.TrimEnd('/') + "/Index";
+        manualPage = await _context.MisManualPages
+            .Include(p => p.MisManualElements)
+            .Include(p => p.MisManual)
+            .FirstOrDefaultAsync(p => p.RouteKey == fallbackPath);
+    }
+
     bool isSuperAdmin = User.IsInRole("mSuperAdmin");
 }
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="misHelpOffcanvas" aria-labelledby="misHelpOffcanvasLabel">
-    <div class="offcanvas-header bg-light border-bottom">
-        <h5 class="offcanvas-title" id="misHelpOffcanvasLabel">
+<div class="offcanvas offcanvas-end border-start-0 shadow" tabindex="-1" id="misHelpOffcanvas" aria-labelledby="misHelpOffcanvasLabel" style="border-radius: 1rem 0 0 1rem; overflow: hidden;">
+    <div class="offcanvas-header bg-white border-bottom pb-3 pt-4 px-4">
+        <h5 class="offcanvas-title fw-800" id="misHelpOffcanvasLabel">
             <i class="bi bi-question-circle text-primary me-2"></i> Page Guide
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
+    <div class="offcanvas-body px-4 pt-4 pb-5">
         @if (manualPage != null)
         {
             <div class="mb-4">
-                <h6 class="fw-bold text-primary">@(manualPage.MisManual?.Title ?? "Platform Guide")</h6>
-                <h4>@manualPage.PageTitle</h4>
-                <p class="text-muted">@manualPage.PageDescription</p>
+                <span class="badge bg-primary bg-opacity-10 text-primary mb-2 rounded-pill px-3 py-2">@(manualPage.MisManual?.Title ?? "Platform Guide")</span>
+                <h4 class="fw-800 text-dark mb-2">@manualPage.PageTitle</h4>
+                <p class="text-muted fs-14px">@manualPage.PageDescription</p>
             </div>
 
             @if (manualPage.MisManualElements != null && manualPage.MisManualElements.Any())
             {
-                <h6 class="border-bottom pb-2 mb-3 fw-bold">Page Elements</h6>
-                <div class="accordion" id="helpElementsAccordion">
-                    @foreach (var element in manualPage.MisManualElements)
+                <hr class="my-4" />
+                <h6 class="fw-700 text-dark mb-3"><i class="bi bi-layers me-2 text-primary"></i> Page Elements</h6>
+                <div class="d-flex flex-column gap-3">
+                    @foreach (var element in manualPage.MisManualElements.OrderBy(e => e.Id))
                     {
                         // Check Role
                         bool hasAccess = isSuperAdmin || string.IsNullOrEmpty(element.RequiredRole) || User.IsInRole(element.RequiredRole);
 
                         if (hasAccess)
                         {
-                            <div class="accordion-item border-0 mb-2 shadow-sm rounded">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed rounded fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#element-@element.Id">
-                                        <i class="bi bi-cursor-fill me-2 text-info"></i> @element.ElementName
-                                    </button>
-                                </h2>
-                                <div id="element-@element.Id" class="accordion-collapse collapse" data-bs-parent="#helpElementsAccordion">
-                                    <div class="accordion-body bg-light rounded-bottom text-muted fs-14px">
-                                        @element.Description
-                                    </div>
+                            string iconClass = "bi-cursor-fill";
+                            string bgClass = "bg-light";
+                            string textClass = "text-dark";
+
+                            switch (element.ElementType?.ToLower())
+                            {
+                                case "button":
+                                    bgClass = "bg-primary bg-opacity-10";
+                                    textClass = "text-primary";
+                                    iconClass = "bi-cursor-fill";
+                                    break;
+                                case "form":
+                                    bgClass = "bg-success bg-opacity-10";
+                                    textClass = "text-success";
+                                    iconClass = "bi-ui-checks";
+                                    break;
+                                case "card":
+                                    bgClass = "bg-info bg-opacity-10";
+                                    textClass = "text-info";
+                                    iconClass = "bi-card-list";
+                                    break;
+                                case "toggle":
+                                    bgClass = "bg-warning bg-opacity-10";
+                                    textClass = "text-warning";
+                                    iconClass = "bi-toggle-on";
+                                    break;
+                                default:
+                                    bgClass = "bg-secondary bg-opacity-10";
+                                    textClass = "text-secondary";
+                                    iconClass = "bi-record-circle";
+                                    break;
+                            }
+
+                            <div class="alert @bgClass border-0 rounded-4 p-3 mb-0">
+                                <h6 class="fw-bold @textClass mb-2"><i class="bi @iconClass me-2"></i> @element.ElementName</h6>
+                                <div class="text-dark fs-14px mb-0" style="line-height: 1.6;">
+                                    @Html.Raw(element.Description)
                                 </div>
                             </div>
                         }
@@ -65,20 +103,28 @@
             }
             else
             {
-                 <div class="alert alert-light text-muted">No specific elements documented for this page yet.</div>
+                <div class="text-center py-5 mt-4">
+                    <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 70px; height: 70px;">
+                        <i class="bi bi-stars text-warning fs-1"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark">Ready to Explore</h6>
+                    <p class="text-muted fs-14px mb-0">This page doesn't have specific interactive elements documented yet, but it's designed to be intuitive!</p>
+                </div>
             }
         }
         else
         {
-            <div class="text-center py-5">
-                <i class="bi bi-journal-x text-muted fs-1 mb-3 d-block"></i>
-                <h5>No Guide Found</h5>
-                <p class="text-muted">There is currently no specific documentation configured for this exact page route (@currentPath).</p>
+            <div class="text-center py-5 mt-4">
+                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 70px; height: 70px;">
+                    <i class="bi bi-map text-muted fs-1"></i>
+                </div>
+                <h6 class="fw-bold text-dark">No Guide Found</h6>
+                <p class="text-muted fs-14px mb-0">There is currently no specific documentation configured for this exact page route (@currentPath).</p>
             </div>
         }
         
-        <div class="mt-5 border-top pt-3 text-center">
-            <a href="/MisManual/Index" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-book"></i> View Full Knowledge Base</a>
+        <div class="mt-5 pt-3 text-center">
+            <a href="/kb" target="_blank" class="btn btn-primary rounded-pill px-4 fw-600 shadow-sm"><i class="bi bi-journal-bookmark-fill me-2"></i> View Full Knowledge Base</a>
         </div>
     </div>
 </div>

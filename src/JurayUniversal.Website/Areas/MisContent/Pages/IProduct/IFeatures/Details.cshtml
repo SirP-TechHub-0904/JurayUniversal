@@ -1,0 +1,61 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IProduct.IFeatures.DetailsModel
+
+@{
+    ViewData["Title"] = "PRODUCT FEATURE details";
+    ViewData["BackUrl"] = "./Index";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductFeature.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductFeature.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductFeature.Product)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.ProductFeature.Product.FullDescription)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

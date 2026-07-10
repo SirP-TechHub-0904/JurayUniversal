@@ -1,0 +1,374 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IPages.Main.DetailsModel
+
+@{
+    ViewData["Title"] = $"{Model.WebPage.Title} Details";
+    ViewData["BackUrl"] = "./Index";
+}
+
+@section HeaderActions {
+    <a asp-page="/ITemplate/Index" target="_blank" class="btn btn-outline-primary rounded-pill px-4 me-2"><i class="fas fa-palette me-1"></i> View Templates</a>
+    <a asp-page="./Edit" asp-route-id="@Model.WebPage.Id" class="btn bg-gradient-warning rounded-pill px-4"><i class="fas fa-edit me-1"></i> Update Page</a>
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-header p-0 border-bottom">
+        <ul class="nav nav-tabs px-4 pt-3 border-0" id="pageDetailsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold px-4" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">
+                    Overview
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4" id="sections-tab" data-bs-toggle="tab" data-bs-target="#sections" type="button" role="tab" aria-controls="sections" aria-selected="false">
+                    Page Sections <span class="badge bg-secondary ms-1">@Model.WebPage.PageSections.Count()</span>
+                </button>
+            </li>
+            <li class="nav-item ms-auto" role="presentation">
+                <button class="nav-link fw-bold px-4 text-primary" id="add-section-tab" data-bs-toggle="tab" data-bs-target="#add-section" type="button" role="tab" aria-controls="add-section" aria-selected="false">
+                    <i class="fas fa-plus-circle me-1"></i> Add New Section
+                </button>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="tab-content" id="pageDetailsTabContent">
+            
+            <!-- OVERVIEW TAB -->
+            <div class="tab-pane fade show active p-4 p-md-5" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="fw-bold text-primary mb-4 border-bottom pb-2">Page Configuration Settings</h5>
+                        
+                        <dl class="row mb-0">
+                            <dt class="col-sm-5 text-muted">Sort Order</dt>
+                            <dd class="col-sm-7 fw-bold">@Html.DisplayFor(model => model.WebPage.SortOrder)</dd>
+
+                            <dt class="col-sm-5 text-muted">@Html.DisplayNameFor(model => model.WebPage.ShowInMainTop)</dt>
+                            <dd class="col-sm-7 fw-bold">@Html.DisplayFor(model => model.WebPage.ShowInMainTop)</dd>
+
+                            <dt class="col-sm-5 text-muted">@Html.DisplayNameFor(model => model.WebPage.ShowInMenuDropDown)</dt>
+                            <dd class="col-sm-7 fw-bold">@Html.DisplayFor(model => model.WebPage.ShowInMenuDropDown)</dd>
+
+                            <dt class="col-sm-5 text-muted">@Html.DisplayNameFor(model => model.WebPage.ShowInMainMenu)</dt>
+                            <dd class="col-sm-7 fw-bold">@Html.DisplayFor(model => model.WebPage.ShowInMainMenu)</dd>
+
+                            <dt class="col-sm-5 text-muted">@Html.DisplayNameFor(model => model.WebPage.ShowInFooter)</dt>
+                            <dd class="col-sm-7 fw-bold">@Html.DisplayFor(model => model.WebPage.ShowInFooter)</dd>
+
+                            <dt class="col-sm-5 text-muted">Publish Status</dt>
+                            <dd class="col-sm-7 fw-bold">
+                                @if(Model.WebPage.Publish) { <span class="badge bg-success">Published</span> } 
+                                else { <span class="badge bg-danger">Hidden</span> }
+                            </dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="col-md-6 mt-4 mt-md-0">
+                        @if (!String.IsNullOrEmpty(Model.WebPage.ImageUrl))
+                        {
+                            <h5 class="fw-bold text-primary mb-4 border-bottom pb-2">Background Image</h5>
+                            <div class="text-center rounded overflow-hidden shadow-sm" style="background: #f8f9fa;">
+                                <img src="@Model.WebPage.ImageUrl" class="img-fluid" style="max-height: 250px; object-fit: contain;" alt="Page Background" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTIONS TAB -->
+            <div class="tab-pane fade p-4" id="sections" role="tabpanel" aria-labelledby="sections-tab">
+                <div class="table-responsive">
+                    <table id="example1" class="table table-hover table-bordered table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Title</th>
+                                <th>Home Sort From</th>
+                                <th>Show In Home</th>
+                                <th>Home Page Sort Order</th>
+                                <th>Media</th>
+                                <th>Template</th>
+                                <th>Add to Ribbon</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int xxsnn = 0; }
+                            @foreach (var item in Model.WebPage.PageSections)
+                            {
+                                xxsnn++;
+                                <tr>
+                                    <td>@xxsnn</td>
+                                    <td class="fw-bold">@item.Title</td>
+                                    <td>@Html.DisplayFor(model => item.HomeSortFrom)</td>
+                                    <td>
+                                        @if(item.ShowInHome) { <i class="bi bi-check-circle-fill text-success"></i> }
+                                        else { <i class="bi bi-x-circle-fill text-danger"></i> }
+                                    </td>
+                                    <td>@Html.DisplayFor(model => item.HomePageSortOrder)</td>
+                                    <td>
+                                        @if (!String.IsNullOrEmpty(item.ImageUrl))
+                                        {
+                                            <img src="@item.ImageUrl" class="rounded shadow-sm" style="height:40px; width:40px; object-fit:cover;" />
+                                        }
+                                        @if (!String.IsNullOrEmpty(item.VideoUrl))
+                                        {
+                                            <span class="badge bg-info"><i class="bi bi-play-circle"></i> Video</span>
+                                        }
+                                    </td>
+                                    <td><span class="badge bg-secondary">Tpl @item.TemplateKey</span></td>
+                                    <td>@Html.DisplayFor(model => item.AddToRibon)</td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-success dropdown-toggle dropdown-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Manage
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                                <li><a class="dropdown-item" asp-page="/IPages/Section/Details" asp-route-id="@item.Id"><i class="bi bi-eye text-primary me-2"></i> Details</a></li>
+                                                <li><a class="dropdown-item" asp-page="/IPages/Section/Edit" asp-route-id="@item.Id"><i class="bi bi-pencil text-warning me-2"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" asp-page="/IPages/Preview" asp-route-secid="@item.Id" target="_blank"><i class="bi bi-window text-info me-2"></i> Preview</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" asp-page="/IPages/Section/Delete" asp-route-id="@item.Id"><i class="bi bi-trash me-2"></i> Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ADD SECTION TAB -->
+            <div class="tab-pane fade p-4 p-md-5 bg-light" id="add-section" role="tabpanel" aria-labelledby="add-section-tab">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-white border-bottom py-3">
+                                <h5 class="fw-bold mb-0 text-primary">Create New Page Section</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <form method="post" enctype="multipart/form-data" asp-page-handler="Section">
+                                    <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 shadow-sm"></div>
+                                    <input asp-for="PageSection.WebPageId" type="hidden" value="@Model.WebPage.Id" />
+                                    
+                                    <h6 class="fw-bold text-muted mb-3 text-uppercase" style="font-size: 0.8rem;">General Information</h6>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.Title" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.Title" class="form-control" placeholder="Enter main title" />
+                                                <span asp-validation-for="PageSection.Title" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.MiniTitle" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.MiniTitle" class="form-control" placeholder="Enter mini title / subtitle" />
+                                                <span asp-validation-for="PageSection.MiniTitle" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label asp-for="PageSection.Qoute" class="form-label fw-semibold">Quote (Optional)</label>
+                                        <input asp-for="PageSection.Qoute" class="form-control" placeholder="Enter a highlighted quote" />
+                                        <span asp-validation-for="PageSection.Qoute" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label asp-for="PageSection.Description" class="form-label fw-semibold">Brief Description</label>
+                                        <textarea asp-for="PageSection.Description" class="form-control" rows="3" placeholder="A short summary of this section"></textarea>
+                                        <span asp-validation-for="PageSection.Description" class="text-danger small"></span>
+                                    </div>
+                                    
+                                    <div class="form-group mb-5">
+                                        <label asp-for="PageSection.FullDescription" class="form-label fw-semibold">Full Content Body</label>
+                                        <textarea asp-for="PageSection.FullDescription" class="form-control summernote"></textarea>
+                                        <span asp-validation-for="PageSection.FullDescription" class="text-danger small"></span>
+                                    </div>
+
+                                    <hr class="my-4 border-light" />
+                                    <h6 class="fw-bold text-muted mb-3 text-uppercase" style="font-size: 0.8rem;">Call to Action & Links</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.ButtonText" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.ButtonText" class="form-control" placeholder="e.g. Learn More" />
+                                                <span asp-validation-for="PageSection.ButtonText" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.ButtonLink" class="form-label fw-semibold"></label>
+                                                <select asp-for="PageSection.ButtonLink" class="form-select" asp-items="ViewBag.WebPageId">
+                                                    <option value="0"># (No Link)</option>
+                                                    <option value="Direct">Direct Custom Link</option>
+                                                    <option value="000">Contact Us Page</option>
+                                                </select>
+                                                <span asp-validation-for="PageSection.ButtonLink" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.DirectUrl" class="form-label fw-semibold">Direct Custom URL</label>
+                                                <input asp-for="PageSection.DirectUrl" class="form-control" placeholder="https://" />
+                                                <span asp-validation-for="PageSection.DirectUrl" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4 border-light" />
+                                    <h6 class="fw-bold text-muted mb-3 text-uppercase" style="font-size: 0.8rem;">Sorting & Display Flags</h6>
+
+                                    <div class="row bg-light p-3 rounded mb-4 mx-0">
+                                        <div class="col-md-3 col-sm-6 mb-3">
+                                            <div class="form-check form-switch mt-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.ShowInHome">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.ShowInHome">Show in Home</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 mb-3">
+                                            <div class="form-check form-switch mt-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.DisableButton">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.DisableButton">Disable Button</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 mb-3">
+                                            <div class="form-check form-switch mt-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.Disable">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.Disable">Disable Section</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 mb-3">
+                                            <div class="form-check form-switch mt-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.FixedAfterFooter">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.FixedAfterFooter">After Footer</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.HomeSortFrom" class="form-label fw-semibold"></label>
+                                                @Html.DropDownListFor(model => model.PageSection.HomeSortFrom, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.HomeSortFrom))), new { @class = "form-select" })
+                                                <span asp-validation-for="PageSection.HomeSortFrom" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.HomePageSortOrder" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.HomePageSortOrder" class="form-control" type="number" />
+                                                <span asp-validation-for="PageSection.HomePageSortOrder" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.PageSortOrder" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.PageSortOrder" class="form-control" type="number" />
+                                                <span asp-validation-for="PageSection.PageSortOrder" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.TemplateKey" class="form-label fw-semibold">Design Template</label>
+                                                <select asp-for="PageSection.TemplateKey" class="form-select">
+                                                    @for (int i = 1; i <= 53; i++)
+                                                    {
+                                                        <option value="@i">Template Style @i</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.BlogSectionPosition" class="form-label fw-semibold">Blog Display Position</label>
+                                                @Html.DropDownListFor(model => model.PageSection.BlogSectionPosition, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.BlogSectionPosition))), new { @class = "form-select" })
+                                            </div>
+                                            <div class="form-check form-switch mb-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.ShowSectionInBlog">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.ShowSectionInBlog">Show in Blogs</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4 border-light" />
+                                    <h6 class="fw-bold text-muted mb-3 text-uppercase" style="font-size: 0.8rem;">Ribbon (Side Menu) Setup</h6>
+
+                                    <div class="row bg-light p-3 rounded mb-4 mx-0">
+                                        <div class="col-md-4">
+                                            <div class="form-check form-switch mt-4">
+                                                <input class="form-check-input" type="checkbox" asp-for="PageSection.AddToRibon">
+                                                <label class="form-check-label fw-semibold" asp-for="PageSection.AddToRibon">Add to Ribbon Menu</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="PageSection.RibonSortOrder" class="form-label fw-semibold"></label>
+                                                <input asp-for="PageSection.RibonSortOrder" class="form-control" type="number" />
+                                                <span asp-validation-for="PageSection.RibonSortOrder" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="PageSection.RibonCustomDisplayTitle" class="form-label fw-semibold">Ribbon Title Override</label>
+                                                <input asp-for="PageSection.RibonCustomDisplayTitle" class="form-control" />
+                                                <span asp-validation-for="PageSection.RibonCustomDisplayTitle" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4 border-light" />
+                                    <h6 class="fw-bold text-muted mb-3 text-uppercase" style="font-size: 0.8rem;">Media Uploads</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label class="form-label fw-semibold">Primary Image</label>
+                                                <input type="file" class="form-control" asp-for="imagefile" accept="image/*" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label class="form-label fw-semibold">Secondary Image</label>
+                                                <input type="file" class="form-control" asp-for="imagefile2" accept="image/*" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label class="form-label fw-semibold">Video Upload (MP4)</label>
+                                                <input type="file" class="form-control" asp-for="videofile" accept="video/mp4" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-4">
+                                                <label asp-for="PageSection.YoutubeUrlLink" class="form-label fw-semibold">YouTube URL (Alternative to Video)</label>
+                                                <input asp-for="PageSection.YoutubeUrlLink" class="form-control" placeholder="https://youtube.com/..." />
+                                                <span asp-validation-for="PageSection.YoutubeUrlLink" class="text-danger small"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mt-5 text-end">
+                                        <button type="submit" class="btn btn-primary px-5 rounded-pill"><i class="fas fa-save me-1"></i> Save New Section</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

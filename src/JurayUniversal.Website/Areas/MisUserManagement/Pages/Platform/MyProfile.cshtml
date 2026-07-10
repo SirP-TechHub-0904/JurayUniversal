@@ -1,35 +1,17 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform.MyProfileModel
 @{
     ViewData["Title"] = "My Profile Details";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "MyProfile";
 }
 
-<div class="page-heading">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="mb-1 fw-bold">My Personal Details</h2>
-        <p class="text-muted mb-0">Manage your profile, view roles, and update preferences.</p>
-    </div>
-    <div>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
-    </div>
-</div>
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>My Profile</h3>
-            <p class="text-subtitle text-muted">View or update your personal account details.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="/Platform/Index" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="/Platform/Index" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to Dashboard
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content">
     <div class="row g-4">
@@ -147,3 +129,4 @@
 
     </div>
 </div>
+

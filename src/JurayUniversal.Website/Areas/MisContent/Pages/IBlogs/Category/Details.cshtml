@@ -1,0 +1,52 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IBlogs.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "BLOG CATEGORY Details";
+    ViewData["BackUrl"] = "./Index";
+    
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.BlogCategory.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.BlogCategory.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.BlogCategory.Publish)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.BlogCategory.Publish)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+

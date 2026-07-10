@@ -1,0 +1,143 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Platform.Campaigns.CreateModel
+@{
+    ViewData["Title"] = "Campaign Builder";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Campaigns";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.2/css/grapes.min.css">
+    <style>
+        /* Custom GrapesJS editor height */
+        #gjs {
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>@TempData["error"]</div>
+        </div>
+    }
+
+    <form method="post" id="campaignForm">
+        <input type="hidden" asp-for="Campaign.Id" />
+        <input type="hidden" asp-for="Campaign.HtmlBody" id="HtmlBodyInput" />
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-gear me-2 text-primary"></i> Campaign Settings</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Subject Line</label>
+                            <input asp-for="Campaign.Subject" class="form-control" placeholder="Enter compelling subject..." required />
+                            <span asp-validation-for="Campaign.Subject" class="text-danger fs-12px"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mailing List</label>
+                            <select asp-for="SelectedListId" asp-items="Model.Lists" class="form-select shadow-none" required>
+                                <option value="">-- Choose Recipients --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Schedule (Optional)</label>
+                            <input asp-for="Campaign.ScheduledDate" type="datetime-local" class="form-control" />
+                            <div class="form-text">Leave blank to send immediately.</div>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="command" value="Draft" class="btn btn-outline-secondary rounded-pill fw-bold" onclick="return saveHtmlBody();">
+                                <i class="bi bi-save me-1"></i> Save Draft
+                            </button>
+                            <button type="submit" name="command" value="Schedule" class="btn btn-info text-white rounded-pill fw-bold" onclick="return saveHtmlBody();">
+                                <i class="bi bi-calendar-check me-1"></i> Schedule
+                            </button>
+                            <button type="submit" name="command" value="SendNow" class="btn btn-primary rounded-pill fw-bold" onclick="return saveHtmlBody();"
+                                    title="Campaigns are queued and sent automatically by the background processor.">
+                                <i class="bi bi-send-check me-1"></i> Send Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-palette me-2 text-success"></i> Email Designer</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="gjs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.2/grapes.min.js"></script>
+    <script src="https://unpkg.com/grapesjs-preset-newsletter"></script>
+    
+    <script>
+        // Initialize GrapesJS Editor
+        const editor = grapesjs.init({
+            container: '#gjs',
+            fromElement: true,
+            height: '600px',
+            width: 'auto',
+            plugins: ['gjs-preset-newsletter'],
+            storageManager: {
+                type: 'none' // We'll manage storage manually via form submit
+            }
+        });
+
+        // Load existing content if editing
+        var existingContent = @Html.Raw(Json.Serialize(Model.Campaign?.HtmlBody ?? ""));
+        if(existingContent && existingContent.length > 0) {
+            editor.setComponents(existingContent);
+        }
+
+        // Add custom blocks if needed here
+        
+        function saveHtmlBody() {
+            // Get HTML and CSS and combine them for email sending
+            var html = editor.getHtml();
+            var css = editor.getCss();
+            
+            var fullEmailBody = `
+                <html>
+                    <head>
+                        <style>${css}</style>
+                    </head>
+                    <body>
+                        ${html}
+                    </body>
+                </html>
+            `;
+            
+            document.getElementById('HtmlBodyInput').value = fullEmailBody;
+            return true;
+        }
+    </script>
+}
+

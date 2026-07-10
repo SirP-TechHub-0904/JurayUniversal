@@ -1,25 +1,18 @@
-@page "{id:long}"
+﻿@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.DetailsModel
 @{
     ViewData["Title"] = "Submission Details";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Submissions";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Submission details: @Model.Submission.MisReportSchema?.Name</h3>
-            <p class="text-subtitle text-muted">Submitted by @Model.Submission.UserProfile?.FirstName @Model.Submission.UserProfile?.LastName on @Model.Submission.SubmittedAt.ToString("g")</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Submissions" class="btn btn-secondary rounded-pill px-4">
+@section HeaderActions {
+    <a asp-page="./Submissions" class="btn btn-secondary rounded-pill px-4">
                 <i class="bi bi-arrow-left"></i> Back to Ledger
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="row justify-content-center">
@@ -169,3 +162,5 @@
         </div>
     </div>
 </div>
+
+

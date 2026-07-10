@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+using JurayUniversal.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,6 @@ namespace JurayUniversal.Domain.Models
         public DateTime? DateLeft { get;set;}
 
         public string? RoleId { get;set;} 
-        public IdentityRole Role { get;set;} 
+        public AppRole Role { get;set;} 
     }
 }

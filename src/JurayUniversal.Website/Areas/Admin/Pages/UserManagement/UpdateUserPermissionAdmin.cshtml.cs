@@ -15,7 +15,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.UserManagement
        
 
         private readonly SignInManager<Profile> _signInManager;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly UserManager<Profile> _userManager;
         private readonly ILogger<UpdateUserPermissionAdminModel> _logger;
         private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
@@ -24,7 +24,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.UserManagement
         public UpdateUserPermissionAdminModel(
             UserManager<Profile> userManager,
             SignInManager<Profile> signInManager,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
         ILogger<UpdateUserPermissionAdminModel> logger,
             JurayUniversal.Persistence.EF.SQL.DashboardDbContext context)
         {

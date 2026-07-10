@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Pages.CareerModel
 
 @{
@@ -167,6 +167,7 @@
                                     <label class="">Upload Passport</label>
                                     <input type="file" asp-for="passportfile" required="required">
                                 </div>
+                                @await Html.PartialAsync("_Captcha")
                                 <div class="col-md-12 mb-30">
                                     <div class="center-holder">
                                         <button type="submit">Submit</button>

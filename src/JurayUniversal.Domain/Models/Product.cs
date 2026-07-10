@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +19,7 @@ namespace JurayUniversal.Domain.Models
         public string? MiniTitle { get; set; }
 
 
+        [Display(Name = "Category")]
         public long? ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
 

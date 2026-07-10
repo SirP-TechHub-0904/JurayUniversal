@@ -1,0 +1,133 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Dashboard.Wallet.FundModel
+@{
+    ViewData["Title"] = "Fund SMS Wallet";
+    ViewData["Subtitle"] = "Add credits to the global company SMS balance.";
+}
+
+<style>
+    .provider-card { transition: all .2s; border-color: #dee2e6 !important; }
+    .provider-card:hover { border-color: #6c63ff !important; background: #f8f7ff; }
+    .provider-card.selected { border-color: #6c63ff !important; background: #f0eeff; box-shadow: 0 0 0 2px #6c63ff33; }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-primary text-white border-bottom-0 rounded-top-4 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0 fw-bold">Online Top-up</h5>
+                        <p class="mb-0 text-white-50 small">Fund the SMS ledger instantly</p>
+                    </div>
+                    <i class="bi bi-credit-card fs-2 opacity-50"></i>
+                </div>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                
+                @if (!string.IsNullOrEmpty(Model.StatusMessage))
+                {
+                    <div class="alert @(Model.StatusMessage.StartsWith("Error") ? "alert-danger" : "alert-info") rounded-3 mb-4">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> @Model.StatusMessage
+                    </div>
+                }
+
+                <div class="alert alert-info rounded-3 mb-4 border-0 bg-info bg-opacity-10 text-info">
+                    <div class="d-flex">
+                        <i class="bi bi-info-circle-fill me-3 fs-4"></i>
+                        <div>
+                            <strong>Current Balance: </strong> <span class="fs-5 fw-bold">&#8358;@Model.CurrentBalance.ToString("N2")</span><br />
+                            <small>Adding funds here will immediately make them available for global SMS campaigns.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-4">
+                        <label asp-for="AmountToFund" class="form-label fw-bold text-muted small text-uppercase">Amount (&#8358;)</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light border-end-0 text-muted">&#8358;</span>
+                            <input asp-for="AmountToFund" type="number" step="0.01" min="1" class="form-control border-start-0 ps-0" placeholder="0.00" required />
+                        </div>
+                        <span asp-validation-for="AmountToFund" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Payment Provider Selector -->
+                    @{
+                        var bothAvailable = Model.PixelPayAvailable && Model.PaystackAvailable;
+                        var noneAvailable = !Model.PixelPayAvailable && !Model.PaystackAvailable;
+                        var onlyPixelPay = Model.PixelPayAvailable && !Model.PaystackAvailable;
+                        var onlyPaystack = !Model.PixelPayAvailable && Model.PaystackAvailable;
+                    }
+
+                    @if (noneAvailable)
+                    {
+                        <div class="alert alert-warning rounded-3 mb-4">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>No payment method available.</strong>
+                            <br /><a href="/MisSetting/Dashboard" class="alert-link">→ Configure a payment provider in MIS Settings</a>
+                        </div>
+                    }
+                    else if (onlyPixelPay)
+                    {
+                        <input type="hidden" name="PaymentProvider" value="PixelPay" />
+                    }
+                    else if (onlyPaystack)
+                    {
+                        <input type="hidden" name="PaymentProvider" value="Paystack" />
+                    }
+                    else
+                    {
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-muted small text-uppercase">Pay with</label>
+                            <div class="d-flex gap-3">
+                                @if (Model.PixelPayAvailable)
+                                {
+                                    <label class="flex-fill" style="cursor:pointer;">
+                                        <input type="radio" name="PaymentProvider" value="PixelPay" class="d-none provider-radio" required />
+                                        <div class="provider-card border rounded-3 p-3 text-center h-100" data-provider="PixelPay">
+                                            <i class="bi bi-credit-card-2-front-fill fs-2 text-primary d-block mb-1"></i>
+                                            <div class="fw-semibold small">PixelPay</div>
+                                        </div>
+                                    </label>
+                                }
+                                @if (Model.PaystackAvailable)
+                                {
+                                    <label class="flex-fill" style="cursor:pointer;">
+                                        <input type="radio" name="PaymentProvider" value="Paystack" class="d-none provider-radio" required />
+                                        <div class="provider-card border rounded-3 p-3 text-center h-100" data-provider="Paystack">
+                                            <i class="bi bi-wallet2 fs-2 text-success d-block mb-1"></i>
+                                            <div class="fw-semibold small">Paystack</div>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm" @(noneAvailable ? "disabled" : "")>
+                            <i class="bi bi-lock-fill me-1"></i> Proceed to Secure Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Highlight selected provider card
+        document.querySelectorAll('.provider-radio').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('selected'));
+                radio.closest('label').querySelector('.provider-card').classList.add('selected');
+            });
+        });
+    </script>
+}

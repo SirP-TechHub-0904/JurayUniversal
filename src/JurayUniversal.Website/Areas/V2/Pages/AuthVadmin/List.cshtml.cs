@@ -1,3 +1,4 @@
+using JurayUniversal.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,16 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
     public class ListModel : PageModel
     {
        
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
       
-        public ListModel(RoleManager<IdentityRole> roleManager)
+        public ListModel(RoleManager<AppRole> roleManager)
         {
             
             _roleManager = roleManager;
 
         }
 
-        public List<IdentityRole> Roles = new List<IdentityRole>();
+        public List<AppRole> Roles = new List<AppRole>();
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             Roles = await _roleManager.Roles.Where(x => x.Name != "mSuperAdmin").ToListAsync();

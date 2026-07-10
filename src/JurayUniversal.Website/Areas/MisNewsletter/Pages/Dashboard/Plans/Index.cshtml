@@ -1,0 +1,117 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Plans.IndexModel
+@{
+    ViewData["Title"] = "Global Newsletter Pricing Plans";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="page-content">
+    <div class="mb-4">
+        <a asp-page="/Dashboard/Wallet/Index" class="btn btn-outline-secondary rounded-pill">
+            <i class="bi bi-arrow-left me-1"></i> Back to Wallet
+        </a>
+    </div>
+    
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>@TempData["error"]</div>
+        </div>
+    }
+    @if (TempData["success"] != null)
+    {
+        <div class="alert alert-success border-0 d-flex align-items-center mb-4">
+            <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+            <div>@TempData["success"]</div>
+        </div>
+    }
+
+    <div class="row mb-5">
+        <div class="col-md-6 col-lg-4 mx-auto">
+            <div class="card bg-primary text-white border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-envelope-paper-heart fs-1 text-white opacity-75 mb-3 d-block"></i>
+                    <h5 class="text-white opacity-75">Global Quota Balance</h5>
+                    <h1 class="display-5 fw-bold text-white mb-1">
+                        @Model.Settings?.GlobalNewsletterQuota.ToString("N0")
+                    </h1>
+                    <p class="mb-4 opacity-75">Available Emails</p>
+                    
+                    <div class="bg-white bg-opacity-10 rounded-3 p-3 text-start">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fs-14px">Valid Until:</span>
+                            <span class="fw-bold">
+                                @if (Model.Settings?.GlobalNewsletterQuotaExpiry != null)
+                                {
+                                    if (Model.Settings.GlobalNewsletterQuotaExpiry.Value < DateTime.UtcNow)
+                                    {
+                                        <span class="text-danger">Expired</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Settings.GlobalNewsletterQuotaExpiry.Value.ToString("MMM dd, yyyy")
+                                    }
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4 text-center">
+        <h4 class="fw-bold mb-2">Fund Global Quota</h4>
+        <p class="text-muted">Choose a plan below to add more emails to the platform's global wallet.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        @foreach (var plan in Model.AvailablePlans)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100 text-center hover-lift transition-all">
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h5 class="fw-bold text-primary mb-3">@plan.Name</h5>
+                        
+                        <div class="mb-4">
+                            <span class="display-6 fw-bold text-dark">&#8358;@plan.Amount.ToString("N0")</span>
+                        </div>
+                        
+                        <ul class="list-unstyled mb-4 text-start flex-grow-1">
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span><strong>@plan.Quota.ToString("N0")</strong> Email Quota</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Valid for <strong>@plan.DurationInMonths Month(s)</strong></span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Rollover unused emails</span>
+                            </li>
+                        </ul>
+                        
+                        <a asp-area="MisNewsletter" asp-page="/Platform/Dashboard/BuyPlan" asp-route-id="@plan.Id" asp-route-isGlobal="true" class="btn btn-outline-primary w-100 rounded-pill fw-bold py-2 mt-auto">
+                            Purchase Plan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        
+        @if (!Model.AvailablePlans.Any())
+        {
+            <div class="col-12 text-center text-muted py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                <p>There are no pricing plans available at the moment.</p>
+            </div>
+        }
+    </div>
+</div>

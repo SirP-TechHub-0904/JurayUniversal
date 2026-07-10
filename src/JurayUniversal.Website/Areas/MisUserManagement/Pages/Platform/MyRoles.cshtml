@@ -1,27 +1,17 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform.MyRolesModel
 @{
     ViewData["Title"] = "My Permissions Matrix";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "MyRoles";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>My Access Roles</h3>
-            <p class="text-subtitle text-muted">Verify which parts of the organization system you have authorization to access.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <button class="btn btn-outline-info btn-sm rounded-pill me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-                <i class="bi bi-question-circle me-1"></i> Help & Guide
-            </button>
-            <a asp-page="/Platform/Index" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="/Platform/Index" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to Dashboard
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content">
     <div class="card shadow-sm border-0">
@@ -80,3 +70,5 @@
         </div>
     </div>
 </div>
+
+

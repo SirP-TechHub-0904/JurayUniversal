@@ -1,0 +1,139 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Platform.ApplyModel
+@{
+    ViewData["Title"] = "Apply for " + Model.JobPosting?.Title;
+}
+
+@section HeaderActions {
+    <a asp-page="./JobBoard" class="text-decoration-none d-inline-block fw-bold text-primary">
+                <i class="bi bi-chevron-left me-1"></i> Back to jobs
+            </a>
+    <a href="#apply-section" class="btn btn-dark rounded-pill px-5 py-2 fw-bold text-white">
+                Apply
+            </a>
+}
+
+<div class="container max-w-900 mt-5 mb-5">
+    
+    <!-- Hero / Header Section -->
+    <div class="mb-5">
+
+    <!-- Details Section -->
+    <div class="mb-5 pb-4 border-bottom" style="font-size: 1.1rem; line-height: 1.8; color: #333;">
+        @Html.Raw(Model.JobPosting?.Description)
+        
+        @if (!string.IsNullOrEmpty(Model.JobPosting?.Benefits))
+        {
+            <div class="mt-5">
+                <h4 class="fw-bold mb-3">What We Offer</h4>
+                @Html.Raw(Model.JobPosting?.Benefits)
+            </div>
+        }
+    </div>
+
+    <!-- Application Form Section -->
+    <div id="apply-section">
+        @if (!User.Identity.IsAuthenticated)
+        {
+        <div id="apply-prompt-card" class="card bg-white border border-primary shadow-sm rounded-4 mt-5">
+            <div class="card-body p-4 p-md-5 text-center">
+                <h3 class="fw-bold mb-3">Ready to Apply?</h3>
+                <p class="text-muted mb-4">You can apply as a new applicant, or log in to use your saved profile.</p>
+                <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
+                    <a asp-page="./Auth/Login" asp-route-ReturnUrl="~/MisRecruitment/Platform/Apply?jobId=@Model.JobPosting.Id#guest-apply-form" class="btn btn-outline-primary btn-lg rounded-pill px-5 fw-bold mb-3 mb-md-0 me-md-3 w-100 w-md-auto">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+                    </a>
+                    <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold w-100 w-md-auto" onclick="document.getElementById('guest-apply-form').classList.remove('d-none'); document.getElementById('apply-prompt-card').classList.add('d-none');">
+                        Start New Application <i class="bi bi-file-earmark-person ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div id="guest-apply-form" class="@(User.Identity.IsAuthenticated ? "mt-5" : "d-none mt-5")">
+        <div class="mb-4">
+            <h3 class="fw-bold mb-1">Apply for this job</h3>
+            <p class="text-danger small fw-bold">* indicates a required field</p>
+        </div>
+        <div class="card-body p-4 p-md-5">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Applicant.MisJobPostingId" />
+                
+                <h5 class="fw-bold mb-3 text-primary">Personal Details</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-600">First Name <span class="text-danger">*</span></label>
+                        <input class="form-control bg-light" value="@Model.Applicant?.FirstName" readonly />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-600">Last Name <span class="text-danger">*</span></label>
+                        <input class="form-control bg-light" value="@Model.Applicant?.LastName" readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-600">Email Address <span class="text-danger">*</span></label>
+                        <input class="form-control bg-light" value="@Model.Applicant?.Email" readonly />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-600">Phone Number <span class="text-danger">*</span></label>
+                        <input class="form-control bg-light" value="@Model.Applicant?.Phone" readonly />
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3 text-primary border-top pt-4">Structured CV Profile</h5>
+                
+                <div class="mb-3">
+                    <label asp-for="Applicant.ProfessionalSummary" class="form-label fw-600">Professional Summary <span class="text-danger">*</span></label>
+                    <textarea asp-for="Applicant.ProfessionalSummary" class="form-control" rows="3" placeholder="A brief 3-5 sentence paragraph summarizing your career and what you bring to the table." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Applicant.WorkExperience" class="form-label fw-600">Work Experience <span class="text-danger">*</span></label>
+                    <textarea asp-for="Applicant.WorkExperience" class="form-control" rows="5" placeholder="Job Title, Company, Dates&#10;- Responsibility 1&#10;- Responsibility 2" required></textarea>
+                    <div class="form-text">List your most recent roles first.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Applicant.Education" class="form-label fw-600">Education <span class="text-danger">*</span></label>
+                    <textarea asp-for="Applicant.Education" class="form-control" rows="3" placeholder="Degree, Institution, Year Graduated" required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Applicant.Skills" class="form-label fw-600">Core Skills <span class="text-danger">*</span></label>
+                    <input asp-for="Applicant.Skills" class="form-control" placeholder="e.g., Python, Project Management, SEO" required />
+                </div>
+
+                <h5 class="fw-bold mb-3 text-primary border-top pt-4">Document Upload</h5>
+                
+                <div class="mb-4">
+                    <label class="form-label fw-600">Passport Photo (Image) <span class="text-danger">*</span></label>
+                    <input type="file" name="PassportFile" class="form-control" accept="image/*" required />
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="ResumeFile" class="form-label fw-600">Original Resume / CV (PDF or DOCX) <span class="text-danger">*</span></label>
+                    <input asp-for="ResumeFile" type="file" class="form-control" accept=".pdf,.doc,.docx" required />
+                    <div class="form-text">Max file size: 5MB. Please ensure your contact info is included.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-600">Other Supporting Documents (Certificates, Cover Letter, etc.)</label>
+                    <input type="file" name="OtherDocuments" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png" multiple />
+                    <div class="form-text">You can select multiple files at once.</div>
+                </div>
+
+                <hr class="my-4" />
+                
+                <div class="text-center text-md-end">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold w-100 w-md-auto">
+                        Submit Application <i class="bi bi-send ms-1"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

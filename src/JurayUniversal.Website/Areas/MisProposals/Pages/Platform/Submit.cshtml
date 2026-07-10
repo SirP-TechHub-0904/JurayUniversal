@@ -1,0 +1,76 @@
+@page
+@model JurayUniversal.Website.Areas.MisProposals.Pages.Platform.SubmitModel
+@{
+    ViewData["Title"] = "Pitch a New Idea";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+}
+
+<div class="container-fluid max-w-800 mx-auto">
+
+    <!-- Instructions / Help Block -->
+    <div class="card border-0 rounded-4 mb-4" style="background: rgba(13, 110, 253, 0.1); color: #084298;">
+        <div class="card-body p-4">
+            <h6 class="fw-bold mb-2"><i class="bi bi-lightbulb-fill me-2"></i>How the Pipeline Works</h6>
+            <p class="mb-0 small">
+                Use this form to pitch a new project idea or submit an official grant proposal. Provide as much detail as possible in the typed proposal section, and attach any relevant budget spreadsheets or PDF documents. Once submitted, management will review your pitch.
+            </p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form method="post" enctype="multipart/form-data">
+                
+                <h5 class="fw-bold text-dark mb-4 border-bottom pb-2">Basic Details</h5>
+                
+                <div class="mb-4">
+                    <label asp-for="Proposal.Title" class="form-label fw-semibold">Project Title <span class="text-danger">*</span></label>
+                    <input asp-for="Proposal.Title" class="form-control form-control-lg" placeholder="e.g., Q3 Community Outreach Program" required />
+                    <span asp-validation-for="Proposal.Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Proposal.Description" class="form-label fw-semibold">Short Summary / Objective</label>
+                    <textarea asp-for="Proposal.Description" class="form-control" rows="3" placeholder="Briefly summarize the goal of this project..."></textarea>
+                    <span asp-validation-for="Proposal.Description" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Proposal.Address" class="form-label fw-semibold">Target Location / Address (Optional)</label>
+                    <input asp-for="Proposal.Address" class="form-control" placeholder="Where will this project take place?" />
+                </div>
+
+                <h5 class="fw-bold text-dark mb-4 border-bottom pb-2 mt-5">Detailed Proposal</h5>
+
+                <div class="mb-4">
+                    <label asp-for="Proposal.TypedProposal" class="form-label fw-semibold">Full Pitch / Narrative</label>
+                    <textarea asp-for="Proposal.TypedProposal" class="form-control summernote" rows="8" placeholder="Type out your full proposal here, or attach a document below..."></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Supporting Documents & Budgets</label>
+                    <div class="p-4 border rounded-3 bg-light text-center">
+                        <i class="bi bi-cloud-arrow-up display-5 text-muted mb-2"></i>
+                        <p class="mb-2 text-muted small">Upload your budget spreadsheets, official letters, or presentation slides.</p>
+                        <input type="file" name="UploadedFiles" class="form-control" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.zip" />
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Proposal.Note" class="form-label fw-semibold">Internal Notes for Reviewers</label>
+                    <textarea asp-for="Proposal.Note" class="form-control" rows="2" placeholder="Any private note you want to leave for the review committee..."></textarea>
+                </div>
+
+                <div class="d-grid mt-5">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                        Submit Proposal for Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Include Summernote or a rich text editor if you have one globally configured, otherwise standard textarea works -->
+}

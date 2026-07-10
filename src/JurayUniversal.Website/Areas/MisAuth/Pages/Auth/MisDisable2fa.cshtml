@@ -1,7 +1,8 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAuth.Pages.Auth.MisDisable2faModel
 @{
     ViewData["Title"] = "Disable two-factor authentication (2FA)";
+    ViewData["Subtitle"] = "Authentication and security access.";
  }
 
 <div class="container-fluid py-4">
@@ -11,7 +12,8 @@
                 <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                     <i class="bi bi-shield-x fs-3"></i>
                 </div>
-                <h3 class="fw-800 text-dark mb-0">Disable 2FA</h3>
+                <h3 class="fw-800 text-dark mb-0 me-auto">Disable 2FA</h3>
+                
             </div>
 
             <partial name="_StatusMessage" for="StatusMessage" />
@@ -38,3 +40,4 @@
         </div>
     </div>
 </div>
+

@@ -1,0 +1,84 @@
+@model IEnumerable<JurayUniversal.Domain.Models.MisFinanceTransaction>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table id="transactionTable" class="table table-hover align-middle w-100">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Member / Donor</th>
+                            <th>Email</th>
+                            <th>Category / Purpose</th>
+                            <th>Amount</th>
+                            <th>Reference</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Notes</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @if (t.UserProfile != null)
+                                    {
+                                        @($"{t.UserProfile.FirstName} {t.UserProfile.LastName}")
+                                    }
+                                    else
+                                    {
+                                        @(t.DonorName ?? "Anonymous")
+                                    }
+                                </td>
+                                <td class="text-muted">@(t.DonorEmail ?? t.UserProfile?.Email ?? "—")</td>
+                                <td>
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">
+                                        @(t.Category?.Title ?? "General Payment")
+                                    </span>
+                                </td>
+                                <td class="fw-bold text-success">&#8358;@t.Amount.ToString("N2")</td>
+                                <td><code class="fs-8">@t.TransactionReference</code></td>
+                                <td>
+                                    @switch (t.Status)
+                                    {
+                                        case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Success:
+                                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill">Paid</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Pending:
+                                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">Pending</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Failed:
+                                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Failed</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">@t.Status</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-muted">
+                                    @(t.PaidAt?.ToString("MMM dd, yyyy HH:mm") ?? t.CreatedAt.ToString("MMM dd, yyyy HH:mm"))
+                                </td>
+                                <td class="text-muted fs-7">
+                                    @(t.Notes ?? "—")
+                                </td>
+                                <td class="text-end">
+                                    <a href="/MisFinances/Dashboard/TransactionDetails?id=@t.Id" class="btn btn-sm btn-outline-primary rounded-pill">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-inbox text-muted opacity-50 mb-3 d-block" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-muted">No transactions recorded yet</h5>
+            </div>
+        }
+    </div>
+</div>

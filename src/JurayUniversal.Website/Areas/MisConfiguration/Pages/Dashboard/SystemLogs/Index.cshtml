@@ -1,0 +1,67 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.SystemLogs.IndexModel
+@{
+    ViewData["Title"] = "System Error Logs";
+    ViewData["Subtitle"] = "View and download background system logs for this domain.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
+}
+
+<div class="page-heading d-flex justify-content-between align-items-center">
+    <div>
+        <h3>System Logs</h3>
+        <p class="text-subtitle text-muted">Daily diagnostic logs for debugging server errors.</p>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="card">
+        <div class="card-body">
+            @if (Model.LogFiles.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Date Modified</th>
+                                <th>Size (KB)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var file in Model.LogFiles)
+                            {
+                                <tr>
+                                    <td><strong>@file.Name</strong></td>
+                                    <td>@file.LastWriteTime.ToString("f")</td>
+                                    <td>@(file.Length / 1024) KB</td>
+                                    <td>
+                                        <form method="post" class="d-inline">
+                                            <input type="hidden" name="fileName" value="@file.Name" />
+                                            <button type="submit" asp-page-handler="Download" class="btn btn-sm btn-primary">
+                                                <i class="bx bx-download"></i> Download
+                                            </button>
+                                            <button type="submit" asp-page-handler="Delete" class="btn btn-sm btn-danger ms-2" onclick="return confirm('Are you sure you want to delete this log file?');">
+                                                <i class="bx bx-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info border-info d-flex align-items-center">
+                    <i class="bx bx-info-circle bx-sm me-2"></i>
+                    <div>
+                        <strong>No log files generated yet.</strong><br/>
+                        System logs will appear here automatically when background tasks or errors occur for your domain.
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

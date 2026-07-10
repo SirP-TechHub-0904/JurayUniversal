@@ -19,7 +19,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
     public class ReadonlyModel : PageModel
     {
         private readonly SignInManager<Profile> _signInManager;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly UserManager<Profile> _userManager;
         private readonly ILogger<ReadonlyModel> _logger;
         private readonly DashboardDbContext _context;
@@ -28,7 +28,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
         public ReadonlyModel(
             UserManager<Profile> userManager,
             SignInManager<Profile> signInManager,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
         ILogger<ReadonlyModel> logger,
             DashboardDbContext context)
         {
@@ -71,7 +71,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-                IdentityRole Role = new IdentityRole("mSuperAdmin");
+                AppRole Role = new AppRole("mSuperAdmin");
                 var checkrole = await _role.FindByNameAsync("mSuperAdmin");
                 if (checkrole == null)
                 {
@@ -79,7 +79,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
                 }
                 //
-                IdentityRole Manager = new IdentityRole("Manager");
+                AppRole Manager = new AppRole("Manager");
                 var checkManager = await _role.FindByNameAsync("Manager");
                 if (checkManager == null)
                 {
@@ -87,7 +87,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
                 }
                  //
-                IdentityRole Managerf = new IdentityRole("Finance");
+                AppRole Managerf = new AppRole("Finance");
                 var checkManagerf = await _role.FindByNameAsync("Finance");
                 if (checkManagerf == null)
                 {
@@ -95,7 +95,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
                 }
                 //
-                IdentityRole Security = new IdentityRole("Security");
+                AppRole Security = new AppRole("Security");
                 var checkSecurity = await _role.FindByNameAsync("Security");
                 if (checkSecurity == null)
                 {
@@ -103,7 +103,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
                 }
                 //
-                IdentityRole JAdmin = new IdentityRole("SubAdmin");
+                AppRole JAdmin = new AppRole("SubAdmin");
                 var checkJAdmin = await _role.FindByNameAsync("SubAdmin");
                 if (checkJAdmin == null)
                 {
@@ -113,7 +113,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
 
                 
-                IdentityRole xRole = new IdentityRole("Editor");
+                AppRole xRole = new AppRole("Editor");
                 var xcheckrole = await _role.FindByNameAsync("Editor");
 
                 if (xcheckrole == null)
@@ -121,21 +121,21 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
                     await _role.CreateAsync(xRole);
 
                 }
-                IdentityRole xstaffUser = new IdentityRole("Staff");
+                AppRole xstaffUser = new AppRole("Staff");
                  var staffUser = await _role.FindByNameAsync("Staff");
                 if (staffUser == null)
                 {
                     await _role.CreateAsync(xstaffUser);
 
                 }
-                IdentityRole AdminRole = new IdentityRole("Admin");
+                AppRole AdminRole = new AppRole("Admin");
                  var checkAdminRole = await _role.FindByNameAsync("Admin");
                 if (checkAdminRole == null)
                 {
                     await _role.CreateAsync(AdminRole);
 
                 }
-                 IdentityRole User = new IdentityRole("User");
+                 AppRole User = new AppRole("User");
                  var checkUser = await _role.FindByNameAsync("User");
                 if (checkUser == null)
                 {

@@ -1,0 +1,145 @@
+@page "{projectId:long}"
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Board.IndexModel
+@{
+    ViewData["Title"] = "Active Sprint Board";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a asp-page="../Projects/Index">Projects</a>
+    <a asp-page="../Backlog/Index" asp-route-projectId="@Model.Project?.Id" class="btn btn-outline-secondary rounded-pill me-2">
+            <i class="bi bi-list-nested me-1"></i> Backlog & Planning
+        </a>
+    <button class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg me-1"></i> New Task
+        </button>
+}
+
+@Html.AntiForgeryToken()
+
+@if (Model.ActiveSprint == null)
+{
+    <div class="card border-0 shadow-sm rounded-4 text-center py-5">
+        <i class="bi bi-exclamation-triangle display-4 text-warning"></i>
+        <h4 class="mt-3">No Active Sprint</h4>
+        <p class="text-muted">You need to start a Sprint from the Backlog to use the Kanban board.</p>
+        <a asp-page="../Backlog/Index" asp-route-projectId="@Model.Project?.Id" class="btn btn-primary mt-2 rounded-pill">Go to Sprint Planning</a>
+    </div>
+}
+else
+{
+    <div class="row flex-nowrap overflow-auto pb-4" style="min-height: 600px;">
+        @{
+            var statuses = new[]
+            {
+                new { Id = Domain.Enum.Enum.MisTaskStatus.ToDo, Title = "To Do", Color = "secondary" },
+                new { Id = Domain.Enum.Enum.MisTaskStatus.InProgress, Title = "In Progress", Color = "primary" },
+                new { Id = Domain.Enum.Enum.MisTaskStatus.Review, Title = "Review", Color = "warning" },
+                new { Id = Domain.Enum.Enum.MisTaskStatus.Done, Title = "Done", Color = "success" }
+            };
+        }
+
+        @foreach (var status in statuses)
+        {
+            var columnTasks = Model.Tasks.Where(t => t.Status == status.Id).ToList();
+
+            <div class="col-12 col-md-4 col-xl-3">
+                <div class="card bg-light border-0 shadow-sm h-100 rounded-4">
+                    <div class="card-header bg-transparent border-0 pt-4 pb-2 d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0">
+                            <span class="badge bg-@status.Color me-2 rounded-pill">@columnTasks.Count</span>
+                            @status.Title
+                        </h6>
+                    </div>
+                    <div class="card-body p-2 kanban-column" data-status-id="@((int)status.Id)" style="min-height: 500px;">
+                        @foreach (var task in columnTasks)
+                        {
+                            <div class="card shadow-sm border-0 rounded-3 mb-2 kanban-card cursor-grab" data-task-id="@task.Id">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        @{
+                                            var typeBadgeClass = task.Type == Domain.Enum.Enum.MisTaskType.Bug ? "danger" :
+                                                                 (task.Type == Domain.Enum.Enum.MisTaskType.Story ? "success" : "info");
+                                        }
+                                        <span class="badge bg-@typeBadgeClass bg-opacity-10 text-@typeBadgeClass border border-@typeBadgeClass border-opacity-25 rounded-pill" style="font-size: 0.7rem;">@task.Type</span>
+                                        <span class="badge bg-light text-dark border">@task.StoryPoints pts</span>
+                                    </div>
+                                    <h6 class="fw-bold mb-1">@task.Title</h6>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="small text-muted">
+                                            @if (task.AssignedToUser != null)
+                                            {
+                                                <i class="bi bi-person-circle me-1"></i> @task.AssignedToUser.FirstName
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-person me-1"></i> <i>Unassigned</i>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var columns = document.querySelectorAll('.kanban-column');
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            columns.forEach(function (col) {
+                new Sortable(col, {
+                    group: 'kanban',
+                    animation: 150,
+                    ghostClass: 'bg-light',
+                    onEnd: function (evt) {
+                        var itemEl = evt.item;  // dragged HTMLElement
+                        var taskId = itemEl.getAttribute('data-task-id');
+                        var newStatusId = evt.to.getAttribute('data-status-id');
+
+                        if (evt.from !== evt.to) {
+                            // Update count badges
+                            var fromBadge = evt.from.parentElement.querySelector('.card-header .badge');
+                            var toBadge = evt.to.parentElement.querySelector('.card-header .badge');
+                            fromBadge.textContent = parseInt(fromBadge.textContent) - 1;
+                            toBadge.textContent = parseInt(toBadge.textContent) + 1;
+
+                            // Send AJAX Request
+                            fetch('?handler=UpdateStatus', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'RequestVerificationToken': token
+                                },
+                                body: new URLSearchParams({
+                                    taskId: taskId,
+                                    newStatus: newStatusId
+                                })
+                            }).then(response => response.json())
+                              .then(data => {
+                                  if (!data.success) {
+                                      alert("Failed to update task status.");
+                                  }
+                              }).catch(error => {
+                                  console.error('Error:', error);
+                              });
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        .cursor-grab { cursor: grab; }
+        .cursor-grab:active { cursor: grabbing; }
+        .kanban-column { background-color: rgba(0,0,0,0.02); border-radius: 8px; }
+    </style>
+}

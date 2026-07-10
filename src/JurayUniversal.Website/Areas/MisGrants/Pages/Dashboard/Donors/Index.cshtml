@@ -1,0 +1,57 @@
+@page
+@model JurayUniversal.Website.Areas.MisGrants.Pages.Dashboard.Donors.IndexModel
+@{
+    ViewData["Title"] = "Donor Management";
+    ViewData["Subtitle"] = "Overview and management of all records.";
+}
+
+@section HeaderActions {
+    <a asp-page="./Manage" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-plus-lg me-2"></i> Add Donor
+            </a>
+}
+
+<div class="container-fluid">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Donor Name</th>
+                            <th>Contact Email</th>
+                            <th>Contact Phone</th>
+                            <th>Total Grants</th>
+                            <th class="pe-4 text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Donors.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    No donors recorded yet.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var donor in Model.Donors)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-600">@donor.Name</td>
+                                <td>@donor.ContactEmail</td>
+                                <td>@donor.ContactPhone</td>
+                                <td><span class="badge bg-primary rounded-pill px-3">@donor.Grants.Count Grants</span></td>
+                                <td class="pe-4 text-end">
+                                    <a asp-page="./Manage" asp-route-id="@donor.Id" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-pencil-fill"></i> Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

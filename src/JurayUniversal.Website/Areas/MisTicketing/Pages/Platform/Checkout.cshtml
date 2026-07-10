@@ -1,0 +1,77 @@
+@page
+@model JurayUniversal.Website.Areas.MisTicketing.Pages.Platform.CheckoutModel
+@{
+    ViewData["Title"] = "Checkout";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="container-fluid max-w-700 mx-auto">
+    
+            </div>
+        </div>
+
+        <!-- Details Column -->
+        <div class="col-md-7 order-md-1">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="fw-bold mb-4">Your Details</h4>
+                    
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="GuestName" class="form-label fw-semibold">Full Name</label>
+                            <input asp-for="GuestName" class="form-control form-control-lg" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="GuestEmail" class="form-label fw-semibold">Email Address</label>
+                            <input asp-for="GuestEmail" type="email" class="form-control form-control-lg" required />
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="GuestPhone" class="form-label fw-semibold">Phone Number</label>
+                            <input asp-for="GuestPhone" class="form-control form-control-lg" required />
+                        </div>
+                        
+                        @if (Model.TicketType.Price > 0)
+                        {
+                            <h5 class="fw-bold mt-4 mb-3 border-top pt-4">Select Payment Method</h5>
+                            
+                            @if (Model.Settings != null && Model.Settings.EnablePixelPay)
+                            {
+                                <div class="form-check custom-radio-ticket mb-3 border bg-white p-3 rounded-3 position-relative">
+                                    <input class="form-check-input ms-0 mt-2" type="radio" asp-for="PaymentMethod" id="pay_pixelpay" value="PixelPay" checked required>
+                                    <label class="form-check-label ms-4 d-block w-100" for="pay_pixelpay" style="cursor:pointer;">
+                                        <div class="fw-bold text-dark">PixelPay</div>
+                                        <div class="small text-muted">Pay securely using PixelPay.</div>
+                                    </label>
+                                </div>
+                            }
+                            
+                            @if (Model.Settings != null && Model.Settings.EnablePaystack)
+                            {
+                                <div class="form-check custom-radio-ticket mb-3 border bg-white p-3 rounded-3 position-relative">
+                                    <input class="form-check-input ms-0 mt-2" type="radio" asp-for="PaymentMethod" id="pay_paystack" value="Paystack" required>
+                                    <label class="form-check-label ms-4 d-block w-100" for="pay_paystack" style="cursor:pointer;">
+                                        <div class="fw-bold text-dark">Paystack</div>
+                                        <div class="small text-muted">Pay securely using your Debit Card via Paystack.</div>
+                                    </label>
+                                </div>
+                            }
+                        }
+                        
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm">
+                                @if (Model.TicketType.Price == 0)
+                                {
+                                    <span>Complete Free Registration</span>
+                                }
+                                else
+                                {
+                                    <span>Proceed to Payment <i class="bi bi-lock-fill ms-1"></i></span>
+                                }
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

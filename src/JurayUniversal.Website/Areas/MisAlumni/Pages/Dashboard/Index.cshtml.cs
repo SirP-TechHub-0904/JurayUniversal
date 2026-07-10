@@ -30,8 +30,13 @@ namespace JurayUniversal.Website.Areas.MisAlumni.Pages.Dashboard
 
         public IList<MisAlumniProfile> RecentAlumni { get; set; } = new List<MisAlumniProfile>();
         
-        public IList<string> GrowthLabels { get; set; } = new List<string>();
-        public IList<int> GrowthData { get; set; } = new List<int>();
+        [BindProperty(SupportsGet = true)]
+        public string? DateRange { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public List<string> ChartLabels { get; set; } = new();
+        public List<int> ChartData { get; set; } = new();
 
         public IList<string> YearLabels { get; set; } = new List<string>();
         public IList<int> YearData { get; set; } = new List<int>();
@@ -44,30 +49,52 @@ namespace JurayUniversal.Website.Areas.MisAlumni.Pages.Dashboard
                 AlumniAlias = settings.AlumniAlias;
             }
 
-            TotalAlumni = await _context.MisAlumniProfiles.CountAsync();
-            PendingVerifications = await _context.MisAlumniProfiles.CountAsync(x => x.VerificationStatus == "Pending");
-            TotalPosts = await _context.MisAlumniPosts.CountAsync(x => x.IsActive);
-            AvailableMentors = await _context.MisAlumniProfiles.CountAsync(x => x.IsAvailableForMentorship);
+            if (!string.IsNullOrEmpty(DateRange))
+            {
+                var dates = DateRange.Split(" - ");
+                if (dates.Length == 2)
+                {
+                    if (DateTime.TryParse(dates[0], out DateTime start)) StartDate = start;
+                    if (DateTime.TryParse(dates[1], out DateTime end)) EndDate = end.AddDays(1).AddTicks(-1);
+                }
+            }
 
-            RecentAlumni = await _context.MisAlumniProfiles
+            var query = _context.MisAlumniProfiles
                 .Include(a => a.UserProfile)
+                .AsQueryable();
+            var postsQuery = _context.MisAlumniPosts.AsQueryable();
+
+            if (StartDate.HasValue && EndDate.HasValue)
+            {
+                query = query.Where(a => a.CreatedAt >= StartDate.Value && a.CreatedAt <= EndDate.Value);
+                postsQuery = postsQuery.Where(p => p.CreatedAt >= StartDate.Value && p.CreatedAt <= EndDate.Value);
+            }
+
+            var allProfiles = await query.ToListAsync();
+
+            TotalAlumni = allProfiles.Count;
+            PendingVerifications = allProfiles.Count(x => x.VerificationStatus == "Pending");
+            AvailableMentors = allProfiles.Count(x => x.IsAvailableForMentorship);
+            TotalPosts = await postsQuery.CountAsync(x => x.IsActive);
+
+            RecentAlumni = allProfiles
                 .OrderByDescending(a => a.CreatedAt)
                 .Take(5)
-                .ToListAsync();
+                .ToList();
 
-            var sixMonthsAgo = DateTime.UtcNow.AddMonths(-5);
-            var startDate = new DateTime(sixMonthsAgo.Year, sixMonthsAgo.Month, 1).ToUniversalTime();
+            var chartStart = StartDate ?? DateTime.UtcNow.Date.AddDays(-29);
+            var chartEnd = EndDate ?? DateTime.UtcNow.Date;
+            var totalDays = (chartEnd - chartStart).TotalDays;
 
-            var recentProfiles = await _context.MisAlumniProfiles
-                .Where(m => m.CreatedAt >= startDate)
-                .ToListAsync();
+            if (totalDays > 365) totalDays = 365;
 
-            for (int i = 5; i >= 0; i--)
+            for (int i = 0; i <= totalDays; i++)
             {
-                var monthDate = DateTime.UtcNow.AddMonths(-i);
-                GrowthLabels.Add(monthDate.ToString("MMM yyyy"));
-                var count = recentProfiles.Count(m => m.CreatedAt.Year == monthDate.Year && m.CreatedAt.Month == monthDate.Month);
-                GrowthData.Add(count);
+                var currentDate = chartStart.AddDays(i).Date;
+                ChartLabels.Add(currentDate.ToString("MMM dd"));
+                
+                var dailySum = allProfiles.Count(m => m.CreatedAt.Date == currentDate);
+                ChartData.Add(dailySum);
             }
 
             var yearGroupings = await _context.MisAlumniProfiles

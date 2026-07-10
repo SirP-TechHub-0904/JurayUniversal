@@ -1,0 +1,36 @@
+/* mis-voting.css - Base Structural Styles for the Voting Booth */
+
+.voting-booth-app {
+    background-color: #f4f6f9; /* Soft background */
+}
+
+.voting-header {
+    left: 0 !important; /* Force header to span full width (overriding sidebar offset) */
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.voting-content {
+    padding-top: 100px !important; /* Space for fixed header */
+    max-width: 1000px;
+    margin: 0 auto !important; /* Center the content and override sidebar margin */
+}
+
+.voting-brand-logo {
+    width: 140px;
+    display: flex;
+    align-items: center;
+}
+
+.secure-badge {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

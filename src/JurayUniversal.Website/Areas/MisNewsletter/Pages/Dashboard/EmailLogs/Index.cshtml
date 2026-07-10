@@ -1,0 +1,176 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.EmailLogs.IndexModel
+@{
+    ViewData["Title"] = "Email Logs";
+    ViewData["Subtitle"] = "View all emails sent out by the system, including transactional and bulk newsletter campaigns.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+    ViewData["ActiveSubMenu"] = "EmailLogs";
+}
+
+@section HeaderActions {
+    <a asp-page="/Dashboard/Index" class="btn btn-outline-secondary rounded-pill fw-bold me-2">
+        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+    </a>
+}
+
+<div class="card shadow-sm border-0 rounded-4 mt-3">
+    <div class="card-header bg-transparent border-bottom p-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-journal-text me-2 text-primary"></i>System Email Logs</h5>
+        <form method="get" class="d-flex w-50">
+            <input type="text" asp-for="SearchTerm" class="form-control rounded-pill me-2" placeholder="Search email address or subject..." />
+            <button type="submit" class="btn btn-primary rounded-pill"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Recipient</th>
+                        <th>Subject</th>
+                        <th>Campaign</th>
+                        <th>Status</th>
+                        <th>Retries</th>
+                        <th>Attempted On</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Logs.Any())
+                    {
+                        @foreach (var log in Model.Logs)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">@log.EmailAddress</td>
+                                <td>@log.Subject</td>
+                                <td>
+                                    @if (log.CampaignId.HasValue)
+                                    {
+                                        <a asp-page="/Dashboard/Campaigns/Details" asp-route-id="@log.CampaignId" class="badge bg-info text-decoration-none">View Campaign</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">System</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Sent)
+                                    {
+                                        <span class="badge bg-success rounded-pill"><i class="bi bi-check-circle me-1"></i>Sent</span>
+                                    }
+                                    else if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Pending)
+                                    {
+                                        <span class="badge bg-warning text-dark rounded-pill"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger rounded-pill"><i class="bi bi-x-circle me-1"></i>Failed</span>
+                                        if (!string.IsNullOrWhiteSpace(log.ErrorMessage))
+                                        {
+                                            <div class="small text-danger mt-1 fw-bold" style="max-width: 250px; font-size: 0.75rem;">
+                                                <i class="bi bi-info-circle me-1"></i>@log.ErrorMessage
+                                            </div>
+                                        }
+                                    }
+                                </td>
+                                <td>@log.RetryCount</td>
+                                <td>
+                                    @log.SentDatetime.ToString("MMM dd, yyyy HH:mm")
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light border rounded-circle shadow-sm" type="button" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                            <li>
+                                                <button type="button" class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#viewModal-@log.Id">
+                                                    <i class="bi bi-eye me-2"></i> View Body
+                                                </button>
+                                            </li>
+                                            @if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Failed)
+                                            {
+                                                <li>
+                                                    <form method="post" asp-page-handler="Resend" asp-route-id="@log.Id">
+                                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                                        <button type="submit" class="dropdown-item text-warning">
+                                                            <i class="bi bi-arrow-clockwise me-2"></i> Queue Resend
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            }
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <form method="post" asp-page-handler="Delete" asp-route-id="@log.Id" onsubmit="return confirm('Are you sure you want to delete this log?');">
+                                                    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        <i class="bi bi-trash me-2"></i> Delete Log
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center p-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                <h5>No email logs found</h5>
+                                <p>There are no email logs matching your search criteria.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (Model.TotalPages > 1)
+    {
+        <div class="card-footer bg-transparent p-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link" asp-route-page="@i" asp-route-SearchTerm="@Model.SearchTerm">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    }
+</div>
+
+@if (Model.Logs.Any())
+{
+    @foreach (var log in Model.Logs)
+    {
+        <!-- View Body Modal -->
+        <div class="modal fade" id="viewModal-@log.Id" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Email Details - @log.Subject</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        @if (log.Status == JurayUniversal.Domain.Enum.Enum.EmailLogStatus.Failed && !string.IsNullOrWhiteSpace(log.ErrorMessage))
+                        {
+                            <div class="alert alert-danger mb-4">
+                                <h6 class="alert-heading fw-bold"><i class="bi bi-exclamation-octagon-fill me-2"></i>Failure Reason:</h6>
+                                <p class="mb-0 text-break">@log.ErrorMessage</p>
+                            </div>
+                        }
+                        
+                        <h6 class="fw-bold border-bottom pb-2 mb-3">Email Body</h6>
+                        @Html.Raw(log.MailBody)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

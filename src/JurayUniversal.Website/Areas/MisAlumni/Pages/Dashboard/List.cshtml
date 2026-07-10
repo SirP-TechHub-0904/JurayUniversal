@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Dashboard.ListModel
 @{
     ViewData["Title"] = Model.AlumniAlias + " Directory";
@@ -8,12 +8,10 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">@Model.AlumniAlias Directory</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-person-plus me-1"></i> Flag New @Model.AlumniAlias</a>
     </div>
 </div>
@@ -112,3 +110,5 @@
         </div>
     </div>
 </div>
+
+

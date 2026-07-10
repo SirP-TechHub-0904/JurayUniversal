@@ -1,0 +1,58 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Themes.IndexModel
+@{
+    ViewData["Title"] = "Platform Themes";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Theme</th>
+                        <th>Code</th>
+                        <th>Sections</th>
+                        <th>Demo Link (Local)</th>
+                        <th>External Link</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var theme in Model.Themes)
+                    {
+                        <tr>
+                            <td><strong>@theme.Name</strong></td>
+                            <td><code>@theme.Code</code></td>
+                            <td>
+                                <a asp-page="./Sections" asp-route-ThemeName="@theme.Name" class="btn btn-sm btn-info">Sections</a>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(theme.LocalDemo))
+                                {
+                                    <a href="@theme.LocalDemo" target="_blank">View Demo</a>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(theme.ExternalLink))
+                                {
+                                    <a href="@theme.ExternalLink" target="_blank" title="@theme.ExternalLink">Website</a>
+                                }
+                            </td>
+                            <td>
+                                @if (Model.SuperSetting.TemplateLayoutKey == theme.Code)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

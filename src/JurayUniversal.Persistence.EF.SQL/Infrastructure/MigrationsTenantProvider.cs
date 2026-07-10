@@ -8,7 +8,7 @@ public class MigrationsTenantProvider : ITenantProvider
 
     public string DbSchemaName => "dbo"; 
 
-    public string ConnectionString => "Persist Security Info=True;Integrated Security=true;Server=JSS\\SQLEXPRESS;Database=universal009911;";
+    public string ConnectionString => "Persist Security Info=True;Integrated Security=true;Server=JSS\\SQLEXPRESS;Database=universal009911;TrustServerCertificate=True;";
 
     public IDisposable BeginScope(string tenant)
     {

@@ -15,7 +15,7 @@ using System;
 
 namespace JurayUniversal.Persistence.EF.SQL
 {
-public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, string>
+public class DashboardDbContext : IdentityDbContext<Profile, AppRole, string>
 {
     private readonly ITenantProvider _tenantProvider;
 
@@ -31,6 +31,26 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     public DbSet<PriceSetting> PriceSettings { get; set; } = null!;
     public DbSet<SuperSetting> SuperSettings { get; set; } = null!;
     public DbSet<MisSetting> MisSettings { get; set; } = null!;
+    public DbSet<MisWidget> MisWidgets { get; set; } = null!;
+    public DbSet<MisWizardStep> MisWizardSteps { get; set; } = null!;
+    public DbSet<MisLeaveRequest> MisLeaveRequests { get; set; } = null!;
+    public DbSet<MisPhoneBook> MisPhoneBooks { get; set; } = null!;
+    public DbSet<MisNewsletterPlan> MisNewsletterPlans { get; set; }
+    public DbSet<MisNewsletterPlanTransaction> MisNewsletterPlanTransactions { get; set; }
+    public DbSet<MisNewsletterWallet> MisNewsletterWallets { get; set; }
+    public DbSet<MisNewsletterWalletTransaction> MisNewsletterWalletTransactions { get; set; }
+    public DbSet<MisNewsletterCampaign> MisNewsletterCampaigns { get; set; }
+    public DbSet<MisNewsletterRecipient> MisNewsletterRecipients { get; set; }
+    public DbSet<MisNewsletterList> MisNewsletterLists { get; set; }
+    public DbSet<MisNewsletterContact> MisNewsletterContacts { get; set; }
+    public DbSet<MisContact> MisContacts { get; set; } = null!;
+    public DbSet<MisUserRecentVisit> MisUserRecentVisits { get; set; } = null!;
+    public DbSet<MisWallet> MisWallets { get; set; } = null!;
+    public DbSet<MisWalletTransaction> MisWalletTransactions { get; set; } = null!;
+    public DbSet<MisSmsTransaction> MisSmsTransactions { get; set; } = null!;
+    public DbSet<MisSmsCampaign> MisSmsCampaigns { get; set; } = null!;
+    public DbSet<MisSmsRecipient> MisSmsRecipients { get; set; } = null!;
+    public DbSet<MisSmsSenderId> MisSmsSenderIds { get; set; } = null!;
     public DbSet<EnableDevice> EnableDevices { get; set; } = null!;
     public DbSet<TemplateCategory> TemplateCategories { get; set; } = null!;
     public DbSet<TemplateType> TemplateTypes { get; set; } = null!;
@@ -174,6 +194,12 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     public DbSet<UserVote> UserVotes { get; set; }
     public DbSet<VoteCondidate> VoteCondidates { get; set; }
 
+    // MIS Projects
+    public DbSet<MisProject> MisProjects { get; set; }
+    public DbSet<MisProjectSprint> MisProjectSprints { get; set; }
+    public DbSet<MisProjectTask> MisProjectTasks { get; set; }
+    public DbSet<MisProjectUser> MisProjectUsers { get; set; }
+
     public DbSet<QuestionAndAnswer> QuestionAndAnswers { get; set; }
 
 
@@ -198,6 +224,10 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     // --- MIS: Committees & Groups Feature ---
     public DbSet<MisGroup> MisGroups { get; set; }
     public DbSet<MisGroupMember> MisGroupMembers { get; set; }
+
+    // --- MIS: Unified Financials (Dues & Donations) Feature ---
+    public DbSet<MisFinanceCategory> MisFinanceCategories { get; set; }
+    public DbSet<MisFinanceTransaction> MisFinanceTransactions { get; set; }
     public DbSet<MisGroupPost> MisGroupPosts { get; set; }
     public DbSet<MisGroupFile> MisGroupFiles { get; set; }
     public DbSet<MisAlumniProfile> MisAlumniProfiles { get; set; }
@@ -222,9 +252,44 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
     public DbSet<MisFeature> MisFeatures { get; set; }
     public DbSet<MisFeatureInvoice> MisFeatureInvoices { get; set; }
 
+    // --- MIS: Event & Ticketing Feature ---
+    public DbSet<MisEvent> MisEvents { get; set; }
+    public DbSet<MisTicketType> MisTicketTypes { get; set; }
+    public DbSet<MisEventTicket> MisEventTickets { get; set; }
+
+    // --- MIS: Proposals & Grants ---
+    public DbSet<MisProposal> MisProposals { get; set; }
+    public DbSet<MisProposalFile> MisProposalFiles { get; set; }
+    public DbSet<MisProposalPhase> MisProposalPhases { get; set; }
+    
+    public DbSet<MisDonor> MisDonors { get; set; }
+    public DbSet<MisGrant> MisGrants { get; set; }
+    public DbSet<MisGrantMilestone> MisGrantMilestones { get; set; }
+
+    // MIS Recruitment / ATS
+    public DbSet<MisJobPosting> MisJobPostings { get; set; }
+    public DbSet<MisJobApplicant> MisJobApplicants { get; set; }
+    public DbSet<MisJobInterview> MisJobInterviews { get; set; }
+    public DbSet<MisApplicantAccount> MisApplicantAccounts { get; set; }
+    public DbSet<MisJobApplicantDocument> MisJobApplicantDocuments { get; set; }
+
     // --- MIS: Global Notifications ---
     public DbSet<MisNotification> MisNotifications { get; set; }
 
+    // --- MIS: E-Voting ---
+    public DbSet<MisElection> MisElections { get; set; }
+    public DbSet<MisVoteCategory> MisVoteCategories { get; set; }
+    public DbSet<MisCandidate> MisCandidates { get; set; }
+    public DbSet<MisElectionVoter> MisElectionVoters { get; set; }
+    public DbSet<MisUserVote> MisUserVotes { get; set; }
+
+    // --- MIS: Fleet & Equipment Management ---
+    public DbSet<MisEquipmentCategory> MisEquipmentCategories { get; set; }
+    public DbSet<MisEquipment> MisEquipments { get; set; }
+    public DbSet<MisMaintenanceLog> MisMaintenanceLogs { get; set; }
+
+    // --- MIS: Email Logs ---
+    public DbSet<MisNewsletterEmailLog> MisNewsletterEmailLogs { get; set; }
 
     private readonly Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
 
@@ -350,8 +415,15 @@ public class DashboardDbContext : IdentityDbContext<Profile, IdentityRole, strin
         //   .HasForeignKey<Accomodation>(a => a.ParticipantListId);
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<MisNewsletterRecipient>()
+            .HasOne(r => r.User)
+            .WithMany()
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Seed the User Manual
         modelBuilder.SeedMisManuals();
+        modelBuilder.SeedMisWizards();
 
         // ConfigureCustomer(modelBuilder);
     }

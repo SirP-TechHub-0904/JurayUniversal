@@ -1,4 +1,4 @@
-﻿
+
 using JurayUniversal.Application.Dtos;
 using JurayUniversal.Persistence.EF.SQL;
 using Microsoft.AspNetCore.Identity;
@@ -27,10 +27,10 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(List<QueryDataList> data, string title)
         {
             
-            ViewBag.DataTitle = title;
+            ViewData["DataTitle"] = title;
              
-            ViewBag.outcomex = data;
-            ViewBag.sn = title.ToLower() + "12";
+            ViewData["outcomex"] = data;
+            ViewData["sn"] = title.ToLower() + "12";
             return View();
         }
     }

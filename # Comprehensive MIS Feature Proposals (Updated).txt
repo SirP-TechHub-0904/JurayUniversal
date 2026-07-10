@@ -25,10 +25,10 @@ Here is the updated list of potential features (modules) for your universal plat
    A comprehensive ticketing engine for concerts, seminars, or community gatherings. It handles paid and free ticket generation, RSVP limits, and barcode/QR code scanning.
 9. **Financials & Dues Management**
    Handles the collection of mandatory subscriptions and recurring membership dues. It tracks defaulters and automates payment reminders.
-10. **Donations & Free-Will Contributions**
-    Tailored for NGOs/Ministries to accept tithes or cause-based funding and issue automated tax receipts.
-11. **Grant & Proposal Management**
-    Crucial for NGOs and Agencies to track external funding, disbursement milestones, and donor reporting deadlines.
+10. **Proposal Pipeline (Internal Ideas & Pitches)**
+    A workflow engine for staff to pitch project ideas, upload budgets, and get management approval.
+11. **Grant Ledger & Funding Tracking**
+    Crucial for NGOs and Agencies to track external awarded funding, disbursement milestones, and donor reporting deadlines.
 
 ## Operations & Workflow
 12. **Recruitment & Applicant Tracking (ATS)**
@@ -45,10 +45,6 @@ Here is the updated list of potential features (modules) for your universal plat
 ## Communication & Tech Integrations
 17. **Bring-Your-Own-Key (BYOK) Artificial Intelligence**
     A powerful module allowing clients to input their own API keys for Gemini, Claude, or ChatGPT. It unlocks AI capabilities (e.g., AI drafting newsletters) at no extra AI cost to you.
-18. **Direct Messaging (1-on-1 Chat)**
-    A secure internal chat system allowing staff or members to message each other directly without leaving the MIS.
-19. **Group & Team Channels (Team Chat)**
-    The companion to Direct Messaging. This acts like Slack or Microsoft Teams, allowing admins to create group channels (e.g., "General", "Management", "Event Planning") for collaborative, real-time team discussions.
 20. **Mass Communication (Newsletter/SMS)**
     Built-in broadcast engine for targeted emails or urgent text alerts, complete with open-rate tracking.
 21. **Anonymous Whistleblowing & Feedback**

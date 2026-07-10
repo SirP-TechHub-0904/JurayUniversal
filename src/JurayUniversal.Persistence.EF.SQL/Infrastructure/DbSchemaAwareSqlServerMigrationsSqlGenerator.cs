@@ -1,4 +1,4 @@
-﻿using JurayUniversal.Infrastructure.TenantSupport;
+using JurayUniversal.Infrastructure.TenantSupport;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -9,9 +9,9 @@ internal class DbSchemaAwareSqlServerMigrationsSqlGenerator : SqlServerMigration
 {
     private readonly ITenantProvider _tenantProvider;
 
-    public DbSchemaAwareSqlServerMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, IRelationalAnnotationProvider migrationsAnnotations,
+    public DbSchemaAwareSqlServerMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, Microsoft.EntityFrameworkCore.Update.ICommandBatchPreparer commandBatchPreparer,
         ITenantProvider tenantProvider)
-        : base(dependencies, migrationsAnnotations)
+        : base(dependencies, commandBatchPreparer)
     {
         _tenantProvider = tenantProvider;
     }

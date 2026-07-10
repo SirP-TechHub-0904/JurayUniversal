@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +27,8 @@ namespace JurayUniversal.Domain.Models
 
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
+
+        public string FullName => $"{Title} {FirstName} {MiddleName} {LastName}".Trim();
 
         [Display(Name = "Date of Birth")]
         public DateTime? DateOfBirth { get; set; }

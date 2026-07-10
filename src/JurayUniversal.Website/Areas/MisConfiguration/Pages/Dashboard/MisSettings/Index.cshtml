@@ -1,0 +1,285 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.MisSettings.IndexModel
+@{
+    ViewData["Title"] = "Global MIS Settings";
+    ViewData["Subtitle"] = "Configure system settings and preferences.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
+}
+
+<div class="page-heading d-flex justify-content-between align-items-center">
+    <div>
+        <h3>MIS Configuration Settings</h3>
+        <p class="text-subtitle text-muted">Customize the global terminology and settings used across the MIS Dashboard.</p>
+    </div>
+    
+</div>
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="page-content">
+    <form method="post">
+        <input type="hidden" asp-for="Setting.Id" />
+        <div class="row g-4">
+
+            <!-- Terminology Configuration Card -->
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-header bg-transparent border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-gear-fill me-2 text-primary"></i>Terminology Configuration</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label asp-for="Setting.CategoryAlias" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="Setting.CategoryAlias" class="form-control form-control-lg bg-light border-0" placeholder="e.g. Department, Group, Unit" />
+                            <small class="text-muted d-block mt-2">This alias replaces "Category" universally across the platform.</small>
+                            <span asp-validation-for="Setting.CategoryAlias" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Setting.SubCategoryAlias" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="Setting.SubCategoryAlias" class="form-control form-control-lg bg-light border-0" placeholder="e.g. Sub-Department, Team" />
+                            <span asp-validation-for="Setting.SubCategoryAlias" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Setting.GroupAlias" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="Setting.GroupAlias" class="form-control form-control-lg bg-light border-0" placeholder="e.g. Committee, Chapter, Group" />
+                            <small class="text-muted d-block mt-2">This alias replaces "Group" & "Committee" across the platform.</small>
+                            <span asp-validation-for="Setting.GroupAlias" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Setting.AlumniAlias" class="form-label fw-bold text-dark"></label>
+                            <input asp-for="Setting.AlumniAlias" class="form-control form-control-lg bg-light border-0" placeholder="e.g. Alumni, Past Members" />
+                            <small class="text-muted d-block mt-2">This alias replaces "Alumni" universally across the platform.</small>
+                            <span asp-validation-for="Setting.AlumniAlias" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Settings Card -->
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-header bg-transparent border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-download me-2 text-success"></i>Export Settings</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="form-check form-switch mb-3">
+                            <input asp-for="Setting.EnableListDownload" class="form-check-input" type="checkbox" role="switch" id="EnableListDownload" />
+                            <label class="form-check-label fw-bold text-dark" for="EnableListDownload">
+                                Enable Download Button on User List
+                            </label>
+                            <small class="text-muted d-block mt-1">
+                                When enabled, an Export button will appear on the User Directory table,
+                                allowing users to download the current filtered list as PDF, Excel, or Word.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PixelPay Payment Configuration Card -->
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-credit-card-fill me-2 text-danger"></i>PixelPay</h5>
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" asp-for="Setting.EnablePixelPay" id="enablePixelPay" />
+                            <label class="form-check-label fw-semibold" for="enablePixelPay">Enable PixelPay</label>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPayBaseUrl" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPayBaseUrl" class="form-control form-control-lg bg-light border-0" placeholder="https://core.mypixelpay.com" />
+                                <div class="form-text text-warning fw-semibold">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>
+                                    Must be <code>https://core.mypixelpay.com</code> â€” leave blank to use default.
+                                </div>
+                                <span asp-validation-for="Setting.PixelPayBaseUrl" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPayCurrency" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPayCurrency" class="form-control form-control-lg bg-light border-0" placeholder="NGN" />
+                                <span asp-validation-for="Setting.PixelPayCurrency" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPayKeyId" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPayKeyId" class="form-control form-control-lg bg-light border-0" placeholder="Enter PixelPay Key ID (systemid)" />
+                                <span asp-validation-for="Setting.PixelPayKeyId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPaySecretKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPaySecretKey" class="form-control form-control-lg bg-light border-0" placeholder="Enter PixelPay Secret Key (token)" />
+                                <span asp-validation-for="Setting.PixelPaySecretKey" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPaySignature" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPaySignature" class="form-control form-control-lg bg-light border-0" placeholder="Enter PixelPay Signature" />
+                                <span asp-validation-for="Setting.PixelPaySignature" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PixelPayWebhookSecret" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PixelPayWebhookSecret" class="form-control form-control-lg bg-light border-0" placeholder="Enter PixelPay Webhook Secret" />
+                                <span asp-validation-for="Setting.PixelPayWebhookSecret" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paystack Payment Configuration Card -->
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-wallet2 me-2 text-success"></i>Paystack</h5>
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" asp-for="Setting.EnablePaystack" id="enablePaystack" />
+                            <label class="form-check-label fw-semibold" for="enablePaystack">Enable Paystack</label>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PaystackPublicKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PaystackPublicKey" class="form-control form-control-lg bg-light border-0" placeholder="pk_test_... or pk_live_..." />
+                                <div class="form-text text-muted">Used on the frontend (if needed). Not required for redirect flow.</div>
+                                <span asp-validation-for="Setting.PaystackPublicKey" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PaystackSecretKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PaystackSecretKey" class="form-control form-control-lg bg-light border-0" placeholder="sk_test_... or sk_live_..." />
+                                <span asp-validation-for="Setting.PaystackSecretKey" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.PaystackWebhookSecret" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.PaystackWebhookSecret" class="form-control form-control-lg bg-light border-0" placeholder="Enter Paystack Webhook Secret" />
+                                <div class="form-text text-muted">Register webhook URL in Paystack dashboard: <code>https://yourdomain.com/api/paystack-webhook</code></div>
+                                <span asp-validation-for="Setting.PaystackWebhookSecret" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZeptoMail Configuration Card -->
+            <div class="col-md-12 mt-4">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-envelope-paper me-2 text-primary"></i>ZeptoMail API Settings</h5>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-outline-primary me-3" onclick="testZeptoMailConnection()">
+                                <i class="bi bi-link-45deg me-1"></i>Test Connection
+                            </button>
+                            <div class="form-check form-switch d-inline-block mb-0 align-middle">
+                                <input class="form-check-input" type="checkbox" asp-for="Setting.EnableZeptoMail" id="enableZeptoMail" />
+                                <label class="form-check-label fw-semibold" for="enableZeptoMail">Enable</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="Setting.ZeptoMailApiKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.ZeptoMailApiKey" class="form-control form-control-lg bg-light border-0" placeholder="Enter ZeptoMail API Token" />
+                                <span asp-validation-for="Setting.ZeptoMailApiKey" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.ZeptoMailSenderEmail" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.ZeptoMailSenderEmail" class="form-control form-control-lg bg-light border-0" placeholder="e.g. noreply@koboview.com" />
+                                <span asp-validation-for="Setting.ZeptoMailSenderEmail" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.ZeptoMailSenderName" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.ZeptoMailSenderName" class="form-control form-control-lg bg-light border-0" placeholder="e.g. KOBOVIEW" />
+                                <span asp-validation-for="Setting.ZeptoMailSenderName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.ZeptoMailSendMailId" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.ZeptoMailSendMailId" class="form-control form-control-lg bg-light border-0" placeholder="Enter SendMail ID (Optional)" />
+                                <span asp-validation-for="Setting.ZeptoMailSendMailId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Setting.EmailMaxRetries" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.EmailMaxRetries" class="form-control form-control-lg bg-light border-0" />
+                                <small class="text-muted d-block mt-2">Maximum attempts by the background worker to resend failed emails.</small>
+                                <span asp-validation-for="Setting.EmailMaxRetries" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Captcha Settings Card -->
+            <div class="col-md-12 mt-4">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-transparent border-bottom">
+                        <h5 class="mb-0"><i class="bi bi-shield-lock-fill me-2 text-warning"></i>Captcha Protection Settings</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Setting.ActiveCaptcha" class="form-label fw-bold text-dark"></label>
+                                <select asp-for="Setting.ActiveCaptcha" class="form-select form-select-lg bg-light border-0" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.CaptchaType>()"></select>
+                                <small class="text-muted d-block mt-2">Select the captcha type applied to public forms.</small>
+                                <span asp-validation-for="Setting.ActiveCaptcha" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Setting.GoogleRecaptchaSiteKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.GoogleRecaptchaSiteKey" class="form-control form-control-lg bg-light border-0" placeholder="Enter reCAPTCHA Site Key" />
+                                <span asp-validation-for="Setting.GoogleRecaptchaSiteKey" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Setting.GoogleRecaptchaSecretKey" class="form-label fw-bold text-dark"></label>
+                                <input asp-for="Setting.GoogleRecaptchaSecretKey" class="form-control form-control-lg bg-light border-0" placeholder="Enter reCAPTCHA Secret Key" />
+                                <span asp-validation-for="Setting.GoogleRecaptchaSecretKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Single Save Button -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary rounded-pill btn-lg px-5 fw-700 shadow-sm">
+                <i class="bi bi-check-lg me-2"></i>Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function testZeptoMailConnection() {
+            var email = prompt("Enter an email address to send the test message to:");
+            if (email == null || email == "") {
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("email", email);
+
+            fetch('/api/ZeptoMailTest/test-connection', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Success: " + data.message);
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                alert("An error occurred while testing the connection: " + error);
+            });
+        }
+    </script>
+}
+

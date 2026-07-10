@@ -1,0 +1,103 @@
+@page
+@model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.PreviewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview: @Model.Form.Title</title>
+    <!-- Include Bootstrap for form styling -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f0ebf8;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .form-preview-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        /* Hide all formBuilder default field labels */
+        .rendered-form label[class^="formbuilder-"][class$="-label"] {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header bar -->
+    <div class="bg-white px-4 py-3 border-bottom shadow-sm mb-5 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold text-dark"><span class="badge bg-info me-2">PREVIEW MODE</span>@Model.Form.Title</h5>
+        <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="window.close()">
+            <i class="bi bi-x-lg me-1"></i> Close Preview
+        </button>
+    </div>
+
+    <div class="container pb-5">
+        <div class="alert alert-warning text-center rounded-pill shadow-sm mb-4 mx-auto" style="max-width: 800px;" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Preview Mode:</strong> This is a live preview. Submissions are disabled.
+        </div>
+
+        <div class="form-preview-container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-2">@Model.Form.Title</h2>
+                <p class="text-muted fs-6">@Model.Form.Description</p>
+            </div>
+
+            <form id="previewForm" onsubmit="event.preventDefault(); alert('This is just a preview. Submissions are disabled.'); return false;">
+                <div id="fb-render" class="mb-4"></div>
+
+                <div class="text-center mt-5 d-flex justify-content-center">
+                    <button type="button" onclick="document.getElementById('previewForm').reset();" class="btn btn-outline-secondary btn-lg rounded-pill px-4 fw-bold mr-3 me-3">
+                        <i class="bi bi-eraser me-1 mr-1"></i> Clear Form
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-bold" style="background-color: #673ab7; border-color: #673ab7;">
+                        <i class="bi bi-send me-2"></i> Submit Form
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts needed for Form Render -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://formbuilder.online/assets/js/form-render.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var formId = '@Model.Form.Id';
+            
+            // Try to load unsaved preview data from localStorage
+            var localSchema = localStorage.getItem('previewSchema_' + formId);
+            
+            // Fallback to database schema if no local preview data found
+            var dbSchema = '@Html.Raw(Model.Form.SchemaJson)';
+            
+            var schemaToUse = localSchema ? localSchema : dbSchema;
+            var parsedData = [];
+            
+            try {
+                if (schemaToUse && schemaToUse !== '[]' && schemaToUse !== '') {
+                    parsedData = JSON.parse(schemaToUse);
+                }
+            } catch (e) {
+                console.error("Failed to parse schema", e);
+            }
+
+            var formRenderInstance = $('#fb-render').formRender({
+                formData: parsedData
+            });
+        });
+    </script>
+</body>
+</html>

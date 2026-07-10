@@ -1,0 +1,46 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Platform.Wallet.FundModel
+@{
+    ViewData["Title"] = "Fund Wallet";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0"><i class="fa fa-credit-card text-success"></i> Secure Payment via Paystack</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.StatusMessage))
+                {
+                    <div class="alert alert-danger">
+                        @Model.StatusMessage
+                    </div>
+                }
+
+                <div class="mb-4">
+                    <h6>Current Balance: <span class="text-primary font-weight-bold">&#8358;@Model.UserWallet.Balance.ToString("N2")</span></h6>
+                </div>
+
+                <form method="post">
+                    <div class="form-group mb-4">
+                        <label class="form-label font-weight-bold">Amount to Fund (&#8358;)</label>
+                        <input asp-for="Amount" class="form-control form-control-lg" type="number" min="100" step="1" required placeholder="e.g. 5000" />
+                        <small class="text-muted">Minimum amount is &#8358;100. Secure processing by Paystack.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <i class="fa fa-lock"></i> Proceed to Payment
+                    </button>
+                    
+                    <div class="mt-3 text-center">
+                        <a href="/MisMassComm/Platform/Wallet/Index" class="text-muted">Cancel and return</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
