@@ -1,0 +1,217 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Analytics Dashboard";
+    ViewData["Subtitle"] = "Overview of email campaign performance and quota expenditure.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    
+    <!-- Date Filter Form -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Start Date</label>
+                    <input type="date" name="startDate" class="form-control" value="@HttpContext.Request.Query["startDate"]" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">End Date</label>
+                    <input type="date" name="endDate" class="form-control" value="@HttpContext.Request.Query["endDate"]" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary fw-bold w-100">
+                        <i class="bi bi-funnel me-1"></i> Filter Metrics
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <a href="/MisNewsletter/Dashboard/Wallet/Index" class="text-decoration-none d-block h-100">
+                <div class="card border-0 shadow-sm h-100 bg-primary text-white card-hover-effect">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-cash-stack fs-1 mb-2 d-block opacity-75"></i>
+                        <h6>Total Spent</h6>
+                        <h3 class="fw-bold">&#8358;@Model.TotalSpent.ToString("N0")</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/MisNewsletter/Dashboard/Campaigns/Index?status=Completed" class="text-decoration-none d-block h-100">
+                <div class="card border-0 shadow-sm h-100 bg-success text-white card-hover-effect">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-send-check fs-1 mb-2 d-block opacity-75"></i>
+                        <h6>Emails Sent</h6>
+                        <h3 class="fw-bold">@Model.TotalSent.ToString("N0")</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/MisNewsletter/Dashboard/Campaigns/Index?status=Pending" class="text-decoration-none d-block h-100">
+                <div class="card border-0 shadow-sm h-100 bg-warning text-dark card-hover-effect">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-hourglass-split fs-1 mb-2 d-block opacity-75"></i>
+                        <h6>Pending / Scheduled</h6>
+                        <h3 class="fw-bold">@Model.PendingCampaigns.ToString("N0")</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/MisNewsletter/Dashboard/Campaigns/Index?status=Failed" class="text-decoration-none d-block h-100">
+                <div class="card border-0 shadow-sm h-100 bg-danger text-white card-hover-effect">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-exclamation-octagon fs-1 mb-2 d-block opacity-75"></i>
+                        <h6>Failed Deliveries</h6>
+                        <h3 class="fw-bold">@Model.FailedDeliveries.ToString("N0")</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row">
+        <!-- Campaign Volume Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-bar-chart me-2 text-primary"></i> Campaign Volume (@DateTime.UtcNow.Year)</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div id="volumeChart" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yearly Expenditure Chart -->
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-graph-up-arrow me-2 text-primary"></i> Yearly Expenditure</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div id="expenditureChart" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campaign Status Pie Chart -->
+        <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-bottom pt-4 pb-3 px-4">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-pie-chart me-2 text-primary"></i> Campaign Status</h5>
+                </div>
+                <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                    <div id="statusChart" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/dashboard/plugins/apexcharts/dist/apexcharts.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Campaign Volume Bar Chart
+            var volumeOptions = {
+                series: [{
+                    name: 'Emails Sent',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.MonthlyVolumeSent))
+                }, {
+                    name: 'Failed Deliveries',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.MonthlyVolumeFailed))
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    toolbar: { show: false }
+                },
+                colors: ['#198754', '#dc3545'], // Success and Danger colors
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: { enabled: false },
+                stroke: { show: true, width: 2, colors: ['transparent'] },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                },
+                fill: { opacity: 1 }
+            };
+
+            var volumeChart = new ApexCharts(document.querySelector("#volumeChart"), volumeOptions);
+            volumeChart.render();
+
+
+            // Yearly Expenditure Bar Chart
+            var expOptions = {
+                series: [{
+                    name: 'Amount Spent (N)',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.YearlySpend))
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    toolbar: { show: false }
+                },
+                colors: ['#0d6efd'], // Primary color
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '40%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: { enabled: false },
+                stroke: { show: true, width: 2, colors: ['transparent'] },
+                xaxis: {
+                    categories: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.YearlyLabels)),
+                },
+                fill: { opacity: 1 }
+            };
+
+            var expChart = new ApexCharts(document.querySelector("#expenditureChart"), expOptions);
+            expChart.render();
+
+            // Campaign Status Pie Chart
+            var statusOptions = {
+                series: [@Model.TotalSent, @Model.PendingCampaigns, @Model.FailedDeliveries],
+                labels: ['Sent', 'Pending', 'Failed'],
+                chart: {
+                    type: 'pie',
+                    height: 350
+                },
+                colors: ['#198754', '#ffc107', '#dc3545'], // Success, Warning, Danger
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return val.toFixed(1) + "%"
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            };
+
+            var statusChart = new ApexCharts(document.querySelector("#statusChart"), statusOptions);
+            statusChart.render();
+        });
+    </script>
+}

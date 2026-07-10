@@ -1,0 +1,112 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IProduct.ISample.DetailsModel
+
+@{
+    ViewData["Title"] = "PRODUCT SAMPLE DETAILS";
+    ViewData["BackUrl"] = "./Index";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.VideoUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <div class="form-group mb-4">
+                            <label class="control-label">Previouse sample Video</label><br />
+                            @if (!String.IsNullOrEmpty(Model.ProductSample.VideoUrl))
+                            {
+                                <div class=" ">
+                                    <label class=" ">Previouse sample Video</label><br />
+                                    <video width="" style="height:200px;" controls="controls">
+                                        <source src="@Model.ProductSample.VideoUrl" type="video/mp4">
+                                        Your browser does not support HTML5 video.
+                                    </video>
+                                </div>
+                            }
+                        </div>
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.VideoKey)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductSample.VideoKey)
+                    </dd>
+                      <dt class="col-sm-2">
+                          @Html.DisplayNameFor(model => model.ProductSample.ImageUrl)
+                      </dt>
+                      <dd class="col-sm-10">
+                          @if (!string.IsNullOrEmpty(Model.ProductSample.ImageUrl))
+                          {
+                              <div class="media-display-block mb-3">
+                                  <a href="@Model.ProductSample.ImageUrl" target="_blank">
+                                      <img src="@Model.ProductSample.ImageUrl" class="img-fluid rounded shadow-sm mb-2" style="max-height: 200px; object-fit: contain;" alt="Preview" />
+                                  </a>
+                                  <br/>
+                                  <div class="btn-group" role="group">
+                                      <button type="button" class="btn btn-secondary btn-sm" onclick="copyToClipboard('@Model.ProductSample.ImageUrl')">
+                                          <i class="fa fa-copy"></i> Copy Image URL
+                                      </button>
+                                      <button type="button" class="btn btn-info btn-sm" onclick="copyToClipboard('@Model.ProductSample.ImageKey')">
+                                          <i class="fa fa-copy"></i> Copy Image Name
+                                      </button>
+                                  </div>
+                              </div>
+                          }
+                      </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductSample.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductSample.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.FullDescription)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.ProductSample.FullDescription)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ProductSample.Product)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ProductSample.Product.FullDescription)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

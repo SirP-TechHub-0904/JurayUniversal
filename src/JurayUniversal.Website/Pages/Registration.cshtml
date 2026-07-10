@@ -1,4 +1,4 @@
-﻿@page "/registration/{mx:long}/{sec:long}/{vml:guid}"
+@page "/registration/{mx:long}/{sec:long}/{vml:guid}"
 @model JurayUniversal.Website.Pages.RegistrationModel
   
 @{
@@ -185,6 +185,8 @@
                                 <input asp-for="UserDatas.PositionOrRank" class="form-control" />
                                 <span asp-validation-for="UserDatas.PositionOrRank" class="text-danger"></span>
                             </div>
+
+                            @await Html.PartialAsync("_Captcha")
 
                             <div class="form-group">
                                 <input type="submit" value="Continue" class="btn btn-primary" />

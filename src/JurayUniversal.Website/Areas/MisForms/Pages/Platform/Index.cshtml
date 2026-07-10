@@ -2,14 +2,19 @@
 @model JurayUniversal.Website.Areas.MisForms.Pages.Platform.IndexModel
 @{
     ViewData["Title"] = "Available Forms";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
     ViewData["ActiveMenu"] = "MisForms";
 }
+
 
 <div class="page-heading mb-4">
     <div class="row align-items-center">
         <div class="col-md-6 col-12">
             <h3 class="fw-bold mb-1">Available Forms</h3>
             <p class="text-muted fs-7 mb-0">Select a form below to fill it out and submit your response.</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-end mt-2 mt-md-0">
+            
         </div>
     </div>
 </div>
@@ -34,11 +39,14 @@
                             <p class="text-muted fs-7 mb-4 flex-grow-1">@form.Description</p>
                             
                             <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="badge bg-light text-muted border px-2 py-1"><i class="bi bi-clock me-1"></i> @form.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                <a asp-page="./MyResponses" asp-route-id="@form.Id" class="btn btn-outline-secondary rounded-pill px-3 shadow-sm">
+                                    My Responses
+                                </a>
                                 <a asp-page="./Submit" asp-route-id="@form.Id" class="btn btn-primary rounded-pill px-4 shadow-sm">
                                     Fill Form <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -56,3 +64,6 @@
         }
     </div>
 </div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+

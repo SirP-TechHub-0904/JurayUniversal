@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.WorkspaceModel
 @{
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
@@ -7,12 +7,10 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">@Model.MisGroup.Title Workspace</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to My Groups</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
     </div>
     <p class="text-muted mb-0">Role: <span class="badge bg-primary rounded-pill">@(Model.CurrentMembership.RolePosition ?? "Member")</span></p>
 </div>
@@ -160,3 +158,5 @@
         </div>
     </div>
 </div>
+
+

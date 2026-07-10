@@ -1,3 +1,4 @@
+using JurayUniversal.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,16 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
 
     public class EditRoleModel : PageModel
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public EditRoleModel(RoleManager<IdentityRole> roleManager)
+        public EditRoleModel(RoleManager<AppRole> roleManager)
         {
 
             _roleManager = roleManager;
 
         }
         [BindProperty]
-        public IdentityRole Role { get; set; }
+        public AppRole Role { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)

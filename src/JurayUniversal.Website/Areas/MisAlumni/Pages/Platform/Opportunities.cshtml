@@ -1,18 +1,19 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.OpportunitiesModel
 @inject Microsoft.AspNetCore.Identity.UserManager<JurayUniversal.Domain.Models.Profile> _userManager
 @{
     ViewData["Title"] = "Opportunities Board";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
     ViewData["ActiveMenu"] = "MisAlumni";
 }
 
+
+
 <div class="mis-page-header">
-    <h3 class="mis-page-title">Opportunities & Networking Board</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Network</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         @if (Model.IsAlumni)
         {
             <button class="btn btn-primary btn-sm rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#createPostModal">
@@ -55,15 +56,9 @@
                         <h5 class="fw-bold mb-3">@post.Title</h5>
                         <div class="text-dark bg-light rounded p-3 mb-3" style="white-space: pre-wrap;">@post.Content</div>
                         
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div class="d-flex justify-content-end gap-2 mt-3">
                             <a href="mailto:@post.UserProfile?.Email" class="btn btn-outline-primary btn-sm rounded-pill"><i class="bi bi-envelope me-1"></i> Contact User</a>
-                            
-                            @if (User.Identity.IsAuthenticated && post.UserProfileId == _userManager.GetUserId(User))
-                            {
-                                <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                                    <button type="submit" class="btn btn-light btn-sm rounded-pill text-danger"><i class="bi bi-trash"></i></button>
-                                </form>
-                            }
+                            <button type="submit" class="btn btn-light btn-sm rounded-pill text-danger"><i class="bi bi-trash"></i></button>
                         </div>
                     </div>
                 </div>
@@ -126,3 +121,4 @@
         </div>
     </div>
 }
+

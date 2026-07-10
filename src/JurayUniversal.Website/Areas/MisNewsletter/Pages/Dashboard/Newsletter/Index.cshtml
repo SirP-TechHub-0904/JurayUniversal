@@ -1,0 +1,110 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Newsletter.IndexModel
+
+@{
+    ViewData["Title"] = "Website Newsletter Subscribers";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Newsletter";
+}
+
+@section HeaderActions {
+    <a asp-page="/Dashboard/Index" class="btn btn-outline-secondary rounded-pill fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+    </a>
+}
+
+<div class="card">
+    <form method="post" asp-page-handler="Export">
+        <div class="card-header border-bottom-0 pb-0">
+            <div class="card-tools" style="float: right;">
+                @if (ViewData["IsNewsletterEnabled"] != null && (bool)ViewData["IsNewsletterEnabled"] == true)
+                {
+                    <button type="submit" id="exportBtn" class="btn btn-sm btn-primary d-none">
+                        <i class="fa fa-file-export"></i> Export Selected
+                    </button>
+                }
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            @if (TempData["error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["error"]
+                </div>
+            }
+            @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["success"]
+                </div>
+            }
+            
+            <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>S/N</th>
+                            <th>Email Address</th>
+                            <th>Subscription Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int sn = 0; }
+                        @foreach (var item in Model.NewsLetters)
+                        {
+                            sn++;
+                            bool isExported = !string.IsNullOrEmpty(item.Email) && Model.ExportedEmails.Contains(item.Email);
+                            
+                            <tr>
+                                <td>
+                                    @if (!isExported)
+                                    {
+                                        <input type="checkbox" name="SelectedIds" value="@item.Id" />
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">Exported</span>
+                                    }
+                                </td>
+                                <td>@sn</td>
+                                <td>@item.Email</td>
+                                <td>@item.Date.ToString("MMM dd, yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Initialize DataTables
+            $('#example1').DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+
+            // Handle Checkbox Logic to show/hide Export button
+            function toggleExportBtn() {
+                if ($('input[name="SelectedIds"]:checked').length > 0) {
+                    $('#exportBtn').removeClass('d-none');
+                } else {
+                    $('#exportBtn').addClass('d-none');
+                }
+            }
+
+            $(document).on('change', 'input[name="SelectedIds"]', function () {
+                toggleExportBtn();
+            });
+        });
+    </script>
+}
+

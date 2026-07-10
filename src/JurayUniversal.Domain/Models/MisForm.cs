@@ -12,6 +12,8 @@ namespace JurayUniversal.Domain.Models
         public string SchemaJson { get; set; }
         public bool IsPublished { get; set; }
         public bool RequireLogin { get; set; }
+        public bool AllowMultipleSubmissions { get; set; } = true;
+        public bool AllowUserToViewResponses { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<MisFormResponse> Responses { get; set; }

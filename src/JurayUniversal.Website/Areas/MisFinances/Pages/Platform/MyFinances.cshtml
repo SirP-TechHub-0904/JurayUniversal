@@ -1,0 +1,179 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MisFinances.Pages.Platform.MyFinancesModel
+@{
+    ViewData["Title"] = "My Finances";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="mis-page-header d-flex justify-content-between align-items-center">
+    
+    <div class="d-flex gap-2">
+        
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+
+    <!-- Outstanding Dues Section -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body p-4 p-md-5">
+            <h5 class="fw-bold mb-1"><i class="bi bi-exclamation-triangle-fill text-danger me-2"></i> Outstanding Payables</h5>
+            <p class="text-muted fs-7 mb-4">These are compulsory payments required from all members.</p>
+
+            @if (Model.OutstandingDues.Any())
+            {
+                <div class="row g-3">
+                    @foreach (var due in Model.OutstandingDues)
+                    {
+                        <div class="col-md-6">
+                            <div class="card border-danger border-opacity-25 rounded-4 h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">@due.Title</h6>
+                                            <div class="text-muted fs-8">@due.Frequency</div>
+                                        </div>
+                                        <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Unpaid</span>
+                                    </div>
+                                    <div class="fs-4 fw-bold text-dark mb-3">
+                                        @if (due.FixedAmount.HasValue)
+                                        {
+                                            @due.FixedAmount.Value.ToString("N2")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fs-6">Open Amount</span>
+                                        }
+                                    </div>
+                                    @{
+                                        var payLink = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/pay/{due.Id}";
+                                    }
+                                    <div class="d-flex gap-2">
+                                        <a href="/pay/@due.Id" class="btn btn-danger rounded-pill btn-sm flex-grow-1">
+                                            <i class="bi bi-credit-card me-1"></i> Pay Now
+                                        </a>
+                                        <button class="btn btn-outline-secondary btn-sm rounded-pill"
+                                                onclick="navigator.clipboard.writeText('@payLink')" title="Copy payment link">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <i class="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
+                    <h5 class="fw-bold text-success">You're all caught up!</h5>
+                    <p class="text-muted">No outstanding compulsory payments at this time.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Donations Section -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body p-4 p-md-5">
+            <h5 class="fw-bold mb-1"><i class="bi bi-heart-fill text-success me-2"></i> Support a Cause</h5>
+            <p class="text-muted fs-7 mb-4">These are optional. Your contributions help our community grow.</p>
+
+            @if (Model.OptionalCauses.Any())
+            {
+                <div class="row g-3">
+                    @foreach (var cause in Model.OptionalCauses)
+                    {                        
+                            var payLink = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/pay/{cause.Id}";
+                        
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card border-0 bg-white shadow-sm rounded-4 h-100">
+                                <div class="card-body p-4">
+                                    <h6 class="fw-bold mb-1">@cause.Title</h6>
+                                    <p class="text-muted fs-8 mb-3">@cause.Description</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="/pay/@cause.Id" class="btn btn-success rounded-pill btn-sm flex-grow-1">
+                                            <i class="bi bi-heart me-1"></i> Donate
+                                        </a>
+                                        <button class="btn btn-outline-secondary btn-sm rounded-pill"
+                                                onclick="navigator.clipboard.writeText('@payLink')" title="Copy payment link">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-heart text-muted fs-1 opacity-50 d-block mb-2"></i>
+                    <p>No active causes at this time.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Payment History Section -->
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <h5 class="fw-bold mb-4"><i class="bi bi-clock-history text-primary me-2"></i> Payment History</h5>
+
+            @if (Model.MyTransactions.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Reference</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var t in Model.MyTransactions)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@t.Category?.Title</td>
+                                    <td class="fw-bold text-success">@t.Amount.ToString("N2")</td>
+                                    <td><code class="fs-8">@t.TransactionReference</code></td>
+                                    <td>
+                                        @switch (t.Status)
+                                        {
+                                            case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Success:
+                                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill">Paid</span>
+                                                break;
+                                            case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Pending:
+                                                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">Pending</span>
+                                                break;
+                                            case JurayUniversal.Domain.Enum.Enum.PaymentStatus.Failed:
+                                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Failed</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="text-muted">@t.PaidAt?.ToString("MMM dd, yyyy") </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-receipt text-muted opacity-50 mb-3 d-block" style="font-size: 3rem;"></i>
+                    <h5 class="fw-bold text-muted">No Payments Made Yet</h5>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+
+

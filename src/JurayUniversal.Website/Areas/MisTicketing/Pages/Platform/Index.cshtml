@@ -1,0 +1,119 @@
+@page
+@model JurayUniversal.Website.Areas.MisTicketing.Pages.Platform.IndexModel
+@{
+    ViewData["Title"] = "My Tickets & Upcoming Events";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="container-fluid">
+    
+        }
+        @foreach (var ev in Model.UpcomingEvents)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4">
+                    @if (!string.IsNullOrEmpty(ev.BannerImageUrl))
+                    {
+                        <img src="@ev.BannerImageUrl" class="card-img-top rounded-top-4" alt="@ev.Title" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="bg-primary text-white d-flex align-items-center justify-content-center rounded-top-4" style="height: 200px;">
+                            <i class="bi bi-calendar-event display-1 opacity-50"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="fw-bold">@ev.Title</h5>
+                        <p class="small text-muted mb-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i> @ev.Venue</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill">
+                                <i class="bi bi-clock me-1"></i> @ev.StartDate.ToString("MMM dd, yyyy")
+                            </span>
+                            <a asp-page="./EventDetails" asp-route-id="@ev.Id" class="btn btn-sm btn-primary rounded-pill px-3">Get Tickets</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h3 class="fw-bold mb-4">My Tickets</h3>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Event</th>
+                            <th>Ticket Type</th>
+                            <th>Date Purchased</th>
+                            <th>Status</th>
+                            <th class="pe-4 text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.MyTickets.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    <i class="bi bi-ticket-perforated display-4 d-block mb-3 opacity-50"></i>
+                                    You don't have any tickets yet.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var ticket in Model.MyTickets)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold">@ticket.MisTicketType?.MisEvent?.Title</div>
+                                    <div class="small text-muted">@ticket.MisTicketType?.MisEvent?.StartDate.ToString("MMM dd, yyyy")</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">@ticket.MisTicketType?.Name</span>
+                                </td>
+                                <td>@ticket.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                <td>
+                                    @if (ticket.IsUsed)
+                                    {
+                                        <span class="badge bg-danger rounded-pill px-3">Checked In</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success rounded-pill px-3">Valid</span>
+                                    }
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#qrModal-@ticket.Id">
+                                        View QR
+                                    </button>
+
+                                    <!-- QR Modal -->
+                                    <div class="modal fade text-start" id="qrModal-@ticket.Id" tabindex="-1" aria-labelledby="qrModalLabel-@ticket.Id" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                                            <div class="modal-content text-center p-3 border-0 shadow rounded-4">
+                                                <div class="modal-header border-0 pb-0 justify-content-end">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="fw-bold mb-1">@ticket.MisTicketType?.MisEvent?.Title</h5>
+                                                    <p class="text-muted small mb-4">@ticket.MisTicketType?.Name Ticket</p>
+                                                    
+                                                    <div class="bg-light p-3 rounded-4 d-inline-block mb-3">
+                                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=@ticket.QrCodeText" alt="QR Code" class="img-fluid rounded" />
+                                                    </div>
+                                                    
+                                                    <p class="small text-muted mb-1">Ref: @ticket.TransactionReference</p>
+                                                    <p class="small text-muted fw-bold mb-0">@ticket.GuestName</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,64 +2,55 @@
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.EditModel
 @{
     ViewData["Title"] = "Edit User Category/Status";
+    ViewData["Subtitle"] = "Modify the details of this record.";
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "Users";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Edit User Configuration</h3>
-            <p class="text-subtitle text-muted">Update category assignment and active status for @Model.FullName.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="/Dashboard/List" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="/Dashboard/List" class="btn btn-secondary">
                 <i class="bi bi-x-circle"></i> Cancel
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
-            <div class="card shadow-sm border-0">
-                <div class="card-header border-bottom bg-transparent py-3">
-                    <h5 class="mb-0 text-dark">User Classification</h5>
+    <div class="card shadow-sm border-0">
+        <div class="card-header border-bottom bg-transparent py-3">
+            <h5 class="mb-0 text-dark">User Classification</h5>
+        </div>
+        <div class="card-body py-4">
+            <form method="post">
+                <input type="hidden" asp-for="ProfileId" />
+
+                <div class="mb-3">
+                    <label class="form-label text-muted fw-semibold">Full Name</label>
+                    <input type="text" class="form-control" value="@Model.FullName" disabled />
                 </div>
-                <div class="card-body py-4">
-                    <form method="post">
-                        <input type="hidden" asp-for="ProfileId" />
 
-                        <div class="mb-3">
-                            <label class="form-label text-muted fw-semibold">Full Name</label>
-                            <input type="text" class="form-control" value="@Model.FullName" disabled />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label text-muted fw-semibold" asp-for="SelectedCategoryId">User Category</label>
-                            <select asp-for="SelectedCategoryId" class="form-select">
-                                <option value="">No Category</option>
-                                @foreach (var cat in Model.Categories)
-                                {
-                                    <option value="@cat.Id">@cat.Title</option>
-                                }
-                            </select>
-                            <span asp-validation-for="SelectedCategoryId" class="text-danger fs-7"></span>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label text-muted fw-semibold" asp-for="SelectedStatus">Account Status</label>
-                            <select asp-for="SelectedStatus" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.UserStatus>()"></select>
-                            <span asp-validation-for="SelectedStatus" class="text-danger fs-7"></span>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100 py-2">
-                            <i class="bi bi-save-fill me-1"></i> Save Changes
-                        </button>
-                    </form>
+                <div class="mb-3">
+                    <label class="form-label text-muted fw-semibold" asp-for="SelectedCategoryId">User Category</label>
+                    <select asp-for="SelectedCategoryId" class="form-select">
+                        <option value="">No Category</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Title</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SelectedCategoryId" class="text-danger fs-7"></span>
                 </div>
-            </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted fw-semibold" asp-for="SelectedStatus">Account Status</label>
+                    <select asp-for="SelectedStatus" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.UserStatus>()"></select>
+                    <span asp-validation-for="SelectedStatus" class="text-danger fs-7"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="bi bi-save-fill me-1"></i> Save Changes
+                </button>
+            </form>
         </div>
     </div>
 </div>
+
+

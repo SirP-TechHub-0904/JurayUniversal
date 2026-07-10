@@ -1,0 +1,152 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Settings Hub";
+    ViewData["Subtitle"] = "Centralized management for all platform configurations and settings.";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="row g-4">
+        <!-- MisSetting -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-sliders-h fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">MIS Settings</h5>
+                    <p class="card-text text-muted fs-7">Configure feature toggles, aliases, and module settings for the MIS.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/MisSettings/Index" class="btn btn-primary rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SuperSetting -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-crown fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Super Settings</h5>
+                    <p class="card-text text-muted fs-7">Global platform controls, theme settings, and authentication configurations.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/SuperSettings/Index" class="btn btn-danger rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setting (General) -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-cogs fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">General Settings</h5>
+                    <p class="card-text text-muted fs-7">Standard application settings, contact info, and basic system variables.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/Settings/Index" class="btn btn-success rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- DataConfig -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+                    <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-database fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Data Config</h5>
+                    <p class="card-text text-muted fs-7">Database connection behaviors, storage policies, and layout injections.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/DataConfigs/Index" class="btn btn-warning rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Manager -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-info">
+                <div class="card-body text-center p-4">
+                    <div class="bg-info bg-opacity-10 text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-user-shield fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Role Manager</h5>
+                    <p class="card-text text-muted fs-7">Manage application roles and categorize them for MIS and Legacy.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/RoleManager/Index" class="btn btn-info text-white rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SuperAdmins -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-dark">
+                <div class="card-body text-center p-4">
+                    <div class="bg-dark bg-opacity-10 text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-user-secret fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Super Admins</h5>
+                    <p class="card-text text-muted fs-7">Manage elite user accounts that have overarching access to all features.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/SuperAdmins/Index" class="btn btn-dark rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Base Manager -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-book fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Knowledge Base</h5>
+                    <p class="card-text text-muted fs-7">Manage contextual help drawers and knowledge base pages.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/KnowledgeBase/Index" class="btn btn-primary rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules & Features -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-secondary">
+                <div class="card-body text-center p-4">
+                    <div class="bg-secondary bg-opacity-10 text-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-layer-group fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Modules & Features</h5>
+                    <p class="card-text text-muted fs-7">Enable or disable system modules and manage platform features.</p>
+                    <a asp-area="MisManagement" asp-page="/Index" class="btn btn-secondary rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Pricing -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-success">
+                <div class="card-body text-center p-4">
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-tags fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Newsletter Pricing</h5>
+                    <p class="card-text text-muted fs-7">Set up and manage pricing plans for the newsletter feature.</p>
+                    <a asp-area="MisManagement" asp-page="/Plans/Index" class="btn btn-success rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Logs -->
+        <div class="col-md-6 col-lg-3 mt-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-danger">
+                <div class="card-body text-center p-4">
+                    <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-exclamation-triangle fs-4"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">System Logs</h5>
+                    <p class="card-text text-muted fs-7">View and manage daily background error logs for this domain.</p>
+                    <a asp-area="MisConfiguration" asp-page="/Dashboard/SystemLogs/Index" class="btn btn-danger rounded-pill px-4 mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

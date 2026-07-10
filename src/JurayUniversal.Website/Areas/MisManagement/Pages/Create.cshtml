@@ -3,17 +3,12 @@
 @model JurayUniversal.Website.Areas.MisManagement.Pages.CreateModel
 @{
     ViewData["Title"] = "Add New Feature";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
     ViewData["ActiveMenu"] = "MisManagement";
 }
 
 <div class="page-heading mb-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h3 class="mb-1"><i class="bi bi-plus-square me-2"></i> Configure New Feature</h3>
-            <p class="text-muted">Register a feature module and define its billing parameters.</p>
-        </div>
-        <a asp-page="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
-    </div>
+    
 </div>
 
 <div class="page-content">
@@ -29,19 +24,17 @@
                             <option value="MisGroups" data-name="Committees & Groups" data-desc="Manage committees and working groups.">Committees & Groups</option>
                             <option value="MisAlumni" data-name="Alumni Network Portal" data-desc="Alumni network and portal management.">Alumni Network Portal</option>
                             <option value="MisReports" data-name="Dynamic Interval Reports" data-desc="Create and schedule dynamic interval reports.">Dynamic Interval Reports</option>
-                            <option value="MisSurveys" data-name="Custom Surveys & Forms" data-desc="Form builder and survey analytics.">Custom Surveys & Forms</option>
-                            <option value="MisManual" data-name="Interactive User Manual" data-desc="Platform interactive user manual.">Interactive User Manual</option>
+                            <option value="MisForms" data-name="Form Builder & Surveys" data-desc="Create custom surveys, registration forms, and feedback modules.">Form Builder & Surveys</option>
                             <option value="MisDues" data-name="Dues & Subscriptions" data-desc="Manage platform dues and member subscriptions.">Dues & Subscriptions</option>
                             <option value="MisTicketing" data-name="Event & Ticket Engine" data-desc="Event management and ticket engine.">Event & Ticket Engine</option>
-                            <option value="MisDonations" data-name="Contributions & Donations" data-desc="Manage contributions and donations.">Contributions & Donations</option>
                             <option value="MisGrants" data-name="Grant & Proposal Pipelines" data-desc="Grant applications and proposal pipelines.">Grant & Proposal Pipelines</option>
                             <option value="MisRecruitment" data-name="Recruitment & ATS" data-desc="Job applications and applicant tracking.">Recruitment & ATS</option>
                             <option value="MisVoting" data-name="Elections & E-Voting" data-desc="Platform elections and e-voting system.">Elections & E-Voting</option>
-                            <option value="MisAssets" data-name="Asset Trackers" data-desc="Company asset ledger and fleet management.">Asset Trackers</option>
-                            <option value="MisProjects" data-name="Project & Task Boards" data-desc="Project and task boards.">Project & Task Boards</option>
-                            <option value="MisChat" data-name="Chats & Channels" data-desc="Direct messaging and team group channels.">Chats & Channels</option>
-                            <option value="MisMassComm" data-name="Mass Broadcast (Email/SMS)" data-desc="Mass broadcast via email and SMS.">Mass Broadcast (Email/SMS)</option>
-                            <option value="MisAI" data-name="BYOK AI Studio" data-desc="Bring your own key AI studio.">BYOK AI Studio</option>
+                            <option value="MisAssets" data-name="Asset Tracker" data-desc="Company asset ledger and fleet management.">Asset Tracker</option>
+                            <option value="MisProjects" data-name="Project and Task Board" data-desc="Project and task boards.">Project and Task Board</option>
+                            <option value="MisEmail" data-name="Email Broadcast" data-desc="Mass broadcast via email.">Email Broadcast</option>
+                            <option value="MisSms" data-name="SMS Broadcast" data-desc="Mass broadcast via SMS.">SMS Broadcast</option>
+                            <option value="MisSmartAssist" data-name="XYZ AI Studio" data-desc="Bring your own key AI studio.">XYZ AI Studio</option>
                             <option value="MisHelpdesk" data-name="Helpdesk Support Tickets" data-desc="Helpdesk support ticketing system.">Helpdesk Support Tickets</option>
                             <option value="MisWhistleblowing" data-name="Anonymous Whistleblowing" data-desc="Anonymous whistleblowing.">Anonymous Whistleblowing</option>
                             <option value="MisDMS" data-name="Document Vault (DMS)" data-desc="Document management system and vault.">Document Vault (DMS)</option>

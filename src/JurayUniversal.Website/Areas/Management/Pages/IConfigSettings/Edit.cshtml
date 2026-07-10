@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.Management.Pages.IConfigSettings.EditModel
 
 @{
@@ -70,6 +70,23 @@
                 <label asp-for="DataConfig.MailSender" class="control-label"></label>
                 @Html.DropDownListFor(model => model.DataConfig.MailSender, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.MailSender))), new { @class = "form-control" })
                 <span asp-validation-for="DataConfig.MailSender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConfig.MisJobBoardCSS" class="control-label"></label>
+                <textarea asp-for="DataConfig.MisJobBoardCSS" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DataConfig.MisJobBoardCSS" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataConfig.ElectionCustomCss" class="control-label"></label>
+                <textarea asp-for="DataConfig.ElectionCustomCss" class="form-control" rows="4" placeholder=".voting-booth-app { background: red; }"></textarea>
+                <span asp-validation-for="DataConfig.ElectionCustomCss" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataConfig.MisLayoutJavaScript" class="control-label"></label>
+                <textarea asp-for="DataConfig.MisLayoutJavaScript" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DataConfig.MisLayoutJavaScript" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataConfig.DisplayName" class="control-label"></label>

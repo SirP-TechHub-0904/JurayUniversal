@@ -1,0 +1,95 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform.Leaves.IndexModel
+@{
+    ViewData["Title"] = "My Leaves & Excuses";
+    ViewData["Subtitle"] = "Track the status of your time-off and excuse requests.";
+    ViewData["ActiveMenu"] = "Leaves";
+}
+@using JurayUniversal.Domain.Enum
+@using Humanizer
+
+@section HeaderActions {
+    <a asp-page="./Create" class="btn btn-primary rounded-pill px-4" id="btn-new-request">
+        <i class="fas fa-plus me-2"></i> Submit Request
+    </a>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card premium-card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="my-requests-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Type</th>
+                                <th>Date Submitted</th>
+                                <th>Period</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.LeaveRequests.Any())
+                            {
+                                @foreach (var req in Model.LeaveRequests)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="fw-600">@req.Type.Humanize()</span>
+                                        </td>
+                                        <td>@req.DateSubmitted.ToString("MMM dd, yyyy")</td>
+                                        <td>
+                                            @req.StartDate.ToString("MMM dd, yyyy") 
+                                            @if (req.EndDate.HasValue && req.EndDate.Value.Date != req.StartDate.Date)
+                                            {
+                                                <span> - @req.EndDate.Value.ToString("MMM dd, yyyy")</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (req.Status == JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Approved)
+                                            {
+                                                <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 rounded-pill">Approved</span>
+                                            }
+                                            else if (req.Status == JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Denied)
+                                            {
+                                                <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1 rounded-pill">Denied</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill">Pending</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(req.ReviewerRemarks))
+                                            {
+                                                <span class="text-muted small">@req.ReviewerRemarks</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted small"><em>None</em></span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">
+                                        <div class="text-muted">
+                                            <i class="fas fa-file-alt fa-3x mb-3 text-muted text-opacity-25"></i>
+                                            <h5>No Requests Found</h5>
+                                            <p>You haven't submitted any leave or excuse requests yet.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

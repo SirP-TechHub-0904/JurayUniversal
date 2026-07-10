@@ -1,15 +1,15 @@
-﻿ 
+ 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<h4>@ViewBag.DataTitle</h4>
-<canvas id="@ViewBag.sn"></canvas>
+<h4>@ViewData["DataTitle"]</h4>
+<canvas id="@ViewData["sn"]"></canvas>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        var chartid = '@ViewBag.sn';
+        var chartid = '@ViewData["sn"]';
         console.log(chartid);
 
         // Use Razor syntax to serialize the model data
-        var data = @Html.Raw(Json.Serialize(ViewBag.outcomex));
+        var data = @Html.Raw(Json.Serialize(ViewData["outcomex"]));
         console.log(data);
 
         var labelsForChart = 'labels_' + chartid;
@@ -37,7 +37,7 @@
             data: {
                 labels: window[labelsForChart],
                 datasets: [{
-                    label: '@ViewBag.DataTitle',
+                    label: '@ViewData["DataTitle"]',
                     data: window[valuesForChart],
                     backgroundColor: window[colorsForChart] // Customize the bar color
                 }]

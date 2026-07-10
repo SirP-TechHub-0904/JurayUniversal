@@ -19,7 +19,7 @@ namespace JurayUniversal.Website.Pages
         private readonly SignInManager<Profile> _signInManager;
         private readonly ILogger<RegistrationModel> _logger;
         private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly IEmailSendService _email;
         private readonly ISmsSendService _sms;
         private readonly ISettingsService _settingsService;
@@ -28,7 +28,7 @@ namespace JurayUniversal.Website.Pages
             ILogger<RegistrationModel> logger,
             UserManager<Profile> userManager,
             JurayUniversal.Persistence.EF.SQL.DashboardDbContext context,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
             IEmailSendService email,
             ISmsSendService sms,
             ISettingsService settingsService)
@@ -54,6 +54,16 @@ namespace JurayUniversal.Website.Pages
 
         [BindProperty]
         public long? CourseId { get;set;}
+
+        [BindProperty]
+        public int? FirstNumber { get; set; }
+
+        [BindProperty]
+        public int? SecondNumber { get; set; }
+
+        [BindProperty]
+        public int? Captcha { get; set; }
+
         public async Task<IActionResult> OnGetAsync(long? mx, long? sec, Guid? vml)
         {
 
@@ -88,6 +98,15 @@ namespace JurayUniversal.Website.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            var misSetting = await _context.MisSettings.FirstOrDefaultAsync();
+            string recaptchaResponse = Request.Form["g-recaptcha-response"];
+            bool isCaptchaValid = await JurayUniversal.Website.Helpers.CaptchaValidator.ValidateCaptchaAsync(misSetting, FirstNumber, SecondNumber, Captcha, recaptchaResponse);
+            
+            if (!isCaptchaValid)
+            {
+                TempData["error"] = "Security Check Failed. Please try again.";
+                return RedirectToPage();
+            }
 
             //if (ModelState.IsValid)
             //{

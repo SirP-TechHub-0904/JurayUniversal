@@ -1,0 +1,157 @@
+@page "{projectId:long}"
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Backlog.IndexModel
+@{
+    ViewData["Title"] = "Sprint Planning & Backlog";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a asp-page="../Projects/Index">Projects</a>
+    <a asp-page="../Board/Index" asp-route-projectId="@Model.Project?.Id" class="btn btn-outline-primary rounded-pill me-2">
+            <i class="bi bi-kanban me-1"></i> Active Board
+        </a>
+    <a asp-page="./CreateTask" asp-route-projectId="@Model.Project?.Id" class="btn btn-primary rounded-pill px-4">
+        <i class="bi bi-plus-lg me-1"></i> New Work Item
+    </a>
+}
+
+<div class="row g-4">
+    <!-- Left Column: Backlog -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 d-flex justify-content-between align-items-center">
+                <h5 class="fw-700 mb-0">Unassigned Backlog <span class="badge bg-secondary ms-2 rounded-pill">@Model.BacklogTasks.Count</span></h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="backlog-list">
+                    @if (Model.BacklogTasks.Count == 0)
+                    {
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox display-4"></i>
+                            <p class="mt-2">Backlog is empty. Add new work items here.</p>
+                        </div>
+                    }
+                    @foreach (var task in Model.BacklogTasks)
+                    {
+                        <div class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center cursor-grab" data-task-id="@task.Id">
+                            <div>
+                                <h6 class="mb-1 fw-bold">@task.Title</h6>
+                                <small class="text-muted">@task.Type | @task.StoryPoints pts</small>
+                            </div>
+                            <span class="badge bg-secondary">Unassigned</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Sprints -->
+    <div class="col-lg-6">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Sprints</h5>
+            <a asp-page="./CreateSprint" asp-route-projectId="@Model.Project?.Id" class="btn btn-sm btn-outline-primary rounded-pill">New Sprint</a>
+        </div>
+
+        @if (Model.Sprints.Count == 0)
+        {
+            <div class="card border-0 shadow-sm rounded-4 text-center py-5">
+                <p class="text-muted mb-0">No sprints created yet. Create one to start planning.</p>
+            </div>
+        }
+
+        @foreach (var sprint in Model.Sprints)
+        {
+            <div class="card border-0 shadow-sm rounded-4 mb-4 border-start border-4 @(sprint.Status == Domain.Enum.Enum.MisSprintStatus.Active ? "border-success" : "border-secondary")">
+                <div class="card-header bg-white border-bottom pt-3 pb-2 d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0">
+                        @sprint.SprintName
+                        @if (sprint.Status == Domain.Enum.Enum.MisSprintStatus.Active)
+                        {
+                            <span class="badge bg-success ms-2">Active</span>
+                        }
+                    </h6>
+                    <small class="text-muted">@sprint.StartDate.ToString("MMM dd") - @sprint.EndDate.ToString("MMM dd")</small>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush sprint-list" data-sprint-id="@sprint.Id" style="min-height: 50px;">
+                        @if(sprint.Tasks.Count == 0)
+                        {
+                            <div class="text-center py-3 text-muted small sprint-empty-msg">Drag tasks here to assign</div>
+                        }
+                        @foreach (var task in sprint.Tasks)
+                        {
+                            <div class="list-group-item py-2 d-flex justify-content-between align-items-center cursor-grab bg-light" data-task-id="@task.Id">
+                                <span><i class="bi bi-grip-vertical text-muted me-2"></i>@task.Title</span>
+                                <span class="badge bg-primary rounded-pill">@task.StoryPoints pts</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @if (sprint.Status == Domain.Enum.Enum.MisSprintStatus.Planned)
+                {
+                    <div class="card-footer bg-white border-top-0 py-2">
+                        <form method="post" asp-page-handler="StartSprint">
+                            <input type="hidden" name="sprintId" value="@sprint.Id" />
+                            <input type="hidden" name="projectId" value="@Model.Project.Id" />
+                            <button type="submit" class="btn btn-sm btn-success w-100 rounded-pill">Start Sprint</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var backlogList = document.getElementById('backlog-list');
+            var sprintLists = document.querySelectorAll('.sprint-list');
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            var allLists = [backlogList];
+            sprintLists.forEach(function (list) { allLists.push(list); });
+
+            allLists.forEach(function (list) {
+                if(list) {
+                    new Sortable(list, {
+                        group: 'backlog',
+                        animation: 150,
+                        ghostClass: 'bg-light',
+                        onEnd: function (evt) {
+                            var itemEl = evt.item;
+                            var taskId = itemEl.getAttribute('data-task-id');
+                            var toSprintId = evt.to.getAttribute('data-sprint-id') || ""; // Empty means back to unassigned backlog
+
+                            if (evt.from !== evt.to) {
+                                fetch('?handler=AssignTask', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'RequestVerificationToken': token
+                                    },
+                                    body: new URLSearchParams({
+                                        taskId: taskId,
+                                        sprintId: toSprintId
+                                    })
+                                }).then(response => response.json())
+                                  .then(data => {
+                                      if (!data.success) alert("Failed to assign task.");
+                                  });
+                            }
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        .cursor-grab { cursor: grab; }
+        .cursor-grab:active { cursor: grabbing; }
+    </style>
+}

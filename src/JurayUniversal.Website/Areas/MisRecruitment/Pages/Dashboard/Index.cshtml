@@ -1,0 +1,194 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "ATS Dashboard";
+    ViewData["Subtitle"] = "High-level overview and analytics.";
+}
+
+@section HeaderActions {
+    <a asp-page="./Jobs/Manage" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-plus-lg me-1"></i> Post New Job
+            </a>
+}
+
+<div class="container-fluid max-w-1200 mx-auto">
+
+    <!-- Public Portal Link Card -->
+    <div class="card border border-primary bg-primary bg-opacity-10 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div>
+                <h6 class="fw-bold text-primary mb-1"><i class="bi bi-link-45deg me-1"></i> Public Career Page</h6>
+                <p class="mb-0 small text-muted">Share this link to allow candidates to view job postings and apply.</p>
+            </div>
+            <div class="mt-3 mt-md-0 d-flex gap-2">
+                <input type="text" class="form-control bg-white" value="@(Request.Scheme)://@(Request.Host)/MisRecruitment/Platform/JobBoard" id="careerLink" readonly />
+                <button class="btn btn-primary" onclick="copyCareerLink()">
+                    <i class="bi bi-clipboard"></i> Copy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCareerLink() {
+            var copyText = document.getElementById("careerLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                alert("Link copied to clipboard!");
+            });
+        }
+    </script>
+
+    <!-- KPI Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-primary text-white h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0 fw-bold opacity-75">Active Jobs</h6>
+                        <i class="bi bi-briefcase fs-3 opacity-50"></i>
+                    </div>
+                    <h2 class="display-5 fw-bold mb-0">@Model.ActiveJobs</h2>
+                    <p class="mb-0 mt-2 small opacity-75">Out of @Model.TotalJobs total postings</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-success text-white h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0 fw-bold opacity-75">Total Applicants</h6>
+                        <i class="bi bi-people fs-3 opacity-50"></i>
+                    </div>
+                    <h2 class="display-5 fw-bold mb-0">@Model.TotalApplicants</h2>
+                    <p class="mb-0 mt-2 small opacity-75">In the pipeline</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-warning text-dark h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0 fw-bold opacity-75">Upcoming Interviews</h6>
+                        <i class="bi bi-calendar-event fs-3 opacity-50"></i>
+                    </div>
+                    <h2 class="display-5 fw-bold mb-0">@Model.PendingInterviews</h2>
+                    <p class="mb-0 mt-2 small opacity-75">Scheduled & pending scoring</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-info text-white h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0 fw-bold opacity-75">Candidates Hired</h6>
+                        <i class="bi bi-person-check fs-3 opacity-50"></i>
+                    </div>
+                    <h2 class="display-5 fw-bold mb-0">@Model.CandidatesHired</h2>
+                    <p class="mb-0 mt-2 small opacity-75">Successfully placed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-xl-8 col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-bottom pt-4 pb-3">
+                    <h5 class="fw-700 mb-0">Applicant Pipeline Funnel</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div id="pipelineChart" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-bottom pt-4 pb-3">
+                    <h5 class="fw-700 mb-0">Job Status Distribution</h5>
+                </div>
+                <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                    <div id="jobStatusChart" class="w-100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Pipeline Funnel Chart (Bar chart as funnel)
+            var pipelineOptions = {
+                series: [{
+                    name: 'Candidates',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PipelineData))
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 4,
+                        horizontal: true,
+                        barHeight: '60%',
+                        distributed: true
+                    }
+                },
+                colors: ['#0dcaf0', '#0d6efd', '#ffc107', '#198754', '#dc3545'],
+                dataLabels: {
+                    enabled: true,
+                    textAnchor: 'start',
+                    style: {
+                        colors: ['#fff']
+                    },
+                    formatter: function (val, opt) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    },
+                    offsetX: 0
+                },
+                xaxis: {
+                    categories: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PipelineLabels)),
+                },
+                yaxis: {
+                    show: false
+                },
+                legend: { show: false }
+            };
+            var pipelineChart = new ApexCharts(document.querySelector("#pipelineChart"), pipelineOptions);
+            pipelineChart.render();
+
+            // Job Status Chart
+            var jobStatusOptions = {
+                series: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.JobStatusData)),
+                chart: {
+                    type: 'donut',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                },
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.JobStatusLabels)),
+                colors: ['#6c757d', '#0d6efd', '#dc3545'],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '70%'
+                        }
+                    }
+                },
+                dataLabels: { enabled: false },
+                legend: {
+                    position: 'bottom'
+                }
+            };
+            var jobStatusChart = new ApexCharts(document.querySelector("#jobStatusChart"), jobStatusOptions);
+            jobStatusChart.render();
+        });
+    </script>
+}

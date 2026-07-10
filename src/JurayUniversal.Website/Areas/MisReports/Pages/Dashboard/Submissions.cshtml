@@ -1,15 +1,17 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.SubmissionsModel
 @{
     ViewData["Title"] = "Master Ledger";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Submissions";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">Submission Master Ledger</h3>
+    
     <div class="d-flex gap-2">
+        
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
     </div>
 </div>
@@ -150,3 +152,5 @@
         </div>
     </div>
 </div>
+
+

@@ -1,0 +1,45 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.SuperAdmins.CreateModel
+@{
+    ViewData["Title"] = "Add Super Admin";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">Promote User to Super Admin</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    
+                    <div class="mb-4">
+                        <label asp-for="Input.Email" class="form-label fw-bold">User Email</label>
+                        <input asp-for="Input.Email" class="form-control" placeholder="Enter the registered email of the user to promote..." />
+                        <div class="form-text mt-2 text-muted">
+                            The user must already be registered in the system. Submitting this form will grant them full Super Admin privileges.
+                        </div>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-page="./Index" class="btn btn-light rounded-pill">Cancel</a>
+                        <button type="submit" class="btn btn-dark rounded-pill px-4">Grant Access</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

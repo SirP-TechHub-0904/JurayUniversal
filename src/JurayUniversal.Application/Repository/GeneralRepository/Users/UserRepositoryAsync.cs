@@ -1,4 +1,4 @@
-﻿using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
+using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
 using Amazon.Runtime.Internal;
 using JurayUniversal.Application.Dtos.UsersDto;
 using JurayUniversal.Application.Services.AWS;
@@ -26,10 +26,10 @@ namespace JurayUniversal.Application.Repository.GeneralRepository.Users
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<Profile> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IStorageService _storageService;
         private readonly ISettingsService _settingsService;
-        public UserRepositoryAsync(UserManager<Profile> userManager, RoleManager<IdentityRole> roleManager, IStorageService storageService, IHttpContextAccessor httpContextAccessor, ISettingsService settingsService)
+        public UserRepositoryAsync(UserManager<Profile> userManager, RoleManager<AppRole> roleManager, IStorageService storageService, IHttpContextAccessor httpContextAccessor, ISettingsService settingsService)
         {
             _userManager = userManager;
             _roleManager = roleManager;

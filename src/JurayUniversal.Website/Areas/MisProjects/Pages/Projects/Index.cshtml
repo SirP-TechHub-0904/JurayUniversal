@@ -1,0 +1,72 @@
+@page
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Projects.IndexModel
+@{
+    ViewData["Title"] = "Agile Projects";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a asp-page="./Create" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg me-1"></i> New Project
+        </a>
+}
+
+<div class="row g-4">
+    @if(Model.Projects.Count == 0)
+    {
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 text-center py-5">
+                <i class="bi bi-rocket-takeoff display-4 text-muted"></i>
+                <h4 class="mt-3 text-muted">No Projects Yet</h4>
+                <p class="text-muted">Create your first agile project to start tracking Sprints and Tasks.</p>
+            </div>
+        </div>
+    }
+    
+    @foreach(var project in Model.Projects)
+    {
+        <div class="col-md-6 col-xl-4">
+            <div class="card border border-primary shadow-sm rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-primary mb-0">@project.Name</h5>
+                        @if(project.Status == Domain.Enum.Enum.MisProjectStatus.Active)
+                        {
+                            <span class="badge bg-success rounded-pill">Active</span>
+                        }
+                        else if(project.Status == Domain.Enum.Enum.MisProjectStatus.OnHold)
+                        {
+                            <span class="badge bg-warning text-dark rounded-pill">On Hold</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary rounded-pill">Completed</span>
+                        }
+                    </div>
+                    <p class="text-muted small mb-4">@(project.Description?.Length > 100 ? project.Description.Substring(0, 100) + "..." : project.Description ?? "No description provided.")</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center small text-muted mb-4">
+                        <div>
+                            <i class="bi bi-diagram-3"></i> @project.Sprints.Count Sprints
+                        </div>
+                        <div>
+                            <i class="bi bi-list-task"></i> @project.Tasks.Count Tasks
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a asp-page="../Board/Index" asp-route-projectId="@project.Id" class="btn btn-primary rounded-pill">
+                            <i class="bi bi-kanban me-1"></i> Active Board
+                        </a>
+                        <a asp-page="../Backlog/Index" asp-route-projectId="@project.Id" class="btn btn-outline-secondary rounded-pill">
+                            <i class="bi bi-list-nested me-1"></i> Sprint Planning
+                        </a>
+                        <a asp-page="./Collaborators" asp-route-id="@project.Id" class="btn btn-outline-dark rounded-pill mt-2">
+                            <i class="bi bi-people me-1"></i> Team / Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

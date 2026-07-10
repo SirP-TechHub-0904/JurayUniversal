@@ -1,0 +1,50 @@
+@model IEnumerable<JurayUniversal.Domain.Models.MisFinanceTransaction>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Member</th>
+                            <th>Email</th>
+                            <th>Amount</th>
+                            <th>Reference</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @if (t.UserProfile != null)
+                                    {
+                                        @($"{t.UserProfile.FirstName} {t.UserProfile.LastName}")
+                                    }
+                                    else
+                                    {
+                                        @(t.DonorName ?? "Anonymous")
+                                    }
+                                </td>
+                                <td class="text-muted">@(t.DonorEmail ?? t.UserProfile?.Email ?? "—")</td>
+                                <td class="fw-bold text-success">&#8358;@t.Amount.ToString("N2")</td>
+                                <td><code class="fs-8">@t.TransactionReference</code></td>
+                                <td class="text-muted">@t.PaidAt?.ToString("MMM dd, yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-inbox text-muted opacity-50 mb-3 d-block" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-muted">No payments recorded yet</h5>
+            </div>
+        }
+    </div>
+</div>

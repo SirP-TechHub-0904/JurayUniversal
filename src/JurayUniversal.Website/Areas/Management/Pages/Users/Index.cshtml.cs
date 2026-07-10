@@ -13,9 +13,9 @@ namespace JurayUniversal.Website.Areas.Management.Pages.Users
     public class IndexModel : PageModel
     {
         private readonly UserManager<Profile> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public IndexModel(UserManager<Profile> userManager, RoleManager<IdentityRole> roleManager)
+        public IndexModel(UserManager<Profile> userManager, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;

@@ -8,6 +8,42 @@ namespace JurayUniversal.Domain.Enum
 {
     public class Enum
     {
+        public enum EmailLogStatus
+        {
+            [Description("Pending")]
+            Pending = 0,
+
+            [Description("Sent")]
+            Sent = 1,
+
+            [Description("Failed")]
+            Failed = 2
+        }
+
+        public enum RoleCategory
+        {
+            [Description("Legacy Dashboard Only")]
+            Legacy = 0,
+
+            [Description("MIS Platform Only")]
+            MIS = 1,
+
+            [Description("Both Legacy and MIS")]
+            Both = 2
+        }
+
+        public enum PhaseStatus
+        {
+            [Description("Upcoming")]
+            Upcoming = 0,
+            
+            [Description("In Progress")]
+            InProgress = 1,
+            
+            [Description("Done")]
+            Done = 2
+        }
+
         public enum VotingStatus
         {
             [Description("None")]
@@ -23,6 +59,15 @@ namespace JurayUniversal.Domain.Enum
             Terminated = 4,
 
 
+        }
+
+        public enum ElectionType
+        {
+            [Description("Closed Election (Requires Accreditation)")]
+            Closed = 0,
+
+            [Description("Open Election (No Accreditation)")]
+            Open = 1
         }
         public enum SenderIdStatus
         {
@@ -469,13 +514,23 @@ namespace JurayUniversal.Domain.Enum
 
         public enum ProposalStatus
         {
+            [Description("Draft")]
+            Draft = 0,
+
             [Description("Pending")]
             Pending = 1,
+
             [Description("Approved")]
             Approved = 2,
 
             [Description("Failed")]
             Failed = 3,
+
+            [Description("Under Review")]
+            UnderReview = 4,
+
+            [Description("Rejected")]
+            Rejected = 5,
 
             [Description("Submitted")]
             Submitted = 6
@@ -599,6 +654,331 @@ namespace JurayUniversal.Domain.Enum
 
             [Description("Suspended")]
             Suspended = 2
+        }
+
+        public enum PaymentFrequency
+        {
+            [Description("One-Time")]
+            OneTime = 0,
+
+            [Description("Daily")]
+            Daily = 1,
+
+            [Description("Weekly")]
+            Weekly = 2,
+
+            [Description("Monthly")]
+            Monthly = 3,
+
+            [Description("Yearly")]
+            Yearly = 4
+        }
+
+        public enum JobStatus
+        {
+            [Description("Draft")]
+            Draft = 0,
+            
+            [Description("Published")]
+            Published = 1,
+            
+            [Description("Closed")]
+            Closed = 2
+        }
+
+        public enum JobType
+        {
+            [Description("Full-Time")]
+            FullTime = 0,
+            
+            [Description("Part-Time")]
+            PartTime = 1,
+            
+            [Description("Contract")]
+            Contract = 2,
+            
+            [Description("Internship")]
+            Internship = 3
+        }
+
+        public enum ApplicationStatus
+        {
+            [Description("Applied")]
+            Applied = 0,
+            
+            [Description("CV Screening")]
+            CVScreening = 1,
+            
+            [Description("Phone Screening")]
+            PhoneScreening = 2,
+            
+            [Description("Online Interview")]
+            OnlineInterview = 3,
+            
+            [Description("Offline Interview")]
+            OfflineInterview = 4,
+            
+            [Description("Background Check")]
+            BackgroundCheck = 5,
+            
+            [Description("Offered")]
+            Offered = 6,
+            
+            [Description("Rejected")]
+            Rejected = 7,
+
+            [Description("Employed")]
+            Employed = 8
+        }
+
+        public enum InterviewType
+        {
+            [Description("Online Video")]
+            OnlineVideo = 0,
+            
+            [Description("Offline Physical")]
+            OfflinePhysical = 1,
+            
+            [Description("Phone Call")]
+            PhoneCall = 2
+        }
+
+        public enum MisElectionType
+        {
+            [Description("Closed Election (Requires Accreditation)")]
+            Closed = 0,
+
+            [Description("Open Election (No Accreditation)")]
+            Open = 1,
+
+            [Description("Public Poll (No Login Required)")]
+            Public = 2
+        }
+
+        public enum MisVotingStatus
+        {
+            [Description("Upcoming")]
+            Upcoming = 0,
+
+            [Description("Active")]
+            Active = 1,
+
+            [Description("Completed")]
+            Completed = 2,
+
+            [Description("Terminated")]
+            Terminated = 3
+        }
+
+        public enum MisEquipmentStatus
+        {
+            [Description("Available")]
+            Available = 0,
+
+            [Description("In Use")]
+            InUse = 1,
+
+            [Description("Maintenance")]
+            Maintenance = 2,
+
+            [Description("Retired")]
+            Retired = 3
+        }
+
+        // --- MIS PROJECTS AGILE ENUMS ---
+
+        public enum MisProjectStatus
+        {
+            [Description("Active")]
+            Active = 0,
+            [Description("Completed")]
+            Completed = 1,
+            [Description("On Hold")]
+            OnHold = 2
+        }
+
+        public enum MisSprintStatus
+        {
+            [Description("Planned")]
+            Planned = 0,
+            [Description("Active")]
+            Active = 1,
+            [Description("Closed")]
+            Closed = 2
+        }
+
+        public enum MisTaskType
+        {
+            [Description("Task")]
+            Task = 0,
+            [Description("User Story")]
+            Story = 1,
+            [Description("Bug")]
+            Bug = 2,
+            [Description("Epic")]
+            Epic = 3
+        }
+
+        public enum MisTaskStatus
+        {
+            [Description("To Do")]
+            ToDo = 0,
+            [Description("In Progress")]
+            InProgress = 1,
+            [Description("Review")]
+            Review = 2,
+            [Description("Done")]
+            Done = 3
+        }
+
+        public enum MisTaskPriority
+        {
+            [Description("Low")]
+            Low = 0,
+            [Description("Medium")]
+            Medium = 1,
+            [Description("High")]
+            High = 2,
+            [Description("Critical")]
+            Critical = 3
+        }
+
+        // --- MIS SMART ASSIST AI ENUMS ---
+
+        public enum MisAiProvider
+        {
+            [Description("None (Disabled)")]
+            None = 0,
+            [Description("Google Gemini")]
+            Gemini = 1,
+            [Description("OpenAI (ChatGPT)")]
+            OpenAI = 2,
+            [Description("Anthropic (Claude)")]
+            Anthropic = 3
+        }
+
+        // --- MIS MASS COMM ENUMS ---
+
+        public enum MisWalletTransactionType
+        {
+            [Description("Credit")]
+            Credit = 0,
+            [Description("Debit")]
+            Debit = 1,
+            [Description("Transfer")]
+            Transfer = 2
+        }
+
+        public enum MisSmsCampaignStatus
+        {
+            [Description("Draft")]
+            Draft = 0,
+            [Description("Scheduled")]
+            Scheduled = 1,
+            [Description("Sending")]
+            Sending = 2,
+            [Description("Completed")]
+            Completed = 3,
+            [Description("Failed")]
+            Failed = 4,
+            [Description("Pending")]
+            Pending = 5
+        }
+
+        public enum MisSmsDeliveryStatus
+        {
+            [Description("Pending")]
+            Pending = 0,
+            [Description("Sent")]
+            Sent = 1,
+            [Description("Failed")]
+            Failed = 2
+        }
+
+        public enum MisSenderIdStatus
+        {
+            [Description("Pending")]
+            Pending = 0,
+            [Description("Active")]
+            Active = 1,
+            [Description("Rejected")]
+            Rejected = 2
+        }
+
+        // --- MIS NEWSLETTER ENUMS ---
+        
+        public enum MisNewsletterCampaignStatus
+        {
+            [Description("Draft")]
+            Draft = 0,
+            [Description("Scheduled")]
+            Scheduled = 1,
+            [Description("Sending")]
+            Sending = 2,
+            [Description("Completed")]
+            Completed = 3,
+            [Description("Failed")]
+            Failed = 4,
+            [Description("Pending")]
+            Pending = 5
+        }
+
+        public enum MisNewsletterDeliveryStatus
+        {
+            [Description("Pending")]
+            Pending = 0,
+            [Description("Sent")]
+            Sent = 1,
+            [Description("Failed")]
+            Failed = 2
+        }
+
+        public enum LeaveRequestType
+        {
+            [Description("Annual Leave")]
+            AnnualLeave = 1,
+
+            [Description("Sick Leave")]
+            SickLeave = 2,
+
+            [Description("Maternity / Paternity Leave")]
+            MaternityLeave = 3,
+
+            [Description("Casual Leave")]
+            CasualLeave = 4,
+
+            [Description("Excuse from Duty")]
+            ExcuseDuty = 5,
+
+            [Description("Late to Work")]
+            LateToWork = 6,
+
+            [Description("Other")]
+            Other = 7
+        }
+
+        public enum LeaveRequestStatus
+        {
+            [Description("Pending")]
+            Pending = 0,
+
+            [Description("Approved")]
+            Approved = 1,
+
+            [Description("Denied")]
+            Denied = 2
+        }
+
+        public enum CaptchaType
+        {
+            [Description("None")]
+            None = 0,
+
+            [Description("Arithmetic Captcha")]
+            Arithmetic = 1,
+
+            [Description("Google reCAPTCHA")]
+            GoogleRecaptcha = 2
         }
     }
 }

@@ -1,0 +1,94 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard.TransactionDetailsModel
+@{
+    ViewData["Title"] = "Transaction Details";
+    ViewData["Subtitle"] = "View detailed information and associated records.";
+}
+
+<div class="container-fluid max-w-800 mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <!-- Header Strip -->
+        <div class="bg-light p-4 border-bottom d-flex justify-content-between align-items-center">
+            <div>
+                <span class="text-muted small d-block text-uppercase fw-bold mb-1">Status</span>
+                @if (Model.Transaction.Status == JurayUniversal.Domain.Enum.Enum.PaymentStatus.Success)
+                {
+                    <h4 class="fw-bold text-success mb-0"><i class="bi bi-check-circle-fill me-1"></i> Successful</h4>
+                }
+                else if (Model.Transaction.Status == JurayUniversal.Domain.Enum.Enum.PaymentStatus.Pending)
+                {
+                    <h4 class="fw-bold text-warning mb-0"><i class="bi bi-hourglass-split me-1"></i> Pending</h4>
+                }
+                else
+                {
+                    <h4 class="fw-bold text-danger mb-0"><i class="bi bi-x-circle-fill me-1"></i> Failed / Cancelled</h4>
+                }
+            </div>
+            <div class="text-end">
+                <span class="text-muted small d-block text-uppercase fw-bold mb-1">Amount</span>
+                <h3 class="fw-bold mb-0">&#8358;@Model.Transaction.Amount.ToString("N2")</h3>
+            </div>
+        </div>
+
+        <!-- Body Details -->
+        <div class="card-body p-4 p-md-5">
+            <div class="row g-4 mb-4">
+                <div class="col-sm-6">
+                    <span class="text-muted small fw-bold d-block mb-1">Transaction Reference</span>
+                    <code class="fs-6 bg-light px-2 py-1 rounded">@Model.Transaction.TransactionReference</code>
+                </div>
+                <div class="col-sm-6 text-sm-end">
+                    <span class="text-muted small fw-bold d-block mb-1">Payment Provider</span>
+                    <span class="fw-semibold">@(Model.Transaction.PaymentProvider ?? "System / Manual")</span>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-sm-6">
+                    <span class="text-muted small fw-bold d-block mb-1">Date Created</span>
+                    <span>@Model.Transaction.CreatedAt.ToString("f")</span>
+                </div>
+                <div class="col-sm-6 text-sm-end">
+                    <span class="text-muted small fw-bold d-block mb-1">Date Paid / Verified</span>
+                    <span>@(Model.Transaction.PaidAt?.ToString("f") ?? "Not Paid Yet")</span>
+                </div>
+            </div>
+
+            <hr class="my-4 text-muted opacity-25" />
+
+            <h5 class="fw-bold mb-3">Customer / Donor Information</h5>
+            <div class="bg-light rounded-3 p-3 mb-4">
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <span class="text-muted small d-block">Name</span>
+                        <span class="fw-semibold">
+                            @(Model.Transaction.UserProfile != null ? $"{Model.Transaction.UserProfile.FirstName} {Model.Transaction.UserProfile.LastName}" : (Model.Transaction.DonorName ?? "Anonymous"))
+                        </span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-muted small d-block">Email</span>
+                        <span class="fw-semibold">@(Model.Transaction.DonorEmail ?? Model.Transaction.UserProfile?.Email ?? "—")</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-muted small d-block">Phone</span>
+                        <span class="fw-semibold">@(Model.Transaction.DonorPhone ?? Model.Transaction.UserProfile?.PhoneNumber ?? "—")</span>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-3">Payment Purpose</h5>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <span class="text-muted small d-block mb-1">Category / Ledger</span>
+                    <span class="badge bg-secondary">@(Model.Transaction.Category?.Title ?? "Uncategorized")</span>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-muted small d-block mb-1">System Notes</span>
+                    <span class="fst-italic text-muted">@(Model.Transaction.Notes ?? "No additional notes provided.")</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

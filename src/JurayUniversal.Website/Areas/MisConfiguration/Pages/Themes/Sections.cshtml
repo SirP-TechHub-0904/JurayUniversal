@@ -1,0 +1,44 @@
+@page "{ThemeName}"
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Themes.SectionsModel
+@{
+    ViewData["Title"] = $"{Model.ThemeName} Theme Sections";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+        <a asp-page="./Index" class="btn btn-sm btn-secondary" style="float:right;">Back to Themes</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Section Code</th>
+                        <th>Image Sample</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var imagePath in Model.ImagePaths)
+                    {
+                        <tr>
+                            <td>@imagePath</td>
+                            <td>
+                                <a href="~/templatesample/@Model.ThemeName.ToLower()/@imagePath" target="_blank">
+                                    <img src="~/templatesample/@Model.ThemeName.ToLower()/@imagePath" alt="Image" style="width:500px;" />
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.ImagePaths.Any())
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">No sections found for this theme.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

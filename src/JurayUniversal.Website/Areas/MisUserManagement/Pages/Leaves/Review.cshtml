@@ -1,0 +1,120 @@
+@page
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.Leaves.ReviewModel
+@inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
+@{
+    ViewData["Title"] = "Review Request";
+    ViewData["ActiveMenu"] = "Leaves";
+    bool canEdit = await MisAuth.CanEditAsync(User, "MisUserManagement");
+}
+@using JurayUniversal.Domain.Enum
+@using Humanizer
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card premium-card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1">Review Request</h4>
+                        <p class="text-muted mb-0">Approve or Deny the request and add your remarks.</p>
+                    </div>
+                    <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Queue
+                    </a>
+                </div>
+
+                <div class="p-3 bg-light rounded-3 mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Requested By</span>
+                            <span class="fw-bold">@Model.LeaveRequest.User?.FullName</span><br />
+                            <span class="text-muted small">@Model.LeaveRequest.User?.Email</span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Request Type</span>
+                            <span class="fw-bold">@Model.LeaveRequest.Type.Humanize()</span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Period</span>
+                            <span class="fw-bold">
+                                @Model.LeaveRequest.StartDate.ToString("MMM dd, yyyy")
+                                @if (Model.LeaveRequest.EndDate.HasValue && Model.LeaveRequest.EndDate.Value.Date != Model.LeaveRequest.StartDate.Date)
+                                {
+                                    <span> - @Model.LeaveRequest.EndDate.Value.ToString("MMM dd, yyyy")</span>
+                                }
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Submitted On</span>
+                            <span class="fw-bold">@Model.LeaveRequest.DateSubmitted.ToString("MMM dd, yyyy HH:mm")</span>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Reason / Details</span>
+                            <div class="p-3 bg-white border rounded">
+                                @Model.LeaveRequest.Reason
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (canEdit)
+                {
+                    <form method="post">
+                        <input type="hidden" asp-for="LeaveRequest.Id" />
+                        
+                        <div class="mb-3">
+                            <label asp-for="LeaveRequest.Status" class="form-label fw-600">Decision</label>
+                            <select asp-for="LeaveRequest.Status" class="form-select form-select-lg" required>
+                                <option value="@JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Pending">Keep Pending</option>
+                                <option value="@JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Approved">Approve Request</option>
+                                <option value="@JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Denied">Deny Request</option>
+                            </select>
+                            <span asp-validation-for="LeaveRequest.Status" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="LeaveRequest.ReviewerRemarks" class="form-label fw-600">Remarks (Optional)</label>
+                            <textarea asp-for="LeaveRequest.ReviewerRemarks" class="form-control" rows="3" placeholder="Add comments for the user..."></textarea>
+                            <span asp-validation-for="LeaveRequest.ReviewerRemarks" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">Submit Review</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="p-3 bg-white border rounded">
+                        <h6 class="fw-bold mb-3">Review Decision</h6>
+                        <div class="mb-3">
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Status</span>
+                            @if (Model.LeaveRequest.Status == JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Approved)
+                            {
+                                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Approved</span>
+                            }
+                            else if (Model.LeaveRequest.Status == JurayUniversal.Domain.Enum.Enum.LeaveRequestStatus.Denied)
+                            {
+                                <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill">Denied</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill">Pending</span>
+                            }
+                        </div>
+                        <div>
+                            <span class="text-muted small fw-bold text-uppercase d-block mb-1">Remarks</span>
+                            <p class="mb-0">@(string.IsNullOrEmpty(Model.LeaveRequest.ReviewerRemarks) ? "No remarks." : Model.LeaveRequest.ReviewerRemarks)</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

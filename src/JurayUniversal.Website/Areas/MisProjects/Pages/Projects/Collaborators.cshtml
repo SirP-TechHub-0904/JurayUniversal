@@ -1,0 +1,106 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Projects.CollaboratorsModel
+@{
+    ViewData["Title"] = "Project Collaborators";
+    ViewData["Subtitle"] = Model.MisProject.Name;
+}
+
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-dark rounded-pill px-4">
+        <i class="bi bi-arrow-left me-1"></i> Back to Projects
+    </a>
+}
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3">
+                <h5 class="fw-bold mb-0">Active Team Members</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">User</th>
+                                <th>Role</th>
+                                <th>Added On</th>
+                                <th class="text-end pe-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Collaborators.Any())
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">No collaborators added yet. Add team members to assign them to tasks.</td>
+                                </tr>
+                            }
+                            @foreach (var user in Model.Collaborators)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 40px; height: 40px;">
+                                                @(user.User.FirstName?.FirstOrDefault() ?? 'U')
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-dark">@user.User.FirstName @user.User.LastName</div>
+                                                <div class="small text-muted">@user.User.Email</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-secondary">@user.Role</span></td>
+                                    <td>@user.DateAdded.ToString("MMM dd, yyyy")</td>
+                                    <td class="text-end pe-4">
+                                        <form method="post" asp-page-handler="RemoveCollaborator" onsubmit="return confirm('Remove this user from the project?');">
+                                            <input type="hidden" name="collabId" value="@user.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3">
+                <h5 class="fw-bold mb-0">Add Team Member</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" asp-page-handler="AddCollaborator">
+                    <input type="hidden" name="projectId" value="@Model.MisProject.Id" />
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Select Staff / User</label>
+                        <select name="userId" class="form-select" required>
+                            <option value="">-- Choose a user --</option>
+                            @foreach(var u in Model.AvailableUsers)
+                            {
+                                <option value="@u.Id">@u.FirstName @u.LastName (@u.Email)</option>
+                            }
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Project Role</label>
+                        <select name="role" class="form-select">
+                            <option value="Collaborator">Collaborator / Developer</option>
+                            <option value="Scrum Master">Scrum Master</option>
+                            <option value="Product Owner">Product Owner</option>
+                            <option value="Manager">Manager</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill">
+                        <i class="bi bi-person-plus-fill me-1"></i> Add to Project
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

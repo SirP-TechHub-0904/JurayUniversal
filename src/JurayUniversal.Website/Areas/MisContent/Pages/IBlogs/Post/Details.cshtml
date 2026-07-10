@@ -1,0 +1,123 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IBlogs.Post.DetailsModel
+
+@{
+    ViewData["Title"] = "BLOG Details";
+    ViewData["BackUrl"] = "./Index";
+    @if (User.Identity.IsAuthenticated && User.IsInRole("SubAdmin") || User.IsInRole("mSuperAdmin"))
+    {
+        
+
+    }
+    else
+    {
+        
+
+    }
+}
+
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.Date)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.Date)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.Publish)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.Publish)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.SortOrder)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.SortOrder)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.VideoUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.VideoUrl)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.VideoKey)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.VideoKey)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.ImageUrl)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @if (!string.IsNullOrEmpty(Model.Blog.ImageUrl))
+                        {
+                            <div class="media-display-block mb-3">
+                                <a href="@Model.Blog.ImageUrl" target="_blank">
+                                    <img src="@Model.Blog.ImageUrl" class="img-fluid rounded shadow-sm mb-2" style="max-height: 200px; object-fit: contain;" alt="Preview" />
+                                </a>
+                                <br/>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="copyToClipboard('@Model.Blog.ImageUrl')">
+                                        <i class="fa fa-copy"></i> Copy Image URL
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-sm" onclick="copyToClipboard('@Model.Blog.ImageKey')">
+                                        <i class="fa fa-copy"></i> Copy Image Name
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.BlogCategory)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.BlogCategory.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.FullDescription)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.Raw(Model.Blog.FullDescription)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Blog.AddToRibon)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Blog.AddToRibon)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a asp-page="./Edit" asp-route-id="@Model.Blog.Id" class="btn btn-primary">Edit</a>
+            <a asp-page="./Delete" asp-route-id="@Model.Blog.Id" class="btn btn-danger">Delete</a>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+
+

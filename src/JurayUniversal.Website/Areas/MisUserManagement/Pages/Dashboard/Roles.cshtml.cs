@@ -76,15 +76,14 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
             AssignedRoles = await _userManagementRepo.GetUserFeatureRolesAsync(id);
 
-            // Populate system features list (25 modules)
+            // Populate system features list (18 active modules)
             SystemFeatures = new List<string>
             {
-                "UserManagement", "Committees", "Alumni", 
-                "IntervalReports", "UserManual", "FormBuilder", "SurveyAnalytics",
-                "Ticketing", "Dues", "Donations", "Grants",
-                "Recruitment", "Voting", "Fleet", "Assets", "Projects",
-                "AI", "DirectChat", "GroupChat", "MassComm", "Whistleblowing", "Helpdesk",
-                "DMS", "LMS", "VisitorManagement"
+                "MisAlumni", "MisConfiguration", "MisFinances", "MisFleet", 
+                "MisForms", "MisGrants", "MisGroups", "MisManagement", 
+                "MisManual", "MisMassComm", "MisNewsletter", "MisProjects", 
+                "MisProposals", "MisRecruitment", "MisReports", "MisTicketing", 
+                "MisUserManagement", "MisVoting"
             };
 
             return Page();

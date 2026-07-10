@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.JoinModel
 @{
     ViewData["Title"] = "Join " + Model.AlumniAlias + " Network";
@@ -6,12 +6,10 @@
 }
 
 <div class="mis-page-header d-flex justify-content-between align-items-center">
-    <h3 class="mis-page-title mb-0">Join the @Model.AlumniAlias Network</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="/Platform/Index" asp-area="MIS" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
     </div>
 </div>
 
@@ -97,3 +95,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

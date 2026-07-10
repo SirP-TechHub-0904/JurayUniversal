@@ -72,9 +72,28 @@ namespace JurayUniversal.Website.Pages
         [BindProperty]
         public CareerFile CareerFile { get; set; }
 
+        [BindProperty]
+        public int? FirstNumber { get; set; }
+
+        [BindProperty]
+        public int? SecondNumber { get; set; }
+
+        [BindProperty]
+        public int? Captcha { get; set; }
+
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            var misSetting = await _context.MisSettings.FirstOrDefaultAsync();
+            string recaptchaResponse = Request.Form["g-recaptcha-response"];
+            bool isCaptchaValid = await JurayUniversal.Website.Helpers.CaptchaValidator.ValidateCaptchaAsync(misSetting, FirstNumber, SecondNumber, Captcha, recaptchaResponse);
+            
+            if (!isCaptchaValid)
+            {
+                TempData["error"] = "Security Check Failed. Please try again.";
+                return RedirectToPage();
+            }
+
             //cv
             if (cvfile != null)
             {

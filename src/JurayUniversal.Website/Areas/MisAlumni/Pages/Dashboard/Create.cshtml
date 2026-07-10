@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Dashboard.CreateModel
 @{
     ViewData["Title"] = "Add New " + Model.AlumniAlias;
@@ -7,22 +7,11 @@
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Add New @Model.AlumniAlias</h3>
-            <p class="text-subtitle text-muted">Flag an existing user as an Alumni to grant them access to the network.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <button class="btn btn-outline-info btn-sm rounded-pill me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-                <i class="bi bi-question-circle me-1"></i> Help & Guide
-            </button>
-            <a asp-page="./List" class="btn btn-secondary">
+@section HeaderActions {
+    <a asp-page="./List" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Back to List
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <section class="section">
     <div class="card shadow-sm border-0">
@@ -95,3 +84,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

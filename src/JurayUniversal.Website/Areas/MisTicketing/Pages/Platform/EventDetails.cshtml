@@ -1,0 +1,89 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisTicketing.Pages.Platform.EventDetailsModel
+@{
+    ViewData["Title"] = Model.MisEvent.Title;
+}
+
+<div class="container-fluid max-w-900 mx-auto">
+    
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded-circle p-3 me-3 text-danger">
+                            <i class="bi bi-geo-alt-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">Location</div>
+                            <div class="text-muted">@Model.MisEvent.Venue</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card bg-light border-0 rounded-4 sticky-top" style="top: 20px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4">Select Tickets</h5>
+                            <form method="post">
+                                <input type="hidden" name="eventId" value="@Model.MisEvent.Id" />
+                                
+                                @if (!Model.MisEvent.TicketTypes.Any(t => t.IsActive))
+                                {
+                                    <div class="alert alert-warning small">No tickets available at this time.</div>
+                                }
+                                
+                                @foreach (var t in Model.MisEvent.TicketTypes.Where(t => t.IsActive))
+                                {
+                                    var isSoldOut = t.TotalCapacity.HasValue && t.SoldCount >= t.TotalCapacity.Value;
+                                    
+                                    <div class="form-check custom-radio-ticket mb-3 border bg-white p-3 rounded-3 position-relative @(isSoldOut ? "opacity-50" : "")">
+                                        <input class="form-check-input ms-0 mt-2" type="radio" name="ticketTypeId" id="ticket_@t.Id" value="@t.Id" required @(isSoldOut ? "disabled" : "")>
+                                        <label class="form-check-label ms-4 d-block w-100" for="ticket_@t.Id" style="cursor:pointer;">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="fw-bold text-dark">@t.Name</span>
+                                                @if (t.Price == 0)
+                                                {
+                                                    <span class="badge bg-success rounded-pill">FREE</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="fw-bold text-primary">₦@t.Price.ToString("N2")</span>
+                                                }
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(t.Description))
+                                            {
+                                                <div class="small text-muted mb-1">@t.Description</div>
+                                            }
+                                            @if (isSoldOut)
+                                            {
+                                                <div class="text-danger small fw-bold mt-2">SOLD OUT</div>
+                                            }
+                                        </label>
+                                    </div>
+                                }
+                                
+                                @if (Model.MisEvent.TicketTypes.Any(t => t.IsActive))
+                                {
+                                    <button type="submit" class="btn btn-primary w-100 btn-lg rounded-pill fw-bold mt-3 shadow-sm">
+                                        Checkout <i class="bi bi-arrow-right ms-1"></i>
+                                    </button>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-radio-ticket {
+        transition: all 0.2s ease;
+    }
+    .custom-radio-ticket:hover {
+        border-color: #0d6efd !important;
+        background-color: rgba(13, 110, 253, 0.02) !important;
+    }
+    .custom-radio-ticket input[type="radio"]:checked + label {
+        color: #0d6efd;
+    }
+</style>

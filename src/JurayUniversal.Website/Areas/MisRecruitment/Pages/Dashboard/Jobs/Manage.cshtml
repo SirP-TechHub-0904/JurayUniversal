@@ -1,0 +1,71 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Dashboard.Jobs.ManageModel
+@{
+    ViewData["Title"] = Model.MisJobPosting.Id == 0 ? "Create Job Posting" : "Edit Job Posting";
+}
+
+<div class="container-fluid max-w-900 mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form method="post">
+                <input type="hidden" asp-for="MisJobPosting.Id" />
+                
+                <div class="row g-4 mb-4">
+                    <div class="col-md-12">
+                        <label asp-for="MisJobPosting.Title" class="form-label fw-600">Job Title <span class="text-danger">*</span></label>
+                        <input asp-for="MisJobPosting.Title" class="form-control" placeholder="e.g., Senior Software Engineer" required />
+                        <span asp-validation-for="MisJobPosting.Title" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisJobPosting.JobType" class="form-label fw-600">Job Type</label>
+                        <select asp-for="MisJobPosting.JobType" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.JobType>()"></select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisJobPosting.Status" class="form-label fw-600">Status</label>
+                        <select asp-for="MisJobPosting.Status" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.JobStatus>()"></select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisJobPosting.AmountOrSalary" class="form-label fw-600">Salary Range / Amount</label>
+                        <input asp-for="MisJobPosting.AmountOrSalary" class="form-control" placeholder="e.g., ₦80,000 - ₦100,000" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="MisJobPosting.ClosingDate" class="form-label fw-600">Closing Date</label>
+                        <input asp-for="MisJobPosting.ClosingDate" type="date" class="form-control" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisJobPosting.Description" class="form-label fw-600">Job Description <span class="text-danger">*</span></label>
+                        <textarea asp-for="MisJobPosting.Description" class="form-control summernote" rows="5" required></textarea>
+                        <span asp-validation-for="MisJobPosting.Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisJobPosting.RequiredSkills" class="form-label fw-600">Required Skills</label>
+                        <input asp-for="MisJobPosting.RequiredSkills" class="form-control" placeholder="e.g., C#, React, Leadership" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="MisJobPosting.Benefits" class="form-label fw-600">Benefits & Perks</label>
+                        <textarea asp-for="MisJobPosting.Benefits" class="form-control summernote" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">
+                        <i class="bi bi-check-circle me-1"></i> Save Job Posting
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

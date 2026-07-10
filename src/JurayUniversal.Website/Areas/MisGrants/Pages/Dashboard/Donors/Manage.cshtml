@@ -1,0 +1,59 @@
+@page
+@model JurayUniversal.Website.Areas.MisGrants.Pages.Dashboard.Donors.ManageModel
+@{
+    ViewData["Title"] = Model.Donor.Id == 0 ? "Add Donor" : "Edit Donor";
+}
+
+<div class="container-fluid max-w-4xl mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form method="post">
+                <input type="hidden" asp-for="Donor.Id" />
+                <input type="hidden" asp-for="Donor.CreatedAt" />
+
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <label asp-for="Donor.Name" class="form-label fw-600">Donor / Organization Name <span class="text-danger">*</span></label>
+                        <input asp-for="Donor.Name" class="form-control form-control-lg bg-light" placeholder="e.g., World Health Organization" required />
+                        <span asp-validation-for="Donor.Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Donor.ContactEmail" class="form-label fw-600">Contact Email</label>
+                        <input asp-for="Donor.ContactEmail" type="email" class="form-control form-control-lg bg-light" />
+                        <span asp-validation-for="Donor.ContactEmail" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Donor.ContactPhone" class="form-label fw-600">Contact Phone</label>
+                        <input asp-for="Donor.ContactPhone" class="form-control form-control-lg bg-light" />
+                        <span asp-validation-for="Donor.ContactPhone" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <label asp-for="Donor.Address" class="form-label fw-600">Address</label>
+                        <input asp-for="Donor.Address" class="form-control form-control-lg bg-light" />
+                        <span asp-validation-for="Donor.Address" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Donor.Description" class="form-label fw-600">Description</label>
+                        <textarea asp-for="Donor.Description" class="form-control bg-light" rows="3"></textarea>
+                        <span asp-validation-for="Donor.Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm w-100 w-md-auto">
+                            @(Model.Donor.Id == 0 ? "Save Donor" : "Update Donor")
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

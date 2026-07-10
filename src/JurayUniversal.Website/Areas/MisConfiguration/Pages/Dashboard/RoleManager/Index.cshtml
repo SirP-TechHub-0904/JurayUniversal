@@ -1,0 +1,53 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.RoleManager.IndexModel
+@{
+    ViewData["Title"] = "Role Manager";
+}
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="fa fa-user-shield text-primary me-2"></i> Role Manager</h5>
+    </div>
+    <div class="card-body">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Role Name</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tr>
+                            <td class="fw-bold">@role.Name</td>
+                            <td>
+                                @if (role.RoleCategory == JurayUniversal.Domain.Enum.Enum.RoleCategory.MIS)
+                                {
+                                    <span class="badge bg-primary">MIS Only</span>
+                                }
+                                else if (role.RoleCategory == JurayUniversal.Domain.Enum.Enum.RoleCategory.Legacy)
+                                {
+                                    <span class="badge bg-warning text-dark">Legacy Only</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Both (Shared)</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

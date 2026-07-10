@@ -1,0 +1,131 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Platform.IndexModel
+@{
+    ViewData["Title"] = "Mass Communication Dashboard";
+    ViewData["Subtitle"] = "High-level overview and analytics.";
+}
+
+<div class="row mb-4 align-items-center">
+    <div class="col-12">
+        <h3 class="fw-bold mb-1 text-dark">SMS Broadcast Hub</h3>
+        <p class="text-muted mb-0">Overview of your campaigns, wallet, and contact lists.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Wallet Balance Card -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white shadow-sm border-0 h-100 rounded-4 overflow-hidden">
+            <div class="card-body p-4 position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-white-50 text-uppercase fw-bold mb-0">Wallet Balance</h6>
+                    <div class="fs-2 text-white-50 opacity-50">
+                        <i class="fa fa-wallet"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0 fw-bolder">&#8358;@Model.UserWallet.Balance.ToString("N2")</h3>
+            </div>
+            <a href="/MisMassComm/Platform/Wallet/Index" class="card-footer bg-transparent border-top border-light border-opacity-25 text-white d-flex justify-content-between align-items-center py-3 text-decoration-none transition-all hover-bg-light-alpha">
+                <span class="small fw-semibold">View History</span>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Total Campaigns -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white shadow-sm border-0 h-100 rounded-4 overflow-hidden">
+            <div class="card-body p-4 position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-white-50 text-uppercase fw-bold mb-0">Total Campaigns</h6>
+                    <div class="fs-2 text-white-50 opacity-50">
+                        <i class="fa fa-bullhorn"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0 fw-bolder">@Model.TotalCampaigns</h3>
+            </div>
+            <a href="/MisMassComm/Platform/Campaigns/Index" class="card-footer bg-transparent border-top border-light border-opacity-25 text-white d-flex justify-content-between align-items-center py-3 text-decoration-none transition-all hover-bg-light-alpha">
+                <span class="small fw-semibold">View Campaigns</span>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Successful Deliveries -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-info text-white shadow-sm border-0 h-100 rounded-4 overflow-hidden">
+            <div class="card-body p-4 position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-white-50 text-uppercase fw-bold mb-0">Successful Deliveries</h6>
+                    <div class="fs-2 text-white-50 opacity-50">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0 fw-bolder">@Model.TotalSmsSent</h3>
+            </div>
+            <a href="javascript:;" class="card-footer bg-transparent border-top border-light border-opacity-25 text-white d-flex justify-content-between align-items-center py-3 text-decoration-none transition-all hover-bg-light-alpha">
+                <span class="small fw-semibold">Delivery Rate</span>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Active Contacts -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-dark text-white shadow-sm border-0 h-100 rounded-4 overflow-hidden">
+            <div class="card-body p-4 position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-white-50 text-uppercase fw-bold mb-0">Active Contacts</h6>
+                    <div class="fs-2 text-white-50 opacity-50">
+                        <i class="fa fa-address-book"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0 fw-bolder">@Model.ActiveContacts</h3>
+            </div>
+            <a href="/MisMassComm/Platform/PhoneBooks/Index" class="card-footer bg-transparent border-top border-light border-opacity-25 text-white d-flex justify-content-between align-items-center py-3 text-decoration-none transition-all hover-bg-light-alpha">
+                <span class="small fw-semibold">Manage Phone Books</span>
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12 col-xl-10">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-header bg-white border-bottom py-3">
+                <h5 class="mb-0 fw-bold"><i class="fa fa-bolt text-warning me-2"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body p-4 bg-light">
+                <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                        <a href="/MisMassComm/Platform/Campaigns/Create" class="btn btn-outline-primary w-100 h-100 py-4 d-flex flex-column align-items-center justify-content-center rounded-4 border-2 transition-all shadow-sm bg-white hover-elevate">
+                            <i class="fa fa-paper-plane fa-2x mb-3"></i>
+                            <span class="fw-bold fs-6">Send SMS</span>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="/MisMassComm/Platform/Wallet/Fund" class="btn btn-outline-success w-100 h-100 py-4 d-flex flex-column align-items-center justify-content-center rounded-4 border-2 transition-all shadow-sm bg-white hover-elevate">
+                            <i class="fa fa-plus-circle fa-2x mb-3"></i>
+                            <span class="fw-bold fs-6">Fund Wallet</span>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="/MisMassComm/Platform/Wallet/Transfer" class="btn btn-outline-warning w-100 h-100 py-4 d-flex flex-column align-items-center justify-content-center rounded-4 border-2 transition-all shadow-sm bg-white hover-elevate">
+                            <i class="fa fa-exchange-alt fa-2x mb-3"></i>
+                            <span class="fw-bold fs-6">Transfer Units</span>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="/MisMassComm/Platform/PhoneBooks/Index" class="btn btn-outline-info w-100 h-100 py-4 d-flex flex-column align-items-center justify-content-center rounded-4 border-2 transition-all shadow-sm bg-white hover-elevate">
+                            <i class="fa fa-address-book fa-2x mb-3"></i>
+                            <span class="fw-bold fs-6">Phone Books</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

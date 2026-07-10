@@ -1,0 +1,42 @@
+@page
+@model JurayUniversal.Website.Areas.MisProjects.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "My Project Tasks";
+    ViewData["Subtitle"] = "Projects you are collaborating on.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
+}
+
+<div class="row g-4">
+    @if(Model.MyProjects.Count == 0)
+    {
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 text-center py-5">
+                <i class="bi bi-briefcase display-4 text-muted"></i>
+                <h4 class="mt-3 text-muted">No Projects Yet</h4>
+                <p class="text-muted">You have not been added as a collaborator to any projects.</p>
+            </div>
+        </div>
+    }
+    
+    @foreach(var item in Model.MyProjects)
+    {
+        var project = item.MisProject;
+        <div class="col-md-6 col-xl-4">
+            <div class="card border border-primary shadow-sm rounded-4 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-primary mb-0">@project.Name</h5>
+                        <span class="badge bg-secondary rounded-pill">@item.Role</span>
+                    </div>
+                    <p class="text-muted small mb-4">@(project.Description?.Length > 100 ? project.Description.Substring(0, 100) + "..." : project.Description ?? "No description provided.")</p>
+                    
+                    <div class="d-grid gap-2">
+                        <a asp-page="../Board/Index" asp-route-projectId="@project.Id" class="btn btn-primary rounded-pill">
+                            <i class="bi bi-kanban me-1"></i> Open Kanban Board
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

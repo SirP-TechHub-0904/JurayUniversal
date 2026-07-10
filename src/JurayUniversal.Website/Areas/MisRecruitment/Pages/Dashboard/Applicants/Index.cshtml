@@ -1,0 +1,82 @@
+@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Dashboard.Applicants.IndexModel
+@{
+    ViewData["Title"] = "Applicant Pipeline";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="container-fluid max-w-1200 mx-auto">
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4 bg-light rounded-4">
+            <form method="get" class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label class="fw-bold me-2">Filter by Job Posting:</label>
+                </div>
+                <div class="col-md-5">
+                    <select asp-for="JobId" asp-items="Model.JobPostingsList" class="form-select border-0 shadow-sm rounded-pill">
+                        <option value="">-- All Jobs --</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            @if (Model.MisJobApplicants.Count == 0)
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-people text-muted display-4 d-block mb-3 opacity-50"></i>
+                    <h5 class="fw-bold">No Applicants Found</h5>
+                    <p class="text-muted mb-0">No one has applied for the selected job postings yet.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Applied For</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MisJobApplicants)
+                            {
+                                <tr>
+                                    <td class="fw-600">@item.FirstName @item.LastName</td>
+                                    <td>
+                                        <a href="/MisRecruitment/Dashboard/Jobs/Manage?id=@item.MisJobPostingId" class="text-decoration-none">
+                                            @item.MisJobPosting?.Title
+                                        </a>
+                                    </td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Phone</td>
+                                    <td>
+                                        <span class="badge bg-info text-dark rounded-pill">@item.Status</span>
+                                    </td>
+                                    <td class="small">@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                    <td class="text-end">
+                                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary rounded-pill px-3">
+                                            Review
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

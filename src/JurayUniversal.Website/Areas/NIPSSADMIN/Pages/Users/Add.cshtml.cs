@@ -21,7 +21,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
         private readonly SignInManager<Profile> _signInManager;
         private readonly ILogger<IndexModel> _logger;
         private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly IEmailSendService _email;
         private readonly ISmsSendService _sms;
 
@@ -29,7 +29,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
             ILogger<IndexModel> logger,
             UserManager<Profile> userManager,
             JurayUniversal.Persistence.EF.SQL.DashboardDbContext context,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
             IEmailSendService email,
             ISmsSendService sms)
         {
@@ -110,7 +110,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
             {
                 _logger.LogInformation("User created a new account with password.");
                 //
-                IdentityRole Managerf = new IdentityRole(Role);
+                AppRole Managerf = new AppRole(Role);
                 var checkManagerf = await _role.FindByNameAsync(Role);
                 if (checkManagerf == null)
                 {

@@ -19,7 +19,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
     public class ReconModel : PageModel
     {
         private readonly SignInManager<Profile> _signInManager;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly UserManager<Profile> _userManager;
         private readonly ILogger<ReadonlyModel> _logger;
         private readonly DashboardDbContext _context;
@@ -28,7 +28,7 @@ namespace JurayUniversal.Website.V2.Pages.AuthVadmin
         public ReconModel(
             UserManager<Profile> userManager,
             SignInManager<Profile> signInManager,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
         ILogger<ReadonlyModel> logger,
             DashboardDbContext context)
         {

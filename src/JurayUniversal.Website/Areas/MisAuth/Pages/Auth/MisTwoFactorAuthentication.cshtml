@@ -1,8 +1,9 @@
-@page
+﻿@page
 @using Microsoft.AspNetCore.Http.Features
 @model JurayUniversal.Website.Areas.MisAuth.Pages.Auth.MisTwoFactorAuthenticationModel
 @{
     ViewData["Title"] = "Two-factor authentication (2FA)";
+    ViewData["Subtitle"] = "Authentication and security access.";
  }
 
 <div class="container-fluid py-4">
@@ -12,7 +13,8 @@
                 <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
                     <i class="bi bi-shield-lock-fill fs-3"></i>
                 </div>
-                <h3 class="fw-800 text-dark mb-0">@ViewData["Title"]</h3>
+                <h3 class="fw-800 text-dark mb-0 me-auto">@ViewData["Title"]</h3>
+                
             </div>
             
             <partial name="_StatusMessage" for="StatusMessage" />
@@ -91,3 +93,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+

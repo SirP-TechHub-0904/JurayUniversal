@@ -1,0 +1,71 @@
+@page
+@model JurayUniversal.Website.Areas.MisFleet.Pages.Dashboard.Categories.IndexModel
+@{
+    ViewData["Title"] = "Equipment Categories";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+@section HeaderActions {
+    <a asp-page="../Equipment/Index" class="btn btn-outline-dark rounded-pill">Back to Ledger</a>
+}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0 text-white">New Category</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="NewCategory.Name" class="form-label fw-bold"></label>
+                        <input asp-for="NewCategory.Name" class="form-control" placeholder="e.g., Laptops, Vehicles" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewCategory.Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="NewCategory.Description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill">Create Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Categories</h5>
+                
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Total Assets</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model.Categories.Count == 0)
+                            {
+                                <tr><td colspan="3" class="text-center text-muted py-4">No categories created yet.</td></tr>
+                            }
+                            @foreach(var item in Model.Categories)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@item.Name</td>
+                                    <td class="text-muted small">@item.Description</td>
+                                    <td>
+                                        <span class="badge bg-secondary rounded-pill">@(item.MisEquipments?.Count ?? 0)</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

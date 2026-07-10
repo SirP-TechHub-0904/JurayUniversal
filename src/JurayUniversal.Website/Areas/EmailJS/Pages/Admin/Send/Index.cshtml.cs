@@ -14,12 +14,12 @@ namespace JurayUniversal.Website.Areas.EmailJS.Pages.Admin.Send
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly ILogger<IndexModel> _logger;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
         public IndexModel(SignInManager<Profile> signInManager,
             ILogger<IndexModel> logger,
             UserManager<Profile> userManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<AppRole> roleManager,
             IEmailSendService email)
         {
             _userManager = userManager;

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Pages.ContactModel
 @{
     ViewData["Title"] = "CONTACT US";
@@ -102,8 +102,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                    @await Html.PartialAsync("_Captcha")
                                 </div>
 
                                 <div class="col-md-12 mb-30">
@@ -240,8 +239,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout2222")
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                    @await Html.PartialAsync("_Captcha")
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <button class="btn btn-theme" type="submit">Send Message</button>
@@ -357,8 +355,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout4444")
                                           required="required"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                @await Html.PartialAsync("_Captcha")
                             </div>
                             <button type="submit" class="btn-curve btn-color"><span>Send Message</span></button>
                         </div>
@@ -412,8 +409,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout5555")
                                                   placeholder="Your message Here" required=""></textarea>
                                     </div>
                                     <div class="col-lg-12 mb-35">
-                                        <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                        <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                        @await Html.PartialAsync("_Captcha")
                                     </div>
                                 </div>
 
@@ -532,8 +528,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout6666")
                                                     <textarea id="message" class="form-control textarea" rows="7" asp-for="ClientRequest.Message" placeholder="Message"></textarea>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                                    <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                                    @await Html.PartialAsync("_Captcha")
                                                 </div>
                                                 <button type="submit" class="btn btn-default mt-0 theme-btn">Send Now</button>
                                             </div>
@@ -752,8 +747,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout7777")
                                         </div>
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-12">
-                                        <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                        <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                        @await Html.PartialAsync("_Captcha")
 
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -809,8 +803,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout8888")
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="col-md-12">
-                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                @await Html.PartialAsync("_Captcha")
                             </div>
 
                             <div class="form-group">
@@ -936,8 +929,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout9999")
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                @await Html.PartialAsync("_Captcha")
                             </div>
 
                             <div class="col-md-12">
@@ -1061,8 +1053,7 @@ else if (Model.SuperSetting.TemplateLayoutKey == "Layout13131313")
                                             <textarea asp-for="ClientRequest.Message" placeholder="Message"></textarea>
                                         </div>
                                         <div class="contact-page__input-box">
-                                            <label for="captcha">Please solve the following: @Model.FirstNumber + @Model.SecondNumber = ?</label>
-                                            <input type="number" id="captcha" asp-for="Captcha" required="required">
+                                            @await Html.PartialAsync("_Captcha")
                                         </div>
                                         <div class="main-slider__btn-box contact-page__btn-box">
                                             <div class="main-slider__btn">

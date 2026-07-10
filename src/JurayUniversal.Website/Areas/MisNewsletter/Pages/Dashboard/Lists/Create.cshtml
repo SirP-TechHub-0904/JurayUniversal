@@ -1,0 +1,48 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.Lists.CreateModel
+@{
+    ViewData["Title"] = "Create Mailing List";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Lists";
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-8 col-lg-6 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="NewsletterList.Name" class="form-label fw-bold">List Name</label>
+                            <input asp-for="NewsletterList.Name" class="form-control" placeholder="e.g. Monthly Newsletter Subscribers" />
+                            <span asp-validation-for="NewsletterList.Name" class="text-danger fs-12px"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="NewsletterList.Description" class="form-label fw-bold">Description (Optional)</label>
+                            <textarea asp-for="NewsletterList.Description" class="form-control" rows="3" placeholder="Briefly describe what this list is used for..."></textarea>
+                            <span asp-validation-for="NewsletterList.Description" class="text-danger fs-12px"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary rounded-pill fw-bold py-2">
+                                <i class="bi bi-save me-1"></i> Save & Continue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

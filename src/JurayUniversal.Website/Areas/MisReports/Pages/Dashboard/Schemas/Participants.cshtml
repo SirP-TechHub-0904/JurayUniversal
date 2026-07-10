@@ -1,25 +1,18 @@
-@page "{id:long}"
+﻿@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.ParticipantsModel
 @{
     ViewData["Title"] = "Manage Participants";
+    ViewData["Subtitle"] = "Overview and management of all records.";
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Schemas";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>Participants: @Model.Schema.Name</h3>
-            <p class="text-subtitle text-muted">Manage which staff members are required to submit this report.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="./Index" class="btn btn-secondary btn-sm rounded-pill">
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-secondary btn-sm rounded-pill">
                 <i class="bi bi-arrow-left me-1"></i> Back to Schemas
             </a>
-        </div>
-    </div>
-</div>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="row g-4">
@@ -95,3 +88,5 @@
         </div>
     </div>
 </div>
+
+

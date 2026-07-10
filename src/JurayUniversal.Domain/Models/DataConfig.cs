@@ -31,6 +31,12 @@ namespace JurayUniversal.Domain.Models
         [Display(Name = "MIS Dashboard CSS")]
         public string? MisDashboardCSS { get; set; }
 
+        [Display(Name = "Job Board Custom CSS")]
+        public string? MisJobBoardCSS { get; set; }
+
+        [Display(Name = "Election Custom CSS")]
+        public string? ElectionCustomCss { get; set; }
+
         [Display(Name = "MIS Layout Javascript")]
         public string? MisLayoutJavaScript { get; set; }
 

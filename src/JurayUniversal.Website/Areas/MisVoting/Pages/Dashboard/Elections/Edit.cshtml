@@ -1,0 +1,109 @@
+@page
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Elections.EditModel
+@{
+    ViewData["Title"] = "Edit Election";
+}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-dark text-white rounded-top-4 p-4">
+        <h4 class="card-title mb-0 text-white">Edit Election</h4>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Election.Id" />
+            <input type="hidden" asp-for="Election.ElectionBannerUrl" />
+            <input type="hidden" asp-for="Election.ShortCode" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Election.Title" class="form-label fw-bold">Election Title <span class="text-danger">*</span></label>
+                <input asp-for="Election.Title" class="form-control form-control-lg rounded-3" placeholder="e.g. 2027 Executive Election" required />
+                <span asp-validation-for="Election.Title" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Election.Instructions" class="form-label fw-bold">Voting Instructions (Optional)</label>
+                <textarea asp-for="Election.Instructions" class="form-control rounded-3" rows="3" placeholder="Provide any specific rules or instructions for voters..."></textarea>
+                <span asp-validation-for="Election.Instructions" class="text-danger small"></span>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6 form-group">
+                    <label asp-for="Election.ElectionType" class="form-label fw-bold">Election Access Type <span class="text-danger">*</span></label>
+                    <select asp-for="Election.ElectionType" class="form-select rounded-3" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisElectionType>()"></select>
+                    <span asp-validation-for="Election.ElectionType" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label asp-for="Election.VotingStatus" class="form-label fw-bold">Current Status <span class="text-danger">*</span></label>
+                    <select asp-for="Election.VotingStatus" class="form-select rounded-3" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisVotingStatus>()"></select>
+                    <span asp-validation-for="Election.VotingStatus" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4 form-group form-check ms-2">
+                    <input asp-for="Election.EnableCandidateImages" class="form-check-input" />
+                    <label asp-for="Election.EnableCandidateImages" class="form-check-label fw-bold">Show Candidate Photos</label>
+                </div>
+                <div class="col-md-4 form-group form-check ms-2">
+                    <input asp-for="Election.ShowResults" class="form-check-input" />
+                    <label asp-for="Election.ShowResults" class="form-check-label fw-bold">Publish Live Results</label>
+                </div>
+                <div class="col-md-3 form-group form-check ms-2">
+                    <input asp-for="Election.RequireAllCategories" class="form-check-input" />
+                    <label asp-for="Election.RequireAllCategories" class="form-check-label fw-bold text-danger">Strict: Must Vote All Categories</label>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6 form-group">
+                    <label asp-for="Election.StartDate" class="form-label fw-bold">Start Date & Time <span class="text-danger">*</span></label>
+                    <input asp-for="Election.StartDate" class="form-control rounded-3" type="datetime-local" required />
+                    <span asp-validation-for="Election.StartDate" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label asp-for="Election.EndDate" class="form-label fw-bold">End Date & Time <span class="text-danger">*</span></label>
+                    <input asp-for="Election.EndDate" class="form-control rounded-3" type="datetime-local" required />
+                    <span asp-validation-for="Election.EndDate" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="card bg-light border-0 rounded-4 mb-4">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-palette text-primary me-2"></i> Branding Options</h6>
+                    
+                    <div class="form-group mb-3">
+                        @if (!string.IsNullOrEmpty(Model.Election?.ElectionBannerUrl))
+                        {
+                            <label class="form-label fw-bold">Replace Banner Image (Optional)</label>
+                            <div class="mb-3">
+                                <img src="@Model.Election.ElectionBannerUrl" alt="Current Banner" class="img-fluid rounded-3 border" style="max-height: 200px;" />
+                            </div>
+                        }
+                        else
+                        {
+                            <label class="form-label fw-bold">Upload Banner Image (Optional)</label>
+                        }
+                        
+                        <input asp-for="imagefile" type="file" class="form-control rounded-3" accept="image/*" />
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="form-label fw-bold">Custom URL Short Code</label>
+                        <input asp-for="Election.ShortCode" class="form-control rounded-3 bg-white" readonly disabled />
+                        <div class="form-text text-muted">This code is auto-generated upon creation and cannot be changed. URL: <code>/e/@Model.Election?.ShortCode</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold"><i class="bi bi-save me-2"></i> Save Changes</button>
+                <a asp-page="./Details" asp-route-id="@Model.Election.Id" class="btn btn-light btn-lg rounded-pill px-5 fw-bold border">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

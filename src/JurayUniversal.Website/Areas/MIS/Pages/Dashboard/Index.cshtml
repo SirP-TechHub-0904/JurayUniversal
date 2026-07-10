@@ -2,14 +2,28 @@
 @model JurayUniversal.Website.Areas.MIS.Pages.Dashboard.IndexModel
 @{
     ViewData["Title"] = "Console Home | Universal MIS";
+    ViewData["Subtitle"] = "Launch, configure, and monitor your 25 universal system modules.";
 }
 
-<!-- Hide Layout Template Header to Render Custom Dynamic Console Header -->
+@section HeaderActions {
+    <button class="btn btn-outline-secondary btn-sm rounded-pill me-2" onclick="resetLayout()">
+        <i class="fas fa-undo me-2"></i>Reset layout
+    </button>
+    <div class="dropdown d-inline-block">
+        <button class="btn btn-primary btn-sm dropdown-toggle rounded-pill" type="button" id="addWidgetBtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-plus me-2"></i>Add widgets
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="addWidgetBtn">
+            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('recent-visited-widget', true)">Recently Visited</a></li>
+            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', true)">Applications Hub</a></li>
+            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', true)">Financials Chart</a></li>
+            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('health-widget', true)">System Health Alert</a></li>
+            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('ai-widget', true)">AI Assistant Status</a></li>
+        </ul>
+    </div>
+}
+
 <style>
-    .page-header {
-        display: none !important;
-    }
-    
     .console-bg-gradient {
         background: linear-gradient(135deg, rgba(103, 80, 164, 0.05) 0%, rgba(0, 150, 136, 0.05) 100%);
     }
@@ -95,35 +109,10 @@
 </style>
 
 <div class="container-fluid px-0 console-bg-gradient py-3 rounded-4">
-    <!-- Header Controls -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 pb-3 border-bottom px-3">
-        <div>
-            <h1 class="h3 fw-800 text-dark mb-1">Console Home <span class="badge bg-secondary bg-opacity-10 text-secondary fs-12px ms-2">Info</span></h1>
-            <p class="text-muted fs-14px mb-0">Launch, configure, and monitor your 25 universal system modules.</p>
-        </div>
-        <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
-            <button class="btn btn-outline-secondary btn-sm" onclick="resetLayout()">
-                <i class="fas fa-undo me-2"></i>Reset to default layout
-            </button>
-            <div class="dropdown">
-                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="addWidgetBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-plus me-2"></i>Add widgets
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addWidgetBtn">
-                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('recent-visited-widget', true)">Recently Visited</a></li>
-                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', true)">Applications Hub</a></li>
-                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', true)">Financials Chart</a></li>
-                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('health-widget', true)">System Health Alert</a></li>
-                    <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('ai-widget', true)">AI Assistant Status</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Grid Workspace -->
     <div class="row px-3">
-        <!-- LEFT COLUMN: 8 Cols on Large, 12 on Mobile -->
-        <div class="col-xl-8 col-lg-7 d-flex flex-column gap-4">
+        <!-- LEFT COLUMN: 7 Cols on Large, 12 on Mobile -->
+        <div class="col-xl-7 col-lg-7 d-flex flex-column gap-4">
             
             <!-- WIDGET 1: Recently Visited -->
             <div class="card" id="recent-visited-widget">
@@ -146,113 +135,55 @@
                         <!-- Loaded dynamically via script -->
                     </div>
                     <div class="text-end mt-2">
-                        <a href="#applications-section" class="text-primary fw-600 fs-13px text-decoration-none">View all services <i class="fas fa-chevron-right ms-1 fs-11px"></i></a>
+                        <a href="#features-grid" class="text-primary fw-600 fs-13px text-decoration-none">View all services <i class="fas fa-chevron-right ms-1 fs-11px"></i></a>
                     </div>
                 </div>
             </div>
 
             <!-- WIDGET 2: Applications Hub -->
             <div class="card" id="applications-widget">
-                <div class="card-body p-4" id="applications-section">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-th text-teal"></i>
-                            <h5 class="card-title fw-700 mb-0">Applications & Modules Hub <span class="text-muted fw-400 fs-14px" id="modules-count">(25)</span></h5>
+                            <i class="fas fa-th-large text-primary"></i>
+                            <h5 class="card-title fw-700 mb-0">Applications Hub</h5>
                         </div>
                         <div class="dropdown">
-                            <button class="btn btn-link text-muted p-0 fs-14px" id="appWidgetDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <button class="btn btn-link text-muted p-0 fs-14px" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', false)">Hide widget</a></li>
                             </ul>
                         </div>
                     </div>
-
-                    <!-- Filter & Search Panel -->
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <span class="input-group-text bg-transparent border-end-0"><i class="fas fa-search text-muted"></i></span>
-                                <input type="text" id="searchFeatures" class="form-control border-start-0 py-2" placeholder="Search features (e.g. directory, ticketing, AI)..." onkeyup="filterFeatures()">
-                            </div>
-                        </div>
-                        <div class="col-md-5 text-md-end d-flex align-items-center justify-content-md-end gap-2">
-                            <select class="form-select border rounded-pill py-1 fs-13px" style="width: auto;" id="statusFilter" onchange="filterFeatures()">
-                                <option value="all">All States</option>
-                                <option value="Active">Active</option>
-                                <option value="Setup Pending">Pending Setup</option>
-                            </select>
-                            <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="triggerCreateFeature()">
-                                <i class="fas fa-plus me-1"></i> New Module
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Category Pills -->
-                    <div class="d-flex flex-wrap mb-4" id="category-tabs-container">
-                        <button class="nav-link active" id="tab-all" onclick="setCategory('all')">All</button>
-                        <button class="nav-link" id="tab-core" onclick="setCategory('core')">Core & People</button>
-                        <button class="nav-link" id="tab-reports" onclick="setCategory('reports')">Reports & Docs</button>
-                        <button class="nav-link" id="tab-financials" onclick="setCategory('financials')">Financials</button>
-                        <button class="nav-link" id="tab-operations" onclick="setCategory('operations')">Operations</button>
-                        <button class="nav-link" id="tab-tech" onclick="setCategory('tech')">Comms & Tech</button>
-                        <button class="nav-link" id="tab-compliance" onclick="setCategory('compliance')">Compliance</button>
-                    </div>
-
-                    <!-- Features Dynamic Grid -->
-                    <div class="row g-3" id="features-grid">
-                        <!-- Loaded dynamically via script -->
-                    </div>
-
-                    <!-- Pagination / Footer link -->
-                    <div class="d-flex align-items-center justify-content-between border-top pt-3 mt-4 fs-13px">
-                        <span class="text-muted" id="showing-summary">Showing 25 of 25 features</span>
-                        <a href="https://seantheme.com/studio/documentation/index.html" class="text-primary text-decoration-none fw-600">Go to myApplications <i class="fas fa-external-link-alt ms-1 fs-11px"></i></a>
+                    <div class="text-muted fs-13px">
+                        Pin your most used applications here for quick access.
                     </div>
                 </div>
             </div>
 
-            <!-- WIDGET 3: Solutions & Recipes Templates -->
-            <div class="card mb-4" id="solutions-widget">
+            <!-- WIDGET 3: Financials Chart -->
+            <div class="card" id="financials-widget">
                 <div class="card-body p-4">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <i class="fas fa-lightbulb text-warning"></i>
-                        <h5 class="card-title fw-700 mb-0">Solutions & Action Recipes <span class="badge bg-primary bg-opacity-10 text-primary fs-11px">Ready</span></h5>
-                    </div>
-                    <p class="text-muted fs-13px mb-4">Select a pre-designed action flow to deploy standard assets instantly.</p>
-
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="p-3 border rounded-3 h-100 d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <h6 class="fw-700 mb-0">Survey Data Collector</h6>
-                                        <span class="badge bg-success bg-opacity-10 text-success fs-10px">1-Click</span>
-                                    </div>
-                                    <p class="text-muted fs-12px mb-3">Generate a Drag-and-Drop survey linked to dynamic graphic reports.</p>
-                                </div>
-                                <a href="javascript:;" onclick="runActionRecipe('Survey Data Collector')" class="btn btn-outline-primary btn-sm text-center w-100 rounded-pill">Deploy recipe</a>
-                            </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-chart-line text-success"></i>
+                            <h5 class="card-title fw-700 mb-0">Financials Chart</h5>
                         </div>
-                        <div class="col-md-6">
-                            <div class="p-3 border rounded-3 h-100 d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <h6 class="fw-700 mb-0">Secure Election Setup</h6>
-                                        <span class="badge bg-warning bg-opacity-10 text-warning fs-10px">Secure</span>
-                                    </div>
-                                    <p class="text-muted fs-12px mb-3">Setup secure digital balloting lists and configure automatic tabulations.</p>
-                                </div>
-                                <a href="javascript:;" onclick="runActionRecipe('Election Setup')" class="btn btn-outline-primary btn-sm text-center w-100 rounded-pill">Deploy recipe</a>
-                            </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0 fs-14px" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', false)">Hide widget</a></li>
+                            </ul>
                         </div>
                     </div>
+                    <div id="revenue-chart"></div>
                 </div>
             </div>
 
         </div>
 
-        <!-- RIGHT COLUMN: 4 Cols on Large, 12 on Mobile -->
-        <div class="col-xl-4 col-lg-5 d-flex flex-column gap-4">
+        <!-- RIGHT COLUMN: 5 Cols on Large, 12 on Mobile -->
+        <div class="col-xl-5 col-lg-5 d-flex flex-column gap-4">
             
             <!-- WIDGET 4: Welcome / Quick Start -->
             <partial name="~/Pages/Shared/Layouts/MIS/_DashboardWelcome.cshtml" />
@@ -279,7 +210,7 @@
                             <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
                             <div>
                                 <div class="fw-700 fs-13px text-dark">Services Healthy</div>
-                                <div class="text-muted fs-11px">All 25 modules responsive</div>
+                                <div class="text-muted fs-11px">All systems are operating normally</div>
                             </div>
                         </div>
                         <span class="badge bg-success bg-opacity-10 text-success">Healthy</span>
@@ -312,110 +243,33 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Notifications Timeline -->
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-700 fs-13px">Dynamic Interval Reports Due</span>
-                                <span class="text-muted fs-11px">2h ago</span>
-                            </div>
-                            <p class="text-muted fs-12px mb-0">2 Scheduled Category Reports are pending user input updates.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-700 fs-13px">Anonymous Whistleblowing Alert</span>
-                                <span class="text-muted fs-11px">1d ago</span>
-                            </div>
-                            <p class="text-muted fs-12px mb-0">1 encrypted anonymous whistleblower report submitted (Finance category).</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-700 fs-13px">Visitor Gate Request</span>
-                                <span class="text-muted fs-11px">Just now</span>
-                            </div>
-                            <p class="text-muted fs-12px mb-0">Security desk registered visitor: Arrived for interview (Host notified).</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- WIDGET 6: Financials & Cost/Usage Equivalent -->
-            <div class="card" id="financials-widget">
-                <div class="card-body p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-coins text-warning"></i>
-                            <h5 class="card-title fw-700 mb-0">Financials & Monetization</h5>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-link text-muted p-0 fs-14px" id="financialDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', false)">Hide widget</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Metrics row -->
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="fs-12px text-muted">Current Month intake</div>
-                            <h3 class="fw-800 text-dark mb-0">$14,285.50</h3>
-                            <div class="text-success fs-11px fw-600"><i class="fas fa-caret-up me-1"></i>12.4% increase</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="fs-12px text-muted">Forecasted Month End</div>
-                            <h3 class="fw-800 text-secondary mb-0">$18,450.00</h3>
-                            <div class="text-success fs-11px fw-600"><i class="fas fa-caret-up me-1"></i>4.6% increase</div>
-                        </div>
-                    </div>
-
-                    <!-- Financial Chart Container (Instantiated by ApexCharts) -->
-                    <div id="revenue-chart" style="min-height: 250px;"></div>
-
-                    <div class="text-center mt-3">
-                        <a href="javascript:;" class="text-primary fw-600 fs-13px text-decoration-none">Go to Billing and Dues Management</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- WIDGET 7: BYOK AI Engine Key Status -->
+            <!-- WIDGET 6: AI Assistant Status -->
             <div class="card" id="ai-widget">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-brain text-purple"></i>
-                            <h5 class="card-title fw-700 mb-0">BYOK AI Integration</h5>
+                            <i class="fas fa-robot text-info"></i>
+                            <h5 class="card-title fw-700 mb-0">AI Assistant Status</h5>
                         </div>
                         <div class="dropdown">
-                            <button class="btn btn-link text-muted p-0 fs-14px" id="aiDropdown" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                            <button class="btn btn-link text-muted p-0 fs-14px" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('ai-widget', false)">Hide widget</a></li>
                             </ul>
                         </div>
                     </div>
-
-                    <!-- Status Indicator -->
-                    <div class="p-3 border rounded-3 mb-3">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="fs-12px fw-600 text-muted">Gemini API status</span>
-                            <span class="badge bg-success bg-opacity-10 text-success">Active & Healthy</span>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <span class="fs-12px fw-600 text-muted">Claude API status</span>
-                            <span class="badge bg-warning bg-opacity-10 text-warning">Setup Pending</span>
+                    <div class="d-flex align-items-center justify-content-between p-3 border rounded-3 bg-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="spinner-grow spinner-grow-sm text-info" role="status"></div>
+                            <div>
+                                <div class="fw-bold fs-13px text-dark">Juray AI is Online</div>
+                                <div class="text-muted fs-11px">Ready to assist with recipes and data analysis.</div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="progress mb-2" style="height: 6px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="d-flex justify-content-between text-muted fs-11px mb-3">
-                        <span>BYOK Monthly Token limit</span>
-                        <span>65,482 / 100,000 tokens used</span>
-                    </div>
-
-                    <button class="btn btn-outline-primary btn-sm w-100 rounded-pill" onclick="openAIConfig()">Configure API Keys</button>
                 </div>
             </div>
 
@@ -423,45 +277,79 @@
     </div>
 </div>
 
+<!-- ================== ALL SERVICES GRID ================== -->
+<div class="container-fluid px-0 mt-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h4 class="fw-800 text-dark mb-1">All Services <span id="modules-count" class="text-muted fw-normal fs-14px"></span></h4>
+            <p class="text-muted fs-13px mb-0" id="showing-summary">Loading available features...</p>
+        </div>
+        <div class="d-flex gap-2">
+            <!-- Search & Filters -->
+            <div class="input-group input-group-sm" style="width: 250px;">
+                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" id="searchFeatures" class="form-control border-start-0 ps-0" placeholder="Search services..." onkeyup="filterFeatures()">
+            </div>
+            <select id="statusFilter" class="form-select form-select-sm w-auto" onchange="filterFeatures()">
+                <option value="all">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Setup Pending">Pending</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <ul class="nav nav-pills mb-4" id="category-tabs-container">
+        <li class="nav-item">
+            <a class="nav-link active" id="tab-all" href="javascript:;" onclick="setCategory('all')">All Services</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-core" href="javascript:;" onclick="setCategory('core')">Core</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-finance" href="javascript:;" onclick="setCategory('finance')">Finance</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-community" href="javascript:;" onclick="setCategory('community')">Community</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-operations" href="javascript:;" onclick="setCategory('operations')">Operations</a>
+        </li>
+    </ul>
+
+    <!-- Dynamic Grid -->
+    <div class="row g-3" id="features-grid">
+        <!-- Rendered by JS -->
+    </div>
+</div>
+@Html.AntiForgeryToken()
+
 <!-- ================== SCRIPTS BLOCK ================== -->
 <script type="text/javascript">
-    // 25 Application Modules Mock Data List
-    const initialModules = [
-        { id: 1, name: "User Directory & KPIs", icon: "fa-users", category: "core", status: "Active", desc: "Manage staff, members, attendance, and record custom Key Performance Indicators (KPIs).", link: "/MIS/UserManagement" },
-        { id: 2, name: "Committees & Groups", icon: "fa-sitemap", category: "core", status: "Active", desc: "Private collaboration workspaces, file shares, and discussion zones for specialized teams.", link: "/MIS/Committees" },
-        { id: 3, name: "Alumni Directory", icon: "fa-graduation-cap", category: "core", status: "Active", desc: "Searchable network portal for past members, mentorship programs, and business boards.", link: "/MIS/Alumni" },
-        
-        { id: 4, name: "Dynamic Interval Reporting", icon: "fa-clock", category: "reports", status: "Active", desc: "Create submission schedules (daily, weekly) and track user latency automatically.", link: "/MIS/IntervalReports" },
-        { id: 5, name: "Interactive User Manual", icon: "fa-book-open", category: "reports", status: "Active", desc: "Integrated guidebook detailing platform features, user roles, and system workflows.", link: "/MIS/UserManual" },
-        { id: 6, name: "Form Builder & Surveys", icon: "fa-poll-h", category: "reports", status: "Active", desc: "Drag-and-drop questionnaire designer for custom forms and survey feedback.", link: "/MIS/FormBuilder" },
-        { id: 7, name: "Survey Analytics", icon: "fa-chart-pie", category: "reports", status: "Active", desc: "Real-time graphic data tabulation, charts, and bar diagrams for custom forms.", link: "/MIS/SurveyAnalytics" },
-        
-        { id: 8, name: "Event & Concert Ticketing", icon: "fa-ticket-alt", category: "financials", status: "Active", desc: "Event engine supporting paid/free entry, limits, barcodes, and QR scanning apps.", link: "/MIS/Ticketing" },
-        { id: 9, name: "Financials & Dues Management", icon: "fa-file-invoice-dollar", category: "financials", status: "Active", desc: "Subscription tracker for recurring fees, member dues, and automated reminders.", link: "/MIS/Dues" },
-        { id: 10, name: "Donations & Contributions", icon: "fa-hand-holding-usd", category: "financials", status: "Active", desc: "Charity gateway for tithes, free-will gifts, and instant tax-deductible receipts.", link: "/MIS/Donations" },
-        { id: 11, name: "Grant & Proposal Tracking", icon: "fa-briefcase", category: "financials", status: "Setup Pending", desc: "External funding pipelines, milestone tasks, and direct donor progress reports.", link: "/MIS/Grants" },
-        
-        { id: 12, name: "Recruitment & ATS", icon: "fa-user-plus", category: "operations", status: "Setup Pending", desc: "Hiring boards, CV pipelines, interview selectors, and candidates scoring sheets.", link: "/MIS/Recruitment" },
-        { id: 13, name: "Elections & E-Voting", icon: "fa-vote-yea", category: "operations", status: "Active", desc: "Tamper-proof digital ballots ensuring one-user-one-vote with real-time tabulation.", link: "/MIS/Voting" },
-        { id: 14, name: "Fleet & Equipment Lifecycle", icon: "fa-truck-monster", category: "operations", status: "Setup Pending", desc: "Logs hardware details, maintenance cycles, lease durations, and depreciation values.", link: "/MIS/Fleet" },
-        { id: 15, name: "Company Asset Ledger", icon: "fa-building", category: "operations", status: "Active", desc: "Corporate assets register for property, machinery, and balance sheet valuations.", link: "/MIS/Assets" },
-        { id: 16, name: "Project & Task Boards", icon: "fa-tasks", category: "operations", status: "Active", desc: "Agile task assigner, board workflows, and team performance tracking charts.", link: "/MIS/Projects" },
-        
-        { id: 17, name: "BYOK AI Engine", icon: "fa-brain", category: "tech", status: "Active", desc: "Bring-your-own-key portal for Claude, ChatGPT, and Gemini APIs at direct costs.", link: "/MIS/AI" },
-        { id: 18, name: "Direct Messaging", icon: "fa-comments", category: "tech", status: "Active", desc: "Instant direct communication channel for users, with typing alerts and push alerts.", link: "/MIS/DirectChat" },
-        { id: 19, name: "Group Channels (Slack-like)", icon: "fa-users-cog", category: "tech", status: "Active", desc: "Multi-user channels for project rooms, announcements, and casual chats.", link: "/MIS/GroupChat" },
-        { id: 20, name: "Mass Communication", icon: "fa-bullhorn", category: "tech", status: "Active", desc: "Targeted broadcast engine for mass emails, automated news, and SMS campaigns.", link: "/MIS/MassComm" },
-        { id: 21, name: "Anonymous Whistleblowing", icon: "fa-user-secret", category: "tech", status: "Active", desc: "Secure encrypted dropboxes for employees and members to report misconduct.", link: "/MIS/Whistleblowing" },
-        { id: 22, name: "Helpdesk & IT Tickets", icon: "fa-life-ring", category: "tech", status: "Active", desc: "Support ticket registry, SLA clocks, and technical resolution boards.", link: "/MIS/Helpdesk" },
-        
-        { id: 23, name: "Document Vault (DMS)", icon: "fa-folder-open", category: "compliance", status: "Active", desc: "Version-controlled official documents, policies, protocols, and access audit logs.", link: "/MIS/DMS" },
-        { id: 24, name: "Learning Management (LMS)", icon: "fa-university", category: "compliance", status: "Active", desc: "Hosting compliance videos, course slides, dynamic quizzes, and completion certificates.", link: "/MIS/LMS" },
-        { id: 25, name: "Visitor & Gate Control", icon: "fa-id-badge", category: "compliance", status: "Active", desc: "Register reception arrivals, logs badges, photos, and triggers host notifications.", link: "/MIS/VisitorManagement" }
-    ];
+    // Application Modules Dynamic Data loaded from DB
+    const initialModules = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.AvailableFeatures.Select(af => {
+            var dbFeature = Model.MisFeatures.FirstOrDefault(f => f.ModuleFolder == af.ModuleFolder);
+            return new {
+                id = af.ModuleFolder, // use string ID since it's the folder name
+                name = af.Name,
+                icon = af.Icon,
+                category = af.Category ?? "core",
+                status = dbFeature != null ? dbFeature.Status.ToString() : "Setup Pending",
+                desc = af.Description,
+                link = af.Link
+            };
+        })
+    ));
 
     let currentCategory = 'all';
     let starredIds = [];
-    let recentlyVisitedIds = [];
+    let recentlyVisitedIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RecentVisits));
+
+    // Database Widgets Configuration
+    const dbWidgets = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.MisWidgets.Select(w => new { id = w.Id, code = w.WidgetCode, span = w.ColSpan, sort = w.SortOrder })
+    ));
 
     // Initialize Page State
     document.addEventListener("DOMContentLoaded", function () {
@@ -476,24 +364,62 @@
         initRevenueChart();
     });
 
+    function getElementIdByCode(code) {
+        switch(code) {
+            case 'welcome_wizard': return 'welcome-widget';
+            case 'system_health_hub': return 'health-widget';
+            case 'applications_hub': return 'applications-widget';
+            case 'financials_chart': return 'financials-widget';
+            case 'recent_visited': return 'recent-visited-widget';
+            case 'ai_integration': return 'ai-widget';
+            case 'solutions_recipes': return 'solutions-widget';
+            default: return null;
+        }
+    }
+
+    function buildWidgetGrid() {
+        const mainRow = document.querySelector('.row.px-3');
+        if (!mainRow) return;
+
+        // Create the new unified grid
+        const widgetGrid = document.createElement('div');
+        widgetGrid.className = 'row px-3 w-100 m-0';
+        widgetGrid.id = 'widget-grid';
+
+        // Extract widgets based on DB order
+        dbWidgets.forEach(w => {
+            const elId = getElementIdByCode(w.code);
+            const el = document.getElementById(elId);
+            if (el) {
+                const wrapper = document.createElement('div');
+                wrapper.className = `col-xl-${w.span} col-lg-${w.span === 12 ? 12 : 6} mb-4 sortable-item`;
+                wrapper.dataset.widgetId = w.id;
+                wrapper.dataset.widgetCode = w.code;
+                
+                // Keep the card taking full height
+                el.classList.add('h-100');
+                
+                wrapper.appendChild(el);
+                widgetGrid.appendChild(wrapper);
+            }
+        });
+
+        // Insert new grid and remove old columns
+        mainRow.parentElement.insertBefore(widgetGrid, mainRow);
+        mainRow.remove();
+    }
+
     function initSettings() {
         // Starred IDs defaults
         const storedStars = localStorage.getItem('mis_starred_ids');
         if (storedStars) {
             starredIds = JSON.parse(storedStars);
         } else {
-            starredIds = [1, 4, 8, 17, 23]; // Default Favorites
+            starredIds = ["MisUserManagement", "MisReports", "MisTicketing", "MisSmartAssist", "MisDMS"]; // Default Favorites
             localStorage.setItem('mis_starred_ids', JSON.stringify(starredIds));
         }
 
-        // Recently Visited defaults
-        const storedVisited = localStorage.getItem('mis_recent_ids');
-        if (storedVisited) {
-            recentlyVisitedIds = JSON.parse(storedVisited);
-        } else {
-            recentlyVisitedIds = [1, 8, 17, 9, 23, 13]; // Default presets
-            localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
-        }
+        // Recently Visited is now loaded directly from the backend Database Model.
 
         // Load hidden widgets states
         const widgetStates = localStorage.getItem('mis_widget_states');
@@ -520,9 +446,14 @@
     function toggleWidgetElement(widgetId, visible) {
         const el = document.getElementById(widgetId);
         if (el) {
+            // Find the wrapper if it was reparented by buildWidgetGrid
+            const wrapper = el.parentElement.classList.contains('sortable-item') ? el.parentElement : el;
+            
             if (visible) {
+                wrapper.classList.remove('d-none');
                 el.classList.remove('d-none');
             } else {
+                wrapper.classList.add('d-none');
                 el.classList.add('d-none');
             }
         }
@@ -534,11 +465,11 @@
         localStorage.removeItem('mis_widget_states');
         
         // Reset local variables
-        starredIds = [1, 4, 8, 17, 23];
-        recentlyVisitedIds = [1, 8, 17, 9, 23, 13];
+        starredIds = ["MisUserManagement", "MisReports", "MisTicketing", "MisSmartAssist", "MisDMS"];
+        recentlyVisitedIds = ["MisUserManagement", "MisTicketing", "MisSmartAssist", "MisDues", "MisDMS", "MisVoting"];
         
         // Make all widgets visible
-        const allWidgets = ['recent-visited-widget', 'applications-widget', 'financials-widget', 'health-widget', 'ai-widget', 'welcome-widget', 'solutions-widget'];
+        const allWidgets = ['recent-visited-widget', 'applications-widget', 'health-widget', 'welcome-widget'];
         allWidgets.forEach(w => toggleWidgetElement(w, true));
 
         // Re-render
@@ -568,7 +499,7 @@
         itemsToRender.forEach(m => {
             const cardHtml = `
                 <div class="col-6 col-md-4">
-                    <a href="${m.link}" onclick="visitModule(${m.id})" class="recent-service-link border">
+                    <a href="javascript:;" onclick="visitModule('${m.id}', '${m.link}')" class="recent-service-link border">
                         <div class="d-flex align-items-center gap-2 text-truncate">
                             <span class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
                                 <i class="fas ${m.icon} fs-16px"></i>
@@ -616,7 +547,7 @@
 
         // Update count summaries
         document.getElementById('modules-count').innerText = `(${filtered.length})`;
-        document.getElementById('showing-summary').innerText = `Showing ${filtered.length} of 25 features`;
+        document.getElementById('showing-summary').innerText = `Showing ${filtered.length} of @Model.AvailableFeatures.Count features`;
 
         if (filtered.length === 0) {
             grid.innerHTML = '<div class="col-12 py-5 text-center text-muted fs-14px"><i class="fas fa-search-minus fa-3x mb-3 text-muted text-opacity-50"></i><br>No modules match your filter settings.</div>';
@@ -650,7 +581,7 @@
                                 </p>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="${m.link}" onclick="visitModule(${m.id})" class="btn btn-primary btn-sm flex-fill rounded-pill py-1 fs-11px text-center">Dashboard</a>
+                                <a href="javascript:;" onclick="visitModule('${m.id}', '${m.link}')" class="btn btn-primary btn-sm flex-fill rounded-pill py-1 fs-11px text-center">Dashboard</a>
                                 <a href="javascript:;" onclick="configureModule('${m.name}')" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
                                     <i class="fas fa-cog"></i>
                                 </a>
@@ -663,18 +594,19 @@
         });
     }
 
-    function visitModule(id) {
-        // Move to top of recently visited
-        recentlyVisitedIds = recentlyVisitedIds.filter(x => x !== id);
-        recentlyVisitedIds.unshift(id);
-        
-        // Cap at 6 items
-        if (recentlyVisitedIds.length > 6) {
-            recentlyVisitedIds = recentlyVisitedIds.slice(0, 6);
-        }
+    function visitModule(id, url) {
+        const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+        const token = tokenElement ? tokenElement.value : '';
 
-        localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
-        renderRecentlyVisited();
+        // Trigger backend save, then navigate
+        fetch('?handler=RecordVisit&moduleId=' + id, {
+            method: 'POST',
+            headers: {
+                'RequestVerificationToken': token
+            }
+        }).finally(() => {
+            window.location.href = url;
+        });
     }
 
     function toggleStar(id, event) {
@@ -693,22 +625,31 @@
     }
 
     function clearRecentlyVisited() {
-        recentlyVisitedIds = [];
-        localStorage.setItem('mis_recent_ids', JSON.stringify(recentlyVisitedIds));
-        renderRecentlyVisited();
-        showToast("Visited services history cleared.");
+        const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+        const token = tokenElement ? tokenElement.value : '';
+
+        fetch('?handler=ClearVisits', {
+            method: 'POST',
+            headers: { 'RequestVerificationToken': token }
+        }).then(() => {
+            recentlyVisitedIds = [];
+            renderRecentlyVisited();
+            showToast("Visited services history cleared.");
+        });
     }
 
-    function setCategory(category) {
-        currentCategory = category;
+    function setCategory(cat) {
+        currentCategory = cat;
         
-        // Remove active class from all tabs
-        const tabs = document.querySelectorAll('#category-tabs-container .nav-link');
-        tabs.forEach(t => t.classList.remove('active'));
+        // Update active pill styling
+        document.querySelectorAll('#category-tabs-container .nav-link').forEach(el => el.classList.remove('active'));
+        
+        let safeCatId = cat.replace(/ & /g, "-").replace(/ /g, "-").toLowerCase();
+        if (cat === 'all') safeCatId = 'all';
 
-        // Add to current tab
-        document.getElementById(`tab-${category}`).classList.add('active');
-
+        const activeTab = document.getElementById('tab-' + safeCatId);
+        if (activeTab) activeTab.classList.add('active');
+        
         renderFeatures();
     }
 
@@ -721,77 +662,15 @@
         const chartElement = document.querySelector("#revenue-chart");
         if (!chartElement) return;
 
-        const options = {
-            series: [{
-                name: 'Dues Collected',
-                data: [12400, 14900, 17800, 13900, 21500, 24800]
-            }, {
-                name: 'Ticket Sales',
-                data: [4800, 8100, 11400, 6900, 14800, 18500]
-            }, {
-                name: 'Donations',
-                data: [2900, 3900, 5800, 4900, 7800, 10200]
-            }],
-            chart: {
-                type: 'bar',
-                height: 250,
-                stacked: true,
-                toolbar: {
-                    show: false
-                },
-                fontFamily: 'Inter, sans-serif'
-            },
-            colors: ['#6750A4', '#009688', '#FF9800'],
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    borderRadius: 6
-                },
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                labels: {
-                    style: {
-                        colors: 'rgba(0,0,0,0.6)',
-                        fontSize: '11px',
-                        fontWeight: 500
-                    }
-                }
-            },
-            yaxis: {
-                labels: {
-                    style: {
-                        colors: 'rgba(0,0,0,0.6)',
-                        fontSize: '11px'
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
-            },
-            legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
-                fontSize: '11px',
-                labels: {
-                    colors: 'rgba(0,0,0,0.7)'
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            tooltip: {
-                theme: 'light',
-                y: {
-                    formatter: function (val) {
-                        return "$" + val.toLocaleString();
-                    }
-                }
-            }
-        };
-
-        const chart = new ApexCharts(chartElement, options);
-        chart.render();
+        // Since the Financial feature is not fully built/enabled yet, we will not show dummy data.
+        // Data must come from the DB in the future.
+        chartElement.innerHTML = `
+            <div class="text-center py-5 text-muted">
+                <i class="fas fa-chart-pie fa-3x mb-3 text-opacity-25"></i>
+                <h6>No Financial Data Available</h6>
+                <p class="fs-12px">This widget will populate with real data from the database once the Financials module is activated.</p>
+            </div>
+        `;
     }
 
     // Event Handler Placeholders for interactive UI alerts
@@ -850,3 +729,4 @@
         }, 3000);
     }
 </script>
+

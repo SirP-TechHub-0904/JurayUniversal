@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,9 +37,9 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.IProject
         //
 
         private readonly IUserRepositoryAsync _userRepositoryAsync;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly UserManager<Profile> _userManager;
-        public IndexModel(JurayUniversal.Persistence.EF.SQL.DashboardDbContext context, IRazorRenderService renderService, IUnitOfWork unitOfWork, ILogger<IndexModel> logger, UserManager<Profile> userManager, RoleManager<IdentityRole> role, IConfiguration config, IStorageService storageService, IUserRepositoryAsync userRepositoryAsync)
+        public IndexModel(JurayUniversal.Persistence.EF.SQL.DashboardDbContext context, IRazorRenderService renderService, IUnitOfWork unitOfWork, ILogger<IndexModel> logger, UserManager<Profile> userManager, RoleManager<AppRole> role, IConfiguration config, IStorageService storageService, IUserRepositoryAsync userRepositoryAsync)
         {
             _context = context;
             _renderService = renderService;

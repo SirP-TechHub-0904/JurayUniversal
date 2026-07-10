@@ -1,0 +1,42 @@
+@page
+@model JurayUniversal.Website.Areas.MisContent.Pages.IPages.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "PAGE CATEGORY Details";
+    ViewData["BackUrl"] = "./Index";
+}
+
+<div class="card card-default">
+    
+    <!-- /.card-header -->
+
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-12">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageCategory.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageCategory.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PageCategory.Publish)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PageCategory.Publish)
+        </dd>
+                </dl>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+

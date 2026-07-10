@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.ListModel
 @{
     ViewData["Title"] = Model.GroupAlias + " Directory";
@@ -7,12 +7,10 @@
 }
 
 <div class="mis-page-header">
-    <h3 class="mis-page-title">@Model.GroupAlias Directory</h3>
+    
     <div class="d-flex gap-2">
         <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
-        <button class="btn btn-outline-info btn-sm rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#misHelpOffcanvas">
-            <i class="bi bi-question-circle me-1"></i> Help & Guide
-        </button>
+        
         @if (await MisAuth.CanEditAsync(User, "MisGroups"))
         {
             <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> Add New @Model.GroupAlias</a>
@@ -80,3 +78,5 @@
         </div>
     </div>
 </div>
+
+

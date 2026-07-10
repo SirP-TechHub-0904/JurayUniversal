@@ -1,0 +1,245 @@
+@page
+@model JurayUniversal.Website.Areas.MisProposals.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Proposal Pipeline Ledger";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="container-fluid">
+
+    <!-- Date Range Filter -->
+    <div class="card mb-4 border-0 shadow-sm rounded-4">
+        <div class="card-body p-3">
+            <form method="get" class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center fw-600 text-muted fs-14px">
+                    <i class="bi bi-funnel-fill me-2 text-primary fs-5"></i>
+                    Filter Analytics
+                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill ms-3">
+                        @(Model.StartDate.HasValue && Model.EndDate.HasValue ? $"{Model.StartDate.Value.ToString("dddd dd MMMM, yyyy")} - {Model.EndDate.Value.ToString("dddd dd MMMM, yyyy")}" : "All Time")
+                    </span>
+                </div>
+                
+                <div class="d-flex align-items-stretch shadow-sm" style="max-width: 500px; flex-grow: 1; border-radius: 50px;">
+                    <div class="d-flex align-items-center flex-grow-1 bg-white border border-primary border-opacity-25 border-end-0" style="border-radius: 50px 0 0 50px;">
+                        <input type="hidden" name="DateRange" id="DateRangeValue" value="@Model.DateRange" />
+                        <input type="text" id="DateRangeDisplay" value="@(Model.StartDate.HasValue && Model.EndDate.HasValue ? $"{Model.StartDate.Value.ToString("dddd dd MMMM, yyyy")} - {Model.EndDate.Value.ToString("dddd dd MMMM, yyyy")}" : "")" class="border-0 shadow-none bg-transparent py-2 px-4 w-100" placeholder="Search by date range..." style="font-size: 14px; font-weight: 500; outline: none; cursor: pointer;" readonly="readonly" />
+                        @if (!string.IsNullOrEmpty(Model.DateRange))
+                        {
+                            <a href="?DateRange=" class="text-danger px-3 d-flex align-items-center" title="Clear Date Filter" style="text-decoration: none;">
+                                <i class="bi bi-x-circle-fill fs-5"></i>
+                            </a>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4 m-0 d-flex align-items-center justify-content-center" style="border-radius: 0 50px 50px 0 !important; font-weight: 600; border: 1px solid var(--md-primary); z-index: 1;">
+                        <i class="bi bi-search me-2"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Applicant</th>
+                            <th>Project Title</th>
+                            <th>Date Submitted</th>
+                            <th>Attachments</th>
+                            <th>Status</th>
+                            <th class="pe-4 text-end">Review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Proposals.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox display-4 d-block mb-3 opacity-50"></i>
+                                    No proposals have been submitted yet.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.Proposals)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center rounded-circle me-3" style="width: 40px; height: 40px;">
+                                            @if(item.UserProfile != null) {
+                                                <span>@item.UserProfile.FirstName?.FirstOrDefault()</span>
+                                            } else {
+                                                <i class="bi bi-person"></i>
+                                            }
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">@(item.UserProfile?.FirstName ?? "Unknown") @(item.UserProfile?.LastName ?? "User")</div>
+                                            <div class="small text-muted">@item.UserProfile?.Email</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">@item.Title</div>
+                                    <div class="small text-muted text-truncate" style="max-width: 250px;">
+                                        @item.Description
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        @(item.DateSubmitted?.ToString("MMM dd, yyyy") ?? "Not Submitted")
+                                    </div>
+                                    <div class="small text-muted">
+                                        @(item.DateSubmitted?.ToString("h:mm tt"))
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="bi bi-paperclip me-1"></i> @item.ProposalFiles.Count
+                                    </span>
+                                </td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Draft:
+                                            <span class="badge bg-secondary rounded-pill px-3">Draft</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Submitted:
+                                            <span class="badge bg-primary rounded-pill px-3">New Submission</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.UnderReview:
+                                            <span class="badge bg-warning text-dark rounded-pill px-3">Under Review</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Approved:
+                                            <span class="badge bg-success rounded-pill px-3">Approved</span>
+                                            break;
+                                        case JurayUniversal.Domain.Enum.Enum.ProposalStatus.Rejected:
+                                            <span class="badge bg-danger rounded-pill px-3">Rejected</span>
+                                            break;
+                                    }
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                                        Review Pitch
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+        $(function() {
+            $('#DateRangeDisplay').daterangepicker({
+                autoUpdateInput: false,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'All Time': [moment().subtract(10, 'years'), moment()]
+                },
+                @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+                {
+                    <text>
+                    startDate: '@Model.StartDate.Value.ToString("yyyy-MM-dd")',
+                    endDate: '@Model.EndDate.Value.ToString("yyyy-MM-dd")',
+                    </text>
+                }
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'dddd DD MMMM, YYYY'
+                }
+            });
+
+            $('#DateRangeDisplay').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('dddd DD MMMM, YYYY') + ' - ' + picker.endDate.format('dddd DD MMMM, YYYY'));
+                $('#DateRangeValue').val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('#DateRangeDisplay').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#DateRangeValue').val('');
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Area Chart for Submission Trend
+            var optionsArea = {
+                series: [{
+                    name: 'Pitches Submitted',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartData))
+                }],
+                chart: {
+                    height: 300,
+                    type: 'area',
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false }
+                },
+                colors: ['#4b45a0'],
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 2 },
+                xaxis: {
+                    categories: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartLabels)),
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100]
+                    }
+                }
+            };
+            var pitchChart = new ApexCharts(document.querySelector("#pitchChart"), optionsArea);
+            pitchChart.render();
+
+            // Donut Chart for Status Distribution
+            var hasData = @Model.TotalPitches > 0;
+            var optionsDonut = {
+                series: hasData ? [@Model.ApprovedCount, @Model.RejectedCount, @Model.UnderReviewCount] : [1],
+                labels: hasData ? ['Approved', 'Rejected', 'Under Review'] : ['No Data'],
+                chart: {
+                    type: 'donut',
+                    fontFamily: 'Inter, sans-serif',
+                    height: 280
+                },
+                colors: hasData ? ['#198754', '#dc3545', '#ffc107'] : ['#e9ecef'],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '70%',
+                            labels: {
+                                show: true,
+                                name: { show: true },
+                                value: { show: true }
+                            }
+                        }
+                    }
+                },
+                dataLabels: { enabled: false },
+                legend: { position: 'bottom' },
+                tooltip: {
+                    enabled: hasData
+                }
+            };
+            var statusChart = new ApexCharts(document.querySelector("#statusChart"), optionsDonut);
+            statusChart.render();
+        });
+    </script>
+}

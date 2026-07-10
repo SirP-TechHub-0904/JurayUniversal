@@ -1,0 +1,362 @@
+@page "{shortcode}"
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Platform.VoteModel
+@{
+    ViewData["Title"] = "Voting Booth - " + Model.Election?.Title;
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisVotingLayout.cshtml";
+}
+
+<div class="container max-w-900 mt-n5 py-0">
+    
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-primary text-white rounded-top-4 p-4 text-center position-relative">
+            
+            <h2 class="fw-bold mb-2">@Model.Election?.Title</h2>
+            @if (!string.IsNullOrEmpty(Model.Election?.Instructions))
+            {
+                <p class="mb-0 text-white-50">@Model.Election.Instructions</p>
+            }
+        </div>
+    </div>
+
+    @if (!Model.IsAccredited)
+    {
+        <div class="alert alert-danger d-flex align-items-center rounded-4 shadow-sm p-4" role="alert">
+            <i class="bi bi-x-circle-fill text-danger fs-1 me-4"></i>
+            <div>
+                <h4 class="alert-heading fw-bold mb-1">Access Denied</h4>
+                <p class="mb-0">You are not accredited to vote in this Closed Election. Please contact the administrator.</p>
+            </div>
+        </div>
+    }
+    else if (Model.HasVoted)
+    {
+        <div class="alert alert-success d-flex align-items-center rounded-4 shadow-sm p-4" role="alert">
+            <i class="bi bi-check-circle-fill text-success fs-1 me-4"></i>
+            <div>
+                <h4 class="alert-heading fw-bold mb-1">You have already voted!</h4>
+                <p class="mb-0">Your vote for this election was securely recorded. Thank you for participating.</p>
+                <div class="mt-3">
+                    <a asp-page="/Platform/Index" class="btn btn-outline-success rounded-pill px-4">Return to Elections Hub</a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Election.VotingStatus != Domain.Enum.Enum.MisVotingStatus.Active || Model.Election.EndDate < DateTime.UtcNow)
+    {
+        <div class="alert alert-warning d-flex align-items-center rounded-4 shadow-sm p-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill text-warning fs-1 me-4"></i>
+            <div>
+                <h4 class="alert-heading fw-bold mb-1">Voting is Closed</h4>
+                <p class="mb-0">This election is either not currently active or the voting period has ended.</p>
+                <div class="mt-3">
+                    <a asp-page="/Platform/Index" class="btn btn-outline-warning rounded-pill px-4">Return to Elections Hub</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info rounded-4 shadow-sm mb-4">
+            <i class="bi bi-shield-lock-fill me-2"></i> <strong>Anonymity Guarantee:</strong> Your choices below will be detached from your identity and stored completely anonymously in our database.
+        </div>
+        
+        @if (!string.IsNullOrEmpty(Model.Election.ElectionBannerUrl))
+        {
+            <div class="mb-4 rounded-4 overflow-hidden shadow-sm" style="height: 250px;">
+                <img src="@Model.Election.ElectionBannerUrl" alt="Election Banner" class="w-100 h-100 object-fit-cover" />
+            </div>
+        }
+
+        <div class="card border-0 shadow-sm rounded-4 mb-4 bg-dark text-white text-center">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-2 text-white-50"><i class="bi bi-stopwatch me-2"></i>Time Remaining to Vote</h5>
+                <div id="countdown-timer" class="display-6 fw-bold text-warning" data-endtime="@Model.Election.EndDate.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+                    Calculating...
+                </div>
+            </div>
+        </div>
+
+        <form method="post" id="votingForm">
+            <div class="accordion" id="votingAccordion">
+                @{
+                    int i = 0;
+                }
+                @foreach (var category in Model.Election.MisVoteCategories.OrderBy(x => x.SortOrder))
+                {
+                    string collapseId = "collapse" + category.Id;
+                    string headingId = "heading" + category.Id;
+
+                    <div class="accordion-item border-0 shadow-sm rounded-4 mb-4 overflow-hidden" data-category-id="@category.Id" data-category-title="@category.Title">
+                        <h2 class="accordion-header" id="@headingId">
+                            <button class="accordion-button bg-light fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="true" aria-controls="@collapseId">
+                                @category.Title
+                            </button>
+                        </h2>
+                        <div id="@collapseId" class="accordion-collapse collapse show" aria-labelledby="@headingId" data-bs-parent="#votingAccordion">
+                            <div class="accordion-body p-4 bg-white">
+                                @if (!string.IsNullOrEmpty(category.Description))
+                                {
+                                    <p class="text-muted small mb-4">@category.Description</p>
+                                }
+
+                                <div class="row row-cols-1 row-cols-md-2 g-4">
+                                    @foreach (var candidate in category.MisCandidates)
+                                    {
+                                        <div class="col">
+                                            <label class="card candidate-card h-100 border rounded-4 cursor-pointer">
+                                                <input type="radio" name="Selections[@category.Id]" value="@candidate.Id" data-candidate-name="@candidate.Title" class="d-none candidate-radio" />
+                                                <div class="card-body text-center p-4">
+                                                    @if (Model.Election.EnableCandidateImages)
+                                                    {
+                                                        if (!string.IsNullOrEmpty(candidate.CandidateImageUrl))
+                                                        {
+                                                            <img src="@candidate.CandidateImageUrl" alt="@candidate.Title" class="rounded-circle mb-3 object-fit-cover shadow-sm" style="width: 120px; height: 120px;" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm" style="width: 120px; height: 120px;">
+                                                                <i class="bi bi-person fs-1"></i>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    <h5 class="fw-bold text-dark mb-1">@candidate.Title</h5>
+                                                    @if (!string.IsNullOrEmpty(candidate.ShortProfile))
+                                                    {
+                                                        <p class="text-muted small mb-0">@candidate.ShortProfile</p>
+                                                    }
+                                                </div>
+                                                <div class="card-footer bg-transparent border-top-0 pb-4 pt-0 text-center selection-indicator">
+                                                    @if (!string.IsNullOrEmpty(candidate.Manifesto))
+                                                    {
+                                                        <div class="mb-3 position-relative z-3">
+                                                            <button type="button" class="btn btn-sm btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#manifestoModal-@candidate.Id">
+                                                                <i class="bi bi-book me-1"></i> Read Manifesto
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                    <div class="btn btn-outline-success rounded-pill px-4 candidate-btn">Select Candidate</div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mt-5">
+                <div class="card-body p-5 text-center bg-light rounded-4">
+                    <h4 class="fw-bold mb-3">Ready to cast your ballot?</h4>
+                    <p class="text-muted mb-4">You will be able to preview your selections before final submission.</p>
+                    <button type="button" id="previewBtn" class="btn btn-success btn-lg rounded-pill px-5 fw-bold shadow">
+                        Preview Ballot <i class="bi bi-eye ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Modal -->
+            <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title fw-bold" id="previewModalLabel"><i class="bi bi-list-check me-2"></i> Review Your Selections</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-4 bg-light">
+                            <p class="text-muted mb-4 text-center">Please verify your choices. This action cannot be undone once submitted.</p>
+                            <div id="previewList" class="list-group list-group-flush rounded-3 shadow-sm">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Back to Edit</button>
+                            <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold shadow">Confirm & Submit Vote <i class="bi bi-shield-lock ms-2"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    }
+</div>
+
+@if (Model.Election != null && Model.Election.MisVoteCategories != null)
+{
+    @foreach (var category in Model.Election.MisVoteCategories)
+    {
+        @if (category.MisCandidates != null)
+        {
+            @foreach (var candidate in category.MisCandidates)
+            {
+                if (!string.IsNullOrEmpty(candidate.Manifesto))
+                {
+                    <!-- Manifesto Modal for @candidate.Title -->
+                    <div class="modal fade" id="manifestoModal-@candidate.Id" tabindex="-1" aria-labelledby="manifestoModalLabel-@candidate.Id" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-light">
+                                    <h5 class="modal-title fw-bold" id="manifestoModalLabel-@candidate.Id">
+                                        <i class="bi bi-book me-2 text-primary"></i> Manifesto: @candidate.Title
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    @Html.Raw(candidate.Manifesto)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    }
+}
+
+    <style>
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .candidate-card {
+            transition: all 0.2s ease-in-out;
+            border: 2px solid #dee2e6 !important;
+        }
+        .candidate-radio:checked + .card-body + .selection-indicator .candidate-btn {
+            background-color: var(--bs-success);
+            color: white;
+            border-color: var(--bs-success);
+            font-weight: bold;
+        }
+        .candidate-radio:checked ~ .card-body {
+            background-color: rgba(var(--bs-success-rgb), 0.08);
+        }
+        .candidate-card:has(.candidate-radio:checked) {
+            border-color: var(--bs-success) !important;
+            border-width: 2px !important;
+            box-shadow: 0 0.5rem 1rem rgba(var(--bs-success-rgb), 0.25) !important;
+        }
+    </style>
+
+    @section Scripts {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                // --- 1. Dynamic "Selected" Button Text ---
+                const radios = document.querySelectorAll('.candidate-radio');
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        // Find all buttons in this specific category group and reset them
+                        const categoryName = this.getAttribute('name');
+                        const siblingRadios = document.querySelectorAll(`input[name="${categoryName}"]`);
+                        
+                        siblingRadios.forEach(sib => {
+                            const btn = sib.closest('.candidate-card').querySelector('.candidate-btn');
+                            if(sib.checked) {
+                                btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Selected';
+                            } else {
+                                btn.innerHTML = 'Select Candidate';
+                            }
+                        });
+                    });
+                });
+
+                // --- 2. Preview Modal Logic & Validation ---
+                const previewBtn = document.getElementById('previewBtn');
+                if (previewBtn) {
+                    previewBtn.addEventListener('click', function() {
+                        const isStrict = @Model.Election.RequireAllCategories.ToString().ToLower();
+                        const categories = document.querySelectorAll('.accordion-item');
+                        const previewList = document.getElementById('previewList');
+                        let allValid = true;
+                        let missingCategories = [];
+                        let htmlContent = '';
+
+                        categories.forEach(cat => {
+                            const catTitle = cat.getAttribute('data-category-title');
+                            const checkedRadio = cat.querySelector('.candidate-radio:checked');
+
+                            if (checkedRadio) {
+                                const candidateName = checkedRadio.getAttribute('data-candidate-name');
+                                htmlContent += `
+                                    <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <small class="text-muted text-uppercase fw-bold">${catTitle}</small>
+                                            <h5 class="mb-0 fw-bold text-dark">${candidateName}</h5>
+                                        </div>
+                                        <i class="bi bi-check-circle-fill text-success fs-3"></i>
+                                    </div>
+                                `;
+                            } else {
+                                if(isStrict) {
+                                    allValid = false;
+                                    missingCategories.push(catTitle);
+                                }
+                                htmlContent += `
+                                    <div class="list-group-item d-flex justify-content-between align-items-center p-3 bg-light opacity-50">
+                                        <div>
+                                            <small class="text-muted text-uppercase fw-bold">${catTitle}</small>
+                                            <h5 class="mb-0 text-muted fst-italic">No Selection</h5>
+                                        </div>
+                                        <i class="bi bi-dash-circle text-secondary fs-3"></i>
+                                    </div>
+                                `;
+                            }
+                        });
+
+                        if (isStrict && !allValid) {
+                            alert("Strict Voting Enforced: You must select a candidate in all categories to cast your vote.\n\nMissing:\n- " + missingCategories.join('\n- '));
+                            return;
+                        }
+
+                        // If all good or not strict, populate and show modal
+                        previewList.innerHTML = htmlContent;
+                        var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
+                        myModal.show();
+                    });
+                }
+
+            // Countdown Timer Logic
+            const timerElement = document.getElementById('countdown-timer');
+            if (timerElement) {
+                const endTimeStr = timerElement.getAttribute('data-endtime');
+                const endTime = new Date(endTimeStr).getTime();
+
+                function updateTimer() {
+                    const now = new Date().getTime();
+                    const distance = endTime - now;
+
+                    if (distance < 0) {
+                        timerElement.innerHTML = "VOTING HAS ENDED";
+                        timerElement.classList.replace('text-warning', 'text-danger');
+                        
+                        const submitBtn = document.querySelector('#votingForm button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML = "Voting Closed <i class='bi bi-lock-fill ms-2'></i>";
+                        }
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    timerElement.innerHTML = 
+                        String(days).padStart(2, '0') + "d : " + 
+                        String(hours).padStart(2, '0') + "h : " + 
+                        String(minutes).padStart(2, '0') + "m : " + 
+                        String(seconds).padStart(2, '0') + "s";
+                }
+
+                updateTimer(); // Initial call
+                setInterval(updateTimer, 1000);
+            }
+        });
+    </script>
+}
+

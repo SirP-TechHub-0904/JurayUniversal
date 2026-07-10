@@ -1,0 +1,49 @@
+@page
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Candidates.CreateModel
+@{
+    ViewData["Title"] = "Add Candidate";
+}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-dark text-white rounded-top-4 p-4">
+        <h4 class="card-title mb-0 text-white">Add Candidate</h4>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Candidate.MisVoteCategoryId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Candidate.Title" class="form-label fw-bold">Candidate Name (Title) <span class="text-danger">*</span></label>
+                <input asp-for="Candidate.Title" class="form-control form-control-lg rounded-3" placeholder="e.g. John Doe" required />
+                <span asp-validation-for="Candidate.Title" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Candidate.ShortProfile" class="form-label fw-bold">Short Profile</label>
+                <input asp-for="Candidate.ShortProfile" class="form-control rounded-3" placeholder="e.g. Department of Computer Science" />
+                <span asp-validation-for="Candidate.ShortProfile" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Candidate.Manifesto" class="form-label fw-bold">Manifesto (Optional)</label>
+                <textarea asp-for="Candidate.Manifesto" class="form-control rounded-3" rows="4" placeholder="Candidate's vision and goals..."></textarea>
+                <span asp-validation-for="Candidate.Manifesto" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label fw-bold">Candidate Image (Optional)</label>
+                <input asp-for="imagefile" type="file" class="form-control rounded-3" accept="image/*" />
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold"><i class="bi bi-save me-2"></i> Save Candidate</button>
+                <a href="javascript:history.back()" class="btn btn-light btn-lg rounded-pill px-5 fw-bold border">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

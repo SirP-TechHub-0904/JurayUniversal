@@ -1,0 +1,76 @@
+﻿@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Elections.AccreditationModel
+@{
+    ViewData["Title"] = "Accreditation Checklist - " + Model.Election.Title;
+}
+
+<div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0 text-white">Voter Accreditation: @Model.Election.Title</h4>
+        <div>
+            
+            <a asp-page="./Index" class="btn btn-outline-light btn-sm rounded-pill">Back</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">Select the users who are authorized to vote in this Closed Election.</p>
+
+        <form method="post">
+            <div class="mb-3 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectAll()">Select All</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="deselectAll()">Deselect All</button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover border">
+                    <thead class="table-light">
+                        <tr>
+                            <th width="50">Select</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var voter in Model.Voters)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="SelectedUserIds" value="@voter.UserId" class="form-check-input voter-checkbox" @(voter.IsAccredited ? "checked" : "") />
+                                </td>
+                                <td class="fw-bold">@voter.FullName</td>
+                                <td>@voter.Email</td>
+                                <td>
+                                    @if(voter.IsAccredited)
+                                    {
+                                        <span class="badge bg-success">Accredited</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Not Accredited</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Save Accreditation List</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function selectAll() {
+            document.querySelectorAll('.voter-checkbox').forEach(cb => cb.checked = true);
+        }
+        function deselectAll() {
+            document.querySelectorAll('.voter-checkbox').forEach(cb => cb.checked = false);
+        }
+    </script>
+}
+

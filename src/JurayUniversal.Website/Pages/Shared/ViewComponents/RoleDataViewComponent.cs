@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+using JurayUniversal.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JurayUniversal.Pages.Shared.ViewComponents
@@ -6,17 +7,17 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
     public class RoleDataViewComponent : ViewComponent
     {
 
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
         public RoleDataViewComponent(
-            RoleManager<IdentityRole> roleManager
+            RoleManager<AppRole> roleManager
             )
         {
 
             _roleManager = roleManager;
         }
 
-        public IdentityRole RoleData { get; set; }
+        public AppRole RoleData { get; set; }
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string Userid, string syle, string fullname)
         {

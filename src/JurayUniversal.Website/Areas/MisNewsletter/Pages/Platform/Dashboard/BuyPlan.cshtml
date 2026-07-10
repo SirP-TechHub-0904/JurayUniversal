@@ -1,0 +1,61 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Platform.Dashboard.BuyPlanModel
+@{
+    ViewData["Title"] = "Purchase Newsletter Plan";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "Dashboard";
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-8 col-lg-5 mx-auto">
+            
+            @if (!string.IsNullOrEmpty(Model.StatusMessage))
+            {
+                <div class="alert alert-danger border-0 d-flex align-items-center mb-4">
+                    <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                    <div>@Model.StatusMessage</div>
+                </div>
+            }
+
+            <div class="card border-0 shadow-sm text-center">
+                <div class="card-body p-5">
+                    <h5 class="text-primary fw-bold mb-3">@Model.Plan.Name</h5>
+                    
+                    <h1 class="display-4 fw-bold text-dark mb-4">
+                        &#8358;@Model.Plan.Amount.ToString("N0")
+                    </h1>
+                    
+                    <ul class="list-unstyled mb-5 text-start fs-5 bg-light p-4 rounded-3">
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Adds <strong>@Model.Plan.Quota.ToString("N0")</strong> emails to your wallet</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Extends wallet expiry by <strong>@Model.Plan.DurationInMonths Month(s)</strong></span>
+                        </li>
+                    </ul>
+
+                    <form method="post">
+                        <input type="hidden" name="id" value="@Model.Plan.Id" />
+                        <input type="hidden" name="IsGlobal" value="@Model.IsGlobal.ToString().ToLowerInvariant()" />
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold py-3 shadow-sm">
+                            <i class="bi bi-credit-card me-2"></i> Pay Now with Paystack
+                        </button>
+                    </form>
+                    
+                    <p class="mt-3 text-muted fs-14px">
+                        By proceeding, you agree to our terms of service. Payments are securely processed via Paystack.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

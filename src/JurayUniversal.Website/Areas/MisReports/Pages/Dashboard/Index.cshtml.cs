@@ -26,6 +26,11 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Dashboard
         public int SubmissionsLast7Days { get; set; }
         public int OnTimeRate7Days { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string? DateRange { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
         public List<int> OnTimeData { get; set; } = new List<int>();
         public List<int> LateData { get; set; } = new List<int>();
         public List<string> ChartLabels { get; set; } = new List<string>();
@@ -40,28 +45,51 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Dashboard
         public async Task<IActionResult> OnGetAsync()
         {
             TotalSchemas = await _context.MisReportSchemas.CountAsync(x => x.IsActive);
-            TotalSubmissionsAllTime = await _context.MisReportSubmissions.CountAsync();
-
-            var sevenDaysAgo = DateTime.Now.AddDays(-7).Date;
             
-            var recentSubmissions = await _context.MisReportSubmissions
-                .Where(s => s.SubmittedAt >= sevenDaysAgo)
-                .ToListAsync();
+            if (!string.IsNullOrEmpty(DateRange))
+            {
+                var dates = DateRange.Split(" - ");
+                if (dates.Length == 2)
+                {
+                    if (DateTime.TryParse(dates[0], out DateTime start)) StartDate = start;
+                    if (DateTime.TryParse(dates[1], out DateTime end)) EndDate = end.AddDays(1).AddTicks(-1);
+                }
+            }
 
-            SubmissionsLast7Days = recentSubmissions.Count;
+            var query = _context.MisReportSubmissions
+                .Include(s => s.UserProfile)
+                .Include(s => s.MisReportSchema)
+                .AsQueryable();
+
+            if (StartDate.HasValue && EndDate.HasValue)
+            {
+                query = query.Where(s => s.SubmittedAt >= StartDate.Value && s.SubmittedAt <= EndDate.Value);
+            }
+
+            var filteredSubmissions = await query.ToListAsync();
+
+            TotalSubmissionsAllTime = filteredSubmissions.Count;
+            SubmissionsLast7Days = TotalSubmissionsAllTime;
+
             if (SubmissionsLast7Days > 0)
             {
-                int onTimeCount = recentSubmissions.Count(s => s.Status == "OnTime");
+                int onTimeCount = filteredSubmissions.Count(s => s.Status == "OnTime");
                 OnTimeRate7Days = (int)Math.Round((double)onTimeCount / SubmissionsLast7Days * 100);
             }
 
-            // Prepare Chart Data
-            for (int i = 6; i >= 0; i--)
-            {
-                var targetDate = DateTime.Now.AddDays(-i).Date;
-                ChartLabels.Add(targetDate.ToString("MMM dd"));
+            var chartStart = StartDate ?? DateTime.UtcNow.Date.AddDays(-29);
+            var chartEnd = EndDate ?? DateTime.UtcNow.Date;
+            var totalDays = (chartEnd - chartStart).TotalDays;
 
-                var subsForDay = recentSubmissions.Where(s => s.SubmittedAt.Date == targetDate).ToList();
+            if (totalDays > 365) totalDays = 365;
+
+            // Prepare Chart Data
+            for (int i = 0; i <= totalDays; i++)
+            {
+                var currentDate = chartStart.AddDays(i).Date;
+                ChartLabels.Add(currentDate.ToString("MMM dd"));
+
+                var subsForDay = filteredSubmissions.Where(s => s.SubmittedAt.Date == currentDate).ToList();
                 OnTimeData.Add(subsForDay.Count(s => s.Status == "OnTime"));
                 LateData.Add(subsForDay.Count(s => s.Status == "Late"));
             }
@@ -75,13 +103,12 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Dashboard
                 .ToListAsync();
 
             // 2. Schema Distribution
-            var schemaGroupings = await _context.MisReportSubmissions
-                .Include(s => s.MisReportSchema)
-                .GroupBy(s => s.MisReportSchema.Name)
+            var schemaGroupings = filteredSubmissions
+                .GroupBy(s => s.MisReportSchema?.Name)
                 .Select(g => new { Title = g.Key, Count = g.Count() })
                 .OrderByDescending(g => g.Count)
                 .Take(5)
-                .ToListAsync();
+                .ToList();
 
             foreach(var item in schemaGroupings)
             {
@@ -90,13 +117,12 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Dashboard
             }
 
             // 3. Top Reporters
-            var topGroupings = await _context.MisReportSubmissions
-                .Include(s => s.UserProfile)
-                .GroupBy(s => new { s.UserProfile.FirstName, s.UserProfile.LastName })
+            var topGroupings = filteredSubmissions
+                .GroupBy(s => new { s.UserProfile?.FirstName, s.UserProfile?.LastName })
                 .Select(g => new { Name = g.Key.FirstName + " " + g.Key.LastName, Count = g.Count() })
                 .OrderByDescending(g => g.Count)
                 .Take(5)
-                .ToListAsync();
+                .ToList();
 
             foreach(var item in topGroupings)
             {

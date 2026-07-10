@@ -17,10 +17,10 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.35")
+                .HasAnnotation("ProductVersion", "8.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.AdditionalProfile", b =>
                 {
@@ -28,7 +28,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -47,13 +47,43 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("AdditionalProfiles");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.AppRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("RoleCategory")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.Attendance", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("ArivalPeriodStatus")
                         .HasColumnType("int");
@@ -93,7 +123,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("AddToRibon")
                         .HasColumnType("bit");
@@ -153,7 +183,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Publish")
                         .HasColumnType("bit");
@@ -173,7 +203,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("AmountInDollar")
                         .HasColumnType("decimal(18,2)");
@@ -211,7 +241,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AccessEmails")
                         .HasColumnType("nvarchar(max)");
@@ -255,7 +285,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("BudgetMainCategoryId")
                         .HasColumnType("bigint");
@@ -284,7 +314,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ApplicationKey")
                         .IsRequired()
@@ -356,7 +386,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -373,7 +403,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("All")
                         .HasColumnType("bit");
@@ -410,7 +440,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -446,7 +476,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -489,7 +519,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -526,7 +556,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -555,7 +585,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -616,7 +646,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -655,7 +685,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(max)");
@@ -678,7 +708,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("DashboardDataId")
                         .HasColumnType("bigint");
@@ -699,7 +729,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("ActivateAccountsOnFinanceManagement")
                         .HasColumnType("bit");
@@ -880,7 +910,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BBmails")
                         .HasColumnType("nvarchar(max)");
@@ -895,6 +925,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ElectionCustomCss")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GooglePort")
@@ -934,6 +967,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MisDashboardCSS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MisJobBoardCSS")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MisLayoutJavaScript")
@@ -998,7 +1034,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("NumberPrefix")
                         .IsRequired()
@@ -1023,7 +1059,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("DeviceInformation")
                         .IsRequired()
@@ -1047,7 +1083,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1062,38 +1098,13 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("ExpensesCategories");
                 });
 
-            modelBuilder.Entity("JurayUniversal.Domain.Models.Facility", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("FacilityLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LGA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ward")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Facilities");
-                });
-
             modelBuilder.Entity("JurayUniversal.Domain.Models.FAQ", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -1114,13 +1125,38 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("FAQs");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.Facility", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("FacilityLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LGA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ward")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Facilities");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.FormSetting", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("EnableCV")
                         .HasColumnType("bit");
@@ -1154,7 +1190,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1177,7 +1213,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1198,7 +1234,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ApprovedDomain")
                         .HasColumnType("nvarchar(max)");
@@ -1305,7 +1341,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1332,7 +1368,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -1349,7 +1385,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Compulsory")
                         .HasColumnType("bit");
@@ -1395,7 +1431,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("LGAName")
                         .IsRequired()
@@ -1417,7 +1453,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -1451,7 +1487,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("CloseTime")
                         .HasColumnType("datetime2");
@@ -1479,7 +1515,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("MeetingId")
                         .HasColumnType("bigint");
@@ -1505,7 +1541,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -1553,7 +1589,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ActionType")
                         .IsRequired()
@@ -1592,7 +1628,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -1630,7 +1666,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Bio")
                         .HasMaxLength(1000)
@@ -1672,13 +1708,414 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisAlumniProfiles");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisApplicantAccount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisApplicantAccounts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisCandidate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CandidateImageKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CandidateImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Manifesto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisVoteCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProfileId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ShortProfile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisVoteCategoryId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("MisCandidates");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisContact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisPhoneBookId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisPhoneBookId");
+
+                    b.ToTable("MisContacts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisDonor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisDonors");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisElection", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ElectionBannerKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ElectionBannerUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ElectionType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EnableCandidateImages")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Instructions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RequireAllCategories")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ShortCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShowResults")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VotingStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisElections");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisElectionVoter", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("HasVoted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAccredited")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisElectionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisElectionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisElectionVoters");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEquipment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AdditionalDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignedToUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CurrentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LifespanMonths")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MisEquipmentCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SalvageValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("MisEquipmentCategoryId");
+
+                    b.ToTable("MisEquipments");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEquipmentCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisEquipmentCategories");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEvent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BannerImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("MisFinanceCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Venue")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisFinanceCategoryId");
+
+                    b.ToTable("MisEvents");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEventTicket", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GuestEmail")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GuestName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GuestPhone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisTicketTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("QrCodeText")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("ScannedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ScannedByUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TransactionReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserProfileId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisTicketTypeId");
+
+                    b.HasIndex("ScannedByUserId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisEventTickets");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisFeature", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("BillingDuration")
                         .HasColumnType("int");
@@ -1717,7 +2154,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("AmountDue")
                         .HasColumnType("decimal(18,2)");
@@ -1744,13 +2181,111 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisFeatureInvoices");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("FixedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompulsory")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisFinanceCategories");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DonorEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisFinanceCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentProvider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserProfileId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisFinanceCategoryId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("MisFinanceTransactions");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisForm", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("AllowMultipleSubmissions")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowUserToViewResponses")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1788,7 +2323,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("MisFormId")
                         .HasColumnType("bigint");
@@ -1813,13 +2348,101 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisFormResponses");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGrant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisDonorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MisProposalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<decimal>("TotalAwardAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisDonorId");
+
+                    b.HasIndex("MisProposalId")
+                        .IsUnique()
+                        .HasFilter("[MisProposalId] IS NOT NULL");
+
+                    b.ToTable("MisGrants");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGrantMilestone", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal?>("AmountReceived")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ExpectedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ExpectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("MisGrantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReceivedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisGrantId");
+
+                    b.ToTable("MisGrantMilestones");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroup", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1846,7 +2469,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("FileName")
                         .IsRequired()
@@ -1882,7 +2505,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");
@@ -1917,7 +2540,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -1942,13 +2565,187 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisGroupPosts");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobApplicant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("MisApplicantAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MisJobPostingId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PassportFileUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfessionalSummary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResumeFileUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkExperience")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisApplicantAccountId");
+
+                    b.HasIndex("MisJobPostingId");
+
+                    b.ToTable("MisJobApplicants");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobApplicantDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisJobApplicantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisJobApplicantId");
+
+                    b.ToTable("MisJobApplicantDocuments");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobInterview", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AdminFeedback")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InterviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InterviewType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LocationOrLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisJobApplicantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisJobApplicantId");
+
+                    b.ToTable("MisJobInterviews");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobPosting", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AmountOrSalary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Benefits")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ClosingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RequiredSkills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisJobPostings");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiIndicator", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -1980,7 +2777,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -2014,13 +2811,99 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisKpiUserScores");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisLeaveRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AttachmentKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateReviewed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReviewerRemarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewedById");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisLeaveRequests");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisMaintenanceLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisEquipmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PerformedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisEquipmentId");
+
+                    b.ToTable("MisMaintenanceLogs");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisManual", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ModuleFolder")
                         .IsRequired()
@@ -2073,6 +2956,104 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                             ModuleFolder = "MisForms",
                             Overview = "The Form Builder module allows administrators to create custom surveys, registration forms, or feedback modules using a drag-and-drop interface, with built-in analytical tracking for submissions.",
                             Title = "Form Builder & Surveys Guide"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            ModuleFolder = "MisFinances",
+                            Overview = "Complete guide for managing compulsory dues and voluntary donations, including payment setup, tracking, and PixelPay integration.",
+                            Title = "Dues & Donations Guide"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            ModuleFolder = "MisTicketing",
+                            Overview = "Complete guide for managing events, generating ticket tiers, processing payments, and scanning QR codes.",
+                            Title = "Event & Ticket Engine Guide"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            ModuleFolder = "MisSetting",
+                            Overview = "Global configuration and terminology settings for the MIS environment.",
+                            Title = "System Configuration Guide"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            ModuleFolder = "MisManagement",
+                            Overview = "Billing parameters, feature toggles, and overall module lifecycle management.",
+                            Title = "Feature & Billing Guide"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            ModuleFolder = "MisAuth",
+                            Overview = "Security preferences including Two-Factor Authentication (2FA), Authenticator App setup, and Recovery Codes.",
+                            Title = "Security & Auth Guide"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            ModuleFolder = "MisGrants",
+                            Overview = "Grant Ledger and external funding tracking.",
+                            Title = "Grant Tracking Guide"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            ModuleFolder = "MisProposals",
+                            Overview = "Proposal Pipeline for internal pitches and external grant applications.",
+                            Title = "Proposal Pipeline Guide"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            ModuleFolder = "MisRecruitment",
+                            Overview = "Applicant Tracking System (ATS) for managing job postings, candidate pipelines, structured CVs, and interview scoring.",
+                            Title = "Recruitment & ATS Guide"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            ModuleFolder = "MisFleet",
+                            Overview = "Complete asset ledger, real-time depreciation calculation, maintenance logging, and checkout/checkin workflows.",
+                            Title = "Fleet & Equipment Management Guide"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            ModuleFolder = "MisVoting",
+                            Overview = "Comprehensive e-voting engine supporting both Open (pool-based) and Closed (accreditation-based) elections with real-time tabulation.",
+                            Title = "Elections & E-Voting Guide"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            ModuleFolder = "MisProjects",
+                            Overview = "Agile Project Tracking module featuring interactive Scrum/Kanban boards, Sprint planning, Backlog management, and Work Item tracking.",
+                            Title = "Agile Projects & Kanban Guide"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            ModuleFolder = "MisSmartAssist",
+                            Overview = "Bring-Your-Own-Key (BYOK) AI Integration allowing organizations to connect their own OpenAI, Google Gemini, or Anthropic API keys to power intelligent chat features.",
+                            Title = "SmartAssist AI Integration Guide"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            ModuleFolder = "MisNewsletter",
+                            Overview = "A complete drag-and-drop newsletter builder, mailing list manager, and global quota distribution system.",
+                            Title = "Newsletter Campaign Guide"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            ModuleFolder = "MisMassComm",
+                            Overview = "Complete global SMS engine for sending bulk messages and managing phone book contacts.",
+                            Title = "Mass Comm SMS Guide"
                         });
                 });
 
@@ -2082,7 +3063,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -2694,6 +3675,978 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                             ElementType = "Button",
                             MisManualPageId = 39L,
                             RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 66L,
+                            Description = "Use the left and right arrows to navigate between months. The workspace will reload and display the analytics and calendar for the selected month.",
+                            ElementName = "Month Navigation Arrows",
+                            ElementType = "Button",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 67L,
+                            Description = "If a report is due today and the deadline has not passed, this banner will appear. Click 'Submit Today's Report' to immediately open the submission form.",
+                            ElementName = "Due Today Alert Banner",
+                            ElementType = "Card",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 68L,
+                            Description = "Shows the total number of reports submitted on time for the selected month. A high On-Time count reflects strong compliance.",
+                            ElementName = "On-Time KPI Card",
+                            ElementType = "Card",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 69L,
+                            Description = "Shows reports that were submitted after the daily deadline. Late submissions are still recorded but carry a warning flag in your compliance record.",
+                            ElementName = "Late KPI Card",
+                            ElementType = "Card",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 70L,
+                            Description = "Shows the count of due dates where no report was submitted at all. Missed reports negatively impact your overall compliance rate.",
+                            ElementName = "Missed KPI Card",
+                            ElementType = "Card",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 71L,
+                            Description = "Your overall submission compliance for the month. It is calculated as (On-Time + Late) / Total Due Days x 100. A 100% rate means you never missed a deadline.",
+                            ElementName = "Compliance Rate & Progress Bar",
+                            ElementType = "Chart",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 72L,
+                            Description = "A visual doughnut chart showing the proportion of On-Time (green), Late (orange), and Missed (red) reports for the selected month.",
+                            ElementName = "Month Performance Doughnut Chart",
+                            ElementType = "Chart",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 73L,
+                            Description = "Click 'Calendar View' to see a full monthly grid. Click 'List View' to see a table of all due dates. Your preference is saved automatically in your browser so it persists across sessions.",
+                            ElementName = "Calendar / List View Toggle",
+                            ElementType = "Toggle",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 74L,
+                            Description = "Each cell represents a day. Green cells (✓) are On-Time submissions. Orange cells (!) are Late submissions. Red cells (✗) are Missed deadlines. Blue dashed cells are pending today. White cells are non-due days.",
+                            ElementName = "Color-Coded Calendar Grid",
+                            ElementType = "Card",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 75L,
+                            Description = "Click on any green or orange calendar cell to jump directly to the submission detail page for that day's report.",
+                            ElementName = "Calendar Cell Clickable Links",
+                            ElementType = "Button",
+                            MisManualPageId = 40L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 76L,
+                            Description = "Shows the full narrative report content as submitted by the user for that specific reporting period.",
+                            ElementName = "Report Content Body",
+                            ElementType = "Card",
+                            MisManualPageId = 41L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 77L,
+                            Description = "If the report schema required hourly logs, this table displays every time slot with the submitted activity description. Break slots are shown as greyed-out rows.",
+                            ElementName = "Hourly Time Log Table",
+                            ElementType = "Table",
+                            MisManualPageId = 41L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 78L,
+                            Description = "Displays the listed accomplishments and achievements the user reported for that day.",
+                            ElementName = "Achievements Section",
+                            ElementType = "Card",
+                            MisManualPageId = 41L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 79L,
+                            Description = "Displays any issues, blockers, or challenges the user reported for that day.",
+                            ElementName = "Challenges Section",
+                            ElementType = "Card",
+                            MisManualPageId = 41L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 80L,
+                            Description = "Shows the clickable attachment if a file was uploaded with this report submission.",
+                            ElementName = "File Attachment",
+                            ElementType = "Button",
+                            MisManualPageId = 41L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 81L,
+                            Description = "Modify the main text content of your report. Changes can only be saved before the daily submission deadline.",
+                            ElementName = "Edit Report Content",
+                            ElementType = "Form",
+                            MisManualPageId = 42L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 82L,
+                            Description = "Update the activity descriptions for each hourly time slot. Break rows are locked and cannot be edited.",
+                            ElementName = "Edit Time Log Entries",
+                            ElementType = "Form",
+                            MisManualPageId = 42L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 83L,
+                            Description = "Save all changes. The system will re-evaluate whether the updated submission is still On-Time or Late based on the current server time.",
+                            ElementName = "Save Changes Button",
+                            ElementType = "Button",
+                            MisManualPageId = 42L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 84L,
+                            Description = "Opens the 'New Payment Category' modal. Fill in the category title, description, type (compulsory or optional), frequency (One-Time, Monthly, Yearly, etc.), and optionally a fixed amount. If you leave the amount blank, the user or donor can choose their own amount when paying.",
+                            ElementName = "New Category Button",
+                            ElementType = "Button",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 85L,
+                            Description = "When set to 'Compulsory Due', ALL active members are expected to pay this. It will appear in every user's 'Outstanding Payables' on their platform dashboard. Defaulters will automatically appear in the Ledger's Defaulters tab.",
+                            ElementName = "Payment Type: Compulsory Due",
+                            ElementType = "Setting",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 86L,
+                            Description = "When set to 'Optional Donation', the payment is voluntary. It shows in the 'Support a Cause' section on the user's platform. No defaulter tracking is applied. Perfect for tithes, offerings, project-specific fundraising.",
+                            ElementName = "Payment Type: Optional Donation",
+                            ElementType = "Setting",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 87L,
+                            Description = "Defines how often this payment is expected: One-Time (single occurrence), Daily, Weekly, Monthly, or Yearly. The system uses this for reporting and defaulter tracking.",
+                            ElementName = "Frequency",
+                            ElementType = "Setting",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 88L,
+                            Description = "Each active category has a unique public payment link (e.g. /pay/5) that anyone — even visitors without an account — can use to make a payment. Copy the link and share it on WhatsApp, email, social media, or embed it on your website.",
+                            ElementName = "Public Link / Share Link",
+                            ElementType = "Column",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 89L,
+                            Description = "Opens the payment ledger for this specific category. Shows who has paid, how much was collected, and (for compulsory dues) who the defaulters are.",
+                            ElementName = "Ledger Button",
+                            ElementType = "Button",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 90L,
+                            Description = "Inactive categories no longer appear on the public payment portal or on the user's platform. Use this to pause a category without deleting its payment history.",
+                            ElementName = "Active / Inactive Toggle",
+                            ElementType = "Setting",
+                            MisManualPageId = 43L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 91L,
+                            Description = "Displays four key metrics: Total Payments, Revenue Collected, Users Paid, and Defaulters (only for compulsory categories). These are real-time calculations from the transaction log.",
+                            ElementName = "Summary Cards",
+                            ElementType = "Dashboard",
+                            MisManualPageId = 44L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 92L,
+                            Description = "Lists all users or guests who have successfully made a payment for this category, including the amount, date, and PixelPay transaction reference.",
+                            ElementName = "Paid Tab",
+                            ElementType = "Tab",
+                            MisManualPageId = 44L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 93L,
+                            Description = "Available only for Compulsory categories. Lists all registered platform members who have NOT yet paid. Use this to identify members to follow up with or remind via Mass Broadcast.",
+                            ElementName = "Defaulters Tab",
+                            ElementType = "Tab",
+                            MisManualPageId = 44L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 94L,
+                            Description = "Allows you to manually record a cash or offline payment on behalf of a member (e.g. someone paid at the office). This creates a verified payment entry in the ledger without going through PixelPay. Enter the payer's name, email, amount, and any relevant notes.",
+                            ElementName = "Record Manual Payment",
+                            ElementType = "Button",
+                            MisManualPageId = 44L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 95L,
+                            Description = "A unique code (e.g. TX-20260626-5-ABC123) that identifies every payment. Use this to trace a specific payment in your PixelPay merchant dashboard or resolve disputes.",
+                            ElementName = "Transaction Reference",
+                            ElementType = "Column",
+                            MisManualPageId = 45L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 96L,
+                            Description = "Three possible statuses: Pending (user started but hasn't completed payment), Paid (PixelPay confirmed success), Failed (payment was declined or cancelled). Status is updated automatically via the PixelPay webhook.",
+                            ElementName = "Payment Status",
+                            ElementType = "Column",
+                            MisManualPageId = 45L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 97L,
+                            Description = "If the payer was a registered member, their name links to their profile. If they were a guest (no account), their name and email as typed at checkout are displayed.",
+                            ElementName = "Donor vs. Member",
+                            ElementType = "Column",
+                            MisManualPageId = 45L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 98L,
+                            Description = "This section shows all compulsory dues that you have not yet paid. Each card shows the title, frequency, and fixed amount (if applicable). Click 'Pay Now' to be taken to the secure PixelPay checkout. Once your payment is confirmed, the card disappears automatically.",
+                            ElementName = "Outstanding Payables",
+                            ElementType = "Section",
+                            MisManualPageId = 46L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 99L,
+                            Description = "Takes you to the PixelPay hosted checkout page. Because you are already logged in, your name and email are automatically filled in. You can pay by Card, Bank Transfer, USSD, or PayAttitude — all supported by PixelPay.",
+                            ElementName = "Pay Now Button",
+                            ElementType = "Button",
+                            MisManualPageId = 46L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 100L,
+                            Description = "Copies the unique payment link to your clipboard. Share it with someone who wants to pay on your behalf, or use it to pay from a different device.",
+                            ElementName = "Share Button",
+                            ElementType = "Button",
+                            MisManualPageId = 46L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            Description = "Shows all optional donation categories set up by the admin. Contributions here are completely voluntary. Click 'Donate' to make a free-will contribution of any amount.",
+                            ElementName = "Support a Cause Section",
+                            ElementType = "Section",
+                            MisManualPageId = 46L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 102L,
+                            Description = "A complete chronological log of all payments you have made. Shows the category, amount paid, transaction reference, payment status, and date. Pending payments will update to 'Paid' automatically once PixelPay confirms.",
+                            ElementName = "Payment History",
+                            ElementType = "Table",
+                            MisManualPageId = 46L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 103L,
+                            Description = "Enable this switch to restrict form submission only to registered, logged-in users. When enabled, their user profile is permanently linked to their response. If disabled, the form is public to anyone with the link.",
+                            ElementName = "Require User Login Toggle",
+                            ElementType = "Setting",
+                            MisManualPageId = 35L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 104L,
+                            Description = "Enable this switch to allow users to submit this form/survey multiple times. If disabled, a user can only file one response; subsequent attempts will show a message that they have already submitted.",
+                            ElementName = "Allow Multiple Submissions Toggle",
+                            ElementType = "Setting",
+                            MisManualPageId = 35L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 105L,
+                            Description = "Enable this switch to allow logged-in users to access their past submissions. Once enabled, users will see a button to browse their submitted responses.",
+                            ElementName = "Allow User to View Responses Toggle",
+                            ElementType = "Setting",
+                            MisManualPageId = 35L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 106L,
+                            Description = "If you have already submitted a response and the administrator has enabled response viewing, this button will appear. Click it to view a summary of your past answers.",
+                            ElementName = "My Responses Link",
+                            ElementType = "Button",
+                            MisManualPageId = 38L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 107L,
+                            Description = "Appears when you have already submitted a response to a single-submission form. The form is locked and cannot be filled out again.",
+                            ElementName = "Completed Badge",
+                            ElementType = "Badge",
+                            MisManualPageId = 38L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 108L,
+                            Description = "A clear grid table showing the timestamp of each of your submissions along with the answers you provided for each question.",
+                            ElementName = "Submitted Responses List",
+                            ElementType = "Table",
+                            MisManualPageId = 47L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 109L,
+                            Description = "Scan the QR code displayed on the guest's ticket.",
+                            ElementName = "QR Scanner",
+                            ElementType = "Scanner",
+                            MisManualPageId = 51L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 110L,
+                            Description = "Proceed to buy tickets for this event.",
+                            ElementName = "Get Tickets Button",
+                            ElementType = "Button",
+                            MisManualPageId = 52L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 111L,
+                            Description = "Confirm order details and proceed to payment.",
+                            ElementName = "Pay Now Button",
+                            ElementType = "Button",
+                            MisManualPageId = 53L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 112L,
+                            Description = "Browse upcoming events.",
+                            ElementName = "Events List",
+                            ElementType = "List",
+                            MisManualPageId = 54L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 113L,
+                            Description = "View the global ledger of all system transactions.",
+                            ElementName = "Transaction Log",
+                            ElementType = "Table",
+                            MisManualPageId = 55L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 114L,
+                            Description = "Detailed receipt of the transaction.",
+                            ElementName = "Receipt Details",
+                            ElementType = "Card",
+                            MisManualPageId = 56L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 115L,
+                            Description = "High-level overview of revenue streams.",
+                            ElementName = "Financial Analytics",
+                            ElementType = "Dashboard",
+                            MisManualPageId = 57L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 116L,
+                            Description = "Your personal record of payments.",
+                            ElementName = "My Transaction Log",
+                            ElementType = "Table",
+                            MisManualPageId = 58L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 117L,
+                            Description = "Create the category.",
+                            ElementName = "Save Category",
+                            ElementType = "Button",
+                            MisManualPageId = 59L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 118L,
+                            Description = "Save the modifications.",
+                            ElementName = "Update Category",
+                            ElementType = "Button",
+                            MisManualPageId = 60L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 119L,
+                            Description = "Confirm deletion of category.",
+                            ElementName = "Delete Confirm",
+                            ElementType = "Button",
+                            MisManualPageId = 61L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 120L,
+                            Description = "Save the new schema definition.",
+                            ElementName = "Save Schema",
+                            ElementType = "Button",
+                            MisManualPageId = 62L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 121L,
+                            Description = "Update schema rules.",
+                            ElementName = "Update Schema",
+                            ElementType = "Button",
+                            MisManualPageId = 63L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 122L,
+                            Description = "View the specific data submitted in this report.",
+                            ElementName = "Submission Body",
+                            ElementType = "Card",
+                            MisManualPageId = 64L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 123L,
+                            Description = "Apply global terminology updates.",
+                            ElementName = "Save Configuration",
+                            ElementType = "Button",
+                            MisManualPageId = 65L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 124L,
+                            Description = "Save changes to feature configuration.",
+                            ElementName = "Save Config",
+                            ElementType = "Button",
+                            MisManualPageId = 66L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 125L,
+                            Description = "Create the new feature.",
+                            ElementName = "Register Feature",
+                            ElementType = "Button",
+                            MisManualPageId = 67L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 126L,
+                            Description = "View the current 2FA status and available options.",
+                            ElementName = "2FA Dashboard",
+                            ElementType = "Card",
+                            MisManualPageId = 68L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 127L,
+                            Description = "Store these codes safely.",
+                            ElementName = "Recovery Codes List",
+                            ElementType = "List",
+                            MisManualPageId = 69L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 128L,
+                            Description = "Invalidate the current app keys.",
+                            ElementName = "Reset Keys",
+                            ElementType = "Button",
+                            MisManualPageId = 70L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 129L,
+                            Description = "Create a new set of backup codes.",
+                            ElementName = "Generate Codes",
+                            ElementType = "Button",
+                            MisManualPageId = 71L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 130L,
+                            Description = "Verify the app configuration.",
+                            ElementName = "Enable App",
+                            ElementType = "Button",
+                            MisManualPageId = 72L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 131L,
+                            Description = "Disable 2FA entirely.",
+                            ElementName = "Disable 2FA",
+                            ElementType = "Button",
+                            MisManualPageId = 73L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 132L,
+                            Description = "Export the grant ledger to CSV.",
+                            ElementName = "Export Ledger",
+                            ElementType = "Button",
+                            MisManualPageId = 74L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 133L,
+                            Description = "View or update detailed grant info.",
+                            ElementName = "Manage Grant",
+                            ElementType = "Button",
+                            MisManualPageId = 75L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 134L,
+                            Description = "Register a new external donor.",
+                            ElementName = "New Donor",
+                            ElementType = "Button",
+                            MisManualPageId = 77L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 135L,
+                            Description = "Approve a submitted proposal to move it to the execution phase.",
+                            ElementName = "Approve Proposal",
+                            ElementType = "Button",
+                            MisManualPageId = 80L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 136L,
+                            Description = "Reject a submitted proposal.",
+                            ElementName = "Reject Proposal",
+                            ElementType = "Button",
+                            MisManualPageId = 80L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 137L,
+                            Description = "Save changes to the proposal draft.",
+                            ElementName = "Save Draft",
+                            ElementType = "Button",
+                            MisManualPageId = 81L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 138L,
+                            Description = "Submit a new pitch to management.",
+                            ElementName = "Submit Pitch",
+                            ElementType = "Button",
+                            MisManualPageId = 84L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 139L,
+                            Description = "Provides an analytical overview of active jobs, applicant counts, and interviews.",
+                            ElementName = "ATS Metrics Dashboard",
+                            ElementType = "Card",
+                            MisManualPageId = 85L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 140L,
+                            Description = "Create a new job posting or manage an existing one.",
+                            ElementName = "Manage Job",
+                            ElementType = "Button",
+                            MisManualPageId = 86L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 141L,
+                            Description = "View the Kanban-style pipeline of all applicants for a specific role.",
+                            ElementName = "Applicant Pipeline",
+                            ElementType = "Dashboard",
+                            MisManualPageId = 88L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 142L,
+                            Description = "Progress an applicant to the next stage (e.g., Interview, Offer).",
+                            ElementName = "Change Status",
+                            ElementType = "Form",
+                            MisManualPageId = 89L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 143L,
+                            Description = "Schedule an offline or online interview and email the candidate.",
+                            ElementName = "Schedule Interview",
+                            ElementType = "Modal",
+                            MisManualPageId = 89L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 144L,
+                            Description = "Rate the candidate's interview performance based on predefined criteria.",
+                            ElementName = "Score Interview",
+                            ElementType = "Form",
+                            MisManualPageId = 89L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 145L,
+                            Description = "Automatically provision a real system account for an applicant who has been offered a role.",
+                            ElementName = "Employ Candidate",
+                            ElementType = "Button",
+                            MisManualPageId = 89L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 146L,
+                            Description = "Securely sign in or register to view your historical applications.",
+                            ElementName = "Applicant Auth Portal",
+                            ElementType = "Form",
+                            MisManualPageId = 90L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 147L,
+                            Description = "Top-level KPI tracking active Sprints, Total Tasks, and Items Done.",
+                            ElementName = "Agile Metrics",
+                            ElementType = "Card",
+                            MisManualPageId = 104L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 148L,
+                            Description = "Donut chart visualizing the distribution of tasks across statuses.",
+                            ElementName = "Global Task Status",
+                            ElementType = "Chart",
+                            MisManualPageId = 104L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 149L,
+                            Description = "Create a new top-level software or general tracking project.",
+                            ElementName = "New Project",
+                            ElementType = "Button",
+                            MisManualPageId = 105L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 150L,
+                            Description = "Quick jump to the active Kanban board for a project.",
+                            ElementName = "Active Board",
+                            ElementType = "Button",
+                            MisManualPageId = 105L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 151L,
+                            Description = "Unassigned tasks waiting to be picked up in future sprints.",
+                            ElementName = "Unassigned Backlog",
+                            ElementType = "List",
+                            MisManualPageId = 106L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 152L,
+                            Description = "Time-boxed iterations for work execution.",
+                            ElementName = "Sprints",
+                            ElementType = "List",
+                            MisManualPageId = 106L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 153L,
+                            Description = "Activate a planned sprint to transition it to the Board.",
+                            ElementName = "Start Sprint",
+                            ElementType = "Button",
+                            MisManualPageId = 106L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 154L,
+                            Description = "Drag a task from 'To Do' into 'In Progress'. The system auto-saves the new status.",
+                            ElementName = "Kanban Columns",
+                            ElementType = "Drag-and-Drop Area",
+                            MisManualPageId = 107L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 155L,
+                            Description = "Shows the Type (Bug/Story/Task), Points, and Assigned user for the item.",
+                            ElementName = "Task Card",
+                            ElementType = "Card",
+                            MisManualPageId = 107L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 163L,
+                            Description = "Takes you to the Collaborators page to assign team members.",
+                            ElementName = "Team / Settings",
+                            ElementType = "Button",
+                            MisManualPageId = 105L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 164L,
+                            Description = "Opens a form to add a new Epic, User Story, Task, or Bug to the backlog.",
+                            ElementName = "New Work Item",
+                            ElementType = "Button",
+                            MisManualPageId = 106L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 165L,
+                            Description = "Opens a form to define a new Sprint container.",
+                            ElementName = "New Sprint",
+                            ElementType = "Button",
+                            MisManualPageId = 106L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 166L,
+                            Description = "Add a user from the directory to the project team.",
+                            ElementName = "Add Team Member",
+                            ElementType = "Form",
+                            MisManualPageId = 201L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 167L,
+                            Description = "Remove a user's access to the project.",
+                            ElementName = "Remove User",
+                            ElementType = "Button",
+                            MisManualPageId = 201L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 168L,
+                            Description = "Quick jump to the active Kanban board for your assigned project.",
+                            ElementName = "Open Kanban Board",
+                            ElementType = "Button",
+                            MisManualPageId = 202L,
+                            RequiredRole = ""
+                        },
+                        new
+                        {
+                            Id = 169L,
+                            Description = "Save the new project details to the database.",
+                            ElementName = "Create Project",
+                            ElementType = "Button",
+                            MisManualPageId = 203L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 170L,
+                            Description = "Save the new work item to the unassigned backlog.",
+                            ElementName = "Add to Backlog",
+                            ElementType = "Button",
+                            MisManualPageId = 204L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 171L,
+                            Description = "Save the sprint definition to the project.",
+                            ElementName = "Create Sprint",
+                            ElementType = "Button",
+                            MisManualPageId = 205L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 172L,
+                            Description = "Navigate back to the Sprint Planning Backlog view.",
+                            ElementName = "Backlog & Planning",
+                            ElementType = "Button",
+                            MisManualPageId = 107L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 173L,
+                            Description = "Instantly add a new task directly to this active sprint.",
+                            ElementName = "New Task",
+                            ElementType = "Button",
+                            MisManualPageId = 107L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 156L,
+                            Description = "Select which AI Provider (Gemini, OpenAI, Anthropic) will power the chat.",
+                            ElementName = "Active Provider Dropdown",
+                            ElementType = "Form Field",
+                            MisManualPageId = 108L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 157L,
+                            Description = "Save the API Keys to the database. These keys are never exposed directly to users.",
+                            ElementName = "Save Configuration",
+                            ElementType = "Button",
+                            MisManualPageId = 108L,
+                            RequiredRole = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 158L,
+                            Description = "Type your prompt or question here to speak to the AI.",
+                            ElementName = "Chat Input",
+                            ElementType = "Text Input",
+                            MisManualPageId = 109L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 159L,
+                            Description = "Send your message to the active AI provider.",
+                            ElementName = "Send Message",
+                            ElementType = "Button",
+                            MisManualPageId = 109L,
+                            RequiredRole = "GlobalViewer"
+                        },
+                        new
+                        {
+                            Id = 160L,
+                            Description = "Transfers email quota directly from the global company pool to a specific user's wallet.",
+                            ElementName = "Share Quota Button",
+                            ElementType = "Button",
+                            MisManualPageId = 112L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 161L,
+                            Description = "Drag components from the right sidebar onto the canvas to design your email.",
+                            ElementName = "GrapesJS Editor",
+                            ElementType = "Drag-and-Drop Area",
+                            MisManualPageId = 117L,
+                            RequiredRole = "GlobalEditor"
+                        },
+                        new
+                        {
+                            Id = 162L,
+                            Description = "Choose a pricing package and securely checkout via Paystack to fund your wallet.",
+                            ElementName = "Buy Plan Button",
+                            ElementType = "Button",
+                            MisManualPageId = 119L,
+                            RequiredRole = ""
                         });
                 });
 
@@ -2703,7 +4656,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("MisManualId")
                         .HasColumnType("bigint");
@@ -2985,6 +4938,38 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         },
                         new
                         {
+                            Id = 43L,
+                            MisManualId = 6L,
+                            PageDescription = "This is where you define and manage all your organization's payment categories — both compulsory dues (e.g. annual subscriptions) and optional donations (e.g. building fund, charity).",
+                            PageTitle = "Payment Categories",
+                            RouteKey = "/MisFinances/Dashboard/Categories"
+                        },
+                        new
+                        {
+                            Id = 44L,
+                            MisManualId = 6L,
+                            PageDescription = "The Ledger gives you a complete financial picture for a single payment category — total revenue collected, who has paid, and (for compulsory dues) a full defaulters list.",
+                            PageTitle = "Payment Ledger",
+                            RouteKey = "/MisFinances/Dashboard/Ledger"
+                        },
+                        new
+                        {
+                            Id = 45L,
+                            MisManualId = 6L,
+                            PageDescription = "A chronological master log of every single payment transaction recorded in the system across all categories. Filter by category, status, or date range.",
+                            PageTitle = "All Transactions",
+                            RouteKey = "/MisFinances/Dashboard/Transactions"
+                        },
+                        new
+                        {
+                            Id = 46L,
+                            MisManualId = 6L,
+                            PageDescription = "Your personal financial dashboard. Shows all payments you owe to the organization, causes you can support, and your complete payment history.",
+                            PageTitle = "My Finances",
+                            RouteKey = "/MisFinances/Platform/MyFinances"
+                        },
+                        new
+                        {
                             Id = 33L,
                             MisManualId = 4L,
                             PageDescription = "The dynamic form where you write and file your required report before the deadline. The fields you see are strictly defined by the Admin's template flags.",
@@ -3027,7 +5012,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         {
                             Id = 35L,
                             MisManualId = 5L,
-                            PageDescription = "Initial setup page to define a new form's basic details like title, description, and whether it requires a user login.",
+                            PageDescription = "Initial setup page to define a new form's basic details and configure settings such as user login requirements, multiple submission limits, and user response view permissions.",
                             PageTitle = "Create Form",
                             RouteKey = "/MisForms/Dashboard/Create"
                         },
@@ -3062,7 +5047,1202 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                             PageDescription = "The dynamic form-filling interface. It instantly translates the Admin's drag-and-drop schema into a functional HTML form.",
                             PageTitle = "Submit Form",
                             RouteKey = "/MisForms/Platform/Submit"
+                        },
+                        new
+                        {
+                            Id = 47L,
+                            MisManualId = 5L,
+                            PageDescription = "Your personal portal to view all your previous submissions for a specific form/survey, provided the administrator enabled response viewing.",
+                            PageTitle = "My Submissions / Responses",
+                            RouteKey = "/MisForms/Platform/MyResponses"
+                        },
+                        new
+                        {
+                            Id = 48L,
+                            MisManualId = 7L,
+                            PageDescription = "The main dashboard listing all your events and showing high-level stats like total tickets sold.",
+                            PageTitle = "Events Dashboard",
+                            RouteKey = "/MisTicketing/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 49L,
+                            MisManualId = 7L,
+                            PageDescription = "Set up a new event, including dates, venue, and descriptions.",
+                            PageTitle = "Create Event",
+                            RouteKey = "/MisTicketing/Dashboard/Create"
+                        },
+                        new
+                        {
+                            Id = 50L,
+                            MisManualId = 7L,
+                            PageDescription = "Manage an event's ticket tiers and check the real-time capacity and sales figures.",
+                            PageTitle = "Manage Ticket Tiers",
+                            RouteKey = "/MisTicketing/Dashboard/Manage"
+                        },
+                        new
+                        {
+                            Id = 51L,
+                            MisManualId = 7L,
+                            PageDescription = "Scan guest QR codes for fast event check-in.",
+                            PageTitle = "QR Check-In Scanner",
+                            RouteKey = "/MisTicketing/Dashboard/Scan"
+                        },
+                        new
+                        {
+                            Id = 52L,
+                            MisManualId = 7L,
+                            PageDescription = "Detailed view of an upcoming event including ticket availability.",
+                            PageTitle = "Event Details",
+                            RouteKey = "/MisTicketing/Platform/EventDetails"
+                        },
+                        new
+                        {
+                            Id = 53L,
+                            MisManualId = 7L,
+                            PageDescription = "Finalize your ticket purchase and review your order.",
+                            PageTitle = "Checkout",
+                            RouteKey = "/MisTicketing/Platform/Checkout"
+                        },
+                        new
+                        {
+                            Id = 54L,
+                            MisManualId = 7L,
+                            PageDescription = "Browse all upcoming events and secure your tickets.",
+                            PageTitle = "Upcoming Events",
+                            RouteKey = "/MisTicketing/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 55L,
+                            MisManualId = 6L,
+                            PageDescription = "A complete administrative history of all system transactions.",
+                            PageTitle = "Transaction History",
+                            RouteKey = "/MisFinances/Dashboard/TransactionHistory"
+                        },
+                        new
+                        {
+                            Id = 56L,
+                            MisManualId = 6L,
+                            PageDescription = "Detailed receipt and status of a specific payment.",
+                            PageTitle = "Transaction Details",
+                            RouteKey = "/MisFinances/Dashboard/TransactionDetails"
+                        },
+                        new
+                        {
+                            Id = 57L,
+                            MisManualId = 6L,
+                            PageDescription = "Financial analytics dashboard tracking revenue and payments.",
+                            PageTitle = "Financial Analytics",
+                            RouteKey = "/MisFinances/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 58L,
+                            MisManualId = 6L,
+                            PageDescription = "A history of all personal payments and contributions.",
+                            PageTitle = "My Payment History",
+                            RouteKey = "/MisFinances/Platform/TransactionHistory"
+                        },
+                        new
+                        {
+                            Id = 59L,
+                            MisManualId = 1L,
+                            PageDescription = "Create a new organizational category.",
+                            PageTitle = "Create Category",
+                            RouteKey = "/MisUserManagement/Dashboard/Categories/Create"
+                        },
+                        new
+                        {
+                            Id = 60L,
+                            MisManualId = 1L,
+                            PageDescription = "Modify an existing category.",
+                            PageTitle = "Edit Category",
+                            RouteKey = "/MisUserManagement/Dashboard/Categories/Edit"
+                        },
+                        new
+                        {
+                            Id = 61L,
+                            MisManualId = 1L,
+                            PageDescription = "Remove a category permanently.",
+                            PageTitle = "Delete Category",
+                            RouteKey = "/MisUserManagement/Dashboard/Categories/Delete"
+                        },
+                        new
+                        {
+                            Id = 62L,
+                            MisManualId = 4L,
+                            PageDescription = "Define a new required report and its deadlines.",
+                            PageTitle = "Create Schema",
+                            RouteKey = "/MisReports/Dashboard/Schemas/Create"
+                        },
+                        new
+                        {
+                            Id = 63L,
+                            MisManualId = 4L,
+                            PageDescription = "Modify an existing report template.",
+                            PageTitle = "Edit Schema",
+                            RouteKey = "/MisReports/Dashboard/Schemas/Edit"
+                        },
+                        new
+                        {
+                            Id = 64L,
+                            MisManualId = 4L,
+                            PageDescription = "Detailed view of an individual staff submission.",
+                            PageTitle = "Submission Details",
+                            RouteKey = "/MisReports/Dashboard/Details"
+                        },
+                        new
+                        {
+                            Id = 65L,
+                            MisManualId = 8L,
+                            PageDescription = "Customize global terminology and application behavior.",
+                            PageTitle = "Global Configuration",
+                            RouteKey = "/MisSetting/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 66L,
+                            MisManualId = 9L,
+                            PageDescription = "Update billing and lifecycle settings for a feature.",
+                            PageTitle = "Edit Feature Config",
+                            RouteKey = "/MisManagement/Edit"
+                        },
+                        new
+                        {
+                            Id = 67L,
+                            MisManualId = 9L,
+                            PageDescription = "Register a new feature and define billing.",
+                            PageTitle = "Configure New Feature",
+                            RouteKey = "/MisManagement/Create"
+                        },
+                        new
+                        {
+                            Id = 110L,
+                            MisManualId = 9L,
+                            PageDescription = "Create a new pricing plan specifying the email quota and duration for the Newsletter module.",
+                            PageTitle = "Create Pricing Plan",
+                            RouteKey = "/MisManagement/Plans/Create"
+                        },
+                        new
+                        {
+                            Id = 111L,
+                            MisManualId = 9L,
+                            PageDescription = "Update the price, quota, or duration of an existing Newsletter pricing plan.",
+                            PageTitle = "Edit Pricing Plan",
+                            RouteKey = "/MisManagement/Plans/Edit"
+                        },
+                        new
+                        {
+                            Id = 68L,
+                            MisManualId = 10L,
+                            PageDescription = "Overview of Two-Factor Authentication status.",
+                            PageTitle = "2FA Status",
+                            RouteKey = "/MisAuth/Auth/MisTwoFactorAuthentication"
+                        },
+                        new
+                        {
+                            Id = 69L,
+                            MisManualId = 10L,
+                            PageDescription = "View emergency backup codes.",
+                            PageTitle = "Recovery Codes",
+                            RouteKey = "/MisAuth/Auth/MisShowRecoveryCodes"
+                        },
+                        new
+                        {
+                            Id = 70L,
+                            MisManualId = 10L,
+                            PageDescription = "Reset the keys used by your authenticator app.",
+                            PageTitle = "Reset Authenticator",
+                            RouteKey = "/MisAuth/Auth/MisResetAuthenticator"
+                        },
+                        new
+                        {
+                            Id = 71L,
+                            MisManualId = 10L,
+                            PageDescription = "Generate new emergency backup codes.",
+                            PageTitle = "Generate Recovery Codes",
+                            RouteKey = "/MisAuth/Auth/MisGenerateRecoveryCodes"
+                        },
+                        new
+                        {
+                            Id = 72L,
+                            MisManualId = 10L,
+                            PageDescription = "Scan a QR code to link your authenticator app.",
+                            PageTitle = "Enable Authenticator",
+                            RouteKey = "/MisAuth/Auth/MisEnableAuthenticator"
+                        },
+                        new
+                        {
+                            Id = 73L,
+                            MisManualId = 10L,
+                            PageDescription = "Turn off two-factor authentication.",
+                            PageTitle = "Disable 2FA",
+                            RouteKey = "/MisAuth/Auth/MisDisable2fa"
+                        },
+                        new
+                        {
+                            Id = 74L,
+                            MisManualId = 11L,
+                            PageDescription = "Analytics dashboard showing all awarded external grants.",
+                            PageTitle = "Grant Ledger",
+                            RouteKey = "/MisGrants/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 75L,
+                            MisManualId = 11L,
+                            PageDescription = "View deep details, milestones, and financials for a specific grant.",
+                            PageTitle = "Grant Details",
+                            RouteKey = "/MisGrants/Dashboard/Details"
+                        },
+                        new
+                        {
+                            Id = 76L,
+                            MisManualId = 11L,
+                            PageDescription = "Form to register or update the details of an awarded grant.",
+                            PageTitle = "Manage Grant",
+                            RouteKey = "/MisGrants/Dashboard/Manage"
+                        },
+                        new
+                        {
+                            Id = 77L,
+                            MisManualId = 11L,
+                            PageDescription = "Directory of all external donors, sponsors, and funding agencies.",
+                            PageTitle = "Donors Directory",
+                            RouteKey = "/MisGrants/Dashboard/Donors/Index"
+                        },
+                        new
+                        {
+                            Id = 78L,
+                            MisManualId = 11L,
+                            PageDescription = "Add or update the profile of a funding organization.",
+                            PageTitle = "Manage Donor",
+                            RouteKey = "/MisGrants/Dashboard/Donors/Manage"
+                        },
+                        new
+                        {
+                            Id = 79L,
+                            MisManualId = 12L,
+                            PageDescription = "Overview of all active internal pitches and submitted grant proposals.",
+                            PageTitle = "Proposal Pipeline",
+                            RouteKey = "/MisProposals/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 80L,
+                            MisManualId = 12L,
+                            PageDescription = "Detailed view of a proposal, including its execution phases and uploaded documents.",
+                            PageTitle = "Proposal Details",
+                            RouteKey = "/MisProposals/Dashboard/Details"
+                        },
+                        new
+                        {
+                            Id = 81L,
+                            MisManualId = 12L,
+                            PageDescription = "Form for an Administrator to draft or edit a new proposal.",
+                            PageTitle = "Manage Proposal",
+                            RouteKey = "/MisProposals/Dashboard/Manage"
+                        },
+                        new
+                        {
+                            Id = 82L,
+                            MisManualId = 12L,
+                            PageDescription = "Your personal dashboard showing proposals and pitches you have submitted.",
+                            PageTitle = "My Proposals",
+                            RouteKey = "/MisProposals/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 83L,
+                            MisManualId = 12L,
+                            PageDescription = "View the current review status and phases of your pitched proposal.",
+                            PageTitle = "My Proposal Details",
+                            RouteKey = "/MisProposals/Platform/Details"
+                        },
+                        new
+                        {
+                            Id = 84L,
+                            MisManualId = 12L,
+                            PageDescription = "Form for a regular user to submit a new pitch or proposal to management.",
+                            PageTitle = "Submit Proposal",
+                            RouteKey = "/MisProposals/Platform/Submit"
+                        },
+                        new
+                        {
+                            Id = 85L,
+                            MisManualId = 13L,
+                            PageDescription = "High-level overview of active jobs, total applicants, and pending interviews.",
+                            PageTitle = "ATS Dashboard",
+                            RouteKey = "/MisRecruitment/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 86L,
+                            MisManualId = 13L,
+                            PageDescription = "List of all published, closed, and draft job postings.",
+                            PageTitle = "Job Postings",
+                            RouteKey = "/MisRecruitment/Dashboard/Jobs/Index"
+                        },
+                        new
+                        {
+                            Id = 87L,
+                            MisManualId = 13L,
+                            PageDescription = "Create or update a job posting including descriptions, salary, and requirements.",
+                            PageTitle = "Manage Job Posting",
+                            RouteKey = "/MisRecruitment/Dashboard/Jobs/Manage"
+                        },
+                        new
+                        {
+                            Id = 88L,
+                            MisManualId = 13L,
+                            PageDescription = "The pipeline list of all candidates who have applied, filterable by Job Title.",
+                            PageTitle = "Applicant Pipeline",
+                            RouteKey = "/MisRecruitment/Dashboard/Applicants/Index"
+                        },
+                        new
+                        {
+                            Id = 89L,
+                            MisManualId = 13L,
+                            PageDescription = "Detailed view of an applicant's structured CV, attached documents, and interview scoring.",
+                            PageTitle = "Review Candidate",
+                            RouteKey = "/MisRecruitment/Dashboard/Applicants/Details"
+                        },
+                        new
+                        {
+                            Id = 90L,
+                            MisManualId = 13L,
+                            PageDescription = "The public portal where candidates can browse open roles.",
+                            PageTitle = "Public Job Board",
+                            RouteKey = "/MisRecruitment/Platform/JobBoard"
+                        },
+                        new
+                        {
+                            Id = 91L,
+                            MisManualId = 13L,
+                            PageDescription = "The structured application form where candidates enter their details and upload their CV/documents.",
+                            PageTitle = "Application Form",
+                            RouteKey = "/MisRecruitment/Platform/Apply"
+                        },
+                        new
+                        {
+                            Id = 93L,
+                            MisManualId = 13L,
+                            PageDescription = "The public portal where candidates enter their Tracking ID to view the status of their application.",
+                            PageTitle = "Track Application",
+                            RouteKey = "/MisRecruitment/Platform/Track"
+                        },
+                        new
+                        {
+                            Id = 94L,
+                            MisManualId = 14L,
+                            PageDescription = "Analytics tracking total asset value, lifetime maintenance costs, and depreciation.",
+                            PageTitle = "Fleet Analytics Dashboard",
+                            RouteKey = "/MisFleet/Dashboard/Equipment/Index"
+                        },
+                        new
+                        {
+                            Id = 95L,
+                            MisManualId = 14L,
+                            PageDescription = "Detailed view of an individual equipment's details, lifecycle, and depreciation.",
+                            PageTitle = "Equipment Details",
+                            RouteKey = "/MisFleet/Dashboard/Equipment/Details"
+                        },
+                        new
+                        {
+                            Id = 96L,
+                            MisManualId = 14L,
+                            PageDescription = "Form to add a new asset to the fleet inventory.",
+                            PageTitle = "Add Equipment",
+                            RouteKey = "/MisFleet/Dashboard/Equipment/Create"
+                        },
+                        new
+                        {
+                            Id = 97L,
+                            MisManualId = 14L,
+                            PageDescription = "Manage the categories that fleet assets can belong to.",
+                            PageTitle = "Fleet Categories",
+                            RouteKey = "/MisFleet/Dashboard/Categories/Index"
+                        },
+                        new
+                        {
+                            Id = 98L,
+                            MisManualId = 15L,
+                            PageDescription = "Voting command center showing total elections, active voters, and turnout charts.",
+                            PageTitle = "Elections Analytics",
+                            RouteKey = "/MisVoting/Dashboard/Elections/Index"
+                        },
+                        new
+                        {
+                            Id = 99L,
+                            MisManualId = 15L,
+                            PageDescription = "Detailed configuration page for an election, where candidates are listed and settings defined.",
+                            PageTitle = "Election Details",
+                            RouteKey = "/MisVoting/Dashboard/Elections/Details"
+                        },
+                        new
+                        {
+                            Id = 100L,
+                            MisManualId = 15L,
+                            PageDescription = "The accreditation checklist to authorize voters for a Closed Election.",
+                            PageTitle = "Voter Accreditation",
+                            RouteKey = "/MisVoting/Dashboard/Elections/Accreditation"
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            MisManualId = 15L,
+                            PageDescription = "User portal displaying all available elections they can vote in.",
+                            PageTitle = "Voter Dashboard",
+                            RouteKey = "/MisVoting/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 102L,
+                            MisManualId = 15L,
+                            PageDescription = "Real-time live results tabulation for an ongoing or concluded election.",
+                            PageTitle = "Live Results",
+                            RouteKey = "/MisVoting/Dashboard/Results"
+                        },
+                        new
+                        {
+                            Id = 103L,
+                            MisManualId = 15L,
+                            PageDescription = "The secure voting booth where users cast their ballot.",
+                            PageTitle = "Voting Booth",
+                            RouteKey = "/MisVoting/Platform/Vote"
+                        },
+                        new
+                        {
+                            Id = 104L,
+                            MisManualId = 16L,
+                            PageDescription = "Global command center for Agile projects, sprint velocities, and task tracking.",
+                            PageTitle = "Agile Analytics Dashboard",
+                            RouteKey = "/MisProjects/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 105L,
+                            MisManualId = 16L,
+                            PageDescription = "Manage all software and general Agile projects in the organization.",
+                            PageTitle = "Agile Projects",
+                            RouteKey = "/MisProjects/Projects/Index"
+                        },
+                        new
+                        {
+                            Id = 106L,
+                            MisManualId = 16L,
+                            PageDescription = "Plan upcoming sprints, manage your backlog, and assign work items.",
+                            PageTitle = "Sprint Planning & Backlog",
+                            RouteKey = "/MisProjects/Backlog/Index"
+                        },
+                        new
+                        {
+                            Id = 107L,
+                            MisManualId = 16L,
+                            PageDescription = "Interactive drag-and-drop Kanban board for managing the active Sprint.",
+                            PageTitle = "Active Sprint Board",
+                            RouteKey = "/MisProjects/Board/Index"
+                        },
+                        new
+                        {
+                            Id = 201L,
+                            MisManualId = 16L,
+                            PageDescription = "Manage staff access and assign Scrum Master or Developer roles.",
+                            PageTitle = "Project Collaborators",
+                            RouteKey = "/MisProjects/Projects/Collaborators"
+                        },
+                        new
+                        {
+                            Id = 202L,
+                            MisManualId = 16L,
+                            PageDescription = "Your personal dashboard showing projects you are collaborating on.",
+                            PageTitle = "My Project Tasks",
+                            RouteKey = "/MisProjects/User/Index"
+                        },
+                        new
+                        {
+                            Id = 203L,
+                            MisManualId = 16L,
+                            PageDescription = "Form to initialize a new agile project container.",
+                            PageTitle = "Create Agile Project",
+                            RouteKey = "/MisProjects/Projects/Create"
+                        },
+                        new
+                        {
+                            Id = 204L,
+                            MisManualId = 16L,
+                            PageDescription = "Form to add a new Epic, User Story, Task, or Bug to the backlog.",
+                            PageTitle = "Create Work Item",
+                            RouteKey = "/MisProjects/Backlog/CreateTask"
+                        },
+                        new
+                        {
+                            Id = 205L,
+                            MisManualId = 16L,
+                            PageDescription = "Form to define the dates and goals for a new sprint.",
+                            PageTitle = "Create Sprint",
+                            RouteKey = "/MisProjects/Backlog/CreateSprint"
+                        },
+                        new
+                        {
+                            Id = 108L,
+                            MisManualId = 17L,
+                            PageDescription = "Secure admin panel to select the active AI provider and securely store BYOK API Keys.",
+                            PageTitle = "AI Provider Settings",
+                            RouteKey = "/MisSmartAssist/Dashboard/Config"
+                        },
+                        new
+                        {
+                            Id = 109L,
+                            MisManualId = 17L,
+                            PageDescription = "The primary interface for conversing with the configured AI companion.",
+                            PageTitle = "SmartAssist Chat",
+                            RouteKey = "/MisSmartAssist/Platform/Chat"
+                        },
+                        new
+                        {
+                            Id = 200L,
+                            MisManualId = 8L,
+                            PageDescription = "The central dashboard giving an overview of all system modules and global metrics.",
+                            PageTitle = "Console Home",
+                            RouteKey = "/MIS/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 112L,
+                            MisManualId = 18L,
+                            PageDescription = "View the company's global email quota and allocate specific amounts to individual staff members.",
+                            PageTitle = "Global Wallet & Sharing",
+                            RouteKey = "/MisNewsletter/Dashboard/Wallet/Index"
+                        },
+                        new
+                        {
+                            Id = 113L,
+                            MisManualId = 18L,
+                            PageDescription = "Directory of all administrative mailing lists.",
+                            PageTitle = "Admin Mailing Lists",
+                            RouteKey = "/MisNewsletter/Dashboard/Lists/Index"
+                        },
+                        new
+                        {
+                            Id = 114L,
+                            MisManualId = 18L,
+                            PageDescription = "Create a new administrative mailing list.",
+                            PageTitle = "Create Admin List",
+                            RouteKey = "/MisNewsletter/Dashboard/Lists/Create"
+                        },
+                        new
+                        {
+                            Id = 115L,
+                            MisManualId = 18L,
+                            PageDescription = "Manage subscribers for this list. You can add them individually or import a CSV file.",
+                            PageTitle = "List Details & CSV Import",
+                            RouteKey = "/MisNewsletter/Dashboard/Lists/Details"
+                        },
+                        new
+                        {
+                            Id = 116L,
+                            MisManualId = 18L,
+                            PageDescription = "Directory of all scheduled, pending, or completed email campaigns.",
+                            PageTitle = "Admin Campaigns",
+                            RouteKey = "/MisNewsletter/Dashboard/Campaigns/Index"
+                        },
+                        new
+                        {
+                            Id = 117L,
+                            MisManualId = 18L,
+                            PageDescription = "Design your email campaign using the drag-and-drop editor and schedule its delivery.",
+                            PageTitle = "Campaign Builder (Admin)",
+                            RouteKey = "/MisNewsletter/Dashboard/Campaigns/Create"
+                        },
+                        new
+                        {
+                            Id = 118L,
+                            MisManualId = 18L,
+                            PageDescription = "View your personal email quota balance and browse available plans to purchase more.",
+                            PageTitle = "My Newsletter Wallet",
+                            RouteKey = "/MisNewsletter/Platform/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 119L,
+                            MisManualId = 18L,
+                            PageDescription = "Review the selected pricing plan details and proceed to secure payment.",
+                            PageTitle = "Purchase Plan Checkout",
+                            RouteKey = "/MisNewsletter/Platform/Dashboard/BuyPlan"
+                        },
+                        new
+                        {
+                            Id = 120L,
+                            MisManualId = 18L,
+                            PageDescription = "Directory of your personal mailing lists.",
+                            PageTitle = "My Mailing Lists",
+                            RouteKey = "/MisNewsletter/Platform/Lists/Index"
+                        },
+                        new
+                        {
+                            Id = 121L,
+                            MisManualId = 18L,
+                            PageDescription = "Create a new personal mailing list.",
+                            PageTitle = "Create Personal List",
+                            RouteKey = "/MisNewsletter/Platform/Lists/Create"
+                        },
+                        new
+                        {
+                            Id = 122L,
+                            MisManualId = 18L,
+                            PageDescription = "Manage your personal subscribers and upload CSV contact lists.",
+                            PageTitle = "Personal List Details",
+                            RouteKey = "/MisNewsletter/Platform/Lists/Details"
+                        },
+                        new
+                        {
+                            Id = 123L,
+                            MisManualId = 18L,
+                            PageDescription = "Directory of your personal email campaigns.",
+                            PageTitle = "My Campaigns",
+                            RouteKey = "/MisNewsletter/Platform/Campaigns/Index"
+                        },
+                        new
+                        {
+                            Id = 124L,
+                            MisManualId = 18L,
+                            PageDescription = "Design and schedule your personal email campaign.",
+                            PageTitle = "Campaign Builder (Personal)",
+                            RouteKey = "/MisNewsletter/Platform/Campaigns/Create"
+                        },
+                        new
+                        {
+                            Id = 125L,
+                            MisManualId = 3L,
+                            PageDescription = "Portal to join the alumni network.",
+                            PageTitle = "Join Alumni",
+                            RouteKey = "/MisAlumni/Platform/Join"
+                        },
+                        new
+                        {
+                            Id = 126L,
+                            MisManualId = 6L,
+                            PageDescription = "List of overdue and unpaid financial obligations.",
+                            PageTitle = "Overdue Payments",
+                            RouteKey = "/MisFinances/Dashboard/Overdue"
+                        },
+                        new
+                        {
+                            Id = 127L,
+                            MisManualId = 11L,
+                            PageDescription = "Historical overview of completed grants and milestones.",
+                            PageTitle = "Grant History",
+                            RouteKey = "/MisGrants/Dashboard/History"
+                        },
+                        new
+                        {
+                            Id = 128L,
+                            MisManualId = 11L,
+                            PageDescription = "Detailed information regarding a specific grant assigned to you.",
+                            PageTitle = "My Grant Details",
+                            RouteKey = "/MisGrants/Platform/Details"
+                        },
+                        new
+                        {
+                            Id = 129L,
+                            MisManualId = 11L,
+                            PageDescription = "Overview of grants you are currently managing or tracking.",
+                            PageTitle = "My Grants",
+                            RouteKey = "/MisGrants/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 130L,
+                            MisManualId = 9L,
+                            PageDescription = "List of all active features, their billing status, and lifecycle management.",
+                            PageTitle = "Features Directory",
+                            RouteKey = "/MisManagement/Index"
+                        },
+                        new
+                        {
+                            Id = 131L,
+                            MisManualId = 9L,
+                            PageDescription = "Manage and view features that have been suspended due to billing or compliance issues.",
+                            PageTitle = "Suspended Features",
+                            RouteKey = "/MisManagement/SuspendedFeature"
+                        },
+                        new
+                        {
+                            Id = 132L,
+                            MisManualId = 9L,
+                            PageDescription = "Directory of all available pricing plans across all platform modules.",
+                            PageTitle = "Pricing Plans Directory",
+                            RouteKey = "/MisManagement/Plans/Index"
+                        },
+                        new
+                        {
+                            Id = 133L,
+                            MisManualId = 1L,
+                            PageDescription = "Modify an existing user's profile information.",
+                            PageTitle = "Edit User",
+                            RouteKey = "/MisUserManagement/Dashboard/Edit"
+                        },
+                        new
+                        {
+                            Id = 134L,
+                            MisManualId = 1L,
+                            PageDescription = "Administrative overview of all manual sections and configurations.",
+                            PageTitle = "User Manual Dashboard",
+                            RouteKey = "/MisUserManagement/Dashboard/UserManual"
+                        },
+                        new
+                        {
+                            Id = 135L,
+                            MisManualId = 1L,
+                            PageDescription = "Your personal user portal for managing profile and metrics.",
+                            PageTitle = "My Portal",
+                            RouteKey = "/MisUserManagement/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 136L,
+                            MisManualId = 19L,
+                            PageDescription = "Analytics dashboard showing SMS delivery rates and campaign stats.",
+                            PageTitle = "Mass Comm Analytics",
+                            RouteKey = "/MisMassComm/Dashboard/Index"
+                        },
+                        new
+                        {
+                            Id = 137L,
+                            MisManualId = 19L,
+                            PageDescription = "Global command center for sending bulk SMS campaigns.",
+                            PageTitle = "Admin SMS Campaigns",
+                            RouteKey = "/MisMassComm/Dashboard/Campaigns/Index"
+                        },
+                        new
+                        {
+                            Id = 138L,
+                            MisManualId = 19L,
+                            PageDescription = "Compose and schedule an SMS campaign to your contacts.",
+                            PageTitle = "Create SMS Campaign",
+                            RouteKey = "/MisMassComm/Dashboard/Campaigns/Create"
+                        },
+                        new
+                        {
+                            Id = 139L,
+                            MisManualId = 19L,
+                            PageDescription = "Global directory of all phone books.",
+                            PageTitle = "Admin Phone Books",
+                            RouteKey = "/MisMassComm/Dashboard/PhoneBooks/Index"
+                        },
+                        new
+                        {
+                            Id = 140L,
+                            MisManualId = 19L,
+                            PageDescription = "Create a new administrative phone book.",
+                            PageTitle = "Create Phone Book",
+                            RouteKey = "/MisMassComm/Dashboard/PhoneBooks/Create"
+                        },
+                        new
+                        {
+                            Id = 141L,
+                            MisManualId = 19L,
+                            PageDescription = "View all contacts within a specific phone book.",
+                            PageTitle = "Phone Book Contacts",
+                            RouteKey = "/MisMassComm/Dashboard/PhoneBooks/Contacts"
+                        },
+                        new
+                        {
+                            Id = 142L,
+                            MisManualId = 19L,
+                            PageDescription = "Upload a CSV of phone numbers into the phone book.",
+                            PageTitle = "Import Contacts",
+                            RouteKey = "/MisMassComm/Dashboard/PhoneBooks/Import"
+                        },
+                        new
+                        {
+                            Id = 143L,
+                            MisManualId = 19L,
+                            PageDescription = "Your personal SMS platform dashboard.",
+                            PageTitle = "My SMS Platform",
+                            RouteKey = "/MisMassComm/Platform/Index"
+                        },
+                        new
+                        {
+                            Id = 144L,
+                            MisManualId = 19L,
+                            PageDescription = "Your personal scheduled and sent SMS campaigns.",
+                            PageTitle = "My Campaigns",
+                            RouteKey = "/MisMassComm/Platform/Campaigns/Index"
+                        },
+                        new
+                        {
+                            Id = 145L,
+                            MisManualId = 19L,
+                            PageDescription = "Compose a new personal SMS campaign.",
+                            PageTitle = "Create Personal Campaign",
+                            RouteKey = "/MisMassComm/Platform/Campaigns/Create"
+                        },
+                        new
+                        {
+                            Id = 146L,
+                            MisManualId = 19L,
+                            PageDescription = "Your personal directory of phone books.",
+                            PageTitle = "My Phone Books",
+                            RouteKey = "/MisMassComm/Platform/PhoneBooks/Index"
+                        },
+                        new
+                        {
+                            Id = 147L,
+                            MisManualId = 19L,
+                            PageDescription = "Create a new personal phone book.",
+                            PageTitle = "Create Phone Book",
+                            RouteKey = "/MisMassComm/Platform/PhoneBooks/Create"
+                        },
+                        new
+                        {
+                            Id = 148L,
+                            MisManualId = 19L,
+                            PageDescription = "View and manage contacts in your phone book.",
+                            PageTitle = "My Contacts",
+                            RouteKey = "/MisMassComm/Platform/PhoneBooks/Contacts"
+                        },
+                        new
+                        {
+                            Id = 149L,
+                            MisManualId = 19L,
+                            PageDescription = "Bulk import numbers via CSV into your personal phone book.",
+                            PageTitle = "Import Personal Contacts",
+                            RouteKey = "/MisMassComm/Platform/PhoneBooks/Import"
+                        },
+                        new
+                        {
+                            Id = 150L,
+                            MisManualId = 19L,
+                            PageDescription = "Overview of your SMS wallet and transaction history.",
+                            PageTitle = "SMS Wallet",
+                            RouteKey = "/MisMassComm/Platform/Wallet/Index"
                         });
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterCampaign", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HtmlBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ScheduledDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalRecipients")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNewsletterCampaigns");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterContact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisNewsletterListId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisNewsletterListId");
+
+                    b.ToTable("MisNewsletterContacts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterEmailLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CampaignId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MailBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReceivedDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SentDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
+
+                    b.ToTable("MisNewsletterEmailLogs");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNewsletterLists");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterPlan", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DurationInMonths")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quota")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisNewsletterPlans");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterPlanTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsGlobalPurchase")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisNewsletterPlanId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentProvider")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quota")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisNewsletterPlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNewsletterPlanTransactions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterRecipient", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("DeliveryStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisNewsletterCampaignId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OpenedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TrackingGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisNewsletterCampaignId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNewsletterRecipients");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterWallet", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("EmailQuotaBalance")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisNewsletterWallets");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterWalletTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisNewsletterWalletId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisNewsletterWalletId");
+
+                    b.ToTable("MisNewsletterWalletTransactions");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisNotification", b =>
@@ -3071,7 +6251,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ActionUrl")
                         .IsRequired()
@@ -3107,13 +6287,320 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisNotifications");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisPhoneBook", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisPhoneBooks");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProject", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisProjects");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectSprint", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SprintName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisProjectId");
+
+                    b.ToTable("MisProjectSprints");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectTask", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AssignedToUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("MisProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MisProjectSprintId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoryPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("MisProjectId");
+
+                    b.HasIndex("MisProjectSprintId");
+
+                    b.ToTable("MisProjectTasks");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("MisProjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisProjectUsers");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateApproved")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExecutionDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProjectEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProjectStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("TypedProposal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisProposals");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposalFile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisProposalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisProposalId");
+
+                    b.ToTable("MisProposalFiles");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposalPhase", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("MisProposalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReportSummary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisProposalId");
+
+                    b.ToTable("MisProposalPhases");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportParticipant", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("MisReportSchemaId")
                         .HasColumnType("bigint");
@@ -3137,7 +6624,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<TimeSpan?>("BreakEndTime")
                         .HasColumnType("time");
@@ -3211,7 +6698,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Achievements")
                         .HasColumnType("nvarchar(max)");
@@ -3272,7 +6759,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ActivityDescription")
                         .IsRequired()
@@ -3300,26 +6787,278 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("ActiveAiProvider")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActiveCaptcha")
+                        .HasColumnType("int");
 
                     b.Property<string>("AlumniAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnthropicApiKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryAlias")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EmailMaxRetries")
+                        .HasColumnType("int");
+
                     b.Property<bool>("EnableListDownload")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("EnablePaystack")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EnablePixelPay")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EnableZeptoMail")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("GeminiApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GlobalNewsletterQuota")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("GlobalNewsletterQuotaExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GoogleRecaptchaSecretKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoogleRecaptchaSiteKey")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupAlias")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OpenAIApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaystackPublicKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaystackSecretKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaystackWebhookSecret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPayBaseUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPayCurrency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPayKeyId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPaySecretKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPaySignature")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PixelPayWebhookSecret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SmsCreditBalance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("SubCategoryAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZeptoMailApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZeptoMailSendMailId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZeptoMailSenderEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZeptoMailSenderName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("MisSettings");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsCampaign", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("CostIncurred")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ScheduledDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalRecipients")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisSmsCampaigns");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsRecipient", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("DeliveryStatus")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MisSmsCampaignId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisSmsCampaignId");
+
+                    b.ToTable("MisSmsRecipients");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsSenderId", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SampleMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisSmsSenderIds");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentProvider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisSmsTransactions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisTicketType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("MisEventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SoldCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TotalCapacity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisEventId");
+
+                    b.ToTable("MisTicketTypes");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserCategory", b =>
@@ -3328,7 +7067,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -3357,7 +7096,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("ActionRole")
                         .HasColumnType("int");
@@ -3392,7 +7131,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -3418,27 +7157,383 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("MisUserNotes");
                 });
 
-            modelBuilder.Entity("JurayUniversal.Domain.Models.NewsLetter", b =>
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserRecentVisit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("LastVisitedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("ModuleFolder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisUserRecentVisits");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserVote", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateCast")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EncryptCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisCandidateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MisVoteCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisCandidateId");
+
+                    b.HasIndex("MisVoteCategoryId");
+
+                    b.ToTable("MisUserVotes");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisVoteCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MisElectionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewsLetter");
+                    b.HasIndex("MisElectionId");
+
+                    b.ToTable("MisVoteCategories");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWallet", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisWallets");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWalletTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("MisWalletId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MisWalletId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MisWalletTransactions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWidget", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("ColSpan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WidgetCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisWidgets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ColSpan = 5,
+                            SortOrder = 1,
+                            WidgetCode = "welcome_wizard"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ColSpan = 12,
+                            SortOrder = 2,
+                            WidgetCode = "system_health_hub"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ColSpan = 12,
+                            SortOrder = 3,
+                            WidgetCode = "applications_hub"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            ColSpan = 7,
+                            SortOrder = 5,
+                            WidgetCode = "recent_visited"
+                        });
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWizardStep", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeatureName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("StepOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TargetElement")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisWizardSteps");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Content = "This is your main dashboard where you manage all platform modules.",
+                            FeatureName = "MIS",
+                            StepOrder = 1,
+                            TargetElement = "#widget-welcome_wizard",
+                            Title = "Welcome to MIS Console"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Content = "Click here to add new charts, lists, and metrics to your dashboard.",
+                            FeatureName = "MIS",
+                            StepOrder = 2,
+                            TargetElement = "#addWidgetBtn",
+                            Title = "Add Custom Widgets"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Content = "Toggle edit mode to drag, resize, and remove widgets.",
+                            FeatureName = "MIS",
+                            StepOrder = 3,
+                            TargetElement = ".btn-outline-secondary",
+                            Title = "Rearrange Layout"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Content = "Manage all your staff, members, and custom KPIs from this central directory.",
+                            FeatureName = "MisUserManagement",
+                            StepOrder = 1,
+                            TargetElement = ".page-header",
+                            Title = "User Directory"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Content = "Click here to invite or manually add a new user to the platform.",
+                            FeatureName = "MisUserManagement",
+                            StepOrder = 2,
+                            TargetElement = "#btn-add-user",
+                            Title = "Add New User"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Content = "View, filter, and manage permissions for existing users.",
+                            FeatureName = "MisUserManagement",
+                            StepOrder = 3,
+                            TargetElement = "#users-table",
+                            Title = "User List"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Content = "Create and manage concerts, conferences, and paid events.",
+                            FeatureName = "MisTicketing",
+                            StepOrder = 1,
+                            TargetElement = ".page-header",
+                            Title = "Event Ticketing"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Content = "Setup a new event, configure ticket limits, and pricing.",
+                            FeatureName = "MisTicketing",
+                            StepOrder = 2,
+                            TargetElement = "#btn-create-event",
+                            Title = "Create Event"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Content = "Track subscriptions, recurring fees, and member dues.",
+                            FeatureName = "MisDues",
+                            StepOrder = 1,
+                            TargetElement = ".page-header",
+                            Title = "Financials"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Content = "Send automated payment reminders to members.",
+                            FeatureName = "MisDues",
+                            StepOrder = 2,
+                            TargetElement = "#btn-new-invoice",
+                            Title = "Generate Invoices"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Content = "Manage private workspaces and specialized teams.",
+                            FeatureName = "MisCommittees",
+                            StepOrder = 1,
+                            TargetElement = ".page-header",
+                            Title = "Committees"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Content = "Start a new collaboration group and invite members.",
+                            FeatureName = "MisCommittees",
+                            StepOrder = 2,
+                            TargetElement = "#btn-add-group",
+                            Title = "Create Workspace"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Content = "Review all leave requests and excuses submitted by platform users.",
+                            FeatureName = "MisUserManagement_Leaves",
+                            StepOrder = 1,
+                            TargetElement = ".page-header",
+                            Title = "Leaves & Excuses"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            Content = "Click 'Review' on any pending request to approve or deny it with remarks.",
+                            FeatureName = "MisUserManagement_Leaves",
+                            StepOrder = 2,
+                            TargetElement = "#leaves-table",
+                            Title = "Request Queue"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            Content = "Need time off or running late? Click here to submit a formal request.",
+                            FeatureName = "Platform_Leaves",
+                            StepOrder = 1,
+                            TargetElement = "#btn-new-request",
+                            Title = "Submit a Request"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            Content = "Monitor the approval status of your submitted requests here.",
+                            FeatureName = "Platform_Leaves",
+                            StepOrder = 2,
+                            TargetElement = "#my-requests-table",
+                            Title = "Track Status"
+                        });
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.NIPSS.Accomodation", b =>
@@ -3447,7 +7542,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -3478,7 +7573,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("EvaluationQuestionId")
                         .HasColumnType("bigint");
@@ -3514,7 +7609,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("CourseCategoryId")
                         .HasColumnType("bigint");
@@ -3555,7 +7650,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
@@ -3576,7 +7671,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CourseId")
                         .HasColumnType("bigint");
@@ -3598,7 +7693,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AbbreviatedQuestion")
                         .IsRequired()
@@ -3622,7 +7717,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CourseId")
                         .HasColumnType("bigint");
@@ -3662,7 +7757,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
@@ -3691,7 +7786,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Disable")
                         .HasColumnType("bit");
@@ -3711,7 +7806,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("NutritionCategoryId")
                         .HasColumnType("bigint");
@@ -3736,7 +7831,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<long?>("CourseId")
                         .HasColumnType("bigint");
@@ -3783,7 +7878,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Answer")
                         .HasColumnType("nvarchar(max)");
@@ -3815,7 +7910,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("StaffId")
                         .HasColumnType("nvarchar(max)");
@@ -3841,7 +7936,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -3867,7 +7962,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CourseId")
                         .HasColumnType("bigint");
@@ -3895,7 +7990,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -3954,7 +8049,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Disable")
                         .HasColumnType("bit");
@@ -3974,7 +8069,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("NutritionCategoryId")
                         .HasColumnType("bigint");
@@ -4009,7 +8104,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("EncryptCode")
                         .HasColumnType("nvarchar(max)");
@@ -4043,7 +8138,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -4070,7 +8165,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CandidateId")
                         .HasColumnType("nvarchar(450)");
@@ -4108,13 +8203,36 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("VoteCondidates");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.NewsLetter", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NewsLetter");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.OfficeActivityCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -4131,7 +8249,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -4175,7 +8293,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("HomeSortFrom")
                         .HasColumnType("int");
@@ -4201,7 +8319,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("AddToRibon")
                         .HasColumnType("bit");
@@ -4306,7 +8424,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("AddToRibon")
                         .HasColumnType("bit");
@@ -4375,7 +8493,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("AmountPaid")
                         .HasColumnType("decimal(18,2)");
@@ -4429,7 +8547,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -4468,7 +8586,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Compulsory")
                         .HasColumnType("bit");
@@ -4512,7 +8630,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -4546,7 +8664,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -4572,7 +8690,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ButtonLink")
                         .HasColumnType("nvarchar(max)");
@@ -4627,7 +8745,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -4658,7 +8776,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -4732,7 +8850,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("HomeSortFrom")
                         .HasColumnType("int");
@@ -4758,7 +8876,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -4785,7 +8903,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -5098,7 +9216,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Authorize")
                         .HasColumnType("bit");
@@ -5129,7 +9247,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Authorize")
                         .HasColumnType("bit");
@@ -5198,7 +9316,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -5232,7 +9350,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("AccountUpgraded")
                         .HasColumnType("bit");
@@ -5286,7 +9404,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("CompanyProgramId")
                         .HasColumnType("bigint");
@@ -5309,7 +9427,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -5330,7 +9448,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Challenges")
                         .HasColumnType("nvarchar(max)");
@@ -5377,7 +9495,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("FileKey")
                         .IsRequired()
@@ -5407,7 +9525,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("AmountSpent")
                         .HasColumnType("decimal(18,2)");
@@ -5485,7 +9603,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -5506,7 +9624,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Challenges")
                         .HasColumnType("nvarchar(max)");
@@ -5554,7 +9672,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
@@ -5583,7 +9701,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");
@@ -5623,7 +9741,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -5670,7 +9788,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(max)");
@@ -5698,7 +9816,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Achievement")
                         .HasColumnType("nvarchar(max)");
@@ -5768,7 +9886,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -5840,7 +9958,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -5863,7 +9981,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AccountName")
                         .HasColumnType("nvarchar(max)");
@@ -6116,7 +10234,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ButtonLink")
                         .HasColumnType("nvarchar(max)");
@@ -6177,7 +10295,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("DeliveredDate")
                         .HasColumnType("datetime2");
@@ -6249,7 +10367,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("SmsMessageCategoryId")
                         .HasColumnType("bigint");
@@ -6270,7 +10388,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BlackListedWords")
                         .IsRequired()
@@ -6320,7 +10438,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("StateName")
                         .IsRequired()
@@ -6337,7 +10455,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("ActivateComingSoon")
                         .HasColumnType("bit");
@@ -6608,7 +10726,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Layout")
                         .IsRequired()
@@ -6641,7 +10759,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(max)");
@@ -6673,7 +10791,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -6707,7 +10825,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("CloseTime")
                         .HasColumnType("datetime2");
@@ -6754,7 +10872,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
@@ -6780,7 +10898,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -6808,7 +10926,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -6838,7 +10956,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("DirectUrl")
                         .HasColumnType("nvarchar(max)");
@@ -6899,7 +11017,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -6942,7 +11060,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -6979,7 +11097,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -7018,7 +11136,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -7062,7 +11180,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("ApproveStatus")
                         .HasColumnType("int");
@@ -7157,40 +11275,13 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.ToTable("XProjectTasks");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -7215,7 +11306,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -7515,6 +11606,102 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisCandidate", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisVoteCategory", "MisVoteCategory")
+                        .WithMany("MisCandidates")
+                        .HasForeignKey("MisVoteCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId");
+
+                    b.Navigation("MisVoteCategory");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisContact", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisPhoneBook", "MisPhoneBook")
+                        .WithMany("Contacts")
+                        .HasForeignKey("MisPhoneBookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisPhoneBook");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisElectionVoter", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisElection", "MisElection")
+                        .WithMany("MisElectionVoters")
+                        .HasForeignKey("MisElectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisElection");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEquipment", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "AssignedToUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedToUserId");
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisEquipmentCategory", "MisEquipmentCategory")
+                        .WithMany("MisEquipments")
+                        .HasForeignKey("MisEquipmentCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssignedToUser");
+
+                    b.Navigation("MisEquipmentCategory");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEvent", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisFinanceCategory", "MisFinanceCategory")
+                        .WithMany()
+                        .HasForeignKey("MisFinanceCategoryId");
+
+                    b.Navigation("MisFinanceCategory");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEventTicket", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisTicketType", "MisTicketType")
+                        .WithMany("Tickets")
+                        .HasForeignKey("MisTicketTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "ScannedByUser")
+                        .WithMany()
+                        .HasForeignKey("ScannedByUserId");
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId");
+
+                    b.Navigation("MisTicketType");
+
+                    b.Navigation("ScannedByUser");
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisFeatureInvoice", b =>
                 {
                     b.HasOne("JurayUniversal.Domain.Models.MisFeature", "MisFeature")
@@ -7524,6 +11711,23 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .IsRequired();
 
                     b.Navigation("MisFeature");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceTransaction", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisFinanceCategory", "Category")
+                        .WithMany("Transactions")
+                        .HasForeignKey("MisFinanceCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisFormResponse", b =>
@@ -7543,6 +11747,34 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MisForm");
 
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGrant", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisDonor", "MisDonor")
+                        .WithMany("Grants")
+                        .HasForeignKey("MisDonorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisProposal", "MisProposal")
+                        .WithOne("LinkedGrant")
+                        .HasForeignKey("JurayUniversal.Domain.Models.MisGrant", "MisProposalId");
+
+                    b.Navigation("MisDonor");
+
+                    b.Navigation("MisProposal");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGrantMilestone", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisGrant", "MisGrant")
+                        .WithMany("Milestones")
+                        .HasForeignKey("MisGrantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisGrant");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroupFile", b =>
@@ -7602,6 +11834,47 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobApplicant", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisApplicantAccount", "MisApplicantAccount")
+                        .WithMany("Applications")
+                        .HasForeignKey("MisApplicantAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisJobPosting", "MisJobPosting")
+                        .WithMany("Applicants")
+                        .HasForeignKey("MisJobPostingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisApplicantAccount");
+
+                    b.Navigation("MisJobPosting");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobApplicantDocument", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisJobApplicant", "MisJobApplicant")
+                        .WithMany("Documents")
+                        .HasForeignKey("MisJobApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisJobApplicant");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobInterview", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisJobApplicant", "MisJobApplicant")
+                        .WithMany("Interviews")
+                        .HasForeignKey("MisJobApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisJobApplicant");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiUserScore", b =>
                 {
                     b.HasOne("JurayUniversal.Domain.Models.MisKpiIndicator", "MisKpiIndicator")
@@ -7619,6 +11892,34 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MisKpiIndicator");
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisLeaveRequest", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "ReviewedBy")
+                        .WithMany()
+                        .HasForeignKey("ReviewedById");
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReviewedBy");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisMaintenanceLog", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisEquipment", "MisEquipment")
+                        .WithMany("MisMaintenanceLogs")
+                        .HasForeignKey("MisEquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisEquipment");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisManualElement", b =>
@@ -7643,6 +11944,108 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MisManual");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterCampaign", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterContact", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisNewsletterList", "MisNewsletterList")
+                        .WithMany("Contacts")
+                        .HasForeignKey("MisNewsletterListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisNewsletterList");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterEmailLog", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisNewsletterCampaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId");
+
+                    b.Navigation("Campaign");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterList", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterPlanTransaction", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisNewsletterPlan", "MisNewsletterPlan")
+                        .WithMany()
+                        .HasForeignKey("MisNewsletterPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisNewsletterPlan");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterRecipient", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisNewsletterCampaign", "MisNewsletterCampaign")
+                        .WithMany("Recipients")
+                        .HasForeignKey("MisNewsletterCampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("MisNewsletterCampaign");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterWallet", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterWalletTransaction", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisNewsletterWallet", "MisNewsletterWallet")
+                        .WithMany("Transactions")
+                        .HasForeignKey("MisNewsletterWalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisNewsletterWallet");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisNotification", b =>
                 {
                     b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
@@ -7652,6 +12055,99 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisPhoneBook", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectSprint", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisProject", "MisProject")
+                        .WithMany("Sprints")
+                        .HasForeignKey("MisProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisProject");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectTask", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "AssignedToUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedToUserId");
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisProject", "MisProject")
+                        .WithMany("Tasks")
+                        .HasForeignKey("MisProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisProjectSprint", "MisProjectSprint")
+                        .WithMany("Tasks")
+                        .HasForeignKey("MisProjectSprintId");
+
+                    b.Navigation("AssignedToUser");
+
+                    b.Navigation("MisProject");
+
+                    b.Navigation("MisProjectSprint");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectUser", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisProject", "MisProject")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("MisProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisProject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposal", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposalFile", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisProposal", "MisProposal")
+                        .WithMany("ProposalFiles")
+                        .HasForeignKey("MisProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisProposal");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposalPhase", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisProposal", "MisProposal")
+                        .WithMany("Phases")
+                        .HasForeignKey("MisProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisProposal");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportParticipant", b =>
@@ -7703,6 +12199,46 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MisReportSubmission");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsCampaign", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsRecipient", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisSmsCampaign", "MisSmsCampaign")
+                        .WithMany("Recipients")
+                        .HasForeignKey("MisSmsCampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisSmsCampaign");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsTransaction", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisTicketType", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisEvent", "MisEvent")
+                        .WithMany("TicketTypes")
+                        .HasForeignKey("MisEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisEvent");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserFeatureRole", b =>
                 {
                     b.HasOne("JurayUniversal.Domain.Models.Profile", "Profile")
@@ -7723,6 +12259,71 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .IsRequired();
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserRecentVisit", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisUserVote", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisCandidate", "MisCandidate")
+                        .WithMany("MisUserVotes")
+                        .HasForeignKey("MisCandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JurayUniversal.Domain.Models.MisVoteCategory", "MisVoteCategory")
+                        .WithMany("MisUserVotes")
+                        .HasForeignKey("MisVoteCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisCandidate");
+
+                    b.Navigation("MisVoteCategory");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisVoteCategory", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisElection", "MisElection")
+                        .WithMany("MisVoteCategories")
+                        .HasForeignKey("MisElectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MisElection");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWallet", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWalletTransaction", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisWallet", "MisWallet")
+                        .WithMany("Transactions")
+                        .HasForeignKey("MisWalletId");
+
+                    b.HasOne("JurayUniversal.Domain.Models.Profile", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("MisWallet");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.NIPSS.Accomodation", b =>
@@ -8260,7 +12861,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
+                    b.HasOne("JurayUniversal.Domain.Models.AppRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
 
@@ -8465,7 +13066,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("JurayUniversal.Domain.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -8492,7 +13093,7 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("JurayUniversal.Domain.Models.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -8571,9 +13172,56 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MeetingAttendances");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisApplicantAccount", b =>
+                {
+                    b.Navigation("Applications");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisCandidate", b =>
+                {
+                    b.Navigation("MisUserVotes");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisDonor", b =>
+                {
+                    b.Navigation("Grants");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisElection", b =>
+                {
+                    b.Navigation("MisElectionVoters");
+
+                    b.Navigation("MisVoteCategories");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEquipment", b =>
+                {
+                    b.Navigation("MisMaintenanceLogs");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEquipmentCategory", b =>
+                {
+                    b.Navigation("MisEquipments");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisEvent", b =>
+                {
+                    b.Navigation("TicketTypes");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceCategory", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisForm", b =>
                 {
                     b.Navigation("Responses");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisGrant", b =>
+                {
+                    b.Navigation("Milestones");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisGroup", b =>
@@ -8583,6 +13231,18 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("Members");
 
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobApplicant", b =>
+                {
+                    b.Navigation("Documents");
+
+                    b.Navigation("Interviews");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisJobPosting", b =>
+                {
+                    b.Navigation("Applicants");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiIndicator", b =>
@@ -8600,6 +13260,49 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Navigation("MisManualElements");
                 });
 
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterCampaign", b =>
+                {
+                    b.Navigation("Recipients");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterList", b =>
+                {
+                    b.Navigation("Contacts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisNewsletterWallet", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisPhoneBook", b =>
+                {
+                    b.Navigation("Contacts");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProject", b =>
+                {
+                    b.Navigation("ProjectUsers");
+
+                    b.Navigation("Sprints");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProjectSprint", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisProposal", b =>
+                {
+                    b.Navigation("LinkedGrant");
+
+                    b.Navigation("Phases");
+
+                    b.Navigation("ProposalFiles");
+                });
+
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSchema", b =>
                 {
                     b.Navigation("Participants");
@@ -8610,6 +13313,28 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisReportSubmission", b =>
                 {
                     b.Navigation("TimeLogs");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisSmsCampaign", b =>
+                {
+                    b.Navigation("Recipients");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisTicketType", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisVoteCategory", b =>
+                {
+                    b.Navigation("MisCandidates");
+
+                    b.Navigation("MisUserVotes");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisWallet", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.NIPSS.Course", b =>

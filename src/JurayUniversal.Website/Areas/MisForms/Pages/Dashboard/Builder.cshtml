@@ -1,29 +1,218 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.BuilderModel
 @{
     ViewData["Title"] = "Form Builder - " + Model.Form.Title;
 }
 
 <style>
-    /* formBuilder basic overrides to match bootstrap 5 */
+    /* Google Forms-like Pastel Theme styling */
+    .page-content {
+        background-color: #f0ebf8 !important; /* Soft pastel purple background */
+    }
+    
     .form-wrap.form-builder .frmb .form-elements {
         background: #f8f9fa !important;
         border: 1px solid #dee2e6 !important;
         border-radius: 0.5rem;
     }
+    
+    /* Style form field cards inside the canvas */
+    .form-wrap.form-builder .stage-wrap .frmb li {
+        background-color: #ffffff !important;
+        border: 1px solid #dadce0 !important;
+        border-radius: 8px !important;
+        padding: 22px 24px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+        transition: border-left 0.12s ease, box-shadow 0.12s ease !important;
+        position: relative !important;
+    }
+    
+    /* Google Forms-like left border for active/focused field card */
+    .form-wrap.form-builder .stage-wrap .frmb li:hover,
+    .form-wrap.form-builder .stage-wrap .frmb li.editing,
+    .form-wrap.form-builder .stage-wrap .frmb li.editing-field {
+        border-left: 6px solid #673ab7 !important;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Sidebar controls */
     .form-wrap.form-builder .cb-wrap {
-        border-radius: 0.5rem;
+        background: #ffffff !important;
+        border: 1px solid #dadce0 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+        padding: 16px !important;
+    }
+    
+    .form-wrap.form-builder .cb-wrap ul li {
+        background: #f8f9fa !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 6px !important;
+        padding: 12px 16px !important;
+        margin-bottom: 8px !important;
+        font-weight: 500 !important;
+        color: #5f6368 !important;
+        transition: all 0.15s ease !important;
+    }
+    
+    .form-wrap.form-builder .cb-wrap ul li:hover {
+        background: #f1f3f4 !important;
+        color: #673ab7 !important;
+        border-color: #673ab7 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+    }
+
+    /* Fix action buttons style and location */
+    .form-wrap.form-builder .frmb li .field-actions {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 6px !important;
+        position: absolute !important;
+        right: 15px !important;
+        top: 15px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        z-index: 10 !important;
+    }
+    .form-wrap.form-builder .frmb li .field-actions button,
+    .form-wrap.form-builder .frmb li .field-actions a {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        font-size: 0.85rem !important;
+        border: 1px solid #dee2e6 !important;
+        background-color: #fff !important;
+        color: #5f6368 !important;
+        transition: all 0.15s ease !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+        position: static !important;
+        opacity: 1 !important;
+    }
+    .form-wrap.form-builder .frmb li .field-actions button:hover,
+    .form-wrap.form-builder .frmb li .field-actions a:hover {
+        background-color: #f1f3f4 !important;
+        color: #673ab7 !important;
+        border-color: #673ab7 !important;
+    }
+    .form-wrap.form-builder .frmb li .field-actions .del-button:hover,
+    .form-wrap.form-builder .frmb li .field-actions .remove:hover {
+        background-color: #fff5f5 !important;
+        color: #dc3545 !important;
+        border-color: #f8d7da !important;
+    }
+    
+    /* Hide copy/clone button on fields */
+    .form-wrap.form-builder .frmb li .field-actions .copy-btn,
+    .form-wrap.form-builder .frmb li .field-actions .copy-button,
+    .form-wrap.form-builder .frmb li .field-actions .frm-copy,
+    .form-wrap.form-builder .frmb li .field-actions .clone-btn {
+        display: none !important;
+    }
+
+    /* Google Forms Header Card */
+    .gforms-header-card {
+        border-top: 10px solid #673ab7 !important;
+        border-radius: 8px !important;
+        overflow: hidden;
+    }
+
+    /* â”€â”€ Fix: field-editor inputs are clipped by global site CSS â”€â”€ */
+    /* style.css sets: input { height: 54px; line-height: 54px; padding: 0 15px }
+       This overrides all inputs, selects and textareas inside the entire
+       form-builder wrapper so text is no longer cut off.  */
+    .form-wrap.form-builder input,
+    .form-wrap.form-builder input[type="text"],
+    .form-wrap.form-builder input[type="number"],
+    .form-wrap.form-builder input[type="email"],
+    .form-wrap.form-builder input[type="color"],
+    .form-wrap.form-builder input[type="checkbox"],
+    .form-wrap.form-builder input[type="radio"],
+    .form-wrap.form-builder select,
+    .form-wrap.form-builder textarea {
+        height: auto !important;
+        min-height: 34px !important;
+        line-height: 1.5 !important;
+        padding: 6px 12px !important;
+        box-sizing: border-box !important;
+        float: none !important;
+        width: auto !important;
+        background: #fff !important;
+        color: #333 !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        font-size: 14px !important;
+    }
+    /* Checkboxes and radios need different sizing */
+    .form-wrap.form-builder input[type="checkbox"],
+    .form-wrap.form-builder input[type="radio"] {
+        min-height: unset !important;
+        height: 16px !important;
+        width: 16px !important;
+        padding: 0 !important;
+        float: none !important;
+    }
+    /* Full-width selects and textareas inside editor panels */
+    .form-wrap.form-builder .frmb li .form-elements select,
+    .form-wrap.form-builder .frmb li .form-elements textarea {
+        width: 100% !important;
+    }
+    
+    /* â”€â”€ Hide Form Field Labels everywhere (as requested) â”€â”€ */
+    /* In the Builder canvas, the field label is the direct .field-label child of the li */
+    .form-wrap.form-builder .frmb > li > .field-label {
+        display: none !important;
+    }
+    .form-wrap.form-builder .frmb > li > .required-asterisk,
+    .form-wrap.form-builder .frmb > li > .tooltip-element {
+        display: none !important;
+    }
+    
+    /* Hide in preview/rendered forms as well */
+    .rendered-form label[class^="formbuilder-"][class$="-label"] {
+        display: none !important;
+    }
+
+    /* Also fix the label/row layout inside field editors */
+    .form-wrap.form-builder .frmb li .form-elements .form-group {
+        margin-bottom: 12px !important;
+    }
+    .form-wrap.form-builder .frmb li .form-elements label {
+        display: block !important;
+        margin-bottom: 4px !important;
+        font-weight: 500 !important;
+        font-size: 0.875rem !important;
+        color: #5f6368 !important;
+        height: auto !important;
+        line-height: 1.4 !important;
     }
 </style>
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    <div>
-        <h3 class="mis-page-title mb-0">Builder: @Model.Form.Title</h3>
-        <span class="text-muted fs-8">/f/@Model.Form.ShortCode</span>
+<div class="mis-page-header d-flex justify-content-between align-items-center mb-0 pb-2 bg-white px-4 border-bottom shadow-xs">
+    <div class="d-flex align-items-center gap-3">
+        <a asp-page="./Index" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width:36px; height:36px;" title="Back to list">
+            <i class="bi bi-arrow-left text-dark"></i>
+        </a>
+        <h4 class="mb-0 fw-bold text-dark">@Model.Form.Title</h4>
     </div>
-    <div class="d-flex gap-2">
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back</a>
-        
+    <div class="d-flex gap-2 align-items-center">
+        @if (Model.Form.IsPublished)
+        {
+            <button type="button" id="btn-share-link" class="btn btn-outline-secondary btn-sm rounded-pill" title="Copy public link">
+                <i class="bi bi-link-45deg me-1"></i> Share Link
+            </button>
+        }
+        <button type="button" id="btn-preview-form" class="btn btn-outline-primary btn-sm rounded-pill" title="Preview form in new tab">
+            <i class="bi bi-eye me-1"></i> Preview
+        </button>
         <form method="post" asp-page-handler="TogglePublish" asp-route-id="@Model.Form.Id" class="d-inline">
             @if (Model.Form.IsPublished)
             {
@@ -31,31 +220,46 @@
             }
             else
             {
-                <button type="submit" class="btn btn-success btn-sm rounded-pill"><i class="bi bi-globe me-1"></i> Publish Publicly</button>
+                <button type="submit" class="btn btn-success btn-sm rounded-pill text-white" style="background-color: #673ab7; border-color: #673ab7;"><i class="bi bi-globe me-1"></i> Publish Publicly</button>
             }
         </form>
+        
     </div>
 </div>
 
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
-    <div class="card border-0 rounded-4 mb-4 shadow" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)); backdrop-filter: blur(10px);">
-        <div class="card-body p-4 p-md-5">
-            <div class="alert rounded-3 border-0 shadow-sm d-flex align-items-center mb-5" style="background: linear-gradient(90deg, rgba(13,110,253,0.1), rgba(13,110,253,0.05)); border-left: 5px solid #0d6efd !important;">
-                <i class="bi bi-info-circle-fill fs-4 me-3"></i>
-                <div>
-                    <h6 class="fw-bold mb-1">Drag and Drop Builder</h6>
-                    <p class="mb-0 fs-8">Drag fields from the right panel into the canvas area. Click on a field to edit its label and placeholder. Ensure you click the <strong>Save Form Layout</strong> button below when finished.</p>
-                </div>
-            </div>
+<!-- Google-style navigation tabs -->
+<div class="d-flex justify-content-center bg-white border-bottom shadow-xs mb-4">
+    <ul class="nav nav-tabs border-0" style="font-weight: 500; font-size: 0.95rem;">
+        <li class="nav-item">
+            <a class="nav-link active border-0 border-bottom border-3 px-4 py-2.5" asp-page="./Builder" asp-route-id="@Model.Form.Id" style="border-color: #673ab7 !important; color: #673ab7; background: transparent;">Questions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link border-0 text-muted px-4 py-2.5" asp-page="./Responses" asp-route-id="@Model.Form.Id">Responses</a>
+        </li>
+    </ul>
+</div>
 
+<div class="page-content p-4" style="min-height: 100vh;">
+    <!-- Google Forms style Header Card (Inline Editable) -->
+    <div class="card border-0 shadow-sm mb-4 gforms-header-card bg-white mx-auto" style="max-width: 900px;">
+        <div class="card-body p-4">
+            <h2 class="fw-normal mb-2 text-dark" id="form-title-editable" contenteditable="true" spellcheck="false" style="outline: none; border-bottom: 1px dashed transparent; transition: border 0.2s;" onfocus="this.style.borderBottom='1px dashed #673ab7'" onblur="this.style.borderBottom='1px dashed transparent'">@Model.Form.Title</h2>
+            <p class="text-muted mb-0" id="form-desc-editable" contenteditable="true" spellcheck="false" style="outline: none; border-bottom: 1px dashed transparent; transition: border 0.2s; min-height: 24px;" onfocus="this.style.borderBottom='1px dashed #673ab7'" onblur="this.style.borderBottom='1px dashed transparent'" placeholder="Form Description">@Model.Form.Description</p>
+        </div>
+    </div>
+
+    <div class="card border-0 rounded-4 mb-4 shadow-sm bg-white mx-auto" style="max-width: 900px;">
+        <div class="card-body p-4 p-md-5">
             <div id="fb-editor"></div>
             
             <div class="mt-4 text-end">
-                <button id="save-builder-btn" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm"><i class="bi bi-save me-1"></i> Save Form Layout</button>
+                <button id="save-builder-btn" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm" style="background-color: #673ab7; border-color: #673ab7;"><i class="bi bi-save me-1"></i> Save Form Layout</button>
             </div>
         </div>
     </div>
 </div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
 
 @Html.AntiForgeryToken()
 
@@ -80,7 +284,8 @@
                 disabledActionButtons: ['data', 'save', 'clear'],
                 defaultFields: parsedData,
                 disableFields: ['hidden', 'button', 'autocomplete'],
-                controlPosition: 'left'
+                controlPosition: 'left',
+                disabledAttrs: ['help', 'access', 'className']
             };
 
             var formBuilder = $('#fb-editor').formBuilder(options);
@@ -92,17 +297,25 @@
                 $btn.prop('disabled', true);
 
                 var jsonResult = formBuilder.actions.getData('json');
+                var updatedTitle = $('#form-title-editable').text().trim();
+                var updatedDesc = $('#form-desc-editable').text().trim();
 
                 $.ajax({
                     url: '?handler=UpdateSchema&id=@Model.Form.Id',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ SchemaJson: jsonResult }),
                     headers: {
-                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                     },
-                    success: function (result) {
-                        toastr.success('Form layout saved successfully!');
+                    data: JSON.stringify({ 
+                        SchemaJson: jsonResult,
+                        Title: updatedTitle,
+                        Description: updatedDesc
+                    }),
+                    success: function() {
+                        toastr.success('Form saved successfully');
+                        // Update the page header title as well
+                        $('.mis-page-header h4').text(updatedTitle);
                         $btn.html(originalText);
                         $btn.prop('disabled', false);
                     },
@@ -113,6 +326,33 @@
                     }
                 });
             });
+
+            // Share link button
+            var shareLinkBtn = document.getElementById('btn-share-link');
+            if (shareLinkBtn) {
+                shareLinkBtn.addEventListener('click', function () {
+                    var link = window.location.origin + '/f/@Model.Form.ShortCode';
+                    navigator.clipboard.writeText(link).then(function () {
+                        shareLinkBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i> Copied!';
+                        shareLinkBtn.classList.add('btn-success');
+                        shareLinkBtn.classList.remove('btn-outline-secondary');
+                        setTimeout(function () {
+                            shareLinkBtn.innerHTML = '<i class="bi bi-link-45deg me-1"></i> Share Link';
+                            shareLinkBtn.classList.remove('btn-success');
+                            shareLinkBtn.classList.add('btn-outline-secondary');
+                        }, 2000);
+                    });
+                });
+            }
+
+            // Preview Form Live
+            $('#btn-preview-form').click(function () {
+                var currentData = formBuilder.actions.getData('json', true);
+                var formId = '@Model.Form.Id';
+                localStorage.setItem('previewSchema_' + formId, currentData);
+                window.open('Preview?id=' + formId, '_blank');
+            });
         });
     </script>
 }
+

@@ -1,0 +1,100 @@
+@page
+@model JurayUniversal.Website.Areas.MisManagement.Pages.Plans.IndexModel
+@{
+    ViewData["Title"] = "Newsletter Pricing Plans";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+    ViewData["ActiveMenu"] = "MisManagement";
+    ViewData["ActiveSubMenu"] = "NewsletterPlans";
+}
+
+@section HeaderActions {
+    <a asp-page="./Create" class="btn btn-primary rounded-pill fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> Add New Plan
+            </a>
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Plan Name</th>
+                            <th>Amount (&#8358;)</th>
+                            <th>Email Quota</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var plan in Model.MisNewsletterPlans)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">@plan.Name</td>
+                                <td>@plan.Amount.ToString("N2")</td>
+                                <td>@plan.Quota.ToString("N0") Emails</td>
+                                <td>@plan.DurationInMonths Month(s)</td>
+                                <td>
+                                    @if (plan.IsActive)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger">Disabled</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                            <li>
+                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@plan.Id">
+                                                    <i class="bi bi-pencil me-2 text-primary"></i> Edit Plan
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <form method="post" asp-page-handler="ToggleStatus" asp-route-id="@plan.Id">
+                                                    <button type="submit" class="dropdown-item">
+                                                        @if (plan.IsActive)
+                                                        {
+                                                            <><i class="bi bi-x-circle me-2 text-danger"></i> Disable Plan</>
+                                                        }
+                                                        else
+                                                        {
+                                                            <><i class="bi bi-check-circle me-2 text-success"></i> Enable Plan</>
+                                                        }
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        
+                        @if (!Model.MisNewsletterPlans.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                    <h5>No Pricing Plans Found</h5>
+                                    <p>Click "Add New Plan" to create your first newsletter subscription plan.</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

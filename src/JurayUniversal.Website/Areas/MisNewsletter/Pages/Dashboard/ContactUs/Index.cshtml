@@ -1,0 +1,338 @@
+@page
+@model JurayUniversal.Website.Areas.MisNewsletter.Pages.Dashboard.ContactUs.IndexModel
+
+@{
+    ViewData["Title"] = "Contact Us Submissions";
+    ViewData["ActiveMenu"] = "MisNewsletter";
+    ViewData["ActiveSubMenu"] = "ContactUs";
+}
+
+@section HeaderActions {
+    <a asp-page="/Dashboard/Index" class="btn btn-outline-secondary rounded-pill fw-bold">
+        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+    </a>
+}
+
+<div class="mis-page-header d-flex justify-content-between align-items-center">
+    <div class="d-flex gap-2">
+        @if (Model.EnableListDownload)
+        {
+            <!-- Action button can go here if needed -->
+        }
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    <!-- Filter Card -->
+    <div class="card mis-card mis-filter-card">
+        <div class="card-body mis-card-body">
+            @Html.AntiForgeryToken()
+            <form method="get" class="row gx-4 gy-3 align-items-end" id="filterForm">
+                <div class="col-12 col-md-4">
+                    <label class="mis-filter-label">Search Requests</label>
+                    <input type="text" asp-for="SearchString" class="form-control mis-search-input" placeholder="Search by name, email, phone or subject...">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Action Toolbar (Hidden by default) -->
+    <div id="bulkActionToolbar" class="mis-bulk-toolbar d-none">
+        <span class="me-auto fw-bold text-primary">
+            <span id="selectedCount" class="badge bg-primary rounded-pill me-2 px-3 py-2">0</span> Selected
+        </span>
+        <div class="d-flex gap-2">
+            @if (Model.IsNewsletterEnabled)
+            {
+                <button class="btn btn-success btn-sm rounded-pill px-3" onclick="submitBulkAction('Newsletter')">
+                    <i class="bi bi-envelope-check me-1"></i> Export to Newsletter
+                </button>
+            }
+            <button class="btn btn-primary btn-sm rounded-pill px-3" onclick="submitBulkAction('SMS')">
+                <i class="bi bi-chat-text me-1"></i> Export to SMS Contact Group
+            </button>
+        </div>
+    </div>
+
+    @if (Model.EnableListDownload)
+    {
+        <!-- Export Dropdown (injected into DOM before DataTables renders, shown via JS) -->
+        <div id="exportDropdownWrapper" class="d-none">
+            <div class="dropdown">
+                <button class="btn btn-light shadow-none border px-3 custom-ctrl-height dropdown-toggle"
+                        type="button" id="exportDropdownBtn"
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style="border-color: #cbd5e1 !important; color: #1e293b; border-radius: 50px;">
+                    <i class="bi bi-download me-1"></i> Export View
+                </button>
+                <ul class="dropdown-menu shadow border-0 rounded-3" aria-labelledby="exportDropdownBtn">
+                    <li>
+                        <a class="dropdown-item py-2" href="#" onclick="triggerExport('excel'); return false;">
+                            <i class="bi bi-file-earmark-excel text-success me-2"></i> Excel (.xlsx)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2" href="#" onclick="triggerExport('pdf'); return false;">
+                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i> PDF (.pdf)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2" href="#" onclick="triggerExport('word'); return false;">
+                            <i class="bi bi-file-earmark-word text-primary me-2"></i> Word (.docx)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+
+    <!-- Table Card -->
+    <div class="card mis-card">
+        <div class="card-body mis-card-body">
+            <div class="table-responsive">
+                <table id="contactTable" class="table mis-table w-100">
+                    <thead>
+                        <tr>
+                            <th class="no-sort text-center" style="width: 40px;">
+                                <div class="form-check d-flex justify-content-center">
+                                    <input class="form-check-input" type="checkbox" id="selectAll">
+                                </div>
+                            </th>
+                            <th style="width: 50px;">S/N</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by DataTables -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.7.0/js/dataTables.colReorder.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var selectedIds = new Set();
+            
+            var table = $('#contactTable').DataTable({
+                serverSide: true,
+                processing: true,
+                ajax: {
+                    url: '?handler=Data',
+                    type: 'POST',
+                    headers: {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    data: function(d) {
+                        d.SearchString = $('#SearchString').val();
+                    }
+                },
+                columns: [
+                    { data: 'checkbox', orderable: false, className: 'text-center align-middle' },
+                    { data: 'sn', orderable: false, className: 'align-middle' },
+                    { data: 'name', className: 'align-middle' },
+                    { data: 'phone', className: 'align-middle' },
+                    { data: 'email', className: 'align-middle' },
+                    { data: 'subject', className: 'align-middle' },
+                    { data: 'manage', orderable: false, className: 'text-end align-middle' }
+                ],
+                order: [[2, 'asc']],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+                language: {
+                    search: "<i class='bi bi-search'></i>",
+                    searchPlaceholder: "Quick search...",
+                    processing: "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>"
+                },
+                dom: `<"row align-items-center mb-3"<"col-md-12"B>>
+                      <"row"<"col-sm-12"tr>>
+                      <"row align-items-center mt-3"<"col-md-5"i><"col-md-7"p>>`,
+                buttons: [
+                    {
+                        extend: 'colvis',
+                        text: '<i class="bi bi-columns-gap me-1"></i> Columns',
+                        className: 'btn btn-light shadow-none border px-3 custom-ctrl-height'
+                    }
+                ],
+                colReorder: true,
+                responsive: true,
+                stateSave: true,
+                drawCallback: function(settings) {
+                    $('.dataTables_filter input').addClass('form-control mis-search-input');
+                    
+                    var api = this.api();
+                    var nodes = api.rows().nodes();
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = $(nodes[i]);
+                        var checkbox = node.find('input[type="checkbox"]');
+                        if (checkbox.length && selectedIds.has(checkbox.val())) {
+                            checkbox.prop('checked', true);
+                            node.addClass('table-active');
+                            node.css('font-weight', '500');
+                        } else {
+                            node.removeClass('table-active');
+                            node.css('font-weight', 'normal');
+                        }
+                    }
+                    
+                    var allCheckboxes = node ? node.parent().find('.row-checkbox').length : 0;
+                    if(allCheckboxes > 0 && selectedIds.size > 0 && $('.row-checkbox:checked').length === allCheckboxes) {
+                        $('#selectAll').prop('checked', true);
+                    } else {
+                        $('#selectAll').prop('checked', false);
+                    }
+                }
+            });
+
+            $('#selectAll').on('change', function() {
+                var isChecked = $(this).is(':checked');
+                
+                if (isChecked) {
+                    $('#selectAll').prop('disabled', true);
+                    var data = {
+                        "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
+                        "SearchString": $('#SearchString').val(),
+                        "search[value]": table.search()
+                    };
+                    
+                    $.post('?handler=AllIds', data, function(ids) {
+                        selectedIds = new Set(ids);
+                        $('.row-checkbox').prop('checked', true);
+                        updateBulkToolbar();
+                        $('#selectAll').prop('disabled', false);
+                    }).fail(function() {
+                        $('#selectAll').prop('checked', false);
+                        $('#selectAll').prop('disabled', false);
+                        alert("Failed to select all records.");
+                    });
+                } else {
+                    selectedIds.clear();
+                    $('.row-checkbox').prop('checked', false);
+                    updateBulkToolbar();
+                }
+            });
+
+            $('#contactTable tbody').on('change', 'input[type="checkbox"]', function(){
+                var id = $(this).val();
+                if(this.checked){
+                    selectedIds.add(id);
+                } else {
+                    selectedIds.delete(id);
+                    var el = $('#selectAll').get(0);
+                    if(el && el.checked && ('indeterminate' in el)){
+                       el.indeterminate = true;
+                    }
+                }
+                updateBulkToolbar();
+            });
+
+            table.on('draw', function () {
+                var isAllChecked = $('#selectAll').is(':checked');
+                $('.row-checkbox').each(function() {
+                    if (isAllChecked) {
+                        $(this).prop('checked', true);
+                        selectedIds.add($(this).val());
+                    } else {
+                        if (selectedIds.has($(this).val())) {
+                            $(this).prop('checked', true);
+                        }
+                    }
+                });
+                updateBulkToolbar();
+            });
+
+            let searchTimeout = null;
+            $('#SearchString').on('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(function() {
+                    selectedIds.clear();
+                    $('#selectAll').prop('checked', false);
+                    updateBulkToolbar();
+                    table.ajax.reload();
+                }, 400);
+            });
+
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault();
+            });
+
+            function updateBulkToolbar() {
+                var selectedCount = selectedIds.size;
+                if (selectedCount > 0) {
+                    $('#bulkActionToolbar').removeClass('d-none').addClass('d-flex');
+                    $('#selectedCount').text(selectedCount);
+                } else {
+                    $('#bulkActionToolbar').addClass('d-none').removeClass('d-flex');
+                }
+            }
+            
+            window.submitBulkAction = function(actionType) {
+                var count = selectedIds.size;
+                if (count === 0) return;
+                
+                var actionLabel = actionType === 'Newsletter' ? 'Export to Newsletter Mailing List' : 'Export to SMS Contact Group';
+                if (!confirm('Are you sure you want to ' + actionLabel + ' for ' + count + ' records?')) {
+                    return;
+                }
+                
+                var idArray = Array.from(selectedIds);
+                $('#bulkActionToolbar button').prop('disabled', true);
+                
+                $.ajax({
+                    url: '?handler=BulkAction',
+                    type: 'POST',
+                    headers: {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    data: {
+                        action: actionType,
+                        ids: idArray
+                    },
+                    success: function (res) {
+                        $('#bulkActionToolbar button').prop('disabled', false);
+                        if (res.success) {
+                            alert(res.message);
+                            selectedIds.clear();
+                            $('.row-checkbox').prop('checked', false);
+                            $('#selectAll').prop('checked', false);
+                            updateBulkToolbar();
+                            table.draw(false);
+                        } else {
+                            alert("Error: " + res.message);
+                        }
+                    },
+                    error: function () {
+                        $('#bulkActionToolbar button').prop('disabled', false);
+                        alert('An error occurred while performing the bulk action.');
+                    }
+                });
+            };
+
+            @if (Model.EnableListDownload)
+            {
+                <text>
+                $('.dt-buttons').append($('#exportDropdownWrapper').html());
+                $('#exportDropdownWrapper').remove();
+                </text>
+            }
+
+            window.triggerExport = function(format) {
+                alert("View export is currently disabled for this page.");
+            };
+        });
+    </script>
+}
+

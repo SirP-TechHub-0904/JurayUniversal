@@ -1,0 +1,139 @@
+@page
+@model JurayUniversal.Website.Areas.MisMassComm.Pages.Dashboard.Campaigns.CreateModel
+@{
+    ViewData["Title"] = "New Global SMS Campaign";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+}
+
+@section HeaderActions {
+    <h5 class="mb-0 text-muted">Company Wallet Balance: <span class="text-primary font-weight-bold">&#8358;@Model.CurrentCompanyBalance.ToString("N2")</span></h5>
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    
+    <div class="row">
+        <!-- Message Details -->
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0"><i class="fa fa-comment-alt text-primary"></i> Campaign Message</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label asp-for="Campaign.Subject" class="form-label font-weight-bold">Internal Subject Name</label>
+                        <input asp-for="Campaign.Subject" class="form-control" required placeholder="e.g. System Maintenance Notice" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Campaign.SenderId" class="form-label font-weight-bold">Sender ID (Max 11 chars)</label>
+                        <input asp-for="Campaign.SenderId" class="form-control" maxlength="11" required placeholder="e.g. MYCOMPANY" />
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Campaign.Message" class="form-label font-weight-bold">Message Content</label>
+                        <textarea asp-for="Campaign.Message" class="form-control" rows="6" required placeholder="Type your SMS message here..."></textarea>
+                        <small class="text-muted mt-1 d-block"><span id="charCount">0</span> characters. (1 page = 160 chars)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipients & Actions -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0"><i class="fa fa-users text-info"></i> Select Recipients</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Global Phone Books -->
+                    <div class="form-group mb-3">
+                        <label class="form-label font-weight-bold">Select Global Phone Books</label>
+                        @if(Model.GlobalPhoneBooks.Count == 0)
+                        {
+                            <p class="text-muted small">No global phone books found. <a href="/MisMassComm/Dashboard/PhoneBooks/Create">Create one</a>.</p>
+                        }
+                        else
+                        {
+                            <div class="border p-2 rounded" style="max-height: 120px; overflow-y: auto;">
+                                @foreach (var pb in Model.GlobalPhoneBooks)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="SelectedPhoneBooks" value="@pb.Id" id="pb_@pb.Id">
+                                        <label class="form-check-label" for="pb_@pb.Id">
+                                            @pb.Name <small class="text-muted">(@pb.Contacts?.Count contacts)</small>
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <!-- System Users -->
+                    <div class="form-group mb-3">
+                        <label class="form-label font-weight-bold">Select Specific Users</label>
+                        <div class="border p-2 rounded" style="max-height: 200px; overflow-y: auto;">
+                            @foreach (var u in Model.SystemUsers)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedUsers" value="@u.Id" id="u_@u.Id">
+                                    <label class="form-check-label" for="u_@u.Id">
+                                        @(u.FirstName) @(u.LastName) <small class="text-muted">(@u.PhoneNumber)</small>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Additional Numbers -->
+                    <div class="form-group mb-4">
+                        <label asp-for="AdditionalNumbers" class="form-label font-weight-bold">Additional Numbers</label>
+                        <textarea asp-for="AdditionalNumbers" class="form-control" rows="2" placeholder="Comma separated list of extra numbers"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Box -->
+            <div class="card border-0 shadow-sm border-top border-primary border-3">
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label class="form-label font-weight-bold">Action</label>
+                        <select asp-for="ActionType" class="form-select" id="actionSelect" onchange="toggleScheduleDate()">
+                            <option value="SendNow">Send Immediately</option>
+                            <option value="Schedule">Schedule for Later</option>
+                            <option value="Draft">Save as Draft</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4" id="scheduleDateContainer" style="display: none;">
+                        <label asp-for="Campaign.ScheduledDate" class="form-label font-weight-bold">Schedule Date & Time</label>
+                        <input asp-for="Campaign.ScheduledDate" class="form-control" type="datetime-local" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fa fa-paper-plane"></i> Execute Global Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function toggleScheduleDate() {
+            var action = document.getElementById('actionSelect').value;
+            var container = document.getElementById('scheduleDateContainer');
+            if (action === 'Schedule') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('Campaign_Message').addEventListener('keyup', function() {
+            document.getElementById('charCount').textContent = this.value.length;
+        });
+    </script>
+}
+

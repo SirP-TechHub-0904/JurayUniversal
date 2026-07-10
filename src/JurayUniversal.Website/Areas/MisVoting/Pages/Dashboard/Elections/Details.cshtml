@@ -1,0 +1,205 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Elections.DetailsModel
+@{
+    ViewData["Title"] = "Election Details - " + Model.Election.Title;
+    
+    // Generate the public link for Open elections
+    var request = HttpContext.Request;
+    var shortCode = !string.IsNullOrEmpty(Model.Election.ShortCode) ? Model.Election.ShortCode : Model.Election.Id.ToString();
+    var publicLink = $"{request.Scheme}://{request.Host}/e/{shortCode}";
+}
+@if (!string.IsNullOrEmpty(Model.Election.ElectionBannerUrl))
+{
+    <div class="row mb-4">
+        <div class="col-12">
+            <img src="@Model.Election.ElectionBannerUrl" alt="Election Banner" class="img-fluid rounded-4 shadow-sm w-100" style="max-height: 300px; object-fit: cover;" />
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0 text-white">Election Details</h4>
+                <div>
+                    <a asp-page="../Results" asp-route-id="@Model.Election.Id" class="btn btn-sm btn-primary rounded-pill px-3 me-1"><i class="bi bi-bar-chart me-1"></i> Results</a>
+                    @if (Model.Election.VotingStatus == Domain.Enum.Enum.MisVotingStatus.Upcoming)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@Model.Election.Id" class="btn btn-sm btn-outline-light rounded-pill px-3 me-1"><i class="bi bi-pencil me-1"></i> Edit</a>
+                        <form method="post" asp-page-handler="Publish" asp-route-id="@Model.Election.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to publish this election? Voting will become active.');">
+                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 fw-bold"><i class="bi bi-send-check me-1"></i> Publish</button>
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5 text-muted">Title:</dt>
+                    <dd class="col-sm-7 fw-bold">@Model.Election.Title</dd>
+                    
+                    <dt class="col-sm-5 text-muted">Type:</dt>
+                    <dd class="col-sm-7">
+                        @if(Model.Election.ElectionType == Domain.Enum.Enum.MisElectionType.Open)
+                        {
+                            <span class="badge bg-success">Open (Pool)</span>
+                        }
+                        else if(Model.Election.ElectionType == Domain.Enum.Enum.MisElectionType.Public)
+                        {
+                            <span class="badge bg-info text-dark">Public Poll</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Closed (Accreditation)</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-5 text-muted">Status:</dt>
+                    <dd class="col-sm-7">
+                        <span class="badge bg-primary">@Model.Election.VotingStatus</span>
+                    </dd>
+
+                    <dt class="col-sm-5 text-muted">Start Date:</dt>
+                    <dd class="col-sm-7">@Model.Election.StartDate.ToString("MMM dd, yyyy")</dd>
+
+                    <dt class="col-sm-5 text-muted">End Date:</dt>
+                    <dd class="col-sm-7">@Model.Election.EndDate.ToString("MMM dd, yyyy")</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a asp-page="./Index" class="btn btn-outline-secondary w-100 rounded-pill">Back to Directory</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8 mb-4">
+        @if(Model.Election.ElectionType == Domain.Enum.Enum.MisElectionType.Open || Model.Election.ElectionType == Domain.Enum.Enum.MisElectionType.Public)
+        {
+            <div class="card border-success border-2 shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0 text-white"><i class="bi bi-link-45deg me-2"></i> Public Shareable Link</h5>
+                </div>
+                <div class="card-body text-center p-4">
+                    @if(Model.Election.ElectionType == Domain.Enum.Enum.MisElectionType.Public)
+                    {
+                        <p class="text-muted mb-3">This is a <strong>Public Poll</strong>. Anyone on the internet can vote without logging in. Copy the link below and share it anywhere.</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-3">This is an Open Election. Copy the link below and share it with your users. Any registered user who clicks this link can log in and vote without prior accreditation.</p>
+                    }
+                    
+                    <div class="input-group input-group-lg mb-3">
+                        <input type="text" class="form-control text-center bg-light fw-bold text-success" id="publicVotingLink" value="@publicLink" readonly>
+                        <button class="btn btn-success fw-bold px-4" type="button" onclick="copyLink()">
+                            <i class="bi bi-clipboard me-1"></i> Copy Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card border-warning border-2 shadow-sm mb-4">
+                <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0"><i class="bi bi-shield-lock me-2"></i> Accreditation Required</h5>
+                    <a asp-page="./Accreditation" asp-route-id="@Model.Election.Id" class="btn btn-sm btn-dark rounded-pill">Manage Checklist</a>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-0">This is a Closed Election. Users cannot vote unless you explicitly accredit them on the Checklist.</p>
+                </div>
+            </div>
+        }
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                <h5 class="card-title mb-0">Vote Categories & Candidates</h5>
+                @if (Model.Election.VotingStatus == Domain.Enum.Enum.MisVotingStatus.Upcoming)
+                {
+                    <a asp-page="../VoteCategories/Create" asp-route-electionId="@Model.Election.Id" class="btn btn-sm btn-primary rounded-pill"><i class="bi bi-plus"></i> Add Category</a>
+                }
+            </div>
+            <div class="card-body">
+                @if(Model.Election.MisVoteCategories == null || !Model.Election.MisVoteCategories.Any())
+                {
+                    <div class="text-center py-4 text-muted">
+                        No categories have been added yet.
+                    </div>
+                }
+                else
+                {
+                    <div class="accordion" id="catAccordion">
+                        @foreach(var category in Model.Election.MisVoteCategories.OrderBy(x => x.SortOrder))
+                        {
+                            <div class="accordion-item mb-2 border rounded">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@category.Id">
+                                        <span class="fw-bold">@category.Title</span>
+                                    </button>
+                                </h2>
+                                <div id="collapse-@category.Id" class="accordion-collapse collapse" data-bs-parent="#catAccordion">
+                                    <div class="accordion-body">
+                                        @if (Model.Election.VotingStatus == Domain.Enum.Enum.MisVotingStatus.Upcoming)
+                                        {
+                                            <div class="d-flex justify-content-end mb-3">
+                                                <a asp-page="../VoteCategories/Edit" asp-route-id="@category.Id" class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-pencil"></i> Edit Category</a>
+                                                <a asp-page="../Candidates/Create" asp-route-categoryId="@category.Id" class="btn btn-sm btn-primary"><i class="bi bi-person-plus"></i> Add Candidate</a>
+                                            </div>
+                                        }
+                                        <ul class="list-group list-group-flush">
+                                            @if(category.MisCandidates == null || !category.MisCandidates.Any())
+                                            {
+                                                <li class="list-group-item text-muted text-center">No candidates in this category.</li>
+                                            }
+                                            else
+                                            {
+                                                foreach(var candidate in category.MisCandidates)
+                                                {
+                                                    <li class="list-group-item d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            @if (!string.IsNullOrEmpty(candidate.CandidateImageUrl))
+                                                            {
+                                                                <img src="@candidate.CandidateImageUrl" class="rounded-circle border me-3" style="width: 40px; height: 40px; object-fit: cover;" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="bi bi-person-circle fs-4 text-secondary me-3"></i>
+                                                            }
+                                                            <div>
+                                                                <div class="fw-bold">@candidate.Title</div>
+                                                                <div class="text-muted small">@candidate.ShortProfile</div>
+                                                            </div>
+                                                        </div>
+                                                        @if (Model.Election.VotingStatus == Domain.Enum.Enum.MisVotingStatus.Upcoming)
+                                                        {
+                                                            <div>
+                                                                <a asp-page="../Candidates/Edit" asp-route-id="@candidate.Id" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i> Edit</a>
+                                                            </div>
+                                                        }
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function copyLink() {
+            var copyText = document.getElementById("publicVotingLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert("Copied the link: " + copyText.value);
+        }
+    </script>
+}
+

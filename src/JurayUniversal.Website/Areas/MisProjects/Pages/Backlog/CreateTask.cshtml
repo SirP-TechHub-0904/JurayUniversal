@@ -1,0 +1,57 @@
+@page
+@model JurayUniversal.Website.Areas.MisProjects.Pages.Backlog.CreateTaskModel
+@{
+    ViewData["Title"] = "New Work Item";
+    ViewData["Subtitle"] = Model.MisProject.Name + " Backlog";
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <form method="post">
+            <input type="hidden" asp-for="MisProjectTask.MisProjectId" value="@Model.MisProject.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label asp-for="MisProjectTask.Title" class="form-label fw-bold"></label>
+                    <input asp-for="MisProjectTask.Title" class="form-control" required placeholder="Enter a brief title for this work item..." />
+                    <span asp-validation-for="MisProjectTask.Title" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="MisProjectTask.Type" class="form-label fw-bold"></label>
+                    <select asp-for="MisProjectTask.Type" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisTaskType>()"></select>
+                    <span asp-validation-for="MisProjectTask.Type" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MisProjectTask.Description" class="form-label fw-bold"></label>
+                <textarea asp-for="MisProjectTask.Description" class="form-control" rows="4" placeholder="Describe the requirements or issue..."></textarea>
+                <span asp-validation-for="MisProjectTask.Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MisProjectTask.Priority" class="form-label fw-bold"></label>
+                    <select asp-for="MisProjectTask.Priority" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisTaskPriority>()"></select>
+                    <span asp-validation-for="MisProjectTask.Priority" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MisProjectTask.StoryPoints" class="form-label fw-bold"></label>
+                    <input asp-for="MisProjectTask.StoryPoints" type="number" min="0" max="100" class="form-control" value="0" />
+                    <span asp-validation-for="MisProjectTask.StoryPoints" class="text-danger"></span>
+                    <div class="form-text">Estimated effort required (e.g. 1, 2, 3, 5, 8).</div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <a asp-page="./Index" asp-route-projectId="@Model.MisProject.Id" class="btn btn-outline-secondary me-2">Cancel</a>
+                <button type="submit" class="btn btn-primary px-4">Add to Backlog</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

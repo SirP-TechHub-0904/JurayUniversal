@@ -1,0 +1,112 @@
+﻿@page
+@model JurayUniversal.Website.Areas.MisRecruitment.Pages.Platform.TrackModel
+@{
+    ViewData["Title"] = "Track Application";
+    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+}
+
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold">My Applications Dashboard</h1>
+                <p class="lead mb-0 opacity-75">Welcome back, @Model.Account?.FirstName. Track the status of your applications here.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-4 mt-md-0 d-flex justify-content-md-end gap-2 align-items-center">
+                
+                <form method="post" asp-page="./Auth/Logout" class="m-0">
+                    <button type="submit" class="btn btn-outline-light rounded-pill px-4 fw-bold shadow-sm">
+                        <i class="bi bi-box-arrow-right me-1"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container max-w-700 mb-5">
+    
+    @if (Model.Applications != null && Model.Applications.Any())
+    {
+        foreach (var app in Model.Applications)
+        {
+            <div class="card border-0 shadow-sm rounded-4 border-top border-primary border-4 mb-4">
+                <div class="card-body p-4 p-md-5 text-center">
+                    <h5 class="fw-bold mb-1">Application for @app.MisJobPosting?.Title</h5>
+                    <p class="text-muted mb-4 small">Applied on: @app.CreatedAt.ToString("MMM dd, yyyy")</p>
+
+                    <h6 class="text-muted text-uppercase small fw-bold mb-3">Current Status</h6>
+                    
+                    @{
+                        string statusBadgeClass = "bg-secondary";
+                        string statusIcon = "bi-hourglass-split";
+                        
+                        if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Applied || 
+                            app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.CVScreening ||
+                            app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.BackgroundCheck)
+                        {
+                            statusBadgeClass = "bg-warning text-dark";
+                            statusIcon = "bi-search";
+                        }
+                        else if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.OnlineInterview || 
+                                 app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.OfflineInterview || 
+                                 app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.PhoneScreening)
+                        {
+                            statusBadgeClass = "bg-info text-dark";
+                            statusIcon = "bi-calendar-event";
+                        }
+                        else if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Offered || app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Employed)
+                        {
+                            statusBadgeClass = "bg-success text-white";
+                            statusIcon = "bi-check-circle-fill";
+                        }
+                        else if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Rejected)
+                        {
+                            statusBadgeClass = "bg-danger text-white";
+                            statusIcon = "bi-x-circle-fill";
+                        }
+                    }
+
+                    <div class="d-inline-flex flex-column align-items-center">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3 @statusBadgeClass" style="width: 80px; height: 80px; font-size: 32px;">
+                            <i class="bi @statusIcon"></i>
+                        </div>
+                        <h4 class="fw-bold @(statusBadgeClass.Replace("bg-", "text-").Replace(" text-dark", "").Replace(" text-white", ""))">@app.Status</h4>
+                    </div>
+                    
+                    @if (app.Status.ToString().Contains("Interview"))
+                    {
+                        <div class="alert alert-info border-0 rounded-3 mt-4 text-start">
+                            <h6 class="fw-bold"><i class="bi bi-info-circle me-1"></i> Interview Scheduled</h6>
+                            <p class="mb-0 small">You have been moved to the interview stage. Please check your email inbox (and spam folder) for an invitation containing the date, time, and location/link for your interview.</p>
+                        </div>
+                    }
+                    else if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Offered)
+                    {
+                        <div class="alert alert-success border-0 rounded-3 mt-4 text-start">
+                            <h6 class="fw-bold"><i class="bi bi-award me-1"></i> Offer Extended!</h6>
+                            <p class="mb-0 small">Congratulations! We have decided to extend an offer. Please check your email for the official offer letter and next steps.</p>
+                        </div>
+                    }
+                    else if (app.Status == JurayUniversal.Domain.Enum.Enum.ApplicationStatus.Employed)
+                    {
+                        <div class="alert alert-success border-0 rounded-3 mt-4 text-start">
+                            <h6 class="fw-bold"><i class="bi bi-briefcase-fill me-1"></i> You are Employed!</h6>
+                            <p class="mb-0 small">Welcome to the team! Your application process is complete and you have been officially onboarded into the system.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info border-0 shadow-sm rounded-4 p-5 text-center">
+            <i class="bi bi-inbox display-1 d-block mb-3 text-info opacity-50"></i>
+            <h4 class="fw-bold mb-2">No Applications Yet</h4>
+            <p class="mb-4">You haven't applied for any positions yet. Browse our open positions to get started.</p>
+            <a asp-page="./JobBoard" class="btn btn-primary rounded-pill px-4 fw-bold">View Open Jobs</a>
+        </div>
+    }
+</div>
+

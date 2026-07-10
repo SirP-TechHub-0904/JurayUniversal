@@ -1,4 +1,4 @@
-ï»¿@using System.Text.RegularExpressions;
+@using System.Text.RegularExpressions;
 @using JurayUniversal.Application.Services;
 
 @{
@@ -184,7 +184,7 @@
                 <!-- Footer Bar Start -->
                 <div class="footer-bar">
                     <p>
-                        <span class="primary-color">@supersetting.CompanyName</span> Â© @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
+                        <span class="primary-color">@supersetting.CompanyName</span> © @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
                         {
                             <span>
                                 Developed by
@@ -338,8 +338,9 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                 <h5>Singup for Weekly Newsletter</h5>
                                 <div class="fieldset">
                                     <p>We may send you information about related events, webinars, products and services which we believe.</p>
-                                    <form>
-                                        <input class="" value="Enter your email address" type="text">
+                                    <form method="post" asp-page="/Subscribe">
+                                        <input class="" name="email" placeholder="Enter your email address" type="email">
+                                        @await Html.PartialAsync("_Captcha")
                                         <input class="submit-btn" name="submit" value="Submit" type="submit">
                                     </form>
                                 </div>
@@ -350,7 +351,7 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                     </div>
                     <div class="copyright">
                         <p>
-                            Â© @DateTime.UtcNow.Year @supersetting.CompanyName All rights reserved. @if (supersetting.ShowMadeByJuray == true)
+                            © @DateTime.UtcNow.Year @supersetting.CompanyName All rights reserved. @if (supersetting.ShowMadeByJuray == true)
                             {
                                 <span>
                                     Developed by
@@ -545,7 +546,7 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                         <div class="col-lg-8">
                             <div class="text-left">
                                 <p>
-                                    Â© @DateTime.UtcNow.Year, @supersetting.CompanyName.
+                                    © @DateTime.UtcNow.Year, @supersetting.CompanyName.
 
                                     @if (supersetting.ShowMadeByJuray == true)
                                     {
@@ -733,8 +734,9 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                             <h3 class="footer-title">Newsletter</h3>
                             <p class="widget-desc white-color">Stay up to update with our latest news and products.</p>
                             <p>
-                                <input type="email" name="EMAIL" placeholder="Your email address" required="">
-                                <input type="submit" value="Subscribe Now">
+                                <input type="email" name="email" placeholder="Your email address" required="">
+                                @await Html.PartialAsync("_Captcha")
+                                        <input type="submit" value="Subscribe Now">
                             </p>
                         </div>
                     </div>
@@ -761,7 +763,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                         <div class="col-lg-6">
                             <div class="copyright text-lg-start text-center ">
                                 <p>
-                                    Â© @DateTime.UtcNow.Year @supersetting.CompanyName. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
+                                    © @DateTime.UtcNow.Year @supersetting.CompanyName. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
                                     {
                                         <span>
                                             Developed by @if (supersetting.ShowMadeByXYZ == true)
@@ -967,11 +969,12 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                 <p>Get subscriber only insights & updates</p>
                                 <div class="mailchimp-widget-wrap mt-4">
                                     <!-- subscribe form -->
-                                    <form id="subscribe-form" class="subscribe-form">
+                                    <form id="subscribe-form" class="subscribe-form" method="post" asp-page="/Subscribe">
                                         <div class="input-group add-on">
-                                            <input type="text" class="form-control" name="mcemail" autocomplete="off" id="mcemail" placeholder="Email Address">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-default subscribe-btn" type="submit">Go</button>
+                                            <input type="text" class="form-control" name="email" autocomplete="off" id="mcemail" placeholder="Email Address">
+                                            @await Html.PartialAsync("_Captcha")
+                                              <div class="input-group-btn">
+                                                  <button class="btn btn-default subscribe-btn" type="submit">Go</button>
                                             </div>
                                         </div>
                                     </form>
@@ -991,7 +994,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                 <ul class="footer-bottom-items">
                                     <li class="nav-item">
                                         <div class="nav-item-inner">
-                                            <span class="primary-color">@supersetting.CompanyName</span> Â© @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
+                                            <span class="primary-color">@supersetting.CompanyName</span> © @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
                                             {
                                                 <span>
                                                     Developed by @if (supersetting.ShowMadeByXYZ == true)
@@ -1200,7 +1203,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <p>
-                            <span class="primary-color">@supersetting.CompanyName</span> Â© @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
+                            <span class="primary-color">@supersetting.CompanyName</span> © @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
                             {
                                 <span>
                                     Developed by @if (supersetting.ShowMadeByXYZ == true)
@@ -1364,7 +1367,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                     <div class="copyright">
                         <div class="row text-center">
                             <div class="col-md-12">
-                                <span class="primary-color">@supersetting.CompanyName</span> Â© @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
+                                <span class="primary-color">@supersetting.CompanyName</span> © @DateTime.UtcNow.Year. All Rights Reserved. @if (supersetting.ShowMadeByJuray == true)
                                 {
                                     <span>
                                         Developed by @if (supersetting.ShowMadeByXYZ == true)
@@ -1779,7 +1782,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="copyright-area-inner">
-                                        Copyright Â© @DateTime.UtcNow.Year @supersetting.CompanyName. All Rights Reserved.  @if (supersetting.ShowMadeByJuray == true)
+                                        Copyright © @DateTime.UtcNow.Year @supersetting.CompanyName. All Rights Reserved.  @if (supersetting.ShowMadeByJuray == true)
                                         {
                                             <span>
                                                 Developed by @if (supersetting.ShowMadeByXYZ == true)
@@ -2122,7 +2125,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                 <div class="container">
                     <div class="site-footer-two__bottom-inner">
                         <p class="site-footer-two__bottom-text">
-                            Â© Copywright @DateTime.UtcNow.Year @supersetting.CompanyName Developed by @if (supersetting.ShowMadeByXYZ == true)
+                            © Copywright @DateTime.UtcNow.Year @supersetting.CompanyName Developed by @if (supersetting.ShowMadeByXYZ == true)
                             {
                                 <a href="https://www.exwhyzee.ng/" target="_blank" style="color:white;" class="devby">
                                     Exwhyzee Technologies Limited.
@@ -2144,3 +2147,4 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
         </footer>
     }
 }
+

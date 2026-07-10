@@ -14,7 +14,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
 
 
         private readonly SignInManager<Profile> _signInManager;
-        private readonly RoleManager<IdentityRole> _role;
+        private readonly RoleManager<AppRole> _role;
         private readonly UserManager<Profile> _userManager;
         private readonly ILogger<UpdateUserPermissionModel> _logger;
         private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
@@ -23,7 +23,7 @@ namespace JurayUniversal.Website.Areas.NIPSSADMIN.Pages.Users
         public UserPermissionModel(
             UserManager<Profile> userManager,
             SignInManager<Profile> signInManager,
-            RoleManager<IdentityRole> role,
+            RoleManager<AppRole> role,
         ILogger<UpdateUserPermissionModel> logger,
             JurayUniversal.Persistence.EF.SQL.DashboardDbContext context)
         {

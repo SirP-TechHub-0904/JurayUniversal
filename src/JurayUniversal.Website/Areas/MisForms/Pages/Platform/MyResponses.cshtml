@@ -1,0 +1,78 @@
+﻿@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisForms.Pages.Platform.MyResponsesModel
+@{
+    ViewData["Title"] = "My Responses - " + Model.Form.Title;
+}
+
+<div class="mis-page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        
+        <p class="text-muted fs-7 mb-0">@Model.Form.Title</p>
+    </div>
+    <div class="d-flex gap-2">
+        
+        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back</a>
+    </div>
+</div>
+
+<div class="page-content bg-light p-0 p-md-4 rounded-4 shadow-sm">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            @if (!Model.FormResponses.Any())
+            {
+                <div class="text-center py-5">
+                    <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-inbox text-muted fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold text-muted">No Responses Found</h5>
+                    <p class="text-muted">You have not submitted any responses to this form yet.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="py-3 px-4 text-nowrap">Submitted At</th>
+                                @foreach (var field in Model.HeaderFields)
+                                {
+                                    <th class="py-3 px-4 text-nowrap">@(Model.FieldLabels.ContainsKey(field) ? Model.FieldLabels[field] : field)</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var response in Model.FormResponses)
+                            {
+                                var answers = Model.ParsedAnswers.ContainsKey(response.Id) ? Model.ParsedAnswers[response.Id] : new Dictionary<string, string>();
+                                <tr>
+                                    <td class="py-3 px-4 text-nowrap">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-clock text-muted me-2"></i>
+                                            @response.SubmittedAt.ToString("MMM dd, yyyy HH:mm")
+                                        </div>
+                                    </td>
+                                    @foreach (var field in Model.HeaderFields)
+                                    {
+                                        <td class="py-3 px-4">
+                                            @if (answers.ContainsKey(field) && !string.IsNullOrWhiteSpace(answers[field]))
+                                            {
+                                                <span class="text-dark">@answers[field]</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">N/A</span>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

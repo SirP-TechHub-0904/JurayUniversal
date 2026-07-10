@@ -1,0 +1,89 @@
+@page
+@model JurayUniversal.Website.Areas.MisVoting.Pages.Dashboard.Elections.CreateModel
+
+@{
+    ViewData["Title"] = "Create New Election";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+    ViewData["BackUrl"] = "./Index";
+}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white border-bottom p-4">
+        <h5 class="mb-0 fw-bold">Create New Election</h5>
+    </div>
+    <div class="card-body p-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="MisElection.Title" class="form-label fw-bold"></label>
+                <input asp-for="MisElection.Title" class="form-control" />
+                <span asp-validation-for="MisElection.Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MisElection.Instructions" class="form-label fw-bold"></label>
+                <textarea asp-for="MisElection.Instructions" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="MisElection.Instructions" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MisElection.StartDate" class="form-label fw-bold"></label>
+                        <input asp-for="MisElection.StartDate" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="MisElection.StartDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MisElection.EndDate" class="form-label fw-bold"></label>
+                        <input asp-for="MisElection.EndDate" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="MisElection.EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MisElection.ElectionType" class="form-label fw-bold"></label>
+                        <select asp-for="MisElection.ElectionType" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisElectionType>()" class="form-select"></select>
+                        <span asp-validation-for="MisElection.ElectionType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MisElection.VotingStatus" class="form-label fw-bold"></label>
+                        <select asp-for="MisElection.VotingStatus" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.MisVotingStatus>()" class="form-select"></select>
+                        <span asp-validation-for="MisElection.VotingStatus" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4 form-group form-check ms-2">
+                    <input asp-for="MisElection.EnableCandidateImages" class="form-check-input" />
+                    <label asp-for="MisElection.EnableCandidateImages" class="form-check-label fw-bold">Show Candidate Photos</label>
+                </div>
+                <div class="col-md-4 form-group form-check ms-2">
+                    <input asp-for="MisElection.ShowResults" class="form-check-input" />
+                    <label asp-for="MisElection.ShowResults" class="form-check-label fw-bold">Publish Live Results</label>
+                </div>
+                <div class="col-md-3 form-group form-check ms-2">
+                    <input asp-for="MisElection.RequireAllCategories" class="form-check-input" />
+                    <label asp-for="MisElection.RequireAllCategories" class="form-check-label fw-bold text-danger">Strict: Must Vote All Categories</label>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary rounded-pill px-4">Create Election</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill px-4 ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

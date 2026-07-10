@@ -1,116 +1,156 @@
-@page
+﻿@page
 @model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.ResponsesModel
 @using System.Text.Json
 @{
     ViewData["Title"] = "Responses - " + Model.Form.Title;
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    <div>
-        <h3 class="mis-page-title mb-0">Responses: @Model.Form.Title</h3>
-        <span class="text-muted fs-8">Total Submissions: @Model.FormResponses.Count</span>
+<!-- Header bar -->
+<div class="mis-page-header d-flex justify-content-between align-items-center mb-0 pb-2 bg-white px-4 border-bottom shadow-xs">
+    <div class="d-flex align-items-center gap-3">
+        <a asp-page="./Index" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width:36px; height:36px;" title="Back to list">
+            <i class="bi bi-arrow-left text-dark"></i>
+        </a>
+        <div>
+            <h4 class="mb-0 fw-bold text-dark">@Model.Form.Title</h4>
+            <small class="text-muted">@Model.FormResponses.Count response(s)</small>
+        </div>
     </div>
-    <div class="d-flex gap-2">
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Forms</a>
+    <div class="d-flex gap-2 align-items-center">
+        
     </div>
 </div>
 
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body p-4 p-md-5">
-            
-            @if (Model.FormResponses.Any())
-            {
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped align-middle">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Date Submitted</th>
-                                @if (Model.Form.RequireLogin)
-                                {
-                                    <th>User</th>
-                                }
-                                @foreach (var header in Model.HeaderFields)
-                                {
-                                    <th>@(Model.FieldLabels.ContainsKey(header) ? Model.FieldLabels[header] : header)</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var response in Model.FormResponses)
-                            {
-                                <tr>
-                                    <td class="text-nowrap text-muted fs-8">
-                                        @response.SubmittedAt.ToString("g")
-                                    </td>
-                                    @if (Model.Form.RequireLogin)
-                                    {
-                                        <td>
-                                            @if (response.UserProfile != null)
-                                            {
-                                                <span class="fw-bold">@response.UserProfile.FirstName @response.UserProfile.LastName</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="text-muted fst-italic">Anonymous</span>
-                                            }
-                                        </td>
-                                    }
-                                    @{
-                                        Dictionary<string, string> answers = new Dictionary<string, string>();
-                                        try
-                                        {
-                                            var doc = JsonDocument.Parse(response.ResponsesJson);
-                                            if (doc.RootElement.ValueKind == JsonValueKind.Array)
-                                            {
-                                                foreach(var item in doc.RootElement.EnumerateArray())
-                                                {
-                                                    if (item.TryGetProperty("name", out var nameProp))
-                                                    {
-                                                        var name = nameProp.GetString();
-                                                        if (item.TryGetProperty("userData", out var userDataProp))
-                                                        {
-                                                            if (userDataProp.ValueKind == JsonValueKind.Array)
-                                                            {
-                                                                var vals = userDataProp.EnumerateArray().Select(x => x.GetString()).Where(x => !string.IsNullOrEmpty(x));
-                                                                answers[name] = string.Join(", ", vals);
-                                                            }
-                                                            else
-                                                            {
-                                                                answers[name] = userDataProp.GetString();
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        catch { }
+<!-- Google-style navigation tabs -->
+<div class="d-flex justify-content-center bg-white border-bottom shadow-xs mb-4 pt-2">
+    <ul class="nav nav-pills mb-2" style="font-weight: 500; font-size: 0.95rem;">
+        <li class="nav-item me-2">
+            <a class="nav-link text-muted px-4 py-2" asp-page="./Builder" asp-route-id="@Model.Form.Id">Questions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active px-4 py-2" asp-page="./Responses" asp-route-id="@Model.Form.Id" style="background-color: #e8eaf6; color: #3f51b5; border-radius: 8px;">Responses</a>
+        </li>
+    </ul>
+</div>
 
-                                        foreach (var header in Model.HeaderFields)
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    @if (Model.FormResponses.Any())
+    {
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10 mb-4">
+                <!-- Main Form Title Card -->
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <h2 class="h3 fw-bold mb-3">@Model.FormResponses.Count response(s)</h2>
+                        <div class="d-flex border-bottom">
+                            <div class="px-3 py-2 border-bottom border-3 border-primary text-primary fw-bold" style="margin-bottom: -2px;">Summary</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @foreach (var header in Model.HeaderFields)
+            {
+                <div class="col-12 col-xl-10 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4 p-md-5">
+                            <h5 class="fw-bold mb-1">@(Model.FieldLabels.ContainsKey(header) ? Model.FieldLabels[header] : header)</h5>
+                            <div class="text-muted fs-7 mb-4">@Model.FormResponses.Count response(s)</div>
+                            
+                            @{
+                                var stat = Model.Statistics.FirstOrDefault(s => s.Name == header);
+                            }
+                            
+                            @if (stat != null)
+                            {
+                                <!-- Chart Field -->
+                                @if (stat.AnswerCounts.Any() && stat.AnswerCounts.Values.Sum() > 0)
+                                {
+                                    <div id="chart-@stat.Name" style="min-height: 250px;"></div>
+                                }
+                                else
+                                {
+                                    <div class="text-center text-muted py-5">
+                                        <i class="bi bi-pie-chart text-light fs-1 mb-2 d-block"></i>
+                                        <small>0 selections made</small>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <!-- Text / Date Field -->
+                                <div class="d-flex flex-column gap-2 mt-2">
+                                    @foreach (var response in Model.FormResponses)
+                                    {
+                                        var answers = Model.ParsedAnswers.ContainsKey(response.Id) ? Model.ParsedAnswers[response.Id] : new Dictionary<string, string>();
+                                        var ansVal = answers.ContainsKey(header) ? answers[header] : "";
+                                        if (!string.IsNullOrEmpty(ansVal))
                                         {
-                                            <td>
-                                                @if (answers != null && answers.ContainsKey(header))
-                                                {
-                                                    @answers[header]
-                                                }
-                                            </td>
+                                            <div class="bg-light rounded-3 p-3 text-dark border" style="background-color: #f8f9fa !important;">
+                                                @ansVal
+                                            </div>
                                         }
                                     }
-                                </tr>
+                                </div>
                             }
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             }
-            else
-            {
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4 p-md-5">
                 <div class="text-center py-5">
                     <i class="bi bi-inbox text-muted opacity-50 mb-3 d-block" style="font-size: 4rem;"></i>
                     <h4 class="fw-bold text-muted">No Responses Yet</h4>
                     <p class="text-muted">Once users start filling out the form, their answers will appear here.</p>
                 </div>
-            }
-
+            </div>
         </div>
-    </div>
+    }
 </div>
+
+<partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            @foreach (var stat in Model.Statistics)
+            {
+                if (stat.AnswerCounts.Any() && stat.AnswerCounts.Values.Sum() > 0)
+                {
+                    <text>
+                    var options_@(stat.Name.Replace("-", "")) = {
+                        series: [@string.Join(",", stat.AnswerCounts.Values)],
+                        labels: [@Html.Raw(string.Join(",", stat.AnswerCounts.Keys.Select(k => $"'{k.Replace("'", "\\'")}'")))],
+                        chart: {
+                            type: 'donut',
+                            height: 250
+                        },
+                        dataLabels: {
+                            enabled: true
+                        },
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    size: '65%'
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    };
+
+                    var chart_@(stat.Name.Replace("-", "")) = new ApexCharts(document.querySelector("#chart-@stat.Name"), options_@(stat.Name.Replace("-", "")));
+                    chart_@(stat.Name.Replace("-", "")).render();
+                    </text>
+                }
+            }
+        });
+    </script>
+}
+

@@ -1,0 +1,71 @@
+@page
+@model JurayUniversal.Website.Areas.MisManagement.Pages.Plans.CreateModel
+@{
+    ViewData["Title"] = "Add New Newsletter Plan";
+    ViewData["Subtitle"] = "Fill out the form below to add a new record.";
+    ViewData["ActiveMenu"] = "MisManagement";
+    ViewData["ActiveSubMenu"] = "NewsletterPlans";
+}
+
+<div class="page-heading">
+    
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-8 col-lg-6 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="MisNewsletterPlan.Name" class="form-label fw-bold"></label>
+                            <input asp-for="MisNewsletterPlan.Name" class="form-control" placeholder="e.g. Pro Monthly" />
+                            <span asp-validation-for="MisNewsletterPlan.Name" class="text-danger fs-12px"></span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="MisNewsletterPlan.Amount" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">&#8358;</span>
+                                    <input asp-for="MisNewsletterPlan.Amount" type="number" step="0.01" class="form-control" placeholder="10000" />
+                                </div>
+                                <span asp-validation-for="MisNewsletterPlan.Amount" class="text-danger fs-12px"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="MisNewsletterPlan.Quota" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <input asp-for="MisNewsletterPlan.Quota" type="number" class="form-control" placeholder="20000" />
+                                    <span class="input-group-text">Emails</span>
+                                </div>
+                                <span asp-validation-for="MisNewsletterPlan.Quota" class="text-danger fs-12px"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="MisNewsletterPlan.DurationInMonths" class="form-label fw-bold"></label>
+                            <div class="input-group">
+                                <input asp-for="MisNewsletterPlan.DurationInMonths" type="number" min="1" class="form-control" placeholder="1" />
+                                <span class="input-group-text">Months</span>
+                            </div>
+                            <span asp-validation-for="MisNewsletterPlan.DurationInMonths" class="text-danger fs-12px"></span>
+                            <div class="form-text">How long this quota remains valid before expiring.</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary rounded-pill fw-bold py-2">
+                                <i class="bi bi-save me-1"></i> Save Plan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

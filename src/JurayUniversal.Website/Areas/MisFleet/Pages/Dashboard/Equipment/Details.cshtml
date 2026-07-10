@@ -1,0 +1,200 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisFleet.Pages.Dashboard.Equipment.DetailsModel
+@{
+    ViewData["Title"] = "Asset Details - " + Model.Asset.Name;
+    var totalMaintenance = Model.Asset.MisMaintenanceLogs?.Sum(x => x.Cost) ?? 0;
+    var currentValue = Model.Asset.CurrentValue();
+}
+
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-dark rounded-pill">Back to Ledger</a>
+}
+
+<div class="row">
+    <!-- Left Column: Specs & Value -->
+    <div class="col-lg-8 mb-4">
+        <div class="row mb-4">
+            <div class="col-sm-6 mb-3">
+                <div class="card bg-success text-white border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="card-title text-white-50 text-uppercase fw-bold mb-2">Current Asset Value</h6>
+                        <h2 class="mb-0 fw-bold">@currentValue.ToString("C", new System.Globalization.CultureInfo("en-NG"))</h2>
+                        <div class="small mt-2">Depreciated from @Model.Asset.PurchasePrice.ToString("C", new System.Globalization.CultureInfo("en-NG"))</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+                <div class="card bg-danger text-white border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="card-title text-white-50 text-uppercase fw-bold mb-2">Total Maint. Cost</h6>
+                        <h2 class="mb-0 fw-bold">@totalMaintenance.ToString("C", new System.Globalization.CultureInfo("en-NG"))</h2>
+                        <div class="small mt-2">@Model.Asset.MisMaintenanceLogs?.Count logs recorded</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white p-4 border-bottom">
+                <h5 class="mb-0 fw-bold">Asset Specifications</h5>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-muted">Category:</dt>
+                    <dd class="col-sm-8 fw-bold text-primary">@Model.Asset.MisEquipmentCategory?.Name</dd>
+
+                    <dt class="col-sm-4 text-muted">Serial/VIN:</dt>
+                    <dd class="col-sm-8">@(Model.Asset.SerialNumber ?? "N/A")</dd>
+
+                    <dt class="col-sm-4 text-muted">Purchase Date:</dt>
+                    <dd class="col-sm-8">@Model.Asset.PurchaseDate.ToString("MMM dd, yyyy")</dd>
+
+                    <dt class="col-sm-4 text-muted">Est. Lifespan:</dt>
+                    <dd class="col-sm-8">@Model.Asset.LifespanMonths Months</dd>
+
+                    <dt class="col-sm-4 text-muted">Salvage Value:</dt>
+                    <dd class="col-sm-8">@Model.Asset.SalvageValue.ToString("C", new System.Globalization.CultureInfo("en-NG"))</dd>
+                </dl>
+                
+                @if (!string.IsNullOrEmpty(Model.Asset.AdditionalDetails))
+                {
+                    <hr class="my-4" />
+                    <h6 class="fw-bold text-muted text-uppercase mb-3">Additional Details</h6>
+                    <div class="bg-light p-4 rounded border">
+                        @Html.Raw(Model.Asset.AdditionalDetails)
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center p-4 border-bottom">
+                <h5 class="mb-0 fw-bold">Maintenance Ledger</h5>
+                <button type="button" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#logMaintenanceModal">
+                    <i class="bi bi-plus"></i> Log Service
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Vendor</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.Asset.MisMaintenanceLogs == null || !Model.Asset.MisMaintenanceLogs.Any())
+                        {
+                            <tr><td colspan="4" class="text-center py-4 text-muted">No maintenance records found.</td></tr>
+                        }
+                        else
+                        {
+                            foreach(var log in Model.Asset.MisMaintenanceLogs.OrderByDescending(x => x.Date))
+                            {
+                                <tr>
+                                    <td>@log.Date.ToString("MMM dd, yyyy")</td>
+                                    <td>@log.Description</td>
+                                    <td>@log.PerformedBy</td>
+                                    <td class="fw-bold text-danger">@log.Cost.ToString("C", new System.Globalization.CultureInfo("en-NG"))</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Status & Assignment -->
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm border-0 mb-4 border-top border-4 border-primary">
+            <div class="card-body p-4 text-center">
+                <h6 class="text-muted text-uppercase fw-bold mb-3">Current Status</h6>
+                
+                @if(Model.Asset.CurrentStatus == Domain.Enum.Enum.MisEquipmentStatus.Available)
+                {
+                    <h3 class="text-success fw-bold mb-4"><i class="bi bi-check-circle me-2"></i> Available</h3>
+                    <button class="btn btn-primary w-100 rounded-pill btn-lg fw-bold" data-bs-toggle="modal" data-bs-target="#checkOutModal">Check Out Asset</button>
+                }
+                else if(Model.Asset.CurrentStatus == Domain.Enum.Enum.MisEquipmentStatus.InUse)
+                {
+                    <h3 class="text-primary fw-bold mb-3"><i class="bi bi-person-badge me-2"></i> In Use</h3>
+                    <div class="alert alert-primary text-start mb-4">
+                        <small class="text-uppercase fw-bold d-block mb-1">Assigned To:</small>
+                        <div class="fs-5">@Model.Asset.AssignedToUser?.FirstName @Model.Asset.AssignedToUser?.LastName</div>
+                    </div>
+                    <form method="post" asp-page-handler="CheckIn" asp-route-id="@Model.Asset.Id">
+                        <button type="submit" class="btn btn-outline-primary w-100 rounded-pill fw-bold">Return (Check In)</button>
+                    </form>
+                }
+                else if(Model.Asset.CurrentStatus == Domain.Enum.Enum.MisEquipmentStatus.Maintenance)
+                {
+                    <h3 class="text-warning fw-bold mb-4"><i class="bi bi-wrench me-2"></i> In Maintenance</h3>
+                    <form method="post" asp-page-handler="CheckIn" asp-route-id="@Model.Asset.Id">
+                        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold">Mark as Available</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Check Out Modal -->
+<div class="modal fade" id="checkOutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" asp-page-handler="CheckOut" asp-route-id="@Model.Asset.Id" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Check Out Asset</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Assign To User</label>
+                    <select asp-for="SelectedUserId" class="form-select form-select-lg" asp-items="Model.UsersList" required>
+                        <option value="">-- Select Staff Member --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Confirm Check Out</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Log Maintenance Modal -->
+<div class="modal fade" id="logMaintenanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" asp-page-handler="Maintenance" asp-route-id="@Model.Asset.Id" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Log Maintenance Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Date of Service</label>
+                    <input asp-for="NewLog.Date" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description of Work</label>
+                    <input asp-for="NewLog.Description" type="text" class="form-control" placeholder="e.g. Oil change, Screen repair" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Vendor / Mechanic</label>
+                    <input asp-for="NewLog.PerformedBy" type="text" class="form-control" placeholder="e.g. Apple Store, QuickLube" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Total Cost ($)</label>
+                    <input asp-for="NewLog.Cost" type="number" step="0.01" class="form-control" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Save Record</button>
+            </div>
+        </form>
+    </div>
+</div>
