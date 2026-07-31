@@ -1,36 +1,30 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.IndexModel
+@using JurayUniversal.Website.Areas.MisGroups.Pages.Platform
 @{
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
     ViewData["Title"] = "My " + Model.GroupAlias + "s";
     ViewData["ActiveMenu"] = "MisGroups";
 }
 
-<div class="mis-page-header">
-    
-    <div class="d-flex gap-2">
-        
-    </div>
-</div>
-
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+<div class="page-content bg-light p-0 p-md-4 mt-4" style="min-height: 100vh;">
     @if (Model.PendingInvites.Any())
     {
-        <h5 class="fw-bold mb-3"><i class="bi bi-envelope-paper me-2 text-warning"></i>Pending Invitations</h5>
+        <h5 class="fw-bold mb-3"><i class="bi bi-envelope-paper me-2 text-warning"></i> Pending Invitations</h5>
         <div class="row g-4 mb-5">
             @foreach (var invite in Model.PendingInvites)
             {
                 <div class="col-xl-4 col-md-6">
                     <div class="card border-warning shadow-sm rounded-4 h-100">
                         <div class="card-body p-4">
-                            <h5 class="fw-bold mb-2">@invite.MisGroup?.Title</h5>
-                            <p class="text-muted fs-7 mb-3">You have been invited to join this @Model.GroupAlias.ToLower() as <strong>@(invite.RolePosition ?? "Member")</strong>.</p>
+                            <h5 class="fw-bold mb-2 text-dark">@invite.MisGroup?.Title</h5>
+                            <p class="text-muted fs-7 mb-3">You have been invited to join this @Model.GroupAlias.ToLower() as <strong>@(string.IsNullOrWhiteSpace(invite.RolePosition) ? "Member" : invite.RolePosition)</strong>.</p>
                             <div class="d-flex gap-2">
                                 <form method="post" asp-page-handler="AcceptInvite" asp-route-inviteId="@invite.Id" class="w-50">
-                                    <button type="submit" class="btn btn-success w-100 rounded-pill">Accept</button>
+                                    <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold">Accept</button>
                                 </form>
                                 <form method="post" asp-page-handler="DeclineInvite" asp-route-inviteId="@invite.Id" class="w-50">
-                                    <button type="submit" class="btn btn-outline-danger w-100 rounded-pill">Decline</button>
+                                    <button type="submit" class="btn btn-outline-danger w-100 rounded-pill fw-bold">Decline</button>
                                 </form>
                             </div>
                         </div>
@@ -41,25 +35,26 @@
         <hr class="mb-4" />
     }
 
-    <h5 class="fw-bold mb-3"><i class="bi bi-diagram-3 me-2 text-primary"></i>Active @Model.GroupAlias.ToLower()s</h5>
+    <h5 class="fw-bold mb-3"><i class="bi bi-diagram-3 me-2 text-primary"></i> Active @Model.GroupAlias.ToLower()s</h5>
     <div class="row g-4">
         @foreach (var group in Model.MyGroups)
         {
+            var token = WorkspaceModel.GetGroupToken(group.Id);
             <div class="col-xl-4 col-md-6">
-                <a asp-page="./Workspace" asp-route-id="@group.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <a asp-page="./Workspace" asp-route-token="@token" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center me-3" style="width:48px; height:48px;">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px; height:48px;">
                                 <i class="bi bi-diagram-3 fs-4"></i>
                             </div>
-                            <h5 class="fw-800 text-dark mb-0">@group.Title</h5>
+                            <h5 class="fw-bold text-dark mb-0">@group.Title</h5>
                         </div>
-                        <p class="text-muted mb-0" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                            @group.Description
+                        <p class="text-muted mb-0 fs-7" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            @(string.IsNullOrWhiteSpace(group.Description) ? "No description provided." : group.Description)
                         </p>
                     </div>
                     <div class="card-footer bg-white border-0 p-4 pt-0">
-                        <span class="text-primary fw-bold text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">Enter Workspace <i class="bi bi-arrow-right ms-1"></i></span>
+                        <span class="text-primary fw-bold text-uppercase fs-8" style="letter-spacing: 0.5px;">Enter Live Workspace <i class="bi bi-arrow-right ms-1"></i></span>
                     </div>
                 </a>
             </div>
@@ -74,5 +69,3 @@
         }
     </div>
 </div>
-
-

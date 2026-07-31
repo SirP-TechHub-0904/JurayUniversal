@@ -143,6 +143,15 @@ namespace JurayUniversal.Application.Repository.MIS.UserManagement
 
         public async Task SaveKpiScoresAsync(List<MisKpiScoreDto> scores, string evaluatedBy)
         {
+            if (scores.Count > 0)
+            {
+                var firstPeriod = scores.FirstOrDefault()?.Period;
+                if (!string.IsNullOrWhiteSpace(firstPeriod))
+                {
+                    await EnsureEvaluationPeriodExistsAsync(firstPeriod);
+                }
+            }
+
             foreach (var dto in scores)
             {
                 if (dto.Id > 0)
@@ -183,11 +192,131 @@ namespace JurayUniversal.Application.Repository.MIS.UserManagement
                 .ToListAsync();
 
         public async Task<List<string>> GetAllPeriodsAsync()
-            => await _context.MisKpiUserScores
+        {
+            var managedPeriods = await GetAllEvaluationPeriodsAsync();
+            if (managedPeriods.Count > 0)
+            {
+                return managedPeriods
+                    .Where(p => p.IsActive)
+                    .OrderBy(p => p.SortOrder)
+                    .ThenByDescending(p => p.Date)
+                    .Select(p => p.Title)
+                    .ToList();
+            }
+
+            return await _context.MisKpiUserScores
                 .Select(x => x.Period)
                 .Distinct()
                 .OrderByDescending(x => x)
                 .ToListAsync();
+        }
+
+        public async Task<List<MisKpiEvaluationPeriod>> GetAllEvaluationPeriodsAsync()
+        {
+            var periods = await _context.MisKpiEvaluationPeriods
+                .OrderBy(x => x.SortOrder)
+                .ThenByDescending(x => x.Date)
+                .ToListAsync();
+
+            if (periods.Count == 0)
+            {
+                var scorePeriods = await _context.MisKpiUserScores
+                    .Select(x => x.Period)
+                    .Where(p => !string.IsNullOrWhiteSpace(p))
+                    .Distinct()
+                    .ToListAsync();
+
+                if (scorePeriods.Count > 0)
+                {
+                    int order = 1;
+                    foreach (var sp in scorePeriods)
+                    {
+                        var newP = new MisKpiEvaluationPeriod
+                        {
+                            Title = sp.Trim(),
+                            IsActive = true,
+                            SortOrder = order++,
+                            Date = DateTime.UtcNow
+                        };
+                        _context.MisKpiEvaluationPeriods.Add(newP);
+                        periods.Add(newP);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return periods;
+        }
+
+        public async Task<MisKpiEvaluationPeriod?> GetEvaluationPeriodByIdAsync(long id)
+            => await _context.MisKpiEvaluationPeriods.FindAsync(id);
+
+        public async Task CreateEvaluationPeriodAsync(MisKpiEvaluationPeriod period)
+        {
+            period.Title = period.Title.Trim();
+            _context.MisKpiEvaluationPeriods.Add(period);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEvaluationPeriodAsync(MisKpiEvaluationPeriod period)
+        {
+            period.Title = period.Title.Trim();
+
+            var existing = await _context.MisKpiEvaluationPeriods.FindAsync(period.Id);
+            if (existing != null)
+            {
+                string oldTitle = existing.Title;
+                existing.Title = period.Title;
+                existing.Description = period.Description;
+                existing.IsActive = period.IsActive;
+                existing.SortOrder = period.SortOrder;
+
+                if (!string.Equals(oldTitle, period.Title, StringComparison.OrdinalIgnoreCase))
+                {
+                    var scoresToUpdate = await _context.MisKpiUserScores
+                        .Where(s => s.Period == oldTitle)
+                        .ToListAsync();
+
+                    foreach (var score in scoresToUpdate)
+                    {
+                        score.Period = period.Title;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteEvaluationPeriodAsync(long id)
+        {
+            var period = await _context.MisKpiEvaluationPeriods.FindAsync(id);
+            if (period != null)
+            {
+                _context.MisKpiEvaluationPeriods.Remove(period);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task EnsureEvaluationPeriodExistsAsync(string periodTitle)
+        {
+            if (string.IsNullOrWhiteSpace(periodTitle)) return;
+            string title = periodTitle.Trim();
+
+            var exists = await _context.MisKpiEvaluationPeriods
+                .AnyAsync(p => p.Title.ToLower() == title.ToLower());
+
+            if (!exists)
+            {
+                _context.MisKpiEvaluationPeriods.Add(new MisKpiEvaluationPeriod
+                {
+                    Title = title,
+                    IsActive = true,
+                    SortOrder = 0,
+                    Date = DateTime.UtcNow
+                });
+                await _context.SaveChangesAsync();
+            }
+        }
 
         public async Task<List<MisKpiLeaderboardDto>> GetKpiLeaderboardAsync(string period)
         {

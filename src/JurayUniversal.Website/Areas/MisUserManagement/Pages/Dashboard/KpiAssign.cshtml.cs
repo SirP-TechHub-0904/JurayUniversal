@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
@@ -35,7 +37,13 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
         public string Period { get; set; } = string.Empty;
 
         [BindProperty]
+        public string? NewPeriodTitle { get; set; }
+
+        [BindProperty]
         public List<MisKpiScoreDto> ScoreSheet { get; set; } = new();
+
+        public List<string> ExistingPeriods { get; set; } = new();
+        public bool PeriodIsNew { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -50,12 +58,22 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
                 return NotFound();
             }
 
+            ExistingPeriods = await _userManagementRepo.GetAllPeriodsAsync();
+
             if (string.IsNullOrEmpty(Period))
             {
-                // Default to current quarter/year e.g., "Q2 2026"
-                int quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-                Period = $"Q{quarter} {DateTime.UtcNow.Year}";
+                if (ExistingPeriods.Count > 0)
+                {
+                    Period = ExistingPeriods[0];
+                }
+                else
+                {
+                    int quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+                    Period = $"Q{quarter} {DateTime.UtcNow.Year}";
+                }
             }
+
+            PeriodIsNew = !string.IsNullOrEmpty(Period) && !ExistingPeriods.Contains(Period, StringComparer.OrdinalIgnoreCase);
 
             ScoreSheet = await _userManagementRepo.GetUserScoreSheetAsync(id, Period);
 
@@ -69,27 +87,41 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
                 return NotFound();
             }
 
+            string finalPeriod = Period;
+            if (finalPeriod == "__NEW__" || !string.IsNullOrWhiteSpace(NewPeriodTitle))
+            {
+                finalPeriod = NewPeriodTitle?.Trim() ?? string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(finalPeriod))
+            {
+                ModelState.AddModelError("NewPeriodTitle", "Please provide a valid Evaluation Period title.");
+            }
+
             if (!ModelState.IsValid)
             {
                 UserProfile = await _context.Users.OfType<Profile>().FirstOrDefaultAsync(u => u.Id == id);
+                ExistingPeriods = await _userManagementRepo.GetAllPeriodsAsync();
                 return Page();
             }
+
+            // Normalize title (single spaces, trim)
+            finalPeriod = Regex.Replace(finalPeriod.Trim(), @"\s+", " ");
 
             var currentAdmin = await _userManager.GetUserAsync(User);
             var adminName = currentAdmin?.GetFullName();
             if (string.IsNullOrWhiteSpace(adminName)) adminName = User.Identity?.Name;
             if (string.IsNullOrWhiteSpace(adminName)) adminName = "Admin";
 
-            // Set period for all scores
             foreach (var score in ScoreSheet)
             {
-                score.Period = Period;
+                score.Period = finalPeriod;
                 score.ProfileId = id;
             }
 
             await _userManagementRepo.SaveKpiScoresAsync(ScoreSheet, adminName);
 
-            TempData["success"] = $"KPI scores for period {Period} saved successfully!";
+            TempData["success"] = $"KPI scores for period '{finalPeriod}' saved successfully!";
             return RedirectToPage("/Dashboard/Detail", new { id });
         }
     }

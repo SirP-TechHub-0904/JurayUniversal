@@ -84,6 +84,7 @@ namespace JurayUniversal.Website
             // --- MIS Feature Repositories ---
             builder.Services.AddScoped<JurayUniversal.Website.Services.IMisAuthorizationService, JurayUniversal.Website.Services.MisAuthorizationService>();
             builder.Services.AddTransient<IMisUserManagementRepository, MisUserManagementRepository>();
+            builder.Services.AddSignalR();
             builder.Services.AddSingleton<IServiceProvider>(provider => provider);
             // Add registration for LoggerLibrary
  
@@ -210,6 +211,7 @@ namespace JurayUniversal.Website
 
             app.MapControllers(); // enables PixelPayWebhookController at POST /api/pixelpay-webhook
             app.MapRazorPages();
+            app.MapHub<JurayUniversal.Website.Hubs.MisGroupChatHub>("/hubs/misgroupchat");
 
             // Seed MisFinances help content on startup
             using (var scope = app.Services.CreateScope())

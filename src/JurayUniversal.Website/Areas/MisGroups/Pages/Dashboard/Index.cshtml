@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.IndexModel
 @{
     ViewData["Title"] = Model.GroupAlias + "s Dashboard";
@@ -7,7 +7,10 @@
 }
 
 @section HeaderActions {
-    <a asp-page="./List" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm">View All</a>
+    @if (await MisAuth.CanEditAsync(User, "MisGroups"))
+    {
+        <a asp-page="./List" class="btn btn-primary rounded-pill px-4"><i class="bi bi-list-task me-1"></i> Manage @Model.GroupAlias</a>
+    }
 }
 
 <style>
@@ -37,18 +40,7 @@
     .gradient-info { background: linear-gradient(135deg, #00c6ff, #0072ff); color: white; }
 </style>
 
-<div class="mis-page-header">
-    
-    <div class="d-flex gap-2">
-        
-        @if (await MisAuth.CanEditAsync(User, "MisGroups"))
-        {
-            <a asp-page="./List" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-list-task me-1"></i> Manage @Model.GroupAlias</a>
-        }
-    </div>
-</div>
-
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+<div class="page-content bg-light p-0 p-md-4 mt-4" style="min-height: 100vh;">
 
     <!-- Date Range Filter -->
     <div class="card mb-4 border-0 shadow-sm rounded-4">
@@ -156,7 +148,7 @@
         </div>
     </div>
 
-    <!-- Charts Row 2 -->
+    <!-- Charts & Activity Row 2 -->
     <div class="row g-4 mb-4">
         <!-- Top Groups Bar Chart -->
         <div class="col-xl-6">
@@ -174,7 +166,35 @@
         <div class="col-xl-6">
             <div class="card premium-card h-100">
                 <div class="card-body p-4">
-                    
+                    <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-activity text-primary me-2"></i> Recent Membership Activity</h5>
+                    @if (Model.RecentActivity.Count == 0)
+                    {
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-person-x fs-2 d-block mb-2"></i>
+                            No recent member join activity recorded yet.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var activity in Model.RecentActivity)
+                            {
+                                <div class="list-group-item bg-transparent px-0 py-3 border-bottom d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="badge bg-primary bg-opacity-10 text-primary rounded-circle p-2 fs-6" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                            @(activity.UserProfile?.FirstName?.Substring(0, 1) ?? "M")
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark fs-14px">@(activity.UserProfile?.GetFullName() ?? "User")</div>
+                                            <small class="text-muted fs-12px">Joined <span class="fw-semibold text-primary">@(activity.MisGroup?.Title ?? "Committee")</span> as <span class="badge bg-light text-dark">@(string.IsNullOrWhiteSpace(activity.RolePosition) ? "Member" : activity.RolePosition)</span></small>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted fs-12px">@activity.DateJoined.ToString("MMM dd, yyyy")</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -218,6 +238,7 @@
             $('#DateRangeDisplay').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('dddd DD MMMM, YYYY') + ' - ' + picker.endDate.format('dddd DD MMMM, YYYY'));
                 $('#DateRangeValue').val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+                $('#DateRangeValue').closest('form').submit();
             });
 
             $('#DateRangeDisplay').on('cancel.daterangepicker', function(ev, picker) {
@@ -227,13 +248,10 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Shared Options
             Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
             Chart.defaults.color = '#6c757d';
             
-            // 1. Membership Growth Line Chart
             var growthCtx = document.getElementById('growthChart').getContext('2d');
-            
             var gradientBlue = growthCtx.createLinearGradient(0, 0, 0, 400);
             gradientBlue.addColorStop(0, 'rgba(78, 84, 200, 0.4)');
             gradientBlue.addColorStop(1, 'rgba(78, 84, 200, 0.0)');
@@ -267,7 +285,6 @@
                 }
             });
 
-            // 2. Status Gauge (Half-Donut)
             var statusCtx = document.getElementById('statusChart').getContext('2d');
             new Chart(statusCtx, {
                 type: 'doughnut',
@@ -283,40 +300,32 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    rotation: -90,
-                    circumference: 180,
                     cutout: '75%',
                     plugins: {
-                        legend: { position: 'bottom', labels: { padding: 20 } }
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
                     }
                 }
             });
 
-            // 3. Top Groups Bar Chart
             var topGroupsCtx = document.getElementById('topGroupsChart').getContext('2d');
-            var topGroupsLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopGroups.Select(g => g.Title)));
-            var topGroupsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopGroups.Select(g => g.Members.Count(m => m.MembershipStatus == "Active"))));
-            
             new Chart(topGroupsCtx, {
                 type: 'bar',
                 data: {
-                    labels: topGroupsLabels,
+                    labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopGroups.Select(g => g.Title))),
                     datasets: [{
                         label: 'Active Members',
-                        data: topGroupsData,
-                        backgroundColor: 'rgba(0, 198, 255, 0.8)',
-                        borderRadius: 6,
-                        borderWidth: 0,
-                        barPercentage: 0.6
+                        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopGroups.Select(g => g.Members?.Count(m => m.MembershipStatus == "Active") ?? 0))),
+                        backgroundColor: '#38ef7d',
+                        borderRadius: 6
                     }]
                 },
                 options: {
-                    indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
+                    indexAxis: 'y',
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { beginAtZero: true, grid: { color: '#f0f0f0' }, ticks: { stepSize: 1 } },
+                        x: { beginAtZero: true, grid: { color: '#f0f0f0' } },
                         y: { grid: { display: false } }
                     }
                 }
@@ -324,5 +333,3 @@
         });
     </script>
 }
-
-

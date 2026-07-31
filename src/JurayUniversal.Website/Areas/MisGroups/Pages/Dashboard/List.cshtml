@@ -1,60 +1,70 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard.ListModel
+@using JurayUniversal.Website.Areas.MisGroups.Pages.Platform
 @{
     ViewData["Title"] = Model.GroupAlias + " Directory";
     ViewData["ActiveMenu"] = "MisGroups";
     ViewData["ActiveSubMenu"] = "Dashboard";
 }
 
-<div class="mis-page-header">
-    
+@section HeaderActions {
     <div class="d-flex gap-2">
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
+        <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
         
         @if (await MisAuth.CanEditAsync(User, "MisGroups"))
         {
-            <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-circle me-1"></i> Add New @Model.GroupAlias</a>
+            <a asp-page="./Create" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-circle me-1"></i> Add New @Model.GroupAlias</a>
         }
     </div>
-</div>
+}
 
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
-    <div class="card mis-card shadow-sm border-0">
-        <div class="card-body mis-card-body p-0">
+<div class="page-content bg-light p-0 p-md-4 mt-4" style="min-height: 100vh;">
+    <div class="card mis-card border-0 shadow-sm rounded-4">
+        <div class="card-body mis-card-body p-4">
             <div class="table-responsive">
-                <table class="table table-hover mis-table mb-0">
+                <table class="table table-hover align-middle mb-0" id="committeeDirectoryTable">
                     <thead class="table-light">
                         <tr>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Date Created</th>
-                            <th class="text-end">Actions</th>
+                            <th class="py-3 px-4">Title</th>
+                            <th class="py-3 text-center">Total Members</th>
+                            <th class="py-3">Status</th>
+                            <th class="py-3">Date Created</th>
+                            <th class="py-3 text-end px-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.MisGroups)
                         {
+                            var token = WorkspaceModel.GetGroupToken(item.Id);
                             <tr>
-                                <td class="fw-bold">@item.Title</td>
+                                <td class="fw-bold text-dark px-4">@item.Title</td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold">
+                                        <i class="bi bi-people me-1"></i> @(item.Members?.Count ?? 0) Members
+                                    </span>
+                                </td>
                                 <td>
                                     @if (item.IsActive)
                                     {
-                                        <span class="badge bg-success">Active</span>
+                                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Active</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-secondary">Inactive</span>
+                                        <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">Inactive</span>
                                     }
                                 </td>
-                                <td>@item.CreatedAt.ToString("MMM dd, yyyy")</td>
-                                <td class="text-end">
+                                <td class="text-muted text-nowrap">@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                <td class="text-end px-4">
                                     <div class="btn-group">
-                                        <a asp-page="./Detail" asp-route-id="@item.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="btn btn-sm btn-outline-primary" title="Manage Members">
-                                            <i class="bi bi-people"></i> Manage
+                                        <a asp-page="/Platform/Workspace" asp-route-token="@token" class="btn btn-sm btn-success rounded-pill px-3 me-1" title="Open Live Chat Workspace">
+                                            <i class="bi bi-chat-dots me-1"></i> Chat
+                                        </a>
+                                        <a asp-page="./Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1" title="Manage Members">
+                                            <i class="bi bi-people me-1"></i> Manage
                                         </a>
                                         @if (await MisAuth.CanEditAsync(User, "MisGroups"))
                                         {
-                                            <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-pxr="@Guid.NewGuid().ToString()" asp-route-mcheckeri="@Guid.NewGuid().ToString()" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary rounded-circle" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                         }
@@ -66,7 +76,7 @@
                         @if (!Model.MisGroups.Any())
                         {
                             <tr>
-                                <td colspan="4" class="text-center py-5 text-muted">
+                                <td colspan="5" class="text-center py-5 text-muted">
                                     <i class="bi bi-inbox fs-1 d-block mb-3"></i>
                                     No @Model.GroupAlias.ToLower()s found.
                                 </td>
@@ -78,5 +88,3 @@
         </div>
     </div>
 </div>
-
-

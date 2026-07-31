@@ -217,6 +217,7 @@ public class DashboardDbContext : IdentityDbContext<Profile, AppRole, string>
     public DbSet<MisUserCategory> MisUserCategories { get; set; }
     public DbSet<MisKpiIndicator> MisKpiIndicators { get; set; }
     public DbSet<MisKpiUserScore> MisKpiUserScores { get; set; }
+    public DbSet<MisKpiEvaluationPeriod> MisKpiEvaluationPeriods { get; set; }
     public DbSet<MisUserFeatureRole> MisUserFeatureRoles { get; set; }
     public DbSet<MisUserNote> MisUserNotes { get; set; }
     public DbSet<MisActivityLog> MisActivityLogs { get; set; }

@@ -85,7 +85,7 @@ namespace JurayUniversal.Website.Filters
                 }
 
                 // Admin roles are only required for the Dashboard side, NOT the User Platform side.
-                if (path != null && !path.Contains("/Platform/", StringComparison.OrdinalIgnoreCase))
+                if (path != null && !path.Contains("/Platform", StringComparison.OrdinalIgnoreCase) && !path.Contains("/User", StringComparison.OrdinalIgnoreCase))
                 {
                     // Check Feature Access Authorization
                     bool hasAccess = await _misAuth.HasAccessAsync(context.HttpContext.User, knownFeature.ModuleFolder);

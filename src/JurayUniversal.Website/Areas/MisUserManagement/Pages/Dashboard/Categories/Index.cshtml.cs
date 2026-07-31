@@ -70,31 +70,37 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categor
             int pageSize = dtParams.Length;
             int skip = dtParams.Start;
 
-            string searchString = Request.Form["SearchString"].FirstOrDefault();
-
             var query = _context.UserCategories.AsQueryable();
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchValue))
             {
-                searchString = searchString.ToLower();
-                query = query.Where(u => u.Title.ToLower().Contains(searchString) || 
-                                         (u.Description != null && u.Description.ToLower().Contains(searchString)));
+                searchValue = searchValue.ToLower();
+                query = query.Where(u => u.Title.ToLower().Contains(searchValue) || 
+                                         (u.Description != null && u.Description.ToLower().Contains(searchValue)));
             }
 
             // Simple sorting
-            if (sortColumnDirection == "asc")
+            if (sortColumnDirection == "desc")
             {
-                query = query.OrderBy(c => c.Title);
+                query = query.OrderByDescending(c => c.Title);
             }
             else
             {
-                query = query.OrderByDescending(c => c.Title);
+                query = query.OrderBy(c => c.Title);
             }
 
             var recordsTotal = await _context.UserCategories.CountAsync();
             var recordsFiltered = await query.CountAsync();
 
-            var categories = await query.Skip(skip).Take(pageSize).ToListAsync();
+            List<UserCategory> categories;
+            if (pageSize > 0)
+            {
+                categories = await query.Skip(skip).Take(pageSize).ToListAsync();
+            }
+            else
+            {
+                categories = await query.Skip(skip).ToListAsync();
+            }
 
             var data = categories.Select((c, index) => new
             {

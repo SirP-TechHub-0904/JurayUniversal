@@ -1,4 +1,4 @@
-﻿@page "{schemaId:long}"
+@page "{schemaId:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SchemaDetailsModel
 @using System.Globalization
 @{
@@ -23,15 +23,21 @@
 }
 
 @section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3 me-2">
+        <i class="bi bi-arrow-left"></i> Dashboard
+    </a>
     <a asp-page="./SchemaDetails" asp-route-schemaId="@Model.Schema.Id" asp-route-year="@prevYear" asp-route-month="@prevMonth" class="btn btn-light btn-sm rounded-pill px-3">
-            <i class="bi bi-chevron-left me-1"></i> @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(prevMonth)
-        </a>
+        <i class="bi bi-chevron-left me-1"></i> @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(prevMonth)
+    </a>
     <a asp-page="./SchemaDetails" asp-route-schemaId="@Model.Schema.Id" asp-route-year="@nextYear" asp-route-month="@nextMonth" class="btn btn-light btn-sm rounded-pill px-3">
-            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(nextMonth) <i class="bi bi-chevron-right ms-1"></i>
+        @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(nextMonth) <i class="bi bi-chevron-right ms-1"></i>
+    </a>
+    @if (Model.CanSubmitToday)
+    {
+        <a asp-page="./Submit" asp-route-schemaId="@Model.Schema.Id" class="btn btn-primary btn-sm rounded-pill px-4 ms-2">
+            <i class="bi bi-plus-lg me-1"></i> Submit Report
         </a>
-    <a asp-page="./Submit" asp-route-schemaId="@Model.Schema.Id" class="btn btn-warning text-dark fw-bold rounded-pill px-4">
-                            <i class="bi bi-check-lg me-1"></i> Submit Today's Report
-                        </a>
+    }
 }
 
 <style>
@@ -101,59 +107,45 @@
     }
 </style>
 
-@section HeaderActions {
-    <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3 me-2">
-                <i class="bi bi-arrow-left"></i> Dashboard
-            </a>
-            @if (Model.CanSubmitToday)
-            {
-                <a asp-page="./Submit" asp-route-schemaId="@Model.Schema.Id" class="btn btn-primary btn-sm rounded-pill px-4 me-2">
-                    <i class="bi bi-plus-lg me-1"></i> Submit Report
-                </a>
-            }
-}
 
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+
+<div class="page-content bg-white p-0 p-md-4" style="min-height: 100vh;">
     
     <!-- Month Selector Bar -->
-    
-            }
-            else if (Model.TodaySubmissionId.HasValue)
-            {
-                <div class="card bg-success bg-opacity-10 border border-success border-opacity-50 rounded-4 shadow-xs">
-                    <div class="card-body p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
-                        <div>
-                            <h6 class="fw-bold text-success-emphasis mb-1"><i class="bi bi-check-circle-fill me-2"></i> Report Submitted Successfully</h6>
-                            <p class="text-muted small mb-0">Today's report has been recorded. You can edit it anytime before the deadline of <strong>@DateTime.Today.Add(Model.Schema.DeadlineTime).ToString("h:mm tt")</strong>.</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a asp-page="./Details" asp-route-id="@Model.TodaySubmissionId" class="btn btn-success text-white fw-bold rounded-pill px-4">
-                                <i class="bi bi-eye me-1"></i> View Details
-                            </a>
-                            <a asp-page="./Edit" asp-route-id="@Model.TodaySubmissionId" class="btn btn-outline-success fw-bold rounded-pill px-4">
-                                <i class="bi bi-pencil me-1"></i> Edit Submission
-                            </a>
-                        </div>
-                    </div>
+    @if (Model.TodaySubmissionId.HasValue)
+    {
+        <div class="card bg-success bg-opacity-10 border border-success border-opacity-50 rounded-4 shadow-xs mb-4">
+            <div class="card-body p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div>
+                    <h6 class="fw-bold text-success-emphasis mb-1"><i class="bi bi-check-circle-fill me-2"></i> Report Submitted Successfully</h6>
+                    <p class="text-muted small mb-0">Today's report has been recorded. You can edit it anytime before the deadline of <strong>@DateTime.Today.Add(Model.Schema.DeadlineTime).ToString("h:mm tt")</strong>.</p>
                 </div>
-            }
-            else if (Model.TodayIsMissed)
-            {
-                <div class="card bg-danger bg-opacity-10 border border-danger border-opacity-50 rounded-4 shadow-xs">
-                    <div class="card-body p-4">
-                        <h6 class="fw-bold text-danger-emphasis mb-1"><i class="bi bi-x-circle-fill me-2"></i> Today's Deadline Passed (Missed Report)</h6>
-                        <p class="text-muted small mb-0">The submission deadline for today's report was <strong>@DateTime.Today.Add(Model.Schema.DeadlineTime).ToString("h:mm tt")</strong>. The workspace is closed for today.</p>
-                    </div>
+                <div class="d-flex gap-2">
+                    <a asp-page="./Details" asp-route-id="@Model.TodaySubmissionId" class="btn btn-success text-white fw-bold rounded-pill px-4">
+                        <i class="bi bi-eye me-1"></i> View Details
+                    </a>
+                    <a asp-page="./Edit" asp-route-id="@Model.TodaySubmissionId" class="btn btn-outline-success fw-bold rounded-pill px-4">
+                        <i class="bi bi-pencil me-1"></i> Edit Submission
+                    </a>
                 </div>
-            }
+            </div>
         </div>
-    </div>
+    }
+    else if (Model.TodayIsMissed)
+    {
+        <div class="card bg-danger bg-opacity-10 border border-danger border-opacity-50 rounded-4 shadow-xs mb-4">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-danger-emphasis mb-1"><i class="bi bi-x-circle-fill me-2"></i> Today's Deadline Passed (Missed Report)</h6>
+                <p class="text-muted small mb-0">The submission deadline for today's report was <strong>@DateTime.Today.Add(Model.Schema.DeadlineTime).ToString("h:mm tt")</strong>. The workspace is closed for today.</p>
+            </div>
+        </div>
+    }
 
     <!-- Analytics Dashboard Row -->
     <div class="row g-4 mb-4">
         <!-- Summary Numbers -->
-        <div class="col-lg-8">
-            <div class="row g-3 h-100">
+        <div class="col-lg-8 d-flex flex-column">
+            <div class="row g-3 flex-grow-1">
                 <div class="col-sm-6 col-xl-3">
                     <div class="card kpi-card h-100">
                         <div class="card-body p-3.5 text-center">
@@ -223,7 +215,7 @@
     </div>
 
     <!-- Toggle View Selection Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-list-task me-2 text-primary"></i> Workspace Ledger</h5>
         <div class="btn-group shadow-sm rounded-pill overflow-hidden bg-white border p-1" role="group">
             <button type="button" class="btn btn-sm btn-light rounded-pill px-3 py-1.5" id="btn-list-view">
@@ -253,7 +245,20 @@
                         {
                             <tr>
                                 <td class="ps-4 fw-medium">@item.Date.ToString("MMM dd, yyyy")</td>
-                                <td>@(item.SubmittedAt.HasValue ? item.SubmittedAt.Value.ToString("hh:mm tt") : "â€”")</td>
+                                <td>
+                                    @if (item.SubmittedAt.HasValue)
+                                    {
+                                        @item.SubmittedAt.Value.ToString("hh:mm tt")
+                                    }
+                                    else if (item.Status == "Upcoming")
+                                    {
+                                        <text>---</text>
+                                    }
+                                    else
+                                    {
+                                        <text>--</text>
+                                    }
+                                </td>
                                 <td>
                                     @if (item.Status == "OnTime")
                                     {
@@ -289,7 +294,7 @@
                                     }
                                     else
                                     {
-                                        <span class="text-muted small">N/A</span>
+                                        <span class="text-muted fw-bold">--</span>
                                     }
                                 </td>
                             </tr>
@@ -304,19 +309,20 @@
     <div id="calendar-view-container" class="card shadow-sm border-0 rounded-4 mb-4">
         <div class="card-body p-4">
             
-            <!-- Calendar Headers -->
-            <div class="calendar-grid text-center text-uppercase fw-bold text-muted small mb-2">
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-                <div>Sun</div>
-            </div>
+            <div class="table-responsive pb-2">
+                <!-- Calendar Headers -->
+                <div class="calendar-grid text-center text-uppercase fw-bold text-muted small mb-2" style="min-width: 700px;">
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                    <div>Sun</div>
+                </div>
 
-            <!-- Calendar Days Grid -->
-            <div class="calendar-grid">
+                <!-- Calendar Days Grid -->
+                <div class="calendar-grid" style="min-width: 700px;">
                 @foreach (var day in Model.CalendarDays)
                 {
                     <div>
@@ -370,13 +376,14 @@
                                     }
                                     else
                                     {
-                                        <span class="text-muted opacity-40 fs-9">â€”</span>
+                                        <span class="text-muted opacity-40 fs-9">--</span>
                                     }
                                 </div>
                             </div>
                         }
                     </div>
                 }
+            </div>
             </div>
         </div>
     </div>

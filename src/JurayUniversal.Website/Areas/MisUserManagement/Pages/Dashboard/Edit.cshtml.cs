@@ -31,6 +31,9 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
         [BindProperty]
         public UserStatus SelectedStatus { get; set; }
 
+        [BindProperty]
+        public GenderStatus SelectedGender { get; set; }
+
         public string FullName { get; set; } = string.Empty;
         public List<UserCategory> Categories { get; set; } = new();
 
@@ -50,6 +53,7 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             ProfileId = profile.Id;
             SelectedCategoryId = profile.UserCategoryId;
             SelectedStatus = profile.UserStatus;
+            SelectedGender = profile.Gender;
             FullName = profile.GetFullName();
 
             Categories = await _context.UserCategories.ToListAsync();
@@ -73,11 +77,12 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
             profile.UserCategoryId = SelectedCategoryId;
             profile.UserStatus = SelectedStatus;
+            profile.Gender = SelectedGender;
 
             _context.Entry(profile).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            TempData["success"] = "User category and status updated successfully!";
+            TempData["success"] = "User category, status, and gender updated successfully!";
             return RedirectToPage("/Dashboard/List");
         }
     }
