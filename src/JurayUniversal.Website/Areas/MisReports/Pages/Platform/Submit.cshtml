@@ -1,4 +1,4 @@
-﻿@page "{schemaId:long}"
+@page "{schemaId:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SubmitModel
 @{
     ViewData["Title"] = "Submit Report";
@@ -32,7 +32,7 @@
                         @if (Model.Schema.RequireTimeLog && Model.TimeLogs.Any())
                         {
                             <div class="form-group mb-5">
-                                <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i> Hourly Time Log</h5>
+                                <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i> Hourly Time Log for @DateTime.Today.ToString("dd MMM, yyyy")</h5>
                                 <div class="table-responsive bg-white rounded-3 border">
                                     <table class="table table-hover table-borderless align-middle mb-0">
                                         <thead class="table-light">
@@ -123,9 +123,11 @@
                         @if (Model.Schema.RequireFileUpload)
                         {
                             <div class="form-group mb-4">
-                                <label class="form-label fw-bold">Attachment <span class="text-danger">*</span></label>
-                                <input type="file" name="attachmentFile" class="form-control" required />
-                                <small class="text-muted">A file attachment is required for this report.</small>
+                                <label class="form-label fw-bold">Attachment <span class="text-muted fw-normal">(Optional)</span></label>
+                                <input type="file" name="attachmentFiles" id="attachmentFiles" class="form-control" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.xls,.xlsx" />
+                                <small class="text-muted">You can attach multiple files if needed for this report.</small>
+                                
+                                <ul id="fileListPreview" class="list-group mt-2 d-none shadow-sm"></ul>
                             </div>
                         }
 
@@ -146,5 +148,30 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.getElementById('attachmentFiles')?.addEventListener('change', function (e) {
+            var fileList = document.getElementById('fileListPreview');
+            fileList.innerHTML = '';
+            if (this.files.length > 0) {
+                fileList.classList.remove('d-none');
+                for (var i = 0; i < this.files.length; i++) {
+                    var file = this.files[i];
+                    var li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center bg-light border-light-subtle';
+                    
+                    var sizeInKb = (file.size / 1024).toFixed(1);
+                    var icon = 'bi-file-earmark-text';
+                    if (file.type.startsWith('image/')) icon = 'bi-file-earmark-image';
+                    else if (file.type === 'application/pdf') icon = 'bi-file-earmark-pdf';
+
+                    li.innerHTML = '<span class="text-truncate fw-medium" style="max-width: 80%;"><i class="bi ' + icon + ' me-2 text-primary"></i>' + file.name + '</span><span class="badge bg-secondary rounded-pill">' + sizeInKb + ' KB</span>';
+                    fileList.appendChild(li);
+                }
+            } else {
+                fileList.classList.add('d-none');
+            }
+        });
+    </script>
 }
 

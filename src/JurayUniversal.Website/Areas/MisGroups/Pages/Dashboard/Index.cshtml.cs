@@ -72,7 +72,8 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
             var groups = await query.ToListAsync();
 
             TotalGroups = groups.Count;
-            TotalMembers = groups.Sum(g => g.Members?.Count ?? 0);
+            TotalMemberships = groups.Sum(g => g.Members?.Count ?? 0);
+            TotalMembers = TotalMemberships;
             ActiveGroups = groups.Count(g => g.IsActive);
             AvgMembers = TotalGroups > 0 ? (int)Math.Round((double)TotalMembers / TotalGroups) : 0;
 
@@ -99,7 +100,7 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
 
             TopGroups = groups
                 .Where(g => g.IsActive)
-                .OrderByDescending(g => g.Members.Count(m => m.MembershipStatus == "Active"))
+                .OrderByDescending(g => g.Members?.Count(m => m.MembershipStatus == "Active") ?? 0)
                 .Take(5)
                 .ToList();
 

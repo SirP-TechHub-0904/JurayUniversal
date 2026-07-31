@@ -25,9 +25,13 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
         }
 
         public List<MisKpiIndicator> Indicators { get; set; } = new();
+        public List<MisKpiEvaluationPeriod> EvaluationPeriods { get; set; } = new();
 
         [BindProperty]
         public MisKpiIndicatorDto IndicatorInput { get; set; } = new();
+
+        [BindProperty]
+        public MisKpiEvaluationPeriod PeriodInput { get; set; } = new();
 
         public bool IsReadOnly { get; set; }
 
@@ -45,11 +49,12 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             return true;
         }
 
-        public async Task<IActionResult> OnGetAsync(long? editId)
+        public async Task<IActionResult> OnGetAsync(long? editId, long? editPeriodId)
         {
             if (!await CheckAccessAndSetReadOnlyAsync()) return RedirectToPage("/Platform/Index", new { area = "MisUserManagement" });
 
             Indicators = await _userManagementRepo.GetAllKpiIndicatorsAsync();
+            EvaluationPeriods = await _userManagementRepo.GetAllEvaluationPeriodsAsync();
 
             if (editId.HasValue)
             {
@@ -68,6 +73,15 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
                 }
             }
 
+            if (editPeriodId.HasValue)
+            {
+                var p = await _userManagementRepo.GetEvaluationPeriodByIdAsync(editPeriodId.Value);
+                if (p != null)
+                {
+                    PeriodInput = p;
+                }
+            }
+
             return Page();
         }
 
@@ -83,6 +97,7 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             if (!ModelState.IsValid)
             {
                 Indicators = await _userManagementRepo.GetAllKpiIndicatorsAsync();
+                EvaluationPeriods = await _userManagementRepo.GetAllEvaluationPeriodsAsync();
                 return Page();
             }
 
@@ -113,6 +128,52 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             {
                 await _userManagementRepo.DeleteKpiIndicatorAsync(id);
                 TempData["success"] = "KPI indicator deleted successfully!";
+            }
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostSavePeriodAsync()
+        {
+            if (!await CheckAccessAndSetReadOnlyAsync()) return RedirectToPage("/Platform/Index", new { area = "MisUserManagement" });
+            if (IsReadOnly)
+            {
+                TempData["error"] = "You do not have permission to modify Evaluation Periods.";
+                return RedirectToPage();
+            }
+
+            if (string.IsNullOrWhiteSpace(PeriodInput.Title))
+            {
+                TempData["error"] = "Please provide a valid Evaluation Period Title.";
+                return RedirectToPage();
+            }
+
+            if (PeriodInput.Id > 0)
+            {
+                await _userManagementRepo.UpdateEvaluationPeriodAsync(PeriodInput);
+                TempData["success"] = "Evaluation Period updated successfully!";
+            }
+            else
+            {
+                await _userManagementRepo.CreateEvaluationPeriodAsync(PeriodInput);
+                TempData["success"] = "Evaluation Period created successfully!";
+            }
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDeletePeriodAsync(long id)
+        {
+            if (!await CheckAccessAndSetReadOnlyAsync()) return RedirectToPage("/Platform/Index", new { area = "MisUserManagement" });
+            if (IsReadOnly)
+            {
+                TempData["error"] = "You do not have permission to delete Evaluation Periods.";
+                return RedirectToPage();
+            }
+
+            if (id > 0)
+            {
+                await _userManagementRepo.DeleteEvaluationPeriodAsync(id);
+                TempData["success"] = "Evaluation Period deleted successfully!";
             }
             return RedirectToPage();
         }

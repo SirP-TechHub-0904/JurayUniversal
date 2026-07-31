@@ -39,10 +39,16 @@
                     <span asp-validation-for="SelectedCategoryId" class="text-danger fs-7"></span>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="form-label text-muted fw-semibold" asp-for="SelectedStatus">Account Status</label>
                     <select asp-for="SelectedStatus" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.UserStatus>()"></select>
                     <span asp-validation-for="SelectedStatus" class="text-danger fs-7"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted fw-semibold" asp-for="SelectedGender">Gender</label>
+                    <select asp-for="SelectedGender" class="form-select" asp-items="Html.GetEnumSelectList<JurayUniversal.Domain.Enum.Enum.GenderStatus>()"></select>
+                    <span asp-validation-for="SelectedGender" class="text-danger fs-7"></span>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 py-2">

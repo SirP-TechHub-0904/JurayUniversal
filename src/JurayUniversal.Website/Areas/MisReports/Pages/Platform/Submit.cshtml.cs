@@ -181,13 +181,21 @@ namespace JurayUniversal.Website.Areas.MisReports.Pages.Platform
             // Handle File Upload
             if (schema.RequireFileUpload && Request.Form.Files.Count > 0)
             {
-                var file = Request.Form.Files["attachmentFile"];
-                if (file != null)
+                var files = Request.Form.Files.GetFiles("attachmentFiles");
+                if (files != null && files.Count > 0)
                 {
-                    var fileResponse = await _storageService.MainUploadFileReturnUrlAsync("", file);
-                    if (fileResponse != null && !string.IsNullOrEmpty(fileResponse.Url))
+                    List<string> uploadedUrls = new List<string>();
+                    foreach (var file in files)
                     {
-                        Submission.AttachmentUrl = fileResponse.Url;
+                        var fileResponse = await _storageService.MainUploadFileReturnUrlAsync("", file);
+                        if (fileResponse != null && !string.IsNullOrEmpty(fileResponse.Url))
+                        {
+                            uploadedUrls.Add(fileResponse.Url);
+                        }
+                    }
+                    if (uploadedUrls.Count > 0)
+                    {
+                        Submission.AttachmentUrl = string.Join("||", uploadedUrls);
                     }
                 }
             }

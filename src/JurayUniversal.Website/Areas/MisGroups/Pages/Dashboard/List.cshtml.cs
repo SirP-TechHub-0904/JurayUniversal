@@ -22,7 +22,7 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
 
         public string GroupAlias { get; set; } = "Group";
 
-        public IList<MisGroup> MisGroups { get; set; }
+        public IList<MisGroup> MisGroups { get; set; } = new List<MisGroup>();
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -33,6 +33,7 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
             }
 
             MisGroups = await _context.MisGroups
+                .Include(x => x.Members)
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
 

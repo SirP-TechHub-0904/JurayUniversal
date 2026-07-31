@@ -1,39 +1,169 @@
-﻿@page
+@page "{token?}"
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.WorkspaceModel
+@using System.Text.Encodings.Web
 @{
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
     ViewData["Title"] = Model.MisGroup?.Title ?? "Workspace";
     ViewData["ActiveMenu"] = "MisGroups";
 }
 
-<div class="mis-page-header">
-    
-    <div class="d-flex gap-2">
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to My Groups</a>
-        
+@functions {
+    public string GetRoleBadgeCss(string role)
+    {
+        if (string.IsNullOrWhiteSpace(role)) return "bg-secondary bg-opacity-10 text-secondary";
+        var r = role.ToLower();
+        if (r.Contains("chair") || r.Contains("president") || r.Contains("patron")) return "bg-warning text-dark fw-bold";
+        if (r.Contains("secretary") || r.Contains("scribe")) return "bg-info text-white fw-bold";
+        if (r.Contains("admin") || r.Contains("leader") || r.Contains("head") || r.Contains("coord")) return "bg-primary text-white fw-bold";
+        if (r.Contains("finance") || r.Contains("treasurer")) return "bg-success text-white fw-bold";
+        return "bg-secondary bg-opacity-10 text-secondary fw-semibold";
+    }
+
+    public (string title, string url) ExtractFileInfo(string content)
+    {
+        try
+        {
+            int startTitle = content.IndexOf("[") + 1;
+            int endTitle = content.IndexOf("]");
+            int startUrl = content.IndexOf("(") + 1;
+            int endUrl = content.IndexOf(")");
+            if (startTitle > 0 && endTitle > startTitle && startUrl > 0 && endUrl > startUrl)
+            {
+                string title = content.Substring(startTitle, endTitle - startTitle);
+                string url = content.Substring(startUrl, endUrl - startUrl);
+                return (title, url);
+            }
+        }
+        catch {}
+        return ("Shared Document", "#");
+    }
+
+    public (bool hasReply, string replyUser, string replySnippet, string bodyText) ExtractReplyInfo(string content)
+    {
+        if (!string.IsNullOrWhiteSpace(content) && content.StartsWith("> Replying to "))
+        {
+            try
+            {
+                int endHeader = content.IndexOf("\n\n");
+                if (endHeader > 0)
+                {
+                    string headerLine = content.Substring(0, endHeader);
+                    string body = content.Substring(endHeader + 2);
+
+                    int startUser = 14;
+                    int endUser = headerLine.IndexOf(": \"");
+                    if (endUser > startUser)
+                    {
+                        string user = headerLine.Substring(startUser, endUser - startUser);
+                        string snippet = headerLine.Substring(endUser + 3).TrimEnd('"');
+                        return (true, user, snippet, body);
+                    }
+                }
+            }
+            catch {}
+        }
+        return (false, "", "", content);
+    }
+}
+
+<style>
+    .workspace-fullscreen-active {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        background: #f8fafc !important;
+        padding: 1.5rem !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+    .workspace-fullscreen-active #chatStream {
+        max-height: calc(100vh - 250px) !important;
+    }
+    .highlight-flash {
+        animation: highlightPulse 2s ease-in-out;
+    }
+    @@keyframes highlightPulse {
+        0% { background-color: rgba(254, 240, 138, 0.9); }
+        100% { background-color: transparent; }
+    }
+</style>
+
+@section HeaderActions {
+    <button type="button" id="fullscreenToggleBtn" class="btn btn-outline-dark rounded-pill px-3 me-2" onclick="toggleFullscreenChat()">
+        <i class="bi bi-arrows-fullscreen me-1" id="fullscreenIcon"></i> <span id="fullscreenText">Fullscreen</span>
+    </button>
+    <button type="button" id="soundToggleBtn" class="btn btn-outline-primary rounded-pill px-3 me-2" onclick="toggleChatSound()">
+        <i class="bi bi-volume-up-fill me-1" id="soundIcon"></i> <span id="soundText">Sound On</span>
+    </button>
+    <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill px-4 me-2">
+        <i class="bi bi-arrow-left me-1"></i> Back to @Model.GroupAlias List
+    </a>
+    @if (Model.IsAdminReadOnly)
+    {
+        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fs-7 fw-bold">
+            <i class="bi bi-eye-fill me-1"></i> Admin Oversight Mode (Read-Only)
+        </span>
+    }
+    else
+    {
+        <span class="badge @GetRoleBadgeCss(Model.CurrentMembership?.RolePosition) px-3 py-2 rounded-pill fs-7">
+            Role: @(string.IsNullOrWhiteSpace(Model.CurrentMembership?.RolePosition) ? "Member" : Model.CurrentMembership.RolePosition)
+        </span>
+    }
+}
+
+<!-- Floating Notification Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+    <div id="chatNotificationToast" class="toast border-0 shadow-lg rounded-4" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-primary text-white border-0 rounded-top-4 py-2">
+            <i class="bi bi-bell-fill me-2"></i>
+            <strong class="me-auto" id="toastSenderName">New Message</strong>
+            <span class="badge bg-white text-primary rounded-pill me-2 fs-8" id="toastSenderRole">Member</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-white text-dark rounded-bottom-4 py-3 px-3 fs-7" id="toastContent">
+            Message text...
+        </div>
     </div>
-    <p class="text-muted mb-0">Role: <span class="badge bg-primary rounded-pill">@(Model.CurrentMembership.RolePosition ?? "Member")</span></p>
 </div>
 
-<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+<div class="page-content bg-light p-0 p-md-4 mt-4" id="workspaceMainContainer" style="min-height: 100vh;">
+
+    @if (Model.IsAdminReadOnly)
+    {
+        <div class="alert alert-warning border-0 shadow-sm rounded-4 mb-4 d-flex align-items-center gap-3">
+            <i class="bi bi-shield-lock-fill fs-2 text-warning flex-shrink-0"></i>
+            <div>
+                <h6 class="fw-bold mb-1 text-dark">👁️ Administrator Oversight Mode (Read-Only Inspection)</h6>
+                <small class="text-muted">You are monitoring this committee's chat as a system administrator. Only active committee members can post messages or share documents.</small>
+            </div>
+        </div>
+    }
+
     <div class="row g-4">
-        <!-- Sidebar: Directory -->
-        <div class="col-md-3">
+        <!-- Sidebar: Committee Members Directory -->
+        <div class="col-md-3" id="membersSidebarCol">
             <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-header bg-white border-0 pt-4 pb-0">
-                    <h5 class="fw-bold"><i class="bi bi-people me-2"></i>Directory</h5>
+                <div class="card-header bg-white border-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-people me-2 text-primary"></i> Members (@Model.Members.Count)</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush" id="membersDirectoryList">
                         @foreach (var m in Model.Members)
                         {
-                            <li class="list-group-item px-0 border-0 d-flex align-items-center">
-                                <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width:36px; height:36px;">
-                                    <strong>@(m.UserProfile?.FirstName?.Substring(0, 1))</strong>
+                            var roleTitle = string.IsNullOrWhiteSpace(m.RolePosition) ? "Member" : m.RolePosition.Trim();
+                            <li class="list-group-item px-0 border-0 d-flex align-items-center py-2" onclick="tagMember('@m.UserProfile?.FirstName')" style="cursor: pointer;" title="Click to mention user">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3 fw-bold flex-shrink-0" style="width:40px; height:40px;">
+                                    @(m.UserProfile?.FirstName?.Substring(0, 1) ?? "U")
                                 </div>
-                                <div>
-                                    <div class="fw-600 fs-7">@m.UserProfile?.FirstName @m.UserProfile?.LastName</div>
-                                    <div class="text-muted fs-8">@(m.RolePosition ?? "Member")</div>
+                                <div class="overflow-hidden">
+                                    <div class="fw-bold text-dark fs-14px text-truncate">@m.UserProfile?.FirstName @m.UserProfile?.LastName</div>
+                                    <span class="badge @GetRoleBadgeCss(roleTitle) fs-8 rounded-pill mt-1">
+                                        @roleTitle
+                                    </span>
                                 </div>
                             </li>
                         }
@@ -42,76 +172,262 @@
             </div>
         </div>
 
-        <!-- Main Content: Posts & Files -->
-        <div class="col-md-9">
+        <!-- Main Content: Chat & Shared Files Tabs -->
+        <div class="col-md-9" id="chatMainCol">
             <ul class="nav nav-pills mb-4" id="workspaceTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active rounded-pill px-4" id="posts-tab" data-bs-toggle="pill" data-bs-target="#posts" type="button" role="tab">Discussions</button>
+                    <button class="nav-link active rounded-pill px-4 fw-bold" id="posts-tab" data-bs-toggle="pill" data-bs-target="#posts" type="button" role="tab">
+                        <i class="bi bi-chat-dots-fill me-2"></i> Live Discussion Chat
+                    </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-pill px-4 ms-2" id="files-tab" data-bs-toggle="pill" data-bs-target="#files" type="button" role="tab">Shared Files</button>
+                    <button class="nav-link rounded-pill px-4 ms-2 fw-bold" id="files-tab" data-bs-toggle="pill" data-bs-target="#files" type="button" role="tab">
+                        <i class="bi bi-folder-symlink-fill me-2"></i> Shared Files (@Model.Files.Count)
+                    </button>
                 </li>
             </ul>
 
             <div class="tab-content" id="workspaceTabsContent">
-                <!-- Discussions Tab -->
+                <!-- Live Chat Tab -->
                 <div class="tab-pane fade show active" id="posts" role="tabpanel">
-                    <div class="card border-0 shadow-sm rounded-4 mb-4">
-                        <div class="card-body">
-                            <form method="post" asp-page-handler="AddPost" asp-route-id="@Model.MisGroup.Id">
-                                <div class="mb-3">
-                                    <textarea asp-for="NewPostContent" class="form-control form-control-lg bg-light border-0" rows="3" placeholder="Share an update or ask a question..." required></textarea>
+                    
+                    <!-- Pinned Announcement Banner -->
+                    <div id="pinnedBannerContainer">
+                        @{
+                            var pinnedPost = Model.Posts.FirstOrDefault(p => p.IsPinned);
+                        }
+                        @if (pinnedPost != null)
+                        {
+                            <div class="card border-0 shadow-sm rounded-4 mb-3" style="background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);" id="pinnedBannerCard">
+                                <div class="card-body p-3 d-flex align-items-center justify-content-between gap-3">
+                                    <div class="d-flex align-items-center gap-3 overflow-hidden">
+                                        <div class="bg-primary text-white rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                                            <i class="bi bi-pin-angle-fill fs-5"></i>
+                                        </div>
+                                        <div class="overflow-hidden">
+                                            <small class="text-primary fw-bold text-uppercase fs-8 d-block mb-1">📌 Pinned Announcement • By @(pinnedPost.UserProfile?.GetFullName() ?? "User")</small>
+                                            <div class="fw-semibold text-dark fs-7 text-truncate" id="pinnedBannerContent">@pinnedPost.Content</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-2 flex-shrink-0">
+                                        <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 fs-8 fw-bold" onclick="scrollToMessage('msg_@pinnedPost.Id')">View</button>
+                                        @if (!Model.IsAdminReadOnly)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fs-8 fw-bold" onclick="togglePinAjax('@pinnedPost.Id')">Unpin</button>
+                                        }
+                                    </div>
                                 </div>
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-send me-2"></i>Post</button>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Message Stream Card -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: #f8fafc;">
+                        <div class="card-body p-4" id="chatStream" style="max-height: 520px; overflow-y: auto;">
+                            @if (!Model.Posts.Any())
+                            {
+                                <div class="text-center text-muted py-5" id="noMessagesPlaceholder">
+                                    <i class="bi bi-chat-dots fs-1 d-block mb-3 text-primary opacity-50"></i>
+                                    <h5>No messages in this chat stream yet.</h5>
+                                    <p class="fs-7">Be the first to start the conversation!</p>
+                                </div>
+                            }
+                            else
+                            {
+                                @foreach (var post in Model.Posts)
+                                {
+                                    bool isMe = post.UserProfileId == Model.CurrentUserId;
+                                    string role = Model.MemberRoleMap.ContainsKey(post.UserProfileId) ? Model.MemberRoleMap[post.UserProfileId] : "Member";
+                                    string roleCss = GetRoleBadgeCss(role);
+                                    string senderName = post.UserProfile?.GetFullName() ?? "User";
+
+                                    var (hasReply, replyUser, replySnippet, bodyContent) = ExtractReplyInfo(post.Content);
+                                    string replySnippetEscaped = JavaScriptEncoder.Default.Encode(bodyContent.Length > 50 ? bodyContent.Substring(0, 50) + "..." : bodyContent);
+
+                                    <div class="d-flex mb-4 @(isMe ? "justify-content-end" : "justify-content-start")" id="msg_@post.Id">
+                                        @if (!isMe)
+                                        {
+                                            <div class="me-3 text-center flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm mx-auto" style="width:42px; height:42px;">
+                                                    @(post.UserProfile?.FirstName?.Substring(0, 1) ?? "U")
+                                                </div>
+                                                <span class="badge @roleCss mt-1 fs-8 d-inline-block rounded-pill">
+                                                    @role
+                                                </span>
+                                            </div>
+                                        }
+
+                                        <div style="max-width: 75%;">
+                                            <div class="d-flex align-items-center mb-1 gap-2 @(isMe ? "justify-content-end" : "justify-content-start")">
+                                                <span class="fw-bold text-dark fs-7">@senderName</span>
+                                                <small class="text-muted fs-8">@post.CreatedAt.ToString("MMM dd, h:mm tt")</small>
+                                                
+                                                @if (!Model.IsAdminReadOnly)
+                                                {
+                                                    <button type="button" class="btn btn-link p-0 text-muted fs-8 text-decoration-none ms-1" onclick="setReplyTo('@senderName', '@replySnippetEscaped')" title="Reply to message">
+                                                        <i class="bi bi-reply-fill me-1"></i> Reply
+                                                    </button>
+
+                                                    <button type="button" class="btn btn-link p-0 text-muted fs-8 text-decoration-none ms-2" onclick="togglePinAjax('@post.Id')" title="@(post.IsPinned ? "Unpin message" : "Pin message as announcement")">
+                                                        <i class="bi @(post.IsPinned ? "bi-pin-angle-fill text-warning" : "bi-pin-angle") me-1"></i> @(post.IsPinned ? "Unpin" : "Pin")
+                                                    </button>
+                                                }
+                                            </div>
+
+                                            <!-- Reply Quote Card OUTSIDE Main Bubble -->
+                                            @if (hasReply)
+                                            {
+                                                <div class="card bg-white border-0 shadow-sm rounded-3 p-2 mb-2 text-dark text-start border-start border-primary border-4" style="cursor: pointer;" onclick="scrollToMessageSnippet('@JavaScriptEncoder.Default.Encode(replySnippet)')">
+                                                    <div class="fs-8 text-primary fw-bold mb-1"><i class="bi bi-reply-fill me-1"></i> Replying to @replyUser</div>
+                                                    <div class="fs-8 text-muted fst-italic text-truncate">"@replySnippet"</div>
+                                                </div>
+                                            }
+
+                                            <div class="p-3 rounded-4 shadow-sm position-relative @(post.IsPinned ? "border border-warning border-2" : "") @(isMe ? "bg-primary text-white ms-auto" : "bg-white text-dark border")" style="border-radius: 1.25rem !important;">
+                                                @if (post.IsPinned)
+                                                {
+                                                    <div class="badge bg-warning text-dark mb-2 rounded-pill px-3 py-1 fs-8 fw-bold">
+                                                        <i class="bi bi-pin-angle-fill me-1"></i> Pinned Announcement
+                                                    </div>
+                                                }
+
+                                                @if (bodyContent.StartsWith("📎 Shared a file:"))
+                                                {
+                                                    var (fileTitle, fileUrl) = ExtractFileInfo(bodyContent);
+                                                    <div class="card bg-white text-dark shadow-sm rounded-3 p-3 border-0 mb-0 text-start">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <div class="bg-warning bg-opacity-10 text-warning-emphasis rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
+                                                                <i class="bi bi-file-earmark-arrow-down-fill fs-3 text-warning"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <div class="fw-bold text-dark fs-14px text-truncate mb-1">@fileTitle</div>
+                                                                <small class="text-muted fs-8 d-block mb-2">Shared by @(post.UserProfile?.FirstName ?? "User")</small>
+                                                                <div class="d-flex gap-2">
+                                                                    <a href="@fileUrl" target="_blank" class="btn btn-sm btn-light border rounded-pill px-3 fs-8 fw-bold text-dark">
+                                                                        <i class="bi bi-eye me-1"></i> Preview
+                                                                    </a>
+                                                                    <a href="@fileUrl" download class="btn btn-sm btn-success rounded-pill px-3 fs-8 fw-bold text-white">
+                                                                        <i class="bi bi-download me-1"></i> Download
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @if (bodyContent.Length > 400)
+                                                    {
+                                                        int cutIndex = bodyContent.LastIndexOf(' ', 400);
+                                                        if (cutIndex < 250) cutIndex = 400;
+                                                        string shortSnippet = bodyContent.Substring(0, cutIndex);
+
+                                                        <div id="msgShort_@post.Id">
+                                                            <p class="mb-1 fs-7 text-break" style="white-space: pre-wrap;">@shortSnippet...</p>
+                                                            <button type="button" class="btn btn-link btn-sm p-0 fw-bold @(isMe ? "text-white" : "text-primary") text-decoration-none" onclick="toggleReadMore('@post.Id')">Read More...</button>
+                                                        </div>
+                                                        <div id="msgFull_@post.Id" style="display: none;">
+                                                            <p class="mb-1 fs-7 text-break" style="white-space: pre-wrap;">@bodyContent</p>
+                                                            <button type="button" class="btn btn-link btn-sm p-0 fw-bold @(isMe ? "text-white opacity-75" : "text-secondary") text-decoration-none" onclick="toggleReadMore('@post.Id')">Show Less</button>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="mb-0 fs-7 text-break" style="white-space: pre-wrap;">@bodyContent</p>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                        @if (isMe)
+                                        {
+                                            <div class="ms-3 text-center flex-shrink-0">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm mx-auto" style="width:42px; height:42px;">
+                                                    @(post.UserProfile?.FirstName?.Substring(0, 1) ?? "U")
+                                                </div>
+                                                <span class="badge @roleCss mt-1 fs-8 d-inline-block rounded-pill">
+                                                    @role
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Input Card with 1000 char validation, Emojis, Replies & Member Mention Autocomplete -->
+                    <div class="card border-0 shadow-sm rounded-4 position-relative">
+                        <!-- Floating Member Mention Menu -->
+                        <div id="mentionMenu" class="dropdown-menu shadow-lg rounded-3 border-0 py-2 position-absolute" style="display: none; max-height: 200px; overflow-y: auto; z-index: 1050; width: 280px; bottom: 100%; left: 15px;">
+                        </div>
+
+                        <div class="card-body p-3">
+                            <!-- In-Reply-To Preview Box -->
+                            <div id="replyPreviewBox" class="alert alert-primary border-0 rounded-3 py-2 px-3 mb-2 d-none align-items-center justify-content-between">
+                                <div class="fs-7 text-truncate">
+                                    <i class="bi bi-reply-fill me-1 text-primary fs-6"></i> Replying to <strong id="replyUserName">Name</strong>: <span id="replySnippetText" class="text-muted fst-italic">"Snippet..."</span>
+                                </div>
+                                <button type="button" class="btn-close btn-sm ms-2" onclick="cancelReply()"></button>
+                            </div>
+
+                            <form method="post" asp-page-handler="AddPost" asp-route-token="@Model.CurrentGroupToken" id="chatForm">
+                                @Html.AntiForgeryToken()
+                                <div class="position-relative mb-2">
+                                    @if (Model.IsAdminReadOnly)
+                                    {
+                                        <textarea id="chatInput" asp-for="NewPostContent" class="form-control border-0 bg-light p-3 fs-7 text-muted" rows="3" placeholder="Admin Oversight Mode: Read-Only inspection. Only active committee members can post messages." disabled="disabled"></textarea>
+                                    }
+                                    else
+                                    {
+                                        <textarea id="chatInput" asp-for="NewPostContent" class="form-control border-0 bg-light p-3 fs-7" rows="3" placeholder="Type a message (up to 1,000 characters)... Click members on the left or type &commat; to search member names." maxlength="1000" required></textarea>
+                                    }
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button type="button" class="btn btn-sm btn-light rounded-circle" onclick="insertEmoji('😊')" title="Smile" @(Model.IsAdminReadOnly ? "disabled" : "")>😊</button>
+                                        <button type="button" class="btn btn-sm btn-light rounded-circle" onclick="insertEmoji('👍')" title="Thumbs Up" @(Model.IsAdminReadOnly ? "disabled" : "")>👍</button>
+                                        <button type="button" class="btn btn-sm btn-light rounded-circle" onclick="insertEmoji('❤️')" title="Heart" @(Model.IsAdminReadOnly ? "disabled" : "")>❤️</button>
+                                        <button type="button" class="btn btn-sm btn-light rounded-circle" onclick="insertEmoji('🎉')" title="Party" @(Model.IsAdminReadOnly ? "disabled" : "")>🎉</button>
+                                        <button type="button" class="btn btn-sm btn-light rounded-circle" onclick="insertEmoji('📌')" title="Pin" @(Model.IsAdminReadOnly ? "disabled" : "")>📌</button>
+                                        <small id="charCounter" class="text-muted fs-8 ms-2">0 / 1000 characters</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" @(Model.IsAdminReadOnly ? "disabled=\"disabled\"" : "")>
+                                        <i class="bi bi-send-fill me-1"></i> Send Message
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
-
-                    @foreach (var post in Model.Posts)
-                    {
-                        <div class="card border-0 shadow-sm rounded-4 mb-3">
-                            <div class="card-body p-4">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:40px; height:40px;">
-                                        <strong>@(post.UserProfile?.FirstName?.Substring(0, 1))</strong>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">@post.UserProfile?.FirstName @post.UserProfile?.LastName</div>
-                                        <div class="text-muted fs-7">@post.CreatedAt.ToString("MMM dd, yyyy h:mm tt")</div>
-                                    </div>
-                                </div>
-                                <p class="mb-0 text-dark">@post.Content</p>
-                            </div>
-                        </div>
-                    }
-                    @if (!Model.Posts.Any())
-                    {
-                        <div class="text-center text-muted py-5">
-                            <i class="bi bi-chat-dots fs-1 d-block mb-3"></i>
-                            No discussions yet. Be the first to post!
-                        </div>
-                    }
                 </div>
 
-                <!-- Files Tab -->
+                <!-- Shared Files Tab -->
                 <div class="tab-pane fade" id="files" role="tabpanel">
                     <div class="card border-0 shadow-sm rounded-4 mb-4">
-                        <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" asp-page-handler="AddFile" asp-route-id="@Model.MisGroup.Id" class="row g-3 align-items-end">
-                                <div class="col-md-5">
-                                    <label class="form-label fw-600">File Title</label>
-                                    <input asp-for="FileTitle" class="form-control bg-light border-0" placeholder="e.g. Q3 Financial Report" required />
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-cloud-upload text-success me-2 fs-5"></i> Upload New Document</h6>
+                            @if (Model.IsAdminReadOnly)
+                            {
+                                <div class="alert alert-light border text-muted fs-7 mb-0">
+                                    <i class="bi bi-info-circle me-1 text-primary"></i> Admin Oversight Mode: Document uploads are restricted to active committee members.
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="form-label fw-600">Select File</label>
-                                    <input type="file" asp-for="Upload" class="form-control bg-light border-0" required />
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success w-100 rounded-pill"><i class="bi bi-upload me-1"></i> Add File</button>
-                                </div>
-                            </form>
+                            }
+                            else
+                            {
+                                <form method="post" enctype="multipart/form-data" asp-page-handler="AddFile" asp-route-token="@Model.CurrentGroupToken" class="row g-3 align-items-end">
+                                    <div class="col-md-5">
+                                        <label class="form-label text-muted fw-semibold fs-7">Document Title</label>
+                                        <input asp-for="FileTitle" class="form-control" placeholder="e.g. Committee Q3 Minutes" required />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="form-label text-muted fw-semibold fs-7">Choose File</label>
+                                        <input type="file" asp-for="Upload" class="form-control" required />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold"><i class="bi bi-upload me-1"></i> Upload</button>
+                                    </div>
+                                </form>
+                            }
                         </div>
                     </div>
 
@@ -130,15 +446,15 @@
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm rounded-4 h-100">
                                     <div class="card-body p-4 d-flex align-items-center">
-                                        <div class="bg-light @color rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px; height:48px;">
+                                        <div class="bg-light @color rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width:48px; height:48px;">
                                             <i class="bi @icon fs-4"></i>
                                         </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="fw-bold mb-1">@f.FileName</h6>
-                                            <div class="text-muted fs-8 mb-2">Uploaded by @f.UploadedByUser?.FirstName on @f.UploadedAt.ToString("MMM dd, yyyy")</div>
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <h6 class="fw-bold mb-1 text-dark text-truncate">@f.FileName</h6>
+                                            <div class="text-muted fs-8 mb-2">Uploaded by @(f.UploadedByUser?.FirstName ?? "User") on @f.UploadedAt.ToString("MMM dd, yyyy")</div>
                                             <div class="d-flex gap-2">
-                                                <a href="@f.FileUrl" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill py-0 fs-8"><i class="bi bi-eye me-1"></i> View</a>
-                                                <a href="@f.FileUrl" download class="btn btn-primary btn-sm rounded-pill py-0 fs-8"><i class="bi bi-download me-1"></i> Download</a>
+                                                <a href="@f.FileUrl" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fs-8 fw-bold"><i class="bi bi-eye me-1"></i> Preview</a>
+                                                <a href="@f.FileUrl" download class="btn btn-primary btn-sm rounded-pill px-3 fs-8 fw-bold"><i class="bi bi-download me-1"></i> Download</a>
                                             </div>
                                         </div>
                                     </div>
@@ -148,8 +464,8 @@
                         @if (!Model.Files.Any())
                         {
                             <div class="col-12 text-center text-muted py-5">
-                                <i class="bi bi-folder-x fs-1 d-block mb-3"></i>
-                                No files have been shared yet.
+                                <i class="bi bi-folder-x fs-1 d-block mb-3 text-secondary"></i>
+                                No files have been uploaded yet.
                             </div>
                         }
                     </div>
@@ -159,4 +475,431 @@
     </div>
 </div>
 
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
 
+    <script>
+        var currentUserId = "@Model.CurrentUserId";
+        var committeeMembersList = [
+            @foreach (var m in Model.Members)
+            {
+                <text>{ name: "@(m.UserProfile?.GetFullName())", handle: "@(m.UserProfile?.FirstName)", role: "@(m.RolePosition ?? "Member")" },</text>
+            }
+        ];
+
+        var chimeSoundBase64 = "data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YV9vAAAAAP////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        var chimeAudio = new Audio(chimeSoundBase64);
+        
+        // Persistent Sound Preference via localStorage
+        var soundEnabled = localStorage.getItem('misChatSoundEnabled') !== 'false';
+        updateSoundButtonUI();
+
+        var isFullscreen = false;
+        var originalTitle = document.title;
+        var unreadCount = 0;
+        var currentReplyTarget = null;
+
+        function scrollToMessage(elementId) {
+            var el = document.getElementById(elementId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.classList.add('highlight-flash');
+                setTimeout(function() { el.classList.remove('highlight-flash'); }, 2000);
+            }
+        }
+
+        function scrollToMessageSnippet(snippetText) {
+            var chatStream = document.getElementById('chatStream');
+            if (chatStream && snippetText) {
+                var messages = chatStream.querySelectorAll('.text-break');
+                for (var i = 0; i < messages.length; i++) {
+                    if (messages[i].textContent.includes(snippetText)) {
+                        var parentMsg = messages[i].closest('[id^="msg_"]');
+                        if (parentMsg) {
+                            scrollToMessage(parentMsg.id);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        function toggleFullscreenChat() {
+            isFullscreen = !isFullscreen;
+            var container = document.getElementById('workspaceMainContainer');
+            var btn = document.getElementById('fullscreenToggleBtn');
+            var icon = document.getElementById('fullscreenIcon');
+            var text = document.getElementById('fullscreenText');
+
+            if (isFullscreen) {
+                container.classList.add('workspace-fullscreen-active');
+                icon.className = "bi bi-fullscreen-exit me-1";
+                text.textContent = "Exit Fullscreen";
+                btn.className = "btn btn-dark rounded-pill px-3 me-2";
+            } else {
+                container.classList.remove('workspace-fullscreen-active');
+                icon.className = "bi bi-arrows-fullscreen me-1";
+                text.textContent = "Fullscreen";
+                btn.className = "btn btn-outline-dark rounded-pill px-3 me-2";
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isFullscreen) {
+                toggleFullscreenChat();
+            }
+        });
+
+        function toggleReadMore(postId) {
+            var shortDiv = document.getElementById('msgShort_' + postId);
+            var fullDiv = document.getElementById('msgFull_' + postId);
+            if (shortDiv && fullDiv) {
+                if (shortDiv.style.display === 'none') {
+                    shortDiv.style.display = 'block';
+                    fullDiv.style.display = 'none';
+                } else {
+                    shortDiv.style.display = 'none';
+                    fullDiv.style.display = 'block';
+                }
+            }
+        }
+
+        function setReplyTo(userName, snippet) {
+            currentReplyTarget = { userName: userName, snippet: snippet };
+            var replyBox = document.getElementById('replyPreviewBox');
+            var replyName = document.getElementById('replyUserName');
+            var replyText = document.getElementById('replySnippetText');
+            if (replyBox && replyName && replyText) {
+                replyName.textContent = userName;
+                replyText.textContent = '"' + snippet + '"';
+                replyBox.classList.remove('d-none');
+                replyBox.classList.add('d-flex');
+            }
+            var chatInput = document.getElementById('chatInput');
+            if (chatInput && !chatInput.disabled) {
+                chatInput.focus();
+            }
+        }
+
+        function cancelReply() {
+            currentReplyTarget = null;
+            var replyBox = document.getElementById('replyPreviewBox');
+            if (replyBox) {
+                replyBox.classList.add('d-none');
+                replyBox.classList.remove('d-flex');
+            }
+        }
+
+        function togglePinAjax(postId) {
+            var tokenVal = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+            fetch('?handler=TogglePinJson&postId=' + postId + '&token=@Model.CurrentGroupToken', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': tokenVal
+                }
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(function(err) { console.error("Toggle pin error:", err); });
+        }
+
+        // Dynamic Message DOM Insertion (Zero Reload)
+        function appendChatMessageToDOM(data) {
+            var chatStream = document.getElementById('chatStream');
+            var noMsgs = document.getElementById('noMessagesPlaceholder');
+            if (noMsgs) noMsgs.style.display = 'none';
+
+            if (!chatStream) return;
+
+            var isMe = data.senderId === currentUserId;
+            var roleCss = "bg-secondary bg-opacity-10 text-secondary";
+            if (data.senderRole) {
+                var r = data.senderRole.toLowerCase();
+                if (r.includes('chair') || r.includes('president') || r.includes('patron')) roleCss = "bg-warning text-dark fw-bold";
+                else if (r.includes('secretary')) roleCss = "bg-info text-white fw-bold";
+                else if (r.includes('admin') || r.includes('leader')) roleCss = "bg-primary text-white fw-bold";
+                else if (r.includes('finance')) roleCss = "bg-success text-white fw-bold";
+            }
+
+            var initial = data.senderName ? data.senderName.charAt(0).toUpperCase() : "U";
+            var snippet = data.content.length > 50 ? data.content.substring(0, 50) + "..." : data.content;
+
+            var wrapper = document.createElement('div');
+            wrapper.className = 'd-flex mb-4 ' + (isMe ? 'justify-content-end' : 'justify-content-start');
+            wrapper.id = 'msg_' + data.postId;
+
+            var html = '';
+            if (!isMe) {
+                html += '<div class="me-3 text-center flex-shrink-0">';
+                html += '<div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm mx-auto" style="width:42px; height:42px;">' + initial + '</div>';
+                html += '<span class="badge ' + roleCss + ' mt-1 fs-8 d-inline-block rounded-pill">' + data.senderRole + '</span>';
+                html += '</div>';
+            }
+
+            html += '<div style="max-width: 75%;">';
+            html += '<div class="d-flex align-items-center mb-1 gap-2 ' + (isMe ? 'justify-content-end' : 'justify-content-start') + '">';
+            html += '<span class="fw-bold text-dark fs-7">' + data.senderName + '</span>';
+            html += '<small class="text-muted fs-8">' + data.createdAt + '</small>';
+            html += '<button type="button" class="btn btn-link p-0 text-muted fs-8 text-decoration-none ms-1" onclick="setReplyTo(\'' + data.senderName + '\', \'' + snippet.replace(/'/g, "\\'") + '\')"><i class="bi bi-reply-fill me-1"></i> Reply</button>';
+            html += '</div>';
+
+            html += '<div class="p-3 rounded-4 shadow-sm position-relative ' + (isMe ? 'bg-primary text-white ms-auto' : 'bg-white text-dark border') + '" style="border-radius: 1.25rem !important;">';
+            html += '<p class="mb-0 fs-7 text-break" style="white-space: pre-wrap;">' + data.content + '</p>';
+            html += '</div></div>';
+
+            if (isMe) {
+                html += '<div class="ms-3 text-center flex-shrink-0">';
+                html += '<div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm mx-auto" style="width:42px; height:42px;">' + initial + '</div>';
+                html += '<span class="badge ' + roleCss + ' mt-1 fs-8 d-inline-block rounded-pill">' + data.senderRole + '</span>';
+                html += '</div>';
+            }
+
+            wrapper.innerHTML = html;
+            chatStream.appendChild(wrapper);
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+
+        // Form Submission - Intercept via AJAX for 0% Page Reload
+        var chatForm = document.getElementById('chatForm');
+        var chatInput = document.getElementById('chatInput');
+        if (chatForm && chatInput) {
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var msg = chatInput.value.trim();
+                if (!msg) return;
+
+                if (currentReplyTarget) {
+                    msg = '> Replying to ' + currentReplyTarget.userName + ': "' + currentReplyTarget.snippet + '"\n\n' + msg;
+                }
+
+                var tokenVal = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+
+                fetch('?handler=SendJsonPost&token=@Model.CurrentGroupToken', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': tokenVal
+                    },
+                    body: JSON.stringify({ content: msg })
+                })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        chatInput.value = '';
+                        cancelReply();
+                        var charCounter = document.getElementById('charCounter');
+                        if (charCounter) charCounter.textContent = '0 / 1000 characters';
+
+                        // Broadcast via SignalR
+                        if (connection && connection.state === signalR.HubConnectionState.Connected) {
+                            connection.invoke("BroadcastChatMessage", "@Model.MisGroup.Id", data.senderId, data.senderName, data.senderRole, data.content, data.createdAt);
+                        }
+
+                        // Append to local DOM instantly
+                        appendChatMessageToDOM(data);
+                    } else {
+                        alert(data.message || "Failed to send message.");
+                    }
+                })
+                .catch(function(err) {
+                    console.error("SignalR AJAX submit error:", err);
+                });
+            });
+        }
+
+        // Member Mention Autocomplete Logic
+        var mentionMenu = document.getElementById('mentionMenu');
+
+        if (chatInput && mentionMenu) {
+            chatInput.addEventListener('keyup', function(e) {
+                var val = chatInput.value;
+                var cursorPosition = chatInput.selectionStart;
+                var textBeforeCursor = val.substring(0, cursorPosition);
+                var lastAtPos = textBeforeCursor.lastIndexOf('\u0040');
+
+                if (lastAtPos !== -1 && lastAtPos >= textBeforeCursor.length - 20) {
+                    var query = textBeforeCursor.substring(lastAtPos + 1).toLowerCase();
+                    var matches = committeeMembersList.filter(function(m) {
+                        return m.name.toLowerCase().includes(query) || m.handle.toLowerCase().includes(query);
+                    });
+
+                    if (matches.length > 0) {
+                        var html = '';
+                        matches.forEach(function(m) {
+                            html += '<button type="button" class="dropdown-item py-2 d-flex align-items-center justify-content-between" onclick="selectMention(\'' + m.handle + '\', ' + lastAtPos + ')">';
+                            html += '<div><strong>' + m.name + '</strong></div>';
+                            html += '<span class="badge bg-light text-dark border rounded-pill fs-8">' + m.role + '</span>';
+                            html += '</button>';
+                        });
+                        mentionMenu.innerHTML = html;
+                        mentionMenu.style.display = 'block';
+                        return;
+                    }
+                }
+                mentionMenu.style.display = 'none';
+            });
+        }
+
+        function selectMention(handle, atPos) {
+            if (chatInput) {
+                var val = chatInput.value;
+                var textBeforeAt = val.substring(0, atPos);
+                var textAfterCursor = val.substring(chatInput.selectionStart);
+                chatInput.value = textBeforeAt + '\u0040' + handle + ' ' + textAfterCursor;
+                mentionMenu.style.display = 'none';
+                chatInput.focus();
+                chatInput.dispatchEvent(new Event('input'));
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (mentionMenu && !mentionMenu.contains(e.target) && e.target !== chatInput) {
+                mentionMenu.style.display = 'none';
+            }
+        });
+
+        function updateSoundButtonUI() {
+            var soundIcon = document.getElementById('soundIcon');
+            var soundText = document.getElementById('soundText');
+            var btn = document.getElementById('soundToggleBtn');
+            if (soundIcon && soundText && btn) {
+                if (soundEnabled) {
+                    soundIcon.className = "bi bi-volume-up-fill me-1";
+                    soundText.textContent = "Sound On";
+                    btn.className = "btn btn-outline-primary rounded-pill px-3 me-2";
+                } else {
+                    soundIcon.className = "bi bi-volume-mute-fill me-1";
+                    soundText.textContent = "Muted";
+                    btn.className = "btn btn-outline-secondary rounded-pill px-3 me-2";
+                }
+            }
+        }
+
+        function toggleChatSound() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('misChatSoundEnabled', soundEnabled);
+            updateSoundButtonUI();
+        }
+
+        function playNotificationChime() {
+            if (soundEnabled && chimeAudio) {
+                chimeAudio.play().catch(function(e) {});
+            }
+        }
+
+        if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+            Notification.requestPermission();
+        }
+
+        function triggerDesktopNotification(title, body) {
+            if ("Notification" in window && Notification.permission === "granted") {
+                if (document.hidden) {
+                    new Notification(title, { body: body, icon: '/favicon.ico' });
+                }
+            }
+        }
+
+        function showFloatingToast(sender, role, content) {
+            var toastEl = document.getElementById('chatNotificationToast');
+            if (toastEl) {
+                document.getElementById('toastSenderName').textContent = sender;
+                document.getElementById('toastSenderRole').textContent = role || 'Member';
+                document.getElementById('toastContent').textContent = content;
+                var bsToast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                bsToast.show();
+            }
+        }
+
+        var chatStream = document.getElementById('chatStream');
+        if (chatStream) {
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+
+        var charCounter = document.getElementById('charCounter');
+        if (chatInput && charCounter) {
+            chatInput.addEventListener('input', function() {
+                var len = chatInput.value.length;
+                charCounter.textContent = len + ' / 1000 characters';
+                if (len >= 980) {
+                    charCounter.className = 'text-danger fw-bold fs-8 ms-2';
+                } else {
+                    charCounter.className = 'text-muted fs-8 ms-2';
+                }
+            });
+        }
+
+        function insertEmoji(emoji) {
+            if (chatInput && !chatInput.disabled) {
+                chatInput.value += emoji;
+                chatInput.focus();
+                chatInput.dispatchEvent(new Event('input'));
+            }
+        }
+
+        function tagMember(name) {
+            if (chatInput && name && !chatInput.disabled) {
+                chatInput.value += '\u0040' + name + ' ';
+                chatInput.focus();
+                chatInput.dispatchEvent(new Event('input'));
+            }
+        }
+
+        function switchTabToFiles() {
+            var filesTabBtn = document.getElementById('files-tab');
+            if (filesTabBtn) {
+                var tab = new bootstrap.Tab(filesTabBtn);
+                tab.show();
+            }
+        }
+
+        window.addEventListener('focus', function() {
+            unreadCount = 0;
+            document.title = originalTitle;
+        });
+
+        if (typeof signalR !== 'undefined') {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/misgroupchat")
+                .withAutomaticReconnect()
+                .build();
+
+            connection.start().then(function () {
+                connection.invoke("JoinGroupChat", "@Model.MisGroup.Id");
+            }).catch(function (err) {
+                console.warn("SignalR live connection fallback to HTTP:", err.toString());
+            });
+
+            connection.on("ReceiveChatMessage", function (data) {
+                if (data && data.senderId !== currentUserId) {
+                    playNotificationChime();
+                    showFloatingToast(data.senderName, data.senderRole, data.content);
+                    triggerDesktopNotification(data.senderName + " (" + (data.senderRole || "Member") + ")", data.content);
+                    
+                    if (document.hidden) {
+                        unreadCount++;
+                        document.title = '🔔 (' + unreadCount + ') New Message - ' + originalTitle;
+                    }
+
+                    appendChatMessageToDOM({
+                        postId: data.postId || Date.now(),
+                        senderId: data.senderId,
+                        senderName: data.senderName,
+                        senderRole: data.senderRole,
+                        content: data.content,
+                        createdAt: data.createdAt,
+                        isMe: false
+                    });
+                }
+            });
+
+            connection.on("ReceiveMessage", function (data) {
+                playNotificationChime();
+            });
+        }
+    </script>
+}

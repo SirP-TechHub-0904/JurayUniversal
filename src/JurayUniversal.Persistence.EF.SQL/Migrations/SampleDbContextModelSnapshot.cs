@@ -2549,6 +2549,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("bit");
+
                     b.Property<long>("MisGroupId")
                         .HasColumnType("bigint");
 
@@ -2737,6 +2740,35 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MisJobPostings");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiEvaluationPeriod", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MisKpiEvaluationPeriods");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisKpiIndicator", b =>

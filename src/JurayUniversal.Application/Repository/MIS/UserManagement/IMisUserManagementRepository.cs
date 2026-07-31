@@ -45,6 +45,14 @@ namespace JurayUniversal.Application.Repository.MIS.UserManagement
         Task<List<MisKpiUserScore>> GetUserScoreHistoryAsync(string profileId);
         Task<List<string>> GetAllPeriodsAsync();  // Returns distinct periods e.g. ["Q1 2025", "Q2 2025"]
 
+        // Evaluation Period Management
+        Task<List<MisKpiEvaluationPeriod>> GetAllEvaluationPeriodsAsync();
+        Task<MisKpiEvaluationPeriod?> GetEvaluationPeriodByIdAsync(long id);
+        Task CreateEvaluationPeriodAsync(MisKpiEvaluationPeriod period);
+        Task UpdateEvaluationPeriodAsync(MisKpiEvaluationPeriod period);
+        Task DeleteEvaluationPeriodAsync(long id);
+        Task EnsureEvaluationPeriodExistsAsync(string periodTitle);
+
         /// <summary>
         /// Returns all users ranked by total KPI score for a given period.
         /// Used to populate the leaderboard table and charts.

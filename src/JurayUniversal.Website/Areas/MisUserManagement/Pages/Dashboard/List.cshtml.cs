@@ -59,10 +59,30 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
         public string CategoryAlias { get; set; } = "Category";
         public Dictionary<string, List<JurayUniversal.Domain.Models.MisUserFeatureRole>> UserRoles { get; set; } = new();
 
+        private async Task<Profile?> GetCurrentUserAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null) return user;
+
+            var userId = _userManager.GetUserId(User);
+            if (!string.IsNullOrEmpty(userId))
+            {
+                user = await _context.Users.OfType<Profile>().FirstOrDefaultAsync(u => u.Id == userId);
+                if (user != null) return user;
+            }
+
+            if (!string.IsNullOrEmpty(User.Identity?.Name))
+            {
+                user = await _context.Users.OfType<Profile>().FirstOrDefaultAsync(u => u.UserName == User.Identity.Name || u.Email == User.Identity.Name);
+            }
+
+            return user;
+        }
+
         public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser == null)
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null && !(User.Identity?.IsAuthenticated ?? false))
             {
                 return Forbid();
             }
@@ -133,8 +153,8 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
         public async Task<IActionResult> OnPostAllIdsAsync()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser == null) return Forbid();
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null && !(User.Identity?.IsAuthenticated ?? false)) return Forbid();
 
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
             string searchString = Request.Form["SearchString"].FirstOrDefault();
@@ -144,11 +164,8 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             long? categoryId = !string.IsNullOrEmpty(categoryIdStr) ? Convert.ToInt64(categoryIdStr) : null;
             UserStatus? status = !string.IsNullOrEmpty(statusStr) && Enum.TryParse<UserStatus>(statusStr, out var parsedStatus) ? parsedStatus : null;
 
-            var superAdminRoleIds = await _context.Roles.Where(r => r.Name == "mSuperAdmin" || r.Name == "SuperAdmin").Select(r => r.Id).ToListAsync();
-            var superAdminUserIds = await _context.UserRoles.Where(ur => superAdminRoleIds.Contains(ur.RoleId)).Select(ur => ur.UserId).ToListAsync();
-
             var query = _context.Users.OfType<Profile>()
-                .Where(u => !superAdminUserIds.Contains(u.Id))
+                .Where(u => u.UserName != "superadmin" && u.UserName != "msuperadmin" && u.Email != "superadmin@juray.ng")
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchValue))
@@ -186,8 +203,8 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
         public async Task<IActionResult> OnPostDataAsync()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser == null)
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null && !(User.Identity?.IsAuthenticated ?? false))
             {
                 return Forbid();
             }
@@ -207,12 +224,9 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             long? categoryId = !string.IsNullOrEmpty(categoryIdStr) ? Convert.ToInt64(categoryIdStr) : null;
             UserStatus? status = !string.IsNullOrEmpty(statusStr) && Enum.TryParse<UserStatus>(statusStr, out var parsedStatus) ? parsedStatus : null;
 
-            var superAdminRoleIds = await _context.Roles.Where(r => r.Name == "mSuperAdmin" || r.Name == "SuperAdmin").Select(r => r.Id).ToListAsync();
-            var superAdminUserIds = await _context.UserRoles.Where(ur => superAdminRoleIds.Contains(ur.RoleId)).Select(ur => ur.UserId).ToListAsync();
-
             var query = _context.Users.OfType<Profile>()
                 .Include(u => u.UserCategory)
-                .Where(u => !superAdminUserIds.Contains(u.Id))
+                .Where(u => u.UserName != "superadmin" && u.UserName != "msuperadmin" && u.Email != "superadmin@juray.ng")
                 .AsQueryable();
 
             // Apply global DataTables search

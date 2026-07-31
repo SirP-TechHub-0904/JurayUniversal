@@ -17,6 +17,8 @@ namespace JurayUniversal.Domain.Models
         [Display(Name = "Message Content")]
         public string Content { get; set; } = string.Empty;
 
+        public bool IsPinned { get; set; } = false;
+
         [Display(Name = "Date Posted")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

@@ -1,44 +1,56 @@
-﻿@page
+@page "{token?}"
 @model JurayUniversal.Website.Areas.MisGroups.Pages.Platform.JoinModel
 @{
+    Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
     ViewData["Title"] = "Join " + Model.GroupAlias;
 }
 
-<div class="position-absolute top-0 end-0 p-3 mt-5">
-    
-</div>
-
-<div class="container py-5 mt-5">
+<div class="container py-5 mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-5 text-center">
                     <div class="mb-4">
                         <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                            <i class="bi bi-people-fill fs-1"></i>
+                            <i class="bi bi-envelope-paper-heart-fill fs-1 text-primary"></i>
                         </div>
                     </div>
-                    
-                    <h3 class="fw-bold mb-2">You've been invited!</h3>
-                    <p class="text-muted mb-4">You have been invited to join the <strong>@Model.MisGroup.Title</strong> @Model.GroupAlias.ToLower().</p>
 
                     @if (Model.ExistingMembership != null && Model.ExistingMembership.MembershipStatus == "Pending")
                     {
-                        <div class="alert alert-warning mb-0">
-                            <i class="bi bi-hourglass-split me-2"></i> You have already requested to join this @Model.GroupAlias.ToLower(). An administrator will review your request soon.
-                        </div>
-                        <div class="mt-4">
-                            <a asp-page="./Index" class="btn btn-outline-secondary rounded-pill w-100">Return to Directory</a>
+                        <h3 class="fw-bold mb-2 text-dark">You've Been Invited!</h3>
+                        <p class="text-muted mb-2 fs-7">
+                            You have been invited to join <strong>@Model.MisGroup.Title</strong> as <strong>@(string.IsNullOrWhiteSpace(Model.ExistingMembership.RolePosition) ? "Member" : Model.ExistingMembership.RolePosition)</strong>.
+                        </p>
+                        <p class="text-muted mb-4 fs-7">
+                            Click to accept the invitation or click to cancel.
+                        </p>
+
+                        <div class="d-flex flex-column gap-2">
+                            <form method="post" asp-page-handler="Accept" asp-route-token="@Model.CurrentToken">
+                                <button type="submit" class="btn btn-success btn-lg rounded-pill w-100 shadow-sm fw-bold py-3">
+                                    <i class="bi bi-check-circle-fill me-2"></i> Accept Invitation
+                                </button>
+                            </form>
+                            <form method="post" asp-page-handler="Decline" asp-route-token="@Model.CurrentToken">
+                                <button type="submit" class="btn btn-outline-secondary rounded-pill w-100 fw-bold py-2">
+                                    Cancel
+                                </button>
+                            </form>
                         </div>
                     }
                     else
                     {
-                        <form method="post">
-                            <input type="hidden" name="code" value="@Model.MisGroup.Id" />
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100 mb-3 shadow-sm">
-                                Request to Join @Model.GroupAlias
+                        <h3 class="fw-bold mb-2 text-dark">Request Access</h3>
+                        <p class="text-muted mb-4 fs-7">
+                            Click below to submit a request to join <strong>@Model.MisGroup.Title</strong>. An administrator will review your request.
+                        </p>
+
+                        <form method="post" asp-page-handler="RequestJoin" asp-route-token="@Model.CurrentToken">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100 mb-3 shadow-sm fw-bold py-3">
+                                <i class="bi bi-send-fill me-2"></i> Submit Join Request
                             </button>
-                            <a asp-page="./Index" class="btn btn-light rounded-pill w-100">Cancel</a>
+                            <a asp-page="./Index" class="btn btn-light rounded-pill w-100 fw-bold text-muted py-2">Cancel</a>
                         </form>
                     }
                 </div>
@@ -46,4 +58,3 @@
         </div>
     </div>
 </div>
-

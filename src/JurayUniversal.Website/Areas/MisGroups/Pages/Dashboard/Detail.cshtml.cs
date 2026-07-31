@@ -27,15 +27,17 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
             _misAuth = misAuth;
         }
 
-        public MisGroup MisGroup { get; set; }
-        public IList<MisGroupMember> Members { get; set; }
-        public IList<Profile> AvailableUsers { get; set; }
+        public MisGroup MisGroup { get; set; } = null!;
+        public IList<MisGroupMember> Members { get; set; } = new List<MisGroupMember>();
+        public IList<Profile> AvailableUsers { get; set; } = new List<Profile>();
         public string GroupAlias { get; set; } = "Group";
+        public string ObfuscatedInviteToken { get; set; } = string.Empty;
 
         [BindProperty]
-        public string SelectedUserId { get; set; }
+        public string SelectedUserId { get; set; } = string.Empty;
+
         [BindProperty]
-        public string RolePosition { get; set; }
+        public string? RolePosition { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
@@ -51,19 +53,28 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
             if (MisGroup == null)
                 return NotFound();
 
-            Members = await _context.MisGroupMembers
+            // Obfuscate ID for invite URL
+            var plainBytes = System.Text.Encoding.UTF8.GetBytes($"group_{id}");
+            ObfuscatedInviteToken = Convert.ToBase64String(plainBytes).Replace("+", "-").Replace("/", "_").TrimEnd('=');
+
+            var allMembers = await _context.MisGroupMembers
                 .Include(m => m.UserProfile)
                 .Where(m => m.MisGroupId == id)
-                .OrderByDescending(m => m.DateJoined)
                 .ToListAsync();
+
+            // Order Officials (non-Members) first, and standard Members last
+            Members = allMembers
+                .OrderBy(m => string.IsNullOrWhiteSpace(m.RolePosition) || m.RolePosition.Trim().Equals("Member", StringComparison.OrdinalIgnoreCase) ? 1 : 0)
+                .ThenBy(m => m.RolePosition)
+                .ThenByDescending(m => m.DateJoined)
+                .ToList();
 
             var memberUserIds = Members.Select(m => m.UserProfileId).ToList();
             
-            // Get users who are not yet members
             AvailableUsers = await _userManager.Users
                 .Where(u => !memberUserIds.Contains(u.Id))
                 .OrderBy(u => u.FirstName)
-                .Take(100) // Limit for performance
+                .Take(100)
                 .ToListAsync();
 
             return Page();
@@ -82,23 +93,23 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
             if (invitee == null)
                 return RedirectToPage(new { id });
 
-            // Create Member Record (Pending)
+            string assignedRole = string.IsNullOrWhiteSpace(RolePosition) ? "Member" : RolePosition.Trim();
+
             var newMember = new MisGroupMember
             {
                 MisGroupId = id,
                 UserProfileId = SelectedUserId,
-                RolePosition = RolePosition,
+                RolePosition = assignedRole,
                 MembershipStatus = "Pending",
                 DateJoined = DateTime.UtcNow
             };
             _context.MisGroupMembers.Add(newMember);
 
-            // Create Notification
             var notification = new MisNotification
             {
                 UserId = SelectedUserId,
-                Title = "New " + "Group" + " Invite",
-                Message = $"You have been invited to join the '{group.Title}' " + "group" + ".",
+                Title = "New " + GroupAlias + " Invite",
+                Message = $"You have been invited to join the '{group.Title}' {GroupAlias}.",
                 ActionUrl = $"/MisGroups/Platform/Index",
                 IsRead = false,
                 Module = "MisGroups",
@@ -108,7 +119,31 @@ namespace JurayUniversal.Website.Areas.MisGroups.Pages.Dashboard
 
             await _context.SaveChangesAsync();
             
-            TempData["success"] = $"Invite sent to {invitee.FirstName} {invitee.LastName} successfully!";
+            TempData["success"] = $"Invite sent to {invitee.FirstName} {invitee.LastName} as {assignedRole} successfully!";
+            return RedirectToPage(new { id });
+        }
+
+        public async Task<IActionResult> OnPostToggleStatusAsync(long memberId, long id)
+        {
+            if (!await _misAuth.CanEditAsync(User, "MisGroups"))
+                return Forbid();
+
+            var member = await _context.MisGroupMembers.FirstOrDefaultAsync(m => m.Id == memberId);
+            if (member != null)
+            {
+                if (member.MembershipStatus == "Suspended")
+                {
+                    member.MembershipStatus = "Active";
+                    TempData["success"] = "Member account activated.";
+                }
+                else
+                {
+                    member.MembershipStatus = "Suspended";
+                    TempData["success"] = "Member account suspended.";
+                }
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage(new { id });
         }
 

@@ -87,7 +87,9 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             }
 
             // Calculate Statistics with Date Filtering
-            var query = _context.Users.OfType<Profile>().AsQueryable();
+            var query = _context.Users.OfType<Profile>()
+                .Where(u => u.UserName != "superadmin" && u.UserName != "msuperadmin" && u.Email != "superadmin@juray.ng")
+                .AsQueryable();
 
             if (StartDate.HasValue && EndDate.HasValue)
             {

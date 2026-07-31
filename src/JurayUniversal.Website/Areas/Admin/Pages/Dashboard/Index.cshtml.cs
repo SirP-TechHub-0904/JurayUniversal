@@ -217,7 +217,7 @@ namespace JurayUniversal.Website.Areas.Admin.Pages.Dashboard
             });
             DataListMain.Add(new DataListDto
             {
-                DataCount = users.Where(x => x.Gender == Domain.Enum.Enum.GenderStatus.Male).Count().ToString(),
+                DataCount = users.Where(x => x.Gender == Domain.Enum.Enum.GenderStatus.Female).Count().ToString(),
                 DataTitle = "FEMALES",
                 DataPath = "/UserManagement/Index",
                 DataColor = MainServices.SelectColor()
