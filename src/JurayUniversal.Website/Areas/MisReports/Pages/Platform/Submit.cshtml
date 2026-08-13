@@ -1,8 +1,9 @@
 @page "{schemaId:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SubmitModel
 @{
-    ViewData["Title"] = "Submit Report";
-    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+    ViewData["Title"] = "Submit Report: " + Model.Schema?.Name;
+    ViewData["Subtitle"] = Model.Schema?.Description ?? "Fill out the form below to submit your report.";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisReports";
 }
 

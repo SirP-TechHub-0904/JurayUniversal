@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     @await Component.InvokeAsync("WebTitle")
@@ -45,6 +45,7 @@
     @RenderSection("MainStyle", required: false)
 
 
+    <link href="~/customcss/smart-sections.css" rel="stylesheet" asp-append-version="true" />
     @await Component.InvokeAsync("WebsiteCSS")
 
 </head>

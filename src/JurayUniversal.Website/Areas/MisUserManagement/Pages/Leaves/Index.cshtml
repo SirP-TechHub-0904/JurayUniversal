@@ -3,6 +3,7 @@
 @inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
 @{
     ViewData["Title"] = "Leaves & Excuses Management";
+    ViewData["Subtitle"] = "Review all leave requests and excuses submitted by platform users.";
     ViewData["ActiveMenu"] = "Leaves";
     bool canEdit = await MisAuth.CanEditAsync(User, "MisUserManagement");
 }
@@ -13,12 +14,6 @@
     <div class="col-12">
         <div class="card premium-card border-0 shadow-sm rounded-4 mb-4">
             <div class="card-body p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div>
-                        <h4 class="fw-bold mb-1 page-header">Leaves & Excuses</h4>
-                        <p class="text-muted mb-0">Review all leave requests and excuses submitted by platform users.</p>
-                    </div>
-                </div>
 
                 <div class="table-responsive">
                     <table class="table table-hover align-middle" id="leaves-table">

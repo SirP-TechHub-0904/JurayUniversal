@@ -1,4 +1,4 @@
-﻿@model ICollection<JurayUniversal.Domain.Models.Slider>
+@model ICollection<JurayUniversal.Domain.Models.Slider>
 @using System.Text.RegularExpressions;
 @{
     Domain.Models.Setting xsetting = ViewBag.setting;
@@ -577,7 +577,8 @@
                                            data-paddingtop="[0,0,0,0]"
                                            data-paddingright="[50,50,50,50]"
                                            data-paddingbottom="[0,0,0,0]"
-                                           data-paddingleft="[50,50,50,50]">@Html.Raw(item.ButtonText)</a>}
+                                           data-paddingleft="[50,50,50,50]">@Html.Raw(item.ButtonText)</a>
+                                    }
                                     <!-- LAYER NR. 17 -->
 
                                 </li>
@@ -856,6 +857,146 @@
         </div>
         <!-- End revolution slider -->
     }
+    else if (supersetting.SliderTemplateKey == "Slider10101010")
+    {
+
+        <!-- Start revolution slider -->
+        <div class="rev-slider-long">
+            <div class="rev_slider_wrapper fs-slider-wrap">
+                <div id="rev_slider" class="rev_slider">
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <!-- Slide 1 -->
+                            <li data-delay="5000" data-transition="slidingoverlayleft" data-slotamount="7" data-masterspeed="2500" data-fsmasterspeed="1000" class="bg-black">
+
+                                <!-- Main image-->
+                                <img src="@item.Url" alt="" data-bgposition="top left" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
+
+                                <!-- Layer 1: Title -->
+                                <div class="slide-title tp-caption tp-resizeme text-center text-lg-left text-white"
+                                     data-x="['left','left','center','center']" data-hoffset="['35','35','0','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['-150','-150','-130','-310']"
+                                     data-fontsize="['55','55', '45', '80']"
+                                     data-fontweight="700"
+                                     data-lineheight="['65','65', '55', '90']"
+                                     data-width="['1200','991','650']"
+                                     data-height="none"
+                                     data-whitespace="normal"
+                                     data-transform_idle="o:1;"
+                                     data-transform_in="x:[105%];z:0;rX:45deg;rY:0deg;rZ:90deg;sX:1;sY:1;skX:0;skY:0;s:2000;e:Power2.easeInOut;"
+                                     data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
+                                     data-mask_in="x:50px;y:0px;s:inherit;e:inherit;"
+                                     data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+                                     data-frames='[{"delay":300,"speed":4500,"frame":"0","from":"x:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-start="300"
+                                     data-responsive_offset="on"
+                                     data-elementdelay="0.05">
+                                    @Html.Raw(item.Title)
+                                </div>
+
+                                <!-- Mini Title (Display after Title) Layer -->
+                                @if (!string.IsNullOrEmpty(item.MiniTitle))
+                                {
+                                    <div class="tp-caption tp-resizeme text-center text-lg-left text-uppercase text-primary-red"
+                                         data-x="['left','left','center','center']" data-hoffset="['35','35','0','0']"
+                                         data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-60','-190']"
+                                         data-fontsize="['14','14','14','20']"
+                                         data-fontweight="700"
+                                         data-lineheight="['20','20','20','30']"
+                                         data-whitespace="nowrap"
+                                         data-frames='[{"delay":700,"speed":1500,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                         data-responsive_offset="on"
+                                         style="letter-spacing: 2px;">
+                                        @Html.Raw(item.MiniTitle)
+                                    </div>
+                                }
+
+                                <!-- Sub Title (Text Description) Layer -->
+                                @if (!string.IsNullOrEmpty(item.Text))
+                                {
+                                    <div class="tp-caption tp-resizeme text-center text-lg-left text-light-grey"
+                                         data-x="['left','left','center','center']" data-hoffset="['35','35','0','0']"
+                                         data-y="['middle','middle','middle','middle']" data-voffset="['10','10','20','-70']"
+                                         data-fontsize="['18','18','16','24']"
+                                         data-lineheight="['28','28','26','36']"
+                                         data-width="['800','700','500','400']"
+                                         data-whitespace="normal"
+                                         data-frames='[{"delay":1100,"speed":1500,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                         data-responsive_offset="on"
+                                         style="font-weight: 400;">
+                                        @Html.Raw(item.Text)
+                                    </div>
+                                }
+
+                                <!-- Layer 2: Button 1 (Primary) -->
+                                @if (!string.IsNullOrEmpty(item.ButtonText))
+                                {
+                                    string link1 = string.IsNullOrEmpty(item.ButtonLink) ? "#" : item.ButtonLink;
+                                    if (link1 == "000") { link1 = "/Contact"; }
+                                    <a href="@link1" class="tp-caption rev-btn tp-resizeme slider-btn primary-button no-rounded"
+                                       id="slide-1081-layer-14"
+                                       data-x="['left','left','center','center']" data-hoffset="['35','35','-110','-110']"
+                                       data-y="['middle','middle','middle','middle']" data-voffset="['95','95','110','50']"
+                                       data-fontsize="['15','15','15','15']"
+                                       data-fontweight="500"
+                                       data-lineheight="['50','50','50','50']"
+                                       data-width="['200','200','200','200']"
+                                       data-height="none"
+                                       data-whitespace="nowrap"
+                                       data-start="1500"
+                                       data-type="button"
+                                       data-responsive_offset="on"
+                                       data-splitin="none"
+                                       data-splitout="none"
+                                       data-frames='[{"delay":1300,"speed":1000,"frame":"0","from":"y:50px;opacity:0;fb:10px;fbr:100;","to":"o:1;fb:0;fbr:100;","ease":"Power4.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;fbr:100;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"200","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;fbr:110%;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                                       data-textAlign="['center','center','center','center']"
+                                       data-paddingtop="[0,0,0,0]"
+                                       data-paddingright="[0,0,0,0]"
+                                       data-paddingbottom="[0,0,0,0]"
+                                       data-paddingleft="[0,0,0,0]"
+                                       style="text-decoration: none;">
+                                        @Html.Raw(item.ButtonText)
+                                    </a>
+                                }
+
+                                <!-- Layer 3: Button 2 (Secondary Outlined) -->
+                                @if (!item.DisableVideoButton && !string.IsNullOrEmpty(item.VideoButtonText))
+                                {
+                                    string link2 = string.IsNullOrEmpty(item.VideoLink) ? "/Contact" : item.VideoLink;
+                                    <a href="@link2" class="tp-caption rev-btn tp-resizeme slider-btn secondary-button no-rounded"
+                                       id="slide-1081-layer-15"
+                                       data-x="['left','left','center','center']" data-hoffset="['250','250','110','110']"
+                                       data-y="['middle','middle','middle','middle']" data-voffset="['95','95','110','50']"
+                                       data-fontsize="['15','15','15','15']"
+                                       data-fontweight="500"
+                                       data-lineheight="['50','50','50','50']"
+                                       data-width="['200','200','200','200']"
+                                       data-height="none"
+                                       data-whitespace="nowrap"
+                                       data-start="1700"
+                                       data-type="button"
+                                       data-responsive_offset="on"
+                                       data-splitin="none"
+                                       data-splitout="none"
+                                       data-frames='[{"delay":1300,"speed":1000,"frame":"0","from":"y:50px;opacity:0;fb:10px;fbr:100;","to":"o:1;fb:0;fbr:100;","ease":"Power4.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;fbr:100;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"200","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;fbr:110%;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                                       data-textAlign="['center','center','center','center']"
+                                       data-paddingtop="[0,0,0,0]"
+                                       data-paddingright="[0,0,0,0]"
+                                       data-paddingbottom="[0,0,0,0]"
+                                       data-paddingleft="[0,0,0,0]"
+                                       style="text-decoration: none; background: transparent; border: 2px solid #ffffff !important; color: #ffffff !important;">
+                                        @Html.Raw(item.VideoButtonText)
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End revolution slider -->
+    }
 
 
 }
@@ -949,7 +1090,6 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
 
     }
     <!-- Master Slider -->
-
     <!-- end Master Slider -->
 }
 else if (supersetting.TemplateLayoutKey == "Layout3333")
@@ -1380,7 +1520,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                 <li>
                                                     <i class="flaticon-call"></i>@xsetting.PhoneOne
                                                 </li>
-                                            } @if (xsetting.ShowPhoneTwoInTop == true)
+                                            }
+             @if (xsetting.ShowPhoneTwoInTop == true)
                                             {
                                                 <li>
                                                     <i class="flaticon-call"></i>@xsetting.PhoneTwo
@@ -1541,7 +1682,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -1744,7 +1885,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 <a asp-page="/Contact">Contact Us</a>
 
                             </li>
-                        }@if (xsetting.AddCareerToFooter == true)
+                        }
+        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -1887,7 +2029,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                 <li>
                                                     <i class="flaticon-call"></i>@xsetting.PhoneOne
                                                 </li>
-                                            } @if (xsetting.ShowPhoneTwoInTop == true)
+                                            }
+             @if (xsetting.ShowPhoneTwoInTop == true)
                                             {
                                                 <li>
                                                     <i class="flaticon-call"></i>@xsetting.PhoneTwo
@@ -2043,7 +2186,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -2246,7 +2389,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 <a asp-page="/Contact">Contact Us</a>
 
                             </li>
-                        }@if (xsetting.AddCareerToFooter == true)
+                        }
+        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -2535,7 +2679,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -2745,7 +2889,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 <a asp-page="/Contact">Contact Us</a>
 
                             </li>
-                        }@if (xsetting.AddCareerToFooter == true)
+                        }
+        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -2969,7 +3114,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -3183,7 +3328,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                             </li>
                         }
-                        @if (xsetting.AddCareerToFooter == true)
+                        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -3232,7 +3377,6 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
             <!--Header End-->
         </div>
         <!--Full width header End-->
-
         <!-- Slider Start -->
         <div id="rs-slider" class="rs-slider slider3 rs-slider-style4 relative">
             <div class="bend niceties">
@@ -3469,7 +3613,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -3686,7 +3830,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 <a asp-page="/Contact">Contact Us</a>
 
                             </li>
-                        }@if (xsetting.AddCareerToFooter == true)
+                        }
+        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -3983,7 +4128,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -4185,7 +4330,8 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                 <a asp-page="/Contact">Contact Us</a>
 
                             </li>
-                        }@if (xsetting.AddCareerToFooter == true)
+                        }
+        @if (xsetting.AddCareerToMenu == true)
                         {
                             <li>
                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -4527,7 +4673,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -4614,95 +4760,100 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                      data-paddingright="[0,0,0,0]"
                                      data-paddingbottom="[0,0,0,0]"
                                      data-paddingleft="[0,0,0,0]"
-                                     style="z-index: 6; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 500; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">@Html.Raw(item.MiniTitle) </div>
+                                     style="z-index: 6; white-space: nowrap; font-size: 20px; line-height: 20px; font-weight: 500; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
+                                    @Html.Raw(item.MiniTitle)
+                                </div>
 
-                                    <!-- LAYER NR. 3 -->
-                                    <div class="tp-caption   tp-resizeme  text-color"
-                                         id="slide-@nxo-layer-1"
-                                         data-x="['left','left','left','center']" data-hoffset="['15','15','64','0']"
-                                         data-y="['middle','middle','middle','middle']" data-voffset="['-82','-82','-98','-114']"
-                                         data-fontsize="['65','65','45','30']"
-                                         data-lineheight="['42','42','45','30']"
-                                         data-width="none"
-                                         data-height="none"
-                                         data-whitespace="nowrap"
-                                         data-type="text"
-                                         data-responsive_offset="on"
-                                         data-frames='[{"delay":760,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
-                                         data-textAlign="['left','left','left','left']"
-                                         data-paddingtop="[0,0,0,0]"
-                                         data-paddingright="[0,0,0,0]"
-                                         data-paddingbottom="[0,0,0,0]"
-                                         data-paddingleft="[0,0,0,0]"
-                                         style="z-index: 7; white-space: nowrap; font-size: 65px; line-height: 42px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">@Html.Raw(item.Title) </div>
+                                <!-- LAYER NR. 3 -->
+                                <div class="tp-caption   tp-resizeme  text-color"
+                                     id="slide-@nxo-layer-1"
+                                     data-x="['left','left','left','center']" data-hoffset="['15','15','64','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['-82','-82','-98','-114']"
+                                     data-fontsize="['65','65','45','30']"
+                                     data-lineheight="['42','42','45','30']"
+                                     data-width="none"
+                                     data-height="none"
+                                     data-whitespace="nowrap"
+                                     data-type="text"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":760,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
+                                     data-textAlign="['left','left','left','left']"
+                                     data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]"
+                                     data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]"
+                                     style="z-index: 7; white-space: nowrap; font-size: 65px; line-height: 42px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
+                                    @Html.Raw(item.Title)
+                                </div>
 
-                                        <!-- LAYER NR. 4 -->
-                                        <div class="tp-caption   tp-resizeme"
-                                             id="slide-@nxo-layer-6"
-                                             data-x="['left','left','left','center']" data-hoffset="['15','15','64','0']"
-                                             data-y="['middle','middle','middle','middle']" data-voffset="['12','12','-11','-7']"
-                                             data-lineheight="['30','30','28','28']"
-                                             data-width="['531','531','400','405']"
-                                             data-height="['87','87','86','none']"
-                                             data-whitespace="normal"
-                                             data-type="text"
-                                             data-responsive_offset="on"
-                                             data-frames='[{"delay":1080,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
-                                             data-textAlign="['left','left','left','center']"
-                                             data-paddingtop="[0,0,0,0]"
-                                             data-paddingright="[0,0,0,0]"
-                                             data-paddingbottom="[0,0,0,0]"
-                                             data-paddingleft="[0,0,0,0]"
-                                             style="z-index: 8; min-width: 531px; max-width: 531px; max-width: 87px; max-width: 87px; white-space: normal; font-size: 19px; line-height: 30px; font-weight: 400; color: #ffffff; letter-spacing: 0px;font-family:Hind;">@Html.Raw(item.Text) </div>
-                                            @{
-                                                string url = string.Empty;
+                                <!-- LAYER NR. 4 -->
+                                <div class="tp-caption   tp-resizeme"
+                                     id="slide-@nxo-layer-6"
+                                     data-x="['left','left','left','center']" data-hoffset="['15','15','64','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['12','12','-11','-7']"
+                                     data-lineheight="['30','30','28','28']"
+                                     data-width="['531','531','400','405']"
+                                     data-height="['87','87','86','none']"
+                                     data-whitespace="normal"
+                                     data-type="text"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1080,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
+                                     data-textAlign="['left','left','left','center']"
+                                     data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]"
+                                     data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]"
+                                     style="z-index: 8; min-width: 531px; max-width: 531px; max-width: 87px; max-width: 87px; white-space: normal; font-size: 19px; line-height: 30px; font-weight: 400; color: #ffffff; letter-spacing: 0px;font-family:Hind;">
+                                    @Html.Raw(item.Text)
+                                </div>
+                                @{
+                                    string url = string.Empty;
 
-                                                if (item.ButtonLink == "0")
-                                                {
-                                                    url = "#";
-                                                }
-                                                else if (item.ButtonLink == "000")
-                                                {
-                                                    url = Url.Content("/Contact");
-                                                }
-                                                else if (item.ButtonLink != "0" && item.ButtonLink == "000")
-                                                {
-                                                    url = Url.Content($"/Source/{item.ButtonLink}");
-                                                }
-                                            }
-                                            <!-- LAYER NR. 5 -->
-                                            <div class="tp-caption rev-btn   btn btn-default"
-                                                 id="slide-@nxo-layer-3"
-                                                 data-x="['left','left','left','center']" data-hoffset="['15','15','65','0']"
-                                                 data-y="['middle','middle','middle','middle']" data-voffset="['122','122','113','110']"
-                                                 data-fontsize="['16','16','14','14']"
-                                                 data-fontweight="['600','600','400','400']"
-                                                 data-width="none"
-                                                 data-height="none"
-                                                 data-whitespace="nowrap"
-                                                 data-type="button"
-                                                 data-actions='[{"event":"click","action":"simplelink","target":"_self","url":"@url","delay":""}]'
-                                                 data-responsive_offset="on"
-                                                 data-responsive="off"
-                                                 data-frames='[{"delay":1490,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(255,255,255);bg:rgb(0,0,0);"}]'
-                                                 data-textAlign="['left','left','left','left']"
-                                                 data-paddingtop="[15,15,12,12]"
-                                                 data-paddingright="[35,35,35,35]"
-                                                 data-paddingbottom="[15,15,12,12]"
-                                                 data-paddingleft="[35,35,35,35]"
-                                                 style="z-index: 9; white-space: nowrap; font-size: 16px; line-height: 20px; font-weight: 600; color: #ffffff; letter-spacing: 0px;font-family:Hind;text-transform:uppercase;background-color:rgb(252,137,2);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;">@Html.Raw(item.ButtonText)   <i class="fa fa-arrow-circle-o-right"></i> </div>
-                                            </li>
+                                    if (item.ButtonLink == "0")
+                                    {
+                                        url = "#";
+                                    }
+                                    else if (item.ButtonLink == "000")
+                                    {
+                                        url = Url.Content("/Contact");
+                                    }
+                                    else if (item.ButtonLink != "0" && item.ButtonLink == "000")
+                                    {
+                                        url = Url.Content($"/Source/{item.ButtonLink}");
+                                    }
+                                }
+                                <!-- LAYER NR. 5 -->
+                                <div class="tp-caption rev-btn   btn btn-default"
+                                     id="slide-@nxo-layer-3"
+                                     data-x="['left','left','left','center']" data-hoffset="['15','15','65','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['122','122','113','110']"
+                                     data-fontsize="['16','16','14','14']"
+                                     data-fontweight="['600','600','400','400']"
+                                     data-width="none"
+                                     data-height="none"
+                                     data-whitespace="nowrap"
+                                     data-type="button"
+                                     data-actions='[{"event":"click","action":"simplelink","target":"_self","url":"@url","delay":""}]'
+                                     data-responsive_offset="on"
+                                     data-responsive="off"
+                                     data-frames='[{"delay":1490,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(255,255,255);bg:rgb(0,0,0);"}]'
+                                     data-textAlign="['left','left','left','left']"
+                                     data-paddingtop="[15,15,12,12]"
+                                     data-paddingright="[35,35,35,35]"
+                                     data-paddingbottom="[15,15,12,12]"
+                                     data-paddingleft="[35,35,35,35]"
+                                     style="z-index: 9; white-space: nowrap; font-size: 16px; line-height: 20px; font-weight: 600; color: #ffffff; letter-spacing: 0px;font-family:Hind;text-transform:uppercase;background-color:rgb(252,137,2);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;">
+                                    @Html.Raw(item.ButtonText)   <i class="fa fa-arrow-circle-o-right"></i>
+                                </div>
+                            </li>
 
-                                        }
+                        }
                     </ul>
                     <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
                 </div>
             </div><!-- END REVOLUTION SLIDER -->
         </div>
         <!-- Revolution Slider Section End -->
-
-
-
     }
 
     else if (supersetting.SliderTemplateKey == "Slider2222")
@@ -4922,7 +5073,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
 
                                                     </li>
                                                 }
-                                                @if (xsetting.AddCareerToFooter == true)
+                                                @if (xsetting.AddCareerToMenu == true)
                                                 {
                                                     <li>
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -4981,61 +5132,65 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                      data-paddingright="[0,0,0,0]"
                                      data-paddingbottom="[0,0,0,0]"
                                      data-paddingleft="[0,0,0,0]"
-                                     style="z-index: 5; min-width: 602px; max-width: 602px; max-width: 201px; max-width: 201px; white-space: normal; font-size: 55px; line-height: 50px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">@Html.Raw(item.Title) </div>
-                                    <!-- LAYER NR. 2 -->
-                                    <div class="tp-caption   tp-resizeme"
-                                         id="slide-@nxoc-layer-7"
-                                         data-x="['left','left','left','center']" data-hoffset="['15','15','15','0']"
-                                         data-y="['middle','middle','middle','middle']" data-voffset="['15','24','24','10']"
-                                         data-fontsize="['20','20','20','22']"
-                                         data-fontweight="['300','400','400','400']"
-                                         data-width="['470','471','472','408']"
-                                         data-height="['61','none','none','none']"
-                                         data-whitespace="normal"
-                                         data-type="text"
-                                         data-responsive_offset="on"
-                                         data-frames='[{"delay":2530,"speed":1500,"frame":"0","from":"x:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
-                                         data-textAlign="['left','left','left','center']"
-                                         data-paddingtop="[0,0,0,0]"
-                                         data-paddingright="[0,0,0,0]"
-                                         data-paddingbottom="[0,0,0,0]"
-                                         data-paddingleft="[0,0,0,0]"
-                                         style="z-index: 6; min-width: 470px; max-width: 470px; max-width: 61px; max-width: 61px; white-space: normal; font-size: 20px; line-height: 30px; font-weight: 300; color: #ffffff; letter-spacing: 0px;font-family:Hind;">@Html.Raw(item.Text)  </div>
-                                        <!-- LAYER NR. 3 -->
-                                        <div class="tp-caption   tp-resizeme"
-                                             id="slide-@nxoc-layer-10"
-                                             data-x="['left','left','left','center']" data-hoffset="['15','15','15','0']"
-                                             data-y="['middle','middle','middle','middle']" data-voffset="['106','106','106','86']"
-                                             data-width="none"
-                                             data-height="none"
-                                             data-whitespace="nowrap"
-                                             data-type="text"
-                                             data-responsive_offset="on"
-                                             data-frames='[{"delay":4060,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
-                                             data-textAlign="['inherit','inherit','inherit','center']"
-                                             data-paddingtop="[0,0,0,0]"
-                                             data-paddingright="[0,0,0,0]"
-                                             data-paddingbottom="[0,0,0,0]"
-                                             data-paddingleft="[0,0,0,0]"
-                                             style="z-index: 7; white-space: nowrap; font-size: 17px; line-height: 17px; font-weight: 500; color: #ffffff; letter-spacing: 0px;font-family:Hind;">
-                                            <div class="btn btn-default">
-                                                @if (item.ButtonLink == "0")
-                                                {
-                                                    <a href="#">@Html.Raw(item.ButtonText)</a>
-                                                }
-                                                else if (item.ButtonLink == "000")
-                                                {
-                                                    <a asp-page="/Contact">@Html.Raw(item.ButtonText)</a>
-                                                }
-                                                else if (item.ButtonLink != "0" && item.ButtonLink == "000")
-                                                {
-                                                    <a asp-page="/Source" asp-route-id="@item.ButtonLink">@Html.Raw(item.ButtonText)</a>
-                                                }
+                                     style="z-index: 5; min-width: 602px; max-width: 602px; max-width: 201px; max-width: 201px; white-space: normal; font-size: 55px; line-height: 50px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
+                                    @Html.Raw(item.Title)
+                                </div>
+                                <!-- LAYER NR. 2 -->
+                                <div class="tp-caption   tp-resizeme"
+                                     id="slide-@nxoc-layer-7"
+                                     data-x="['left','left','left','center']" data-hoffset="['15','15','15','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['15','24','24','10']"
+                                     data-fontsize="['20','20','20','22']"
+                                     data-fontweight="['300','400','400','400']"
+                                     data-width="['470','471','472','408']"
+                                     data-height="['61','none','none','none']"
+                                     data-whitespace="normal"
+                                     data-type="text"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":2530,"speed":1500,"frame":"0","from":"x:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
+                                     data-textAlign="['left','left','left','center']"
+                                     data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]"
+                                     data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]"
+                                     style="z-index: 6; min-width: 470px; max-width: 470px; max-width: 61px; max-width: 61px; white-space: normal; font-size: 20px; line-height: 30px; font-weight: 300; color: #ffffff; letter-spacing: 0px;font-family:Hind;">
+                                    @Html.Raw(item.Text)
+                                </div>
+                                <!-- LAYER NR. 3 -->
+                                <div class="tp-caption   tp-resizeme"
+                                     id="slide-@nxoc-layer-10"
+                                     data-x="['left','left','left','center']" data-hoffset="['15','15','15','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['106','106','106','86']"
+                                     data-width="none"
+                                     data-height="none"
+                                     data-whitespace="nowrap"
+                                     data-type="text"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":4060,"speed":1500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"nothing"}]'
+                                     data-textAlign="['inherit','inherit','inherit','center']"
+                                     data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]"
+                                     data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]"
+                                     style="z-index: 7; white-space: nowrap; font-size: 17px; line-height: 17px; font-weight: 500; color: #ffffff; letter-spacing: 0px;font-family:Hind;">
+                                    <div class="btn btn-default">
+                                        @if (item.ButtonLink == "0")
+                                        {
+                                            <a href="#">@Html.Raw(item.ButtonText)</a>
+                                        }
+                                        else if (item.ButtonLink == "000")
+                                        {
+                                            <a asp-page="/Contact">@Html.Raw(item.ButtonText)</a>
+                                        }
+                                        else if (item.ButtonLink != "0" && item.ButtonLink == "000")
+                                        {
+                                            <a asp-page="/Source" asp-route-id="@item.ButtonLink">@Html.Raw(item.ButtonText)</a>
+                                        }
 
-                                            </div>
-                                        </div>
-                                    </li>
-                                }
+                                    </div>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
                 </div>
@@ -5120,7 +5275,6 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-12">
-
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12">
                             <div class="mid_bar_content">
@@ -5172,12 +5326,14 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                                                 <p>
                                                                     @ViewBag.setting.PhoneOne
                                                                 </p>
-                                                            } @if (xsetting.ShowPhoneTwoInTop == true)
+                                                            }
+             @if (xsetting.ShowPhoneTwoInTop == true)
                                                             {
                                                                 <p>
                                                                     @ViewBag.setting.PhoneTwo
                                                                 </p>
-                                                            } @if (xsetting.ShowPhoneThreeInTop == true)
+                                                            }
+             @if (xsetting.ShowPhoneThreeInTop == true)
                                                             {
                                                                 <p>
                                                                     @ViewBag.setting.PhoneThree
@@ -5329,7 +5485,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
 
                                 </li>
                             }
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li class="menu-item nav-item">
                                     <a class="nav-link link_hd" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -5603,7 +5759,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                 </li>
                             }
 
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li class="menu-item nav-item">
                                     <a class="nav-link link_hd" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -5907,7 +6063,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
 
                                 </li>
                             }
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li class="menu-item nav-item">
                                     <a class="nav-link link_hd" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -6270,7 +6426,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
 
                                             </li>
                                         }
-                                        @if (xsetting.AddCareerToFooter == true)
+                                        @if (xsetting.AddCareerToMenu == true)
                                         {
                                             <li class="nav-item">
                                                 <a class="nav-link" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -6847,8 +7003,6 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
         </header>
 
         <!--header end-->
-
-
         <!--hero section start-->
 
         <section class="banner p-0 position-relative fullscreen-banner">
@@ -7111,7 +7265,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 @{
                                                     IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
 
-                                                   
+
                                                 }
                                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
 
@@ -7434,8 +7588,6 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
         </header>
 
         <!--header end-->
-
-
         <!--hero section start-->
 
         <section class="banner p-0 position-relative fullscreen-banner">
@@ -7500,8 +7652,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                    <!-- Left nav -->
-                                    <ul class="nav navbar-nav ms-auto">
+
+                                    @*                                                                <ul class="nav navbar-nav ms-auto">
                                         @{
                                             IEnumerable<Domain.Models.PageCategory> catitemlist = ViewBag.pages;
                                             IEnumerable<Domain.Models.WebPage> singlePages = ViewBag.singlePages;
@@ -7562,6 +7714,119 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
 
                                             </li>
                                         }
+                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
+                                        {
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+
+                                                </li>
+                                            }
+                                        }
+                                        @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">@item.Title</a>
+
+                                                @{
+                                                    IEnumerable<Domain.Models.WebPage> itemlistxx = item.WebPages;
+
+
+                                                    IEnumerable<Domain.Models.WebPage> FirstDropDownRaw = item.WebPages.Where(x => x.MainPageId == null);
+                                                    IEnumerable<Domain.Models.WebPage> SecondDropDown = item.WebPages.Where(x => x.MainPageId != null);
+
+                                                    //get id
+                                                    var seconddropDownMainPageId = SecondDropDown.Select(x => x.MainPageId).Distinct();
+                                                    IEnumerable<Domain.Models.WebPage> DropselectedItems = itemlistxx.Where(item => seconddropDownMainPageId.Contains(item.Id));
+
+
+
+                                                    var seconddropDownMainPageIdRemove = SecondDropDown.Select(x => x.Id).Distinct();
+                                                    IEnumerable<Domain.Models.WebPage> itemlistcc = item.WebPages.Where(x => !seconddropDownMainPageIdRemove.Contains(x.Id));
+                                                    IEnumerable<Domain.Models.WebPage> itemlist = itemlistcc.Where(x => !seconddropDownMainPageId.Contains(x.Id));
+
+
+                                                }
+
+                                                <ul class="dropdown-menu">
+
+
+                                                    @foreach (var xitem in DropselectedItems.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+
+                                                        <li class="dropdown dropdown-submenu">
+                                                            @if (xitem.EnableDirectUrl == true)
+                                                            {
+                                                                <a target="_blank" href="@xitem.DirectUrl" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                                    @xitem.Title
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                                    @xitem.Title
+                                                                </a>
+                                                            }
+
+                                                            @{
+                                                                IEnumerable<Domain.Models.WebPage> Dropdowmtwo = item.WebPages.Where(x => x.MainPageId == xitem.Id);
+
+
+                                                            }
+
+                                                            <ul class="dropdown-menu">
+
+                                                                @foreach (var xitemlist in Dropdowmtwo.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                                {
+                                                                    if (xitemlist.EnableDirectUrl == true)
+                                                                    {
+                                                                        <li>
+                                                                            <a target="_blank" href="@xitemlist.DirectUrl">@xitemlist.Title</a>
+
+                                                                        </li>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <li>
+                                                                            <a asp-page="/Source" asp-route-id="@xitemlist.Id" asp-route-title="@regex.Replace(xitemlist.Title, "-")">@xitemlist.Title</a>
+
+                                                                        </li>
+                                                                    }
+                                                                }
+
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+                                                        if (xitem.EnableDirectUrl == true)
+                                                        {
+                                                            <li>
+                                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li>
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+
+                                        }
+
                                         @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
                                         {
                                             <li class="nav-item dropdown">
@@ -7581,31 +7846,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                             </li>
 
                                         }
-                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
-                                        {
-                                            if (item.EnableDirectUrl == true)
-                                            {
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
 
-                                                </li>
-                                            }
-                                            else
-                                            {
-                                                <li class="nav-item">
-                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
-
-                                                </li>
-                                            }
-                                        }
-                                        @foreach (var item in ViewBag.linkExternal)
-                                        {
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
-
-                                            </li>
-
-                                        }
+                                      
 
                                         @if (xsetting.AddBlogToMenu == true)
                                         {
@@ -7628,13 +7870,266 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
 
                                             </li>
                                         }
-                                        @if (xsetting.AddCareerToFooter == true)
+                                        @if (xsetting.AddCareerToMenu == true)
                                         {
                                             <li class="nav-item">
                                                 <a class="nav-link" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
                                             </li>
                                         }
+                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                                        {
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+
+                                                </li>
+                                            }
+                                        }
                                     </ul>
+  *@
+                                    <!-- Left nav -->
+                                    <ul class="nav navbar-nav ms-auto">
+                                        @{
+                                            IEnumerable<Domain.Models.PageCategory> catitemlist = ViewBag.pages;
+                                            IEnumerable<Domain.Models.WebPage> singlePages = ViewBag.singlePages;
+
+                                            // Track titles that have already been rendered to prevent duplicates
+                                            var renderedPageTitles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                                        }
+
+                                        @* --- 1. TOP SINGLE PAGES --- *@
+                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                                        {
+                                            renderedPageTitles.Add(item.Title);
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                </li>
+                                            }
+                                        }
+
+                                        @* --- 2. TOP CATEGORIES --- *@
+                                        @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Top))
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">@item.Title</a>
+
+                                                @{
+                                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                                }
+                                                <ul class="dropdown-menu">
+
+                                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+                                                        <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                                    }
+
+                                                </ul>
+                                            </li>
+                                        }
+
+                                        @* --- 3. PRODUCTS --- *@
+                                        @if (xsetting.ShowProductsInMenu == true)
+                                        {
+                                            <li class="nav-item dropdown">
+                                                @{
+                                                    IEnumerable<Domain.Models.ProductCategory> productpage = ViewBag.productpage;
+                                                }
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" asp-page="/UHSource" asp-route-title="@title">@await Component.InvokeAsync("ProductTitle")</a>
+                                                @if (productpage.Count() > 0)
+                                                {
+                                                    <ul class="dropdown-menu">
+                                                        @foreach (var item in productpage)
+                                                        {
+                                                            <li><a asp-page="/UHSource" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a></li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </li>
+                                        }
+
+                                        @* --- 4. MIDDLE SINGLE PAGES (Skips duplicates) --- *@
+                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
+                                        {
+                                            if (!renderedPageTitles.Add(item.Title))
+                                            {
+                                                continue; // Skip if this page title was already rendered in Top
+                                            }
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                </li>
+                                            }
+                                        }
+
+                                        @* --- 5. MIDDLE CATEGORIES --- *@
+                                        @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Middle))
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">@item.Title</a>
+
+                                                @{
+                                                    IEnumerable<Domain.Models.WebPage> itemlistxx = item.WebPages;
+
+                                                    IEnumerable<Domain.Models.WebPage> FirstDropDownRaw = item.WebPages.Where(x => x.MainPageId == null);
+                                                    IEnumerable<Domain.Models.WebPage> SecondDropDown = item.WebPages.Where(x => x.MainPageId != null);
+
+                                                    var seconddropDownMainPageId = SecondDropDown.Select(x => x.MainPageId).Distinct();
+                                                    IEnumerable<Domain.Models.WebPage> DropselectedItems = itemlistxx.Where(item => seconddropDownMainPageId.Contains(item.Id));
+
+                                                    var seconddropDownMainPageIdRemove = SecondDropDown.Select(x => x.Id).Distinct();
+                                                    IEnumerable<Domain.Models.WebPage> itemlistcc = item.WebPages.Where(x => !seconddropDownMainPageIdRemove.Contains(x.Id));
+                                                    IEnumerable<Domain.Models.WebPage> itemlist = itemlistcc.Where(x => !seconddropDownMainPageId.Contains(x.Id));
+                                                }
+
+                                                <ul class="dropdown-menu">
+                                                    @foreach (var xitem in DropselectedItems.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+                                                        <li class="dropdown dropdown-submenu">
+                                                            @if (xitem.EnableDirectUrl == true)
+                                                            {
+                                                                <a target="_blank" href="@xitem.DirectUrl" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                                    @xitem.Title
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                                    @xitem.Title
+                                                                </a>
+                                                            }
+
+                                                            @{
+                                                                IEnumerable<Domain.Models.WebPage> Dropdowmtwo = item.WebPages.Where(x => x.MainPageId == xitem.Id);
+                                                            }
+
+                                                            <ul class="dropdown-menu">
+                                                                @foreach (var xitemlist in Dropdowmtwo.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                                {
+                                                                    if (xitemlist.EnableDirectUrl == true)
+                                                                    {
+                                                                        <li>
+                                                                            <a target="_blank" href="@xitemlist.DirectUrl">@xitemlist.Title</a>
+                                                                        </li>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <li>
+                                                                            <a asp-page="/Source" asp-route-id="@xitemlist.Id" asp-route-title="@regex.Replace(xitemlist.Title, "-")">@xitemlist.Title</a>
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+                                                        if (xitem.EnableDirectUrl == true)
+                                                        {
+                                                            <li>
+                                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li>
+                                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+
+                                        @* --- 6. BOTTOM CATEGORIES --- *@
+                                        @foreach (var item in catitemlist.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">@item.Title</a>
+
+                                                @{
+                                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                                }
+                                                <ul class="dropdown-menu">
+                                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
+                                                    {
+                                                        <li><a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a></li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+
+                                        @* --- 7. STATIC SETTING LINKS --- *@
+                                        @if (xsetting.AddBlogToMenu == true)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-page="/Bpg">@xsetting.BlogDisplayTitle</a>
+                                            </li>
+                                        }
+                                        @if (supersetting.ActivateProfilePortfolio == true && supersetting.ShowInMenuPortfolio == true)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-page="/PortfolioAccount">@supersetting.PortfolioTitle</a>
+                                            </li>
+                                        }
+                                        @if (xsetting.ShowContactUsMenu == true)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-page="/Contact">Contact Us</a>
+                                            </li>
+                                        }
+                                        @if (xsetting.AddCareerToMenu == true)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
+                                            </li>
+                                        }
+
+                                        @* --- 8. BOTTOM SINGLE PAGES (Skips duplicates) --- *@
+                                        @foreach (var item in singlePages.Where(x => x.HomeSortFrom == Domain.Enum.Enum.HomeSortFrom.Bottom))
+                                        {
+                                            if (!renderedPageTitles.Add(item.Title))
+                                            {
+                                                continue; // Skip if "Home" was already printed in Top or Middle
+                                            }
+                                            if (item.EnableDirectUrl == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@item.DirectUrl">@item.Title</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+
+
                                 </div>
                             </nav>
                         </div>
@@ -7644,8 +8139,6 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
         </header>
 
         <!--header end-->
-
-
         <!--hero section start-->
         @foreach (var item in Model.Take(1))
         {
@@ -7667,9 +8160,14 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 {
                                     <a asp-page="/Contact" class="btn btn-theme btn-radius animated7">@Html.Raw(item.ButtonText)</a>
                                 }
-                                else if (item.ButtonLink != "0" && item.ButtonLink == "000")
+                                else if (item.ButtonLink != "0" && item.ButtonLink != "000")
                                 {
                                     <a asp-page="/Source" asp-route-id="@item.ButtonLink" class="btn btn-theme btn-radius animated7">@Html.Raw(item.ButtonText)</a>
+                                }
+                                @if (!String.IsNullOrEmpty(item.VideoLink))
+                                {
+                                    <a class="btn btn-border btn-radius animated6" href="@item.VideoLink">@Html.Raw(item.VideoButtonText)</a>
+
                                 }
                             </div>
                         </div>
@@ -7863,7 +8361,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
 
                                             </li>
                                         }
-                                        @if (xsetting.AddCareerToFooter == true)
+                                        @if (xsetting.AddCareerToMenu == true)
                                         {
                                             <li class="nav-item">
                                                 <a class="nav-link" asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -7879,8 +8377,6 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
         </header>
 
         <!--header end-->
-
-
         <!--hero section start-->
 
         <section class="banner p-0 position-relative fullscreen-banner">
@@ -8116,7 +8612,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     </div>
                                 </li>
                             }
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li>
                                     <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -8143,7 +8639,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                     <div class="senatory-bg-img" style="background-image:url(@item.Url);"></div>
                     <svg viewBox="0 0 191.6 78.6" class="lottie-shape">
                         <path class="path" fill="none" stroke="#DD131A" stroke-width="4.5" stroke-linecap="round" d="M186.3,17.5c0,0-36.4-18.2-92.3-14.7S1.4,29.6,2.9,47.8s34.4,25.9,62.6,28s79.9-1.5,108.2-14.9
-        s12.8-31.8-5.9-37.7c-26.4-8.4-49.5-9.5-49.5-9.5" />
+                    s12.8-31.8-5.9-37.7c-26.4-8.4-49.5-9.5-49.5-9.5" />
                     </svg>
                     <div class="container nav-container">
                         <div class="row">
@@ -8339,7 +8835,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     </div>
                                 </li>
                             }
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li>
                                     <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -8551,7 +9047,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                     </div>
                                 </li>
                             }
-                            @if (xsetting.AddCareerToFooter == true)
+                            @if (xsetting.AddCareerToMenu == true)
                             {
                                 <li>
                                     <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -8698,12 +9194,12 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                                     <polygon class="triangle" id="XMLID_17_" fill="none" stroke-width="7"
                                                                              stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
                                                                              points="
-                                                    73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
+                                                                    73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
                                                                     <circle class="circle" id="XMLID_18_" fill="none" stroke-width="7"
                                                                             stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
                                                                             cx="106.8" cy="106.8" r="103.3">
-                                     </circle>
-                                  </svg>
+                                                     </circle>
+                                                  </svg>
                                                                     <span>@item.VideoButtonText</span>
                                                                 </a>
                                                             </div>
@@ -9036,4 +9532,3 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
     @await Component.InvokeAsync("NewsRibon")
 }
 
- 

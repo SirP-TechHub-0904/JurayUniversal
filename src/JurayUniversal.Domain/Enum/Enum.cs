@@ -671,7 +671,10 @@ namespace JurayUniversal.Domain.Enum
             Monthly = 3,
 
             [Description("Yearly")]
-            Yearly = 4
+            Yearly = 4,
+
+            [Description("Unlimited / As Many As Possible")]
+            AsManyAsPossible = 5
         }
 
         public enum JobStatus

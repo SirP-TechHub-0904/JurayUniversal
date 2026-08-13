@@ -1,0 +1,540 @@
+/* SmartSections Styling System (Templates 51-57) */
+
+.smart-section {
+    font-family: 'Inter', 'Fira Sans', sans-serif;
+    padding: 90px 0;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.smart-section-grey {
+    background-color: #f8fafc;
+}
+
+.smart-section-dark {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+.smart-section .container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Template 51: Hero & Statistics Section */
+.smart-hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.smart-hero-content {
+    flex: 1 1 500px;
+}
+
+.smart-badge-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.smart-badge {
+    background: rgba(220, 38, 38, 0.08);
+    color: #dc2626;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
+    border: 1px solid rgba(220, 38, 38, 0.15);
+}
+
+.smart-hero-title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.smart-hero-desc {
+    font-size: 1.1rem;
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.smart-btn-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.smart-btn-primary {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    color: #ffffff !important;
+    padding: 14px 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.smart-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+    color: #ffffff !important;
+}
+
+.smart-btn-secondary {
+    background: transparent !important;
+    color: #334155 !important;
+    padding: 14px 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.smart-btn-secondary:hover {
+    border-color: #475569 !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+.smart-stats-card {
+    flex: 1 1 400px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+}
+
+.smart-stat-item {
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 15px;
+}
+
+.smart-stat-item:nth-last-child(-n+2) {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.smart-stat-num {
+    font-size: 2.75rem;
+    font-weight: 900;
+    color: #dc2626;
+    margin-bottom: 6px;
+    line-height: 1;
+}
+
+.smart-stat-label {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Template 52: About Us Section */
+.smart-about-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.smart-about-content {
+    flex: 1 1 500px;
+}
+
+.smart-section-tag {
+    color: #dc2626;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.smart-section-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 24px;
+    line-height: 1.25;
+}
+
+.smart-about-desc {
+    color: #334155;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.smart-about-image-wrapper {
+    flex: 1 1 400px;
+}
+
+.smart-about-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+/* Template 53: Services Grid Section */
+.smart-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.smart-service-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.smart-service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    border-color: rgba(220, 38, 38, 0.25);
+}
+
+.smart-service-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(220, 38, 38, 0.08);
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+}
+
+.smart-service-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 14px;
+}
+
+.smart-service-desc {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Template 54: Sectors Section */
+.smart-sectors-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 35px;
+    margin-top: 50px;
+}
+
+.smart-sector-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smart-sector-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+.smart-sector-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.smart-sector-content {
+    padding: 35px;
+}
+
+.smart-sector-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #dc2626;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.smart-sector-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+.smart-sector-desc {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* Template 55: Why Choose Us Section */
+.smart-grid-2-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.smart-advantage-card {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smart-advantage-card:hover {
+    background: #ffffff;
+    border-color: #dc2626;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.smart-advantage-icon {
+    font-size: 1.6rem;
+    color: #dc2626;
+    margin-bottom: 20px;
+}
+
+.smart-advantage-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+.smart-advantage-desc {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Template 56: Testimonials Section */
+.smart-testimonials-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.smart-testimonial-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.smart-testimonial-quote {
+    font-style: italic;
+    color: #334155;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.smart-testimonial-quote::before {
+    content: "\201C";
+    font-size: 4rem;
+    color: rgba(220, 38, 38, 0.1);
+    position: absolute;
+    left: -20px;
+    top: -25px;
+    font-family: Georgia, serif;
+    z-index: -1;
+}
+
+.smart-testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+}
+
+.smart-testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dc2626;
+}
+
+.smart-testimonial-name {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.smart-testimonial-position {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+/* Template 57: Contact Us Section */
+.smart-contact-wrapper {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.smart-contact-info {
+    flex: 1 1 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.smart-info-card {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.smart-info-icon {
+    font-size: 1.6rem;
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.08);
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.smart-info-title {
+    font-weight: 800;
+    color: #1e293b;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.smart-info-text {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.smart-contact-form-card {
+    flex: 1 1 500px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+}
+
+.smart-form-group {
+    margin-bottom: 24px;
+}
+
+.smart-form-label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+.smart-form-input {
+    width: 100%;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    color: #1e293b;
+}
+
+.smart-form-input:focus {
+    outline: none;
+    border-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 768px) {
+    .smart-section {
+        padding: 60px 0;
+    }
+    .smart-hero-title {
+        font-size: 2.2rem;
+    }
+    .smart-section-title {
+        font-size: 2rem;
+    }
+    .smart-stats-card {
+        padding: 30px;
+        gap: 20px;
+    }
+    .smart-contact-form-card {
+        padding: 30px;
+    }
+}
+
+/* Color utilities for slider & sections */
+.text-primary-red {
+    color: #dc2626 !important;
+}
+.text-light-grey {
+    color: #e2e8f0 !important;
+}
+.text-white {
+    color: #ffffff !important;
+}

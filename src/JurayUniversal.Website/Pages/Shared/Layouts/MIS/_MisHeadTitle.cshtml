@@ -9,6 +9,9 @@
 }
 
 <title id="page-title-j">@uppercaseTitle | @category | @(superSetting?.CompanyName)</title>
-<link rel="shortcut icon" href="@(superSetting?.CompanyIconUrl)" type="image/x-icon" />
+<link rel="shortcut icon" href="@(!string.IsNullOrEmpty(superSetting?.CompanyIconUrl) ? superSetting.CompanyIconUrl : superSetting?.CompanyLogoUrl)" type="image/x-icon" />
 <meta name="description" content="@(superSetting?.CompanyDescription ?? "")">
 <meta name="author" content="@(superSetting?.CompanyName ?? "")">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">

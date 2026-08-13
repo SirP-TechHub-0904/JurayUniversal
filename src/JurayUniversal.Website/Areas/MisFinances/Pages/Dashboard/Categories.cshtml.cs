@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static JurayUniversal.Domain.Enum.Enum;
 
 namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
 {
@@ -25,48 +24,27 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
         public string StatusMessage { get; set; }
 
         public IList<MisFinanceCategory> Categories { get; set; }
+        public SuperSetting SuperSetting { get; set; }
 
         public async Task OnGetAsync()
         {
+            SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
             Categories = await _context.MisFinanceCategories
                 .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
-        }
 
-        public async Task<IActionResult> OnPostCreateAsync(
-            string Title, string Description, bool IsCompulsory, PaymentFrequency Frequency, decimal? FixedAmount)
-        {
-            var category = new MisFinanceCategory
+            // Auto-assign keys for legacy records if missing
+            bool modified = false;
+            foreach (var cat in Categories.Where(c => string.IsNullOrEmpty(c.Key)))
             {
-                Title = Title,
-                Description = Description,
-                IsCompulsory = IsCompulsory,
-                Frequency = Frequency,
-                FixedAmount = FixedAmount,
-                IsActive = true
-            };
-            _context.MisFinanceCategories.Add(category);
-            await _context.SaveChangesAsync();
-            StatusMessage = $"Payment category \"{Title}\" created successfully.";
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostEditAsync(
-            long Id, string Title, string Description, bool IsCompulsory, PaymentFrequency Frequency, decimal? FixedAmount, bool IsActive)
-        {
-            var category = await _context.MisFinanceCategories.FindAsync(Id);
-            if (category == null) return NotFound();
-
-            category.Title = Title;
-            category.Description = Description;
-            category.IsCompulsory = IsCompulsory;
-            category.Frequency = Frequency;
-            category.FixedAmount = FixedAmount;
-            category.IsActive = IsActive;
-
-            await _context.SaveChangesAsync();
-            StatusMessage = $"Payment category \"{Title}\" updated successfully.";
-            return RedirectToPage();
+                cat.Key = "CAT-" + System.Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+                _context.Entry(cat).State = EntityState.Modified;
+                modified = true;
+            }
+            if (modified)
+            {
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

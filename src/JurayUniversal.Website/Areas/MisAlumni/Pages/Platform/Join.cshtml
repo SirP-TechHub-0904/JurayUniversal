@@ -1,17 +1,14 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.JoinModel
 @{
     ViewData["Title"] = "Join " + Model.AlumniAlias + " Network";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisAlumni";
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    
-    <div class="d-flex gap-2">
-        <a asp-page="/Platform/Index" asp-area="MIS" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
-        
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="/Platform/Index" asp-area="MIS" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="container max-w-3xl mx-auto">

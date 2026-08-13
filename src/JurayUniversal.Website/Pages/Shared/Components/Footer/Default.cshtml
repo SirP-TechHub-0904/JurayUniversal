@@ -302,7 +302,8 @@ else if (supersetting.TemplateLayoutKey == "Layout2222")
                                             <a asp-page="/Contact">Contact Us</a>
 
                                         </li>
-                                    } @if (xsetting.AddCareerToFooter == true)
+                                    }
+         @if (xsetting.AddCareerToFooter == true)
                                     {
                                         <li>
                                             <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -475,7 +476,8 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
                                         <i class="fas fa-chevron-right"></i>   <a asp-page="/Contact">Contact Us</a>
 
                                     </li>
-                                } @if (xsetting.AddCareerToFooter == true)
+                                }
+         @if (xsetting.AddCareerToFooter == true)
                                 {
                                     <li>
                                         <i class="fas fa-chevron-right"></i>    <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -584,30 +586,30 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
         @section Scripts {
 
             <script>
-                $(function () {
+                    $(function () {
 
-                    "use strict";
+                        "use strict";
 
-                    var wind = $(window);
+                        var wind = $(window);
 
-                    wind.on("scroll", function () {
+                        wind.on("scroll", function () {
 
-                        var bodyScroll = wind.scrollTop(),
-                            navbar = $(".navbar.change"),
-                            logo = $(".navbar.change .logo> img");
+                            var bodyScroll = wind.scrollTop(),
+                                navbar = $(".navbar.change"),
+                                logo = $(".navbar.change .logo> img");
 
-                        if (bodyScroll > 300) {
+                            if (bodyScroll > 300) {
 
-                            navbar.addClass("nav-scroll");
-                            logo.attr('src', @supersetting.CompanyLogoUrl);
+                                navbar.addClass("nav-scroll");
+                                logo.attr('src', @supersetting.CompanyLogoUrl);
 
-                        } else {
+                            } else {
 
-                            navbar.removeClass("nav-scroll");
-                            logo.attr('src', @supersetting.CompanyWhiteLogoUrl);
-                        }
-                    });
-            }
+                                navbar.removeClass("nav-scroll");
+                                logo.attr('src', @supersetting.CompanyWhiteLogoUrl);
+                            }
+                        });
+                }
             </script>
         }
 
@@ -736,7 +738,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                             <p>
                                 <input type="email" name="email" placeholder="Your email address" required="">
                                 @await Html.PartialAsync("_Captcha")
-                                        <input type="submit" value="Subscribe Now">
+                                <input type="submit" value="Subscribe Now">
                             </p>
                         </div>
                     </div>
@@ -772,7 +774,7 @@ else if (supersetting.TemplateLayoutKey == "Layout5555")
                                                     Exwhyzee Technologies Limited.
                                                 </a>
                                             }
-                                            else
+                                                                else
                                             {
                                                 <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                                     Juray Smart Solutions Limited.
@@ -876,7 +878,8 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                         <a asp-page="/Contact">Contact Us</a>
 
                                                     </li>
-                                                } @if (xsetting.AddCareerToFooter == true)
+                                                }
+         @if (xsetting.AddCareerToFooter == true)
                                                 {
                                                     <li class="pb-3">
                                                         <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -932,8 +935,9 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                 <span>
                                                     @xsetting.PhoneOne<br />
                                                     @if (xsetting.ShowPhoneOneInFooter == true)
-                                                    {@xsetting.PhoneTwo
-                                                }
+                                                    {
+                                                        @xsetting.PhoneTwo
+                                                    }
                                                 </span>
                                             </p>
                                         }
@@ -973,8 +977,8 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                         <div class="input-group add-on">
                                             <input type="text" class="form-control" name="email" autocomplete="off" id="mcemail" placeholder="Email Address">
                                             @await Html.PartialAsync("_Captcha")
-                                              <div class="input-group-btn">
-                                                  <button class="btn btn-default subscribe-btn" type="submit">Go</button>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default subscribe-btn" type="submit">Go</button>
                                             </div>
                                         </div>
                                     </form>
@@ -1003,7 +1007,7 @@ else if (supersetting.TemplateLayoutKey == "Layout6666")
                                                             Exwhyzee Technologies Limited.
                                                         </a>
                                                     }
-                                                    else
+                                                                                else
                                                     {
                                                         <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                                             Juray Smart Solutions Limited.
@@ -1097,7 +1101,8 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                                     <a asp-page="/Contact">Contact Us</a>
 
                                                 </li>
-                                            } @if (xsetting.AddCareerToFooter == true)
+                                            }
+         @if (xsetting.AddCareerToFooter == true)
                                             {
                                                 <li>
                                                     <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -1212,7 +1217,7 @@ else if (supersetting.TemplateLayoutKey == "Layout7777")
                                             Exwhyzee Technologies Limited.
                                         </a>
                                     }
-                                    else
+                                                else
                                     {
                                         <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                             Juray Smart Solutions Limited.
@@ -1266,7 +1271,17 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 {
                                     <li><a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">@item.Title <i class="fas fa-angle-right"></i></a></li>
                                 }
+                                @foreach (var item in ViewBag.linkExternal)
+                                {
+                                    if (item.SecurityPage == false)
+                                    {
+                                        <li>
+                                            <a target="_blank" href="@item.DirectUrl"><i class="fas fa-angle-right"></i> @item.Title</a>
 
+                                        </li>
+
+                                    }
+                                }
                             </ul>
                         </div>
                         <div class="col-lg-4 col-md-6 mt-5 mt-lg-0 footer-list">
@@ -1308,7 +1323,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                         <a asp-page="/Contact"><i class="fas fa-angle-right"></i> Contact Us</a>
 
                                     </li>
-                                } @if (xsetting.AddCareerToFooter == true)
+                                }
+         @if (xsetting.AddCareerToFooter == true)
                                 {
                                     <li>
                                         <a asp-page="/Career"><i class="fas fa-angle-right"></i> @xsetting.CareerDisplayTitle</a>
@@ -1317,11 +1333,14 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                 }
                                 @foreach (var item in ViewBag.linkExternal)
                                 {
-                                    <li>
-                                        <a target="_blank" href="@item.DirectUrl"><i class="fas fa-angle-right"></i> @item.Title</a>
+                                    if (item.SecurityPage == true)
+                                    {
+                                        <li>
+                                            <a target="_blank" href="@item.DirectUrl"><i class="fas fa-angle-right"></i> @item.Title</a>
 
-                                    </li>
+                                        </li>
 
+                                    }
                                 }
                                 @foreach (var item in ViewBag.SecPages)
                                 {
@@ -1376,7 +1395,7 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                                 Exwhyzee Technologies Limited.
                                             </a>
                                         }
-                                        else
+                                                        else
                                         {
                                             <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                                 Juray Smart Solutions Limited.
@@ -1390,7 +1409,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                     </div>
                 </div>
             </div>
-        </footer> }
+        </footer>
+    }
     else if (supersetting.FooterTemplateKey == "Footer2222")
     {
         <footer class="footer footer-2 pt-5 mt-0 dark-bg position-relative">
@@ -1452,7 +1472,8 @@ else if (supersetting.TemplateLayoutKey == "Layout8888")
                                         <a asp-page="/Contact"><i class="fas fa-angle-right"></i> Contact Us</a>
 
                                     </li>
-                                } @if (xsetting.AddCareerToFooter == true)
+                                }
+         @if (xsetting.AddCareerToFooter == true)
                                 {
                                     <li>
                                         <a asp-page="/Career"><i class="fas fa-angle-right"></i> @xsetting.CareerDisplayTitle</a>
@@ -1636,7 +1657,8 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                                 <a asp-page="/Contact">Contact Us</a>
 
                                             </li>
-                                        } @if (xsetting.AddCareerToFooter == true)
+                                        }
+         @if (xsetting.AddCareerToFooter == true)
                                         {
                                             <li>
                                                 <a asp-page="/Career">@xsetting.CareerDisplayTitle</a>
@@ -1791,7 +1813,7 @@ else if (supersetting.TemplateLayoutKey == "Layout9999")
                                                         Exwhyzee Technologies Limited.
                                                     </a>
                                                 }
-                                                else
+                                                                        else
                                                 {
                                                     <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                                         Juray Smart Solutions Limited.
@@ -1968,7 +1990,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                 Exwhyzee Technologies Limited.
                                             </a>
                                         }
-                                        else
+                                                                else
                                         {
                                             <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                                 Juray Smart Solutions Limited.
@@ -2131,7 +2153,7 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                     Exwhyzee Technologies Limited.
                                 </a>
                             }
-                            else
+                                        else
                             {
                                 <a href="https://www.juray.ng/" target="_blank" style="color:white;" class="devby">
                                     Juray Smart Solutions Limited.

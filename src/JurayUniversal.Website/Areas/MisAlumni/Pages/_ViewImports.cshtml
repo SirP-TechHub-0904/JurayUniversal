@@ -1,7 +1,9 @@
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
 @using JurayUniversal.Website.Areas.MisAlumni
 @using JurayUniversal.Domain.Models
 @namespace JurayUniversal.Website.Areas.MisAlumni.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@attribute [Authorize]
 
 @inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth

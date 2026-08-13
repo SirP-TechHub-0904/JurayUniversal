@@ -28,7 +28,7 @@ namespace JurayUniversal.Website.Pages.Pay
                 OrgName = setting.CompanyName ?? OrgName;
 
             Categories = await _context.MisFinanceCategories
-                .Where(c => c.IsActive)
+                .Where(c => c.IsActive && c.AllowGuestPayment)
                 .OrderBy(c => c.IsCompulsory ? 0 : 1)
                 .ThenBy(c => c.Title)
                 .ToListAsync();

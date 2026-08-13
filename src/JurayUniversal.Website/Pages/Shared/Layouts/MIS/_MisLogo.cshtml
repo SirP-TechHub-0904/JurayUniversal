@@ -2,9 +2,23 @@
 
 @{
     var superSetting = _context.SuperSettings.FirstOrDefault();
+    bool hasIcon = superSetting != null && !string.IsNullOrEmpty(superSetting.CompanyIconUrl);
+    bool hasLogo = superSetting != null && !string.IsNullOrEmpty(superSetting.CompanyLogoUrl);
 }
-@if (superSetting != null && !string.IsNullOrEmpty(superSetting.CompanyLogoUrl))
-{
-    <img src="@superSetting.CompanyLogoUrl" class="invert-dark" alt="Logo" height="20" style="max-height: 20px; object-fit: contain;">
-}
+
+<div class="flex items-center space-x-2">
+    @if (hasIcon)
+    {
+        <img src="@superSetting.CompanyIconUrl" alt="Icon" class="h-8 w-8 object-contain transition-all duration-200 rounded-sm">
+    }
+
+    @if (hasLogo)
+    {
+        <img src="@superSetting.CompanyLogoUrl" alt="Logo" class="max-h-9 max-w-[140px] object-contain transition-all duration-200">
+    }
+    else
+    {
+        <span class="text-xl font-bold tracking-tight text-[#0069A1] uppercase">@(superSetting?.CompanyName ?? "XYZ")</span>
+    }
+</div>
 

@@ -48,7 +48,7 @@ public class TenantScopeMiddleware
                 return;
 
             }
-            else if (tenant.ToString().ToLower() == "localhost:8083")
+            else if (tenant.ToString().ToLower() == "health.exwhyzee.ng")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);

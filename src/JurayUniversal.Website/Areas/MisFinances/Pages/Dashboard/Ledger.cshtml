@@ -1,36 +1,39 @@
-﻿@page "{id:long}"
+@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard.LedgerModel
 @{
-    ViewData["Title"] = $"Ledger â€“ {Model.Category?.Title}";
+    ViewData["Title"] = $"Ledger - {Model.Category?.Title}";
+    ViewData["ShowBackButton"] = false;
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    <div>
-        
-        <div class="text-muted fs-7">
-            @if (Model.Category?.IsCompulsory == true)
-            {
-                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill me-1"><i class="bi bi-lock-fill me-1"></i>Compulsory</span>
-            }
-            else
-            {
-                <span class="badge bg-success bg-opacity-10 text-success rounded-pill me-1"><i class="bi bi-heart-fill me-1"></i>Optional</span>
-            }
-            @Model.Category?.Frequency
-            @if (Model.Category?.FixedAmount.HasValue == true)
-            {
-                <span class="ms-1">Â· Fixed: @Model.Category.FixedAmount.Value.ToString("N2")</span>
-            }
-        </div>
-    </div>
-    <div class="d-flex gap-2">
-        
-        <button class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#recordPaymentModal">
-            <i class="bi bi-cash-coin me-1"></i> Record Manual Payment
+
+@section HeaderActions {
+    <div class="dropdown d-inline-block me-2">
+        <button class="btn btn-outline-dark btn-sm rounded-pill px-3 dropdown-toggle" type="button" id="ledgerExportBtn" data-bs-toggle="dropdown" data-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-download me-1"></i> Export
         </button>
-        <a asp-page="./Categories" class="btn btn-light btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back</a>
+        <ul class="dropdown-menu shadow border-0 rounded-3" aria-labelledby="ledgerExportBtn">
+            <li>
+                <a class="dropdown-item py-2" href="#" onclick="exportLedgerTable('excel'); return false;">
+                    <i class="bi bi-file-earmark-excel text-success me-2"></i> Excel (.csv)
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item py-2" href="#" onclick="exportLedgerTable('csv'); return false;">
+                    <i class="bi bi-file-earmark-text text-primary me-2"></i> CSV (.csv)
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item py-2" href="#" onclick="window.print(); return false;">
+                    <i class="bi bi-printer text-secondary me-2"></i> Print / PDF
+                </a>
+            </li>
+        </ul>
     </div>
-</div>
+    <button class="btn btn-outline-success btn-sm rounded-pill me-2" data-bs-toggle="modal" data-bs-target="#recordPaymentModal">
+        <i class="bi bi-cash-coin me-1"></i> Record Manual Payment
+    </button>
+    <a asp-page="./Categories" class="btn btn-light btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     @if (!string.IsNullOrEmpty(Model.StatusMessage))
@@ -42,14 +45,17 @@
     }
 
     <!-- Summary Cards -->
+    @{
+        var cardColClass = Model.Category?.IsCompulsory == true ? "col-md-3" : "col-md-6";
+    }
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
+        <div class="@cardColClass">
             <div class="card border-0 shadow-sm rounded-4 text-center p-3">
                 <div class="fs-1 fw-bold text-primary">@Model.TotalTransactions</div>
                 <div class="text-muted fs-7">Total Payments</div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="@cardColClass">
             <div class="card border-0 shadow-sm rounded-4 text-center p-3">
                 <div class="fs-1 fw-bold text-success">&#8358;@Model.TotalRevenue.ToString("N2")</div>
                 <div class="text-muted fs-7">Revenue Collected</div>
@@ -66,18 +72,18 @@
             <div class="col-md-3">
                 <div class="card border-0 shadow-sm rounded-4 text-center p-3">
                     <div class="fs-1 fw-bold text-danger">@Model.DefaulterCount</div>
-                    <div class="text-muted fs-7">Defaulters</div>
+                    <div class="text-muted fs-7">Not Paid</div>
                 </div>
             </div>
         }
     </div>
 
-    <!-- Tabs for Paid vs Defaulters -->
+    <!-- Tabs for Paid vs Not Paid -->
     @if (Model.Category?.IsCompulsory == true)
     {
         <ul class="nav nav-pills mb-3" id="ledgerTab">
             <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#tab-paid">Paid (@Model.PaidUserCount)</a></li>
-            <li class="nav-item"><a class="nav-link text-danger" data-bs-toggle="pill" href="#tab-defaulters">Defaulters (@Model.DefaulterCount)</a></li>
+            <li class="nav-item"><a class="nav-link text-danger" data-bs-toggle="pill" href="#tab-defaulters">Not Paid (@Model.DefaulterCount)</a></li>
         </ul>
         @if (!string.IsNullOrEmpty(Model.CurrentPeriodLabel))
         {
@@ -87,29 +93,82 @@
         }
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-paid">
-                @await Html.PartialAsync("_LedgerUserTable", Model.PaidTransactions)
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        @if (Model.PaidTransactions.Any())
+                        {
+                            var sn = 1;
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle misTableList" id="ledgerPaidTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="mis-table-th" style="width:50px;">S/N</th>
+                                            <th class="mis-table-th">NAME <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">EMAIL <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">AMOUNT <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">REFERENCE <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">DATE <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="text-end mis-table-th" style="width: 100px;">ACTIONS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var t in Model.PaidTransactions)
+                                        {
+                                            var name = t.UserProfile != null ? $"{t.UserProfile.FirstName} {t.UserProfile.LastName}".Trim() : (t.DonorName ?? "Anonymous");
+                                            var email = t.DonorEmail ?? t.UserProfile?.Email ?? "—";
+                                            <tr>
+                                                <td class="text-muted fw-bold">@(sn++)</td>
+                                                <td class="fw-semibold text-dark search-name">@name</td>
+                                                <td class="text-muted search-email">@email</td>
+                                                <td class="fw-bold text-success">&#8358;@t.Amount.ToString("N2")</td>
+                                                <td><code class="fs-8 search-ref">@t.TransactionReference</code></td>
+                                                <td class="text-muted">@t.PaidAt?.ToString("dd/MM/yyyy hh:mm tt")</td>
+                                                <td class="text-end">
+                                                    <a href="/pay/callback?ref=@t.TransactionReference" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                                        <i class="bi bi-receipt me-1"></i> Receipt
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-inbox text-muted opacity-50 mb-3 d-block" style="font-size: 3rem;"></i>
+                                <h5 class="fw-bold text-muted">No payments recorded yet</h5>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="tab-defaulters">
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4">
                         @if (Model.DefaulterUsers.Any())
                         {
+                            var unpaidSn = 1;
                             <div class="table-responsive">
-                                <table class="table table-hover align-middle">
+                                <table class="table table-hover align-middle misTableList" id="ledgerUnpaidTable">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
+                                            <th class="mis-table-th" style="width:50px;">S/N</th>
+                                            <th class="mis-table-th">NAME <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">EMAIL <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                            <th class="mis-table-th">STATUS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var u in Model.DefaulterUsers)
                                         {
+                                            var name = $"{u.FirstName} {u.LastName}".Trim();
                                             <tr>
-                                                <td class="fw-semibold">@u.FirstName @u.LastName</td>
-                                                <td class="text-muted">@u.Email</td>
-                                                <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Unpaid</span></td>
+                                                <td class="text-muted fw-bold">@(unpaidSn++)</td>
+                                                <td class="fw-semibold search-name">@name</td>
+                                                <td class="text-muted search-email">@u.Email</td>
+                                                <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Not Paid</span></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -134,35 +193,37 @@
             <div class="card-body p-4">
                 @if (Model.PaidTransactions.Any())
                 {
+                    var paidSn = 1;
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
+                        <table class="table table-hover align-middle misTableList" id="ledgerPaidTable">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Donor</th>
-                                    <th>Email</th>
-                                    <th>Amount</th>
-                                    <th>Reference</th>
-                                    <th>Date</th>
+                                    <th class="mis-table-th" style="width:50px;">S/N</th>
+                                    <th class="mis-table-th">NAME <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                    <th class="mis-table-th">EMAIL <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                    <th class="mis-table-th">AMOUNT <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                    <th class="mis-table-th">REFERENCE <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                    <th class="mis-table-th">DATE <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                    <th class="text-end mis-table-th" style="width: 100px;">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var t in Model.PaidTransactions)
                                 {
+                                    var name = t.UserProfile != null ? $"{t.UserProfile.FirstName} {t.UserProfile.LastName}".Trim() : (t.DonorName ?? "Anonymous");
+                                    var email = t.DonorEmail ?? t.UserProfile?.Email ?? "—";
                                     <tr>
-                                        <td class="fw-semibold">
-                                            @if (t.UserProfile != null)
-                                            {
-                                                @($"{t.UserProfile.FirstName} {t.UserProfile.LastName}")
-                                            }
-                                            else
-                                            {
-                                                @(t.DonorName ?? "Anonymous")
-                                            }
+                                        <td class="text-muted fw-bold">@(paidSn++)</td>
+                                        <td class="fw-semibold text-dark search-name">@name</td>
+                                        <td class="text-muted search-email">@email</td>
+                                        <td class="fw-bold text-success">&#8358;@t.Amount.ToString("N2")</td>
+                                        <td><code class="fs-8 search-ref">@t.TransactionReference</code></td>
+                                        <td class="text-muted">@t.PaidAt?.ToString("dd/MM/yyyy hh:mm tt")</td>
+                                        <td class="text-end">
+                                            <a href="/pay/callback?ref=@t.TransactionReference" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                                <i class="bi bi-receipt me-1"></i> Receipt
+                                            </a>
                                         </td>
-                                        <td class="text-muted">@(t.DonorEmail ?? t.UserProfile?.Email ?? "â€”")</td>
-                                        <td class="fw-bold text-success">@t.Amount.ToString("N2")</td>
-                                        <td><code class="fs-8">@t.TransactionReference</code></td>
-                                        <td class="text-muted">@t.PaidAt?.ToString("MMM dd, yyyy")</td>
                                     </tr>
                                 }
                             </tbody>
@@ -193,24 +254,25 @@
                 <div class="modal-body px-4">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="CategoryId" value="@Model.Category?.Id" />
+
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Full Name</label>
-                        <input type="text" class="form-control rounded-3" name="DonorName" placeholder="Payer's full name" />
+                        <label class="form-label fw-semibold">Select Member / User <span class="text-danger">*</span></label>
+                        <select class="form-select rounded-3" name="SelectedUserId" required asp-items="Model.UserOptions">
+                            <option value="">-- Select Member --</option>
+                        </select>
                     </div>
+
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control rounded-3" name="DonorEmail" placeholder="Payer's email (optional)" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Amount Paid</label>
+                        <label class="form-label fw-semibold">Amount Paid <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text">&#8358;</span>
                             <input type="number" step="0.01" min="0" class="form-control" name="Amount" required
                                    value="@Model.Category?.FixedAmount" />
                         </div>
                     </div>
+
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Notes</label>
+                        <label class="form-label fw-semibold">Notes / Remark</label>
                         <input type="text" class="form-control rounded-3" name="Notes" placeholder="e.g. Cash payment received at office" />
                     </div>
                 </div>
@@ -223,6 +285,40 @@
     </div>
 </div>
 
+
 <partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
 
+@section Scripts {
+    <script>
+        function exportLedgerTable(format) {
+            var categoryTitle = "@Html.Raw(Model.Category?.Title ?? "Ledger")";
+            var csv = [];
+            csv.push(['Category', categoryTitle]);
+            csv.push(['S/N', 'NAME', 'EMAIL', 'AMOUNT', 'REFERENCE', 'DATE']);
+
+            var table = document.getElementById('ledgerPaidTable');
+            if (table) {
+                var rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    var sn = row.cells[0]?.innerText.trim() || '';
+                    var name = row.querySelector('.search-name')?.innerText.trim() || row.cells[1]?.innerText.trim() || '';
+                    var email = row.querySelector('.search-email')?.innerText.trim() || row.cells[2]?.innerText.trim() || '';
+                    var amount = row.cells[3]?.innerText.trim().replace('₦','').replace(/,/g,'') || '';
+                    var ref = row.querySelector('.search-ref')?.innerText.trim() || row.cells[4]?.innerText.trim() || '';
+                    var date = row.cells[5]?.innerText.trim() || '';
+                    csv.push(['"' + sn + '"', '"' + name + '"', '"' + email + '"', '"' + amount + '"', '"' + ref + '"', '"' + date + '"']);
+                });
+            }
+
+            var csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Ledger_" + categoryTitle.replace(/[^a-z0-9]/gi, '_') + ".csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+}
 

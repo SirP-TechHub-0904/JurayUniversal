@@ -2,29 +2,23 @@
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.DetailModel
 @{
     ViewData["Title"] = "User Details";
+    ViewData["Subtitle"] = "View profile, manage access roles, evaluate KPIs, and read private HR notes.";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "Users";
 }
 
-<div class="page-heading">
-    <div class="row align-items-center">
-        <div class="col-md-6 col-12">
-            <h3>User Details</h3>
-            <p class="text-subtitle text-muted">View profile, manage access roles, evaluate KPIs, and read private HR notes.</p>
-        </div>
-        <div class="col-md-6 col-12 text-md-end">
-            <a asp-page="/Dashboard/List" class="btn btn-secondary me-2">
-                <i class="bi bi-arrow-left"></i> Back to List
-            </a>
-            <a asp-page="/Dashboard/KpiAssign" asp-route-id="@Model.UserProfile.Id" class="btn btn-success me-2">
-                <i class="bi bi-clipboard-check"></i> Evaluate KPIs
-            </a>
-            <a asp-page="/Dashboard/Roles" asp-route-id="@Model.UserProfile.Id" class="btn btn-primary">
-                <i class="bi bi-shield-check"></i> Manage Roles
-            </a>
-        </div>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./List" class="px-3.5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors text-decoration-none">
+        <i class="bi bi-arrow-left me-1"></i> Back to List
+    </a>
+    <a asp-page="./KpiAssign" asp-route-id="@Model.UserProfile.Id" class="px-3.5 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors text-decoration-none">
+        <i class="bi bi-clipboard-check me-1"></i> Evaluate KPIs
+    </a>
+    <a asp-page="./Roles" asp-route-id="@Model.UserProfile.Id" class="px-3.5 py-2 text-sm font-medium text-white bg-[#0069A1] hover:bg-[#004d77] rounded-lg transition-colors text-decoration-none">
+        <i class="bi bi-shield-check me-1"></i> Manage Roles
+    </a>
+}
 
 <div class="page-content">
     <div class="row">

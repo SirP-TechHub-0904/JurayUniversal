@@ -4,6 +4,223 @@
     var dataConfig = _context.DataConfigs.FirstOrDefault();
 }
 
+<style>
+    /* Global Typography - Space Grotesk Matching Prototype */
+    html, body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    }
+    
+    /* Scrollbar Suppression */
+    html, body {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Collapsed (Mini) Sidebar Mode for Desktop Only */
+    @@media (min-width: 1024px) {
+      #sidebar.sidebar-collapsed {
+        width: 5rem !important; /* 80px */
+      }
+      #sidebar.sidebar-collapsed nav span,
+      #sidebar.sidebar-collapsed nav h3,
+      #sidebar.sidebar-collapsed nav button div.ml-auto,
+      #sidebar.sidebar-collapsed .submenu-list {
+        display: none !important;
+      }
+      #sidebar.sidebar-collapsed nav a,
+      #sidebar.sidebar-collapsed nav button {
+        justify-content: center !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+      #sidebar.sidebar-collapsed img {
+        max-width: 36px !important;
+        max-height: 36px !important;
+      }
+      #topbar.sidebar-collapsed {
+        left: 5rem !important; /* 80px */
+      }
+      #main-content.sidebar-collapsed {
+        margin-left: 5rem !important; /* 80px */
+      }
+    }
+
+    /* =========================================================
+       Universal DataTables Controls Alignment & Styling
+       ========================================================= */
+
+    /* Top controls row (Export buttons + Search bar) */
+    .dataTables_wrapper .row:first-child,
+    .dt-layout-row:first-child {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 1.25rem !important;
+        gap: 1rem !important;
+        flex-wrap: wrap !important;
+    }
+
+    .dataTables_wrapper .row:first-child > [class*="col-"] {
+        display: flex !important;
+        align-items: center !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Left side (Export Buttons & Length menu) */
+    .dataTables_wrapper .dt-buttons,
+    .dataTables_wrapper .dataTables_length {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.35rem !important;
+        margin-bottom: 0 !important;
+        flex-wrap: wrap !important;
+    }
+
+    .dataTables_wrapper .dt-buttons .btn,
+    .dataTables_wrapper .dt-buttons .dt-button {
+        margin-right: 0.25rem !important;
+        margin-bottom: 0 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        padding: 0.4rem 0.85rem !important;
+        border-radius: 0.5rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 38px !important;
+        line-height: 1 !important;
+    }
+
+    /* Right side (Search Bar Container) */
+    .dataTables_wrapper .dataTables_filter {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        margin-left: auto !important;
+        width: auto !important;
+    }
+
+    .dataTables_wrapper .dataTables_filter label {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        margin-bottom: 0 !important;
+        font-weight: 600 !important;
+        font-size: 0.875rem !important;
+        color: #334155 !important;
+        white-space: nowrap !important;
+        height: 38px !important;
+    }
+
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_filter input.form-control,
+    .dataTables_wrapper .dataTables_filter input[type="search"] {
+        display: inline-block !important;
+        width: 220px !important;
+        max-width: 100% !important;
+        height: 38px !important;
+        margin-left: 0 !important;
+        padding: 0.375rem 0.85rem !important;
+        font-size: 0.875rem !important;
+        border-radius: 0.5rem !important;
+        border: 1px solid #cbd5e1 !important;
+        background-color: #ffffff !important;
+        box-shadow: none !important;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    }
+
+    .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+        outline: none !important;
+    }
+
+    /* =========================================================
+       Universal Table & Action Dropdown Alignment & Clipping Fixes
+       ========================================================= */
+
+    /* Prevent table containers from clipping overflow dropdown menus */
+    .table-responsive,
+    .dataTables_wrapper,
+    .card-body.p-0 {
+        overflow: visible !important;
+    }
+
+    /* Ensure table cells position dropdown menus properly */
+    .table td {
+        position: relative;
+        vertical-align: middle !important;
+    }
+
+    .table td .btn-group,
+    .table td .dropdown {
+        position: relative !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+
+    /* Dropdown Menu Positioning and Elevation */
+    .table td .dropdown-menu,
+    .dropdown-menu {
+        z-index: 1060 !important;
+        min-width: 10rem !important;
+        padding: 0.5rem 0 !important;
+        margin-top: 0.25rem !important;
+        font-size: 0.875rem !important;
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .dropdown-menu.show {
+        display: block !important;
+    }
+
+    .dropdown-item {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.5rem 1rem !important;
+        color: #334155 !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: background-color 0.15s ease, color 0.15s ease !important;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
+    }
+
+    /* =========================================================
+       Universal Offcanvas Help Drawer Rules
+       ========================================================= */
+    .offcanvas:not(.show) {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .offcanvas.show {
+        display: flex !important;
+        visibility: visible !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 400px !important;
+        max-width: 100vw !important;
+        z-index: 1055 !important;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15) !important;
+    }
+</style>
+
 @if (dataConfig != null && !string.IsNullOrEmpty(dataConfig.MisDashboardCSS))
 {
     <style>

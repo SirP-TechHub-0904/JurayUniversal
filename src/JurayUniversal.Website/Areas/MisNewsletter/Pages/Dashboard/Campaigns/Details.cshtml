@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = $"Campaign: {Model.Campaign.Subject}";
     ViewData["Subtitle"] = $"Status: {Model.Campaign.Status} | Created: {Model.Campaign.CreatedAt.ToString("g")}";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisNewsletter";
     ViewData["ActiveSubMenu"] = "Campaigns";
 }

@@ -1,25 +1,15 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.ResponsesModel
 @using System.Text.Json
 @{
-    ViewData["Title"] = "Responses - " + Model.Form.Title;
+    ViewData["Title"] = "Form Responses: " + Model.Form?.Title;
+    ViewData["Subtitle"] = $"{Model.FormResponses?.Count ?? 0} response(s) collected.";
+    ViewData["ShowBackButton"] = false;
 }
 
-<!-- Header bar -->
-<div class="mis-page-header d-flex justify-content-between align-items-center mb-0 pb-2 bg-white px-4 border-bottom shadow-xs">
-    <div class="d-flex align-items-center gap-3">
-        <a asp-page="./Index" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width:36px; height:36px;" title="Back to list">
-            <i class="bi bi-arrow-left text-dark"></i>
-        </a>
-        <div>
-            <h4 class="mb-0 fw-bold text-dark">@Model.Form.Title</h4>
-            <small class="text-muted">@Model.FormResponses.Count response(s)</small>
-        </div>
-    </div>
-    <div class="d-flex gap-2 align-items-center">
-        
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to Forms</a>
+}
 
 <!-- Google-style navigation tabs -->
 <div class="d-flex justify-content-center bg-white border-bottom shadow-xs mb-4 pt-2">

@@ -1,8 +1,10 @@
 using JurayUniversal.Domain.Models;
 using JurayUniversal.Persistence.EF.SQL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,12 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
     public class LedgerModel : PageModel
     {
         private readonly DashboardDbContext _context;
+        private readonly UserManager<Profile> _userManager;
 
-        public LedgerModel(DashboardDbContext context)
+        public LedgerModel(DashboardDbContext context, UserManager<Profile> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [TempData]
@@ -28,6 +32,8 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
         public MisFinanceCategory Category { get; set; }
         public List<MisFinanceTransaction> PaidTransactions { get; set; } = new();
         public List<Profile> DefaulterUsers { get; set; } = new();
+        public List<SelectListItem> UserOptions { get; set; } = new();
+
         public int TotalTransactions { get; set; }
         public decimal TotalRevenue { get; set; }
         public int PaidUserCount { get; set; }
@@ -48,24 +54,38 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
 
             TotalTransactions = PaidTransactions.Count;
             TotalRevenue = PaidTransactions.Sum(t => t.Amount);
-            PaidUserCount = PaidTransactions.Select(t => t.UserId).Distinct().Count();
+            PaidUserCount = PaidTransactions.Select(t => t.UserId).Where(uid => !string.IsNullOrEmpty(uid)).Distinct().Count();
+
+            // Fetch users excluding SuperAdmin role
+            var superAdmins = await _userManager.GetUsersInRoleAsync("SuperAdmin");
+            var superAdminIds = superAdmins.Select(u => u.Id).ToHashSet();
+
+            var eligibleUsers = await _context.Users
+                .Where(u => !superAdminIds.Contains(u.Id))
+                .OrderBy(u => u.FirstName)
+                .ThenBy(u => u.LastName)
+                .ToListAsync();
+
+            UserOptions = eligibleUsers.Select(u => new SelectListItem
+            {
+                Value = u.Id,
+                Text = $"{u.FirstName} {u.LastName} ({u.Email})".Trim()
+            }).ToList();
 
             if (Category.IsCompulsory)
             {
-                // Determine the current billing period based on frequency
+                // Determine current billing period
                 var (periodStart, periodEnd, periodLabel) = GetCurrentPeriod(Category.Frequency);
                 CurrentPeriodLabel = periodLabel;
 
                 var paidUserIds = PaidTransactions
-                    .Where(t => t.PaidAt.HasValue && t.PaidAt.Value >= periodStart && t.PaidAt.Value < periodEnd)
+                    .Where(t => t.PaidAt.HasValue && t.PaidAt.Value >= periodStart && t.PaidAt.Value < periodEnd && !string.IsNullOrEmpty(t.UserId))
                     .Select(t => t.UserId)
                     .Distinct()
-                    .ToList();
+                    .ToHashSet();
 
                 PaidUserCount = paidUserIds.Count;
-
-                var allUsers = await _context.Users.ToListAsync();
-                DefaulterUsers = allUsers.Where(u => !paidUserIds.Contains(u.Id)).ToList();
+                DefaulterUsers = eligibleUsers.Where(u => !paidUserIds.Contains(u.Id)).ToList();
                 DefaulterCount = DefaulterUsers.Count;
             }
 
@@ -96,26 +116,41 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
         }
 
         public async Task<IActionResult> OnPostRecordManualAsync(
-            long CategoryId, string DonorName, string DonorEmail, decimal Amount, string Notes)
+            long CategoryId, string SelectedUserId, decimal Amount, string Notes)
         {
             var category = await _context.MisFinanceCategories.FindAsync(CategoryId);
             if (category == null) return NotFound();
 
+            string donorName = "Manual Payment";
+            string donorEmail = null;
+
+            if (!string.IsNullOrEmpty(SelectedUserId))
+            {
+                var user = await _context.Users.FindAsync(SelectedUserId);
+                if (user != null)
+                {
+                    donorName = $"{user.FirstName} {user.LastName}".Trim();
+                    donorEmail = user.Email;
+                }
+            }
+
             var tx = new MisFinanceTransaction
             {
                 MisFinanceCategoryId = CategoryId,
-                DonorName = DonorName,
-                DonorEmail = DonorEmail,
+                UserId = SelectedUserId,
+                DonorName = donorName,
+                DonorEmail = donorEmail,
                 Amount = Amount,
                 Notes = Notes,
-                TransactionReference = $"MANUAL-{System.DateTime.UtcNow.Ticks}",
+                PaymentProvider = "Manual / Offline",
+                TransactionReference = $"MANUAL-{DateTime.UtcNow.Ticks}",
                 Status = PaymentStatus.Success,
-                PaidAt = System.DateTime.UtcNow
+                PaidAt = DateTime.UtcNow
             };
 
             _context.MisFinanceTransactions.Add(tx);
             await _context.SaveChangesAsync();
-            StatusMessage = $"Manual payment of {Amount:N2} recorded successfully.";
+            StatusMessage = $"Manual payment of ₦{Amount:N2} recorded for {donorName} successfully.";
             return RedirectToPage(new { id = CategoryId });
         }
     }

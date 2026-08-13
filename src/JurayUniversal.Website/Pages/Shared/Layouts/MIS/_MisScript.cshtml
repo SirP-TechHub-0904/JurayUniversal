@@ -4,6 +4,10 @@
     var dataConfig = _context.DataConfigs.FirstOrDefault();
 }
 
+<!-- jQuery & Core Dependencies -->
+<script src="~/dashboard/plugins/jquery/jquery.min.js"></script>
+<script src="~/dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- Ported from _Main.cshtml (Dashboard plugins) -->
 <script src="~/dashboard/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="~/dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -76,7 +80,277 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         }
+
+        // Universal DataTables Auto-Initializer (.misTableList, .js-datatable, .data-table, .datatable, .table-datatable)
+        $('.misTableList, .js-datatable, .data-table, .datatable, .table-datatable').each(function () {
+            if ($.fn.DataTable && !$.fn.DataTable.isDataTable(this)) {
+                var tableElem = this;
+                var tableId = this.id || 'dt_' + Math.random().toString(36).substring(2, 9);
+                if (!this.id) { this.id = tableId; }
+
+                $(this).DataTable({
+                    "responsive": true,
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
+                    "language": {
+                        "search": "",
+                        "searchPlaceholder": "Search records..."
+                    },
+                    "initComplete": function() {
+                        var wrapper = $(this.api().table().container());
+                        var topRow = wrapper.find('> div.row:first-child, > .row:first-child');
+                        topRow.attr('style', 'display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; margin: 0 0 1.25rem 0 !important; padding: 0 !important;');
+                        topRow.children('div').attr('style', 'display: flex !important; align-items: center !important; flex: 0 0 auto !important; width: auto !important; max-width: none !important; padding: 0 !important; margin: 0 !important;');
+
+                        var filterContainer = wrapper.find('.dataTables_filter');
+                        filterContainer.attr('style', 'display: flex !important; align-items: center !important; justify-content: flex-end !important; gap: 0.75rem !important; margin-left: auto !important;');
+
+                        var pageExportWrapper = $('#exportDropdownWrapper');
+                        // Only use the page-level export wrapper for the specific user directory table
+                        if (pageExportWrapper.length && tableId === 'userDirectoryTable') {
+                            pageExportWrapper.removeClass('d-none').prependTo(filterContainer);
+                        }
+                        else if (filterContainer.length && !filterContainer.find('.dt-export-btn-wrapper').length) {
+                            var exportHtml = `
+                                <div class="dt-export-btn-wrapper dropdown d-inline-block">
+                                    <button class="btn btn-outline-dark rounded-3 px-3 py-1 d-inline-flex align-items-center gap-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" data-toggle="dropdown" aria-expanded="false" style="height:38px; border:1px solid #212529!important; color:#212529; font-size:0.875rem; font-weight:500; border-radius:8px!important;">
+                                        <i class="bi bi-download me-1"></i> Export
+                                    </button>
+                                    <ul class="dropdown-menu shadow border-0 rounded-3">
+                                        <li><a class="dropdown-item py-2" href="#" onclick="exportTableData('${tableId}', 'excel'); return false;"><i class="bi bi-file-earmark-excel text-success me-2"></i> Excel (.xlsx)</a></li>
+                                        <li><a class="dropdown-item py-2" href="#" onclick="exportTableData('${tableId}', 'csv'); return false;"><i class="bi bi-file-earmark-text text-primary me-2"></i> CSV (.csv)</a></li>
+                                        <li><a class="dropdown-item py-2" href="#" onclick="window.print(); return false;"><i class="bi bi-printer text-secondary me-2"></i> Print / PDF</a></li>
+                                    </ul>
+                                </div>`;
+                            filterContainer.prepend(exportHtml);
+                        }
+                    }
+                });
+            }
+        });
+
+        // Universal Table Export Engine (Excel, CSV, Print/PDF)
+        window.exportTableData = function(tableId, format) {
+            var table = document.getElementById(tableId);
+            if (!table) return;
+            var title = (document.title || 'Export').split('|')[0].trim().replace(/[^a-z0-9]/gi, '_');
+
+            if (format === 'print') {
+                window.print();
+                return;
+            }
+
+            var delimiter = format === 'excel' ? "\t" : ",";
+            var rowsData = [];
+            var headers = [];
+            var ths = table.querySelectorAll('thead th');
+            ths.forEach((th, idx) => {
+                if (idx < ths.length - 1 || !th.innerText.toLowerCase().includes('action')) {
+                    var text = th.innerText.replace(/[\r\n]+/g, ' ').trim();
+                    headers.push(format === 'excel' ? text : '"' + text + '"');
+                }
+            });
+            rowsData.push(headers.join(delimiter));
+
+            var rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                var rowData = [];
+                var tds = row.querySelectorAll('td');
+                tds.forEach((td, idx) => {
+                    if (idx < tds.length - 1 || !tds[tds.length - 1].innerHTML.includes('dropdown')) {
+                        var text = td.innerText.replace(/[\r\n]+/g, ' ').trim();
+                        rowData.push(format === 'excel' ? text : '"' + text + '"');
+                    }
+                });
+                if (rowData.length) rowsData.push(rowData.join(delimiter));
+            });
+
+            var mimeType = format === 'excel' ? "data:application/vnd.ms-excel;charset=utf-8," : "data:text/csv;charset=utf-8,";
+            var ext = format === 'excel' ? ".xls" : ".csv";
+            var content = mimeType + encodeURIComponent(rowsData.join("\n"));
+            var link = document.createElement("a");
+            link.setAttribute("href", content);
+            link.setAttribute("download", title + "_" + new Date().toISOString().slice(0,10) + ext);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // Universal Action Dropdown Toggle Click Handler (Supports data-toggle & data-bs-toggle)
+        $(document).on('click', '[data-toggle="dropdown"], [data-bs-toggle="dropdown"]', function (e) {
+            var $this = $(this);
+            var $parent = $this.closest('.dropdown, .btn-group');
+            var $menu = $parent.find('.dropdown-menu');
+
+            // Close other dropdown menus
+            $('.dropdown-menu').not($menu).removeClass('show');
+            $('.dropdown, .btn-group').not($parent).removeClass('show');
+
+            // Toggle current dropdown menu
+            $parent.toggleClass('show');
+            $menu.toggleClass('show');
+            e.stopPropagation();
+        });
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function () {
+            $('.dropdown-menu, .dropdown, .btn-group').removeClass('show');
+        });
+
+        // Universal Modal Toggle & Dismiss Click Handler (Supports data-bs-toggle="modal" & BS4 data-toggle="modal")
+        $(document).on('click', '[data-bs-toggle="modal"], [data-toggle="modal"]', function (e) {
+            e.preventDefault();
+            var target = $(this).attr('data-bs-target') || $(this).attr('data-target') || $(this).attr('href');
+            if (target && $(target).length) {
+                var $modal = $(target);
+                if (typeof $modal.modal === 'function') {
+                    $modal.modal('show');
+                } else {
+                    $modal.addClass('show').css('display', 'block');
+                }
+            }
+        });
+
+        $(document).on('click', '[data-bs-dismiss="modal"], [data-dismiss="modal"]', function (e) {
+            e.preventDefault();
+            var $modal = $(this).closest('.modal');
+            if ($modal.length) {
+                if (typeof $modal.modal === 'function') {
+                    $modal.modal('hide');
+                } else {
+                    $modal.removeClass('show').css('display', 'none');
+                }
+            }
+        });
     });
+</script>
+
+<!-- EXWHYZEE Prototype Layout Interactivity Script Engine -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const topbar = document.getElementById('topbar');
+        const mainContent = document.getElementById('main-content');
+        const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+        const backdrop = document.getElementById('sidebar-backdrop');
+        
+        let isSidebarCollapsed = false;
+        let isMobileOpen = false;
+
+        // 1. Sidebar Toggle (Desktop Mini-Sidebar vs Mobile Drawer)
+        function handleSidebarToggle() {
+            const isMobile = window.innerWidth < 1024;
+            
+            if (isMobile) {
+                isMobileOpen = !isMobileOpen;
+                if (isMobileOpen) {
+                    if (sidebar) {
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                    }
+                    if (backdrop) backdrop.classList.remove('hidden');
+                } else {
+                    if (sidebar) {
+                        sidebar.classList.remove('translate-x-0');
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                    if (backdrop) backdrop.classList.add('hidden');
+                }
+            } else {
+                isSidebarCollapsed = !isSidebarCollapsed;
+                if (isSidebarCollapsed) {
+                    if (sidebar) sidebar.classList.add('sidebar-collapsed');
+                    if (topbar) topbar.classList.add('sidebar-collapsed');
+                    if (mainContent) mainContent.classList.add('sidebar-collapsed');
+                } else {
+                    if (sidebar) sidebar.classList.remove('sidebar-collapsed');
+                    if (topbar) topbar.classList.remove('sidebar-collapsed');
+                    if (mainContent) mainContent.classList.remove('sidebar-collapsed');
+                }
+            }
+        }
+
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleSidebarToggle();
+            });
+        }
+
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                if (window.innerWidth < 1024 && isMobileOpen) {
+                    handleSidebarToggle();
+                }
+            });
+        }
+
+        // 2. Profile Menu Dropdown Toggle & Outside Click Dismissal
+        const profileBtn = document.getElementById('profile-menu-btn');
+        const profileDropdown = document.getElementById('profile-menu-dropdown');
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', () => {
+                profileDropdown.classList.add('hidden');
+            });
+        }
+
+        // 3. Floating Scroll Progress Widget
+        const scrollWidget = document.getElementById('scroll-widget');
+        const scrollTopBtn = document.getElementById('btn-scroll-top');
+        const scrollBottomBtn = document.getElementById('btn-scroll-bottom');
+        const progressBar = document.getElementById('scroll-progress-bar');
+
+        if (scrollTopBtn) {
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        if (scrollBottomBtn) {
+            scrollBottomBtn.addEventListener('click', () => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalScroll > 0) {
+                const progress = (window.scrollY / totalScroll) * 100;
+                if (progressBar) progressBar.style.height = `${Math.min(100, Math.max(0, progress))}%`;
+                if (scrollWidget) {
+                    if (window.scrollY > 100) {
+                        scrollWidget.classList.remove('opacity-0', 'translate-x-4', 'pointer-events-none');
+                        scrollWidget.classList.add('opacity-100', 'translate-x-0');
+                    } else {
+                        scrollWidget.classList.add('opacity-0', 'translate-x-4', 'pointer-events-none');
+                        scrollWidget.classList.remove('opacity-100', 'translate-x-0');
+                    }
+                }
+            }
+        });
+    });
+
+    // 4. Accordion Submenu Toggle Helper
+    function toggleSubMenu(id) {
+        const list = document.getElementById(id);
+        const caret = document.getElementById('caret-' + id);
+        if (!list) return;
+        const isHidden = list.classList.contains('hidden');
+        list.classList.toggle('hidden', !isHidden);
+        if (caret) {
+            caret.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    }
 </script>
 
 <!-- Custom SuperSetting Layout JavaScript -->

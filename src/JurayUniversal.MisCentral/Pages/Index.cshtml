@@ -1,0 +1,231 @@
+@page
+@model JurayUniversal.MisCentral.Pages.IndexModel
+@{
+    Layout = "~/Pages/Shared/Layouts/_MisMasterLayout.cshtml";
+    ViewData["Title"] = "Multi-Database Central Control";
+    ViewData["Subtitle"] = "Overview & Billing Analytics";
+}
+
+<div class="container-fluid p-0">
+
+    <!-- CUMULATIVE METRICS ROW -->
+    <div class="row g-3 mb-4">
+        <!-- Total Websites -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card p-3 border-start border-4 border-primary">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Registered Databases</span>
+                        <h3 class="fw-bold mb-0 mt-1">@Model.Summary.TotalWebsitesCount</h3>
+                        <small class="text-success"><i class="fa fa-circle me-1" style="font-size: 0.5rem;"></i>@Model.Summary.TotalOnlineCount Connected Online</small>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
+                        <i class="fa fa-database fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enabled Features Ratio -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card p-3 border-start border-4 border-success">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Active Modules Ratio</span>
+                        <h3 class="fw-bold mb-0 mt-1">@Model.Summary.TotalFeaturesEnabled <span class="fs-6 text-muted font-normal">/ @Model.Summary.TotalFeaturesAvailable</span></h3>
+                        <small class="text-muted">Total Enabled Features</small>
+                    </div>
+                    <div class="bg-success bg-opacity-10 text-success p-3 rounded-circle">
+                        <i class="fa fa-cubes fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cumulative Feature Billing Cost -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card p-3 border-start border-4 border-info">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Cumulative Billing Cost</span>
+                        <h3 class="fw-bold mb-0 mt-1 text-primary">₦@Model.Summary.TotalCumulativeCost.ToString("N0")</h3>
+                        <small class="text-muted">Total Billing Value</small>
+                    </div>
+                    <div class="bg-info bg-opacity-10 text-info p-3 rounded-circle">
+                        <i class="fa fa-receipt fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Urgent Renewal / Expiring Counter -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card p-3 border-start border-4 border-warning">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Urgent Renewals</span>
+                        <h3 class="fw-bold mb-0 mt-1 text-danger">@(Model.Summary.Expiring7DaysCount + Model.Summary.ExpiredCount)</h3>
+                        <small class="text-danger"><i class="fa fa-exclamation-triangle me-1"></i>@Model.Summary.Expiring7DaysCount in &lt; 7 Days, @Model.Summary.ExpiredCount Expired</small>
+                    </div>
+                    <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-circle">
+                        <i class="fa fa-bell fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTAL-SPECIFIC EXPIRATION WARNINGS FEED -->
+    @{
+        var allExpiring = Model.Summary.Tenants
+            .SelectMany(t => t.Features.Select(f => new { Tenant = t, Feature = f }))
+            .Where(x => x.Feature.Status != JurayUniversal.Domain.Enum.Enum.FeatureBillingStatus.Disabled && x.Feature.NextBillingDate.HasValue && x.Feature.DaysUntilExpiration <= 30)
+            .OrderBy(x => x.Feature.DaysUntilExpiration)
+            .ToList();
+    }
+
+    @if (allExpiring.Any())
+    {
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa fa-clock text-warning fs-5"></i>
+                    <h6 class="fw-bold mb-0">Portal Feature Expiration Feed</h6>
+                </div>
+                <a href="/Expirations" class="btn btn-sm btn-outline-secondary rounded-pill">View All Schedule</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Portal / Website</th>
+                                <th>Feature Module</th>
+                                <th>Billing Cost</th>
+                                <th>Next Billing Date</th>
+                                <th>Status</th>
+                                <th class="text-end">Quick Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var alert in allExpiring.Take(5))
+                            {
+                                <tr>
+                                    <td>
+                                        <strong class="text-dark">@alert.Tenant.PrimaryDomain</strong>
+                                        <div class="small text-muted">Catalog: @alert.Tenant.CatalogName</div>
+                                    </td>
+                                    <td>
+                                        <span class="fw-medium text-dark">@alert.Feature.FeatureName</span>
+                                        <div class="small text-muted"><code>@alert.Feature.ModuleFolder</code></div>
+                                    </td>
+                                    <td class="fw-bold text-dark">₦@alert.Feature.CostPerDuration.ToString("N0") <small class="text-muted font-normal">/@alert.Feature.BillingDuration</small></td>
+                                    <td>@(alert.Feature.NextBillingDate?.ToString("MMM dd, yyyy") ?? "-")</td>
+                                    <td>
+                                        <span class="badge @alert.Feature.ExpirationStatusBadge px-2 py-1">
+                                            @alert.Feature.ExpirationStatusText
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="@Model.GetConfigUrl(alert.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1">
+                                            Manage
+                                        </a>
+                                        <a href="@Model.GetMisUrl(alert.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
+                                            Access MIS
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- WEBSITE REGISTRY TABLE -->
+    <div class="card border-0 shadow-sm" id="websites">
+        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
+            <div>
+                <h6 class="fw-bold mb-0">Website Databases Registry</h6>
+                <small class="text-muted">Directly loaded from shared appsettings.json</small>
+            </div>
+            <a href="/FeaturePricing" class="btn btn-sm btn-outline-success rounded-pill">
+                <i class="fa fa-tags me-1"></i> Adjust Feature Pricing
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Website / Domain</th>
+                            <th>Database Catalog</th>
+                            <th>Connection Status</th>
+                            <th>Active Features</th>
+                            <th>Total Cost</th>
+                            <th>Urgent Alerts</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tenant in Model.Summary.Tenants)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="fw-bold text-dark">@tenant.PrimaryDomain</div>
+                                    @if (tenant.Domains.Count > 1)
+                                    {
+                                        <div class="small text-muted">+@(tenant.Domains.Count - 1) additional alias domain(s)</div>
+                                    }
+                                </td>
+                                <td>
+                                    <code>@tenant.CatalogName</code>
+                                </td>
+                                <td>
+                                    @if (tenant.IsOnline)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-1">
+                                            <i class="fa fa-check-circle me-1"></i> Online
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-2 py-1" title="@tenant.StatusErrorMessage">
+                                            <i class="fa fa-times-circle me-1"></i> Connection Error
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="fw-bold">@tenant.EnabledFeatures</span> / @tenant.TotalFeatures
+                                </td>
+                                <td class="fw-bold text-success">
+                                    ₦@tenant.TotalCost.ToString("N0")
+                                </td>
+                                <td>
+                                    @if (tenant.UrgentExpiringCount > 0)
+                                    {
+                                        <span class="badge bg-danger rounded-pill">@tenant.UrgentExpiringCount Urgent</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-muted border rounded-pill">Healthy</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <a href="@Model.GetConfigUrl(tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1">
+                                        <i class="fa fa-sliders-h me-1"></i> Manage Config
+                                    </a>
+                                    <a href="@Model.GetMisUrl(tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
+                                        <i class="fa fa-sign-in-alt me-1"></i> Access MIS
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

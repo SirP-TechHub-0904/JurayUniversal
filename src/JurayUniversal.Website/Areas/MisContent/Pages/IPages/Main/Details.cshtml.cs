@@ -64,6 +64,7 @@ namespace JurayUniversal.Website.Areas.MisContent.Pages.IPages.Main
 
             ViewData["TemplateTypeId"] = new SelectList(_context.TemplateTypes, "Id", "Name");
             ViewData["WebPageId"] = new SelectList(_context.WebPages, "Id", "Title");
+            ViewData["TargetWebPageId"] = new SelectList(_context.WebPages.OrderBy(x => x.Title), "Id", "Title");
 
             return Page();
         }
@@ -252,6 +253,105 @@ namespace JurayUniversal.Website.Areas.MisContent.Pages.IPages.Main
             return RedirectToPage("./Details", new { id = PageSection.WebPageId });
         }
 
-         
+        public async Task<IActionResult> OnPostMoveSectionAsync(long sectionId, long targetWebPageId)
+        {
+            var section = await _context.PageSections.FindAsync(sectionId);
+            if (section == null)
+            {
+                TempData["error"] = "Section not found.";
+                return RedirectToPage();
+            }
+
+            var currentWebPageId = section.WebPageId;
+            section.WebPageId = targetWebPageId;
+            _context.Attach(section).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            TempData["success"] = "Section moved successfully.";
+            return RedirectToPage("./Details", new { id = currentWebPageId });
+        }
+
+        public async Task<IActionResult> OnPostCopySectionAsync(long sectionId, long targetWebPageId)
+        {
+            var sourceSection = await _context.PageSections
+                .Include(s => s.PageSectionLists)
+                .FirstOrDefaultAsync(s => s.Id == sectionId);
+
+            if (sourceSection == null)
+            {
+                TempData["error"] = "Source section not found.";
+                return RedirectToPage();
+            }
+
+            var newSection = new PageSection
+            {
+                WebPageId = targetWebPageId,
+                Title = sourceSection.Title != null ? $"{sourceSection.Title} (Copy)" : null,
+                MiniTitle = sourceSection.MiniTitle,
+                Qoute = sourceSection.Qoute,
+                Description = sourceSection.Description,
+                FullDescription = sourceSection.FullDescription,
+                ButtonText = sourceSection.ButtonText,
+                ButtonLink = sourceSection.ButtonLink,
+                DirectUrl = sourceSection.DirectUrl,
+                ShowInHome = sourceSection.ShowInHome,
+                DisableButton = sourceSection.DisableButton,
+                Disable = sourceSection.Disable,
+                FixedAfterFooter = sourceSection.FixedAfterFooter,
+                HomePageSortOrder = sourceSection.HomePageSortOrder,
+                HomeSortFrom = sourceSection.HomeSortFrom,
+                PageSortOrder = sourceSection.PageSortOrder,
+                BlogSectionPosition = sourceSection.BlogSectionPosition,
+                ShowSectionInBlog = sourceSection.ShowSectionInBlog,
+                TemplateKey = sourceSection.TemplateKey,
+                CustomClass = sourceSection.CustomClass,
+                AddToRibon = sourceSection.AddToRibon,
+                RibonCustomDisplayTitle = sourceSection.RibonCustomDisplayTitle,
+                RibonSortOrder = sourceSection.RibonSortOrder,
+                ImageUrl = sourceSection.ImageUrl,
+                ImageKey = sourceSection.ImageKey,
+                SecondImageUrl = sourceSection.SecondImageUrl,
+                SecondImageKey = sourceSection.SecondImageKey,
+                VideoUrl = sourceSection.VideoUrl,
+                VideoKey = sourceSection.VideoKey,
+                YoutubeUrlLink = sourceSection.YoutubeUrlLink
+            };
+
+            _context.PageSections.Add(newSection);
+            await _context.SaveChangesAsync();
+
+            if (sourceSection.PageSectionLists != null && sourceSection.PageSectionLists.Any())
+            {
+                foreach (var listItem in sourceSection.PageSectionLists)
+                {
+                    var newList = new PageSectionList
+                    {
+                        PageSectionId = newSection.Id,
+                        Title = listItem.Title,
+                        MiniTitle = listItem.MiniTitle,
+                        Description = listItem.Description,
+                        MoreDescription = listItem.MoreDescription,
+                        ButtonText = listItem.ButtonText,
+                        ButtonLink = listItem.ButtonLink,
+                        DirectUrl = listItem.DirectUrl,
+                        Disable = listItem.Disable,
+                        SortOrder = listItem.SortOrder,
+                        IconText = listItem.IconText,
+                        ImageUrl = listItem.ImageUrl,
+                        ImageKey = listItem.ImageKey,
+                        VideoUrl = listItem.VideoUrl,
+                        VideoKey = listItem.VideoKey,
+                        AddToRibon = listItem.AddToRibon,
+                        RibonCustomDisplayTitle = listItem.RibonCustomDisplayTitle,
+                        RibonSortOrder = listItem.RibonSortOrder
+                    };
+                    _context.PageSectionLists.Add(newList);
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            TempData["success"] = "Section copied successfully.";
+            return RedirectToPage("./Details", new { id = sourceSection.WebPageId });
+        }
     }
 }

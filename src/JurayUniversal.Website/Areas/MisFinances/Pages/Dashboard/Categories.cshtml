@@ -1,26 +1,22 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard.CategoriesModel
 @{
     ViewData["Title"] = "Payment Categories";
     ViewData["Subtitle"] = "Manage and configure settings for this module.";
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    
-    <div class="d-flex gap-2">
-        
-        <button class="btn btn-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
-            <i class="bi bi-plus-lg me-1"></i> New Category
-        </button>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./CreateCategory" class="btn btn-primary btn-sm rounded-pill">
+        <i class="bi bi-plus-lg me-1"></i> New Category
+    </a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     @if (!string.IsNullOrEmpty(Model.StatusMessage))
     {
         <div class="alert alert-success alert-dismissible fade show rounded-4 mb-3" role="alert">
             @Model.StatusMessage
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" data-dismiss="alert"></button>
         </div>
     }
 
@@ -29,16 +25,16 @@
             @if (Model.Categories.Any())
             {
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle misTableList">
                         <thead class="table-light">
                             <tr>
-                                <th>Category Title</th>
-                                <th>Type</th>
-                                <th>Frequency</th>
-                                <th>Amount</th>
-                                <th>Public Link</th>
-                                <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th class="mis-table-th">Category Title <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                <th class="mis-table-th">Type <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                <th class="mis-table-th">Frequency <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                <th class="mis-table-th">Amount <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                <th class="mis-table-th">Public Link</th>
+                                <th class="mis-table-th">Status</th>
+                                <th class="text-end mis-table-th" style="width: 100px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,8 +42,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <div class="fw-bold">@cat.Title</div>
-                                        <div class="text-muted fs-8">@cat.Description</div>
+                                        <div class="fw-bold text-dark">@cat.Title</div>
                                     </td>
                                     <td>
                                         @if (cat.IsCompulsory)
@@ -60,6 +55,19 @@
                                         {
                                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill">
                                                 <i class="bi bi-heart-fill me-1"></i> Optional Donation
+                                            </span>
+                                        }
+
+                                        @if (cat.AllowGuestPayment)
+                                        {
+                                            <span class="badge bg-info bg-opacity-10 text-info rounded-pill ms-1">
+                                                <i class="bi bi-globe me-1"></i> Public
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning bg-opacity-10 text-dark rounded-pill ms-1">
+                                                <i class="bi bi-person-lock me-1"></i> Members Only
                                             </span>
                                         }
                                     </td>
@@ -76,13 +84,18 @@
                                     </td>
                                     <td>
                                         @{
-                                            var payLink = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/pay/{cat.Id}";
+                                            var domain = !string.IsNullOrEmpty(Model.SuperSetting?.CompanyWebsiteLink) 
+                                                ? Model.SuperSetting.CompanyWebsiteLink.TrimEnd('/') 
+                                                : $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                                            var key = !string.IsNullOrEmpty(cat.Key) ? cat.Key : cat.Id.ToString();
+                                            var payLink = $"{domain}/pay/{key}";
                                         }
-                                        <div class="input-group input-group-sm" style="max-width: 220px;">
-                                            <input type="text" class="form-control form-control-sm rounded-start-pill border-end-0 bg-light" value="@payLink" readonly id="paylink-@cat.Id" />
-                                            <button class="btn btn-outline-secondary rounded-end-pill" type="button"
-                                                    onclick="navigator.clipboard.writeText('@payLink').then(()=> { var el=document.getElementById('paylink-@cat.Id'); el.classList.add('border-success'); setTimeout(()=>el.classList.remove('border-success'),1200); })">
-                                                <i class="bi bi-clipboard"></i>
+                                        <div class="input-group input-group-sm border rounded-pill overflow-hidden bg-light" style="max-width: 240px;">
+                                            <input type="text" class="form-control form-control-sm border-0 bg-transparent ps-3 font-monospace fw-medium" value="@payLink" readonly id="paylink-@cat.Id" />
+                                            <button class="btn btn-light border-0 px-3 text-primary d-flex align-items-center justify-content-center" type="button"
+                                                    title="Copy Public Link"
+                                                    onclick="navigator.clipboard.writeText('@payLink').then(()=> { var el=document.getElementById('paylink-@cat.Id'); el.classList.add('bg-success', 'bg-opacity-10'); setTimeout(()=>el.classList.remove('bg-success', 'bg-opacity-10'),1200); })">
+                                                <i class="bi bi-copy fs-6"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -92,21 +105,22 @@
                                         </span>
                                     </td>
                                     <td class="text-end">
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-outline-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#editCategoryModal"
-                                                    data-id="@cat.Id"
-                                                    data-title="@cat.Title"
-                                                    data-description="@cat.Description"
-                                                    data-compulsory="@cat.IsCompulsory.ToString().ToLower()"
-                                                    data-frequency="@((int)cat.Frequency)"
-                                                    data-amount="@cat.FixedAmount"
-                                                    data-active="@cat.IsActive.ToString().ToLower()">
-                                                <i class="bi bi-pencil-square"></i>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light border rounded-pill dropdown-toggle px-3" type="button" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots-vertical me-1"></i> Actions
                                             </button>
-                                            <a asp-page="./Ledger" asp-route-id="@cat.Id" class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-list-ul"></i> Ledger
-                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
+                                                <li>
+                                                    <a asp-page="./EditCategory" asp-route-id="@cat.Id" class="dropdown-item py-2">
+                                                        <i class="bi bi-pencil-square me-2 text-primary"></i> Edit Category
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a asp-page="./Ledger" asp-route-id="@cat.Id" class="dropdown-item py-2">
+                                                        <i class="bi bi-journal-text me-2 text-success"></i> Payment Ledger
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </td>
                                 </tr>
@@ -121,150 +135,13 @@
                     <i class="bi bi-wallet2 text-muted opacity-50 mb-3 d-block" style="font-size: 4rem;"></i>
                     <h4 class="fw-bold text-muted">No Payment Categories Yet</h4>
                     <p class="text-muted">Create your first payment category to start collecting dues or donations.</p>
-                    <button class="btn btn-primary rounded-pill px-4 mt-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
+                    <a asp-page="./CreateCategory" class="btn btn-primary rounded-pill px-4 mt-3">
                         <i class="bi bi-plus-lg me-1"></i> Create First Category
-                    </button>
+                    </a>
                 </div>
             }
         </div>
     </div>
 </div>
 
-<!-- Create Modal -->
-<div class="modal fade" id="createCategoryModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0 rounded-4 shadow-lg">
-            <form method="post" asp-page-handler="Create">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">New Payment Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body px-4 pb-0">
-                    @Html.AntiForgeryToken()
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Category Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control rounded-3" name="Title" required placeholder="e.g. 2026 Annual Dues, Church Building Fund" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Description</label>
-                        <textarea class="form-control rounded-3" name="Description" rows="2" placeholder="Brief description of this payment category..."></textarea>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Payment Type <span class="text-danger">*</span></label>
-                            <select class="form-select rounded-3" name="IsCompulsory" id="createCompulsorySelect">
-                                <option value="true">Compulsory Due (All users owe this)</option>
-                                <option value="false">Optional Donation (User's choice)</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Frequency</label>
-                            <select class="form-select rounded-3" name="Frequency">
-                                <option value="0">One-Time</option>
-                                <option value="1">Daily</option>
-                                <option value="2">Weekly</option>
-                                <option value="3">Monthly</option>
-                                <option value="4">Yearly</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Fixed Amount</label>
-                        <div class="input-group rounded-3">
-                            <span class="input-group-text">&#8358;</span>
-                            <input type="number" step="0.01" min="0" class="form-control" name="FixedAmount" placeholder="Leave blank to allow user to enter any amount" />
-                        </div>
-                        <div class="form-text">Leave blank for donations where the user chooses their own amount.</div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-check-lg me-1"></i> Create Category</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0 rounded-4 shadow-lg">
-            <form method="post" asp-page-handler="Edit">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">Edit Payment Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body px-4 pb-0">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="Id" id="editId" />
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Category Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control rounded-3" name="Title" id="editTitle" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Description</label>
-                        <textarea class="form-control rounded-3" name="Description" id="editDescription" rows="2"></textarea>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Payment Type</label>
-                            <select class="form-select rounded-3" name="IsCompulsory" id="editCompulsory">
-                                <option value="true">Compulsory Due</option>
-                                <option value="false">Optional Donation</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Frequency</label>
-                            <select class="form-select rounded-3" name="Frequency" id="editFrequency">
-                                <option value="0">One-Time</option>
-                                <option value="1">Daily</option>
-                                <option value="2">Weekly</option>
-                                <option value="3">Monthly</option>
-                                <option value="4">Yearly</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Fixed Amount</label>
-                            <div class="input-group">
-                                <span class="input-group-text">&#8358;</span>
-                                <input type="number" step="0.01" min="0" class="form-control rounded-end-3" name="FixedAmount" id="editAmount" />
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-end">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="IsActive" id="editActive" />
-                                <label class="form-check-label fw-semibold" for="editActive">Active</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-check-lg me-1"></i> Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
-
-@section Scripts {
-<script>
-    document.getElementById('editCategoryModal').addEventListener('show.bs.modal', function (e) {
-        var btn = e.relatedTarget;
-        document.getElementById('editId').value = btn.getAttribute('data-id');
-        document.getElementById('editTitle').value = btn.getAttribute('data-title');
-        document.getElementById('editDescription').value = btn.getAttribute('data-description');
-        document.getElementById('editCompulsory').value = btn.getAttribute('data-compulsory') === 'true' ? 'true' : 'false';
-        document.getElementById('editFrequency').value = btn.getAttribute('data-frequency');
-        document.getElementById('editAmount').value = btn.getAttribute('data-amount') || '';
-        document.getElementById('editActive').checked = btn.getAttribute('data-active') === 'true';
-    });
-</script>
-}
-
-
