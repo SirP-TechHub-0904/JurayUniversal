@@ -1,0 +1,214 @@
+/* ==========================================================================
+   MIS GLOBAL DESIGN BRIDGE
+   Maps Bootstrap & Standard HTML elements to dashboard.html design tokens
+   ========================================================================== */
+
+/* 1. CARDS & PANELS */
+.card, .panel, .box {
+    background-color: #ffffff !important;
+    border: 1px solid #f3f4f6 !important; /* border-gray-100 */
+    border-radius: 1rem !important;        /* rounded-2xl */
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05) !important; /* shadow-sm */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04) !important; /* hover:shadow-md */
+}
+
+.card-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #f3f4f6 !important;
+    padding: 1.25rem 1.5rem !important;
+    border-top-left-radius: 1rem !important;
+    border-top-right-radius: 1rem !important;
+}
+
+.card-title, h5.card-title, h4.card-title {
+    font-[#111827] !important;
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.card-body {
+    padding: 1.25rem 1.5rem !important;
+}
+
+.card-footer {
+    background-color: #f9fafb !important;
+    border-top: 1px solid #f3f4f6 !important;
+    padding: 1rem 1.5rem !important;
+    border-bottom-left-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
+}
+
+/* 2. DATA TABLES & LISTS */
+.table, table, .dataTable {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.table thead th, table thead th, .dataTable thead th {
+    background-color: rgba(249, 250, 251, 0.7) !important; /* bg-gray-50/50 */
+    border-bottom: 1px solid #f3f4f6 !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #6b7280 !important; /* text-gray-500 */
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 0.875rem 1rem !important;
+}
+
+.table tbody td, table tbody td, .dataTable tbody td {
+    padding: 0.875rem 1rem !important;
+    border-bottom: 1px solid #f9fafb !important;
+    border-top: none !important;
+    font-size: 0.875rem !important;
+    color: #374151 !important;
+    vertical-align: middle !important;
+}
+
+.table tbody tr:hover, table tbody tr:hover, .dataTable tbody tr:hover {
+    background-color: rgba(249, 250, 251, 0.8) !important;
+}
+
+/* 3. BUTTONS & ACTIONS */
+.btn-primary, button.btn-primary, a.btn-primary {
+    background-color: #0069A1 !important;
+    border-color: #0069A1 !important;
+    color: #ffffff !important;
+    border-radius: 0.75rem !important; /* rounded-xl */
+    font-weight: 600 !important;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-primary:hover, button.btn-primary:hover, a.btn-primary:hover {
+    background-color: #005b8b !important;
+    border-color: #005b8b !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-outline-primary, a.btn-outline-primary {
+    background-color: transparent !important;
+    border: 1px solid #0069A1 !important;
+    color: #0069A1 !important;
+    border-radius: 0.75rem !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-outline-primary:hover, a.btn-outline-primary:hover {
+    background-color: rgba(0, 105, 161, 0.05) !important;
+    color: #005b8b !important;
+}
+
+.btn-secondary, .btn-outline-secondary {
+    border-radius: 0.75rem !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.875rem !important;
+}
+
+/* 4. BADGES & STATUS PILLS */
+.badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.25rem 0.625rem !important;
+    border-radius: 9999px !important; /* rounded-full */
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.025em !important;
+}
+
+.badge-success, .badge.bg-success, .bg-success.bg-opacity-10 {
+    background-color: #ecfdf5 !important;
+    color: #047857 !important;
+    border: 1px solid #a7f3d0 !important;
+}
+
+.badge-warning, .badge.bg-warning, .bg-warning.bg-opacity-10 {
+    background-color: #fffbeb !important;
+    color: #b45309 !important;
+    border: 1px solid #fde68a !important;
+}
+
+.badge-danger, .badge.bg-danger, .bg-danger.bg-opacity-10 {
+    background-color: #fef2f2 !important;
+    color: #b91c1c !important;
+    border: 1px solid #fecaca !important;
+}
+
+.badge-info, .badge.bg-info, .bg-info.bg-opacity-10 {
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+    border: 1px solid #bfdbfe !important;
+}
+
+/* 5. FORM CONTROLS & INPUTS */
+.form-control, .form-select {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important; /* border-gray-200 */
+    border-radius: 0.75rem !important;     /* rounded-xl */
+    padding: 0.5rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #0069A1 !important;
+    box-shadow: 0 0 0 3px rgba(0, 105, 161, 0.15) !important;
+    outline: none !important;
+}
+
+.input-group-text {
+    background-color: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 0.75rem !important;
+    color: #6b7280 !important;
+}
+
+/* 6. METRIC CARD GRID UTILITIES */
+.metric-card-container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@@media (min-width: 640px) {
+    .metric-card-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@@media (min-width: 1024px) {
+    .metric-card-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.metric-card-item {
+    background-color: #ffffff;
+    border: 1px solid #f3f4f6;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.metric-card-item:hover {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+}

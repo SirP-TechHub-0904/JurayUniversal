@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MIS Central Command Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html, body { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div id="root">
+        <div class="min-h-screen flex flex-col">
+            <div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 z-40 hidden transition-opacity duration-300"></div>
+
+            <aside id="sidebar" class="fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-50 flex flex-col w-80 -translate-x-full lg:translate-x-0">
+                <div class="h-16 flex flex-col justify-center border-b border-gray-200 flex-shrink-0 px-6 py-2">
+                    <h6 class="font-bold text-gray-900 mb-0 text-base leading-tight">MIS Central</h6>
+                    <small class="text-gray-500 text-xs">Multi-Database Hub</small>
+                </div>
+
+                @{
+                    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "/Index";
+                }
+
+                <nav class="flex-1 overflow-y-auto overflow-x-hidden px-4 py-6">
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/Index" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/Index" || currentPage == "" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
+                                <span class="font-medium">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="pt-4 pb-1">
+                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Management</h3>
+                        </li>
+                        <li>
+                            <a href="/Index#websites" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
+                                <span class="font-medium">Website Databases</span>
+                            </a>
+                        </li>
+                        <li class="pt-4 pb-1">
+                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Billing & Expirations</h3>
+                        </li>
+                        <li>
+                            <a href="/Expirations" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/Expirations" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
+                                <span class="font-medium">Expiration Alerts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/FeaturePricing" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/FeaturePricing" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
+                                <span class="font-medium">Feature Pricing</span>
+                            </a>
+                        </li>
+                        <li class="pt-4 pb-1">
+                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Operations</h3>
+                        </li>
+                        <li>
+                            <a href="/Index" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
+                                <span class="font-medium">Shared Config Registry</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Expirations" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
+                                <span class="font-medium">Renewal Schedules</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <header id="topbar" class="fixed top-0 h-16 bg-white border-b border-gray-100 flex items-center justify-between z-40 transition-all duration-300 left-0 right-0 lg:left-80 px-4 lg:px-6">
+                <div>
+                    <h5 class="font-bold text-gray-900 text-lg mb-0">@ViewData["Title"]</h5>
+                </div>
+                <partial name="_LoginPartial" />
+            </header>
+
+            <main id="main-content" class="transition-all duration-300 flex-1 ml-0 lg:ml-80 mt-16 p-4 sm:p-6">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

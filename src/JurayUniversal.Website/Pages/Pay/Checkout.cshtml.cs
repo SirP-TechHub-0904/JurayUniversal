@@ -33,6 +33,7 @@ namespace JurayUniversal.Website.Pages.Pay
 
         public MisFinanceCategory Category { get; set; }
         public MisSetting Settings { get; set; }
+        public SuperSetting SuperSetting { get; set; }
 
         // Pre-filled from user profile if logged in
         public string PrefillName { get; set; }
@@ -47,12 +48,29 @@ namespace JurayUniversal.Website.Pages.Pay
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(long id)
+        [BindProperty]
+        public string Notes { get; set; }
+
+        // Paystack Inline Popup parameters
+        public string PaystackPublicKey { get; set; }
+        public string PaystackAccessCode { get; set; }
+        public string PaystackReference { get; set; }
+        public string PaystackEmail { get; set; }
+        public decimal PaystackAmount { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string key)
         {
-            Category = await _context.MisFinanceCategories.FindAsync(id);
+            if (string.IsNullOrEmpty(key)) return NotFound();
+
+            bool isNumericId = long.TryParse(key, out long parsedId);
+            Category = await _context.MisFinanceCategories
+                .FirstOrDefaultAsync(m => m.Key == key || (isNumericId && m.Id == parsedId));
+
             if (Category == null || !Category.IsActive) return NotFound();
 
+            SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
             Settings = await _context.MisSettings.FirstOrDefaultAsync();
+            PaystackPublicKey = Settings?.PaystackPublicKey;
             ResolveAvailableProviders(Settings);
 
             // Auto-fill details if the user is logged in
@@ -77,13 +95,31 @@ namespace JurayUniversal.Website.Pages.Pay
             string DonorEmail,
             string DonorPhone,
             decimal Amount,
-            string PaymentProvider)
+            string PaymentProvider,
+            int? FirstNumber,
+            int? SecondNumber,
+            int? Captcha)
         {
             Category = await _context.MisFinanceCategories.FindAsync(CategoryId);
             if (Category == null || !Category.IsActive) return NotFound();
 
+            SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
             Settings = await _context.MisSettings.FirstOrDefaultAsync();
+            PaystackPublicKey = Settings?.PaystackPublicKey;
             ResolveAvailableProviders(Settings);
+
+            // Validate Captcha security check
+            string recaptchaResponse = Request.Form["g-recaptcha-response"];
+            bool isCaptchaValid = await JurayUniversal.Website.Helpers.CaptchaValidator.ValidateCaptchaAsync(
+                Settings, FirstNumber, SecondNumber, Captcha, recaptchaResponse);
+
+            if (!isCaptchaValid)
+            {
+                StatusMessage = "Error: Security check (Captcha) failed. Please answer the verification question correctly.";
+                IsLoggedIn = User.Identity?.IsAuthenticated == true;
+                PrefillName = DonorName; PrefillEmail = DonorEmail; PrefillPhone = DonorPhone;
+                return Page();
+            }
 
             // Resolve logged-in user
             string userId = null;
@@ -121,6 +157,7 @@ namespace JurayUniversal.Website.Pages.Pay
                 DonorEmail = DonorEmail,
                 DonorPhone = DonorPhone,
                 Amount = Amount,
+                Notes = Notes,
                 TransactionReference = transactionRef,
                 PaymentProvider = provider,
                 Status = PaymentStatus.Pending,
@@ -135,8 +172,19 @@ namespace JurayUniversal.Website.Pages.Pay
 
             if (provider == "Paystack")
             {
-                var email = string.IsNullOrEmpty(DonorEmail) ? "guest@payment.com" : DonorEmail;
+                var email = (string.IsNullOrWhiteSpace(DonorEmail) ? "guest@payment.com" : DonorEmail).Trim();
                 result = await _paystackService.InitializePaymentAsync(transactionRef, Amount, email, callbackUrl);
+
+                if (result.Success && !string.IsNullOrEmpty(result.AccessCode))
+                {
+                    PaystackAccessCode = result.AccessCode;
+                    PaystackReference = transactionRef;
+                    PaystackEmail = email;
+                    PaystackAmount = Amount;
+                    IsLoggedIn = userId != null;
+                    PrefillName = DonorName; PrefillEmail = DonorEmail; PrefillPhone = DonorPhone;
+                    return Page();
+                }
             }
             else
             {
@@ -145,7 +193,7 @@ namespace JurayUniversal.Website.Pages.Pay
 
             if (!result.Success)
             {
-                StatusMessage = $"Error: {result.ErrorMessage}";
+                StatusMessage = result.ErrorMessage;
                 IsLoggedIn = userId != null;
                 PrefillName = DonorName; PrefillEmail = DonorEmail; PrefillPhone = DonorPhone;
                 return Page();

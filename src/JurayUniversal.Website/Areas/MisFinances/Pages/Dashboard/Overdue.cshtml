@@ -1,22 +1,15 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard.OverdueModel
 @{
     ViewData["Title"] = "Overdue & Compliance";
-    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+    ViewData["Subtitle"] = "Track members who have missed compulsory payments for the current period.";
     ViewData["ActiveMenu"] = "MisFinances";
     ViewData["ActiveSubMenu"] = "Overdue";
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    <div>
-        
-        <div class="text-muted fs-7">Track members who have missed compulsory payments for the current period.</div>
-    </div>
-    <div class="d-flex gap-2">
-        
-        <a asp-page="./Categories" class="btn btn-light btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Categories</a>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Categories" class="btn btn-light btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Categories</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
 

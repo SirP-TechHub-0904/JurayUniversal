@@ -1,17 +1,13 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisForms.Pages.Dashboard.IndexModel
 @{
     ViewData["Title"] = "Custom Forms & Surveys";
     ViewData["Subtitle"] = "Manage and configure settings for this module.";
 }
 
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    
-    <div class="d-flex gap-2">
-        
-        <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-lg me-1"></i> Create New Form</a>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Create" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-plus-lg me-1"></i> Create New Form</a>
+}
 
 <!-- Date Range Filter -->
 <div class="card mb-4 border-0 shadow-sm rounded-4">

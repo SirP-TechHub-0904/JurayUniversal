@@ -1,0 +1,112 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.SitePages.IndexModel
+@{
+    ViewData["Title"] = "Website Page Directory";
+    ViewData["Subtitle"] = "All direct public URLs and system page routes for navigation menus and site configuration.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
+}
+
+@section HeaderActions {
+    <a asp-area="MisConfiguration" asp-page="/Dashboard/MisSettings/Index" class="btn btn-light btn-sm rounded-pill border">
+        <i class="bi bi-arrow-left me-1"></i> Back to Settings
+    </a>
+}
+
+<div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
+    
+    <!-- Table of Pages -->
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="sitePagesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 50px;" class="ps-4">S/N</th>
+                            <th>PAGE NAME</th>
+                            <th>CATEGORY</th>
+                            <th>ROUTE / URL</th>
+                            <th>TARGET AUDIENCE</th>
+                            <th class="text-end pe-4">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var sn = 1; }
+                        @foreach (var item in Model.PageLinks)
+                        {
+                            var fullUrl = $"{Model.BaseUrl}{item.Route}";
+                            var badgeClass = item.Category switch
+                            {
+                                "Payment" => "bg-success bg-opacity-10 text-success",
+                                "Public Information" => "bg-primary bg-opacity-10 text-primary",
+                                "Member Accounts" => "bg-warning bg-opacity-10 text-dark",
+                                _ => "bg-secondary bg-opacity-10 text-secondary"
+                            };
+
+                            <tr>
+                                <td class="ps-4 text-muted fw-bold">@(sn++)</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="rounded-circle bg-light p-2 text-primary flex-shrink-0 d-flex align-items-center justify-content-center" style="width:36px; height:36px;">
+                                            <i class="bi @item.IconClass fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">@item.Title</div>
+                                            <div class="text-muted fs-8">@item.Description</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge @badgeClass rounded-pill px-2.5 py-1 fw-semibold fs-12px">
+                                        @item.Category
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="input-group input-group-sm" style="max-width: 340px;">
+                                        <input type="text" class="form-control form-control-sm rounded-start-pill border-end-0 bg-light font-monospace fw-medium"
+                                               value="@fullUrl" readonly id="pageurl-@sn" />
+                                        <button class="btn btn-outline-primary rounded-end-pill px-3" type="button"
+                                                title="Copy Direct Link"
+                                                onclick="copyPageUrl('@fullUrl', 'pageurl-@sn')">
+                                            <i class="bi bi-copy fs-6"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1">
+                                        @item.TargetAudience
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    @if (!item.Route.Contains("{"))
+                                    {
+                                        <a href="@item.Route" target="_blank" class="btn btn-sm btn-light border rounded-pill px-3">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i> Open
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fs-8 fst-italic">Requires parameter</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function copyPageUrl(url, elementId) {
+            navigator.clipboard.writeText(url).then(function() {
+                var el = document.getElementById(elementId);
+                if (el) {
+                    el.classList.add('border-success', 'bg-success', 'bg-opacity-10');
+                    setTimeout(() => el.classList.remove('border-success', 'bg-success', 'bg-opacity-10'), 1200);
+                }
+            });
+        }
+    </script>
+}

@@ -35,9 +35,10 @@ namespace JurayUniversal.Website
                 .MinimumLevel.Warning() // Don't log Information to avoid huge files, Warning/Error/Fatal only
                 .Enrich.FromLogContext()
                 .WriteTo.Map("Tenant", "System", (tenant, wt) => 
-                    wt.File(Path.Combine("wwwroot", "logs", tenant.ToString(), "syslog-.txt"), 
+                    wt.File(Path.Combine("logs", tenant.ToString(), "syslog-.txt"), 
                         rollingInterval: RollingInterval.Day,
-                        retainedFileCountLimit: 30))
+                        retainedFileCountLimit: 30,
+                        shared: true))
                 .CreateLogger();
 
             try
@@ -56,7 +57,24 @@ namespace JurayUniversal.Website
                         .AddEntityFrameworkStores<DashboardDbContext>()
                         .AddDefaultTokenProviders();
 
-            builder.Services.AddRazorPages().AddMvcOptions(options =>
+            builder.Services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/MIS");
+                options.Conventions.AuthorizeFolder("/MisUserManagement");
+                options.Conventions.AuthorizeFolder("/MisReports");
+                options.Conventions.AuthorizeFolder("/MisForms");
+                options.Conventions.AuthorizeFolder("/MisFinances");
+                options.Conventions.AuthorizeFolder("/MisAlumni");
+                options.Conventions.AuthorizeFolder("/MisMassComm");
+                options.Conventions.AuthorizeFolder("/MisNewsletter");
+                options.Conventions.AuthorizeFolder("/MisManagement");
+                options.Conventions.AuthorizeFolder("/MisConfiguration");
+                options.Conventions.AuthorizeFolder("/MisProjects");
+                options.Conventions.AuthorizeFolder("/MisProposals");
+                options.Conventions.AuthorizeFolder("/MisRecruitment");
+                options.Conventions.AuthorizeFolder("/MisTicketing");
+                options.Conventions.AuthorizeFolder("/MisVoting");
+            }).AddMvcOptions(options =>
             {
                 options.Filters.Add(typeof(JurayUniversal.Website.Filters.MisFeatureAccessFilter));
             });

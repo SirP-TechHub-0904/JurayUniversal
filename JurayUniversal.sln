@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostmarkEmailService", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelPay.Net", "src\PixelPay.Net\PixelPay.Net.csproj", "{FC0D8253-16BC-4775-9AA4-33CA68A17455}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JurayUniversal.MisCentral", "src\JurayUniversal.MisCentral\JurayUniversal.MisCentral.csproj", "{5535701E-CBFA-4E83-9C8E-1F5021046D6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{FC0D8253-16BC-4775-9AA4-33CA68A17455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC0D8253-16BC-4775-9AA4-33CA68A17455}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC0D8253-16BC-4775-9AA4-33CA68A17455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5535701E-CBFA-4E83-9C8E-1F5021046D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5535701E-CBFA-4E83-9C8E-1F5021046D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5535701E-CBFA-4E83-9C8E-1F5021046D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5535701E-CBFA-4E83-9C8E-1F5021046D6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{E9957EEB-5642-48F4-A3EA-8A5B459761A1} = {6FFE1EE5-8C4D-4C1F-BE37-50134A97E8A2}
 		{CDC59612-A266-41A5-91FD-051E80E0A63E} = {6FFE1EE5-8C4D-4C1F-BE37-50134A97E8A2}
 		{FC0D8253-16BC-4775-9AA4-33CA68A17455} = {6FFE1EE5-8C4D-4C1F-BE37-50134A97E8A2}
+		{5535701E-CBFA-4E83-9C8E-1F5021046D6B} = {6FFE1EE5-8C4D-4C1F-BE37-50134A97E8A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A392E8F-3C35-419D-B17B-94DC9921BB90}

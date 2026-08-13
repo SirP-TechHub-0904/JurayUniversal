@@ -1,21 +1,16 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard.Categories.DeleteModel
 @{
     ViewData["Title"] = "Delete " + Model.CategoryAlias;
+    ViewData["Subtitle"] = "Are you sure you want to delete this " + Model.CategoryAlias.ToLower() + "?";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "UserManagement";
     ViewData["ActiveSubMenu"] = "Categories";
 }
 
-<div class="mis-page-header">
-    <div>
-        
-        <p class="text-muted fs-14px mb-0">Are you sure you want to delete this @Model.CategoryAlias.ToLower()?</p>
-    </div>
-    <div class="d-flex gap-2">
-        
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="card mis-card border-danger border-opacity-25">

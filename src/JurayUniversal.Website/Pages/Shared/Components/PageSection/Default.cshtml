@@ -1,4 +1,4 @@
-﻿@model ICollection<JurayUniversal.Domain.Models.PageSection>
+@model ICollection<JurayUniversal.Domain.Models.PageSection>
 @using System.Text.RegularExpressions;
 @using JurayUniversal.Application.Services;
 @{
@@ -2387,8 +2387,352 @@
             </div>
         </div>
     }
+        else if (item.TemplateKey == "51")
+        {
+            <div class="smart-section @item.CustomClass">
+                <div class="container">
+                    <div class="smart-hero-wrapper">
+                        <div class="smart-hero-content">
+                            @if (!string.IsNullOrEmpty(item.MiniTitle))
+                            {
+                                <div class="smart-badge-group">
+                                    @foreach (var badge in item.MiniTitle.Split(new[] { '|', ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="smart-badge">@badge.Trim()</span>
+                                    }
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(item.Title))
+                            {
+                                <h1 class="smart-hero-title">@Html.Raw(item.Title)</h1>
+                            }
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                <p class="smart-hero-desc">@Html.Raw(item.Description)</p>
+                            }
+                            @if (isHomePage == true && item.DisableButton == false && !string.IsNullOrEmpty(item.ButtonText))
+                            {
+                                <div class="smart-btn-group">
+                                    @if (item.ButtonLink == "0")
+                                    {
+                                        <a href="#" class="smart-btn-primary">@item.ButtonText</a>
+                                    }
+                                    else if (item.ButtonLink == "Direct")
+                                    {
+                                        <a href="@item.DirectUrl" class="smart-btn-primary">@item.ButtonText</a>
+                                    }
+                                    else if (item.ButtonLink == "00")
+                                    {
+                                        <a asp-page="/Contact" class="smart-btn-primary">@item.ButtonText</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page="/Source" asp-route-id="@item.ButtonLink" asp-route-title="@MainServices.GenerateSlug(item.Title)" class="smart-btn-primary">@item.ButtonText</a>
+                                    }
 
-}
+                                    @if (!string.IsNullOrEmpty(item.Qoute))
+                                    {
+                                        <a href="#services" class="smart-btn-secondary">@item.Qoute</a>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                        {
+                            <div class="smart-stats-card">
+                                @foreach (var stat in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                                {
+                                    <div class="smart-stat-item">
+                                        <div class="smart-stat-num">@stat.Title</div>
+                                        <div class="smart-stat-label">@stat.Description</div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "52")
+        {
+            <div class="smart-section smart-section-grey @item.CustomClass">
+                <div class="container">
+                    <div class="smart-about-wrapper">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <div class="smart-about-image-wrapper">
+                                <img src="@item.ImageUrl" alt="@item.Title" class="smart-about-image" />
+                            </div>
+                        }
+                        <div class="smart-about-content">
+                            @if (!string.IsNullOrEmpty(item.MiniTitle))
+                            {
+                                <span class="smart-section-tag">@item.MiniTitle</span>
+                            }
+                            @if (!string.IsNullOrEmpty(item.Title))
+                            {
+                                <h2 class="smart-section-title">@item.Title</h2>
+                            }
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                <div class="smart-about-desc">
+                                    @Html.Raw(item.Description)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "53")
+        {
+            <div class="smart-section @item.CustomClass">
+                <div class="container">
+                    <div class="text-center" style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                        @if (!string.IsNullOrEmpty(item.MiniTitle))
+                        {
+                            <span class="smart-section-tag">@item.MiniTitle</span>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Title))
+                        {
+                            <h2 class="smart-section-title">@item.Title</h2>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <p style="color: #475569; font-size: 1.05rem; line-height: 1.6;">@item.Description</p>
+                        }
+                    </div>
+
+                    @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                    {
+                        <div class="smart-grid-3">
+                            @foreach (var list in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="smart-service-card">
+                                    <div class="smart-service-icon">
+                                        <i class="@(string.IsNullOrEmpty(list.IconText) ? "fa-solid fa-laptop-code" : list.IconText)"></i>
+                                    </div>
+                                    <h3 class="smart-service-title">@list.Title</h3>
+                                    <p class="smart-service-desc">@list.Description</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "54")
+        {
+            <div class="smart-section smart-section-grey @item.CustomClass">
+                <div class="container">
+                    <div class="text-center" style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                        @if (!string.IsNullOrEmpty(item.MiniTitle))
+                        {
+                            <span class="smart-section-tag">@item.MiniTitle</span>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Title))
+                        {
+                            <h2 class="smart-section-title">@item.Title</h2>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <p style="color: #475569; font-size: 1.05rem; line-height: 1.6;">@item.Description</p>
+                        }
+                    </div>
+
+                    @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                    {
+                        <div class="smart-sectors-wrapper">
+                            @foreach (var list in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="smart-sector-card">
+                                    @if (!string.IsNullOrEmpty(list.ImageUrl))
+                                    {
+                                        <img src="@list.ImageUrl" alt="@list.Title" class="smart-sector-image" />
+                                    }
+                                    <div class="smart-sector-content">
+                                        @if (!string.IsNullOrEmpty(list.MiniTitle))
+                                        {
+                                            <span class="smart-sector-badge">@list.MiniTitle</span>
+                                        }
+                                        <h3 class="smart-sector-title">@list.Title</h3>
+                                        <div class="smart-sector-desc">
+                                            @Html.Raw(list.Description)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "55")
+        {
+            <div class="smart-section @item.CustomClass">
+                <div class="container">
+                    <div class="text-center" style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                        @if (!string.IsNullOrEmpty(item.MiniTitle))
+                        {
+                            <span class="smart-section-tag">@item.MiniTitle</span>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Title))
+                        {
+                            <h2 class="smart-section-title">@item.Title</h2>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <p style="color: #475569; font-size: 1.05rem; line-height: 1.6;">@item.Description</p>
+                        }
+                    </div>
+
+                    @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                    {
+                        <div class="smart-grid-2-3">
+                            @foreach (var list in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="smart-advantage-card">
+                                    <div class="smart-advantage-icon">
+                                        <i class="@(string.IsNullOrEmpty(list.IconText) ? "fa-solid fa-circle-check" : list.IconText)"></i>
+                                    </div>
+                                    <h3 class="smart-advantage-title">@list.Title</h3>
+                                    <p class="smart-advantage-desc">@list.Description</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "56")
+        {
+            <div class="smart-section smart-section-grey @item.CustomClass">
+                <div class="container">
+                    <div class="text-center" style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                        @if (!string.IsNullOrEmpty(item.MiniTitle))
+                        {
+                            <span class="smart-section-tag">@item.MiniTitle</span>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Title))
+                        {
+                            <h2 class="smart-section-title">@item.Title</h2>
+                        }
+                    </div>
+
+                    @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                    {
+                        <div class="smart-testimonials-wrapper">
+                            @foreach (var list in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="smart-testimonial-card">
+                                    <div class="smart-testimonial-quote">
+                                        @list.Description
+                                    </div>
+                                    <div class="smart-testimonial-author">
+                                        @if (!string.IsNullOrEmpty(list.ImageUrl))
+                                        {
+                                            <img src="@list.ImageUrl" alt="@list.Title" class="smart-testimonial-avatar" />
+                                        }
+                                        <div>
+                                            <div class="smart-testimonial-name">@list.Title</div>
+                                            @if (!string.IsNullOrEmpty(list.MiniTitle))
+                                            {
+                                                <div class="smart-testimonial-position">@list.MiniTitle</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (item.TemplateKey == "57")
+        {
+            <div class="smart-section @item.CustomClass">
+                <div class="container">
+                    <div class="text-center" style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                        @if (!string.IsNullOrEmpty(item.MiniTitle))
+                        {
+                            <span class="smart-section-tag">@item.MiniTitle</span>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Title))
+                        {
+                            <h2 class="smart-section-title">@item.Title</h2>
+                        }
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <p style="color: #475569; font-size: 1.05rem; line-height: 1.6;">@item.Description</p>
+                        }
+                    </div>
+
+                    <div class="smart-contact-wrapper">
+                        <div class="smart-contact-info">
+                            @if (item.PageSectionLists != null && item.PageSectionLists.Any())
+                            {
+                                @foreach (var info in item.PageSectionLists.OrderBy(x => x.SortOrder))
+                                {
+                                    <div class="smart-info-card">
+                                        <div class="smart-info-icon">
+                                            <i class="@(string.IsNullOrEmpty(info.IconText) ? "fa-solid fa-info" : info.IconText)"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="smart-info-title">@info.Title</h3>
+                                            <div class="smart-info-text">@Html.Raw(info.Description)</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="smart-contact-form-card">
+                            <form method="post" id="smartContactForm" asp-page-handler="Contact">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="smart-form-group">
+                                            <label class="smart-form-label">Full Name *</label>
+                                            <input type="text" name="FullName" required class="smart-form-input" placeholder="John Doe" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="smart-form-group">
+                                            <label class="smart-form-label">Email Address *</label>
+                                            <input type="email" name="Email" required class="smart-form-input" placeholder="john@example.com" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="smart-form-group">
+                                            <label class="smart-form-label">Phone Number</label>
+                                            <input type="tel" name="Phone" class="smart-form-input" placeholder="+234..." />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="smart-form-group">
+                                            <label class="smart-form-label">Subject</label>
+                                            <input type="text" name="Subject" class="smart-form-input" placeholder="Project Inquiry" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="smart-form-group">
+                                            <label class="smart-form-label">Your Message *</label>
+                                            <textarea name="Message" rows="5" required class="smart-form-input" placeholder="Write your message here..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="smart-btn-primary w-100" style="width: 100%; border: none; cursor: pointer;">Send Message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
 }
 else if (ViewBag.themedata == "Layout2222")
 {
@@ -10494,7 +10838,7 @@ else if (ViewBag.themedata == "Layout8888")
         }
         else if (item.TemplateKey == "19")
         {
-            <section class="dark-bg position-relative">
+            <section class="dark-bg position-relative @item.CustomClass"">
                 <div class="side-background side-image">
                     <div class="row">
                         <div class="col-lg-6 img-side img-left" style="background: url(@item.ImageUrl) no-repeat left center; background-size: cover;"></div>
@@ -10530,43 +10874,7 @@ else if (ViewBag.themedata == "Layout8888")
                     </div>
                 </div>
             </section>
-            <section class="dark-bg position-relative">
-                <div class="side-background side-image">
-                    <div class="row">
-                        <div class="col-lg-6 img-side img-left" style="background: url(@item.ImageUrl) no-repeat left center; background-size: cover;"></div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 ms-auto ps-lg-5">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="section-title mb-4">
-                                        <h2 class="title">@item.Title></h2>
-                                    </div>
-                                    <p class="line-h-3 text-white">@item.Description</p>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @foreach (var list in item.PageSectionLists.OrderBy(x => x.SortOrder))
-                                            {
-                                                <div class="ht-progress-bar">
-                                                    <h4>Contracting</h4>
-                                                    <div class="progress" data-value="88">
-                                                        <div class="progress-bar progress-bar-striped progress-bar-animated">
-                                                            <div class="progress-parcent">@list.Title</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        }
+         }
 
 
         else if (item.TemplateKey == "20")
@@ -11353,6 +11661,7 @@ else if (ViewBag.themedata == "Layout8888")
                                         </div>
                                     </div><!---->
                                     <h3 class="sx-tilte">@item.Title</h3>
+                                    <p>@item.Description</p> 
                                     <div class="our-exp p-b30">
                                         @foreach (var list in item.PageSectionLists.Take(4))
                                         {

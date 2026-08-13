@@ -14,6 +14,8 @@ namespace JurayUniversal.Domain.Models
         public bool IsCompulsory { get; set; }
         public Enum.Enum.PaymentFrequency Frequency { get; set; }
         public decimal? FixedAmount { get; set; }
+        public string? Key { get; set; }
+        public bool AllowGuestPayment { get; set; } = true;
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

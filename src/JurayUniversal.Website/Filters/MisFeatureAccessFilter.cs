@@ -31,6 +31,14 @@ namespace JurayUniversal.Website.Filters
                 await next();
                 return;
             }
+
+            // 1b. Enforce mandatory authentication for ALL /Mis routes
+            if (!context.HttpContext.User.Identity?.IsAuthenticated ?? true)
+            {
+                var returnUrl = Uri.EscapeDataString(context.HttpContext.Request.Path + context.HttpContext.Request.QueryString);
+                context.Result = new RedirectToPageResult("/V2/AuthV2/Account/Login", new { returnUrl });
+                return;
+            }
             
             // 2. Bypass filter for the MisManagement area itself and the Suspended page
             if (path.StartsWith("/MisManagement", StringComparison.OrdinalIgnoreCase) || path.StartsWith("/SuspendedFeature", StringComparison.OrdinalIgnoreCase))

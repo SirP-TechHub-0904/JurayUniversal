@@ -60,7 +60,20 @@ namespace JurayUniversal.Website.Areas.MisContent.Pages.IPages.Section
                 return NotFound();
             }
             ViewData["WebPageId"] = new SelectList(_context.WebPages, "Id", "Title");
- 
+            ViewData["TargetPageSections"] = new SelectList(
+                await _context.PageSections
+                    .Include(p => p.WebPage)
+                    .OrderBy(p => p.WebPage.Title)
+                    .ThenBy(p => p.Title)
+                    .Select(p => new {
+                        Id = p.Id,
+                        DisplayName = (p.WebPage != null ? p.WebPage.Title + " -> " : "") + (p.Title ?? "Untitled Section")
+                    })
+                    .ToListAsync(),
+                "Id",
+                "DisplayName"
+            );
+
             return Page();
         }
 
@@ -168,8 +181,60 @@ namespace JurayUniversal.Website.Areas.MisContent.Pages.IPages.Section
             return RedirectToPage("./Details", new { id = PageSectionList.PageSectionId });
         }
 
+        public async Task<IActionResult> OnPostMoveListItemAsync(long listId, long targetSectionId)
+        {
+            var item = await _context.PageSectionLists.FindAsync(listId);
+            if (item == null)
+            {
+                TempData["error"] = "List item not found.";
+                return RedirectToPage();
+            }
 
- 
+            var currentSectionId = item.PageSectionId;
+            item.PageSectionId = targetSectionId;
+            _context.Attach(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
+            TempData["success"] = "List item moved successfully.";
+            return RedirectToPage("./Details", new { id = currentSectionId });
+        }
+
+        public async Task<IActionResult> OnPostCopyListItemAsync(long listId, long targetSectionId)
+        {
+            var sourceItem = await _context.PageSectionLists.FindAsync(listId);
+            if (sourceItem == null)
+            {
+                TempData["error"] = "Source list item not found.";
+                return RedirectToPage();
+            }
+
+            var newItem = new PageSectionList
+            {
+                PageSectionId = targetSectionId,
+                Title = sourceItem.Title != null ? $"{sourceItem.Title} (Copy)" : null,
+                MiniTitle = sourceItem.MiniTitle,
+                Description = sourceItem.Description,
+                MoreDescription = sourceItem.MoreDescription,
+                ButtonText = sourceItem.ButtonText,
+                ButtonLink = sourceItem.ButtonLink,
+                DirectUrl = sourceItem.DirectUrl,
+                Disable = sourceItem.Disable,
+                SortOrder = sourceItem.SortOrder,
+                IconText = sourceItem.IconText,
+                ImageUrl = sourceItem.ImageUrl,
+                ImageKey = sourceItem.ImageKey,
+                VideoUrl = sourceItem.VideoUrl,
+                VideoKey = sourceItem.VideoKey,
+                AddToRibon = sourceItem.AddToRibon,
+                RibonCustomDisplayTitle = sourceItem.RibonCustomDisplayTitle,
+                RibonSortOrder = sourceItem.RibonSortOrder
+            };
+
+            _context.PageSectionLists.Add(newItem);
+            await _context.SaveChangesAsync();
+
+            TempData["success"] = "List item copied successfully.";
+            return RedirectToPage("./Details", new { id = sourceItem.PageSectionId });
+        }
     }
 }

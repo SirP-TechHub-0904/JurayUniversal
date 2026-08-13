@@ -1,20 +1,16 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisAlumni.Pages.Platform.IndexModel
 @{
     ViewData["Title"] = Model.AlumniAlias + " Network";
     ViewData["ActiveMenu"] = "MisAlumni";
 }
 
-<div class="mis-page-header">
-    
-    <div class="d-flex gap-2">
-        
-        @if (Model.IsAlumni)
-        {
-            <a asp-page="./MyProfile" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-person-badge me-1"></i> My Profile</a>
-        }
-    </div>
-</div>
+@section HeaderActions {
+    @if (Model.IsAlumni)
+    {
+        <a asp-page="./MyProfile" class="btn btn-primary btn-sm rounded-pill"><i class="bi bi-person-badge me-1"></i> My Profile</a>
+    }
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <!-- Welcome Banner -->

@@ -1,0 +1,125 @@
+@inject JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context
+
+@{
+    var superSetting = _context.SuperSettings.FirstOrDefault();
+    var orgName = superSetting?.CompanyName ?? "Universal";
+    var rawTitle = ViewData["MetaTitle"]?.ToString() ?? ViewData["Title"]?.ToString() ?? "Payment Portal";
+    var metaTitle = $"{rawTitle} – {orgName}";
+    var metaDesc = ViewData["MetaDescription"]?.ToString() ?? $"Make a secure payment or contribution to {orgName}.";
+    var metaImage = ViewData["MetaImage"]?.ToString();
+    if (string.IsNullOrEmpty(metaImage))
+    {
+        metaImage = !string.IsNullOrEmpty(superSetting?.CompanyLogoUrl) ? superSetting.CompanyLogoUrl : superSetting?.CompanyIconUrl;
+    }
+    var currentUrl = ViewData["MetaUrl"]?.ToString() ?? $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@metaTitle</title>
+    <meta name="description" content="@metaDesc" />
+
+    <!-- Open Graph / WhatsApp / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@currentUrl" />
+    <meta property="og:title" content="@metaTitle" />
+    <meta property="og:description" content="@metaDesc" />
+    <meta property="og:site_name" content="@orgName" />
+    @if (!string.IsNullOrEmpty(metaImage))
+    {
+        <meta property="og:image" content="@metaImage" />
+        <meta property="og:image:secure_url" content="@metaImage" />
+    }
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@metaTitle" />
+    <meta name="twitter:description" content="@metaDesc" />
+    @if (!string.IsNullOrEmpty(metaImage))
+    {
+        <meta name="twitter:image" content="@metaImage" />
+    }
+
+    <!-- Favicon & Site Icons -->
+    @if (!string.IsNullOrEmpty(superSetting?.CompanyIconUrl))
+    {
+        <link rel="icon" type="image/x-icon" href="@superSetting.CompanyIconUrl" />
+        <link rel="shortcut icon" href="@superSetting.CompanyIconUrl" />
+        <link rel="apple-touch-icon" href="@superSetting.CompanyIconUrl" />
+    }
+    else if (!string.IsNullOrEmpty(superSetting?.CompanyLogoUrl))
+    {
+        <link rel="icon" type="image/x-icon" href="@superSetting.CompanyLogoUrl" />
+        <link rel="shortcut icon" href="@superSetting.CompanyLogoUrl" />
+        <link rel="apple-touch-icon" href="@superSetting.CompanyLogoUrl" />
+    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <style>
+        body { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f8fafc; color: #0f172a; min-height: 100vh; }
+        .pay-card { border: 1px solid #e2e8f0; border-radius: 24px; background: #ffffff; }
+        .provider-card { transition: all .2s; border-color: #cbd5e1 !important; }
+        .provider-card:hover { border-color: #0284c7 !important; background: #f0f9ff; }
+        .provider-card.selected { border-color: #0284c7 !important; background: #e0f2fe; box-shadow: 0 0 0 2px #0284c733; }
+        .receipt-row { border-bottom: 1px dashed #e2e8f0; padding: 12px 0; }
+        .receipt-row:last-child { border-bottom: none; }
+        @@media print {
+            .no-print { display: none !important; }
+            body { background-color: #ffffff !important; background: #ffffff !important; }
+            .pay-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4" style="max-width: 560px;">
+        
+        <!-- Top Center Business Branding (Icon, Logo & Name) -->
+        <div class="text-center mb-3 pt-2">
+            <a href="/" class="d-inline-flex align-items-center justify-content-center gap-2 text-decoration-none">
+                @if (!string.IsNullOrEmpty(superSetting?.CompanyIconUrl))
+                {
+                    <img src="@superSetting.CompanyIconUrl" alt="Icon" class="rounded-2 object-contain" style="height:36px; width:36px;" />
+                }
+                @if (!string.IsNullOrEmpty(superSetting?.CompanyLogoUrl))
+                {
+                    <img src="@superSetting.CompanyLogoUrl" alt="Logo" class="object-contain" style="max-height:42px; max-width:170px;" />
+                }
+                else
+                {
+                    <span class="fs-4 fw-bold text-dark text-uppercase tracking-tight">@(superSetting?.CompanyName ?? "UNIVERSAL")</span>
+                }
+            </a>
+        </div>
+
+        <!-- Top Navigation Actions -->
+        <div class="d-flex align-items-center justify-content-between mb-4 no-print">
+            <a href="/pay" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                <i class="bi bi-arrow-left me-1"></i> All Categories
+            </a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a href="/MIS/Dashboard/Index" class="btn btn-sm btn-primary rounded-pill px-3.5 shadow-sm fw-semibold">
+                    <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                </a>
+            }
+            else
+            {
+                <a href="/Identity/Account/Login" class="btn btn-sm btn-outline-primary rounded-pill px-3.5 fw-semibold">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+                </a>
+            }
+        </div>
+
+        @RenderBody()
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

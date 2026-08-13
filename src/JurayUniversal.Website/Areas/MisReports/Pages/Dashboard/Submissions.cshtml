@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.SubmissionsModel
 @{
     ViewData["Title"] = "Master Ledger";
@@ -8,13 +8,9 @@
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
 }
 
-<div class="mis-page-header">
-    
-    <div class="d-flex gap-2">
-        
-        <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
-    </div>
-</div>
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
+}
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <!-- Nav tabs -->

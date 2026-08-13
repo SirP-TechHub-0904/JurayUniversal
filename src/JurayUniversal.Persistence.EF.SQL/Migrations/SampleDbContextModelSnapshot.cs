@@ -2189,6 +2189,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("AllowGuestPayment")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -2206,6 +2209,9 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
 
                     b.Property<bool>("IsCompulsory")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()

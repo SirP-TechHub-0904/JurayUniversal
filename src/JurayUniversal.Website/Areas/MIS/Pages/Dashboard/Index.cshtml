@@ -6,19 +6,19 @@
 }
 
 @section HeaderActions {
-    <button class="btn btn-outline-secondary btn-sm rounded-pill me-2" onclick="resetLayout()">
-        <i class="fas fa-undo me-2"></i>Reset layout
+    <button type="button" class="inline-flex items-center justify-center font-medium rounded-md border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 px-3 py-2 text-xs transition-colors duration-200" onclick="resetLayout()">
+        Reset layout
     </button>
-    <div class="dropdown d-inline-block">
-        <button class="btn btn-primary btn-sm dropdown-toggle rounded-pill" type="button" id="addWidgetBtn" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-plus me-2"></i>Add widgets
+    <div class="relative inline-block text-left">
+        <button type="button" class="inline-flex items-center justify-center font-medium rounded-md bg-[#0069A1] hover:bg-[#005b8b] text-white px-3 py-2 text-xs transition-colors duration-200" id="addWidgetBtn" onclick="document.getElementById('widget-dropdown-menu')?.classList.toggle('hidden')">
+            + Add widgets
         </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="addWidgetBtn">
-            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('recent-visited-widget', true)">Recently Visited</a></li>
-            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('applications-widget', true)">Applications Hub</a></li>
-            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('financials-widget', true)">Financials Chart</a></li>
-            <li><a class="dropdown-item" href="javascript:;" onclick="toggleWidget('health-widget', true)">System Health Alert</a></li>
-        </ul>
+        <div id="widget-dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-1 hidden z-50">
+            <a href="javascript:;" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#0069A1]" onclick="toggleWidget('recent-visited-widget', true); document.getElementById('widget-dropdown-menu')?.classList.add('hidden')">Recently Visited</a>
+            <a href="javascript:;" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#0069A1]" onclick="toggleWidget('applications-widget', true); document.getElementById('widget-dropdown-menu')?.classList.add('hidden')">Applications Hub</a>
+            <a href="javascript:;" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#0069A1]" onclick="toggleWidget('financials-widget', true); document.getElementById('widget-dropdown-menu')?.classList.add('hidden')">Financials Chart</a>
+            <a href="javascript:;" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#0069A1]" onclick="toggleWidget('health-widget', true); document.getElementById('widget-dropdown-menu')?.classList.add('hidden')">System Health Alert</a>
+        </div>
     </div>
 }
 
@@ -133,9 +133,7 @@
                     <div class="row g-2" id="recent-list-container">
                         <!-- Loaded dynamically via script -->
                     </div>
-                    <div class="text-end mt-2">
-                        <a href="#features-grid" class="text-primary fw-600 fs-13px text-decoration-none">View all services <i class="fas fa-chevron-right ms-1 fs-11px"></i></a>
-                    </div>
+
                 </div>
             </div>
 
@@ -216,30 +214,46 @@
                     </div>
 
                     <!-- System Data Feeds (connected to backing DB repository counts) -->
-                    <div class="row g-2 mb-4">
-                        <div class="col-6">
-                            <div class="p-2 border rounded text-center">
-                                <div class="text-muted fs-11px mb-1">Total Users</div>
-                                <h4 class="fw-800 text-primary mb-0">@Model.TotalUsers</h4>
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-white rounded-xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-600">Total Users</span>
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-[#0069A1]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor"><path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="currentColor" stroke-width="1.5"/><path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C16.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"/></svg>
+                                </div>
                             </div>
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight my-1">@Model.TotalUsers</h4>
+                            <span class="text-[11px] text-gray-500 font-medium">Registered profiles</span>
                         </div>
-                        <div class="col-6">
-                            <div class="p-2 border rounded text-center">
-                                <div class="text-muted fs-11px mb-1">Active Users</div>
-                                <h4 class="fw-800 text-success mb-0">@Model.ActiveUsers</h4>
+                        <div class="bg-white rounded-xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-600">Active Users</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </div>
                             </div>
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-emerald-600 tracking-tight my-1">@Model.ActiveUsers</h4>
+                            <span class="text-[11px] text-gray-500 font-medium">Active accounts</span>
                         </div>
-                        <div class="col-6">
-                            <div class="p-2 border rounded text-center">
-                                <div class="text-muted fs-11px mb-1">Pending Users</div>
-                                <h4 class="fw-800 text-warning mb-0">@Model.PendingUsers</h4>
+                        <div class="bg-white rounded-xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-600">Pending</span>
+                                <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </div>
                             </div>
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-amber-600 tracking-tight my-1">@Model.PendingUsers</h4>
+                            <span class="text-[11px] text-gray-500 font-medium">Approval pending</span>
                         </div>
-                        <div class="col-6">
-                            <div class="p-2 border rounded text-center">
-                                <div class="text-muted fs-11px mb-1">Suspended</div>
-                                <h4 class="fw-800 text-danger mb-0">@Model.SuspendedUsers</h4>
+                        <div class="bg-white rounded-xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-600">Suspended</span>
+                                <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </div>
                             </div>
+                            <h4 class="text-xl sm:text-2xl font-extrabold text-red-600 tracking-tight my-1">@Model.SuspendedUsers</h4>
+                            <span class="text-[11px] text-gray-500 font-medium">Inactive/Disabled</span>
                         </div>
                     </div>
                 </div>
@@ -251,51 +265,7 @@
     </div>
 </div>
 
-<!-- ================== ALL SERVICES GRID ================== -->
-<div class="container-fluid px-0 mt-5">
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <div>
-            <h4 class="fw-800 text-dark mb-1">All Services <span id="modules-count" class="text-muted fw-normal fs-14px"></span></h4>
-            <p class="text-muted fs-13px mb-0" id="showing-summary">Loading available features...</p>
-        </div>
-        <div class="d-flex gap-2">
-            <!-- Search & Filters -->
-            <div class="input-group input-group-sm" style="width: 250px;">
-                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
-                <input type="text" id="searchFeatures" class="form-control border-start-0 ps-0" placeholder="Search services..." onkeyup="filterFeatures()">
-            </div>
-            <select id="statusFilter" class="form-select form-select-sm w-auto" onchange="filterFeatures()">
-                <option value="all">All Status</option>
-                <option value="Active">Active</option>
-                <option value="Setup Pending">Pending</option>
-            </select>
-        </div>
-    </div>
 
-    <!-- Category Tabs -->
-    <ul class="nav nav-pills mb-4" id="category-tabs-container">
-        <li class="nav-item">
-            <a class="nav-link active" id="tab-all" href="javascript:;" onclick="setCategory('all')">All Services</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-core" href="javascript:;" onclick="setCategory('core')">Core</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-finance" href="javascript:;" onclick="setCategory('finance')">Finance</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-community" href="javascript:;" onclick="setCategory('community')">Community</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-operations" href="javascript:;" onclick="setCategory('operations')">Operations</a>
-        </li>
-    </ul>
-
-    <!-- Dynamic Grid -->
-    <div class="row g-3" id="features-grid">
-        <!-- Rendered by JS -->
-    </div>
-</div>
 @Html.AntiForgeryToken()
 
 <!-- ================== SCRIPTS BLOCK ================== -->
@@ -332,7 +302,6 @@
         
         // Render Widgets
         renderRecentlyVisited();
-        renderFeatures();
         
         // Initialize ApexCharts
         initRevenueChart();
@@ -446,7 +415,6 @@
 
         // Re-render
         renderRecentlyVisited();
-        renderFeatures();
         
         showToast("Dashboard widgets reset to default settings.");
     }
@@ -485,86 +453,7 @@
         });
     }
 
-    // Render All Features list
-    function renderFeatures() {
-        const grid = document.getElementById('features-grid');
-        if (!grid) return;
 
-        grid.innerHTML = '';
-
-        // Filter and Search parameters
-        const searchQuery = document.getElementById('searchFeatures').value.toLowerCase();
-        const statusQuery = document.getElementById('statusFilter').value;
-
-        // Apply filters
-        let filtered = initialModules.filter(m => {
-            // Category match
-            const matchesCategory = currentCategory === 'all' || m.category === currentCategory;
-            // Search match
-            const matchesSearch = m.name.toLowerCase().includes(searchQuery) || m.desc.toLowerCase().includes(searchQuery);
-            // Status match
-            const matchesStatus = statusQuery === 'all' || m.status === statusQuery;
-
-            return matchesCategory && matchesSearch && matchesStatus;
-        });
-
-        // Sort starred items to front, then name
-        filtered.sort((a, b) => {
-            const isAStarred = starredIds.includes(a.id);
-            const isBStarred = starredIds.includes(b.id);
-            if (isAStarred && !isBStarred) return -1;
-            if (!isAStarred && isBStarred) return 1;
-            return a.name.localeCompare(b.name);
-        });
-
-        // Update count summaries
-        document.getElementById('modules-count').innerText = `(${filtered.length})`;
-        document.getElementById('showing-summary').innerText = `Showing ${filtered.length} of @Model.AvailableFeatures.Count features`;
-
-        if (filtered.length === 0) {
-            grid.innerHTML = '<div class="col-12 py-5 text-center text-muted fs-14px"><i class="fas fa-search-minus fa-3x mb-3 text-muted text-opacity-50"></i><br>No modules match your filter settings.</div>';
-            return;
-        }
-
-        filtered.forEach(m => {
-            const isStarred = starredIds.includes(m.id);
-            const statusClass = m.status === 'Active' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning';
-            
-            const cardHtml = `
-                <div class="col-12 col-md-6 col-xl-4 feature-item" data-category="${m.category}">
-                    <div class="card feature-card h-100">
-                        <div class="card-body p-3 d-flex flex-column justify-content-between">
-                            <div>
-                                <!-- Header: Icon + Star -->
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="bg-primary bg-opacity-10 text-primary rounded-3 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                                            <i class="fas ${m.icon} fs-16px"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="fw-800 text-dark mb-0 fs-13px">${m.name}</h6>
-                                            <span class="badge badge-status ${statusClass}">${m.status}</span>
-                                        </div>
-                                    </div>
-                                    <i class="fas fa-star fav-star ${isStarred ? 'active' : ''}" onclick="toggleStar(${m.id}, event)"></i>
-                                </div>
-                                <p class="text-muted fs-12px mb-3 line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 36px;">
-                                    ${m.desc}
-                                </p>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="javascript:;" onclick="visitModule('${m.id}', '${m.link}')" class="btn btn-primary btn-sm flex-fill rounded-pill py-1 fs-11px text-center">Dashboard</a>
-                                <a href="javascript:;" onclick="configureModule('${m.name}')" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
-                                    <i class="fas fa-cog"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            grid.insertAdjacentHTML('beforeend', cardHtml);
-        });
-    }
 
     function visitModule(id, url) {
         const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
@@ -581,20 +470,7 @@
         });
     }
 
-    function toggleStar(id, event) {
-        event.stopPropagation();
-        event.preventDefault();
 
-        if (starredIds.includes(id)) {
-            starredIds = starredIds.filter(x => x !== id);
-        } else {
-            starredIds.push(id);
-        }
-
-        localStorage.setItem('mis_starred_ids', JSON.stringify(starredIds));
-        renderFeatures();
-        showToast("Favorites checklist updated successfully.");
-    }
 
     function clearRecentlyVisited() {
         const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
@@ -610,24 +486,7 @@
         });
     }
 
-    function setCategory(cat) {
-        currentCategory = cat;
-        
-        // Update active pill styling
-        document.querySelectorAll('#category-tabs-container .nav-link').forEach(el => el.classList.remove('active'));
-        
-        let safeCatId = cat.replace(/ & /g, "-").replace(/ /g, "-").toLowerCase();
-        if (cat === 'all') safeCatId = 'all';
 
-        const activeTab = document.getElementById('tab-' + safeCatId);
-        if (activeTab) activeTab.classList.add('active');
-        
-        renderFeatures();
-    }
-
-    function filterFeatures() {
-        renderFeatures();
-    }
 
     // ApexCharts Financial Setup
     function initRevenueChart() {

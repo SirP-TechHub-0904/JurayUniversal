@@ -2,7 +2,9 @@
 @model JurayUniversal.Website.Areas.MisReports.Pages.Platform.SchemaDetailsModel
 @using System.Globalization
 @{
-    ViewData["Title"] = Model.Schema.Name + " Workspace";
+    ViewData["Title"] = Model.Schema?.Name + " Workspace";
+    ViewData["Subtitle"] = Model.Schema?.Description ?? "Monthly reporting workspace and calendar overview.";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisReports";
 
     int prevMonth = Model.Month - 1;

@@ -71,29 +71,50 @@ namespace JurayUniversal.Application.Services
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    string cleanMessage = null;
+                    try
+                    {
+                        using var errDoc = JsonDocument.Parse(responseBody);
+                        if (errDoc.RootElement.TryGetProperty("message", out var msgEl))
+                        {
+                            cleanMessage = msgEl.GetString();
+                        }
+                    }
+                    catch { }
+
                     return new PaymentInitResult
                     {
                         Success = false,
-                        ErrorMessage = $"Paystack API error {(int)response.StatusCode}: {responseBody}"
+                        ErrorMessage = !string.IsNullOrEmpty(cleanMessage)
+                            ? $"Paystack Error: {cleanMessage}"
+                            : $"Paystack API error {(int)response.StatusCode}: {responseBody}"
                     };
                 }
 
                 using var doc = JsonDocument.Parse(responseBody);
                 var root = doc.RootElement;
 
-                // Paystack response: { "status": true, "data": { "authorization_url": "...", "reference": "..." } }
-                if (root.TryGetProperty("data", out var data)
-                    && data.TryGetProperty("authorization_url", out var urlEl))
+                // Paystack response: { "status": true, "data": { "authorization_url": "...", "access_code": "...", "reference": "..." } }
+                if (root.TryGetProperty("data", out var data))
                 {
-                    var url = urlEl.GetString();
-                    if (!string.IsNullOrEmpty(url))
-                        return new PaymentInitResult { Success = true, PaymentUrl = url };
+                    string url = data.TryGetProperty("authorization_url", out var urlEl) ? urlEl.GetString() : null;
+                    string accessCode = data.TryGetProperty("access_code", out var codeEl) ? codeEl.GetString() : null;
+
+                    if (!string.IsNullOrEmpty(url) || !string.IsNullOrEmpty(accessCode))
+                    {
+                        return new PaymentInitResult
+                        {
+                            Success = true,
+                            PaymentUrl = url,
+                            AccessCode = accessCode
+                        };
+                    }
                 }
 
                 return new PaymentInitResult
                 {
                     Success = false,
-                    ErrorMessage = $"Paystack responded OK but no authorization_url found. Response: {responseBody}"
+                    ErrorMessage = $"Paystack responded OK but no payment URL or access code returned. Response: {responseBody}"
                 };
             }
             catch (Exception ex)

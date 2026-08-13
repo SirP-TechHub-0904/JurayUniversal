@@ -6,13 +6,11 @@
     Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
 }
 
-<div class="page-heading d-flex justify-content-between align-items-center">
-    <div>
-        <h3>MIS Configuration Settings</h3>
-        <p class="text-subtitle text-muted">Customize the global terminology and settings used across the MIS Dashboard.</p>
-    </div>
-    
-</div>
+@section HeaderActions {
+    <a asp-area="MisConfiguration" asp-page="/Dashboard/SitePages/Index" class="btn btn-outline-primary btn-sm rounded-pill">
+        <i class="bi bi-link-45deg me-1"></i> Website Page Directory
+    </a>
+}
 
 <partial name="_StatusMessage" for="StatusMessage" />
 

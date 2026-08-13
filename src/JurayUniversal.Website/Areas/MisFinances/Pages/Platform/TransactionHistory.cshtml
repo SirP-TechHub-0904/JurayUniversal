@@ -1,22 +1,13 @@
-﻿@page "/MisFinances/Platform/TransactionHistory"
+@page "/MisFinances/Platform/TransactionHistory"
 @model JurayUniversal.Website.Areas.MisFinances.Pages.Platform.TransactionHistoryModel
 @{
     ViewData["Title"] = "Transaction History";
-    ViewData["Subtitle"] = "Manage and configure settings for this module.";
+    ViewData["Subtitle"] = "A full record of all your payments and contributions.";
 }
-
-<div class="mis-page-header d-flex justify-content-between align-items-center">
-    
-    
-</div>
 
 <div class="page-content bg-light p-0 p-md-4" style="min-height: 100vh;">
     <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4 p-md-5">
-            <h5 class="fw-bold mb-1">
-                <i class="bi bi-clock-history text-primary me-2"></i> My Payment History
-            </h5>
-            <p class="text-muted fs-7 mb-4">A full record of all your payments and contributions.</p>
 
             @if (Model.MyTransactions.Any())
             {

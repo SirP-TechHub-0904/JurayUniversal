@@ -1,0 +1,117 @@
+@page
+@model JurayUniversal.MisCentral.Pages.ExpirationsModel
+@{
+    Layout = "~/Pages/Shared/Layouts/_MisMasterLayout.cshtml";
+    ViewData["Title"] = "Feature Expiration & Renewal Schedule";
+    ViewData["Subtitle"] = "Portal Expiration Warnings & Alerts";
+}
+
+<div class="container-fluid p-0">
+
+    <!-- SUMMARY CARDS -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 border-start border-4 border-danger">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Urgent (&lt; 7 Days)</span>
+                        <h3 class="fw-bold mb-0 text-danger mt-1">@Model.Summary.Expiring7DaysCount</h3>
+                    </div>
+                    <i class="fa fa-exclamation-triangle text-danger fs-2 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 border-start border-4 border-warning">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Upcoming (&lt; 30 Days)</span>
+                        <h3 class="fw-bold mb-0 text-warning mt-1">@Model.Summary.Expiring30DaysCount</h3>
+                    </div>
+                    <i class="fa fa-clock text-warning fs-2 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 border-start border-4 border-dark">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Expired / Grace Period</span>
+                        <h3 class="fw-bold mb-0 text-dark mt-1">@Model.Summary.ExpiredCount</h3>
+                    </div>
+                    <i class="fa fa-times-circle text-dark fs-2 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPLETE EXPIRATION SCHEDULE TABLE -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
+            <h6 class="fw-bold mb-0">Feature Expiration Ledger across Portals</h6>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Portal Website</th>
+                            <th>Feature Name</th>
+                            <th>Module Key</th>
+                            <th>Cost</th>
+                            <th>Next Billing Date</th>
+                            <th>Countdown / Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var allFeatures = Model.Summary.Tenants
+                                .SelectMany(t => t.Features.Select(f => new { Tenant = t, Feature = f }))
+                                .OrderBy(x => x.Feature.DaysUntilExpiration ?? 9999)
+                                .ToList();
+                        }
+
+                        @foreach (var item in allFeatures)
+                        {
+                            <tr>
+                                <td>
+                                    <strong class="text-dark">@item.Tenant.PrimaryDomain</strong>
+                                    <div class="small text-muted">@item.Tenant.CatalogName</div>
+                                </td>
+                                <td>
+                                    <span class="fw-semibold">@item.Feature.FeatureName</span>
+                                </td>
+                                <td>
+                                    <code>@item.Feature.ModuleFolder</code>
+                                </td>
+                                <td>
+                                    ₦@item.Feature.CostPerDuration.ToString("N0") <small class="text-muted">/@item.Feature.BillingDuration</small>
+                                </td>
+                                <td>
+                                    @(item.Feature.NextBillingDate?.ToString("MMM dd, yyyy") ?? "-")
+                                </td>
+                                <td>
+                                    <span class="badge @item.Feature.ExpirationStatusBadge px-2 py-1">
+                                        @item.Feature.ExpirationStatusText
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="@Model.GetConfigUrl(item.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1">
+                                        Manage Config
+                                    </a>
+                                    <a href="@Model.GetMisUrl(item.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
+                                        Access MIS
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,8 +1,9 @@
-﻿@page "{id:long}"
+@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.DetailsModel
 @{
     ViewData["Title"] = "Submission Details";
     ViewData["Subtitle"] = "View detailed information and associated records.";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Submissions";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";

@@ -1,8 +1,9 @@
-﻿@page "{id:long}"
+@page "{id:long}"
 @model JurayUniversal.Website.Areas.MisReports.Pages.Dashboard.Schemas.ParticipantsModel
 @{
     ViewData["Title"] = "Manage Participants";
     ViewData["Subtitle"] = "Overview and management of all records.";
+    ViewData["ShowBackButton"] = false;
     ViewData["ActiveMenu"] = "MisReports";
     ViewData["ActiveSubMenu"] = "Schemas";
     Layout = "/Pages/Shared/Layouts/MIS/_MisAdminLayout.cshtml";
