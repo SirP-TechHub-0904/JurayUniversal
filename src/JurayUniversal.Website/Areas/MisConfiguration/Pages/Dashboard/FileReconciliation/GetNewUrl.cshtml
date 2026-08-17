@@ -1,0 +1,114 @@
+@page
+@model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.FileReconciliation.GetNewUrlModel
+@{
+    ViewData["Title"] = "Regenerate Pre-signed URL";
+    ViewData["Subtitle"] = "Generate a fresh AWS S3 pre-signed URL and update the database entity.";
+}
+
+<div class="container-fluid pt-2 pb-5 mb-8">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <a asp-page="./Index" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> Back to File Reconciliation
+                </a>
+            </div>
+
+            <!-- Status Alert -->
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger") alert-dismissible fade show rounded-3 shadow-sm mb-4" role="alert">
+                    <i class="bi @(Model.IsSuccess ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill") me-2"></i>
+                    @Model.Message
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+                <div class="card-header bg-white py-3 px-4 border-bottom">
+                    <h5 class="fw-bold text-slate-800 mb-0">
+                        <i class="bi bi-arrow-repeat text-success me-2"></i> Pre-signed URL Regeneration Summary
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+
+                    <!-- Preview if available -->
+                    @if (!string.IsNullOrEmpty(Model.NewUrl))
+                    {
+                        <div class="bg-light p-3 rounded-3 text-center mb-4 border">
+                            <h6 class="fw-bold text-muted text-uppercase mb-3" style="font-size: 0.75rem;">Generated File Preview</h6>
+                            @if (Model.FileType == "image")
+                            {
+                                <img src="@Model.NewUrl" class="rounded shadow-sm border mx-auto d-block" style="max-width: 100%; max-height: 240px; object-fit: contain;" />
+                            }
+                            else if (Model.FileType == "video")
+                            {
+                                <video src="@Model.NewUrl" controls class="rounded shadow-sm border mx-auto d-block" style="max-width: 100%; max-height: 240px;"></video>
+                            }
+                            else if (Model.FileType == "pdf")
+                            {
+                                <a href="@Model.NewUrl" target="_blank" class="btn btn-outline-danger rounded-pill px-4">
+                                    <i class="bi bi-file-earmark-pdf-fill me-2"></i> Open PDF Document
+                                </a>
+                            }
+                            else if (Model.FileType == "doc")
+                            {
+                                <a href="@Model.NewUrl" target="_blank" class="btn btn-outline-primary rounded-pill px-4">
+                                    <i class="bi bi-file-earmark-word-fill me-2"></i> Open Word Document
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Model.NewUrl" target="_blank" class="btn btn-outline-dark rounded-pill px-4">
+                                    <i class="bi bi-box-arrow-up-right me-2"></i> View File Link
+                                </a>
+                            }
+                        </div>
+                    }
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light text-muted" style="width: 30%;">Target Entity</th>
+                                    <td><span class="fw-semibold">@Model.Entity</span> <span class="badge bg-secondary ms-1">ID: @Model.Id</span></td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Property Name</th>
+                                    <td><code>@Model.Property</code></td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">S3 Bucket Name</th>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-1">@Model.NewBucket</span></td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">S3 Object Key</th>
+                                    <td><code class="text-slate-800 bg-slate-100 px-2 py-1 rounded">@Model.Key</code></td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(Model.NewUrl))
+                                {
+                                    <tr>
+                                        <th class="bg-light text-muted">Fresh Pre-signed URL</th>
+                                        <td>
+                                            <a href="@Model.NewUrl" target="_blank" class="text-primary text-break text-decoration-none">
+                                                @Model.NewUrl <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-end gap-2 mt-4">
+                        <a asp-page="./Index" class="btn btn-light border rounded-pill px-4">
+                            Done
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

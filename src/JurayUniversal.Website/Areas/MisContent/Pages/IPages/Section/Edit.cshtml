@@ -205,12 +205,16 @@
                         </div>
                     }
                     <div class="form-group mb-4">
-                        <label class="control-label">sample Image</label><br />
-                        <input type="file" class="control-label" asp-for="imagefile" />
+                        <label class="control-label">Primary Image</label><br />
+                        <input type="file" class="form-control" asp-for="imagefile" accept="image/*" />
+                    </div>
+                    <div class="form-group mb-4">
+                        <label class="control-label">Secondary Image</label><br />
+                        <input type="file" class="form-control" asp-for="imagefile2" accept="image/*" />
                     </div>
                     <div class="form-group mb-4">
                         <label class="control-label">Sample Video</label><br />
-                        <input type="file" class="control-label" asp-for="videofile" accept="video/mp4" />
+                        <input type="file" class="form-control" asp-for="videofile" accept="video/mp4" />
                     </div>
 
                     <div class="form-group mb-4">

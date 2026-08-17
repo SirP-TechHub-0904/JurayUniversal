@@ -29,6 +29,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="mis-table-th">Category Title <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
+                                <th class="mis-table-th">Target Audience <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
                                 <th class="mis-table-th">Type <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
                                 <th class="mis-table-th">Frequency <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
                                 <th class="mis-table-th">Amount <i class="bi bi-chevron-expand ms-1 opacity-25"></i></th>
@@ -43,6 +44,30 @@
                                 <tr>
                                     <td>
                                         <div class="fw-bold text-dark">@cat.Title</div>
+                                        @if (!string.IsNullOrEmpty(cat.Description))
+                                        {
+                                            <div class="text-muted small text-truncate" style="max-width: 220px;">@cat.Description</div>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (cat.MisGroup != null)
+                                        {
+                                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
+                                                <i class="bi bi-people-fill me-1"></i> @cat.MisGroup.Title
+                                            </span>
+                                        }
+                                        else if (cat.UserCategory != null)
+                                        {
+                                            <span class="badge rounded-pill" style="background-color: #f3e8ff; color: #6b21a8;">
+                                                <i class="bi bi-person-badge me-1"></i> @cat.UserCategory.Title
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-muted border rounded-pill">
+                                                All Members / Public
+                                            </span>
+                                        }
                                     </td>
                                     <td>
                                         @if (cat.IsCompulsory)

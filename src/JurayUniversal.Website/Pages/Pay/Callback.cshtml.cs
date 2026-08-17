@@ -34,10 +34,13 @@ namespace JurayUniversal.Website.Pages.Pay
 
         public MisFinanceTransaction Transaction { get; set; }
         public MisSmsTransaction SmsTransaction { get; set; }
+        public SuperSetting SuperSetting { get; set; }
         public bool IsSuccess { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string @ref, string status = null, string reference = null)
         {
+            SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync() ?? new SuperSetting();
+
             // Support both ?ref= (our param) and ?reference= (Paystack appends this)
             var txRef = @ref ?? reference;
             if (string.IsNullOrEmpty(txRef)) return RedirectToPage("/pay/Index");

@@ -1,32 +1,204 @@
-﻿
-<html lang="zxx">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    @await Component.InvokeAsync("WebTitle")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    @await Component.InvokeAsync("HeadeTitle")
-     @await Component.InvokeAsync("LoginCSS")
+    <!-- Core Bootstrap & Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    @await Component.InvokeAsync("LoginCSS")
+
+    <style>
+        /* THEME 4: CORPORATE EXECUTIVE SPLIT-SCREEN */
+        * {
+            box-sizing: border-box;
+            font-family: 'Public Sans', sans-serif;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #ffffff;
+        }
+        .login-split-hero {
+            background: linear-gradient(145deg, #004b75 0%, #0069A1 50%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 50px;
+            color: #ffffff;
+            position: relative;
+        }
+        .login-split-hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .login-split-form-col {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px 60px;
+            background: #ffffff;
+        }
+        @@media (max-width: 991px) {
+            .login-split-form-col {
+                padding: 40px 24px;
+                min-height: auto;
+            }
+        }
+        .login-split-form-col .form-control {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            color: #0f172a !important;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+        }
+        .login-split-form-col .form-control:focus {
+            border-color: #0069A1;
+            box-shadow: 0 0 0 4px rgba(0, 105, 161, 0.15);
+        }
+        .login-split-form-col label {
+            color: #334155;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .login-split-form-col .btn-primary {
+            background: #0069A1;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 105, 161, 0.25);
+            transition: all 0.2s ease;
+        }
+        .login-split-form-col .btn-primary:hover {
+            background: #005582;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 105, 161, 0.35);
+        }
+        .split-feature-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+        .split-feature-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #0069A1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
-<body id="top">
+<body>
 
-    @await Component.InvokeAsync("CompanyName")
-    @await Component.InvokeAsync("LoginNote")
+    <div class="container-fluid p-0">
+        <div class="row g-0 min-vh-100">
+            <!-- Left Hero Column -->
+            <div class="col-lg-6 d-none d-lg-flex login-split-hero">
+                <div class="max-w-lg mx-auto position-relative" style="z-index: 2;">
+                    <div class="mb-4">
+                        @if (Model.SuperSetting.UseWhiteLogoInLogin == true)
+                        {
+                            <img src="@Model.SuperSetting.CompanyWhiteLogoUrl" alt="Logo" style="max-height: 65px;" />
+                        }
+                        else
+                        {
+                            <img src="@Model.SuperSetting.CompanyLogoUrl" alt="Logo" style="max-height: 65px;" />
+                        }
+                    </div>
+                    <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1.5 text-xs fw-bold mb-3 d-inline-block text-uppercase">
+                        Enterprise Portal
+                    </span>
+                    <h1 class="display-5 fw-bold text-white mb-3" style="letter-spacing: -0.5px;">
+                        @await Component.InvokeAsync("CompanyName")
+                    </h1>
+                    <p class="lead opacity-85 mb-5" style="line-height: 1.6; font-size: 1.1rem;">
+                        @await Component.InvokeAsync("LoginNote")
+                    </p>
 
-    @await Component.InvokeAsync("CompanyLogo")
+                    <div class="split-feature-box">
+                        <div class="split-feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold text-white">Centralized Management System</h6>
+                            <small class="text-white opacity-70">Unified membership, financial records, and operational reporting.</small>
+                        </div>
+                    </div>
 
+                    <div class="split-feature-box mb-0">
+                        <div class="split-feature-icon">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold text-white">High Reliability &amp; Uptime</h6>
+                            <small class="text-white opacity-70">Secured with multi-factor authentication and role auditing.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    @RenderBody()
+            <!-- Right Form Column -->
+            <div class="col-lg-6 login-split-form-col">
+                <div class="w-100" style="max-width: 440px; margin: 0 auto;">
+                    <div class="d-lg-none text-center mb-4">
+                        <img src="@Model.SuperSetting.CompanyLogoUrl" alt="Logo" style="max-height: 55px;" />
+                    </div>
 
-    @await Component.InvokeAsync("LoginNoteFooter")
+                    <div class="mb-4">
+                        <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Welcome Back</h3>
+                        <p class="text-muted small mb-0">Please authenticate to continue to your dashboard.</p>
+                    </div>
 
-    @RenderSection("Scripts", required: false)
+                    <div class="mb-4">
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-lock-fill text-success"></i>
+                            <span style="font-size: 12px; font-weight: 600; color: #334155;">https://@await Component.InvokeAsync("CompanyUrl")</span>
+                        </div>
+                    </div>
+
+                    @RenderBody()
+
+                    <div class="mt-4 pt-3 text-center border-top">
+                        <p class="text-muted small mb-0">
+                            @await Component.InvokeAsync("LoginNoteFooter")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
     <script>
         function myFunction() {
             var x = document.getElementById("myInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
+            if (x) {
+                x.type = x.type === "password" ? "text" : "password";
             }
         }
     </script>

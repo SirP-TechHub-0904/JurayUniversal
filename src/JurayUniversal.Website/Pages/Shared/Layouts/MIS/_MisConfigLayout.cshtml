@@ -158,10 +158,50 @@
 			#userDirectoryTable_wrapper .dataTables_filter { flex-direction: column; align-items: flex-start; gap: .5rem; }
 			#userDirectoryTable_wrapper .dataTables_filter input[type="search"] { width: 100%; max-width: 100%; }
 		}
-	</style>
+
 	<link href="~/css/mis-datatables.css" rel="stylesheet">
 	<link href="~/dashboard/plugins/summernote/summernote-lite.min.css" rel="stylesheet">
 	<partial name="~/Pages/Shared/Layouts/MIS/_MisDashboardCSS.cshtml" />
+
+	<style>
+		/* Hardcore clearance for MisConfiguration Layout */
+		#topbar {
+			height: 64px !important;
+			z-index: 999 !important;
+		}
+		#main-content {
+			margin-top: 5.5rem !important; /* 88px */
+			padding-top: 2rem !important; /* 32px */
+			padding-bottom: 5rem !important;
+			padding-left: 1.5rem !important;
+			padding-right: 1.5rem !important;
+			max-width: 100% !important;
+			margin-left: auto !important;
+			margin-right: auto !important;
+			width: 100% !important;
+			display: block !important;
+			box-sizing: border-box !important;
+		}
+
+		@@media (min-width: 768px) {
+			#main-content {
+				margin-top: 6rem !important; /* 96px */
+				padding-top: 2.5rem !important; /* 40px */
+				padding-left: 2rem !important;
+				padding-right: 2rem !important;
+			}
+		}
+
+		.config-hub-card {
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+			border-radius: 1rem !important;
+		}
+
+		.config-hub-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+		}
+	</style>
 </head>
 <body class="bg-gray-50">
 	<div id="root">
@@ -208,7 +248,7 @@
 									Admin Dashboard
 								</a>
 								<div class="border-t border-gray-100 my-1"></div>
-								<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+								<form asp-area="V2" asp-page="/AuthV2/Account/Logout" method="get">
 									<button type="submit" class="w-full text-left flex items-center px-4 py-2 text-xs text-red-600 hover:bg-red-50 font-medium transition-colors">
 										Log Out
 									</button>
@@ -221,7 +261,7 @@
 			</div>
 
 			<!-- Main Content Container with Balanced Top, Bottom & Side Margins -->
-			<main id="main-content" class="transition-all duration-300 main-content-scroll flex-1 mt-16 pt-8 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+			<main id="main-content" style="margin-top: 6.5rem !important; padding-top: 3rem !important; padding-bottom: 6rem !important;" class="transition-all duration-300 main-content-scroll flex-1 px-4 sm:px-6 lg:px-8 w-full">
 				@if (ViewData["Title"] != null)
 				{
 					<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
@@ -257,8 +297,8 @@
 	</div>
 
     <!-- Interactive User Manual Offcanvas -->
-    <partial name="Layouts/MIS/_MisContextualHelp" />
-    <partial name="Layouts/MIS/_MisScript" />
+    <partial name="~/Pages/Shared/Layouts/MIS/_MisContextualHelp.cshtml" />
+    <partial name="~/Pages/Shared/Layouts/MIS/_MisScript.cshtml" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

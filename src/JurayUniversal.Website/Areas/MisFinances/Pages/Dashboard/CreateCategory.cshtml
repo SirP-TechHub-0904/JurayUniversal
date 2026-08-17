@@ -39,7 +39,7 @@
                             <div class="col-md-6">
                                 <label asp-for="Category.IsCompulsory" class="form-label fw-bold text-dark">Payment Type <span class="text-danger">*</span></label>
                                 <select asp-for="Category.IsCompulsory" class="form-select form-select-lg rounded-3">
-                                    <option value="true">Compulsory Due (All users owe this)</option>
+                                    <option value="true">Compulsory Due (Users owe this)</option>
                                     <option value="false">Optional Donation (User's choice)</option>
                                 </select>
                                 <span asp-validation-for="Category.IsCompulsory" class="text-danger"></span>
@@ -51,6 +51,28 @@
                                     <option value="false">Members Only (Must log in to pay)</option>
                                 </select>
                                 <span asp-validation-for="Category.AllowGuestPayment" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Target Audience (Group / User Category) -->
+                        <div class="row g-3 mb-4 p-3 bg-light rounded-3 border">
+                            <div class="col-12">
+                                <h6 class="fw-bold text-dark mb-1"><i class="bi bi-bullseye text-primary me-1"></i> Target Audience (Optional Targeting)</h6>
+                                <small class="text-muted">Target this payment to a specific group/community or member category. Leave both as "All" for universal dues.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Category.MisGroupId" class="form-label fw-bold text-dark">Target Group / Branch / Community</label>
+                                <select asp-for="Category.MisGroupId" class="form-select rounded-3" asp-items="Model.GroupSelectList">
+                                    <option value="">-- All Groups / Universal --</option>
+                                </select>
+                                <span asp-validation-for="Category.MisGroupId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Category.UserCategoryId" class="form-label fw-bold text-dark">Target Member Category</label>
+                                <select asp-for="Category.UserCategoryId" class="form-select rounded-3" asp-items="Model.UserCategorySelectList">
+                                    <option value="">-- All Member Categories --</option>
+                                </select>
+                                <span asp-validation-for="Category.UserCategoryId" class="text-danger"></span>
                             </div>
                         </div>
 

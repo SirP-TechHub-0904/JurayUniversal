@@ -212,3 +212,121 @@
 .metric-card-item:hover {
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
 }
+
+/* 7. NAV TABS & TAB PANES ENGINE */
+.tab-content > .tab-pane {
+    display: none !important;
+}
+
+.tab-content > .tab-pane.active,
+.tab-content > .tab-pane.show.active {
+    display: block !important;
+}
+
+.tab-pane.fade {
+    transition: opacity 0.15s linear;
+}
+
+.tab-pane.fade:not(.show) {
+    opacity: 0;
+    display: none !important;
+}
+
+.tab-pane.fade.show {
+    opacity: 1;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #f1f5f9 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+    list-style: none !important;
+    gap: 0.5rem !important;
+}
+
+.nav-tabs .nav-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    border-radius: 0 !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+    font-size: 0.925rem !important;
+    padding: 0.75rem 1.25rem !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #0069A1 !important;
+    border-bottom-color: #cbd5e1 !important;
+    background: rgba(0, 105, 161, 0.03) !important;
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0069A1 !important;
+    background-color: transparent !important;
+    border-bottom: 3px solid #0069A1 !important;
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+
+.nav-pills {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+    list-style: none !important;
+    gap: 0.5rem !important;
+}
+
+.nav-pills .nav-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 9999px !important;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    background-color: #f1f5f9 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.nav-pills .nav-link:hover {
+    color: #0f172a !important;
+    background-color: #e2e8f0 !important;
+}
+
+.nav-pills .nav-link.active {
+    color: #ffffff !important;
+    background-color: #0069A1 !important;
+    box-shadow: 0 2px 6px rgba(0, 105, 161, 0.25) !important;
+}
+
+/* 8. SUMMERNOTE WYSIWYG INTEGRATION */
+.note-editor.note-airframe,
+.note-editor.note-frame {
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.75rem !important;
+    background-color: #ffffff !important;
+    overflow: hidden !important;
+}
+
+.note-modal {
+    z-index: 1065 !important;
+}
+
+.note-modal:not(.open) {
+    display: none !important;
+}
+
+
