@@ -36,7 +36,7 @@ namespace JurayUniversal.Website.Areas.MIS.Pages.Dashboard
 
         public List<MisFeature> MisFeatures { get; set; } = new List<MisFeature>();
         public List<MisWidget> MisWidgets { get; set; } = new List<MisWidget>();
-        public List<JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.PredefinedFeature> AvailableFeatures { get; set; }
+        public List<JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.PredefinedFeature> AvailableFeatures { get; set; } = JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.AvailableFeatures ?? new();
         
         public List<string> RecentVisits { get; set; } = new List<string>();
 
@@ -47,7 +47,7 @@ namespace JurayUniversal.Website.Areas.MIS.Pages.Dashboard
             SuspendedUsers = await _userManagementRepo.GetSuspendedUsersCountAsync();
             PendingUsers = await _userManagementRepo.GetPendingUsersCountAsync();
 
-            AvailableFeatures = JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.AvailableFeatures;
+            AvailableFeatures = JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.AvailableFeatures ?? new();
             MisFeatures = await _context.MisFeatures.ToListAsync();
 
             // Auto-seed User Management if system is brand new

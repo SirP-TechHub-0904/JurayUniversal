@@ -16,8 +16,69 @@
     {
         ViewData["MetaImage"] = Model.SuperSetting.CompanyLogoUrl;
     }
-    Layout = "~/Pages/Shared/Layouts/_PayLayout.cshtml";
+    if (Model.SuperSetting?.TemplateLayoutKey == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
 }
+
+@await Component.InvokeAsync("BreadcrumOthers", new { data = "PAYMENT CHECKOUT" })
+
+<!-- FontAwesome & Bootstrap Icons for Payment Checkout -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<div class="universal-payment-portal-wrapper py-5">
+    <div class="container" style="max-width: 620px;">
+        <div class="mb-4">
+            <a href="/pay" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                <i class="bi bi-arrow-left me-1"></i> Back to Payment Categories
+            </a>
+        </div>
 
 @if (Model.Category == null)
 {
@@ -35,7 +96,7 @@ else if (!Model.Category.AllowGuestPayment && !Model.IsLoggedIn)
         </div>
         <h3 class="fw-bold mb-2 text-dark">Members-Only Payment</h3>
         <p class="text-muted mb-4">This payment category (<strong>@Model.Category.Title</strong>) is reserved for registered members only. Please log in to your member account before proceeding.</p>
-        <a href="/Identity/Account/Login?returnUrl=@(Url.Page("/Pay/Checkout", new { key = Model.Category.Key ?? Model.Category.Id.ToString() }))" class="btn btn-primary btn-lg rounded-pill fw-bold py-3 px-5 shadow-sm">
+        <a href="/AuthV2/Account/Login?returnUrl=@(Url.Page("/Pay/Checkout", new { key = Model.Category.Key ?? Model.Category.Id.ToString() }))" class="btn btn-primary btn-lg rounded-pill fw-bold py-3 px-5 shadow-sm">
             <i class="bi bi-box-arrow-in-right me-2"></i> Log In to Pay
         </a>
     </div>
@@ -90,7 +151,7 @@ else
                                 <div class="fw-bold text-dark text-truncate">@Model.PrefillName</div>
                                 <div class="text-muted fs-8 text-truncate">@Model.PrefillEmail</div>
                             </div>
-                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1.5 fs-12px">
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1.5 fs-12px text-white">
                                 <i class="bi bi-check-circle-fill me-1"></i> Logged In
                             </span>
                         </div>
@@ -269,9 +330,12 @@ else
             </div>
         </div>
     </div>
-</div>
+
+    </div> <!-- /.container -->
+</div> <!-- /.universal-payment-portal-wrapper -->
 
 @section Scripts {
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
         // Highlight selected provider card
         document.querySelectorAll('.provider-radio').forEach(radio => {

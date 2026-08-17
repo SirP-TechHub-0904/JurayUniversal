@@ -2,217 +2,236 @@
 @model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.DataConfigs.IndexModel
 
 @{
-    ViewData["Title"] = "Index"; 
-
+    ViewData["Title"] = "Data & System Configuration";
+    ViewData["Subtitle"] = "Global CSS/JS stylesheet injections, mail server settings, and system redirects.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
 }
 
-<h1>Details</h1>
+@section HeaderActions {
+    <div class="d-flex align-items-center gap-2">
+        <a asp-page="./Edit" asp-route-id="@Model.DataConfig.Id" class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm">
+            <i class="bi bi-pencil-square me-1"></i> Edit Configuration
+        </a>
+        <a asp-area="MisConfiguration" asp-page="/Dashboard/Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+            <i class="bi bi-arrow-left me-1"></i> Back
+        </a>
+    </div>
+}
 
-<div>
-    <h4>DataConfig</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.LoginCSS)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.LoginCSS)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.LayoutCSS)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.LayoutCSS)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.LayoutJavaScript)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.LayoutJavaScript)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.DashboardCSS)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.DashboardCSS)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttpswww)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.RedirectTohttpswww)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttps)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.RedirectTohttps)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.Configuration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.Configuration)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.LiveConfiguration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.LiveConfiguration)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.MailSender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.MailSender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.DisplayName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.DisplayName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookServer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookServer)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookPort)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookPort)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookUsername)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookUsername)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookSecurity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookSecurity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookSenderEmail)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookSenderEmail)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookSSLEnable)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookSSLEnable)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.OutlookUseDefaultCredentials)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.OutlookUseDefaultCredentials)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleServer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleServer)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GooglePort)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GooglePort)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleUsername)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleUsername)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleSecurity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleSecurity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleSenderEmail)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleSenderEmail)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleSSLEnable)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleSSLEnable)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.GoogleUseDefaultCredentials)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.GoogleUseDefaultCredentials)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailServer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailServer)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailPort)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailPort)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailUsername)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailUsername)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailSecurity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailSecurity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailSenderEmail)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailSenderEmail)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailSSLEnable)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailSSLEnable)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.WebmailUseDefaultCredentials)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.WebmailUseDefaultCredentials)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.CCmails)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.CCmails)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataConfig.BBmails)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataConfig.BBmails)
-        </dd>
-    </dl>
+<style>
+    .code-preview-container {
+        position: relative;
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+        padding: 16px;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    .code-preview-container.collapsed {
+        max-height: 140px;
+    }
+    .code-preview-container.expanded {
+        max-height: 1200px;
+    }
+    .code-preview-container pre {
+        color: #38bdf8;
+        font-family: 'JetBrains Mono', Consolas, monospace;
+        font-size: 12.5px;
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    .code-expand-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(180deg, transparent 0%, #0f172a 90%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 8px;
+        pointer-events: none;
+    }
+    .code-preview-container.expanded .code-expand-overlay {
+        display: none;
+    }
+</style>
+
+<div class="container-fluid p-0">
+    <div class="row g-4">
+        <!-- 1. SYSTEM SWITCHES & REDIRECTS -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-sliders text-primary me-2"></i> System &amp; SSL Redirect Flags</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="p-3 bg-light rounded-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fw-semibold text-dark fs-13px">Redirect to HTTPS WWW</div>
+                                    <div class="text-muted fs-11px">Forces www prefix with SSL</div>
+                                </div>
+                                <span class="badge @(Model.DataConfig.RedirectTohttpswww ? "bg-success" : "bg-secondary") rounded-pill px-2.5 py-1">
+                                    @(Model.DataConfig.RedirectTohttpswww ? "Enabled" : "Disabled")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="p-3 bg-light rounded-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fw-semibold text-dark fs-13px">Redirect to HTTPS</div>
+                                    <div class="text-muted fs-11px">Forces secure HTTPS connection</div>
+                                </div>
+                                <span class="badge @(Model.DataConfig.RedirectTohttps ? "bg-success" : "bg-secondary") rounded-pill px-2.5 py-1">
+                                    @(Model.DataConfig.RedirectTohttps ? "Enabled" : "Disabled")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="p-3 bg-light rounded-3 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fw-semibold text-dark fs-13px">Active Mail Provider</div>
+                                    <div class="text-muted fs-11px">Current outbound sender</div>
+                                </div>
+                                <span class="badge bg-primary rounded-pill px-2.5 py-1">
+                                    @Model.DataConfig.MailSender
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. STYLESHEET & JAVASCRIPT INJECTIONS -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-code-square text-info me-2"></i> Custom Stylesheets &amp; Script Injections</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <!-- Dashboard CSS -->
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="fw-bold text-dark fs-13px"><i class="bi bi-filetype-css text-danger me-1"></i> MIS Dashboard Custom CSS</span>
+                                <button type="button" class="btn btn-link btn-sm text-primary p-0 text-decoration-none" onclick="toggleCode('dashboard-css-box', this)">Show more</button>
+                            </div>
+                            <div class="code-preview-container collapsed" id="dashboard-css-box">
+                                <pre>@(string.IsNullOrEmpty(Model.DataConfig.DashboardCSS) ? "/* No custom CSS defined */" : Model.DataConfig.DashboardCSS)</pre>
+                                <div class="code-expand-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Layout CSS -->
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="fw-bold text-dark fs-13px"><i class="bi bi-filetype-css text-danger me-1"></i> Public Website Layout CSS</span>
+                                <button type="button" class="btn btn-link btn-sm text-primary p-0 text-decoration-none" onclick="toggleCode('layout-css-box', this)">Show more</button>
+                            </div>
+                            <div class="code-preview-container collapsed" id="layout-css-box">
+                                <pre>@(string.IsNullOrEmpty(Model.DataConfig.LayoutCSS) ? "/* No custom CSS defined */" : Model.DataConfig.LayoutCSS)</pre>
+                                <div class="code-expand-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Login CSS -->
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="fw-bold text-dark fs-13px"><i class="bi bi-filetype-css text-danger me-1"></i> Auth &amp; Login Custom CSS</span>
+                                <button type="button" class="btn btn-link btn-sm text-primary p-0 text-decoration-none" onclick="toggleCode('login-css-box', this)">Show more</button>
+                            </div>
+                            <div class="code-preview-container collapsed" id="login-css-box">
+                                <pre>@(string.IsNullOrEmpty(Model.DataConfig.LoginCSS) ? "/* No custom CSS defined */" : Model.DataConfig.LoginCSS)</pre>
+                                <div class="code-expand-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Layout JavaScript -->
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="fw-bold text-dark fs-13px"><i class="bi bi-filetype-js text-warning me-1"></i> Public Website Layout JavaScript</span>
+                                <button type="button" class="btn btn-link btn-sm text-primary p-0 text-decoration-none" onclick="toggleCode('layout-js-box', this)">Show more</button>
+                            </div>
+                            <div class="code-preview-container collapsed" id="layout-js-box">
+                                <pre>@(string.IsNullOrEmpty(Model.DataConfig.LayoutJavaScript) ? "/* No custom JavaScript defined */" : Model.DataConfig.LayoutJavaScript)</pre>
+                                <div class="code-expand-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. EMAIL SERVERS (SMTP ACCOUNTS) -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-envelope-at text-success me-2"></i> Mail Server Configurations (SMTP)</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <!-- Outlook -->
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100 bg-white">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-microsoft me-1"></i> Microsoft / Outlook SMTP</h6>
+                                <div class="fs-12px mb-1"><span class="text-muted">Host:</span> <strong>@(Model.DataConfig.OutlookServer ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Port:</span> <strong>@Model.DataConfig.OutlookPort</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Username:</span> <strong>@(Model.DataConfig.OutlookUsername ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Sender Email:</span> <strong>@(Model.DataConfig.OutlookSenderEmail ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">SSL Enabled:</span> <span class="badge @(Model.DataConfig.OutlookSSLEnable ? "bg-success" : "bg-secondary")">@(Model.DataConfig.OutlookSSLEnable ? "Yes" : "No")</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Google -->
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100 bg-white">
+                                <h6 class="fw-bold text-danger mb-3"><i class="bi bi-google me-1"></i> Google / Gmail SMTP</h6>
+                                <div class="fs-12px mb-1"><span class="text-muted">Host:</span> <strong>@(Model.DataConfig.GoogleServer ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Port:</span> <strong>@Model.DataConfig.GooglePort</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Username:</span> <strong>@(Model.DataConfig.GoogleUsername ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Sender Email:</span> <strong>@(Model.DataConfig.GoogleSenderEmail ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">SSL Enabled:</span> <span class="badge @(Model.DataConfig.GoogleSSLEnable ? "bg-success" : "bg-secondary")">@(Model.DataConfig.GoogleSSLEnable ? "Yes" : "No")</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Webmail -->
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded-3 h-100 bg-white">
+                                <h6 class="fw-bold text-success mb-3"><i class="bi bi-globe me-1"></i> Custom Webmail SMTP</h6>
+                                <div class="fs-12px mb-1"><span class="text-muted">Host:</span> <strong>@(Model.DataConfig.WebmailServer ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Port:</span> <strong>@Model.DataConfig.WebmailPort</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Username:</span> <strong>@(Model.DataConfig.WebmailUsername ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">Sender Email:</span> <strong>@(Model.DataConfig.WebmailSenderEmail ?? "N/A")</strong></div>
+                                <div class="fs-12px mb-1"><span class="text-muted">SSL Enabled:</span> <span class="badge @(Model.DataConfig.WebmailSSLEnable ? "bg-success" : "bg-secondary")">@(Model.DataConfig.WebmailSSLEnable ? "Yes" : "No")</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.DataConfig.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+@section Scripts {
+    <script>
+        function toggleCode(containerId, btn) {
+            const box = document.getElementById(containerId);
+            if (!box) return;
+            if (box.classList.contains('collapsed')) {
+                box.classList.remove('collapsed');
+                box.classList.add('expanded');
+                btn.textContent = 'Show less';
+            } else {
+                box.classList.remove('expanded');
+                box.classList.add('collapsed');
+                btn.textContent = 'Show more';
+            }
+        }
+    </script>
+}

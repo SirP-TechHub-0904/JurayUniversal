@@ -2,21 +2,25 @@
 @model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.IndexModel
 @{
     ViewData["Title"] = "Settings Hub";
-    ViewData["Subtitle"] = "Centralized management for all platform configurations and settings.";
+    ViewData["Subtitle"] = "Centralized management for all platform configurations, roles, logs, and cloud storage.";
 }
-
-<div class="container-fluid pt-2 pb-4 mb-8">
+<style>
+.col-md-6, .col-lg-3{
+ margin-bottom:10px !important;   
+}
+    </style>
+<div class="py-4 pt-3 pb-5 mb-8" style="margin-top: 2rem;">
 
     <div class="row g-4">
         <!-- MisSetting -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-sliders fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">MIS Settings</h5>
+                        <h5 class="card-title fw-bold text-slate-800">MIS Settings</h5>
                         <p class="card-text text-muted fs-7">Configure feature toggles, aliases, and module settings for the MIS.</p>
                     </div>
                     <div>
@@ -28,13 +32,13 @@
 
         <!-- SuperSetting -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-award-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Super Settings</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Super Settings</h5>
                         <p class="card-text text-muted fs-7">Global platform controls, theme settings, and authentication configurations.</p>
                     </div>
                     <div>
@@ -46,13 +50,13 @@
 
         <!-- Setting (General) -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-gear-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">General Settings</h5>
+                        <h5 class="card-title fw-bold text-slate-800">General Settings</h5>
                         <p class="card-text text-muted fs-7">Standard application settings, contact info, and basic system variables.</p>
                     </div>
                     <div>
@@ -64,13 +68,13 @@
 
         <!-- DataConfig -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-database-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Data Config</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Data Config</h5>
                         <p class="card-text text-muted fs-7">Database connection behaviors, storage policies, and layout injections.</p>
                     </div>
                     <div>
@@ -82,13 +86,13 @@
 
         <!-- Site Pages -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-info mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-info bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-info bg-opacity-10 text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-globe2 fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Site Pages</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Site Pages</h5>
                         <p class="card-text text-muted fs-7">View all direct public URLs and system page routes for navigation menus and site configuration.</p>
                     </div>
                     <div>
@@ -100,13 +104,13 @@
 
         <!-- Role Manager -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-info mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-info bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-info bg-opacity-10 text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-shield-lock-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Role Manager</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Role Manager</h5>
                         <p class="card-text text-muted fs-7">Manage application roles and categorize them for MIS and Legacy.</p>
                     </div>
                     <div>
@@ -118,13 +122,13 @@
 
         <!-- SuperAdmins -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-dark mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-dark bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-dark bg-opacity-10 text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-person-badge-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Super Admins</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Super Admins</h5>
                         <p class="card-text text-muted fs-7">Manage elite user accounts that have overarching access to all features.</p>
                     </div>
                     <div>
@@ -136,13 +140,13 @@
 
         <!-- Knowledge Base Manager -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-primary bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-journal-bookmark-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Knowledge Base</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Knowledge Base</h5>
                         <p class="card-text text-muted fs-7">Manage contextual help drawers and knowledge base pages.</p>
                     </div>
                     <div>
@@ -154,13 +158,13 @@
 
         <!-- Modules & Features -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-secondary mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-secondary bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-secondary bg-opacity-10 text-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-layers-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Modules & Features</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Modules & Features</h5>
                         <p class="card-text text-muted fs-7">Enable or disable system modules and manage platform features.</p>
                     </div>
                     <div>
@@ -172,13 +176,13 @@
 
         <!-- Newsletter Pricing -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-success mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-success bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-tags-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Newsletter Pricing</h5>
+                        <h5 class="card-title fw-bold text-slate-800">Newsletter Pricing</h5>
                         <p class="card-text text-muted fs-7">Set up and manage pricing plans for the newsletter feature.</p>
                     </div>
                     <div>
@@ -190,17 +194,35 @@
 
         <!-- System Logs -->
         <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm border-0 border-top border-4 border-danger mt-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-danger bg-white">
                 <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
                             <i class="bi bi-exclamation-triangle-fill fs-4"></i>
                         </div>
-                        <h5 class="card-title fw-bold">System Logs</h5>
+                        <h5 class="card-title fw-bold text-slate-800">System Logs</h5>
                         <p class="card-text text-muted fs-7">View and manage daily background error logs for this domain.</p>
                     </div>
                     <div>
                         <a asp-area="MisConfiguration" asp-page="/Dashboard/SystemLogs/Index" class="btn btn-danger rounded-pill px-4 mt-3">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Files Reconciliation -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card config-hub-card h-100 shadow-sm border-0 border-top border-4 border-primary bg-white">
+                <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
+                            <i class="bi bi-file-earmark-diff-fill fs-4"></i>
+                        </div>
+                        <h5 class="card-title fw-bold text-slate-800">Files Reconciliation</h5>
+                        <p class="card-text text-muted fs-7">Audit, migrate, and reconcile all stored files and pre-signed URLs across AWS S3 buckets.</p>
+                    </div>
+                    <div>
+                        <a asp-area="MisConfiguration" asp-page="/Dashboard/FileReconciliation/Index" class="btn btn-primary rounded-pill px-4 mt-3">Reconcile</a>
                     </div>
                 </div>
             </div>

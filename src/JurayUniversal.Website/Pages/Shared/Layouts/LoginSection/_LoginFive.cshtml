@@ -1,33 +1,175 @@
-﻿
-<html lang="zxx">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    @await Component.InvokeAsync("WebTitle")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    @await Component.InvokeAsync("HeadeTitle")   
+    <!-- Core Bootstrap & Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     @await Component.InvokeAsync("LoginCSS")
 
+    <style>
+        /* THEME 5: CREATIVE VIBRANT MESH */
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #0f172a;
+        }
+        .login-vibrant-wrapper {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #0f172a 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            overflow: hidden;
+        }
+        .vibrant-circle-1 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            filter: blur(80px);
+            opacity: 0.35;
+            top: -120px;
+            left: -120px;
+            pointer-events: none;
+        }
+        .vibrant-circle-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            filter: blur(90px);
+            opacity: 0.35;
+            bottom: -150px;
+            right: -150px;
+            pointer-events: none;
+        }
+        .login-vibrant-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+            padding: 50px 45px;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+        @@media (max-width: 576px) {
+            .login-vibrant-card {
+                padding: 35px 22px;
+                border-radius: 20px;
+            }
+        }
+        .login-vibrant-card .form-control {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            color: #0f172a !important;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .login-vibrant-card .form-control:focus {
+            background: #ffffff;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+        }
+        .login-vibrant-card label {
+            color: #334155;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .login-vibrant-card .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.45);
+            transition: all 0.2s ease;
+        }
+        .login-vibrant-card .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px -4px rgba(99, 102, 241, 0.65);
+        }
+        .url-chip-vibrant {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #475569;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body id="top">
+<body>
 
-    @await Component.InvokeAsync("CompanyName")
-    @await Component.InvokeAsync("LoginNote")
+    <div class="login-vibrant-wrapper">
+        <div class="vibrant-circle-1"></div>
+        <div class="vibrant-circle-2"></div>
 
-    @await Component.InvokeAsync("CompanyLogo")
+        <div class="login-vibrant-card">
+            <div class="text-center mb-4">
+                <a href="/" class="d-inline-block mb-3">
+                    @if (Model.SuperSetting.UseNormalLogoInLogin == true)
+                    {
+                        <img src="@Model.SuperSetting.CompanyLogoUrl" alt="Logo" style="max-height: 55px;" />
+                    }
+                    else
+                    {
+                        <img src="@Model.SuperSetting.CompanyWhiteLogoUrl" alt="Logo" style="max-height: 55px;" />
+                    }
+                </a>
+                <h4 class="fw-bold text-dark mb-1" style="letter-spacing: -0.3px;">
+                    @await Component.InvokeAsync("CompanyName")
+                </h4>
+                <p class="text-muted small mb-3">
+                    @await Component.InvokeAsync("LoginNote")
+                </p>
+                <div class="url-chip-vibrant">
+                    <i class="bi bi-shield-fill-check text-primary"></i>
+                    <span>https://@await Component.InvokeAsync("CompanyUrl")</span>
+                </div>
+            </div>
 
+            @RenderBody()
 
-    @RenderBody()
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="text-muted small mb-0">
+                    @await Component.InvokeAsync("LoginNoteFooter")
+                </p>
+            </div>
+        </div>
+    </div>
 
-    @await Component.InvokeAsync("LoginNoteFooter")
-
-    @RenderSection("Scripts", required: false)
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
     <script>
         function myFunction() {
             var x = document.getElementById("myInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
+            if (x) {
+                x.type = x.type === "password" ? "text" : "password";
             }
         }
     </script>

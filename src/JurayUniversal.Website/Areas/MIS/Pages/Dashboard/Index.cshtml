@@ -272,8 +272,8 @@
 <script type="text/javascript">
     // Application Modules Dynamic Data loaded from DB
     const initialModules = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-        Model.AvailableFeatures.Select(af => {
-            var dbFeature = Model.MisFeatures.FirstOrDefault(f => f.ModuleFolder == af.ModuleFolder);
+        (Model.AvailableFeatures ?? JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.AvailableFeatures ?? new List<JurayUniversal.Website.Areas.MisManagement.Pages.IndexModel.PredefinedFeature>()).Select(af => {
+            var dbFeature = (Model.MisFeatures ?? new List<JurayUniversal.Domain.Models.MisFeature>()).FirstOrDefault(f => f.ModuleFolder == af.ModuleFolder);
             return new {
                 id = af.ModuleFolder, // use string ID since it's the folder name
                 name = af.Name,
@@ -288,11 +288,11 @@
 
     let currentCategory = 'all';
     let starredIds = [];
-    let recentlyVisitedIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RecentVisits));
+    let recentlyVisitedIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RecentVisits ?? new List<string>()));
 
     // Database Widgets Configuration
     const dbWidgets = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-        Model.MisWidgets.Select(w => new { id = w.Id, code = w.WidgetCode, span = w.ColSpan, sort = w.SortOrder })
+        (Model.MisWidgets ?? new List<JurayUniversal.Domain.Models.MisWidget>()).Select(w => new { id = w.Id, code = w.WidgetCode, span = w.ColSpan, sort = w.SortOrder })
     ));
 
     // Initialize Page State

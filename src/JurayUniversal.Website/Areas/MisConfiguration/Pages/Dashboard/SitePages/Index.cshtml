@@ -34,12 +34,12 @@
                         @foreach (var item in Model.PageLinks)
                         {
                             var fullUrl = $"{Model.BaseUrl}{item.Route}";
-                            var badgeClass = item.Category switch
+                            var (badgeBg, badgeColor) = item.Category switch
                             {
-                                "Payment" => "bg-success bg-opacity-10 text-success",
-                                "Public Information" => "bg-primary bg-opacity-10 text-primary",
-                                "Member Accounts" => "bg-warning bg-opacity-10 text-dark",
-                                _ => "bg-secondary bg-opacity-10 text-secondary"
+                                "Payment" => ("#dcfce7", "#15803d"),
+                                "Public Information" => ("#e0f2fe", "#0369a1"),
+                                "Member Accounts" => ("#fef3c7", "#b45309"),
+                                _ => ("#f1f5f9", "#475569")
                             };
 
                             <tr>
@@ -56,7 +56,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="badge @badgeClass rounded-pill px-2.5 py-1 fw-semibold fs-12px">
+                                    <span class="badge rounded-pill px-3 py-1.5 fw-semibold" style="background-color: @badgeBg !important; color: @badgeColor !important; font-size: 11px;">
                                         @item.Category
                                     </span>
                                 </td>

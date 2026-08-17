@@ -80,6 +80,7 @@
         }
 	</style>
 	<link href="~/css/mis-datatables.css" rel="stylesheet">
+	<link href="~/dashboard/plugins/summernote/summernote-lite.min.css" rel="stylesheet">
 	<partial name="~/Pages/Shared/Layouts/MIS/_MisDashboardCSS.cshtml" />
     
     <!-- Include the base voting structure styles -->
@@ -127,7 +128,7 @@
                             <strong class="d-block text-dark">@userFullName</strong>
                         </div>
 						<div class="dropdown-divider"></div>
-						<form class="m-0 p-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+						<form class="m-0 p-0" asp-area="V2" asp-page="/AuthV2/Account/Logout" method="get">
 							<button type="submit" class="dropdown-item d-flex align-items-center text-danger rounded-3 py-2">Leave Booth & Log Out <i class="fa fa-sign-out-alt fa-fw ms-auto text-danger text-opacity-50"></i></button>
 						</form>
 					</div>

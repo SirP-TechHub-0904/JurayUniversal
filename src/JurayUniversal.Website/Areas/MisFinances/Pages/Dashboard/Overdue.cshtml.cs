@@ -28,8 +28,10 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
 
         public async Task OnGetAsync()
         {
-            // Get all active, compulsory categories
+            // Get all active, compulsory categories with targeting included
             var compulsoryCategories = await _context.MisFinanceCategories
+                .Include(c => c.MisGroup)
+                .Include(c => c.UserCategory)
                 .Where(c => c.IsActive && c.IsCompulsory)
                 .ToListAsync();
 
@@ -37,9 +39,32 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
 
             // Get all registered users
             var allUsers = await _context.Users.ToListAsync();
+            var allGroupMembers = await _context.MisGroupMembers
+                .Where(m => m.MembershipStatus == "Active")
+                .ToListAsync();
 
             foreach (var cat in compulsoryCategories)
             {
+                // Filter eligible users based on targeting (Group or UserCategory)
+                List<Profile> targetMembers;
+                if (cat.MisGroupId.HasValue)
+                {
+                    var groupUserIds = allGroupMembers
+                        .Where(m => m.MisGroupId == cat.MisGroupId.Value)
+                        .Select(m => m.UserProfileId)
+                        .ToHashSet();
+
+                    targetMembers = allUsers.Where(u => groupUserIds.Contains(u.Id)).ToList();
+                }
+                else if (cat.UserCategoryId.HasValue)
+                {
+                    targetMembers = allUsers.Where(u => u.UserCategoryId == cat.UserCategoryId.Value).ToList();
+                }
+                else
+                {
+                    targetMembers = allUsers;
+                }
+
                 // Determine the current billing period
                 var (periodStart, periodEnd, periodLabel) = GetCurrentPeriod(cat.Frequency);
 
@@ -54,7 +79,7 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
                     .Distinct()
                     .ToListAsync();
 
-                var defaulters = allUsers.Where(u => !paidUserIds.Contains(u.Id)).ToList();
+                var defaulters = targetMembers.Where(u => !paidUserIds.Contains(u.Id)).ToList();
 
                 var vm = new OverdueCategoryViewModel
                 {
@@ -62,12 +87,12 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
                     PeriodLabel = periodLabel,
                     PeriodStart = periodStart,
                     PeriodEnd = periodEnd,
-                    PaidCount = paidUserIds.Count,
+                    PaidCount = targetMembers.Count - defaulters.Count,
                     DefaulterCount = defaulters.Count,
-                    TotalMembers = allUsers.Count,
+                    TotalMembers = targetMembers.Count,
                     Defaulters = defaulters,
-                    CompliancePercent = allUsers.Count > 0
-                        ? (int)Math.Round((double)paidUserIds.Count / allUsers.Count * 100)
+                    CompliancePercent = targetMembers.Count > 0
+                        ? (int)Math.Round((double)(targetMembers.Count - defaulters.Count) / targetMembers.Count * 100)
                         : 0
                 };
 

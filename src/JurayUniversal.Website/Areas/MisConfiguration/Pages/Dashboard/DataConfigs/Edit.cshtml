@@ -2,222 +2,196 @@
 @model JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.DataConfigs.EditModel
 
 @{
-    ViewData["Title"] = "Edit"; 
-
+    ViewData["Title"] = "Edit Data & System Configuration";
+    ViewData["Subtitle"] = "Update global stylesheet injections, mail server settings, and system redirects.";
+    Layout = "~/Pages/Shared/Layouts/MIS/_MisConfigLayout.cshtml";
 }
 
-<h1>Edit</h1>
+@section HeaderActions {
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+        <i class="bi bi-arrow-left me-1"></i> Back to Details
+    </a>
+}
 
-<h4>DataConfig</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DataConfig.Id" />
+<form method="post" class="container-fluid p-0">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="DataConfig.Id" />
 
+    <div class="row g-4">
+        <!-- 1. STYLESHEET & JAVASCRIPT INJECTIONS -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-code-slash text-primary me-2"></i> Custom Stylesheets &amp; JavaScript Injections</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="DataConfig.DashboardCSS" class="fw-bold text-dark fs-13px mb-2">MIS Dashboard CSS</label>
+                                <textarea asp-for="DataConfig.DashboardCSS" class="form-control font-monospace" rows="8" placeholder="/* Custom CSS for MIS Admin Dashboard */"></textarea>
+                                <span asp-validation-for="DataConfig.DashboardCSS" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="DataConfig.LayoutCSS" class="fw-bold text-dark fs-13px mb-2">Public Website Layout CSS</label>
+                                <textarea asp-for="DataConfig.LayoutCSS" class="form-control font-monospace" rows="8" placeholder="/* Custom CSS for Public Website Layout */"></textarea>
+                                <span asp-validation-for="DataConfig.LayoutCSS" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="DataConfig.LoginCSS" class="fw-bold text-dark fs-13px mb-2">Auth &amp; Login Custom CSS</label>
+                                <textarea asp-for="DataConfig.LoginCSS" class="form-control font-monospace" rows="8" placeholder="/* Custom CSS for Login & Register Pages */"></textarea>
+                                <span asp-validation-for="DataConfig.LoginCSS" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="DataConfig.LayoutJavaScript" class="fw-bold text-dark fs-13px mb-2">Public Website Layout JavaScript</label>
+                                <textarea asp-for="DataConfig.LayoutJavaScript" class="form-control font-monospace" rows="8" placeholder="// Custom JavaScript for Layout"></textarea>
+                                <span asp-validation-for="DataConfig.LayoutJavaScript" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- 2. SYSTEM SWITCHES & REDIRECTS -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-toggles text-info me-2"></i> System &amp; SSL Redirection Settings</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-check form-switch p-3 bg-light rounded-3 d-flex align-items-center justify-content-between ps-4">
+                                <label class="form-check-label fw-semibold text-dark fs-13px" for="redirectWww">Redirect to HTTPS WWW</label>
+                                <input class="form-check-input" type="checkbox" asp-for="DataConfig.RedirectTohttpswww" id="redirectWww" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check form-switch p-3 bg-light rounded-3 d-flex align-items-center justify-content-between ps-4">
+                                <label class="form-check-label fw-semibold text-dark fs-13px" for="redirectHttps">Redirect to HTTPS</label>
+                                <input class="form-check-input" type="checkbox" asp-for="DataConfig.RedirectTohttps" id="redirectHttps" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="DataConfig.MailSender" class="fw-bold text-dark fs-13px mb-2">Active Mail Sender</label>
+                                <input asp-for="DataConfig.MailSender" class="form-control" placeholder="e.g. Outlook, Google, Webmail" />
+                                <span asp-validation-for="DataConfig.MailSender" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.DashboardCSS"></label><br />
+        <!-- 3. MAIL SERVER SMTP SETTINGS -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-envelope-gear text-success me-2"></i> SMTP Mail Server Credentials</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <!-- Microsoft / Outlook -->
+                        <div class="col-lg-4">
+                            <div class="p-3 border rounded-3 bg-white h-100">
+                                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-microsoft me-1"></i> Microsoft / Outlook</h6>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.OutlookServer" class="fs-12px text-muted fw-semibold">Host / Server</label>
+                                    <input asp-for="DataConfig.OutlookServer" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.OutlookPort" class="fs-12px text-muted fw-semibold">Port</label>
+                                    <input asp-for="DataConfig.OutlookPort" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.OutlookUsername" class="fs-12px text-muted fw-semibold">Username</label>
+                                    <input asp-for="DataConfig.OutlookUsername" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.OutlookSenderEmail" class="fs-12px text-muted fw-semibold">Sender Email</label>
+                                    <input asp-for="DataConfig.OutlookSenderEmail" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" asp-for="DataConfig.OutlookSSLEnable" id="outlookSsl" />
+                                    <label class="form-check-label fs-12px text-dark fw-semibold" for="outlookSsl">Enable SSL</label>
+                                </div>
+                            </div>
+                        </div>
 
-                <textarea asp-for="DataConfig.DashboardCSS" class="form-control "></textarea>
-            </div>
+                        <!-- Google / Gmail -->
+                        <div class="col-lg-4">
+                            <div class="p-3 border rounded-3 bg-white h-100">
+                                <h6 class="fw-bold text-danger mb-3"><i class="bi bi-google me-1"></i> Google / Gmail</h6>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.GoogleServer" class="fs-12px text-muted fw-semibold">Host / Server</label>
+                                    <input asp-for="DataConfig.GoogleServer" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.GooglePort" class="fs-12px text-muted fw-semibold">Port</label>
+                                    <input asp-for="DataConfig.GooglePort" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.GoogleUsername" class="fs-12px text-muted fw-semibold">Username</label>
+                                    <input asp-for="DataConfig.GoogleUsername" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.GoogleSenderEmail" class="fs-12px text-muted fw-semibold">Sender Email</label>
+                                    <input asp-for="DataConfig.GoogleSenderEmail" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" asp-for="DataConfig.GoogleSSLEnable" id="googleSsl" />
+                                    <label class="form-check-label fs-12px text-dark fw-semibold" for="googleSsl">Enable SSL</label>
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- Custom Webmail -->
+                        <div class="col-lg-4">
+                            <div class="p-3 border rounded-3 bg-white h-100">
+                                <h6 class="fw-bold text-success mb-3"><i class="bi bi-globe me-1"></i> Custom Webmail</h6>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.WebmailServer" class="fs-12px text-muted fw-semibold">Host / Server</label>
+                                    <input asp-for="DataConfig.WebmailServer" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.WebmailPort" class="fs-12px text-muted fw-semibold">Port</label>
+                                    <input asp-for="DataConfig.WebmailPort" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.WebmailUsername" class="fs-12px text-muted fw-semibold">Username</label>
+                                    <input asp-for="DataConfig.WebmailUsername" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label asp-for="DataConfig.WebmailSenderEmail" class="fs-12px text-muted fw-semibold">Sender Email</label>
+                                    <input asp-for="DataConfig.WebmailSenderEmail" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" asp-for="DataConfig.WebmailSSLEnable" id="webmailSsl" />
+                                    <label class="form-check-label fs-12px text-dark fw-semibold" for="webmailSsl">Enable SSL</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.LayoutCSS"></label><br />
-
-                <textarea asp-for="DataConfig.LayoutCSS" class="form-control "></textarea>
-            </div>
-
-
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.LoginCSS"></label><br />
-
-                <textarea asp-for="DataConfig.LoginCSS" class="form-control "></textarea>
-            </div>
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.LayoutJavaScript"></label><br />
-
-                <textarea asp-for="DataConfig.LayoutJavaScript" class="form-control "></textarea>
-            </div>
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.LiveConfiguration"></label><br />
-
-                <textarea asp-for="DataConfig.LiveConfiguration" class="form-control "></textarea>
-            </div>
-            <div class="form-group">
-                <label class="control-label" asp-for="DataConfig.Configuration"></label><br />
-
-                <textarea asp-for="DataConfig.Configuration" class="form-control "></textarea>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.RedirectTohttpswww" /> @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttpswww)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.RedirectTohttps" /> @Html.DisplayNameFor(model => model.DataConfig.RedirectTohttps)
-                </label>
-            </div>
-
-
-
-
-            <div class="form-group">
-                <label asp-for="DataConfig.MailSender" class="control-label"></label>
-                @Html.DropDownListFor(model => model.DataConfig.MailSender, new SelectList(Enum.GetValues(typeof(JurayUniversal.Domain.Enum.Enum.MailSender))), new { @class = "form-control" })
-                <span asp-validation-for="DataConfig.MailSender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.MisJobBoardCSS" class="control-label"></label>
-                <textarea asp-for="DataConfig.MisJobBoardCSS" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="DataConfig.MisJobBoardCSS" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="DataConfig.ElectionCustomCss" class="control-label"></label>
-                <textarea asp-for="DataConfig.ElectionCustomCss" class="form-control" rows="4" placeholder=".voting-booth-app { background: red; }"></textarea>
-                <span asp-validation-for="DataConfig.ElectionCustomCss" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="DataConfig.MisLayoutJavaScript" class="control-label"></label>
-                <textarea asp-for="DataConfig.MisLayoutJavaScript" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="DataConfig.MisLayoutJavaScript" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.DisplayName" class="control-label"></label>
-                <input asp-for="DataConfig.DisplayName" class="form-control" />
-                <span asp-validation-for="DataConfig.DisplayName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.OutlookServer" class="control-label"></label>
-                <input asp-for="DataConfig.OutlookServer" class="form-control" />
-                <span asp-validation-for="DataConfig.OutlookServer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.OutlookPort" class="control-label"></label>
-                <input asp-for="DataConfig.OutlookPort" class="form-control" />
-                <span asp-validation-for="DataConfig.OutlookPort" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.OutlookUsername" class="control-label"></label>
-                <input asp-for="DataConfig.OutlookUsername" class="form-control" />
-                <span asp-validation-for="DataConfig.OutlookUsername" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.OutlookSecurity" class="control-label"></label>
-                <input asp-for="DataConfig.OutlookSecurity" class="form-control" />
-                <span asp-validation-for="DataConfig.OutlookSecurity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.OutlookSenderEmail" class="control-label"></label>
-                <input asp-for="DataConfig.OutlookSenderEmail" class="form-control" />
-                <span asp-validation-for="DataConfig.OutlookSenderEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.OutlookSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.OutlookSSLEnable)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.OutlookUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.OutlookUseDefaultCredentials)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.GoogleServer" class="control-label"></label>
-                <input asp-for="DataConfig.GoogleServer" class="form-control" />
-                <span asp-validation-for="DataConfig.GoogleServer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.GooglePort" class="control-label"></label>
-                <input asp-for="DataConfig.GooglePort" class="form-control" />
-                <span asp-validation-for="DataConfig.GooglePort" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.GoogleUsername" class="control-label"></label>
-                <input asp-for="DataConfig.GoogleUsername" class="form-control" />
-                <span asp-validation-for="DataConfig.GoogleUsername" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.GoogleSecurity" class="control-label"></label>
-                <input asp-for="DataConfig.GoogleSecurity" class="form-control" />
-                <span asp-validation-for="DataConfig.GoogleSecurity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.GoogleSenderEmail" class="control-label"></label>
-                <input asp-for="DataConfig.GoogleSenderEmail" class="form-control" />
-                <span asp-validation-for="DataConfig.GoogleSenderEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.GoogleSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.GoogleSSLEnable)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.GoogleUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.GoogleUseDefaultCredentials)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.WebmailServer" class="control-label"></label>
-                <input asp-for="DataConfig.WebmailServer" class="form-control" />
-                <span asp-validation-for="DataConfig.WebmailServer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.WebmailPort" class="control-label"></label>
-                <input asp-for="DataConfig.WebmailPort" class="form-control" />
-                <span asp-validation-for="DataConfig.WebmailPort" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.WebmailUsername" class="control-label"></label>
-                <input asp-for="DataConfig.WebmailUsername" class="form-control" />
-                <span asp-validation-for="DataConfig.WebmailUsername" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.WebmailSecurity" class="control-label"></label>
-                <input asp-for="DataConfig.WebmailSecurity" class="form-control" />
-                <span asp-validation-for="DataConfig.WebmailSecurity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.WebmailSenderEmail" class="control-label"></label>
-                <input asp-for="DataConfig.WebmailSenderEmail" class="form-control" />
-                <span asp-validation-for="DataConfig.WebmailSenderEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.WebmailSSLEnable" /> @Html.DisplayNameFor(model => model.DataConfig.WebmailSSLEnable)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DataConfig.WebmailUseDefaultCredentials" /> @Html.DisplayNameFor(model => model.DataConfig.WebmailUseDefaultCredentials)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.CCmails" class="control-label"></label>
-                <input asp-for="DataConfig.CCmails" class="form-control" />
-                <span asp-validation-for="DataConfig.CCmails" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataConfig.BBmails" class="control-label"></label>
-                <input asp-for="DataConfig.BBmails" class="form-control" />
-                <span asp-validation-for="DataConfig.BBmails" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <!-- SAVE BUTTON -->
+        <div class="col-12 text-end pb-5">
+            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm">
+                <i class="bi bi-check2-circle me-1"></i> Save All Changes
+            </button>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -48,9 +48,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link href="~/css/index-lz42kh8m.css" rel="stylesheet" />
     <link href="~/css/mis-design-bridge.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
-<link rel="stylesheet" href="~/dashboard/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
-<link rel="stylesheet" href="~/dashboard/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
+    <link href="~/dashboard/plugins/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/dashboard/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/dashboard/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
 
     <style>
         /* Global Typography - Space Grotesk Matching Live Site */
@@ -308,7 +309,7 @@
                                 </a>
                                 <div class="border-t border-gray-100 my-1"></div>
 
-                                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                <form asp-area="V2" asp-page="/AuthV2/Account/Logout" method="get">
                                     <button type="submit" class="w-full text-left flex items-center px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" color="currentColor" class="mr-3 text-red-500">
                                             <path d="M15 12H3M3 12L7 8M3 12L7 16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>

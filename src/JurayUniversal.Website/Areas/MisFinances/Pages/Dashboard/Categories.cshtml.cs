@@ -30,6 +30,8 @@ namespace JurayUniversal.Website.Areas.MisFinances.Pages.Dashboard
         {
             SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
             Categories = await _context.MisFinanceCategories
+                .Include(c => c.MisGroup)
+                .Include(c => c.UserCategory)
                 .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
 

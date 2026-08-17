@@ -61,15 +61,30 @@
             theme: 'bootstrap4'
         })
 
-        // Summernote
-        if ($('.summernote').length) {
-            $('.summernote').summernote({
-                height: 300,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline']],
-                    ['insert', ['picture', 'link']],
-                    ['view', ['codeview']]
-                ]
+        // Summernote Auto-Initializer
+        if ($.fn.summernote && $('.summernote').length) {
+            $('.summernote').each(function () {
+                var $textarea = $(this);
+                if (!$textarea.next('.note-editor').length) {
+                    $textarea.summernote({
+                        height: 280,
+                        minHeight: 150,
+                        placeholder: 'Type your content here...',
+                        dialogsInBody: true,
+                        dialogsFade: true,
+                        toolbar: [
+                            ['style', ['style']],
+                            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                            ['fontname', ['fontname']],
+                            ['fontsize', ['fontsize']],
+                            ['color', ['color']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['table', ['table']],
+                            ['insert', ['link', 'picture', 'video', 'hr']],
+                            ['view', ['fullscreen', 'codeview', 'help']]
+                        ]
+                    });
+                }
             });
         }
 
@@ -227,6 +242,73 @@
                 }
             }
         });
+
+        // Universal Tab & Pill Switcher Engine (Supports data-toggle, data-bs-toggle, data-bs-target, data-target, href)
+        $(document).on('click', '[data-toggle="tab"], [data-bs-toggle="tab"], [data-toggle="pill"], [data-bs-toggle="pill"], .nav-tabs .nav-link, .nav-pills .nav-link', function (e) {
+            var $tab = $(this);
+            
+            // Check for actual navigation links (ignore if asp-page, regular URL, or non-hash href)
+            var href = $tab.attr('href');
+            var targetSelector = $tab.attr('data-bs-target') || $tab.attr('data-target') || (href && href.startsWith('#') ? href : null) || ($tab.attr('aria-controls') ? '#' + $tab.attr('aria-controls') : null);
+            
+            if (!targetSelector || targetSelector === '#') {
+                return; // Allow standard page link navigation if present
+            }
+
+            e.preventDefault();
+
+            var $targetPane = $(targetSelector);
+            if (!$targetPane.length) return;
+
+            // 1. Manage Active State on Tab Triggers
+            var $navContainer = $tab.closest('.nav, [role="tablist"], .card-header, ul');
+            if ($navContainer.length) {
+                $navContainer.find('.nav-link, [role="tab"], [data-toggle="tab"], [data-bs-toggle="tab"], [data-toggle="pill"], [data-bs-toggle="pill"]')
+                    .removeClass('active')
+                    .attr('aria-selected', 'false');
+            } else {
+                $tab.siblings().removeClass('active').attr('aria-selected', 'false');
+            }
+            $tab.addClass('active').attr('aria-selected', 'true');
+
+            // 2. Manage Active State on Target Tab Panes
+            var $contentContainer = $targetPane.closest('.tab-content');
+            if ($contentContainer.length) {
+                $contentContainer.children('.tab-pane, [role="tabpanel"]')
+                    .removeClass('active show')
+                    .css('display', 'none');
+            } else {
+                $targetPane.siblings('.tab-pane, [role="tabpanel"]')
+                    .removeClass('active show')
+                    .css('display', 'none');
+            }
+
+            $targetPane.addClass('active').css('display', 'block');
+            setTimeout(function () {
+                $targetPane.addClass('show');
+            }, 10);
+
+            // 3. Trigger standard Bootstrap events and re-adjust nested DataTables
+            $tab.trigger({
+                type: 'shown.bs.tab',
+                target: $tab[0]
+            });
+
+            if ($.fn.DataTable) {
+                $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+            }
+
+            window.dispatchEvent(new Event('resize'));
+        });
+
+        // Auto-activate tab from URL hash if present on load
+        if (window.location.hash) {
+            var hash = window.location.hash;
+            var $hashTab = $('[data-bs-target="' + hash + '"], [data-target="' + hash + '"], [href="' + hash + '"]');
+            if ($hashTab.length) {
+                $hashTab.first().trigger('click');
+            }
+        }
     });
 </script>
 

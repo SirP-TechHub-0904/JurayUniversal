@@ -64,9 +64,18 @@ namespace JurayUniversal.Website.Pages.Pay
 
             bool isNumericId = long.TryParse(key, out long parsedId);
             Category = await _context.MisFinanceCategories
+                .Include(c => c.MisGroup)
+                .Include(c => c.UserCategory)
                 .FirstOrDefaultAsync(m => m.Key == key || (isNumericId && m.Id == parsedId));
 
             if (Category == null || !Category.IsActive) return NotFound();
+
+            // Redirect unauthenticated users if category is restricted to members only or targeted
+            bool isRestricted = !Category.AllowGuestPayment || Category.MisGroupId.HasValue || Category.UserCategoryId.HasValue;
+            if (isRestricted && User.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToPage("/AuthV2/Account/Login", new { area = "V2", returnUrl = $"/pay/{key}" });
+            }
 
             SuperSetting = await _context.SuperSettings.FirstOrDefaultAsync();
             Settings = await _context.MisSettings.FirstOrDefaultAsync();
@@ -80,7 +89,7 @@ namespace JurayUniversal.Website.Pages.Pay
                 if (user != null)
                 {
                     IsLoggedIn = true;
-                    PrefillName = $"{user.FirstName} {user.LastName}".Trim();
+                    PrefillName = !string.IsNullOrWhiteSpace(user.FullName) ? user.FullName : $"{user.FirstName} {user.LastName}".Trim();
                     PrefillEmail = user.Email;
                     PrefillPhone = user.PhoneNumber;
                 }

@@ -2213,11 +2213,21 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("MisGroupId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("UserCategoryId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MisGroupId");
+
+                    b.HasIndex("UserCategoryId");
 
                     b.ToTable("MisFinanceCategories");
                 });
@@ -11749,6 +11759,21 @@ namespace JurayUniversal.Persistence.EF.SQL.Migrations
                         .IsRequired();
 
                     b.Navigation("MisFeature");
+                });
+
+            modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceCategory", b =>
+                {
+                    b.HasOne("JurayUniversal.Domain.Models.MisGroup", "MisGroup")
+                        .WithMany()
+                        .HasForeignKey("MisGroupId");
+
+                    b.HasOne("JurayUniversal.Domain.Models.UserCategory", "UserCategory")
+                        .WithMany()
+                        .HasForeignKey("UserCategoryId");
+
+                    b.Navigation("MisGroup");
+
+                    b.Navigation("UserCategory");
                 });
 
             modelBuilder.Entity("JurayUniversal.Domain.Models.MisFinanceTransaction", b =>
