@@ -1,4 +1,4 @@
-﻿@model ICollection<JurayUniversal.Domain.Models.Blog>
+@model ICollection<JurayUniversal.Domain.Models.Blog>
 @using JurayUniversal.Application.Services;
 
 @using System.Text.RegularExpressions;
@@ -27,7 +27,7 @@
                             <div class="col-md-4 col-sm-4 col-12">
                                 <div class="blog-grid">
                                     <div class="blog-grid-img">
-                                        <img src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
+                                        <img loading="lazy" src="@item.ImageUrl" alt="@item.Title" style="height:220px;">
                                         <div class="data-box-grid">
                                             <h4>@item.Date.ToString("dd")</h4>
                                             <p>@item.Date.ToString("MMM")</p>
@@ -106,7 +106,7 @@
                                         <div class="col-md-4 col-sm-6 col-xs-12">
                                             <div class="blog-post">
                                                 <div class="post-img">
-                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"> <img class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;"> </a>
+                                                    <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)"> <img loading="lazy" class="img-responsive" alt="@item.Title" src="@item.ImageUrl" style="height:270px;"> </a>
 
                                                 </div>
                                                 <div class="post-info"> <a href="">Aug 30, 2017</a>  </div>
@@ -200,7 +200,7 @@
                                             <div class="item mb-80">
                                                 <div class="img">
                                                     <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
-                                                        <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
+                                                        <img loading="lazy" src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
                                                     </a>
                                                     <div class="info">
                                                         <div class="date">
@@ -264,7 +264,7 @@
                                             <div class="blog-item">
                                                 <div class="blog-img">
                                                     <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
-                                                        <img src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
+                                                        <img loading="lazy" src="@item.ImageUrl" alt="@item.Title" class="thumparallax">
                                                     </a>
 
 
@@ -324,7 +324,7 @@
                                         <div class="blog-item">
                                             <div class="blog-img">
                                                 <a asp-page="/Bpg_info" asp-route-id="@item.Id" asp-route-title="@MainServices.GenerateSlug(item.Title)">
-                                                    <img src="@item.ImageUrl"
+                                                    <img loading="lazy" src="@item.ImageUrl"
                                                          alt="@item.Title">
                                                 </a>
 
@@ -386,7 +386,7 @@
                                         <div class="col-sm-12">
                                             <div class="latest_news_inner type_four">
                                                 <div class="image">
-                                                    <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title">
+                                                    <img loading="lazy" src="@item.ImageUrl" class="img-fluid" alt="@item.Title">
 
 
                                                 </div>
@@ -456,7 +456,7 @@
                                         <div class="item">
                                             <div class="post style-3">
                                                 <div class="post-image">
-                                                    <img src="@item.ImageUrl" alt="@item.Title">
+                                                    <img loading="lazy" src="@item.ImageUrl" alt="@item.Title">
                                                 </div>
                                                 <div class="post-desc">
                                                     <div class="post-date"><i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")</div>
@@ -493,7 +493,7 @@
                                         <div class="col-md-4">
                                             <div class="post style-3">
                                                 <div class="post-image">
-                                                    <img src="@item.ImageUrl" alt="@item.Title">
+                                                    <img loading="lazy" src="@item.ImageUrl" alt="@item.Title">
                                                 </div>
                                                 <div class="post-desc">
                                                     <div class="post-date"><i class="fa fa-calendar-check-o"></i> @item.Date.ToString("MMM dd, yyyy")</div>
@@ -534,7 +534,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="news-single-items-two">
                                         <div class="thumbnail">
-                                            <img src="@item.ImageUrl" alt="@item.Title">
+                                            <img loading="lazy" src="@item.ImageUrl" alt="@item.Title">
 
                                         </div>
                                         <div class="content">
@@ -589,7 +589,7 @@
                                 <div class="blog-one__single">
                                     <div class="blog-one__img-box">
                                         <div class="blog-one__img">
-                                            <img src="@x.ImageUrl" alt="@x.Title">
+                                            <img loading="lazy" src="@x.ImageUrl" alt="@x.Title">
                                             <div class="blog-one__tags">
                                                 <span>@(x.BlogCategory?.Title ?? "")</span>
                                             </div>

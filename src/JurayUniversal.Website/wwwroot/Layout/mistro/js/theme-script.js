@@ -50,6 +50,9 @@ $.fn.exists = function () {
 function preloader() {
   $('#ht-preloader').fadeOut();
 };
+setTimeout(function () {
+  preloader();
+}, 1500);
 
 /*------------------------------------
   HT FullScreen
@@ -428,6 +431,9 @@ function particles() {
   HT Window load and functions
 --------------------------------------*/
 $(document).ready(function () {
+  setTimeout(function () {
+    preloader();
+  }, 600);
   bannerslider(),
   owlcarousel(),
   fullScreen(),
