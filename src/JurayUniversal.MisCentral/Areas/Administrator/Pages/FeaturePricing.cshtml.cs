@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static JurayUniversal.Domain.Enum.Enum;
 
-namespace JurayUniversal.MisCentral.Pages
+namespace JurayUniversal.MisCentral.Areas.Administrator.Pages
 {
     public class FeaturePricingModel : PageModel
     {

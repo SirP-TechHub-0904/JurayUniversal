@@ -37,6 +37,13 @@ namespace JurayUniversal.Website.Services
                 .Where(r => r.ProfileId == appUser.Id && r.IsActive)
                 .ToListAsync();
 
+            // If Admin role is assigned with Readonly, they are strictly ReadOnly across features
+            var adminRole = roles.FirstOrDefault(r => string.Equals(r.FeatureAreaKey, "Admin", System.StringComparison.OrdinalIgnoreCase));
+            if (adminRole != null && adminRole.ActionRole == MisActionRole.Readonly)
+            {
+                return false;
+            }
+
             // If they have a GlobalEditor role for ANY feature, they are a GlobalEditor
             if (roles.Any(r => r.ActionRole == MisActionRole.GlobalEditor))
             {
@@ -71,8 +78,8 @@ namespace JurayUniversal.Website.Services
                 .Where(r => r.ProfileId == appUser.Id && r.IsActive)
                 .ToListAsync();
 
-            // If they have a GlobalEditor role for ANY feature, they have access to everything
-            if (roles.Any(r => r.ActionRole == MisActionRole.GlobalEditor))
+            // If they have a GlobalEditor role for ANY feature or Admin role, they have access to everything
+            if (roles.Any(r => r.ActionRole == MisActionRole.GlobalEditor || string.Equals(r.FeatureAreaKey, "Admin", System.StringComparison.OrdinalIgnoreCase)))
             {
                 return true;
             }

@@ -1,0 +1,24 @@
+@page "/Administrator/Account/AccessDenied"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Account.AccessDeniedModel
+@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Access Denied - MIS Central";
+}
+
+<section class="min-h-[70vh] pt-36 pb-20 flex items-center justify-center bg-slate-900">
+    <div class="text-center max-w-md mx-auto px-4">
+        <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center mx-auto text-2xl mb-6 shadow-lg">
+            <i class="bi bi-shield-x"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-2">403 - Access Denied</h1>
+        <p class="text-slate-400 text-sm mb-6">You do not have the required Master Administrative role to view this resource.</p>
+        <div class="flex items-center justify-center gap-3">
+            <a href="/Administrator/Index" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-all">
+                <i class="bi bi-speedometer2"></i> Master Dashboard
+            </a>
+            <a href="/Administrator/Account/Login" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs transition-all border border-slate-700">
+                <i class="bi bi-person-fill"></i> Switch Account
+            </a>
+        </div>
+    </div>
+</section>

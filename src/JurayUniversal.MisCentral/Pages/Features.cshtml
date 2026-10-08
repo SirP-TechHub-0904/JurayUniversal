@@ -1,0 +1,220 @@
+@page
+@model JurayUniversal.MisCentral.Pages.FeaturesModel
+@{
+    ViewData["Title"] = "Explore All 16 Features";
+    Layout = "_PublicLayout";
+}
+
+<!-- breadcrumb-area -->
+<section class="breadcrumb__area breadcrumb__bg fix" data-background="/xyz-mis/assets/img/bg/breadcrumb_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb__content">
+                    <h2 class="title">Explore All 16 Features</h2>
+                    <nav class="breadcrumb">
+                        <span property="itemListElement" typeof="ListItem">
+                            <a asp-page="/Index">Home</a>
+                        </span>
+                        <span class="breadcrumb-separator">/</span>
+                        <span property="itemListElement" typeof="ListItem">Features</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb-area-end -->
+
+<!-- services-area -->
+<section class="services__area section-bg section-py-120">
+    <div class="container">
+        <div class="row justify-content-center text-center mb-50">
+            <div class="col-lg-8">
+                <div class="section__title section__title-two mb-15">
+                    <span class="sub-title text-primary fw-bold text-uppercase">Enterprise System Suite</span>
+                    <h2 class="title">Fully Integrated Solutions Tailored For Your Operations</h2>
+                </div>
+                <p class="text-muted fs-6">Every feature is completely modular — enable only what your organization needs today and scale effortlessly as you grow.</p>
+            </div>
+        </div>
+
+        <div class="row gutter-y-30">
+            @for (int i = 0; i < Model.Features.Count; i++)
+            {
+                var feature = Model.Features[i];
+                var modalId = $"featureModal_{i}";
+                
+                <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="@((i % 3) * 100 + 100)">
+                    <div class="services__item h-100 d-flex flex-column justify-content-between bg-white p-4 rounded-4 shadow-sm border border-light-subtle hover-shadow transition-all">
+                        <div>
+                            <div class="d-flex items-center justify-content-between mb-3">
+                                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1 text-xs font-semibold rounded-pill">
+                                    @feature.Category
+                                </span>
+                                <div class="w-10 h-10 rounded-circle bg-light d-flex align-items-center justify-content-center text-primary fs-5">
+                                    <i class="@feature.Icon"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="title fw-bold text-gray-900 fs-5 mb-2">@feature.Name</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">@feature.Description</p>
+                            
+                            <!-- Quick Capabilities Preview -->
+                            <ul class="list-unstyled space-y-1 mb-4">
+                                @foreach (var cap in feature.KeyCapabilities.Take(2))
+                                {
+                                    <li class="d-flex align-items-start text-xs text-gray-600 mb-1.5">
+                                        <i class="bi bi-check-circle-fill text-success me-2 fs-6"></i>
+                                        <span>@cap</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="pt-3 border-top mt-auto d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill flex-fill py-2 px-2 text-xs font-semibold d-flex align-items-center justify-content-center gap-1 transition-all" data-bs-toggle="modal" data-bs-target="#@modalId" style="white-space: nowrap;">
+                                <i class="bi bi-info-circle"></i>
+                                <span>Know More</span>
+                            </button>
+                            <a asp-page="/Contact" asp-route-feature="@feature.Name" class="btn btn-primary btn-sm rounded-pill flex-fill py-2 px-2 text-xs font-bold text-white text-center shadow-sm d-flex align-items-center justify-content-center gap-1 transition-all" style="white-space: nowrap;">
+                                <span>Get Started</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Details Modal -->
+                <div class="modal fade" id="@modalId" tabindex="-1" aria-labelledby="@(modalId)_label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content rounded-4 border-0 shadow-2xl overflow-hidden">
+                            <!-- Modal Header -->
+                            <div class="modal-header p-4 text-white position-relative" style="background: linear-gradient(135deg, #0a1f44 0%, #0d6efd 100%);">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="w-12 h-12 rounded-3 bg-white bg-opacity-20 text-white d-flex align-items-center justify-content-center fs-3" style="width: 48px; height: 48px;">
+                                        <i class="@feature.Icon"></i>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-white text-primary px-2.5 py-0.5 rounded-pill text-xs font-semibold mb-1">@feature.Category</span>
+                                        <h4 class="modal-title fw-bold text-white fs-4 mb-0" id="@(modalId)_label">@feature.Name</h4>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Modal Body -->
+                            <div class="modal-body p-4 p-md-5 bg-white">
+                                <h5 class="fw-bold text-gray-900 fs-6 mb-2">Detailed Overview</h5>
+                                <p class="text-gray-700 leading-relaxed text-sm mb-4">
+                                    @feature.LongDescription
+                                </p>
+
+                                <h5 class="fw-bold text-gray-900 fs-6 mb-3">Key Capabilities &amp; Deliverables</h5>
+                                <div class="row g-3 mb-4">
+                                    @foreach (var cap in feature.KeyCapabilities)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="p-3 bg-light rounded-3 border h-100 d-flex align-items-start gap-2">
+                                                <i class="bi bi-check2-circle text-success fs-5 mt-0.5"></i>
+                                                <span class="text-xs text-gray-700 font-medium">@cap</span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="p-3 bg-primary bg-opacity-10 rounded-3 border border-primary border-opacity-25 d-flex align-items-center gap-3 mb-4">
+                                    <i class="bi bi-people-fill text-primary fs-3"></i>
+                                    <div>
+                                        <span class="text-xs text-muted text-uppercase fw-bold d-block">Recommended For</span>
+                                        <span class="text-sm font-semibold text-gray-900">@feature.BestFor</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer CTA -->
+                            <div class="modal-footer p-3 px-4 bg-light border-top d-flex flex-wrap justify-content-between align-items-center">
+                                <span class="text-xs text-muted">
+                                    <i class="bi bi-shield-check text-success me-1"></i> 100% Private &amp; Secure Workspace
+                                </span>
+                                <div class="d-flex gap-2">
+                                    <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20would%20like%20to%20get%20started%20with%20the%20@(Uri.EscapeDataString(feature.Name))%20feature%20for%20our%20organization." target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-2 text-xs font-bold text-white">
+                                        <i class="bi bi-whatsapp me-1"></i> WhatsApp Inquiry
+                                    </a>
+                                    <a asp-page="/Contact" asp-route-feature="@feature.Name" class="btn btn-primary btn-sm rounded-pill px-4 py-2 text-xs font-bold text-white">
+                                        Get Started <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- services-area-end -->
+
+<!-- cta-banner -->
+<section class="section-pb-120 position-relative">
+    <div class="container">
+        <div class="rounded-5 p-4 p-md-5 p-xl-5 position-relative overflow-hidden shadow-lg border border-white border-opacity-15" style="background: linear-gradient(135deg, #07132c 0%, #0c244d 50%, #083b8a 100%);">
+            <!-- Decorative Ambient Glows -->
+            <div class="position-absolute top-0 end-0 translate-middle-y pointer-events-none" style="width: 450px; height: 450px; background: radial-gradient(circle, rgba(13, 110, 253, 0.35) 0%, rgba(0, 210, 255, 0) 70%); filter: blur(50px);"></div>
+            <div class="position-absolute bottom-0 start-0 translate-middle-x pointer-events-none" style="width: 350px; height: 350px; background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0, 0, 0, 0) 70%); filter: blur(45px);"></div>
+
+            <div class="row align-items-center justify-content-between position-relative" style="z-index: 2;">
+                <!-- Left Column: Content -->
+                <div class="col-lg-7 text-center text-lg-start mb-4 mb-lg-0">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white bg-opacity-10 text-white border border-white border-opacity-20 fw-bold text-uppercase mb-3" style="font-size: 0.78rem; letter-spacing: 0.8px;">
+                        <span class="d-inline-block rounded-circle bg-success" style="width: 8px; height: 8px; box-shadow: 0 0 8px #10b981;"></span>
+                        <span>Customized Solutions</span>
+                    </div>
+
+                    <h2 class="text-white fw-bold display-6 mb-3" style="letter-spacing: -0.5px;">
+                        Need a Custom Feature Suite?
+                    </h2>
+                    
+                    <p class="text-white text-opacity-80 fs-6 mb-4 mx-auto mx-lg-0" style="max-width: 580px; line-height: 1.7;">
+                        Our solutions team will configure the exact features tailored to your school, hospital, or enterprise workflow with zero complexity.
+                    </p>
+
+                    <!-- Trust Chips -->
+                    <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
+                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-15 py-2 px-3 fw-normal" style="font-size: 0.82rem;">
+                            <i class="bi bi-shield-check text-primary me-1"></i> 100% Modular &amp; Scalable
+                        </span>
+                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-15 py-2 px-3 fw-normal" style="font-size: 0.82rem;">
+                            <i class="bi bi-speedometer2 text-info me-1"></i> Free Setup &amp; Training
+                        </span>
+                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-15 py-2 px-3 fw-normal" style="font-size: 0.82rem;">
+                            <i class="bi bi-headset text-success me-1"></i> 24/7 Human WhatsApp Care
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Action Buttons Card -->
+                <div class="col-lg-5 col-xl-4 text-center text-lg-end">
+                    <div class="p-4 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-15 shadow-sm backdrop-blur d-flex flex-column gap-3">
+                        <a asp-page="/Contact" class="btn btn-lg py-3 px-4 fw-bold rounded-pill shadow-lg d-flex align-items-center justify-content-center gap-2 text-white border-0 transition-all hover-scale" style="background: linear-gradient(135deg, #00d2ff 0%, #0d6efd 100%); font-size: 1.02rem;">
+                            <span>Request a Free Live Demo</span>
+                            <i class="bi bi-arrow-right fs-5"></i>
+                        </a>
+
+                        <a href="https://wa.me/2348165680904" target="_blank" class="btn btn-lg py-3 px-4 fw-bold rounded-pill d-flex align-items-center justify-content-center gap-2 text-white border border-white border-opacity-25 transition-all hover-scale" style="background: rgba(37, 211, 102, 0.2); font-size: 0.95rem;">
+                            <i class="bi bi-whatsapp text-success fs-5"></i>
+                            <span>WhatsApp (+234 816 568 0904)</span>
+                        </a>
+
+                        <div class="text-center pt-1">
+                            <span class="text-white text-opacity-70" style="font-size: 0.76rem;">
+                                <i class="bi bi-patch-check-fill text-info me-1"></i> Tailored consultation &bull; No credit card required
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- cta-banner-end -->

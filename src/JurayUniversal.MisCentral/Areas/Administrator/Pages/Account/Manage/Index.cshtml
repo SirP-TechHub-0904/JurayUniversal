@@ -1,0 +1,101 @@
+@page "/Administrator/Account/Manage"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Account.Manage.IndexModel
+@{
+    Layout = "_MisMasterLayout";
+    ViewData["Title"] = "Master Staff Profile & Security";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Central Master Security Profile</h1>
+            <p class="text-sm text-gray-500">Manage your Master administrative credentials, roles, and session security.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-3">
+            <i class="bi bi-check-circle-fill text-lg text-emerald-600"></i>
+            <span>@Model.StatusMessage</span>
+        </div>
+    }
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Profile Details Card -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold">
+                    @(Model.Username.Length > 0 ? Model.Username.Substring(0, 1).ToUpper() : "A")
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-900">@Model.Username</h3>
+                    <p class="text-xs text-gray-500">Central Master Administrator</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 pt-4 border-t border-gray-100">
+                <div>
+                    <span class="text-xs text-gray-400 font-medium block">Registered Email</span>
+                    <span class="text-sm text-gray-800 font-medium">@Model.Email</span>
+                </div>
+                <div>
+                    <span class="text-xs text-gray-400 font-medium block mb-1">Central Roles</span>
+                    <div class="flex flex-wrap gap-1.5">
+                        @foreach (var role in Model.Roles)
+                        {
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold">
+                                <i class="bi bi-shield-check"></i> @role
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs text-gray-400 font-medium block">Identity Scope</span>
+                    <span class="text-xs text-gray-600 font-mono">JurayMisCentralDb (Independent)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Form -->
+        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+            <h2 class="text-base font-bold text-gray-900 mb-1">Change Master Access Password</h2>
+            <p class="text-xs text-gray-500 mb-6">Ensure your master account is protected with a strong, complex passphrase.</p>
+
+            <form method="post" asp-page-handler="ChangePassword">
+                <div asp-validation-summary="ModelOnly" class="p-3 mb-4 rounded-lg bg-red-50 text-red-700 text-xs border border-red-200" role="alert"></div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label asp-for="PasswordInput.OldPassword" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5"></label>
+                        <input asp-for="PasswordInput.OldPassword" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" />
+                        <span asp-validation-for="PasswordInput.OldPassword" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label asp-for="PasswordInput.NewPassword" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5"></label>
+                            <input asp-for="PasswordInput.NewPassword" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" />
+                            <span asp-validation-for="PasswordInput.NewPassword" class="text-red-500 text-xs mt-1 block"></span>
+                        </div>
+                        <div>
+                            <label asp-for="PasswordInput.ConfirmPassword" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5"></label>
+                            <input asp-for="PasswordInput.ConfirmPassword" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" />
+                            <span asp-validation-for="PasswordInput.ConfirmPassword" class="text-red-500 text-xs mt-1 block"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                    <button type="submit" class="px-5 py-2.5 rounded-lg bg-[#0069A1] hover:bg-[#005a8c] text-white font-medium text-sm transition-all shadow-sm flex items-center gap-2">
+                        <i class="bi bi-shield-lock"></i> Update Master Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

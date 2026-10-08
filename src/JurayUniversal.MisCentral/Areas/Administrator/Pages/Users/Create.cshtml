@@ -1,0 +1,77 @@
+@page "/Administrator/Users/Create"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Users.CreateModel
+@{
+    Layout = "_MisMasterLayout";
+    ViewData["Title"] = "Add Central Administrator";
+}
+
+<div class="max-w-2xl mx-auto space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Add Master Central Administrator</h1>
+            <p class="text-sm text-gray-500">Provision a new administrator account with specific governance roles.</p>
+        </div>
+        <a href="/Administrator/Users" class="px-3.5 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-semibold shadow-sm transition-all">
+            &larr; Back to Users
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="p-3 mb-4 rounded-lg bg-red-50 text-red-700 text-xs border border-red-200" role="alert"></div>
+
+            <div class="space-y-4">
+                <div>
+                    <label asp-for="Input.Email" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Official Administrator Email</label>
+                    <input asp-for="Input.Email" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" placeholder="admin@jurayuniversal.com" />
+                    <span asp-validation-for="Input.Email" class="text-red-500 text-xs mt-1 block"></span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label asp-for="Input.Password" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Initial Password</label>
+                        <input asp-for="Input.Password" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" placeholder="••••••••••••" />
+                        <span asp-validation-for="Input.Password" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.ConfirmPassword" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Confirm Password</label>
+                        <input asp-for="Input.ConfirmPassword" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" placeholder="••••••••••••" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Assign Central Governance Roles</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        @foreach (var role in Model.AvailableRoles)
+                        {
+                            <label class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50/20 cursor-pointer transition-colors">
+                                <input type="checkbox" name="Input.SelectedRoles" value="@role" class="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500" />
+                                <div>
+                                    <div class="text-xs font-semibold text-gray-900">@role</div>
+                                    <div class="text-[11px] text-gray-500">
+                                        @if (role == "MasterSuperAdmin") { <span>Full control over Central &amp; all tenants</span> }
+                                        else if (role == "CentralAdmin") { <span>Manage tenants, features, and pricing</span> }
+                                        else if (role == "CentralSupport") { <span>Support diagnostics and assistance</span> }
+                                        else { <span>Auditor &amp; compliance inspector</span> }
+                                    </div>
+                                </div>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end gap-3">
+                <a href="/Administrator/Users" class="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-colors">Cancel</a>
+                <button type="submit" class="px-5 py-2 rounded-lg bg-[#0069A1] hover:bg-[#005a8c] text-white font-medium text-xs shadow-sm transition-all flex items-center gap-1.5">
+                    <i class="bi bi-person-check-fill"></i> Create Central Admin
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

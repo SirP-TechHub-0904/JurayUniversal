@@ -1,0 +1,98 @@
+@page "{id:int}"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.EditModel
+@{
+    ViewData["Title"] = $"Edit Tenant - {Model.Input.OrganizationName}";
+    Layout = "_MisMasterLayout";
+}
+
+<div class="max-w-3xl mx-auto space-y-6">
+
+    <!-- Header Banner -->
+    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+        <div>
+            <a asp-page="./Index" class="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1 mb-2 text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Back to Tenants Directory
+            </a>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Edit Tenant Configuration</h1>
+            <p class="text-sm text-gray-500 mt-1">Update organization parameters, custom domains, contact details, and workspace status.</p>
+        </div>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Input.Id" />
+        <input type="hidden" asp-for="Input.TenantKey" />
+        <input type="hidden" asp-for="Input.PrimaryDomain" />
+
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-5">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2">
+                    <label asp-for="Input.OrganizationName" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Organization / Client Name <span class="text-red-500">*</span></label>
+                    <input asp-for="Input.OrganizationName" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" required />
+                    <span asp-validation-for="Input.OrganizationName" class="text-red-500 text-xs mt-1 block"></span>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Subdomain Key (Readonly)</label>
+                    <input value="@Model.Input.TenantKey" class="w-full px-4 py-2.5 bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-500 font-mono" disabled />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Primary Domain (Readonly)</label>
+                    <input value="@Model.Input.PrimaryDomain" class="w-full px-4 py-2.5 bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-500 font-mono" disabled />
+                </div>
+
+                <div>
+                    <label asp-for="Input.CustomDomain" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Custom Domain</label>
+                    <input asp-for="Input.CustomDomain" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none font-mono transition-all" placeholder="e.g. portal.client.com" />
+                    <span asp-validation-for="Input.CustomDomain" class="text-red-500 text-xs mt-1 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.Sector" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Sector / Category</label>
+                    <input asp-for="Input.Sector" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" />
+                </div>
+
+                <div>
+                    <label asp-for="Input.AdminEmail" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Admin Email</label>
+                    <input asp-for="Input.AdminEmail" type="email" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none font-mono transition-all" />
+                    <span asp-validation-for="Input.AdminEmail" class="text-red-500 text-xs mt-1 block"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Input.ContactPhone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Contact Phone</label>
+                    <input asp-for="Input.ContactPhone" type="tel" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" />
+                </div>
+
+                <div class="md:col-span-2">
+                    <label asp-for="Input.Notes" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Internal Administrator Notes</label>
+                    <textarea asp-for="Input.Notes" rows="3" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="Add any operational or maintenance notes for this tenant workspace..."></textarea>
+                </div>
+
+                <div class="md:col-span-2 pt-2">
+                    <label class="flex items-center gap-3 p-3.5 rounded-lg border border-gray-200 bg-gray-50/50 cursor-pointer">
+                        <input type="checkbox" asp-for="Input.IsActive" class="h-4 w-4 text-[#0069A1] rounded border-gray-300 focus:ring-[#0069A1]" />
+                        <div>
+                            <span class="text-xs font-bold text-gray-900">Tenant Workspace Active</span>
+                            <p class="text-xs text-gray-500">Uncheck to temporarily suspend workspace access and traffic.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-5 flex items-center justify-between">
+                <a asp-page="./Details" asp-route-id="@Model.Input.Id" class="text-xs font-semibold text-gray-600 hover:text-gray-900 text-decoration-none">
+                    View Complete Details
+                </a>
+                <button type="submit" class="px-6 py-2.5 bg-[#0069A1] hover:bg-[#005582] text-white text-sm font-bold rounded-lg shadow-sm transition-colors">
+                    Save Changes
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

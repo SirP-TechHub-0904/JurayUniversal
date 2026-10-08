@@ -16,12 +16,18 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly System.Text.Encodings.Web.UrlEncoder _urlEncoder;
+        private readonly JurayUniversal.Persistence.EF.SQL.DashboardDbContext _context;
 
-        public ChangePasswordModel(UserManager<Profile> userManager, SignInManager<Profile> signInManager, System.Text.Encodings.Web.UrlEncoder urlEncoder)
+        public ChangePasswordModel(
+            UserManager<Profile> userManager, 
+            SignInManager<Profile> signInManager, 
+            System.Text.Encodings.Web.UrlEncoder urlEncoder,
+            JurayUniversal.Persistence.EF.SQL.DashboardDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _urlEncoder = urlEncoder;
+            _context = context;
         }
 
         [BindProperty]
@@ -69,9 +75,17 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform
                 }
                 SharedKey = FormatKey(unformattedKey!);
                 var email = await _userManager.GetEmailAsync(user);
+
+                var superSetting = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync(_context.SuperSettings);
+                string businessName = !string.IsNullOrWhiteSpace(superSetting?.CompanyName) 
+                    ? superSetting.CompanyName 
+                    : (!string.IsNullOrWhiteSpace(superSetting?.CompanyNameAbbreviation) 
+                        ? superSetting.CompanyNameAbbreviation 
+                        : (!string.IsNullOrWhiteSpace(superSetting?.DashboardTitle) ? superSetting.DashboardTitle : "Assembly"));
+
                 AuthenticatorUri = string.Format(
                     "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6",
-                    _urlEncoder.Encode("JurayUniversal"),
+                    _urlEncoder.Encode(businessName.Trim()),
                     _urlEncoder.Encode(email!),
                     unformattedKey);
             }

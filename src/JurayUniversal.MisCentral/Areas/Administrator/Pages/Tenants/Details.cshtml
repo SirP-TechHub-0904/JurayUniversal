@@ -1,0 +1,170 @@
+@page "{id:int}"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.DetailsModel
+@{
+    ViewData["Title"] = "Tenant Details - " + Model.Tenant.OrganizationName;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Tenant Details</h4>
+            <div class="page-title-right">
+                <a asp-page="./Edit" asp-route-id="@Model.Tenant.Id" class="btn btn-primary me-2">
+                    <i class="bi bi-pencil me-1"></i> Edit Tenant
+                </a>
+                <a asp-page="./Features" asp-route-id="@Model.Tenant.Id" class="btn btn-info me-2">
+                    <i class="bi bi-toggles me-1"></i> Manage Features
+                </a>
+                <a asp-page="./Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Directory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body text-center p-4">
+                <div class="avatar-lg mx-auto mb-3 bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <i class="bi bi-buildings text-primary" style="font-size: 2.5rem;"></i>
+                </div>
+                <h4 class="card-title mb-1">@Model.Tenant.OrganizationName</h4>
+                <p class="text-muted mb-2">@Model.Tenant.TenantKey</p>
+                
+                <div class="mb-3">
+                    @if (Model.Tenant.IsActive)
+                    {
+                        <span class="badge bg-success-subtle text-success fs-6 px-3 py-1">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger-subtle text-danger fs-6 px-3 py-1">Disabled</span>
+                    }
+                </div>
+
+                <hr />
+
+                <div class="text-start">
+                    <p class="text-muted mb-2"><i class="bi bi-envelope me-2 text-primary"></i> <strong>Admin Email:</strong> <br/><span class="ms-4">@Model.Tenant.AdminEmail</span></p>
+                    <p class="text-muted mb-2"><i class="bi bi-telephone me-2 text-primary"></i> <strong>Phone:</strong> <br/><span class="ms-4">@(string.IsNullOrEmpty(Model.Tenant.ContactPhone) ? "Not Provided" : Model.Tenant.ContactPhone)</span></p>
+                    <p class="text-muted mb-2"><i class="bi bi-calendar3 me-2 text-primary"></i> <strong>Provisioned On:</strong> <br/><span class="ms-4">@Model.Tenant.CreatedAtUtc.ToString("dd MMM yyyy, HH:mm UTC")</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Domain & Access</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-semibold">WORKSPACE / TENANT KEY</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly value="@Model.Tenant.TenantKey" id="tenantKeyInput" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-semibold">PRIMARY DOMAIN</label>
+                    <p class="form-control-plaintext mb-0">
+                        <i class="bi bi-globe2 text-secondary me-1"></i> @Model.Tenant.PrimaryDomain
+                    </p>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Tenant.CustomDomain))
+                {
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold">CUSTOM DOMAIN</label>
+                        <p class="form-control-plaintext mb-0">
+                            <i class="bi bi-link-45deg text-success me-1"></i> @Model.Tenant.CustomDomain
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Database & Connection Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted small fw-semibold">DATABASE NAME</label>
+                        <p class="form-control-plaintext fw-bold text-dark">@(string.IsNullOrEmpty(Model.Tenant.DatabaseName) ? "Default Shared" : Model.Tenant.DatabaseName)</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted small fw-semibold">PROVISIONING STATUS</label>
+                        <p class="form-control-plaintext"><span class="badge bg-primary">Isolated Database</span></p>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label text-muted small fw-semibold">CONNECTION STRING</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control font-monospace small" readonly value="@Model.Tenant.ConnectionString" id="connStringInput" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="var el = document.getElementById('connStringInput'); el.type = el.type === 'password' ? 'text' : 'password';">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Enabled Feature Modules (@Model.SubscribedFeatures.Count(f => f.IsEnabled))</h5>
+                <a asp-page="./Features" asp-route-id="@Model.Tenant.Id" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-sliders me-1"></i> Configure Modules
+                </a>
+            </div>
+            <div class="card-body p-0">
+                @if (Model.SubscribedFeatures.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Feature Name</th>
+                                    <th>Module Key</th>
+                                    <th>Status</th>
+                                    <th>Enabled Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var sub in Model.SubscribedFeatures.OrderBy(s => s.FeatureName))
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="fw-semibold">@sub.FeatureName</div>
+                                        </td>
+                                        <td><code>@sub.FeatureKey</code></td>
+                                        <td>
+                                            @if (sub.IsEnabled)
+                                            {
+                                                <span class="badge bg-success">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Disabled</span>
+                                            }
+                                        </td>
+                                        <td class="text-muted small">@sub.EnabledAtUtc.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-4 text-center text-muted">
+                        <i class="bi bi-puzzle fs-1 d-block mb-2"></i>
+                        No specific feature records found for this tenant. All default core capabilities are active.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

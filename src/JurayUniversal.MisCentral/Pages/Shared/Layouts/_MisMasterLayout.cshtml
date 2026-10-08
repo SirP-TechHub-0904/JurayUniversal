@@ -1,90 +1,381 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "/Admin/Index";
+    var currentUser = await UserManager.GetUserAsync(User);
+    string userEmail = currentUser?.Email ?? User.Identity?.Name ?? "Master Admin";
+    string userInitials = string.IsNullOrWhiteSpace(userEmail) ? "A" : userEmail.Substring(0, 1).ToUpper();
+    var userRoles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+    string primaryRole = userRoles.FirstOrDefault() ?? "Master Administrator";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MIS Central Command Hub</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0069A1',
+                            600: '#005a8c',
+                            700: '#004c77',
+                            900: '#002844'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Typography & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
     <style>
-        html, body { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
+        html, body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Collapsed Sidebar Mode for Desktop */
+        @@media (min-width: 1024px) {
+            #sidebar.sidebar-collapsed {
+                width: 5rem !important;
+            }
+            #sidebar.sidebar-collapsed .nav-text,
+            #sidebar.sidebar-collapsed .nav-heading,
+            #sidebar.sidebar-collapsed .brand-text {
+                display: none !important;
+            }
+            #sidebar.sidebar-collapsed nav a {
+                justify-content: center !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            #topbar.sidebar-collapsed {
+                left: 5rem !important;
+            }
+            #main-content.sidebar-collapsed {
+                margin-left: 5rem !important;
+            }
+        }
     </style>
 </head>
 
-<body class="bg-gray-50">
-    <div id="root">
-        <div class="min-h-screen flex flex-col">
-            <div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 z-40 hidden transition-opacity duration-300"></div>
+<body class="bg-[#f8fafc] text-slate-800 antialiased min-h-screen flex flex-col">
+    <div id="root" class="min-h-screen flex flex-col">
+        <!-- Sidebar Mobile Backdrop -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden transition-opacity duration-300"></div>
 
-            <aside id="sidebar" class="fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-50 flex flex-col w-80 -translate-x-full lg:translate-x-0">
-                <div class="h-16 flex flex-col justify-center border-b border-gray-200 flex-shrink-0 px-6 py-2">
-                    <h6 class="font-bold text-gray-900 mb-0 text-base leading-tight">MIS Central</h6>
-                    <small class="text-gray-500 text-xs">Multi-Database Hub</small>
-                </div>
+        <!-- Master Central Sidebar Component -->
+        <aside id="sidebar" class="fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 ease-in-out z-50 flex flex-col w-80 -translate-x-full lg:translate-x-0 shadow-sm">
+            <!-- Brand / Logo Area -->
+            <div class="h-16 flex items-center justify-between border-b border-slate-100 flex-shrink-0 px-6 bg-slate-900 text-white">
+                <a href="/Administrator/Index" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform">
+                        <i class="bi bi-layers-half"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h6 class="font-bold text-white text-base leading-tight tracking-tight">EXWHYZEE<span class="text-blue-400">MIS</span></h6>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Central Master Hub</span>
+                    </div>
+                </a>
+                <button id="sidebar-close-btn" class="lg:hidden text-slate-400 hover:text-white transition-colors">
+                    <i class="bi bi-x-lg text-lg"></i>
+                </button>
+            </div>
 
-                @{
-                    string currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "/Index";
-                }
-
-                <nav class="flex-1 overflow-y-auto overflow-x-hidden px-4 py-6">
+            <!-- Sidebar Navigation Links -->
+            <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-6">
+                <!-- Overview -->
+                <div>
+                    <h3 class="nav-heading text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Platform Control</h3>
                     <ul class="space-y-1">
                         <li>
-                            <a href="/Index" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/Index" || currentPage == "" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
-                                <span class="font-medium">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="pt-4 pb-1">
-                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Management</h3>
-                        </li>
-                        <li>
-                            <a href="/Index#websites" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
-                                <span class="font-medium">Website Databases</span>
-                            </a>
-                        </li>
-                        <li class="pt-4 pb-1">
-                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Billing & Expirations</h3>
-                        </li>
-                        <li>
-                            <a href="/Expirations" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/Expirations" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
-                                <span class="font-medium">Expiration Alerts</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/FeaturePricing" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent @(currentPage == "/FeaturePricing" ? "bg-[#0069A1] text-white border-[#0069A1]" : "text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200")">
-                                <span class="font-medium">Feature Pricing</span>
-                            </a>
-                        </li>
-                        <li class="pt-4 pb-1">
-                            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">Operations</h3>
-                        </li>
-                        <li>
-                            <a href="/Index" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
-                                <span class="font-medium">Shared Config Registry</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Expirations" class="flex items-center px-3 py-3 rounded-lg transition-all duration-200 group border border-transparent text-gray-700 hover:bg-gray-50 hover:text-black hover:border-gray-200">
-                                <span class="font-medium">Renewal Schedules</span>
+                            <a href="/Administrator/Index" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage == "/Administrator/Index" || currentPage == "/Administrator" ? "bg-[#0069A1] text-white shadow-sm shadow-blue-900/10 font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-speedometer2 text-base @(currentPage == "/Administrator/Index" || currentPage == "/Administrator" ? "text-white" : "text-blue-600")"></i>
+                                <span class="nav-text">Overview Dashboard</span>
                             </a>
                         </li>
                     </ul>
-                </nav>
-            </aside>
-
-            <header id="topbar" class="fixed top-0 h-16 bg-white border-b border-gray-100 flex items-center justify-between z-40 transition-all duration-300 left-0 right-0 lg:left-80 px-4 lg:px-6">
-                <div>
-                    <h5 class="font-bold text-gray-900 text-lg mb-0">@ViewData["Title"]</h5>
                 </div>
-                <partial name="_LoginPartial" />
-            </header>
 
-            <main id="main-content" class="transition-all duration-300 flex-1 ml-0 lg:ml-80 mt-16 p-4 sm:p-6">
-                @RenderBody()
-            </main>
-        </div>
+                <!-- Tenants & Sovereign Databases -->
+                <div>
+                    <h3 class="nav-heading text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Tenants &amp; Sovereign DBs</h3>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/Administrator/Tenants/Index" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Tenants") && !currentPage.Contains("/Create") && !currentPage.Contains("/Sync") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-buildings text-base @(currentPage.StartsWith("/Administrator/Tenants") && !currentPage.Contains("/Create") && !currentPage.Contains("/Sync") ? "text-white" : "text-indigo-600")"></i>
+                                <span class="nav-text flex-1">Tenant Catalogs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Tenants/Create" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium transition-all @(currentPage == "/Administrator/Tenants/Create" ? "bg-[#0069A1] text-white font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900") ml-2">
+                                <i class="bi bi-plus-circle-fill text-blue-500"></i>
+                                <span class="nav-text">+ Provision New Tenant</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Tenants/Sync" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium transition-all @(currentPage == "/Administrator/Tenants/Sync" ? "bg-[#0069A1] text-white font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900") ml-2">
+                                <i class="bi bi-arrow-repeat text-emerald-600"></i>
+                                <span class="nav-text">Sync &amp; Migrate All DBs</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Master Security & Central Staff -->
+                <div>
+                    <h3 class="nav-heading text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Central Staff &amp; Roles</h3>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/Administrator/Users" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Users") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-people-fill text-base @(currentPage.StartsWith("/Administrator/Users") ? "text-white" : "text-purple-600")"></i>
+                                <span class="nav-text">Central Staff</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Roles" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Roles") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-shield-lock-fill text-base @(currentPage.StartsWith("/Administrator/Roles") ? "text-white" : "text-amber-600")"></i>
+                                <span class="nav-text">Master Roles</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature Pricing & Expirations -->
+                <div>
+                    <h3 class="nav-heading text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Governance &amp; Subscriptions</h3>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/Administrator/Plans" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Plans") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-credit-card-2-front-fill text-base @(currentPage.StartsWith("/Administrator/Plans") ? "text-white" : "text-emerald-600")"></i>
+                                <span class="nav-text">Pricing Plans Manager</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/FeaturePricing" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage == "/Administrator/FeaturePricing" ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-tag-fill text-base @(currentPage == "/Administrator/FeaturePricing" ? "text-white" : "text-indigo-600")"></i>
+                                <span class="nav-text">Feature Matrix</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Expirations" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage == "/Administrator/Expirations" ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-bell-fill text-base @(currentPage == "/Administrator/Expirations" ? "text-white" : "text-rose-600")"></i>
+                                <span class="nav-text">Expiration Monitoring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Testimonials" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Testimonials") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-chat-quote-fill text-base @(currentPage.StartsWith("/Administrator/Testimonials") ? "text-white" : "text-sky-600")"></i>
+                                <span class="nav-text">Client Testimonials</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Administrator/Leads" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all @(currentPage.StartsWith("/Administrator/Leads") ? "bg-[#0069A1] text-white shadow-sm font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")">
+                                <i class="bi bi-inbox-fill text-base @(currentPage.StartsWith("/Administrator/Leads") ? "text-white" : "text-amber-500")"></i>
+                                <span class="nav-text">Prospective Leads</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- External Portals -->
+                <div>
+                    <h3 class="nav-heading text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">External Portals</h3>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/" target="_blank" class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all">
+                                <i class="bi bi-box-arrow-up-right text-blue-600"></i>
+                                <span class="nav-text">Public Website</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Bottom Session Status Pill -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <div class="text-[11px] text-slate-500 font-medium">
+                        Master DB: <span class="text-slate-700 font-semibold font-mono">JurayMisCentralDb</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Topbar Component -->
+        <header id="topbar" class="fixed top-0 h-16 bg-white border-b border-slate-200/80 flex items-center justify-between z-40 transition-all duration-300 left-0 right-0 lg:left-80 px-4 lg:px-6">
+            <div class="flex items-center gap-3 lg:gap-4">
+                <!-- Sidebar toggle button -->
+                <button id="sidebar-toggle-btn" class="p-2 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors focus:outline-none" title="Toggle Sidebar">
+                    <i class="bi bi-layout-sidebar-inset text-lg"></i>
+                </button>
+
+                <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500 font-medium">
+                    <span class="text-slate-400">MIS Central</span>
+                    <i class="bi bi-chevron-right text-[10px] text-slate-300"></i>
+                    <span class="text-slate-800 font-semibold">@(ViewData["Title"] ?? "Command Hub")</span>
+                </div>
+            </div>
+
+            <!-- Topbar Actions & User Profile -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Sync Quick Button -->
+                <a href="/Administrator/Tenants/Sync" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-semibold transition-colors">
+                    <i class="bi bi-arrow-repeat"></i> Sync Catalogs
+                </a>
+
+                <!-- User Dropdown Menu -->
+                <div class="relative">
+                    <button id="user-menu-btn" class="flex items-center gap-2.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all">
+                        <div class="w-8 h-8 rounded-full bg-[#0069A1] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                            @userInitials
+                        </div>
+                        <div class="hidden sm:block text-left">
+                            <div class="text-xs font-bold text-slate-800 leading-tight">@userEmail</div>
+                            <div class="text-[10px] text-slate-400 font-semibold uppercase">@primaryRole</div>
+                        </div>
+                        <i class="bi bi-chevron-down text-xs text-slate-400 hidden sm:block"></i>
+                    </button>
+
+                    <!-- Dropdown Content -->
+                    <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 hidden z-50 transition-all">
+                        <div class="px-4 py-3 border-b border-slate-100">
+                            <p class="text-xs font-bold text-slate-900 truncate">@userEmail</p>
+                            <span class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-[#0069A1] border border-blue-100 uppercase">
+                                @primaryRole
+                            </span>
+                        </div>
+
+                        <div class="py-1">
+                            <a href="/Administrator/Account/Manage" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-[#0069A1] transition-colors">
+                                <i class="bi bi-shield-lock text-slate-400"></i> Profile &amp; Password
+                            </a>
+                            <a href="/Administrator/Users" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-[#0069A1] transition-colors">
+                                <i class="bi bi-people text-slate-400"></i> Central Staff Directory
+                            </a>
+                        </div>
+
+                        <div class="border-t border-slate-100 pt-1">
+                            <form method="post" action="/Administrator/Account/Logout">
+                                <button type="submit" class="w-full text-left flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors">
+                                    <i class="bi bi-box-arrow-right"></i> Sign Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Content Area -->
+        <main id="main-content" class="transition-all duration-300 flex-1 ml-0 lg:ml-80 mt-16 p-4 sm:p-6 lg:p-8">
+            <!-- Toast / TempData Alerts -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm flex items-center justify-between shadow-xs">
+                    <div class="flex items-center gap-2.5">
+                        <i class="bi bi-check-circle-fill text-base text-emerald-600"></i>
+                        <span>@TempData["SuccessMessage"]</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700"><i class="bi bi-x-lg"></i></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center justify-between shadow-xs">
+                    <div class="flex items-center gap-2.5">
+                        <i class="bi bi-exclamation-triangle-fill text-base text-rose-600"></i>
+                        <span>@TempData["ErrorMessage"]</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-700"><i class="bi bi-x-lg"></i></button>
+                </div>
+            }
+
+            @RenderBody()
+        </main>
     </div>
+
+    <!-- Interactive Scripts for Dashboard Shell -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const topbar = document.getElementById('topbar');
+            const mainContent = document.getElementById('main-content');
+            const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+            const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+            const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            const userMenuDropdown = document.getElementById('user-menu-dropdown');
+
+            // Sidebar Toggle
+            sidebarToggleBtn?.addEventListener('click', function () {
+                if (window.innerWidth < 1024) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    sidebarBackdrop.classList.toggle('hidden');
+                } else {
+                    sidebar.classList.toggle('sidebar-collapsed');
+                    topbar.classList.toggle('sidebar-collapsed');
+                    mainContent.classList.toggle('sidebar-collapsed');
+                }
+            });
+
+            // Close mobile sidebar
+            function closeMobileSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                sidebarBackdrop.classList.add('hidden');
+            }
+            sidebarBackdrop?.addEventListener('click', closeMobileSidebar);
+            sidebarCloseBtn?.addEventListener('click', closeMobileSidebar);
+
+            // User dropdown toggle
+            userMenuBtn?.addEventListener('click', function (e) {
+                e.stopPropagation();
+                userMenuDropdown?.classList.toggle('hidden');
+            });
+
+            // Close dropdowns on outside click
+            document.addEventListener('click', function (e) {
+                if (!userMenuBtn?.contains(e.target) && !userMenuDropdown?.contains(e.target)) {
+                    userMenuDropdown?.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

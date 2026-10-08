@@ -1,0 +1,49 @@
+[
+  {
+    "Id": "efa8e33fda814c37bca79b19917a3af0",
+    "CreatedAtUtc": "2026-10-05T17:51:23.9631664Z",
+    "OrganizationName": "Ahmadu Bello Science Academy",
+    "OrganizationType": "Primary / Secondary School",
+    "EstimatedSize": "1,000 - 5,000 Students",
+    "StateOrCity": "Kaduna",
+    "ContactPersonName": "Malam Haruna Bello",
+    "JobTitle": "Principal",
+    "Email": "principal@absa.edu.ng",
+    "Phone": "\u002B2348031234567",
+    "FeaturesOfInterest": [
+      "School \u0026 Student Portal",
+      "Online CBT Exams",
+      "Fees \u0026 Card Payments",
+      "Instant SMS Alerts"
+    ],
+    "PrimaryGoal": "Automate termly report card calculations and online student fee payment with instant SMS alerts.",
+    "RolloutTimeline": "Immediate (This Term)",
+    "AdditionalNotes": "",
+    "Status": "New",
+    "AdminNotes": null,
+    "LastFollowUpUtc": null
+  },
+  {
+    "Id": "581d24fcbf0945eab507be91f2e03245",
+    "CreatedAtUtc": "2026-10-03T17:51:23.9639645Z",
+    "OrganizationName": "Greenfield Specialist Hospital",
+    "OrganizationType": "Hospital / Healthcare",
+    "EstimatedSize": "250 - 1,000 Staff/Patients",
+    "StateOrCity": "Abuja FCT",
+    "ContactPersonName": "Dr. Grace Oladipo",
+    "JobTitle": "Medical Director",
+    "Email": "dr.grace@greenfieldhealth.ng",
+    "Phone": "\u002B2348029876543",
+    "FeaturesOfInterest": [
+      "Staff Payroll \u0026 HR",
+      "Accounting \u0026 Invoicing",
+      "Inventory \u0026 Store Tracking"
+    ],
+    "PrimaryGoal": "Implement computerized pharmacy stock tracking, doctor consults, and automated monthly staff payroll.",
+    "RolloutTimeline": "Within 30 Days",
+    "AdditionalNotes": "",
+    "Status": "Demo Scheduled",
+    "AdminNotes": "Demo scheduled for Friday 11:00 AM with their ICT Director.",
+    "LastFollowUpUtc": null
+  }
+]

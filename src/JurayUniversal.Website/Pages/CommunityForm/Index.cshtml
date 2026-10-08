@@ -1,0 +1,1334 @@
+@page "/CommunityForm"
+@model JurayUniversal.Website.Pages.CommunityForm.IndexModel
+@{
+    ViewData["Title"] = "Community & Clan Profiling Application";
+    ViewData["PageName"] = "Community Form";
+    ViewData["Description"] = "Community and clan membership profiling questionnaire and digital pedigree registry.";
+    ViewData["Image"] = Model.SuperSetting?.CompanyLogoUrl;
+
+    if (Model.SuperSetting?.TemplateLayoutKey == "Layout1111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/RedbizTheme/_RedbizLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout2222")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Carspot/_CarspotLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout3333")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Alina/_AlinaLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout4444")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Archo/_ArchoLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout5555")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Bizup/_BizupLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout6666")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Industry/_IndustryLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout7777")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Lawnella/_LawnellaLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout8888")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Mistro/_MistroLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout9999")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Senatory/_SenatoryLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout11111111")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Education/_EducationLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout12121212")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Streamlab/_StreamlabLayout.cshtml";
+    }
+    else if (Model.SuperSetting?.TemplateLayoutKey == "Layout13131313")
+    {
+        Layout = "/Pages/Shared/Layouts/Theme/Judge/_JudgeLayout.cshtml";
+    }
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<style>
+    .cf-app-wrapper {
+        background: #f1f5f9;
+        min-height: 90vh;
+        padding: 40px 15px 90px;
+    }
+    .cf-shell {
+        max-width: 1040px;
+        margin: 0 auto;
+    }
+
+    /* Top Bar & Resume CTA */
+    .cf-top-cta {
+        background: #0f172a;
+        color: #ffffff;
+        border-radius: 16px;
+        padding: 18px 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    /* Wizard Container Card */
+    .cf-card {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+    }
+
+    /* Hero Header */
+    .cf-hero {
+        background: linear-gradient(135deg, #0b1e36 0%, #173b6c 50%, #0069a1 100%);
+        color: #ffffff;
+        padding: 38px 34px 28px;
+        position: relative;
+    }
+    .cf-hero h1 {
+        font-size: 1.85rem;
+        font-weight: 800;
+        margin: 0 0 8px;
+        color: #ffffff;
+        letter-spacing: -0.5px;
+    }
+    .cf-hero p {
+        color: #cbd5e1;
+        margin: 0;
+        font-size: 0.96rem;
+        max-width: 750px;
+    }
+
+    /* Interactive Steps Navigation (Tabs) */
+    .cf-tabs-nav {
+        display: flex;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+    .cf-tab-btn {
+        flex: 1;
+        min-width: 175px;
+        padding: 16px 14px;
+        border: none;
+        background: transparent;
+        border-bottom: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+    }
+    .cf-tab-btn:hover {
+        background: #f1f5f9;
+    }
+    .cf-tab-btn.active {
+        background: #ffffff;
+        border-bottom-color: #0069a1;
+    }
+    .cf-tab-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+        flex-shrink: 0;
+        transition: all 0.2s;
+    }
+    .cf-tab-btn.active .cf-tab-num {
+        background: #0069a1;
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 105, 161, 0.4);
+    }
+    .cf-tab-btn.completed .cf-tab-num {
+        background: #10b981;
+        color: #ffffff;
+    }
+    .cf-tab-text h6 {
+        margin: 0;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #334155;
+        white-space: nowrap;
+    }
+    .cf-tab-btn.active .cf-tab-text h6 {
+        color: #0069a1;
+    }
+    .cf-tab-text small {
+        display: block;
+        font-size: 0.72rem;
+        color: #64748b;
+        white-space: nowrap;
+    }
+
+    /* Progress Indicator Bar */
+    .cf-progress-strip {
+        height: 4px;
+        background: #e2e8f0;
+        width: 100%;
+    }
+    .cf-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0069a1, #10b981);
+        width: 20%;
+        transition: width 0.35s ease;
+    }
+
+    /* Tab Content Area */
+    .cf-tab-pane {
+        display: none;
+        padding: 34px 34px 24px;
+        animation: fadeIn 0.25s ease-in-out;
+    }
+    .cf-tab-pane.active {
+        display: block;
+    }
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Detailed "Long Info" Explanatory Banners */
+    .cf-info-banner {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-left: 5px solid #0284c7;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 26px;
+    }
+    .cf-info-banner h6 {
+        color: #0369a1;
+        font-weight: 700;
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+    }
+    .cf-info-banner p {
+        color: #334155;
+        margin: 0;
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+
+    /* Form Fields Styling */
+    .cf-section-heading {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .cf-section-subheading {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-bottom: 20px;
+    }
+    .cf-label {
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+    .cf-input {
+        border-radius: 10px;
+        border: 1px solid #cbd5e1;
+        padding: 11px 14px;
+        font-size: 0.92rem;
+        transition: all 0.2s;
+        width: 100%;
+        background: #ffffff;
+    }
+    .cf-input:focus {
+        border-color: #0069a1;
+        box-shadow: 0 0 0 3px rgba(0, 105, 161, 0.15);
+        outline: none;
+    }
+
+    /* Checkbox & Radio Cards */
+    .cf-check-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 10px;
+    }
+    .cf-check-box {
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 11px 13px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f8fafc;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: #334155;
+    }
+    .cf-check-box:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+    }
+    .cf-check-box input:checked + span {
+        font-weight: 700;
+        color: #0069a1;
+    }
+
+    /* Step Navigation Actions Footer */
+    .cf-nav-footer {
+        padding: 24px 34px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    /* Hero Header Badge */
+    .cf-hero-badge {
+        background: rgba(255, 255, 255, 0.16) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.3px;
+        padding: 6px 14px !important;
+        border-radius: 30px !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Live Auto-Save Status Pill */
+    .cf-autosave-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: #ffffff !important;
+        background: rgba(15, 23, 42, 0.5) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        padding: 6px 14px;
+        border-radius: 20px;
+    }
+    .cf-dot-live {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        display: inline-block;
+        animation: pulseDot 2s infinite;
+    }
+    @@keyframes pulseDot {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(1.2); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    .hp-field {
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+</style>
+
+<div class="cf-app-wrapper">
+    <div class="cf-shell">
+
+        @if (!string.IsNullOrEmpty(Model.Submitted))
+        {
+            <!-- Submission Success View -->
+            <div class="cf-card text-center p-5">
+                <div class="mb-4">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle" style="width: 88px; height: 88px;">
+                        <i class="bi bi-check2-circle" style="font-size: 3rem;"></i>
+                    </span>
+                </div>
+                <h2 class="fw-bold text-dark mb-2">Application Submitted Successfully!</h2>
+                <p class="text-muted mb-4 fs-6" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Thank you for submitting your profiling questionnaire for <strong>@Model.OrgName</strong>. Your records and clan lineage have been securely received.
+                </p>
+                <div class="d-inline-block bg-light border rounded-4 px-5 py-3 mb-4 shadow-sm">
+                    <span class="text-muted small d-block text-uppercase fw-bold letter-spacing-1">Official Reference Code</span>
+                    <strong class="fs-3 text-primary font-monospace">@Model.Submitted</strong>
+                </div>
+                <p class="small text-muted mb-4">Please keep this reference code for your records or future updates.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="/" class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold">Return Home</a>
+                    <a href="/CommunityForm" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold">New Profile Application</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- Resume Existing Application CTA Top Bar -->
+            <div class="cf-top-cta">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-primary bg-opacity-20 text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                        <i class="bi bi-bookmark-check-fill fs-5 text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-white mb-0">Have an in-progress application?</h6>
+                        <small class="text-white-50">Continue from where you stopped using your Phone, Email, or Reference Code.</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-warning btn-sm rounded-pill px-4 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Continue From Where You Stopped
+                    </button>
+                    <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#saveDraftModal">
+                        <i class="bi bi-cloud-arrow-up me-1"></i> Save &amp; Set Password
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Wizard Card -->
+            <div class="cf-card">
+                <!-- Hero Header -->
+                <div class="cf-hero">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                        <div class="cf-hero-badge">
+                            <i class="bi bi-diagram-3-fill text-warning"></i>
+                            <span>Official Clan &amp; Community Profiling</span>
+                        </div>
+                        <div class="cf-autosave-status" id="autoSaveIndicator">
+                            <span class="cf-dot-live"></span>
+                            <span id="autoSaveText">Real-time auto-saving active</span>
+                        </div>
+                    </div>
+                    <h1>@Model.OrgName Community Profiling Form</h1>
+                    <p>Complete this comprehensive profiling questionnaire to preserve family lineage, document community expertise, and foster unity.</p>
+                </div>
+
+                <!-- Tabs Navigation Header -->
+                <div class="cf-tabs-nav" id="wizardTabs">
+                    <button type="button" class="cf-tab-btn active" onclick="jumpToStep(1)" id="tabBtn-1">
+                        <span class="cf-tab-num">1</span>
+                        <div class="cf-tab-text">
+                            <h6>Personal &amp; Family</h6>
+                            <small>Basic &amp; Immediate</small>
+                        </div>
+                    </button>
+                    <button type="button" class="cf-tab-btn" onclick="jumpToStep(2)" id="tabBtn-2">
+                        <span class="cf-tab-num">2</span>
+                        <div class="cf-tab-text">
+                            <h6>Ancestral &amp; Lineage</h6>
+                            <small>Compound &amp; Pedigree</small>
+                        </div>
+                    </button>
+                    <button type="button" class="cf-tab-btn" onclick="jumpToStep(3)" id="tabBtn-3">
+                        <span class="cf-tab-num">3</span>
+                        <div class="cf-tab-text">
+                            <h6>Education &amp; Career</h6>
+                            <small>Academics &amp; Business</small>
+                        </div>
+                    </button>
+                    <button type="button" class="cf-tab-btn" onclick="jumpToStep(4)" id="tabBtn-4">
+                        <span class="cf-tab-num">4</span>
+                        <div class="cf-tab-text">
+                            <h6>Skills &amp; Community</h6>
+                            <small>Talent &amp; Participation</small>
+                        </div>
+                    </button>
+                    <button type="button" class="cf-tab-btn" onclick="jumpToStep(5)" id="tabBtn-5">
+                        <span class="cf-tab-num">5</span>
+                        <div class="cf-tab-text">
+                            <h6>Contacts &amp; Consent</h6>
+                            <small>Emergency &amp; Submit</small>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="cf-progress-strip">
+                    <div class="cf-progress-fill" id="progressFill"></div>
+                </div>
+
+                <form method="post" enctype="multipart/form-data" id="communityProfilingForm">
+                    <!-- Honeypot -->
+                    <div class="hp-field">
+                        <input asp-for="Website" autocomplete="off" />
+                        <input type="hidden" asp-for="Input.ReferenceNumber" id="hiddenReferenceNumber" />
+                        <input type="hidden" asp-for="AccessPassword" id="hiddenAccessPassword" />
+                    </div>
+
+                    <!-- ═════════════ TAB 1: PERSONAL & FAMILY ═════════════ -->
+                    <div class="cf-tab-pane active" id="step-1">
+                        <div class="cf-info-banner">
+                            <h6><i class="bi bi-info-circle-fill me-1"></i> Purpose of Personal &amp; Family Records</h6>
+                            <p>This information registers your primary identity in the central clan roll, ensuring official recognition of yourself and immediate family members in ongoing community planning and welfare registers.</p>
+                        </div>
+
+                        <!-- 1. Basic Information -->
+                        <div class="cf-section-heading"><i class="bi bi-person-badge text-primary"></i> 1. Basic Information</div>
+                        <div class="cf-section-subheading">Personal identification and primary contact details.</div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Input.FullName" class="cf-label">Full Name <span class="text-danger">*</span></label>
+                                <input asp-for="Input.FullName" class="cf-input track-input" placeholder="Enter full name" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.PreferredName" class="cf-label">Preferred Name / Alias</label>
+                                <input asp-for="Input.PreferredName" class="cf-input track-input" placeholder="Enter preferred name or nickname" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.Gender" class="cf-label">Gender</label>
+                                <select asp-for="Input.Gender" class="cf-input track-input">
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.DateOfBirth" class="cf-label">Date of Birth</label>
+                                <input asp-for="Input.DateOfBirth" type="date" class="cf-input track-input" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.MaritalStatus" class="cf-label">Marital Status</label>
+                                <select asp-for="Input.MaritalStatus" class="cf-input track-input">
+                                    <option value="">-- Select Status --</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.PhoneNumber" class="cf-label">Phone Number <span class="text-danger">*</span></label>
+                                <input asp-for="Input.PhoneNumber" class="cf-input track-input" placeholder="Enter phone number" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.Email" class="cf-label">Email Address</label>
+                                <input asp-for="Input.Email" type="email" class="cf-input track-input" placeholder="Enter email address" />
+                            </div>
+                            <div class="col-md-8">
+                                <label asp-for="Input.ResidentialAddress" class="cf-label">Current Residential Address</label>
+                                <input asp-for="Input.ResidentialAddress" class="cf-input track-input" placeholder="Enter current residential address" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.StateCountryOfResidence" class="cf-label">State / Country of Residence</label>
+                                <input asp-for="Input.StateCountryOfResidence" class="cf-input track-input" placeholder="Enter state / country of residence" />
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- 2. Family Information -->
+                        <div class="cf-section-heading"><i class="bi bi-people text-primary"></i> 2. Immediate Family Information</div>
+                        <div class="cf-section-subheading">Parents, spouse, and children relationships.</div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="Input.FatherFullName" class="cf-label">Father's Full Name</label>
+                                <input asp-for="Input.FatherFullName" class="cf-input track-input" placeholder="Enter father's full name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.MotherFullName" class="cf-label">Mother's Full Name</label>
+                                <input asp-for="Input.MotherFullName" class="cf-input track-input" placeholder="Enter mother's full name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.FamilyKindredName" class="cf-label">Name of Family / Kindred</label>
+                                <input asp-for="Input.FamilyKindredName" class="cf-input track-input" placeholder="Enter family or kindred name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.ClanName" class="cf-label">Name of Clan</label>
+                                <input asp-for="Input.ClanName" class="cf-input track-input" placeholder="Enter clan name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.SpouseName" class="cf-label">Spouse's Name (if applicable)</label>
+                                <input asp-for="Input.SpouseName" class="cf-input track-input" placeholder="Enter spouse's name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.NumberOfChildren" class="cf-label">Number of Children</label>
+                                <input asp-for="Input.NumberOfChildren" type="number" min="0" class="cf-input track-input" placeholder="Enter number of children" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.ChildrenNames" class="cf-label">Names of Children (if appropriate)</label>
+                                <input asp-for="Input.ChildrenNames" class="cf-input track-input" placeholder="Enter children's names" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.RelationshipToCommunity" class="cf-label">Relationship to the Clan / Community</label>
+                                <input asp-for="Input.RelationshipToCommunity" class="cf-input track-input" placeholder="Enter relationship to community" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ═════════════ TAB 2: ANCESTRAL & LINEAGE ═════════════ -->
+                    <div class="cf-tab-pane" id="step-2">
+                        <div class="cf-info-banner">
+                            <h6><i class="bi bi-diagram-3-fill me-1"></i> Clan Profiling &amp; Ancestral Pedigree</h6>
+                            <p>This section is vital for historical preservation and establishing family trees across villages. Filling known ancestral roots helps connect separated generations, preserves oral history, and documents title holdings.</p>
+                        </div>
+
+                        <div class="cf-section-heading"><i class="bi bi-houses text-primary"></i> 3. Ancestral Information</div>
+                        <div class="cf-section-subheading">Villages, family compounds, lineages, and historical heritage.</div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Input.FatherVillageTown" class="cf-label">Father's Village / Town</label>
+                                <input asp-for="Input.FatherVillageTown" class="cf-input track-input" placeholder="Enter village or town" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.MotherVillageTown" class="cf-label">Mother's Village / Town</label>
+                                <input asp-for="Input.MotherVillageTown" class="cf-input track-input" placeholder="Enter village or town" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.FamilyCompound" class="cf-label">Family Compound (Compound Name)</label>
+                                <input asp-for="Input.FamilyCompound" class="cf-input track-input" placeholder="Enter family compound name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.KindredLineage" class="cf-label">Kindred / Lineage Branch</label>
+                                <input asp-for="Input.KindredLineage" class="cf-input track-input" placeholder="Enter kindred or lineage branch" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.FamilyHeadName" class="cf-label">Name of Family Head</label>
+                                <input asp-for="Input.FamilyHeadName" class="cf-input track-input" placeholder="Enter family head name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.AncestralHome" class="cf-label">Ancestral Home Description</label>
+                                <input asp-for="Input.AncestralHome" class="cf-input track-input" placeholder="Enter ancestral home description" />
+                            </div>
+
+                            <!-- Family Tree Box -->
+                            <div class="col-12 mt-2">
+                                <div class="p-4 bg-light rounded-4 border">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-diagram-2 text-primary fs-5"></i>
+                                        <h6 class="fw-bold text-dark mb-0">Family-Tree Lineage Section (Optional)</h6>
+                                    </div>
+                                    <p class="small text-muted mb-3">Identify your grandparents and known great-grandparents to assist the clan genealogist in linking the ancestry tree.</p>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.PaternalGrandfather" class="cf-label">Paternal Grandfather (Father's Father)</label>
+                                            <input asp-for="Input.PaternalGrandfather" class="cf-input track-input" placeholder="Enter paternal grandfather's name" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.PaternalGrandmother" class="cf-label">Paternal Grandmother (Father's Mother)</label>
+                                            <input asp-for="Input.PaternalGrandmother" class="cf-input track-input" placeholder="Enter paternal grandmother's name" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.MaternalGrandfather" class="cf-label">Maternal Grandfather (Mother's Father)</label>
+                                            <input asp-for="Input.MaternalGrandfather" class="cf-input track-input" placeholder="Enter maternal grandfather's name" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.MaternalGrandmother" class="cf-label">Maternal Grandmother (Mother's Mother)</label>
+                                            <input asp-for="Input.MaternalGrandmother" class="cf-input track-input" placeholder="Enter maternal grandmother's name" />
+                                        </div>
+                                        <div class="col-12">
+                                            <label asp-for="Input.GreatGrandparents" class="cf-label">Known Great-Grandparents</label>
+                                            <input asp-for="Input.GreatGrandparents" class="cf-input track-input" placeholder="Enter known great-grandparents' names" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <label asp-for="Input.FamilyHistory" class="cf-label">Known Family History / Oral Traditions</label>
+                                <textarea asp-for="Input.FamilyHistory" rows="3" class="cf-input track-input" placeholder="Enter known family history, traditions, or notable facts"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.RelatedFamilies" class="cf-label">Other Related Families / Kindreds</label>
+                                <input asp-for="Input.RelatedFamilies" class="cf-input track-input" placeholder="Enter other related families or kindreds" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ═════════════ TAB 3: EDUCATION & CAREER ═════════════ -->
+                    <div class="cf-tab-pane" id="step-3">
+                        <div class="cf-info-banner">
+                            <h6><i class="bi bi-briefcase-fill me-1"></i> Community Talent &amp; Economic Directory</h6>
+                            <p>Documenting academic qualifications, skills, and business enterprises enables the clan to build mentorship pipelines, support local businesses, facilitate job referrals, and offer professional scholarships.</p>
+                        </div>
+
+                        <!-- 4. Education -->
+                        <div class="cf-section-heading"><i class="bi bi-mortarboard text-primary"></i> 4. Education &amp; Academics</div>
+                        <div class="cf-section-subheading">Academic qualifications and fields of study.</div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Input.HighestQualification" class="cf-label">Highest Educational Qualification</label>
+                                <select asp-for="Input.HighestQualification" class="cf-input track-input">
+                                    <option value="">-- Select Qualification --</option>
+                                    <option value="Primary / FSLC">Primary / FSLC</option>
+                                    <option value="Secondary / SSCE / WASSCE">Secondary / SSCE / WASSCE</option>
+                                    <option value="OND / NCE">OND / NCE</option>
+                                    <option value="HND / Bachelor's Degree (B.Sc / B.A / B.Eng)">HND / Bachelor's Degree (B.Sc / B.A / B.Eng)</option>
+                                    <option value="Postgraduate Diploma (PGD)">Postgraduate Diploma (PGD)</option>
+                                    <option value="Master's Degree (M.Sc / M.A / MBA)">Master's Degree (M.Sc / M.A / MBA)</option>
+                                    <option value="Doctorate (Ph.D)">Doctorate (Ph.D)</option>
+                                    <option value="Professional Qualification">Professional Qualification</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.Institution" class="cf-label">School / Institution</label>
+                                <input asp-for="Input.Institution" class="cf-input track-input" placeholder="Enter school or institution name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.FieldOfStudy" class="cf-label">Course / Field of Study</label>
+                                <input asp-for="Input.FieldOfStudy" class="cf-input track-input" placeholder="Enter course or field of study" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.CurrentCourseOfStudy" class="cf-label">Current Course of Study (if currently enrolled)</label>
+                                <input asp-for="Input.CurrentCourseOfStudy" class="cf-input track-input" placeholder="Enter current course of study" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.ProfessionalCertifications" class="cf-label">Professional Certifications</label>
+                                <input asp-for="Input.ProfessionalCertifications" class="cf-input track-input" placeholder="Enter professional certifications" />
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- 5. Employment & Business -->
+                        <div class="cf-section-heading"><i class="bi bi-building text-primary"></i> 5. Employment &amp; Business</div>
+                        <div class="cf-section-subheading">Current occupation, venture profile, and work experience.</div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="Input.CurrentOccupation" class="cf-label">Current Occupation</label>
+                                <input asp-for="Input.CurrentOccupation" class="cf-input track-input" placeholder="Enter current occupation" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.Employer" class="cf-label">Employer / Organisation</label>
+                                <input asp-for="Input.Employer" class="cf-input track-input" placeholder="Enter employer or organisation name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.JobTitle" class="cf-label">Position / Job Title</label>
+                                <input asp-for="Input.JobTitle" class="cf-input track-input" placeholder="Enter position or job title" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.YearsOfExperience" class="cf-label">Years of Experience</label>
+                                <input asp-for="Input.YearsOfExperience" type="number" min="0" class="cf-input track-input" placeholder="Enter years of experience" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.BusinessName" class="cf-label">Business Name (if self-employed)</label>
+                                <input asp-for="Input.BusinessName" class="cf-input track-input" placeholder="Enter business name" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.BusinessType" class="cf-label">Business Type / Industry</label>
+                                <input asp-for="Input.BusinessType" class="cf-input track-input" placeholder="Enter business type or industry" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Input.BusinessLocation" class="cf-label">Business Location</label>
+                                <input asp-for="Input.BusinessLocation" class="cf-input track-input" placeholder="Enter business location" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.ProfessionalSkills" class="cf-label">Professional Skills Summary</label>
+                                <input asp-for="Input.ProfessionalSkills" class="cf-input track-input" placeholder="Enter professional skills summary" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ═════════════ TAB 4: SKILLS & COMMUNITY ═════════════ -->
+                    <div class="cf-tab-pane" id="step-4">
+                        <div class="cf-info-banner">
+                            <h6><i class="bi bi-lightbulb-fill me-1"></i> Community Development &amp; Skills Registry</h6>
+                            <p>We believe in harnessing the combined strength of our members. Identifying specific skills allows the community leadership to engage relevant professionals for development committees, health outreaches, and youth empowerment.</p>
+                        </div>
+
+                        <!-- 6. Skills & Expertise -->
+                        <div class="cf-section-heading"><i class="bi bi-stars text-primary"></i> 6. Skills &amp; Areas of Expertise</div>
+                        <div class="cf-section-subheading">Select all areas where you possess specialized expertise.</div>
+
+                        <div class="mb-3">
+                            <label class="cf-label d-block mb-2">What skills or areas of expertise do you have?</label>
+                            <div class="cf-check-grid">
+                                @foreach (var opt in JurayUniversal.Website.Pages.CommunityForm.IndexModel.ExpertiseOptions)
+                                {
+                                    <label class="cf-check-box">
+                                        <input type="checkbox" name="SelectedExpertise" value="@opt" class="form-check-input mt-0 track-input" />
+                                        <span>@opt</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <label asp-for="Input.OtherExpertise" class="cf-label">Other Skills / Expertise (not listed above)</label>
+                                <input asp-for="Input.OtherExpertise" class="cf-input track-input" placeholder="Enter other skills or areas of expertise" />
+                            </div>
+                            <div class="col-12 mt-2">
+                                <div class="p-3 bg-light rounded-3 border">
+                                    <label class="cf-label d-block mb-2 text-dark">Are you willing to offer your skills to support the development of the clan/community?</label>
+                                    <div class="d-flex gap-4">
+                                        <label class="d-inline-flex align-items-center gap-2">
+                                            <input type="radio" asp-for="Input.WillingToOfferSkills" value="Yes" class="form-check-input track-input" />
+                                            <span class="fw-semibold text-success">Yes</span>
+                                        </label>
+                                        <label class="d-inline-flex align-items-center gap-2">
+                                            <input type="radio" asp-for="Input.WillingToOfferSkills" value="No" class="form-check-input track-input" />
+                                            <span class="fw-semibold text-secondary">No</span>
+                                        </label>
+                                        <label class="d-inline-flex align-items-center gap-2">
+                                            <input type="radio" asp-for="Input.WillingToOfferSkills" value="Maybe" class="form-check-input track-input" />
+                                            <span class="fw-semibold text-warning">Maybe</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- 7. Community Participation -->
+                        <div class="cf-section-heading"><i class="bi bi-award text-primary"></i> 7. Community Participation &amp; Service</div>
+                        <div class="cf-section-subheading">Leadership, associations, and volunteer interests.</div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="Input.CurrentCommunityPosition" class="cf-label">Current Community / Clan Position (if any)</label>
+                                <input asp-for="Input.CurrentCommunityPosition" class="cf-input track-input" placeholder="Enter current community position" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.PreviousLeadershipPositions" class="cf-label">Previous Leadership Positions</label>
+                                <input asp-for="Input.PreviousLeadershipPositions" class="cf-input track-input" placeholder="Enter previous leadership positions" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.CommunityAssociations" class="cf-label">Membership of Community Associations</label>
+                                <input asp-for="Input.CommunityAssociations" class="cf-input track-input" placeholder="Enter community associations or organizations" />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Input.CommunityContributions" class="cf-label">Contributions to Community Development</label>
+                                <textarea asp-for="Input.CommunityContributions" rows="2" class="cf-input track-input" placeholder="Enter contributions to community development"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.ContributionInterests" class="cf-label">Areas where you would like to contribute</label>
+                                <input asp-for="Input.ContributionInterests" class="cf-input track-input" placeholder="Enter areas where you would like to contribute" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.VolunteerInterests" class="cf-label">Volunteer Interests</label>
+                                <input asp-for="Input.VolunteerInterests" class="cf-input track-input" placeholder="Enter volunteer interests" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ═════════════ TAB 5: CONTACTS & CONSENT ═════════════ -->
+                    <div class="cf-tab-pane" id="step-5">
+                        <div class="cf-info-banner">
+                            <h6><i class="bi bi-shield-lock-fill me-1"></i> Emergency Safety, Identity &amp; Data Privacy</h6>
+                            <p>Having verified emergency contacts protects members in distress. Your data is strictly encrypted and used solely for authentic clan administration and community records.</p>
+                        </div>
+
+                        <!-- 8. Contact & Emergency -->
+                        <div class="cf-section-heading"><i class="bi bi-telephone-plus text-primary"></i> 8. Emergency &amp; Alternative Contact</div>
+                        <div class="cf-section-subheading">Emergency reachability for safety and welfare.</div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Input.AlternativePhone" class="cf-label">Alternative Phone Number</label>
+                                <input asp-for="Input.AlternativePhone" class="cf-input track-input" placeholder="Enter alternative phone number" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.EmergencyContactName" class="cf-label">Emergency Contact Name</label>
+                                <input asp-for="Input.EmergencyContactName" class="cf-input track-input" placeholder="Enter emergency contact name" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.EmergencyContactPhone" class="cf-label">Emergency Contact Phone</label>
+                                <input asp-for="Input.EmergencyContactPhone" class="cf-input track-input" placeholder="Enter emergency contact phone number" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.EmergencyContactRelationship" class="cf-label">Relationship to Emergency Contact</label>
+                                <input asp-for="Input.EmergencyContactRelationship" class="cf-input track-input" placeholder="Enter relationship to emergency contact" />
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- 9. Optional Personal Info -->
+                        <div class="cf-section-heading"><i class="bi bi-camera text-primary"></i> 9. Optional Personal Media</div>
+                        <div class="cf-section-subheading">Passport photograph and additional background.</div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="PassportPhoto" class="cf-label">Passport Photograph</label>
+                                <input asp-for="PassportPhoto" type="file" accept="image/*" class="cf-input" />
+                                <span class="text-muted small">Max 2MB (JPG, PNG or WEBP).</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.SocialProfileLink" class="cf-label">Social Media / LinkedIn / Profile URL</label>
+                                <input asp-for="Input.SocialProfileLink" class="cf-input track-input" placeholder="Enter profile or social media link" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.LanguagesSpoken" class="cf-label">Languages Spoken</label>
+                                <input asp-for="Input.LanguagesSpoken" class="cf-input track-input" placeholder="Enter languages spoken" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Input.Hobbies" class="cf-label">Hobbies / Personal Interests</label>
+                                <input asp-for="Input.Hobbies" class="cf-input track-input" placeholder="Enter hobbies or personal interests" />
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- 10. Consent -->
+                        <div class="cf-section-heading text-success"><i class="bi bi-shield-check text-success"></i> 10. Declaration and Consent</div>
+                        <div class="cf-section-subheading">Mandatory confirmation to submit to digital community archives.</div>
+
+                        <div class="p-4 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-4 mb-4">
+                            <div class="form-check">
+                                <input type="checkbox" asp-for="Input.ConsentGiven" class="form-check-input" required id="consentCheck" />
+                                <label class="form-check-label ms-2" for="consentCheck" style="font-size: 0.94rem; color: #166534; font-weight: 600;">
+                                    I confirm that the information provided is accurate to the best of my knowledge. I consent to the use and storage of my information for legitimate clan/community administration, communication, planning and development purposes.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wizard Navigation Footer Bar -->
+                    <div class="cf-nav-footer">
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="prevBtn" onclick="prevStep()" style="display: none;">
+                                <i class="bi bi-arrow-left me-1"></i> Previous Step
+                            </button>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-outline-primary rounded-pill px-3" onclick="triggerManualSave()">
+                                <i class="bi bi-cloud-check me-1"></i> Save Draft
+                            </button>
+                            <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" id="nextBtn" onclick="nextStep()">
+                                Next Step <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success rounded-pill px-5 fw-bold shadow" id="submitBtn" style="display: none;">
+                                <i class="bi bi-send-fill me-2"></i> Submit Final Application
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- ═════════════ MODAL: CONTINUE FROM WHERE YOU STOPPED ═════════════ -->
+<div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header bg-dark text-white rounded-top-4 p-4">
+                <div>
+                    <h5 class="modal-title fw-bold text-white mb-1" id="resumeModalLabel">
+                        <i class="bi bi-arrow-clockwise me-2 text-warning"></i>Continue Application
+                    </h5>
+                    <small class="text-white-50">Resume your saved draft on any phone or device.</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="resumeAlert" class="alert alert-danger d-none small"></div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small text-muted">Phone Number, Email, or Draft Reference Code</label>
+                    <input type="text" id="resumeIdentifier" class="form-control rounded-3 p-2" placeholder="Enter phone number, email, or draft code" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small text-muted">Access Password / PIN (if you set one)</label>
+                    <input type="password" id="resumePassword" class="form-control rounded-3 p-2" placeholder="Enter your 4-6 digit PIN or password" />
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" onclick="executeResumeDraft()">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Load My Draft
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═════════════ MODAL: SAVE DRAFT & SET PASSWORD ═════════════ -->
+<div class="modal fade" id="saveDraftModal" tabindex="-1" aria-labelledby="saveDraftModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header bg-primary text-white rounded-top-4 p-4">
+                <div>
+                    <h5 class="modal-title fw-bold text-white mb-1" id="saveDraftModalLabel">
+                        <i class="bi bi-cloud-arrow-up me-2"></i>Save &amp; Continue Later
+                    </h5>
+                    <small class="text-white-50">Set an access password to resume your draft securely anytime.</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="saveModalAlert" class="alert alert-success d-none small"></div>
+
+                <p class="small text-muted mb-3">
+                    Your current answers will be saved in our secure database. You can pick up where you left off from your smartphone, tablet, or PC.
+                </p>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small text-muted">Create a Draft Access Password / PIN</label>
+                    <input type="password" id="draftPasswordInput" class="form-control rounded-3 p-2" placeholder="Enter a PIN or password" />
+                    <small class="text-muted">You will need this password + your phone number to resume later.</small>
+                </div>
+
+                <div id="saveResultBox" class="p-3 bg-light rounded-3 border d-none">
+                    <span class="small text-muted d-block fw-bold">Your Resume Code:</span>
+                    <strong class="text-primary font-monospace fs-5 d-block my-1" id="generatedDraftCode"></strong>
+                    <small class="text-muted">You can also resume with your registered phone number.</small>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success rounded-pill px-4 fw-bold" onclick="executeSaveDraftWithPassword()">
+                    <i class="bi bi-check-circle me-1"></i> Save Draft Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        let autoSaveTimer = null;
+
+        // Initialize on page load
+        document.addEventListener("DOMContentLoaded", function () {
+            // Restore from localStorage if available
+            restoreFromLocalStorage();
+
+            // Track changes on all inputs for realtime auto-save
+            document.querySelectorAll(".track-input").forEach(function (el) {
+                el.addEventListener("input", scheduleAutoSave);
+                el.addEventListener("change", scheduleAutoSave);
+            });
+
+            updateStepUI();
+        });
+
+        // Tab Navigation
+        function updateStepUI() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const pane = document.getElementById("step-" + i);
+                const tabBtn = document.getElementById("tabBtn-" + i);
+                if (pane) pane.classList.toggle("active", i === currentStep);
+                if (tabBtn) {
+                    tabBtn.classList.toggle("active", i === currentStep);
+                    if (i < currentStep) {
+                        tabBtn.classList.add("completed");
+                    }
+                }
+            }
+
+            // Progress bar
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById("progressFill").style.width = percent + "%";
+
+            // Prev / Next / Submit buttons
+            document.getElementById("prevBtn").style.display = currentStep > 1 ? "inline-block" : "none";
+            document.getElementById("nextBtn").style.display = currentStep < totalSteps ? "inline-block" : "none";
+            document.getElementById("submitBtn").style.display = currentStep === totalSteps ? "inline-block" : "none";
+
+            window.scrollTo({ top: 120, behavior: "smooth" });
+        }
+
+        function nextStep() {
+            if (currentStep === 1) {
+                const fullName = document.querySelector("[name='Input.FullName']");
+                const phone = document.querySelector("[name='Input.PhoneNumber']");
+                if (!fullName.value.trim() || !phone.value.trim()) {
+                    alert("Please provide at least your Full Name and Phone Number to continue.");
+                    if (!fullName.value.trim()) fullName.focus();
+                    else phone.focus();
+                    return;
+                }
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStepUI();
+                saveToLocalStorage();
+                triggerServerSave();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        }
+
+        function jumpToStep(step) {
+            currentStep = step;
+            updateStepUI();
+        }
+
+        // ═════════════ REALTIME LOCAL STORAGE & SERVER AUTO-SAVE ═════════════
+
+        function collectFormData() {
+            const form = document.getElementById("communityProfilingForm");
+            if (!form) return null;
+
+            const data = {};
+            const inputs = form.querySelectorAll(".track-input");
+            inputs.forEach(function (inp) {
+                const name = inp.getAttribute("name");
+                if (!name) return;
+                const cleanName = name.replace("Input.", "");
+
+                if (inp.type === "checkbox") {
+                    if (name === "SelectedExpertise") {
+                        if (!data["SelectedExpertise"]) data["SelectedExpertise"] = [];
+                        if (inp.checked) data["SelectedExpertise"].push(inp.value);
+                    } else {
+                        data[cleanName] = inp.checked;
+                    }
+                } else if (inp.type === "radio") {
+                    if (inp.checked) data[cleanName] = inp.value;
+                } else {
+                    data[cleanName] = inp.value;
+                }
+            });
+
+            return data;
+        }
+
+        function saveToLocalStorage() {
+            const data = collectFormData();
+            if (data) {
+                localStorage.setItem("misCommunityForm_draft", JSON.stringify({
+                    step: currentStep,
+                    savedAt: new Date().toISOString(),
+                    data: data
+                }));
+            }
+        }
+
+        function restoreFromLocalStorage() {
+            const raw = localStorage.getItem("misCommunityForm_draft");
+            if (!raw) return;
+            try {
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.data) {
+                    populateFormFields(parsed.data);
+                    if (parsed.step) currentStep = parsed.step;
+                    showAutoSaveBadge("Draft restored from your last session (" + new Date(parsed.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ")");
+                }
+            } catch (e) {
+                console.error("Failed to restore draft:", e);
+            }
+        }
+
+        function scheduleAutoSave() {
+            saveToLocalStorage();
+            showAutoSaveBadge("Saving changes...");
+
+            if (autoSaveTimer) clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function () {
+                triggerServerSave();
+            }, 3000);
+        }
+
+        function triggerManualSave() {
+            saveToLocalStorage();
+            triggerServerSave(true);
+        }
+
+        function triggerServerSave(showPrompt) {
+            const formData = collectFormData();
+            if (!formData || !formData.FullName || !formData.PhoneNumber) {
+                showAutoSaveBadge("Draft saved locally");
+                return;
+            }
+
+            const refNum = document.getElementById("hiddenReferenceNumber").value;
+            const password = document.getElementById("hiddenAccessPassword").value;
+
+            fetch("/CommunityForm?handler=SaveDraft", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    referenceNumber: refNum,
+                    password: password,
+                    step: currentStep,
+                    data: formData,
+                    selectedExpertise: formData.SelectedExpertise || []
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    if (res.referenceNumber) {
+                        document.getElementById("hiddenReferenceNumber").value = res.referenceNumber;
+                    }
+                    showAutoSaveBadge("Auto-saved to server at " + (res.lastSaved || new Date().toLocaleTimeString()));
+                    if (showPrompt) {
+                        alert("Your application draft has been securely saved!\nReference: " + (res.referenceNumber || "Draft"));
+                    }
+                }
+            })
+            .catch(err => {
+                showAutoSaveBadge("Saved locally (offline)");
+            });
+        }
+
+        function showAutoSaveBadge(text) {
+            const el = document.getElementById("autoSaveText");
+            if (el) el.innerText = text;
+        }
+
+        function populateFormFields(data) {
+            for (let key in data) {
+                const val = data[key];
+                if (val === null || val === undefined) continue;
+
+                if (key === "SelectedExpertise" && Array.isArray(val)) {
+                    document.querySelectorAll("input[name='SelectedExpertise']").forEach(function (cb) {
+                        cb.checked = val.includes(cb.value);
+                    });
+                    continue;
+                }
+
+                const field = document.querySelector(`[name='Input.${key}']`);
+                if (!field) continue;
+
+                if (field.type === "checkbox") {
+                    field.checked = Boolean(val);
+                } else if (field.type === "radio") {
+                    const r = document.querySelector(`[name='Input.${key}'][value='${val}']`);
+                    if (r) r.checked = true;
+                } else {
+                    field.value = val;
+                }
+            }
+        }
+
+        // ═════════════ RESUME EXISTING APPLICATION ═════════════
+
+        function executeResumeDraft() {
+            const identifier = document.getElementById("resumeIdentifier").value.trim();
+            const password = document.getElementById("resumePassword").value;
+            const alertEl = document.getElementById("resumeAlert");
+
+            alertEl.classList.add("d-none");
+            alertEl.innerText = "";
+
+            if (!identifier) {
+                alertEl.innerText = "Please enter your Phone, Email, or Reference Code.";
+                alertEl.classList.remove("d-none");
+                return;
+            }
+
+            fetch("/CommunityForm?handler=ResumeDraft", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identifier: identifier, password: password })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success && res.data) {
+                    populateFormFields(res.data);
+                    if (res.selectedExpertise) {
+                        document.querySelectorAll("input[name='SelectedExpertise']").forEach(function (cb) {
+                            cb.checked = res.selectedExpertise.includes(cb.value);
+                        });
+                    }
+                    if (res.referenceNumber) {
+                        document.getElementById("hiddenReferenceNumber").value = res.referenceNumber;
+                    }
+                    if (password) {
+                        document.getElementById("hiddenAccessPassword").value = password;
+                    }
+
+                    jumpToStep(res.step || 1);
+                    saveToLocalStorage();
+
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("resumeModal"));
+                    if (modal) modal.hide();
+
+                    alert(res.message || "Draft loaded successfully!");
+                } else {
+                    alertEl.innerText = res.message || "Could not load draft.";
+                    alertEl.classList.remove("d-none");
+                }
+            })
+            .catch(err => {
+                alertEl.innerText = "Error contacting server. Please try again.";
+                alertEl.classList.remove("d-none");
+            });
+        }
+
+        // ═════════════ SAVE DRAFT WITH PASSWORD ═════════════
+
+        function executeSaveDraftWithPassword() {
+            const password = document.getElementById("draftPasswordInput").value.trim();
+            const formData = collectFormData();
+
+            if (!formData || !formData.FullName || !formData.PhoneNumber) {
+                alert("Please fill at least your Full Name and Phone Number before saving.");
+                return;
+            }
+
+            const refNum = document.getElementById("hiddenReferenceNumber").value;
+
+            fetch("/CommunityForm?handler=SaveDraft", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    referenceNumber: refNum,
+                    password: password,
+                    step: currentStep,
+                    data: formData,
+                    selectedExpertise: formData.SelectedExpertise || []
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    if (res.referenceNumber) {
+                        document.getElementById("hiddenReferenceNumber").value = res.referenceNumber;
+                        document.getElementById("generatedDraftCode").innerText = res.referenceNumber;
+                    }
+                    if (password) {
+                        document.getElementById("hiddenAccessPassword").value = password;
+                    }
+
+                    document.getElementById("saveResultBox").classList.remove("d-none");
+                    const alertEl = document.getElementById("saveModalAlert");
+                    alertEl.innerText = "Application draft saved successfully!";
+                    alertEl.classList.remove("d-none");
+
+                    saveToLocalStorage();
+                } else {
+                    alert(res.message || "Failed to save draft.");
+                }
+            });
+        }
+    </script>
+}

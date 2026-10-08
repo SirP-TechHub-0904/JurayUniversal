@@ -1,38 +1,36 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using JurayUniversal.MisCentral.Models;
-using JurayUniversal.MisCentral.Services;
+using JurayUniversal.Domain.Models;
+using JurayUniversal.MisCentral.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace JurayUniversal.MisCentral.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ITenantAnalyticsService _analyticsService;
-        private readonly IMasterSuperAdminAuthService _authService;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(
-            ITenantAnalyticsService analyticsService,
-            IMasterSuperAdminAuthService authService)
+        public IndexModel(ApplicationDbContext context)
         {
-            _analyticsService = analyticsService;
-            _authService = authService;
+            _context = context;
         }
 
-        public DashboardAnalyticsSummary Summary { get; set; } = new DashboardAnalyticsSummary();
+        public List<MasterFeatureCatalog> FeaturedModules { get; set; } = new();
+        public int TotalTenantsCount { get; set; }
+        public int TotalActiveModulesCount { get; set; }
 
         public async Task OnGetAsync()
         {
-            Summary = await _analyticsService.GetDashboardSummaryAsync();
-        }
+            FeaturedModules = await _context.MasterFeatureCatalogs
+                .Where(f => f.IsActive)
+                .OrderBy(f => f.SortOrder)
+                .Take(8)
+                .ToListAsync();
 
-        public string GetConfigUrl(string domainName)
-        {
-            return _authService.GetTargetConfigUrl(domainName);
-        }
-
-        public string GetMisUrl(string domainName)
-        {
-            return _authService.GetTargetMisUrl(domainName);
+            TotalTenantsCount = await _context.MasterTenantCatalogs.CountAsync();
+            TotalActiveModulesCount = await _context.MasterTenantFeatureSubscriptions.CountAsync(s => s.IsEnabled);
         }
     }
 }

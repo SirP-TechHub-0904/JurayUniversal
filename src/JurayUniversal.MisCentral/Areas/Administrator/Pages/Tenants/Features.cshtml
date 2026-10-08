@@ -1,0 +1,72 @@
+@page "{id:int}"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.FeaturesModel
+@{
+    ViewData["Title"] = "Manage Features - " + Model.Tenant.OrganizationName;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1">Tenant Module & Feature Access</h4>
+                <p class="text-muted mb-0">Enable or disable MIS modules for <strong>@Model.Tenant.OrganizationName</strong> (@Model.Tenant.TenantKey)</p>
+            </div>
+            <div class="page-title-right">
+                <a asp-page="./Details" asp-route-id="@Model.Tenant.Id" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Details
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="post">
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Module Subscriptions & Entitlements</h5>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-1"></i> Save Changes
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-1"></i> Toggling a module off disables navigation and feature access for all users in this tenant workspace without deleting their stored data.
+                    </div>
+
+                    <div class="row">
+                        @for (int i = 0; i < Model.FeaturesList.Count; i++)
+                        {
+                            <div class="col-md-6 col-xl-4 mb-4">
+                                <div class="card border h-100 p-3 shadow-none bg-light-subtle">
+                                    <input type="hidden" asp-for="FeaturesList[i].FeatureId" />
+                                    <input type="hidden" asp-for="FeaturesList[i].FeatureKey" />
+                                    <input type="hidden" asp-for="FeaturesList[i].FeatureName" />
+                                    <input type="hidden" asp-for="FeaturesList[i].Description" />
+
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="me-3">
+                                            <h6 class="fw-bold mb-1">@Model.FeaturesList[i].FeatureName</h6>
+                                            <span class="badge bg-secondary mb-2">@Model.FeaturesList[i].FeatureKey</span>
+                                            <p class="text-muted small mb-0">@Model.FeaturesList[i].Description</p>
+                                        </div>
+                                        <div class="form-check form-switch fs-4">
+                                            <input class="form-check-input" type="checkbox" asp-for="FeaturesList[i].IsEnabled" id="feat_@i">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer bg-white text-end">
+                    <a asp-page="./Details" asp-route-id="@Model.Tenant.Id" class="btn btn-secondary me-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-lg me-1"></i> Save Module Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

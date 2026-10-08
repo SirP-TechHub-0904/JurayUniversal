@@ -1,0 +1,121 @@
+@page
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.SyncModel
+@{
+    ViewData["Title"] = "Sync Databases to Master Tenant Catalog";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="mb-1">Database Sync & Schema Migration Engine</h4>
+                <p class="text-muted mb-0">Import and sync configured tenant databases into the Master Catalog and apply EF Core database migrations</p>
+            </div>
+            <div class="page-title-right">
+                <a asp-page="./Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Directory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Synchronize Configuration to Master Catalog</h5>
+                        <p class="text-muted mb-0">
+                            Reads all connection strings in <code>appsettings.json</code>, populates missing <code>MasterTenantCatalogs</code>, creates default module subscriptions in <code>MasterTenantFeatureSubscriptions</code>, and executes <code>Database.MigrateAsync()</code> on every tenant database.
+                        </p>
+                    </div>
+                    <form method="post">
+                        <button type="submit" class="btn btn-success btn-lg px-4 shadow-sm">
+                            <i class="bi bi-arrow-repeat me-2"></i> Run Sync & Migrations Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Summary != null)
+{
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm text-center p-3 bg-light">
+                <div class="text-muted small fw-semibold">TOTAL DATABASES</div>
+                <div class="fs-2 fw-bold text-dark">@Model.Summary.TotalDatabasesFound</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm text-center p-3 bg-light">
+                <div class="text-muted small fw-semibold">NEWLY REGISTERED</div>
+                <div class="fs-2 fw-bold text-success">@Model.Summary.NewlyRegisteredCatalogs</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm text-center p-3 bg-light">
+                <div class="text-muted small fw-semibold">UPDATED CATALOGS</div>
+                <div class="fs-2 fw-bold text-info">@Model.Summary.UpdatedCatalogs</div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm text-center p-3 bg-light">
+                <div class="text-muted small fw-semibold">MIGRATIONS APPLIED</div>
+                <div class="fs-2 fw-bold text-primary">@Model.Summary.SuccessfulMigrations</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Sync & Migration Execution Log</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Database Catalog</th>
+                                    <th>Organization Name</th>
+                                    <th>Tenant Key</th>
+                                    <th>Domain</th>
+                                    <th>Migration Status</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Summary.Results)
+                                {
+                                    <tr>
+                                        <td><code>@item.DatabaseName</code></td>
+                                        <td><strong>@item.OrganizationName</strong></td>
+                                        <td><span class="badge bg-secondary">@item.TenantKey</span></td>
+                                        <td>@item.PrimaryDomain</td>
+                                        <td>
+                                            @if (item.MigrationSucceeded)
+                                            {
+                                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i> Warning</span>
+                                            }
+                                        </td>
+                                        <td><small class="text-muted">@item.StatusMessage</small></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

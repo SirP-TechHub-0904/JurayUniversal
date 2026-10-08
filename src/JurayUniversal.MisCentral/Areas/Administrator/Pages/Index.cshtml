@@ -1,0 +1,143 @@
+@page
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.IndexModel
+@{
+    ViewData["Title"] = "Administrator Control Hub";
+    Layout = "_MisMasterLayout";
+}
+
+<div class="space-y-6">
+
+    <!-- Top Notification Banner -->
+    <div class="bg-gradient-to-r from-[#0069A1] to-[#0A2540] p-6 rounded-2xl text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider mb-2">
+                <i class="bi bi-shield-lock-fill"></i> Central Multi-Tenant Controller
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Master Platform Administration</h1>
+            <p class="text-blue-100 text-sm mt-1">Sovereign database isolation engine, automated tenant provisioning, and module feature subscription manager.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a asp-page="/Tenants/Sync" class="inline-flex items-center px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-xl shadow transition-colors text-decoration-none">
+                <i class="bi bi-arrow-repeat me-2"></i> Sync & Migrate All DBs
+            </a>
+            <a asp-page="/Tenants/Create" class="inline-flex items-center px-4 py-2.5 bg-white text-[#0069A1] hover:bg-blue-50 text-sm font-bold rounded-xl shadow transition-colors text-decoration-none">
+                <i class="bi bi-plus-circle me-2"></i> Provision Tenant
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Stats Metric Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-blue-50 text-[#0069A1] rounded-xl flex items-center justify-center text-2xl">
+                <i class="bi bi-buildings"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Registered Tenants</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Catalogs.Count</p>
+                <span class="text-[11px] text-emerald-600 font-medium"><i class="bi bi-check-circle"></i> @Model.Catalogs.Count(c => c.IsActive) Active</span>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl">
+                <i class="bi bi-database"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Isolated DBs</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Catalogs.Select(c => c.DatabaseName).Distinct().Count()</p>
+                <span class="text-[11px] text-gray-400 font-medium">100% Isolated Catalogs</span>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl">
+                <i class="bi bi-puzzle"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Modules</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Catalogs.Sum(c => c.FeatureSubscriptions.Count(f => f.IsEnabled))</p>
+                <span class="text-[11px] text-gray-400 font-medium">Across All Tenants</span>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl">
+                <i class="bi bi-globe"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Custom Domains</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Catalogs.Count(c => !string.IsNullOrEmpty(c.CustomDomain))</p>
+                <span class="text-[11px] text-gray-400 font-medium">Domain Routing Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tenant Master Catalog Table -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <div>
+                <h3 class="font-bold text-gray-900 text-base">Active Tenant Catalog Registry</h3>
+                <p class="text-xs text-gray-500">Live directory of organization workspaces managed on Exwhyzee MIS Central</p>
+            </div>
+            <a asp-page="/Tenants/Index" class="text-xs font-semibold text-[#0069A1] hover:underline flex items-center gap-1">
+                View Full Directory <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50/75 text-xs text-gray-500 uppercase font-semibold border-b border-gray-100">
+                    <tr>
+                        <th class="px-6 py-3.5">Organization</th>
+                        <th class="px-6 py-3.5">Tenant Slug</th>
+                        <th class="px-6 py-3.5">Domain</th>
+                        <th class="px-6 py-3.5">Database Catalog</th>
+                        <th class="px-6 py-3.5">Status</th>
+                        <th class="px-6 py-3.5 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 font-normal">
+                    @foreach (var tenant in Model.Catalogs.Take(10))
+                    {
+                        <tr class="hover:bg-gray-50/50 transition-colors">
+                            <td class="px-6 py-4 font-bold text-gray-900">
+                                @tenant.OrganizationName
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="font-mono text-xs bg-gray-100 px-2 py-0.5 rounded text-gray-700">@tenant.TenantKey</span>
+                            </td>
+                            <td class="px-6 py-4 text-xs font-medium text-[#0069A1]">
+                                @tenant.PrimaryDomain
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="font-mono text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-100">
+                                    @tenant.DatabaseName
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                @if (tenant.IsActive)
+                                {
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700">
+                                        Suspended
+                                    </span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a asp-page="/Tenants/Details" asp-route-id="@tenant.Id" class="btn btn-sm btn-outline-primary py-1 px-2 text-xs">
+                                    Manage
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

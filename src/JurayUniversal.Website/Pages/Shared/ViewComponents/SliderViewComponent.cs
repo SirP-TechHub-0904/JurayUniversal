@@ -40,7 +40,10 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
             var topPages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainTop == true).ToListAsync();
             ViewBag.topPages = topPages;
 
-            var linkExternal = await _context.WebPages.Where(x => x.Publish == true && x.ShowInMainTop == false && x.EnableDirectUrl == true).ToListAsync();
+            //  Fixed (Only show in main menu if ShowInMainMenu is checked):
+            var linkExternal = await _context.WebPages
+                .Where(x => x.Publish == true && x.ShowInMainMenu == true && x.EnableDirectUrl == true)
+                .ToListAsync();
             ViewBag.linkExternal = linkExternal;
 
 

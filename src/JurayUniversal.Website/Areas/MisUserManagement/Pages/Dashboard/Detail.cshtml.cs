@@ -33,6 +33,7 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
         public List<MisUserFeatureRole> FeatureRoles { get; set; } = new();
         public List<MisKpiUserScore> KpiHistory { get; set; } = new();
         public List<MisUserNote> Notes { get; set; } = new();
+        public bool IsTwoFactorEnabled { get; set; }
 
         [BindProperty]
         public string NewNoteText { get; set; } = string.Empty;
@@ -56,6 +57,7 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
                 return NotFound();
             }
 
+            IsTwoFactorEnabled = await _userManager.GetTwoFactorEnabledAsync(UserProfile);
             FeatureRoles = await _userManagementRepo.GetUserFeatureRolesAsync(id);
             KpiHistory = await _userManagementRepo.GetUserScoreHistoryAsync(id);
             Notes = await _userManagementRepo.GetUserNotesAsync(id, includePrivate: true);
@@ -120,6 +122,35 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
             else
             {
                 TempData["error"] = "Failed to reset password: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            }
+
+            return RedirectToPage(new { id });
+        }
+
+        public async Task<IActionResult> OnPostDisable2faAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                TempData["error"] = "Invalid user ID.";
+                return RedirectToPage(new { id });
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+
+            if (result.Succeeded)
+            {
+                TempData["success"] = "Two-Factor Authentication (2FA) has been successfully disabled for this user.";
+            }
+            else
+            {
+                TempData["error"] = "Failed to disable 2FA: " + string.Join(", ", result.Errors.Select(e => e.Description));
             }
 
             return RedirectToPage(new { id });

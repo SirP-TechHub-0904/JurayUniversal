@@ -1,26 +1,39 @@
-﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<div class="flex items-center gap-3">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    var currentUser = await UserManager.GetUserAsync(User);
+    var email = currentUser?.Email ?? User.Identity?.Name ?? "Admin";
+    var initial = email.Length > 0 ? email.Substring(0, 1).ToUpper() : "A";
+
+    <div class="flex items-center gap-3">
+        <a href="/Administrator/Account/Manage" class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors group">
+            <div class="w-8 h-8 rounded-full bg-[#0069A1] text-white flex items-center justify-center font-bold text-xs">
+                @initial
+            </div>
+            <div class="hidden sm:block text-left">
+                <div class="text-xs font-semibold text-gray-800 leading-tight">@email</div>
+                <div class="text-[10px] text-gray-400 font-medium">Master Admin</div>
+            </div>
+        </a>
+
+        <form method="post" action="/Administrator/Account/Logout" class="inline">
+            <button type="submit" title="Sign Out" class="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors text-sm">
+                <i class="bi bi-box-arrow-right text-base"></i>
+            </button>
         </form>
-    </li>
+    </div>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <div class="flex items-center gap-2">
+        <a href="/Administrator/Account/Login" class="px-4 py-2 rounded-lg bg-[#0069A1] hover:bg-[#005a8c] text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+            <i class="bi bi-shield-lock-fill"></i> Central Staff Login
+        </a>
+    </div>
 }
-</ul>
+</div>
+
