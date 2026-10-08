@@ -1,0 +1,181 @@
+@page
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.IndexModel
+@{
+    ViewData["Title"] = "Tenant Workspaces Management";
+    Layout = "_MisMasterLayout";
+}
+
+<div class="space-y-6">
+
+    <!-- Header Actions Banner -->
+    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Organization Tenants &amp; Workspaces</h1>
+            <p class="text-sm text-gray-500 mt-1">Manage sovereign database instances, custom domains, and module access across the platform.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a asp-page="./Sync" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors text-decoration-none">
+                <i class="bi bi-arrow-repeat me-2"></i> Sync Databases &amp; Migrate
+            </a>
+            <a asp-page="./Create" class="inline-flex items-center px-4 py-2.5 bg-[#0069A1] hover:bg-[#005582] text-white text-sm font-semibold rounded-lg shadow-sm transition-colors text-decoration-none">
+                <i class="bi bi-plus-circle me-2"></i> Provision New Tenant
+            </a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium rounded-xl flex items-center gap-2">
+            <i class="bi bi-check-circle-fill text-emerald-600 text-base"></i>
+            <span>@Model.SuccessMessage</span>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="p-4 bg-red-50 border border-red-200 text-red-800 text-sm font-medium rounded-xl flex items-center gap-2">
+            <i class="bi bi-exclamation-triangle-fill text-red-600 text-base"></i>
+            <span>@Model.ErrorMessage</span>
+        </div>
+    }
+
+    <!-- Quick Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-blue-50 text-[#0069A1] rounded-xl flex items-center justify-center text-xl">
+                <i class="bi bi-buildings"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Tenants</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Tenants.Count</p>
+            </div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+                <i class="bi bi-check-circle"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Workspaces</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Tenants.Count(t => t.IsActive)</p>
+            </div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl">
+                <i class="bi bi-database"></i>
+            </div>
+            <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Isolated DBs</p>
+                <p class="text-2xl font-bold text-gray-900">@Model.Tenants.Select(t => t.DatabaseName).Distinct().Count()</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tenants Catalog Table -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-bold text-gray-900 text-base">Provisioned Tenant Catalog</h3>
+            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">@Model.Tenants.Count Total</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50/75 text-xs text-gray-500 uppercase font-semibold border-b border-gray-100">
+                    <tr>
+                        <th class="px-6 py-3.5">Organization / Slug</th>
+                        <th class="px-6 py-3.5">Domain Routing</th>
+                        <th class="px-6 py-3.5">Database Catalog</th>
+                        <th class="px-6 py-3.5">Features Active</th>
+                        <th class="px-6 py-3.5">Status</th>
+                        <th class="px-6 py-3.5 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 font-normal">
+                    @if (!Model.Tenants.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-400">
+                                <i class="bi bi-buildings fs-1 d-block mb-2 text-gray-300"></i>
+                                <p class="text-base font-medium text-gray-600">No tenants provisioned yet.</p>
+                                <p class="text-xs text-gray-400 mt-1">Click the button above to provision your first organization workspace directly from the admin console.</p>
+                                <a asp-page="./Create" class="inline-flex items-center px-4 py-2 mt-4 bg-[#0069A1] text-white text-xs font-semibold rounded-lg hover:bg-[#005582] transition-colors">
+                                    + Provision First Tenant
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var tenant in Model.Tenants)
+                        {
+                            <tr class="hover:bg-gray-50/50 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900 leading-tight">@tenant.OrganizationName</div>
+                                    <div class="text-xs text-gray-500 mt-0.5 flex items-center gap-1 font-mono">
+                                        <span class="px-1.5 py-0.5 bg-gray-100 rounded text-gray-600">@tenant.TenantKey</span>
+                                        @if (!string.IsNullOrEmpty(tenant.AdminEmail))
+                                        {
+                                            <span class="text-gray-400">·</span>
+                                            <span>@tenant.AdminEmail</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-xs font-medium text-[#0069A1] hover:underline">
+                                        <a href="@tenant.WebsiteUrl" target="_blank">@tenant.PrimaryDomain</a>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(tenant.CustomDomain))
+                                    {
+                                        <div class="text-[11px] text-gray-500 font-mono mt-0.5">
+                                            <i class="bi bi-globe me-1"></i> @tenant.CustomDomain
+                                        </div>
+                                    }
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-xs font-mono text-gray-700 bg-gray-50 px-2 py-1 rounded border border-gray-100 inline-block">
+                                        @tenant.DatabaseName
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-[#0069A1] border border-blue-100">
+                                        @tenant.FeatureSubscriptions.Count(f => f.IsEnabled) Modules
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (tenant.IsActive)
+                                    {
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                            Suspended
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a asp-page="./Features" asp-route-id="@tenant.Id" class="p-1.5 text-gray-500 hover:text-[#0069A1] hover:bg-blue-50 rounded-lg transition-colors" title="Manage Feature Modules">
+                                            <i class="bi bi-toggles text-base"></i>
+                                        </a>
+                                        <a asp-page="./Details" asp-route-id="@tenant.Id" class="p-1.5 text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="View Details">
+                                            <i class="bi bi-eye text-base"></i>
+                                        </a>
+                                        <a asp-page="./Edit" asp-route-id="@tenant.Id" class="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors" title="Edit Configuration">
+                                            <i class="bi bi-pencil-square text-base"></i>
+                                        </a>
+                                        <form method="post" asp-page-handler="ToggleStatus" asp-route-id="@tenant.Id" asp-route-isActive="@(!tenant.IsActive)" class="inline">
+                                            <button type="submit" class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="@(tenant.IsActive ? "Suspend Workspace" : "Activate Workspace")" onclick="return confirm('Are you sure you want to change this tenant status?');">
+                                                <i class="bi @(tenant.IsActive ? "bi-pause-circle" : "bi-play-circle") text-base"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

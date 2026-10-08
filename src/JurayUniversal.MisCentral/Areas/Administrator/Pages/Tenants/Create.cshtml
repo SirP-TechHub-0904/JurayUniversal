@@ -1,0 +1,194 @@
+@page
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Tenants.CreateModel
+@{
+    ViewData["Title"] = "Provision New Tenant Workspace";
+    Layout = "_MisMasterLayout";
+}
+
+<div class="max-w-4xl mx-auto space-y-6">
+
+    <!-- Header Banner -->
+    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+        <div>
+            <a asp-page="./Index" class="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1 mb-2 text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Back to Tenants Directory
+            </a>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Provision New Organization Tenant</h1>
+            <p class="text-sm text-gray-500 mt-1">Directly initialize a new database, execute schema migrations, configure admin credentials, and assign feature modules.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="p-4 bg-red-50 border border-red-200 text-red-800 text-sm font-medium rounded-xl flex items-center gap-2">
+            <i class="bi bi-exclamation-triangle-fill text-red-600 text-base"></i>
+            <span>@Model.ErrorMessage</span>
+        </div>
+    }
+
+    <form method="post" id="provisionForm">
+        <div class="space-y-6">
+
+            <!-- SECTION 1: Organization & Domain Identity -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div class="flex items-center gap-3 border-b border-gray-100 pb-4 mb-6">
+                    <div class="w-10 h-10 bg-blue-50 text-[#0069A1] rounded-lg flex items-center justify-center text-lg font-bold">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 leading-tight">Organization &amp; Domain Routing</h3>
+                        <p class="text-xs text-gray-500">Configure business identity and unique subdomain endpoint.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="md:col-span-2">
+                        <label asp-for="Input.OrganizationName" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Organization / Client Name <span class="text-red-500">*</span></label>
+                        <input asp-for="Input.OrganizationName" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="e.g. Urualla Clan Assembly" required />
+                        <span asp-validation-for="Input.OrganizationName" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.TenantKey" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Subdomain Slug Key <span class="text-red-500">*</span></label>
+                        <div class="flex rounded-lg shadow-sm">
+                            <input asp-for="Input.TenantKey" class="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-l-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none font-mono transition-all" placeholder="urualla" required />
+                            <span class="inline-flex items-center px-3 rounded-r-lg border border-l-0 border-gray-200 bg-gray-100 text-gray-500 text-xs font-mono">
+                                .jurayuniversal.com
+                            </span>
+                        </div>
+                        <span asp-validation-for="Input.TenantKey" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.CustomDomain" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Custom Domain (Optional)</label>
+                        <input asp-for="Input.CustomDomain" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all font-mono" placeholder="e.g. portal.uruallaclan.com" />
+                        <span asp-validation-for="Input.CustomDomain" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.Sector" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Sector / Category</label>
+                        <input asp-for="Input.Sector" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="e.g. Community &amp; Non-Profit" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Initial Administrator Account -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div class="flex items-center gap-3 border-b border-gray-100 pb-4 mb-6">
+                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center text-lg font-bold">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 leading-tight">Primary Administrator Account</h3>
+                        <p class="text-xs text-gray-500">Initial super administrative user credentials for this tenant workspace.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label asp-for="Input.AdminFirstName" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">First Name <span class="text-red-500">*</span></label>
+                        <input asp-for="Input.AdminFirstName" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="e.g. Jude" required />
+                        <span asp-validation-for="Input.AdminFirstName" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.AdminLastName" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Last Name <span class="text-red-500">*</span></label>
+                        <input asp-for="Input.AdminLastName" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="e.g. Ugokwe" required />
+                        <span asp-validation-for="Input.AdminLastName" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.AdminEmail" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Email Address (Login Username) <span class="text-red-500">*</span></label>
+                        <input asp-for="Input.AdminEmail" type="email" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all font-mono" placeholder="admin@organization.com" required />
+                        <span asp-validation-for="Input.AdminEmail" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Input.AdminPassword" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Initial Password <span class="text-red-500">*</span></label>
+                        <input asp-for="Input.AdminPassword" type="password" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all font-mono" placeholder="••••••••••••" required />
+                        <span asp-validation-for="Input.AdminPassword" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label asp-for="Input.PhoneNumber" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Phone Number</label>
+                        <input asp-for="Input.PhoneNumber" type="tel" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:bg-white focus:border-[#0069A1] focus:ring-1 focus:ring-[#0069A1] outline-none transition-all" placeholder="+234..." />
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Modular Feature Selection -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-lg font-bold">
+                            3
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-gray-900 leading-tight">Active MIS Feature Modules</h3>
+                            <p class="text-xs text-gray-500">Select which capabilities are unlocked for this organization.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="selectAllFeatures(true)" class="px-2.5 py-1 text-xs font-semibold text-[#0069A1] hover:bg-blue-50 rounded border border-blue-200 transition-colors">Select All</button>
+                        <button type="button" onclick="selectAllFeatures(false)" class="px-2.5 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded border border-gray-200 transition-colors">Clear All</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    @foreach (var feat in Model.AvailableFeatures)
+                    {
+                        <label class="flex items-start p-3.5 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50/50 cursor-pointer transition-all">
+                            <input type="checkbox" name="Input.SelectedFeatureKeys" value="@feat.FeatureKey" @(feat.IsCompulsory ? "checked disabled" : "checked") class="feature-checkbox mt-1 h-4 w-4 text-[#0069A1] rounded border-gray-300 focus:ring-[#0069A1]" />
+                            @if (feat.IsCompulsory)
+                            {
+                                <input type="hidden" name="Input.SelectedFeatureKeys" value="@feat.FeatureKey" />
+                            }
+                            <div class="ml-3">
+                                <div class="flex items-center gap-1.5">
+                                    <i class="bi @feat.IconClass text-primary"></i>
+                                    <span class="text-xs font-bold text-gray-900">@feat.Name</span>
+                                    @if (feat.IsCompulsory)
+                                    {
+                                        <span class="text-[10px] font-bold uppercase bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-200">Core</span>
+                                    }
+                                </div>
+                                <p class="text-xs text-gray-500 mt-0.5 leading-snug">@feat.Description</p>
+                            </div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Submit Button & Spinner -->
+            <div class="pt-2">
+                <button type="submit" id="submitBtn" class="w-full py-3.5 px-6 bg-[#0069A1] hover:bg-[#005582] text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-base">
+                    <i class="bi bi-rocket-takeoff-fill"></i>
+                    <span>Execute Auto-Provisioning Pipeline</span>
+                </button>
+                <div id="loadingIndicator" class="hidden text-center py-4 space-y-2">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#0069A1] border-t-transparent"></div>
+                    <p class="text-sm font-semibold text-gray-700">Provisioning isolated SQL database &amp; applying migrations... Please wait.</p>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function selectAllFeatures(selected) {
+            document.querySelectorAll('.feature-checkbox:not(:disabled)').forEach(cb => {
+                cb.checked = selected;
+            });
+        }
+
+        document.getElementById('provisionForm').addEventListener('submit', function() {
+            if ($(this).valid()) {
+                document.getElementById('submitBtn').classList.add('hidden');
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+            }
+        });
+    </script>
+}

@@ -310,11 +310,52 @@
                         <!-- TAB 5: Security -->
                         <div class="tab-pane fade" id="security" role="tabpanel">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h5 class="mb-0 text-dark">Account Security</h5>
+                                <h5 class="mb-0 text-dark">Account Security &amp; Access Controls</h5>
                             </div>
+
+                            <!-- Two-Factor Authentication (2FA) Card -->
+                            <div class="card bg-light border-0 mb-4">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">
+                                                <i class="bi bi-shield-check me-1 text-primary"></i> Two-Factor Authentication (2FA)
+                                            </h6>
+                                            <p class="text-muted fs-7 mb-0">
+                                                Status: 
+                                                @if (Model.IsTwoFactorEnabled)
+                                                {
+                                                    <span class="badge bg-success text-white px-2 py-1 ms-1">Enabled / Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary text-white px-2 py-1 ms-1">Disabled</span>
+                                                }
+                                            </p>
+                                        </div>
+                                        @if (Model.IsTwoFactorEnabled)
+                                        {
+                                            <form method="post" asp-page-handler="Disable2fa">
+                                                <input type="hidden" name="id" value="@Model.UserProfile.Id" />
+                                                <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('Are you sure you want to disable 2FA for this user? They will need to re-configure their authenticator app.');">
+                                                    <i class="bi bi-shield-x me-1"></i> Disable 2FA
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fs-13px fst-italic">2FA is not active on this account</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password Reset Card -->
                             <div class="card bg-light border-0">
                                 <div class="card-body p-4">
-                                    <h6 class="fw-bold mb-3">Reset User Password</h6>
+                                    <h6 class="fw-bold mb-3">
+                                        <i class="bi bi-key-fill me-1 text-warning"></i> Reset User Password
+                                    </h6>
                                     <form method="post" asp-page-handler="ResetPassword">
                                         <input type="hidden" name="id" value="@Model.UserProfile.Id" />
                                         <div class="mb-3">

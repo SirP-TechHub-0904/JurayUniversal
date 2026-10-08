@@ -27,6 +27,7 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform
         }
 
         public Profile UserProfile { get; set; } = null!;
+        public System.Collections.Generic.List<MisUserFeatureRole> AssignedRoles { get; set; } = new();
 
         [BindProperty]
         [Required]
@@ -75,6 +76,11 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Platform
             {
                 return NotFound();
             }
+
+            AssignedRoles = await _context.MisUserFeatureRoles
+                .Where(r => r.ProfileId == user.Id && r.IsActive)
+                .OrderBy(r => r.FeatureAreaKey)
+                .ToListAsync();
 
             FirstName = UserProfile.FirstName ?? string.Empty;
             LastName = UserProfile.LastName ?? string.Empty;

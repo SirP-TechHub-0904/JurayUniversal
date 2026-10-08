@@ -131,7 +131,12 @@ namespace JurayUniversal.Website.Areas.MisAuth.Pages.Auth
 
             var email = await _userManager.GetEmailAsync(user);
             var supersettings = await _context.SuperSettings.FirstOrDefaultAsync();
-            AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey, supersettings.CompanyNameAbbreviation.Replace(" ", "-"));
+            string businessName = !string.IsNullOrWhiteSpace(supersettings?.CompanyName)
+                ? supersettings.CompanyName
+                : (!string.IsNullOrWhiteSpace(supersettings?.CompanyNameAbbreviation)
+                    ? supersettings.CompanyNameAbbreviation
+                    : (!string.IsNullOrWhiteSpace(supersettings?.DashboardTitle) ? supersettings.DashboardTitle : "Assembly"));
+            AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey, businessName.Trim());
         }
 
         private string FormatKey(string unformattedKey)

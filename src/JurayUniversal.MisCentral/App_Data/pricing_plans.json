@@ -1,0 +1,62 @@
+[
+  {
+    "Id": "plan_starter",
+    "Name": "Starter Plan",
+    "Subtitle": "Perfect for small schools, single branches \u0026 growing businesses",
+    "MonthlyPrice": 150000,
+    "Currency": "\u20A6",
+    "BillingCycle": "month",
+    "IsPopular": false,
+    "SortOrder": 1,
+    "IsActive": true,
+    "FeaturesList": [
+      "100% Private Workspace",
+      "Up to 5 Features of Your Choice",
+      "Custom Web Portal Address",
+      "Daily Automatic Backups",
+      "Standard Email \u0026 WhatsApp Support"
+    ],
+    "CtaText": "Get Started Now",
+    "CtaPlanKey": "Starter"
+  },
+  {
+    "Id": "plan_growth",
+    "Name": "Growth Plan",
+    "Subtitle": "Ideal for secondary schools, colleges \u0026 established businesses",
+    "MonthlyPrice": 350000,
+    "Currency": "\u20A6",
+    "BillingCycle": "month",
+    "IsPopular": true,
+    "SortOrder": 2,
+    "IsActive": true,
+    "FeaturesList": [
+      "100% Private Dedicated Environment",
+      "Up to 10 Features of Your Choice",
+      "Custom Domain (portal.yourschool.com)",
+      "Online CBT Exams \u0026 E-Voting Portals",
+      "Priority 24/7 Phone \u0026 WhatsApp Support"
+    ],
+    "CtaText": "Get Started Now",
+    "CtaPlanKey": "Growth"
+  },
+  {
+    "Id": "plan_enterprise",
+    "Name": "Enterprise Plan",
+    "Subtitle": "For large universities, hospital networks \u0026 group organizations",
+    "MonthlyPrice": 750000,
+    "Currency": "\u20A6",
+    "BillingCycle": "month",
+    "IsPopular": false,
+    "SortOrder": 3,
+    "IsActive": true,
+    "FeaturesList": [
+      "Maximum Speed \u0026 Unlimited Storage",
+      "All 16 Features Included",
+      "Unlimited Staff, Students \u0026 User Accounts",
+      "Dedicated Account Manager \u0026 Staff Training",
+      "Custom Institutional Branding \u0026 Mobile Setup"
+    ],
+    "CtaText": "Contact Us",
+    "CtaPlanKey": "Enterprise"
+  }
+]

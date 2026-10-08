@@ -1,0 +1,569 @@
+@page "{id:long}"
+@model JurayUniversal.Website.Areas.MisUserManagement.Pages.CommunityForms.DetailsModel
+@inject JurayUniversal.Website.Services.IMisAuthorizationService MisAuth
+@{
+    ViewData["Title"] = $"Application: {Model.Submission.FullName}";
+    ViewData["Subtitle"] = "Complete Community & Clan Profiling Submission Record";
+    ViewData["ActiveMenu"] = "UserManagement";
+    ViewData["ActiveSubMenu"] = "CommunityForms";
+    bool canEdit = await MisAuth.CanEditAsync(User, "MisUserManagement");
+    var s = Model.Submission;
+}
+
+<style>
+    .detail-section-card {
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .detail-section-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        color: #0f172a;
+    }
+    .detail-section-header i {
+        color: #0077b6;
+    }
+    .detail-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 4px;
+    }
+    .detail-value {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #1e293b;
+    }
+</style>
+
+<div class="container-fluid px-0">
+    <!-- Top Action Bar -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <a asp-page="./Index" class="btn btn-light rounded-pill px-3 mb-2">
+                <i class="bi bi-arrow-left me-1"></i> Back to Applications
+            </a>
+            <h3 class="fw-bold mb-0">@s.FullName</h3>
+            <span class="badge bg-light text-dark border font-monospace mt-1">Ref: @(s.ReferenceNumber ?? $"#CF-{s.Id}")</span>
+            <span class="text-muted small ms-2">Submitted on @s.CreatedAtUtc.ToString("dddd, MMMM dd, yyyy HH:mm") UTC</span>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="button" onclick="window.print()" class="btn btn-outline-secondary rounded-pill px-3">
+                <i class="bi bi-printer me-1"></i> Print / Save PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Column: All 10 Sections -->
+        <div class="col-lg-8">
+
+            <!-- 1. Basic Information -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-person-vcard fs-5"></i>
+                    <span>1. Basic Information</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Full Name</div>
+                            <div class="detail-value">@s.FullName</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Preferred Name / Alias</div>
+                            <div class="detail-value">@(s.PreferredName ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Gender</div>
+                            <div class="detail-value">@(s.Gender ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Date of Birth</div>
+                            <div class="detail-value">@(s.DateOfBirth?.ToString("MMMM dd, yyyy") ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Marital Status</div>
+                            <div class="detail-value">@(s.MaritalStatus ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Phone Number</div>
+                            <div class="detail-value text-primary fw-bold">@s.PhoneNumber</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Email Address</div>
+                            <div class="detail-value">@(s.Email ?? "-")</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="detail-label">Current Residential Address</div>
+                            <div class="detail-value">@(s.ResidentialAddress ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">State / Country of Residence</div>
+                            <div class="detail-value">@(s.StateCountryOfResidence ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Family Information -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-people fs-5"></i>
+                    <span>2. Family Information</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Father's Full Name</div>
+                            <div class="detail-value">@(s.FatherFullName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Mother's Full Name</div>
+                            <div class="detail-value">@(s.MotherFullName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Name of Family / Kindred</div>
+                            <div class="detail-value">@(s.FamilyKindredName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Name of Clan</div>
+                            <div class="detail-value">@(s.ClanName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Spouse's Name</div>
+                            <div class="detail-value">@(s.SpouseName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Number of Children</div>
+                            <div class="detail-value">@(s.NumberOfChildren?.ToString() ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Names of Children</div>
+                            <div class="detail-value">@(s.ChildrenNames ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Relationship to Clan / Community</div>
+                            <div class="detail-value">@(s.RelationshipToCommunity ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Ancestral Information & Family Tree -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-diagram-3 fs-5"></i>
+                    <span>3. Ancestral Information &amp; Family Tree</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Father's Village / Town</div>
+                            <div class="detail-value">@(s.FatherVillageTown ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Mother's Village / Town</div>
+                            <div class="detail-value">@(s.MotherVillageTown ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Family Compound</div>
+                            <div class="detail-value">@(s.FamilyCompound ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Kindred / Lineage</div>
+                            <div class="detail-value">@(s.KindredLineage ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Name of Family Head</div>
+                            <div class="detail-value">@(s.FamilyHeadName ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Ancestral Home</div>
+                            <div class="detail-value">@(s.AncestralHome ?? "-")</div>
+                        </div>
+
+                        <!-- Family tree box -->
+                        <div class="col-12 mt-3">
+                            <div class="p-3 bg-light rounded-3 border">
+                                <span class="fw-bold text-dark d-block mb-3"><i class="bi bi-diagram-2 me-2 text-primary"></i>Family Tree Lineage</span>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="detail-label">Paternal Grandfather</div>
+                                        <div class="detail-value">@(s.PaternalGrandfather ?? "-")</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-label">Paternal Grandmother</div>
+                                        <div class="detail-value">@(s.PaternalGrandmother ?? "-")</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-label">Maternal Grandfather</div>
+                                        <div class="detail-value">@(s.MaternalGrandfather ?? "-")</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="detail-label">Maternal Grandmother</div>
+                                        <div class="detail-value">@(s.MaternalGrandmother ?? "-")</div>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <div class="detail-label">Known Great-Grandparents</div>
+                                        <div class="detail-value">@(s.GreatGrandparents ?? "-")</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="detail-label">Known Family History</div>
+                            <div class="detail-value bg-light p-3 rounded-3">@(s.FamilyHistory ?? "No notes provided.")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Other Related Families / Kindreds</div>
+                            <div class="detail-value">@(s.RelatedFamilies ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Education -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-mortarboard fs-5"></i>
+                    <span>4. Education</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Highest Qualification</div>
+                            <div class="detail-value">@(s.HighestQualification ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">School / Institution</div>
+                            <div class="detail-value">@(s.Institution ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Course / Field of Study</div>
+                            <div class="detail-value">@(s.FieldOfStudy ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Current Course of Study</div>
+                            <div class="detail-value">@(s.CurrentCourseOfStudy ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Professional Certifications</div>
+                            <div class="detail-value">@(s.ProfessionalCertifications ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Employment & Business -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-briefcase fs-5"></i>
+                    <span>5. Employment &amp; Business</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Current Occupation</div>
+                            <div class="detail-value">@(s.CurrentOccupation ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Employer / Organisation</div>
+                            <div class="detail-value">@(s.Employer ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Position / Job Title</div>
+                            <div class="detail-value">@(s.JobTitle ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Years of Experience</div>
+                            <div class="detail-value">@(s.YearsOfExperience?.ToString() ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Business Name</div>
+                            <div class="detail-value">@(s.BusinessName ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Business Type</div>
+                            <div class="detail-value">@(s.BusinessType ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Business Location</div>
+                            <div class="detail-value">@(s.BusinessLocation ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Professional Skills</div>
+                            <div class="detail-value">@(s.ProfessionalSkills ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Skills & Expertise -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-lightbulb fs-5"></i>
+                    <span>6. Skills &amp; Expertise</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="detail-label">Areas of Expertise</div>
+                            <div class="detail-value">
+                                @if (!string.IsNullOrEmpty(s.ExpertiseAreas))
+                                {
+                                    @foreach (var exp in s.ExpertiseAreas.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                                    {
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1 px-3 py-2 rounded-pill">@exp</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Other Skills / Expertise</div>
+                            <div class="detail-value">@(s.OtherExpertise ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Willing to Offer Skills for Clan Development</div>
+                            <div class="detail-value">
+                                @if (s.WillingToOfferSkills == "Yes")
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill"><i class="bi bi-check-circle me-1"></i> Yes</span>
+                                }
+                                else if (s.WillingToOfferSkills == "Maybe")
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill"><i class="bi bi-question-circle me-1"></i> Maybe</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">@(s.WillingToOfferSkills ?? "No")</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Community Participation -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-award fs-5"></i>
+                    <span>7. Community Participation</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Current Community / Clan Position</div>
+                            <div class="detail-value">@(s.CurrentCommunityPosition ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Previous Leadership Positions</div>
+                            <div class="detail-value">@(s.PreviousLeadershipPositions ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Membership of Community Associations</div>
+                            <div class="detail-value">@(s.CommunityAssociations ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Contributions to Community Development</div>
+                            <div class="detail-value bg-light p-3 rounded-3">@(s.CommunityContributions ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Contribution Interests</div>
+                            <div class="detail-value">@(s.ContributionInterests ?? "-")</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Volunteer Interests</div>
+                            <div class="detail-value">@(s.VolunteerInterests ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Contact & Emergency -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-telephone-plus fs-5"></i>
+                    <span>8. Contact &amp; Emergency Information</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Primary Phone</div>
+                            <div class="detail-value">@s.PhoneNumber</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Alternative Phone</div>
+                            <div class="detail-value">@(s.AlternativePhone ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Emergency Contact Name</div>
+                            <div class="detail-value">@(s.EmergencyContactName ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Emergency Contact Phone</div>
+                            <div class="detail-value">@(s.EmergencyContactPhone ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="detail-label">Relationship to Emergency Contact</div>
+                            <div class="detail-value">@(s.EmergencyContactRelationship ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Optional Personal Information -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-info-circle fs-5"></i>
+                    <span>9. Optional Personal Information</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-label">Social Media / Profile Link</div>
+                            <div class="detail-value">
+                                @if (!string.IsNullOrEmpty(s.SocialProfileLink))
+                                {
+                                    <a href="@s.SocialProfileLink" target="_blank" rel="noopener noreferrer">@s.SocialProfileLink</a>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-label">Languages Spoken</div>
+                            <div class="detail-value">@(s.LanguagesSpoken ?? "-")</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-label">Hobbies / Interests</div>
+                            <div class="detail-value">@(s.Hobbies ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Consent -->
+            <div class="detail-section-card">
+                <div class="detail-section-header text-success">
+                    <i class="bi bi-shield-check fs-5 text-success"></i>
+                    <span>10. Declaration &amp; Consent</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-check-circle-fill text-success fs-3"></i>
+                        <div>
+                            <span class="fw-bold text-dark d-block">Consent Confirmed and Acknowledged</span>
+                            <span class="text-muted small">Applicant accepted terms on @(s.ConsentDateUtc?.ToString("MMMM dd, yyyy HH:mm") ?? s.CreatedAtUtc.ToString("MMMM dd, yyyy HH:mm")) UTC (IP: @(s.SubmittedFromIp ?? "Unknown"))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Column: Photo, Status, Admin Review -->
+        <div class="col-lg-4">
+            <!-- Profile Photo Card -->
+            <div class="detail-section-card text-center p-4">
+                @if (!string.IsNullOrEmpty(s.PassportPhotoUrl))
+                {
+                    <img src="@s.PassportPhotoUrl" alt="@s.FullName" class="img-fluid rounded-4 shadow-sm mb-3 object-fit-cover" style="max-height: 260px; width: 100%;" />
+                }
+                else
+                {
+                    <div class="bg-light rounded-4 d-flex align-items-center justify-content-center mx-auto mb-3" style="height: 180px; width: 100%;">
+                        <div class="text-muted">
+                            <i class="bi bi-person-bounding-box fs-1 text-muted text-opacity-50"></i>
+                            <div class="small mt-2">No Passport Photo Uploaded</div>
+                        </div>
+                    </div>
+                }
+                <h5 class="fw-bold mb-1">@s.FullName</h5>
+                <p class="text-muted small mb-0">@(s.CurrentOccupation ?? s.ClanName ?? "Community Member")</p>
+            </div>
+
+            <!-- Review & Approval Workflow Card -->
+            <div class="detail-section-card">
+                <div class="detail-section-header">
+                    <i class="bi bi-sliders fs-5"></i>
+                    <span>Verification &amp; Review</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="detail-label">Current Status</div>
+                        @if (s.Status == "Approved")
+                        {
+                            <span class="badge bg-success bg-opacity-10 text-success fs-6 px-3 py-2 rounded-pill d-inline-block">
+                                <i class="bi bi-check-circle-fill me-1"></i> Approved
+                            </span>
+                        }
+                        else if (s.Status == "Rejected")
+                        {
+                            <span class="badge bg-danger bg-opacity-10 text-danger fs-6 px-3 py-2 rounded-pill d-inline-block">
+                                <i class="bi bi-x-circle-fill me-1"></i> Rejected
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning bg-opacity-10 text-warning fs-6 px-3 py-2 rounded-pill d-inline-block">
+                                <i class="bi bi-hourglass-split me-1"></i> Pending Review
+                            </span>
+                        }
+                    </div>
+
+                    @if (s.ReviewedAtUtc.HasValue)
+                    {
+                        <div class="mb-3 small text-muted">
+                            <div>Last Reviewed: @s.ReviewedAtUtc.Value.ToString("MMM dd, yyyy HH:mm")</div>
+                            @if (!string.IsNullOrEmpty(s.ReviewedByUserId))
+                            {
+                                <div>Reviewed By: @s.ReviewedByUserId</div>
+                            }
+                        </div>
+                    }
+
+                    @if (canEdit)
+                    {
+                        <form method="post">
+                            <div class="mb-3">
+                                <label class="detail-label">Admin Notes / Remarks</label>
+                                <textarea name="AdminNotes" rows="3" class="form-control" placeholder="Internal remarks regarding this profile...">@Model.AdminNotes</textarea>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" asp-page-handler="UpdateStatus" asp-route-id="@s.Id" asp-route-status="Approved" class="btn btn-success rounded-pill">
+                                    <i class="bi bi-check-lg me-1"></i> Approve Application
+                                </button>
+                                <button type="submit" asp-page-handler="UpdateStatus" asp-route-id="@s.Id" asp-route-status="Rejected" class="btn btn-outline-danger rounded-pill">
+                                    <i class="bi bi-x-lg me-1"></i> Reject Application
+                                </button>
+                                @if (s.Status != "Pending")
+                                {
+                                    <button type="submit" asp-page-handler="UpdateStatus" asp-route-id="@s.Id" asp-route-status="Pending" class="btn btn-outline-secondary rounded-pill btn-sm">
+                                        Reset to Pending
+                                    </button>
+                                }
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿@model JurayUniversal.Domain.Models.Setting
+@model JurayUniversal.Domain.Models.Setting
 @using System.Text.RegularExpressions;
 @using JurayUniversal.Application.Services;
 
@@ -280,14 +280,7 @@
                             </li>
                         }
                     }
-                    @foreach (var item in ViewBag.linkExternalDropdown)
-                    {
-                        <li>
-                            <a href="@item.DirectUrl">@item.Title</a>
 
-                        </li>
-
-                    }
 
                     @if (xsetting.AddBlogToMenu == true)
                     {
@@ -658,14 +651,6 @@ else if (supersetting.TemplateLayoutKey == "Layout4444")
 
                     }
 
-                    @foreach (var item in ViewBag.linkExternal)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="@item.DirectUrl">@item.Title</a>
-
-                        </li>
-
-                    }
                     @if (xsetting.AddBlogToMenu == true)
                     {
                         <li class="nav-item">
@@ -869,14 +854,7 @@ else if (supersetting.TemplateLayoutKey == "Layout12121212")
                                                 </li>
                                             }
                                         }
-                                        @foreach (var item in ViewBag.linkExternalDropdown)
-                                        {
-                                            <li class="menu-item">
-                                                <a href="@item.DirectUrl">@item.Title</a>
 
-                                            </li>
-
-                                        }
 
                                         @if (xsetting.AddBlogToMenu == true)
                                         {
@@ -1214,12 +1192,6 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 }
                             }
 
-                            @foreach (var item in ViewBag.linkExternalDropdown)
-                            {
-                                <li>
-                                    <a href="@item.DirectUrl">@item.Title</a>
-                                </li>
-                            }
                             @if (xsetting.AddBlogToMenu == true)
                             {
                                 <li>
@@ -1463,12 +1435,6 @@ else if (supersetting.TemplateLayoutKey == "Layout13131313")
                                 }
                             }
 
-                            @foreach (var item in ViewBag.linkExternalDropdown)
-                            {
-                                <li>
-                                    <a href="@item.DirectUrl">@item.Title</a>
-                                </li>
-                            }
                             @if (xsetting.AddBlogToMenu == true)
                             {
                                 <li>

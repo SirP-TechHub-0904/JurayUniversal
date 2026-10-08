@@ -222,6 +222,9 @@ public class DashboardDbContext : IdentityDbContext<Profile, AppRole, string>
     public DbSet<MisUserNote> MisUserNotes { get; set; }
     public DbSet<MisActivityLog> MisActivityLogs { get; set; }
 
+    // --- MIS: Community Form (User Management extension) ---
+    public DbSet<MisCommunityFormSubmission> MisCommunityFormSubmissions { get; set; }
+
     // --- MIS: Committees & Groups Feature ---
     public DbSet<MisGroup> MisGroups { get; set; }
     public DbSet<MisGroupMember> MisGroupMembers { get; set; }

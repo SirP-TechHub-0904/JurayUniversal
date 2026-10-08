@@ -76,10 +76,10 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
             AssignedRoles = await _userManagementRepo.GetUserFeatureRolesAsync(id);
 
-            // Populate system features list (18 active modules)
+            // Populate system features list including Core Admin and MIS active modules
             SystemFeatures = new List<string>
             {
-                "MisAlumni", "MisConfiguration", "MisFinances", "MisFleet", 
+                "Admin", "MisAlumni", "MisConfiguration", "MisFinances", "MisFleet", 
                 "MisForms", "MisGrants", "MisGroups", "MisManagement", 
                 "MisManual", "MisMassComm", "MisNewsletter", "MisProjects", 
                 "MisProposals", "MisRecruitment", "MisReports", "MisTicketing", 
@@ -119,6 +119,29 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
             await _userManagementRepo.AssignFeatureRoleAsync(dto);
 
+            // Handle system admin role synchronization
+            if (SelectedFeatureKey.Equals("Admin", System.StringComparison.OrdinalIgnoreCase))
+            {
+                var targetUser = await _userManager.FindByIdAsync(id);
+                if (targetUser != null)
+                {
+                    if (SelectedActionRole == (int)MisActionRole.GlobalEditor)
+                    {
+                        if (!await _userManager.IsInRoleAsync(targetUser, "Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(targetUser, "Admin");
+                        }
+                    }
+                    else
+                    {
+                        if (await _userManager.IsInRoleAsync(targetUser, "Admin"))
+                        {
+                            await _userManager.RemoveFromRoleAsync(targetUser, "Admin");
+                        }
+                    }
+                }
+            }
+
             TempData["success"] = "Feature permission assigned successfully!";
             return RedirectToPage(new { id });
         }
@@ -134,6 +157,16 @@ namespace JurayUniversal.Website.Areas.MisUserManagement.Pages.Dashboard
 
             if (roleId > 0)
             {
+                var existingRole = await _context.MisUserFeatureRoles.FindAsync(roleId);
+                if (existingRole != null && existingRole.FeatureAreaKey.Equals("Admin", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    var targetUser = await _userManager.FindByIdAsync(id);
+                    if (targetUser != null && await _userManager.IsInRoleAsync(targetUser, "Admin"))
+                    {
+                        await _userManager.RemoveFromRoleAsync(targetUser, "Admin");
+                    }
+                }
+
                 await _userManagementRepo.RevokeFeatureRoleAsync(roleId);
                 TempData["success"] = "Feature permission revoked successfully!";
             }

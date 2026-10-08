@@ -1,231 +1,813 @@
 @page
 @model JurayUniversal.MisCentral.Pages.IndexModel
 @{
-    Layout = "~/Pages/Shared/Layouts/_MisMasterLayout.cshtml";
-    ViewData["Title"] = "Multi-Database Central Control";
-    ViewData["Subtitle"] = "Overview & Billing Analytics";
+    ViewData["Title"] = "Exwhyzee MIS Cloud Architecture";
+    Layout = "_PublicLayout";
 }
 
-<div class="container-fluid p-0">
-
-    <!-- CUMULATIVE METRICS ROW -->
-    <div class="row g-3 mb-4">
-        <!-- Total Websites -->
-        <div class="col-md-6 col-lg-3">
-            <div class="card p-3 border-start border-4 border-primary">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Registered Databases</span>
-                        <h3 class="fw-bold mb-0 mt-1">@Model.Summary.TotalWebsitesCount</h3>
-                        <small class="text-success"><i class="fa fa-circle me-1" style="font-size: 0.5rem;"></i>@Model.Summary.TotalOnlineCount Connected Online</small>
+<!-- slider-area -->
+<section class="slider__area fix">
+    <div class="swiper-container slider__active" id="heroSlider" data-swiper-options='{
+        "loop": true,
+        "effect": "fade",
+        "autoplay": { "delay": 5000 },
+        "breakpoints": {
+            "0": { "spaceBetween": 0, "slidesPerView": 1 },
+            "375": { "spaceBetween": 0, "slidesPerView": 1 },
+            "575": { "spaceBetween": 0, "slidesPerView": 1 },
+            "768": { "spaceBetween": 0, "slidesPerView": 1 },
+            "992": { "spaceBetween": 0, "slidesPerView": 1 },
+            "1400": { "spaceBetween": 0, "slidesPerView": 1 }
+        },
+        "pagination": {
+            "el": ".slider-pagination",
+            "clickable": true
+        }}'>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="slider__bg">
+                    <div class="slider__bg-img" data-background="/xyz-mis/assets/img/slider/slider_bg01.jpg"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="slider__content">
+                                    <span class="sub-title">Smart Cloud System</span>
+                                    <h2 class="title">Simple Management Software For Your Organization</h2>
+                                    <p>Easily manage schools, businesses, hospitals, staff records, payroll, and finances in one secure and easy-to-use platform.</p>
+                                    <div class="slider__btn">
+                                        <a asp-page="/Features" class="tg-btn">See All Features
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <a asp-page="/Contact" class="tg-btn white-btn">Request a Demo
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                        <i class="fa fa-database fs-4"></i>
+                    <div class="slider__shape">
+                        <img src="~/xyz-mis/assets/img/slider/slider_shape.svg" alt="shape">
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Enabled Features Ratio -->
-        <div class="col-md-6 col-lg-3">
-            <div class="card p-3 border-start border-4 border-success">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Active Modules Ratio</span>
-                        <h3 class="fw-bold mb-0 mt-1">@Model.Summary.TotalFeaturesEnabled <span class="fs-6 text-muted font-normal">/ @Model.Summary.TotalFeaturesAvailable</span></h3>
-                        <small class="text-muted">Total Enabled Features</small>
+            <div class="swiper-slide">
+                <div class="slider__bg">
+                    <div class="slider__bg-img" data-background="/xyz-mis/assets/img/slider/slider_bg02.jpg"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="slider__content">
+                                    <span class="sub-title">Safe &amp; Private</span>
+                                    <h2 class="title">100% Private, Secure &amp; Lightning Fast</h2>
+                                    <p>Every organization gets its own completely private, dedicated workspace. Your records and confidential files are protected and never mixed with anyone else.</p>
+                                    <div class="slider__btn">
+                                        <a asp-page="/About" class="tg-btn">Learn More
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <a asp-page="/Pricing" class="tg-btn white-btn">View Pricing
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-success bg-opacity-10 text-success p-3 rounded-circle">
-                        <i class="fa fa-cubes fs-4"></i>
+                    <div class="slider__shape">
+                        <img src="~/xyz-mis/assets/img/slider/slider_shape.svg" alt="shape">
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Cumulative Feature Billing Cost -->
-        <div class="col-md-6 col-lg-3">
-            <div class="card p-3 border-start border-4 border-info">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Cumulative Billing Cost</span>
-                        <h3 class="fw-bold mb-0 mt-1 text-primary">₦@Model.Summary.TotalCumulativeCost.ToString("N0")</h3>
-                        <small class="text-muted">Total Billing Value</small>
+            <div class="swiper-slide">
+                <div class="slider__bg">
+                    <div class="slider__bg-img" data-background="/xyz-mis/assets/img/slider/slider_bg03.jpg"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="slider__content">
+                                    <span class="sub-title">16 Ready-to-Use Features</span>
+                                    <h2 class="title">From School Portals to Staff Payroll &amp; Exams</h2>
+                                    <p>Get everything you need: Student Records, Payroll, Accounts &amp; Billing, Online Exams, Digital Voting, and SMS Alerts.</p>
+                                    <div class="slider__btn">
+                                        <a asp-page="/Contact" class="tg-btn">Request a Demo
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <a href="/Administrator/Account/Login" class="tg-btn white-btn">Admin Portal
+                                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-info bg-opacity-10 text-info p-3 rounded-circle">
-                        <i class="fa fa-receipt fs-4"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Urgent Renewal / Expiring Counter -->
-        <div class="col-md-6 col-lg-3">
-            <div class="card p-3 border-start border-4 border-warning">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem;">Urgent Renewals</span>
-                        <h3 class="fw-bold mb-0 mt-1 text-danger">@(Model.Summary.Expiring7DaysCount + Model.Summary.ExpiredCount)</h3>
-                        <small class="text-danger"><i class="fa fa-exclamation-triangle me-1"></i>@Model.Summary.Expiring7DaysCount in &lt; 7 Days, @Model.Summary.ExpiredCount Expired</small>
-                    </div>
-                    <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-circle">
-                        <i class="fa fa-bell fs-4"></i>
+                    <div class="slider__shape">
+                        <img src="~/xyz-mis/assets/img/slider/slider_shape.svg" alt="shape">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="slider-pagination"></div>
+</section>
+<!-- slider-area-end -->
 
-    <!-- PORTAL-SPECIFIC EXPIRATION WARNINGS FEED -->
-    @{
-        var allExpiring = Model.Summary.Tenants
-            .SelectMany(t => t.Features.Select(f => new { Tenant = t, Feature = f }))
-            .Where(x => x.Feature.Status != JurayUniversal.Domain.Enum.Enum.FeatureBillingStatus.Disabled && x.Feature.NextBillingDate.HasValue && x.Feature.DaysUntilExpiration <= 30)
-            .OrderBy(x => x.Feature.DaysUntilExpiration)
-            .ToList();
-    }
-
-    @if (allExpiring.Any())
-    {
-        <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="fa fa-clock text-warning fs-5"></i>
-                    <h6 class="fw-bold mb-0">Portal Feature Expiration Feed</h6>
-                </div>
-                <a href="/Expirations" class="btn btn-sm btn-outline-secondary rounded-pill">View All Schedule</a>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Portal / Website</th>
-                                <th>Feature Module</th>
-                                <th>Billing Cost</th>
-                                <th>Next Billing Date</th>
-                                <th>Status</th>
-                                <th class="text-end">Quick Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var alert in allExpiring.Take(5))
-                            {
-                                <tr>
-                                    <td>
-                                        <strong class="text-dark">@alert.Tenant.PrimaryDomain</strong>
-                                        <div class="small text-muted">Catalog: @alert.Tenant.CatalogName</div>
-                                    </td>
-                                    <td>
-                                        <span class="fw-medium text-dark">@alert.Feature.FeatureName</span>
-                                        <div class="small text-muted"><code>@alert.Feature.ModuleFolder</code></div>
-                                    </td>
-                                    <td class="fw-bold text-dark">₦@alert.Feature.CostPerDuration.ToString("N0") <small class="text-muted font-normal">/@alert.Feature.BillingDuration</small></td>
-                                    <td>@(alert.Feature.NextBillingDate?.ToString("MMM dd, yyyy") ?? "-")</td>
-                                    <td>
-                                        <span class="badge @alert.Feature.ExpirationStatusBadge px-2 py-1">
-                                            @alert.Feature.ExpirationStatusText
-                                        </span>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="@Model.GetConfigUrl(alert.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1">
-                                            Manage
-                                        </a>
-                                        <a href="@Model.GetMisUrl(alert.Tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
-                                            Access MIS
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    }
-
-    <!-- WEBSITE REGISTRY TABLE -->
-    <div class="card border-0 shadow-sm" id="websites">
-        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
-            <div>
-                <h6 class="fw-bold mb-0">Website Databases Registry</h6>
-                <small class="text-muted">Directly loaded from shared appsettings.json</small>
-            </div>
-            <a href="/FeaturePricing" class="btn btn-sm btn-outline-success rounded-pill">
-                <i class="fa fa-tags me-1"></i> Adjust Feature Pricing
-            </a>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Website / Domain</th>
-                            <th>Database Catalog</th>
-                            <th>Connection Status</th>
-                            <th>Active Features</th>
-                            <th>Total Cost</th>
-                            <th>Urgent Alerts</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var tenant in Model.Summary.Tenants)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="fw-bold text-dark">@tenant.PrimaryDomain</div>
-                                    @if (tenant.Domains.Count > 1)
-                                    {
-                                        <div class="small text-muted">+@(tenant.Domains.Count - 1) additional alias domain(s)</div>
-                                    }
-                                </td>
-                                <td>
-                                    <code>@tenant.CatalogName</code>
-                                </td>
-                                <td>
-                                    @if (tenant.IsOnline)
-                                    {
-                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-1">
-                                            <i class="fa fa-check-circle me-1"></i> Online
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-2 py-1" title="@tenant.StatusErrorMessage">
-                                            <i class="fa fa-times-circle me-1"></i> Connection Error
-                                        </span>
-                                    }
-                                </td>
-                                <td>
-                                    <span class="fw-bold">@tenant.EnabledFeatures</span> / @tenant.TotalFeatures
-                                </td>
-                                <td class="fw-bold text-success">
-                                    ₦@tenant.TotalCost.ToString("N0")
-                                </td>
-                                <td>
-                                    @if (tenant.UrgentExpiringCount > 0)
-                                    {
-                                        <span class="badge bg-danger rounded-pill">@tenant.UrgentExpiringCount Urgent</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-light text-muted border rounded-pill">Healthy</span>
-                                    }
-                                </td>
-                                <td class="text-end">
-                                    <a href="@Model.GetConfigUrl(tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1">
-                                        <i class="fa fa-sliders-h me-1"></i> Manage Config
-                                    </a>
-                                    <a href="@Model.GetMisUrl(tenant.PrimaryDomain)" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">
-                                        <i class="fa fa-sign-in-alt me-1"></i> Access MIS
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+<!-- brand-area -->
+<div class="brand__area fix">
+    <div class="brand__active swiper-container fix" id="brandSlider" data-swiper-options='{
+        "loop": true,
+        "autoplay": { "delay": 2000 },
+        "breakpoints": {
+            "0": { "spaceBetween": 10, "slidesPerView": 2 },
+            "375": { "spaceBetween": 20, "slidesPerView": 2 },
+            "575": { "spaceBetween": 20, "slidesPerView": 3 },
+            "768": { "spaceBetween": 10, "slidesPerView": 4 },
+            "992": { "spaceBetween": 20, "slidesPerView": 6 },
+            "1200": { "spaceBetween": 20, "slidesPerView": 7 },
+            "1400": { "spaceBetween": 20, "slidesPerView": 9 }
+        }}'>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_01.png" alt="Federal Ministry of Health Nigeria"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_02.png" alt="Federal Ministry of Budget and Economic Planning"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_03.png" alt="NIPSS Kuru"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_04.png" alt="Urualla.ng Community Portal"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_05.png" alt="Ekefin Financial Services"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_06.png" alt="Juray Smart Technologies"></div></div>
+            <div class="swiper-slide"><div class="brand__item"><img src="~/xyz-mis/assets/img/brand/brand_07.png" alt="Exwhyzee Technologies"></div></div>
         </div>
     </div>
-
 </div>
+<!-- brand-area-end -->
+
+<!-- about-area -->
+<section class="about__area section-pt-120 section-pb-100 fix">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <!-- Left Column: Single Image -->
+            <div class="col-lg-5 col-md-10 mx-auto">
+                <div class="about__img" data-sal="slide-right" data-sal-duration="700" data-sal-delay="100">
+                    <img src="~/xyz-mis/assets/img/images/about_img.jpg" alt="Exwhyzee MIS Cloud Workspace" class="main-img rounded-4 shadow-sm" style="width: 100%; object-fit: cover; max-height: 480px;">
+                    <div class="experience__wrap">
+                        <h2 class="count">16 <span>+</span></h2>
+                        <span class="text">Powerful <br> System Features</span>
+                    </div>
+                    <img src="~/xyz-mis/assets/img/images/about_shape.svg" alt="shape" class="shape rotateme">
+                </div>
+            </div>
+
+            <!-- Right Column: Clean Content -->
+            <div class="col-lg-7">
+                <div class="about__content ps-lg-4" data-sal="slide-left" data-sal-duration="700" data-sal-delay="100">
+                    <div class="section__title mb-20">
+                        <span class="sub-title text-primary fw-bold text-uppercase">Built For Growth</span>
+                        <h2 class="title fw-bold">Manage Your Entire Organization With Total Peace of Mind</h2>
+                    </div>
+                    <p class="text-muted fs-6 leading-relaxed mb-4">
+                        Exwhyzee MIS gives every school, hospital, and business their own private, secure system. Your student, financial, and staff records are completely private, always protected, and easy to access anytime, on any device.
+                    </p>
+                    
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light-subtle border">
+                            <div class="w-12 h-12 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center fs-4 flex-shrink-0" style="width: 48px; height: 48px;">
+                                <i class="flaticon-technical-support"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark fs-6 mb-1">100% Private Workspace</h5>
+                                <p class="text-muted text-xs mb-0">Your records, accounts, and student files are completely private and exclusively accessible only to your authorized staff.</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light-subtle border">
+                            <div class="w-12 h-12 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center fs-4 flex-shrink-0" style="width: 48px; height: 48px;">
+                                <i class="flaticon-settings"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark fs-6 mb-1">Pick What You Need</h5>
+                                <p class="text-muted text-xs mb-0">Easily enable the features you want: School Portal, Payroll, Accounts, Online Exams, or E-Voting.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <a asp-page="/Contact" class="tg-btn">
+                            Get Started Today
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                        <a asp-page="/Features" class="tg-btn white-btn">
+                            Explore All Features
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- about-area-end -->
+
+<!-- counter-area -->
+<section class="counter__area section-pb-140 fix">
+    <div class="container">
+        <div class="counter__item-wrap">
+            <div class="row gutter-y-40">
+                <div class="col-lg-4 col-md-4 col-6">
+                    <div class="counter__item">
+                        <h2 class="count"><span class="counter-number">100</span>%</h2>
+                        <p>Private &amp; Secure Data</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-6">
+                    <div class="counter__item">
+                        <h2 class="count"><span class="counter-number">99</span>.99%</h2>
+                        <p>Reliable Uptime</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-6">
+                    <div class="counter__item">
+                        <h2 class="count"><span class="counter-number">16</span></h2>
+                        <p>All-in-One Features</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- counter-area-end -->
+
+<!-- services-area -->
+<section class="services__area section-bg section-py-140 fix">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7">
+                <div class="section__title text-center mb-45" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
+                    <span class="sub-title">What You Can Do</span>
+                    <h2 class="title">16 Ready-to-Use Features For All Your Operations</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-it-service"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">School &amp; Student Portal</a></h2>
+                        <p>Admissions, student records, class attendance, timetables, report cards, and parent access.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="200">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-data-access"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">Accounting &amp; Invoicing</a></h2>
+                        <p>Track school fees, generate invoices, accept online card payments, and monitor expenses.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="300">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-coding"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">Staff &amp; Payroll</a></h2>
+                        <p>Automate monthly staff salary calculations, tax deductions, allowances, and payslips.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="100">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-technical-support"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">Digital Voting &amp; Elections</a></h2>
+                        <p>Simple and transparent electronic voting for alumni, associations, and student unions.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="200">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-inspiration"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">Online CBT Exams</a></h2>
+                        <p>Computer-based testing with question banks, automatic scoring, and instant result publishing.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-sal="slide-up" data-sal-duration="700" data-sal-delay="300">
+                <div class="services__item">
+                    <div class="services__icon-wrap">
+                        <div class="services__icon">
+                            <i class="flaticon-technology"></i>
+                        </div>
+                    </div>
+                    <div class="services__content">
+                        <h2 class="title"><a asp-page="/Features">SMS &amp; Email Alerts</a></h2>
+                        <p>Instantly send notifications, receipts, exam results, and bulk announcements to parents &amp; staff.</p>
+                        <a asp-page="/Features" class="tg-text-btn">See Details
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-50">
+            <div class="col-12 text-center" data-sal="slide-up" data-sal-duration="700" data-sal-delay="300">
+                <a asp-page="/Features" class="tg-btn" style="padding: 16px 38px; font-size: 1rem; border-radius: 50px;">
+                    Explore All 16 Features
+                    <svg width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-2">
+                        <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="services__shape">
+        <img src="~/xyz-mis/assets/img/images/services_shape.svg" alt="shape" class="alltuchtopdown">
+    </div>
+</section>
+<!-- services-area-end -->
+
+<!-- choose-area -->
+<section class="choose__area">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="choose__inner-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="choose__content">
+                                <div class="section__title white-title mb-15">
+                                    <span class="sub-title">Why Choose Us</span>
+                                    <h2 class="title">Built Simple, Fast &amp; Reliable For Your Team</h2>
+                                </div>
+                                <p>No complicated setups. We provide a clean interface, daily automated backups, and 24/7 technical support.</p>
+                                <a asp-page="/About" class="tg-btn white-btn">Learn More
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="choose__list list-wrap">
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-info fs-4 me-2"></i>
+                                    100% Private Workspace For Your Organization
+                                </li>
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-info fs-4 me-2"></i>
+                                    Works Smoothly On Mobile Phones &amp; Laptops
+                                </li>
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-info fs-4 me-2"></i>
+                                    Automatic Daily Backups &amp; Data Protection
+                                </li>
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-info fs-4 me-2"></i>
+                                    Custom Domain Name (e.g. portal.yourschool.com)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="choose__img" data-background="/xyz-mis/assets/img/slider/slider_bg03.jpg"></div>
+    <div class="choose__shape">
+        <img src="~/xyz-mis/assets/img/images/choose_shape.png" alt="shape">
+    </div>
+</section>
+<!-- choose-area-end -->
+
+<!-- counter-area-two -->
+<section class="counter__area-two">
+    <div class="container">
+        <div class="row gutter-y-30 justify-content-center">
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="counter__item-two">
+                    <div class="counter__icon">
+                        <i class="bi bi-shield-check text-primary fs-1"></i>
+                    </div>
+                    <div class="counter__content">
+                        <h2 class="count"><span class="counter-number">100</span>%</h2>
+                        <p>Private &amp; Safe</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="counter__item-two">
+                    <div class="counter__icon">
+                        <i class="bi bi-grid-3x3-gap-fill text-primary fs-1"></i>
+                    </div>
+                    <div class="counter__content">
+                        <h2 class="count"><span class="counter-number">16</span>+</h2>
+                        <p>Ready Features</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="counter__item-two">
+                    <div class="counter__icon">
+                        <i class="bi bi-speedometer2 text-primary fs-1"></i>
+                    </div>
+                    <div class="counter__content">
+                        <h2 class="count"><span class="counter-number">99</span>.9%</h2>
+                        <p>Fast &amp; Reliable</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="counter__item-two">
+                    <div class="counter__icon">
+                        <i class="bi bi-headset text-primary fs-1"></i>
+                    </div>
+                    <div class="counter__content">
+                        <h2 class="count">24/7</h2>
+                        <p>Friendly Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- counter-area-two-end -->
+
+<!-- marquee-area -->
+<section class="marquee__area fix">
+    <div class="slider__marquee clearfix marquee-wrap">
+        <div class="marquee_mode marquee__group">
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                School &amp; Student Portals
+            </h2>
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                Staff Payroll &amp; HR
+            </h2>
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                Online Exams &amp; CBT
+            </h2>
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                Fee Invoicing &amp; Card Payments
+            </h2>
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                Instant SMS &amp; Email Alerts
+            </h2>
+            <h2 class="marquee__item">
+                <svg class="rotateme" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4289 0H16.5711V6.76884L19.9561 0.90669L23.5445 2.97839L20.1595 8.84054L26.0216 5.45676L28.0933 9.04388L22.2312 12.4289H29V16.5711H22.2312L28.0933 19.9561L26.0216 23.5445L20.1595 20.1595L23.5445 26.0216L19.9561 28.0933L16.5711 22.2312V29H12.4289V22.2312L9.04388 28.0933L5.45548 26.0216L8.84054 20.1595L2.97839 23.5445L0.90669 19.9561L6.76884 16.5711H0V12.4289H6.76884L0.90669 9.04388L2.97839 5.45676L8.84054 8.84054L5.45676 2.97839L9.04388 0.90669L12.4289 6.76884V0Z" fill="currentColor" />
+                </svg>
+                100% Private &amp; Secure Workspaces
+            </h2>
+        </div>
+    </div>
+</section>
+<!-- marquee-area-end -->
+
+<!-- testimonial-area -->
+<section class="testimonial__area section-bg section-py-140 fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="testimonial__content-wrap">
+                    <div class="section__title mb-20">
+                        <span class="sub-title">Client Stories</span>
+                        <h2 class="title">Trusted by Leading Organizations &amp; Institutions</h2>
+                    </div>
+                    <p>Discover how government ministries, academic institutes, communities, and growing businesses rely on Exwhyzee MIS to simplify their daily records, payments, and operations.</p>
+                    <div class="testimonial__nav-wrap">
+                        <button class="testimonial-button-prev">
+                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.6924 10.5H1.30761M1.30761 10.5L10.5 1.30762M1.30761 10.5L10.5 19.6924" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button class="testimonial-button-next">
+                            <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.80761 10.1924H20.1924M20.1924 10.1924L11 1M20.1924 10.1924L11 19.3848" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="testimonial__item-wrap">
+                    <div class="swiper-container testimonial-active fix" id="testimonialSlider" data-swiper-options='{
+                        "loop": true,
+                        "autoplay": { "delay": 5000 },
+                        "breakpoints": {
+                            "0": { "spaceBetween": 10, "slidesPerView": 1 },
+                            "768": { "spaceBetween": 20, "slidesPerView": 2 },
+                            "1200": { "spaceBetween": 24, "slidesPerView": 2 }
+                        },
+                        "navigation": {
+                            "nextEl": ".testimonial-button-next",
+                            "prevEl": ".testimonial-button-prev"
+                        }}'>
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">Seamless Staff &amp; Health Records</h2>
+                                    <p>"Managing staff postings, clinic schedules, and institutional records across multiple departments is now seamless and completely stress-free."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar01.jpg" alt="Dr. Ibrahim Usman">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Dr. Ibrahim Usman</h2>
+                                            <span>Director of Health Records &amp; ICT, Federal Ministry of Health</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">Smooth Student &amp; Course Portals</h2>
+                                    <p>"Participant registration, lecture schedules, and result collation run effortlessly on Exwhyzee MIS without technical hitches or delays."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar02.jpg" alt="Prof. Anthony Okafor">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Prof. Anthony Okafor</h2>
+                                            <span>Head of Academic Operations, NIPSS Kuru</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">Clear Project Tracking &amp; Reports</h2>
+                                    <p>"The automated reporting and departmental workflow tools have given our management total clarity and timely execution on key projects."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar03.jpg" alt="Hajia Maryam Bello">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Hajia Maryam Bello</h2>
+                                            <span>Planning &amp; Operations Lead, Ministry of Budget &amp; Economic Planning</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">Transparent Online Voting</h2>
+                                    <p>"Over 15,000 members voted in our annual elections online from their mobile phones. It was 100% transparent, fast, and results were instant."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar04.jpg" alt="Chief Kingsley Anyanwu">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Chief Kingsley Anyanwu</h2>
+                                            <span>General Secretary, Urualla Community Development</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">Automated Invoicing &amp; Payroll</h2>
+                                    <p>"Monthly salary calculations, customer invoicing, and financial reconciliation that used to take days now happen automatically in minutes."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar05.jpg" alt="Joy Adetola">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Joy Adetola</h2>
+                                            <span>Head of Payroll &amp; Accounts, Ekefin Financial Services</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial__item">
+                                    <div class="rating">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <h2 class="title">100% Safe, Private &amp; Reliable</h2>
+                                    <p>"Every school and business gets their own dedicated, private environment with fast loading speeds and reliable 24/7 technical support."</p>
+                                    <div class="testimonial__avatar">
+                                        <div class="thumb">
+                                            <img src="~/xyz-mis/assets/img/images/testi_avatar06.jpg" alt="Engr. Emeka Nwankwo">
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="name">Engr. Emeka Nwankwo</h2>
+                                            <span>Lead Solutions Engineer, Juray Technologies</span>
+                                        </div>
+                                    </div>
+                                    <div class="shape">
+                                        <img src="~/xyz-mis/assets/img/images/testi_item_shape.svg" alt="shape">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- testimonial-area-end -->
+
+<!-- contact-area -->
+<section class="contact__area">
+    <div class="container">
+        <div class="contact__inner-wrap" style="background: linear-gradient(135deg, #0a1f44 0%, #0d6efd 100%);">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-sal="slide-right" data-sal-duration="700" data-sal-delay="100">
+                    <div class="contact__content">
+                        <div class="section__title white-title mb-15">
+                            <span class="sub-title">Quick Onboarding &amp; Demo</span>
+                            <h2 class="title">Ready to Upgrade Your Organization's Management?</h2>
+                        </div>
+                        <p class="text-white-50">Join leading schools, colleges, ministries, and businesses across Nigeria. Get a 100% private, customized workspace tailored for your operations.</p>
+                        <div class="contact__info-list mt-4 d-flex flex-column gap-3">
+                            <div class="d-flex align-items-center gap-3 p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-15">
+                                <div class="w-12 h-12 rounded-circle bg-white bg-opacity-20 text-white d-flex align-items-center justify-content-center fs-4 flex-shrink-0" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-headset text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="d-block text-white text-opacity-75 text-xs fw-semibold text-uppercase">Friendly Support Desk</span>
+                                    <a href="tel:+2348165680904" class="text-white fw-bold fs-5 text-decoration-none">+234 816 568 0904</a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center gap-3 p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-15">
+                                <div class="w-12 h-12 rounded-circle bg-white bg-opacity-20 text-white d-flex align-items-center justify-content-center fs-4 flex-shrink-0" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-envelope-check-fill text-white"></i>
+                                </div>
+                                <div>
+                                    <span class="d-block text-white text-opacity-75 text-xs fw-semibold text-uppercase">Email Onboarding</span>
+                                    <a href="mailto:support@exwhyzee.ng" class="text-white fw-bold fs-5 text-decoration-none">support@exwhyzee.ng</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-sal="slide-left" data-sal-duration="700" data-sal-delay="100">
+                    <div class="contact__form-wrap" style="background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+                        <form method="get" action="/Contact" class="contact__form">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <span class="badge bg-primary px-3 py-2 rounded-pill font-semibold"><i class="bi bi-clock-history me-1"></i> 24/7 Demo Booking</span>
+                                <h4 class="text-dark fw-bold mb-0">Book a Free Live Demo</h4>
+                            </div>
+                            <p class="text-muted text-sm mb-4">Enter your organization name below to start your personalized demo questionnaire.</p>
+                            
+                            <div class="form-grp mb-3">
+                                <label class="text-xs fw-bold text-dark text-uppercase mb-1">Organization / School Name</label>
+                                <input type="text" name="org" placeholder="e.g. Premier College Abuja" required class="form-control form-control-lg fs-6" style="border: 1px solid #ced4da; border-radius: 12px; padding: 12px 18px; color: #1e293b;">
+                            </div>
+                            <button type="submit" class="tg-btn w-100 text-center" style="border-radius: 12px; padding: 15px; font-weight: 700; font-size: 1rem;">
+                                Start Demo Questionnaire <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                            <div class="text-center mt-3">
+                                <span class="text-xs text-muted"><i class="bi bi-shield-check text-success me-1"></i> 100% Free &bull; No credit card required</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <img src="~/xyz-mis/assets/img/images/map.svg" alt="shape" class="shape">
+        </div>
+    </div>
+</section>
+<!-- contact-area-end -->

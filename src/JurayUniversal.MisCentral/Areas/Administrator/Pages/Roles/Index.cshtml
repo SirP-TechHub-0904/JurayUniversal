@@ -1,0 +1,98 @@
+@page "/Administrator/Roles"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Roles.IndexModel
+@{
+    Layout = "_MisMasterLayout";
+    ViewData["Title"] = "Master Central Roles";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Central Master Roles &amp; Permissions</h1>
+            <p class="text-sm text-gray-500">Configure administrative access roles governing the central multi-tenant hub.</p>
+        </div>
+        <a href="/Administrator/Users" class="px-3.5 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+            <i class="bi bi-people-fill"></i> View Central Staff
+        </a>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div class="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+            <i class="bi bi-check-circle-fill text-emerald-600"></i>
+            <span>@Model.StatusMessage</span>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
+            <i class="bi bi-exclamation-triangle-fill text-red-600"></i>
+            <span>@Model.ErrorMessage</span>
+        </div>
+    }
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Roles List -->
+        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                <span class="font-bold text-gray-800 text-sm">Defined Central Roles</span>
+                <span class="text-xs text-gray-400">@Model.Roles.Count Total Roles</span>
+            </div>
+            <div class="divide-y divide-gray-100">
+                @foreach (var role in Model.Roles)
+                {
+                    <div class="p-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900 text-sm flex items-center gap-2">
+                                    <span>@role.Name</span>
+                                    @if (role.IsSystemRole)
+                                    {
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-gray-100 text-gray-600 border border-gray-200">System</span>
+                                    }
+                                </div>
+                                <div class="text-xs text-gray-400">
+                                    @if (role.Name == "MasterSuperAdmin") { <span>Full administrative power over master &amp; tenants</span> }
+                                    else if (role.Name == "CentralAdmin") { <span>Tenant provisioning &amp; catalog management</span> }
+                                    else if (role.Name == "CentralSupport") { <span>Diagnostic support &amp; telemetry monitoring</span> }
+                                    else if (role.Name == "CentralAuditor") { <span>Compliance auditing &amp; usage reporting</span> }
+                                    else { <span>Custom administrator role</span> }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                                <i class="bi bi-person-fill"></i> @role.UserCount @(role.UserCount == 1 ? "Admin" : "Admins")
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Add Custom Role Form -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm h-fit">
+            <h2 class="text-sm font-bold text-gray-900 mb-1">Create Custom Central Role</h2>
+            <p class="text-xs text-gray-500 mb-4">Define a new role category for Central staff delegation.</p>
+
+            <form method="post" asp-page-handler="CreateRole">
+                <div class="space-y-3">
+                    <div>
+                        <label asp-for="Input.RoleName" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"></label>
+                        <input asp-for="Input.RoleName" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600" placeholder="e.g. CentralBillingAdmin" />
+                        <span asp-validation-for="Input.RoleName" class="text-red-500 text-xs mt-1 block"></span>
+                    </div>
+
+                    <button type="submit" class="w-full py-2.5 px-4 rounded-lg bg-[#0069A1] hover:bg-[#005a8c] text-white font-medium text-xs shadow-sm transition-all flex items-center justify-center gap-1.5">
+                        <i class="bi bi-plus-circle-fill"></i> Add Role
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

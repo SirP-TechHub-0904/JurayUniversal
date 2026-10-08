@@ -1,0 +1,71 @@
+@page
+@model JurayUniversal.MisCentral.Pages.CookiesModel
+@{
+    ViewData["Title"] = "Cookie Policy & Preferences";
+    Layout = "_PublicLayout";
+}
+
+<!-- breadcrumb-area -->
+<section class="breadcrumb__area breadcrumb__bg fix" data-background="/xyz-mis/assets/img/bg/breadcrumb_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb__content">
+                    <h2 class="title">Cookie Policy</h2>
+                    <nav class="breadcrumb">
+                        <span property="itemListElement" typeof="ListItem">
+                            <a asp-page="/Index">Home</a>
+                        </span>
+                        <span class="breadcrumb-separator">/</span>
+                        <span property="itemListElement" typeof="ListItem">Cookie Policy</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb-area-end -->
+
+<!-- cookies-content-area -->
+<section class="section-py-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill font-semibold mb-3">Cookie Notice</span>
+                    <h1 class="fw-bold text-gray-900 mb-4">Exwhyzee MIS Cookie Policy</h1>
+
+                    <p class="lead text-muted mb-4">We use cookies to make your browsing experience smoother, secure your portal login sessions, and remember your display preferences.</p>
+
+                    <hr class="my-4" />
+
+                    <h4 class="fw-bold text-gray-900 mt-4 mb-3">1. What Are Cookies?</h4>
+                    <p class="text-gray-600 leading-relaxed">Cookies are tiny text files stored on your computer or mobile device when you browse websites. They help web applications remember who you are so you don't have to re-enter your credentials on every single page.</p>
+
+                    <h4 class="fw-bold text-gray-900 mt-4 mb-3">2. Types of Cookies We Use</h4>
+                    <div class="space-y-3 mb-4">
+                        <div class="p-3 bg-light rounded-3 border">
+                            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-shield-check me-2"></i> Strictly Necessary Cookies</h6>
+                            <p class="text-gray-600 text-sm mb-0">Required for fundamental features such as logging in, security authentication tokens, and maintaining session state between portal screens.</p>
+                        </div>
+                        <div class="p-3 bg-light rounded-3 border">
+                            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-sliders me-2"></i> Functional &amp; Preference Cookies</h6>
+                            <p class="text-gray-600 text-sm mb-0">Help remember your selected display theme, language settings, and menu configurations.</p>
+                        </div>
+                        <div class="p-3 bg-light rounded-3 border">
+                            <h6 class="fw-bold text-primary mb-1"><i class="bi bi-graph-up me-2"></i> Performance &amp; Analytics</h6>
+                            <p class="text-gray-600 text-sm mb-0">Anonymous metrics that help our engineering team measure system speed and fix bugs.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="fw-bold text-gray-900 mt-4 mb-3">3. Managing Your Cookie Settings</h4>
+                    <p class="text-gray-600 leading-relaxed">You can customize or reset your cookie preferences at any time using the button below:</p>
+                    <button type="button" class="tg-btn btn-sm" onclick="resetCookieConsent()">
+                        <i class="bi bi-cookie me-1"></i> Reset Cookie Preferences
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- cookies-content-area-end -->

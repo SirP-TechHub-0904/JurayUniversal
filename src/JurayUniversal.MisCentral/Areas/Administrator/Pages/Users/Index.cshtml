@@ -1,0 +1,124 @@
+@page "/Administrator/Users"
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Users.IndexModel
+@{
+    Layout = "_MisMasterLayout";
+    ViewData["Title"] = "Central Master User Management";
+}
+
+<div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Master Central Staff &amp; Roles</h1>
+            <p class="text-sm text-gray-500">Manage independent administrator accounts with governance access across Central.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="/Administrator/Roles" class="px-4 py-2.5 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+                <i class="bi bi-shield-lock text-indigo-600"></i> Manage Central Roles
+            </a>
+            <a href="/Administrator/Users/Create" class="px-4 py-2.5 rounded-lg bg-[#0069A1] hover:bg-[#005a8c] text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+                <i class="bi bi-person-plus-fill"></i> + Add Central Staff
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Central Admins</div>
+            <div class="text-2xl font-bold text-gray-900">@Model.CentralUsers.Count</div>
+            <span class="text-xs text-blue-600 mt-1 block">Dedicated Central Identity Store</span>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Super Administrators</div>
+            <div class="text-2xl font-bold text-indigo-600">@Model.CentralUsers.Count(u => u.Roles.Contains("MasterSuperAdmin"))</div>
+            <span class="text-xs text-gray-500 mt-1 block">Full Platform Authority</span>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Active Status</div>
+            <div class="text-2xl font-bold text-emerald-600">@Model.CentralUsers.Count(u => !u.IsLockedOut)</div>
+            <span class="text-xs text-gray-500 mt-1 block">Unlocked &amp; operational</span>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 text-gray-600 text-xs font-semibold uppercase tracking-wider border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-3.5">Administrator</th>
+                        <th class="px-6 py-3.5">Assigned Roles</th>
+                        <th class="px-6 py-3.5">Account Status</th>
+                        <th class="px-6 py-3.5 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach (var user in Model.CentralUsers)
+                    {
+                        <tr class="hover:bg-gray-50/75 transition-colors">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                                        @(user.Email.Length > 0 ? user.Email.Substring(0, 1).ToUpper() : "U")
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-gray-900">@user.Email</div>
+                                        <div class="text-xs text-gray-400 font-mono">@user.UserName</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-wrap gap-1">
+                                    @if (user.Roles.Any())
+                                    {
+                                        @foreach (var role in user.Roles)
+                                        {
+                                            var badgeClass = role switch
+                                            {
+                                                "MasterSuperAdmin" => "bg-purple-100 text-purple-800 border-purple-200",
+                                                "CentralAdmin" => "bg-blue-100 text-blue-800 border-blue-200",
+                                                "CentralSupport" => "bg-emerald-100 text-emerald-800 border-emerald-200",
+                                                _ => "bg-gray-100 text-gray-700 border-gray-200"
+                                            };
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border @badgeClass">
+                                                @role
+                                            </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-xs text-gray-400 italic">No role assigned</span>
+                                    }
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                @if (user.IsLockedOut)
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        <i class="bi bi-lock-fill text-xs"></i> Locked
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                        <i class="bi bi-check-circle-fill text-xs"></i> Active
+                                    </span>
+                                }
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="inline-flex items-center gap-2">
+                                    <a href="/Administrator/Users/Edit?id=@user.Id" class="px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium shadow-xs transition-colors">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a href="/Administrator/Users/Delete?id=@user.Id" class="px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-medium transition-colors">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

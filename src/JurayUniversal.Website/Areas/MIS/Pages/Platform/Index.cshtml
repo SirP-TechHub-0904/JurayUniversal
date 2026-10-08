@@ -210,54 +210,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Feature Permissions Detailed View -->
-            <div class="premium-card mb-4">
-                <div class="card-header border-bottom bg-transparent p-4 d-flex align-items-center">
-                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                        <i class="bi bi-list-check fs-5"></i>
-                    </div>
-                    <h5 class="mb-0 fw-bold text-dark">Assigned Action Roles</h5>
-                </div>
-                <div class="card-body p-4">
-                    @if (Model.FeatureRoles.Count == 0)
-                    {
-                        <div class="text-center py-5">
-                            <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                                <i class="bi bi-shield-slash text-muted fs-1"></i>
-                            </div>
-                            <h5 class="fw-bold text-dark mb-2">No Access Roles Assigned</h5>
-                            <p class="text-muted mb-0 mx-auto" style="max-width: 400px;">You currently do not have any specific feature-level permission roles assigned to your account.</p>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="row g-3">
-                            @foreach (var role in Model.FeatureRoles)
-                            {
-                                <div class="col-12 col-md-6">
-                                    <div class="glass-role-card p-3 h-100 d-flex flex-column justify-content-between">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-primary text-white rounded p-2 me-3 shadow-sm">
-                                                <i class="bi bi-box fs-5"></i>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-0 fw-bold text-dark">@role.FeatureAreaKey</h6>
-                                                <small class="text-muted fw-semibold">Granted: @role.Date.ToString("MMM dd, yyyy")</small>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill w-100 text-center fw-bold fs-7 border border-primary border-opacity-25">
-                                                Level: @role.ActionRole.ToString()
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    }
-                </div>
-            </div>
         </div>
 
         <!-- Sidebar Actions & Info -->

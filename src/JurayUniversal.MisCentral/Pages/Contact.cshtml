@@ -1,0 +1,1024 @@
+@page
+@model JurayUniversal.MisCentral.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact Us & Book a Free Demo";
+    ViewData["MetaDescription"] = "Connect with Exwhyzee MIS technical team for a personalized demo, custom onboarding, or support. Direct phone: +234 816 568 0904, WhatsApp, and official email.";
+    Layout = "_PublicLayout";
+}
+
+@section Styles {
+    <style>
+        /* Modern Scoped Styling for Contact Page */
+        .contact-hero-gradient {
+            background: linear-gradient(135deg, #09142e 0%, #0d2352 50%, #07193f 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 175px !important;
+            padding-bottom: 95px !important;
+        }
+
+        .contact-hero-gradient::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(13, 110, 253, 0.18) 0%, rgba(0, 210, 255, 0.05) 50%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact-hero-gradient::after {
+            content: "";
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .channel-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 20px;
+            padding: 28px 24px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 20px 35px -10px rgba(13, 110, 253, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(13, 110, 253, 0.35);
+        }
+
+        .channel-card.featured-whatsapp {
+            background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .channel-card.featured-whatsapp:hover {
+            border-color: rgba(34, 197, 94, 0.6);
+            box-shadow: 0 20px 35px -10px rgba(34, 197, 94, 0.2);
+        }
+
+        .channel-icon-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .channel-card:hover .channel-icon-wrap {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .pulse-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseAnimation 2s infinite;
+        }
+
+        @@keyframes pulseAnimation {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        /* Form Card Styling */
+        .assessment-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assessment-header-bar {
+            background: linear-gradient(90deg, #0d6efd 0%, #00d2ff 50%, #10b981 100%);
+            height: 6px;
+            width: 100%;
+        }
+
+        .step-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0d6efd 0%, #0060df 100%);
+            color: #ffffff;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+            flex-shrink: 0;
+        }
+
+        /* Selectable Feature Card in Form */
+        .feature-select-card {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px 16px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            height: 100%;
+            margin-bottom: 0;
+        }
+
+        .feature-select-card:hover {
+            border-color: #0d6efd;
+            background-color: #f8faff;
+            transform: translateY(-2px);
+        }
+
+        .feature-select-card input[type="checkbox"]:checked ~ .feature-label-text strong {
+            color: #0d6efd;
+        }
+
+        .feature-select-card input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            border-radius: 6px;
+            accent-color: #0d6efd;
+            flex-shrink: 0;
+        }
+
+        .feature-select-card .feat-icon {
+            font-size: 1.25rem;
+            color: #0d6efd;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: rgba(13, 110, 253, 0.08);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .input-group-modern {
+            position: relative;
+        }
+
+        .input-icon-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.15rem;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .form-control-modern {
+            border-radius: 12px;
+            padding: 13px 16px 13px 46px !important;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            background-color: #fdfdfd;
+        }
+
+        .form-control-modern:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.12);
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .form-select-modern {
+            border-radius: 12px;
+            padding: 13px 16px 13px 44px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            background-color: #fdfdfd;
+        }
+
+        .form-select-modern:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.12);
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .textarea-modern {
+            border-radius: 12px;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            background-color: #fdfdfd;
+        }
+
+        .textarea-modern:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.12);
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .sidebar-trust-box {
+            background: linear-gradient(145deg, #0a132c 0%, #0f1c3f 100%);
+            border-radius: 20px;
+            padding: 34px 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-trust-box::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(13, 110, 253, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* FAQ Accordion Styling */
+        .modern-faq-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px !important;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+
+        .modern-faq-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .modern-faq-btn {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            padding: 20px 24px;
+            background: #ffffff;
+            border: none;
+            box-shadow: none !important;
+        }
+
+        .modern-faq-btn:not(.collapsed) {
+            color: #0d6efd;
+            background: #f8faff;
+        }
+
+        .modern-faq-body {
+            padding: 20px 24px 24px;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            background: #f8faff;
+            border-top: 1px solid rgba(226, 232, 240, 0.6);
+        }
+    </style>
+}
+
+<!-- ========================================================================= -->
+<!-- 1. HERO HEADER AREA -->
+<!-- ========================================================================= -->
+<section class="contact-hero-gradient text-white position-relative">
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center justify-content-between g-5">
+            <div class="col-lg-7 col-md-10">
+                <!-- Badge -->
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-white bg-opacity-10 border border-white border-opacity-20 text-white fw-semibold text-xs text-uppercase mb-4" style="letter-spacing: 0.8px;">
+                    <i class="bi bi-headset text-info fs-6"></i>
+                    <span>Direct Consultation &amp; Onboarding</span>
+                </div>
+
+                <!-- Title -->
+                <h1 class="display-5 fw-bolder text-white mb-3" style="letter-spacing: -0.8px; line-height: 1.2;">
+                    Let’s Transform Your Operations with <span style="background: linear-gradient(135deg, #00d2ff 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Exwhyzee MIS</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="fs-6 mb-4" style="color: #cbd5e1; line-height: 1.75; max-width: 580px;">
+                    Whether you need a personalized 1-on-1 live walkthrough, custom data migration from paper registers or Excel spreadsheets, or an institutional rollout across branches — our technical engineering team is at your service.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <a href="#demoFormSection" class="btn btn-primary px-4 py-3 rounded-pill fw-bold text-sm shadow-lg d-inline-flex align-items-center gap-2 border-0 hover-scale" style="background: linear-gradient(135deg, #00d2ff 0%, #0d6efd 100%);">
+                        <span>Fill Assessment &amp; Book Demo</span>
+                        <i class="bi bi-arrow-down-short fs-5"></i>
+                    </a>
+                    <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20would%20like%20to%20inquire%20about%20your%20cloud%20management%20system." target="_blank" class="btn btn-outline-light px-4 py-3 rounded-pill fw-bold text-sm d-inline-flex align-items-center gap-2 hover-scale" style="background: rgba(37, 211, 102, 0.15); border: 1.5px solid rgba(37, 211, 102, 0.4); color: #ffffff;">
+                        <i class="bi bi-whatsapp text-success fs-5"></i>
+                        <span>Instant WhatsApp Chat</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right SLA Box -->
+            <div class="col-lg-5 col-xl-4 d-none d-lg-block">
+                <div class="p-4 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-15 shadow-lg position-relative overflow-hidden" style="backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+                    <!-- Top Accent -->
+                    <div class="position-absolute top-0 start-0 w-100" style="height: 3px; background: linear-gradient(90deg, #10b981 0%, #00d2ff 100%);"></div>
+
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="fw-bold text-white mb-0 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                            <i class="bi bi-shield-check text-success fs-5"></i>
+                            <span>Client Commitment SLA</span>
+                        </h5>
+                        <span class="badge rounded-pill bg-success bg-opacity-20 text-success border border-success border-opacity-25 px-2.5 py-1 text-xs fw-bold">Guaranteed</span>
+                    </div>
+
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-3 text-sm" style="color: #e2e8f0;">
+                        <li class="d-flex align-items-start gap-2.5">
+                            <div class="rounded-circle bg-warning bg-opacity-20 text-warning d-flex align-items-center justify-content-center flex-shrink-0 mt-0.5" style="width: 26px; height: 26px; font-size: 0.85rem;">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="text-white d-block" style="font-size: 0.88rem;">24/7 Demo &amp; Instant Response</strong>
+                                <span class="text-white text-opacity-75" style="font-size: 0.78rem;">Submit your demo request anytime 24/7 with immediate dispatch &amp; WhatsApp confirmation.</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start gap-2.5">
+                            <div class="rounded-circle bg-info bg-opacity-20 text-info d-flex align-items-center justify-content-center flex-shrink-0 mt-0.5" style="width: 26px; height: 26px; font-size: 0.85rem;">
+                                <i class="bi bi-lock-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="text-white d-block" style="font-size: 0.88rem;">100% Private Workspace</strong>
+                                <span class="text-white text-opacity-75" style="font-size: 0.78rem;">Dedicated isolated data container for your institution.</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start gap-2.5">
+                            <div class="rounded-circle bg-success bg-opacity-20 text-success d-flex align-items-center justify-content-center flex-shrink-0 mt-0.5" style="width: 26px; height: 26px; font-size: 0.85rem;">
+                                <i class="bi bi-gift-fill"></i>
+                            </div>
+                            <div>
+                                <strong class="text-white d-block" style="font-size: 0.88rem;">Free Assisted Onboarding</strong>
+                                <span class="text-white text-opacity-75" style="font-size: 0.78rem;">We help import your student, staff, &amp; account records with zero stress.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 2. CONTACT CHANNELS AREA -->
+<!-- ========================================================================= -->
+<section class="py-5 bg-light-subtle">
+    <div class="container">
+        <div class="row justify-content-center text-center mb-4">
+            <div class="col-lg-8">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill font-semibold text-uppercase mb-2">Connect In Real Time</span>
+                <h2 class="fw-bold text-dark fs-2 mb-2">Direct Contact &amp; Support Channels</h2>
+                <p class="text-muted fs-6 mb-0">Choose your preferred channel below to speak directly with an Exwhyzee Solutions Architect.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Channel 1: WhatsApp (Priority) -->
+            <div class="col-lg-3 col-md-6" data-sal="slide-up" data-sal-duration="600" data-sal-delay="100">
+                <div class="channel-card featured-whatsapp">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="channel-icon-wrap bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-whatsapp"></i>
+                            </div>
+                            <span class="pulse-indicator bg-success bg-opacity-10 text-success">
+                                <span class="pulse-dot bg-success"></span> Online Now
+                            </span>
+                        </div>
+                        <h4 class="fw-bold text-gray-900 fs-5 mb-1">WhatsApp Desk</h4>
+                        <p class="text-muted text-xs mb-3">Instant chats, voice notes, screenshots &amp; quick onboarding inquiries.</p>
+                    </div>
+                    <div>
+                        <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20would%20like%20to%20inquire%20about%20your%20management%20system." target="_blank" class="btn btn-success w-100 rounded-pill fw-bold text-xs py-2.5 text-white shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-whatsapp"></i>
+                            <span>Chat on WhatsApp &rarr;</span>
+                        </a>
+                        <span class="d-block text-center text-muted text-xs mt-2">+234 816 568 0904</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel 2: Phone Hotline -->
+            <div class="col-lg-3 col-md-6" data-sal="slide-up" data-sal-duration="600" data-sal-delay="200">
+                <div class="channel-card">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="channel-icon-wrap bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-telephone-outbound-fill"></i>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 text-xs"><i class="bi bi-clock-fill me-1"></i> Available 24/7</span>
+                        </div>
+                        <h4 class="fw-bold text-gray-900 fs-5 mb-1">Direct Phone Hotline</h4>
+                        <p class="text-muted text-xs mb-3">Speak directly with a specialist regarding features, pricing or custom proposals.</p>
+                    </div>
+                    <div>
+                        <a href="tel:+2348165680904" class="btn btn-outline-primary w-100 rounded-pill fw-bold text-xs py-2.5 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-telephone-fill"></i>
+                            <span>+234 816 568 0904</span>
+                        </a>
+                        <span class="d-block text-center text-muted text-xs mt-2">24/7 Hotline Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel 3: Email Desk -->
+            <div class="col-lg-3 col-md-6" data-sal="slide-up" data-sal-duration="600" data-sal-delay="300">
+                <div class="channel-card">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="channel-icon-wrap bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-envelope-paper-fill"></i>
+                            </div>
+                            <span class="badge bg-light text-muted border text-xs">&lt; 2hr Reply Guarantee</span>
+                        </div>
+                        <h4 class="fw-bold text-gray-900 fs-5 mb-1">Official Email Desk</h4>
+                        <p class="text-muted text-xs mb-3">Send official RFPs, enterprise requirements, quotation requests &amp; support.</p>
+                    </div>
+                    <div>
+                        <a href="mailto:support@exwhyzee.ng" class="btn btn-outline-primary w-100 rounded-pill fw-bold text-xs py-2.5 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-envelope-fill"></i>
+                            <span>support@exwhyzee.ng</span>
+                        </a>
+                        <span class="d-block text-center text-muted text-xs mt-2">Monitored 24/7/365</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel 4: Headquarters -->
+            <div class="col-lg-3 col-md-6" data-sal="slide-up" data-sal-duration="600" data-sal-delay="400">
+                <div class="channel-card">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="channel-icon-wrap bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <span class="badge bg-light text-muted border text-xs">Abuja FCT, Nigeria</span>
+                        </div>
+                        <h4 class="fw-bold text-gray-900 fs-5 mb-1">Executive Office</h4>
+                        <p class="text-muted text-xs mb-3">In-person consultations, institutional demonstrations, and partnership meetings.</p>
+                    </div>
+                    <div>
+                        <a href="#demoFormSection" class="btn btn-outline-secondary w-100 rounded-pill fw-bold text-xs py-2.5 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-calendar-event"></i>
+                            <span>Book In-Person Demo</span>
+                        </a>
+                        <span class="d-block text-center text-muted text-xs mt-2">Open Mon – Fri, 9am – 5pm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 3. INTERACTIVE QUESTIONNAIRE & ASSESSMENT FORM -->
+<!-- ========================================================================= -->
+<section class="py-5 bg-white" id="demoFormSection">
+    <div class="container py-4">
+        <div class="row g-5 align-items-start">
+            
+            <!-- Left Form Column -->
+            <div class="col-lg-8">
+                <div class="assessment-card">
+                    <div class="assessment-header-bar"></div>
+                    
+                    <div class="p-4 p-md-5">
+                        @if (Model.IsSubmitted)
+                        {
+                            <div class="text-center py-5">
+                                <div class="w-20 h-20 bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center p-4 mb-4" style="width: 84px; height: 84px;">
+                                    <i class="bi bi-check2-circle" style="font-size: 3.5rem;"></i>
+                                </div>
+                                <h2 class="fw-bold text-gray-900 mb-2">Request Received Successfully!</h2>
+                                <p class="text-muted fs-5 max-w-lg mx-auto mb-4">@Model.SuccessMessage</p>
+                                
+                                <div class="p-4 bg-light rounded-4 text-start mb-4 max-w-lg mx-auto border">
+                                    <h6 class="fw-bold text-dark mb-2 d-flex align-items-center gap-2">
+                                        <i class="bi bi-clock-history text-primary"></i>
+                                        <span>What Happens Next?</span>
+                                    </h6>
+                                    <ol class="text-xs text-gray-700 ps-3 mb-0 d-flex flex-column gap-2">
+                                        <li><strong>Assessment Review:</strong> A dedicated Solutions Architect reviews your organization's requirements.</li>
+                                        <li><strong>Interactive Demo Schedule:</strong> We contact you via WhatsApp / Phone to confirm a convenient live demonstration.</li>
+                                        <li><strong>Dedicated Pilot Environment:</strong> We provision your private 14-day testing sandbox.</li>
+                                    </ol>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-center gap-3">
+                                    <a asp-page="/Index" class="btn btn-outline-secondary px-4 py-2.5 rounded-pill fw-bold text-sm">
+                                        <i class="bi bi-house me-1"></i> Back to Homepage
+                                    </a>
+                                    <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20just%20submitted%20a%20demo%20assessment%20form%20for%20our%20organization." target="_blank" class="btn btn-success px-4 py-2.5 rounded-pill fw-bold text-sm text-white shadow-sm">
+                                        <i class="bi bi-whatsapp me-1"></i> Expedite on WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="mb-4 pb-3 border-bottom">
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                    <div>
+                                        <h2 class="fw-bold text-dark fs-3 mb-1">Tell Us About Your Organization</h2>
+                                        <p class="text-muted text-sm mb-0">Help us understand your setup so we can tailor a live walkthrough for your leadership team.</p>
+                                    </div>
+                                    <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light border text-xs text-muted">
+                                        <i class="bi bi-shield-lock-fill text-success fs-5"></i>
+                                        <span><strong>100% Confidential</strong> • No Spam</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form method="post" class="needs-validation" novalidate>
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4" role="alert"></div>
+
+                                <!-- STEP 1: ORGANIZATION PROFILE -->
+                                <div class="mb-5">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <span class="step-badge">1</span>
+                                        <div>
+                                            <h5 class="fw-bold text-dark fs-5 mb-0">Organization Profile</h5>
+                                            <small class="text-muted">Tell us about your institution, school, hospital or company.</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.OrganizationName" class="form-label fw-semibold text-dark text-xs text-uppercase">Organization / School Name <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-building input-icon-prefix"></i>
+                                                <input asp-for="Input.OrganizationName" class="form-control form-control-modern" placeholder="e.g. Premier Academy Abuja or Apex Clinic" required />
+                                            </div>
+                                            <span asp-validation-for="Input.OrganizationName" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.OrganizationType" class="form-label fw-semibold text-dark text-xs text-uppercase">Category / Sector <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-grid-fill input-icon-prefix"></i>
+                                                <select asp-for="Input.OrganizationType" class="form-select form-select-modern" required>
+                                                    <option value="Primary / Secondary School">Primary / Secondary School</option>
+                                                    <option value="College / Polytechnic / University">College / Polytechnic / University</option>
+                                                    <option value="Hospital / Healthcare Clinic">Hospital / Healthcare Clinic</option>
+                                                    <option value="Government Ministry / Parastatal">Government Ministry / Parastatal</option>
+                                                    <option value="Corporate Enterprise / Business">Corporate Enterprise / Business</option>
+                                                    <option value="Community Association / NGO">Community Association / NGO</option>
+                                                    <option value="Financial / Cooperative Society">Financial / Cooperative Society</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.EstimatedSize" class="form-label fw-semibold text-dark text-xs text-uppercase">Estimated Population / Volume</label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-people-fill input-icon-prefix"></i>
+                                                <select asp-for="Input.EstimatedSize" class="form-select form-select-modern">
+                                                    <option value="Under 250 Users/Students">Under 250 Students / Staff</option>
+                                                    <option value="250 - 1,000 Users/Students">250 – 1,000 Students / Staff</option>
+                                                    <option value="1,000 - 5,000 Users/Students">1,000 – 5,000 Students / Staff</option>
+                                                    <option value="5,000 - 20,000+ Users/Students">5,000 – 20,000+ (Large Multi-Branch)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.StateOrCity" class="form-label fw-semibold text-dark text-xs text-uppercase">State / City Location</label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-geo-alt-fill input-icon-prefix"></i>
+                                                <input asp-for="Input.StateOrCity" class="form-control form-control-modern" placeholder="e.g. Abuja FCT, Lagos, Port Harcourt" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 2: MODULES & FEATURES NEEDED -->
+                                <div class="mb-5">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <span class="step-badge">2</span>
+                                        <div>
+                                            <h5 class="fw-bold text-dark fs-5 mb-0">Select Features of Interest</h5>
+                                            <small class="text-muted">Choose all features you would like to activate or see demonstrated.</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3">
+                                        @{
+                                            var featureItems = new[]
+                                            {
+                                                new { Title = "School & Student Portal", Sub = "Admissions, Classes, Grading & Report Cards", Icon = "bi-mortarboard-fill" },
+                                                new { Title = "Staff & Automated Payroll", Sub = "Salary schedules, deductions & pay slips", Icon = "bi-cash-coin" },
+                                                new { Title = "Online Computer CBT Exams", Sub = "Timed quizzes, question bank & instant scores", Icon = "bi-laptop-fill" },
+                                                new { Title = "Fees & Online Card Payments", Sub = "Direct parent card billing, receipts & bank reconcile", Icon = "bi-credit-card-2-front-fill" },
+                                                new { Title = "Digital E-Voting & Elections", Sub = "Secure OTP ballot for associations & councils", Icon = "bi-check2-square" },
+                                                new { Title = "Instant Bulk SMS & WhatsApp", Sub = "Parent alerts, attendance notices & circulars", Icon = "bi-chat-dots-fill" },
+                                                new { Title = "Hospital & Clinic Patient Records", Sub = "Appointments, patient vitals & pharmacy stock", Icon = "bi-heart-pulse-fill" },
+                                                new { Title = "Inventory & Store Asset Tracking", Sub = "Stock levels, requisition approvals & logs", Icon = "bi-box-seam-fill" }
+                                            };
+                                        }
+
+                                        @foreach (var feat in featureItems)
+                                        {
+                                            var isChecked = Model.Input.SelectedFeatures.Contains(feat.Title);
+                                            <div class="col-md-6">
+                                                <label class="feature-select-card" for="feat_@feat.Title.GetHashCode()">
+                                                    <input type="checkbox" name="Input.SelectedFeatures" value="@feat.Title" id="feat_@feat.Title.GetHashCode()" @(isChecked ? "checked" : "") />
+                                                    <div class="feat-icon">
+                                                        <i class="bi @feat.Icon"></i>
+                                                    </div>
+                                                    <div class="feature-label-text">
+                                                        <strong class="d-block text-xs text-dark">@feat.Title</strong>
+                                                        <span class="text-muted text-xs d-block" style="font-size: 0.75rem;">@feat.Sub</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- STEP 3: GOALS & TIMELINE -->
+                                <div class="mb-5">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <span class="step-badge">3</span>
+                                        <div>
+                                            <h5 class="fw-bold text-dark fs-5 mb-0">Operational Goals &amp; Deployment Timeline</h5>
+                                            <small class="text-muted">What bottlenecks or manual tasks do you want to eliminate?</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3">
+                                        <div class="col-md-8">
+                                            <label asp-for="Input.PrimaryGoal" class="form-label fw-semibold text-dark text-xs text-uppercase">Primary Objectives / Current Bottlenecks <span class="text-danger">*</span></label>
+                                            <textarea asp-for="Input.PrimaryGoal" class="form-control textarea-modern" rows="3" placeholder="e.g. We want to stop manual paper receipts, allow parents to check grades online via phone, and calculate staff monthly payroll automatically." required></textarea>
+                                            <span asp-validation-for="Input.PrimaryGoal" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label asp-for="Input.RolloutTimeline" class="form-label fw-semibold text-dark text-xs text-uppercase">Desired Launch Date</label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-calendar-check-fill input-icon-prefix"></i>
+                                                <select asp-for="Input.RolloutTimeline" class="form-select form-select-modern">
+                                                    <option value="Immediate (This Term/Month)">Immediate (This Term/Month)</option>
+                                                    <option value="Within 30 Days">Within 30 Days</option>
+                                                    <option value="Next Academic Term / Quarter">Next Academic Term / Quarter</option>
+                                                    <option value="Budgeting / Just Exploring">Budgeting / Just Exploring</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 4: REPRESENTATIVE CONTACT INFO -->
+                                <div class="mb-5">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <span class="step-badge">4</span>
+                                        <div>
+                                            <h5 class="fw-bold text-dark fs-5 mb-0">Representative Contact Details</h5>
+                                            <small class="text-muted">Whom should we send the live demonstration link and login details to?</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.FullName" class="form-label fw-semibold text-dark text-xs text-uppercase">Your Full Name <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-person-fill input-icon-prefix"></i>
+                                                <input asp-for="Input.FullName" class="form-control form-control-modern" placeholder="e.g. Dr. John Doe / Alhaji Ibrahim" required />
+                                            </div>
+                                            <span asp-validation-for="Input.FullName" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.JobTitle" class="form-label fw-semibold text-dark text-xs text-uppercase">Designation / Role <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-briefcase-fill input-icon-prefix"></i>
+                                                <input asp-for="Input.JobTitle" class="form-control form-control-modern" placeholder="e.g. Principal, ICT Director, MD" required />
+                                            </div>
+                                            <span asp-validation-for="Input.JobTitle" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.Email" class="form-label fw-semibold text-dark text-xs text-uppercase">Official Email Address <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-envelope-fill input-icon-prefix"></i>
+                                                <input asp-for="Input.Email" type="email" class="form-control form-control-modern" placeholder="john@yourorganization.com" required />
+                                            </div>
+                                            <span asp-validation-for="Input.Email" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label asp-for="Input.Phone" class="form-label fw-semibold text-dark text-xs text-uppercase">Phone / WhatsApp Number <span class="text-danger">*</span></label>
+                                            <div class="input-group-modern">
+                                                <i class="bi bi-whatsapp input-icon-prefix text-success"></i>
+                                                <input asp-for="Input.Phone" class="form-control form-control-modern" placeholder="e.g. +234 816 568 0904" required />
+                                            </div>
+                                            <span asp-validation-for="Input.Phone" class="text-danger text-xs mt-1 d-block"></span>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label asp-for="Input.AdditionalNotes" class="form-label fw-semibold text-dark text-xs text-uppercase">Additional Special Requirements / Notes</label>
+                                            <textarea asp-for="Input.AdditionalNotes" class="form-control textarea-modern" rows="2" placeholder="Any specific requirements, custom integrations, or questions..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-top text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold fs-6 shadow-lg d-inline-flex align-items-center gap-2 border-0 hover-scale" style="background: linear-gradient(135deg, #00d2ff 0%, #0d6efd 100%);">
+                                        <span>Submit 24/7 Demo Request (Instant Confirmation)</span>
+                                        <i class="bi bi-arrow-right-short fs-4"></i>
+                                    </button>
+                                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 text-muted text-xs mt-3">
+                                        <span><i class="bi bi-clock-history text-primary me-1"></i> 24/7 Instant Processing</span>
+                                        <span><i class="bi bi-shield-fill-check text-success me-1"></i> No Credit Card Required</span>
+                                        <span><i class="bi bi-check-circle-fill text-info me-1"></i> Free 14-Day Live Pilot</span>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Trust & Support Sidebar -->
+            <div class="col-lg-4">
+                
+                <!-- Box 1: Why Organizations Partner With Us -->
+                <div class="sidebar-trust-box mb-4">
+                    <span class="badge bg-primary bg-opacity-25 text-info px-3 py-1 rounded-pill text-uppercase text-xs font-semibold mb-3">Enterprise Standard</span>
+                    <h4 class="fw-bold text-white fs-4 mb-3">Why Top Nigerian Institutions Choose Us</h4>
+                    
+                    <ul class="list-unstyled mb-4 d-flex flex-column gap-3 text-sm">
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check-circle-fill text-info mt-1 fs-5"></i>
+                            <div>
+                                <strong class="text-white d-block">100% Sovereign Data Isolation</strong>
+                                <span class="text-slate-300" style="color: #cbd5e1;">Your database and records are never mixed with another school or hospital.</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check-circle-fill text-info mt-1 fs-5"></i>
+                            <div>
+                                <strong class="text-white d-block">Effortless Excel Roster Imports</strong>
+                                <span class="text-slate-300" style="color: #cbd5e1;">Our team migrates your past student, staff, and financial registers for free.</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check-circle-fill text-info mt-1 fs-5"></i>
+                            <div>
+                                <strong class="text-white d-block">Offline-Resilient Mobile Friendly</strong>
+                                <span class="text-slate-300" style="color: #cbd5e1;">Optimized for African internet connectivity on smartphones and low-bandwidth PCs.</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="w-12 h-12 rounded-circle bg-success text-white d-flex align-items-center justify-content-center fs-4 fw-bold" style="width: 48px; height: 48px;">
+                                99%
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-white mb-0 fs-6">Client Satisfaction</h6>
+                                <small class="text-slate-300" style="color: #cbd5e1;">Over 50+ schools &amp; hospitals onboarded across Nigeria.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 2: Emergency Contact & Support Desk -->
+                <div class="bg-light p-4 rounded-4 border">
+                    <h5 class="fw-bold text-dark fs-5 mb-2 d-flex align-items-center gap-2">
+                        <i class="bi bi-lightning-charge-fill text-warning"></i>
+                        <span>Need Urgent Help?</span>
+                    </h5>
+                    <p class="text-muted text-xs mb-3">If you are an existing client experiencing an operational bottleneck or fee collection issue:</p>
+                    
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        <a href="tel:+2348165680904" class="btn btn-outline-dark btn-sm rounded-pill fw-bold text-xs py-2 text-start px-3 d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-telephone-fill text-primary me-2"></i> Call Priority Line</span>
+                            <span class="badge bg-primary text-white">24/7</span>
+                        </a>
+                        <a href="https://wa.me/2348165680904" target="_blank" class="btn btn-outline-success btn-sm rounded-pill fw-bold text-xs py-2 text-start px-3 d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-whatsapp text-success me-2"></i> WhatsApp Escalations</span>
+                            <span class="badge bg-success text-white">Instant</span>
+                        </a>
+                    </div>
+                    <small class="text-muted text-xs d-block text-center">
+                        <i class="bi bi-shield-check text-success me-1"></i> Remote desktop support available via AnyDesk / TeamViewer.
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 4. PHYSICAL OFFICE & INTERACTIVE MAP LOCATION -->
+<!-- ========================================================================= -->
+<section class="py-5 bg-light-subtle border-top border-bottom">
+    <div class="container py-2">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-5">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill font-semibold text-uppercase mb-2">Visit Our Headquarters</span>
+                <h3 class="fw-bold text-dark fs-2 mb-3">Experience Exwhyzee MIS in Person</h3>
+                <p class="text-muted text-sm leading-relaxed mb-4">
+                    Our corporate offices are open for institutional delegations, school proprietors, hospital management boards, and government project executives seeking hands-on technology demonstrations.
+                </p>
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="w-10 h-10 rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center fs-5 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <strong class="text-dark d-block text-sm">Abuja Executive Suite</strong>
+                            <span class="text-muted text-xs">Federal Capital Territory (FCT), Abuja, Nigeria</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="w-10 h-10 rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center fs-5 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div>
+                            <strong class="text-dark d-block text-sm">Official Working Hours</strong>
+                            <span class="text-muted text-xs">Monday to Friday: 8:30 AM – 5:30 PM (WAT)</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20would%20like%20to%20schedule%20an%20in-person%20visit%20to%20your%20Abuja%20office." target="_blank" class="btn btn-primary rounded-pill px-4 py-2.5 fw-bold text-xs d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Schedule In-Person Meeting</span>
+                </a>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="rounded-4 overflow-hidden shadow-sm border" style="height: 340px; position: relative;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126093.7533036669!2d7.398574483756306!3d9.05785023932824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0baf7da76d43%3A0xb40f7b036bf69a23!2sAbuja%2C%20Federal%20Capital%20Territory!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Exwhyzee MIS Abuja Office Location">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 5. FREQUENTLY ASKED QUESTIONS ACCORDION -->
+<!-- ========================================================================= -->
+<section class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill font-semibold text-uppercase mb-2">Clear Answers</span>
+                <h2 class="fw-bold text-dark fs-2 mb-2">Frequently Asked Questions</h2>
+                <p class="text-muted fs-6 mb-0">Everything you need to know about getting started, pricing, and system deployment.</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="accordion" id="contactFaqAccordion">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="accordion-item modern-faq-item">
+                        <h2 class="accordion-header" id="faqHeading1">
+                            <button class="accordion-button modern-faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                                <i class="bi bi-clock-history text-primary me-3 fs-5"></i>
+                                <span>How fast can our school or business be onboarded?</span>
+                            </button>
+                        </h2>
+                        <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body modern-faq-body">
+                                Most institutions are fully deployed within <strong>24 to 48 hours</strong>. Our onboarding team assists you with uploading your student rosters, staff lists, class structures, and grading scales for free. You do not need technical knowledge to get started.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="accordion-item modern-faq-item">
+                        <h2 class="accordion-header" id="faqHeading2">
+                            <button class="accordion-button modern-faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                                <i class="bi bi-file-earmark-excel-fill text-success me-3 fs-5"></i>
+                                <span>Can we import our existing records from Excel or CSV files?</span>
+                            </button>
+                        </h2>
+                        <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body modern-faq-body">
+                                Yes! Exwhyzee MIS provides automated Excel import templates for student registrations, staff payroll profiles, subject lists, and past examination records with zero data loss. Our technical support staff can also format and import the files on your behalf.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="accordion-item modern-faq-item">
+                        <h2 class="accordion-header" id="faqHeading3">
+                            <button class="accordion-button modern-faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                                <i class="bi bi-cloud-check-fill text-info me-3 fs-5"></i>
+                                <span>Do we need to buy expensive servers or special computers?</span>
+                            </button>
+                        </h2>
+                        <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body modern-faq-body">
+                                No physical hardware or servers are required. Exwhyzee MIS runs 100% on the cloud. You and your staff can securely access your portal from any existing smartphone, tablet, laptop, or desktop with an internet connection.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="accordion-item modern-faq-item">
+                        <h2 class="accordion-header" id="faqHeading4">
+                            <button class="accordion-button modern-faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                                <i class="bi bi-shield-lock-fill text-danger me-3 fs-5"></i>
+                                <span>Is our student and financial data private and secure?</span>
+                            </button>
+                        </h2>
+                        <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body modern-faq-body">
+                                Absolutely 100%. Every single client organization receives their own isolated environment and database. Your student data, examination questions, financial cashbooks, and staff records are encrypted and completely private.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="accordion-item modern-faq-item">
+                        <h2 class="accordion-header" id="faqHeading5">
+                            <button class="accordion-button modern-faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                                <i class="bi bi-mortarboard-fill text-warning me-3 fs-5"></i>
+                                <span>Do you provide training for teachers and administrative staff?</span>
+                            </button>
+                        </h2>
+                        <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5" data-bs-parent="#contactFaqAccordion">
+                            <div class="accordion-body modern-faq-body">
+                                Yes! Every onboarding package includes comprehensive virtual or on-site staff training sessions, step-by-step video manuals, and printable quick-reference guides to ensure all teachers and accountants feel confident from day one.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Callout Box Below FAQ -->
+                <div class="mt-4 p-4 rounded-4 bg-light border text-center">
+                    <h5 class="fw-bold text-dark fs-5 mb-1">Still have a specific question?</h5>
+                    <p class="text-muted text-sm mb-3">Our solutions team is happy to answer any questions about your school, hospital, or corporate workflow.</p>
+                    <a href="https://wa.me/2348165680904?text=Hello%20Exwhyzee%20MIS!%20I%20have%20a%20specific%20question%20about%20your%20system." target="_blank" class="btn btn-success rounded-pill px-4 py-2.5 fw-bold text-xs text-white d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-whatsapp"></i>
+                        <span>Ask Us on WhatsApp (+234 816 568 0904)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

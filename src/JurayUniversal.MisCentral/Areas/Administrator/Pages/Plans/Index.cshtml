@@ -1,0 +1,219 @@
+@page
+@model JurayUniversal.MisCentral.Areas.Administrator.Pages.Plans.IndexModel
+@{
+    ViewData["Title"] = "Pricing Plans & Subscription Manager";
+    Layout = "_MisMasterLayout";
+}
+
+<div class="space-y-6">
+    <!-- Top Header Banner -->
+    <div class="bg-gradient-to-r from-[#0069A1] to-[#0A2540] p-6 rounded-2xl text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider mb-2">
+                <i class="bi bi-tags-fill"></i> Subscription Tier Governance
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Pricing Plans &amp; Packages</h1>
+            <p class="text-blue-100 text-sm mt-1">Manage public subscription tiers, prices, features, and popularity badges.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button type="button" class="inline-flex items-center px-4 py-2.5 bg-white text-[#0069A1] hover:bg-blue-50 text-sm font-bold rounded-xl shadow transition-colors" onclick="openCreatePlanModal()">
+                <i class="bi bi-plus-circle me-2"></i> Add New Plan
+            </button>
+            <a href="/Pricing" target="_blank" class="inline-flex items-center px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-xl transition-colors text-decoration-none">
+                <i class="bi bi-eye me-2"></i> View on Website
+            </a>
+        </div>
+    </div>
+
+    <!-- Plans Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach (var plan in Model.Plans)
+        {
+            <div class="bg-white rounded-2xl border @(plan.IsPopular ? "border-blue-500 ring-2 ring-blue-500/20 shadow-md" : "border-gray-200 shadow-sm") p-6 flex flex-col justify-between hover:shadow-lg transition-all relative">
+                @if (plan.IsPopular)
+                {
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full text-[11px] font-bold tracking-wider uppercase shadow">
+                        <i class="bi bi-star-fill text-amber-300 me-1"></i> Most Popular
+                    </div>
+                }
+
+                <div>
+                    <div class="flex items-center justify-between mb-3 mt-1">
+                        <span class="text-xs font-bold uppercase tracking-wider @(plan.IsActive ? "text-emerald-600" : "text-gray-400")">
+                            <i class="bi bi-circle-fill fs-6 me-1"></i> @(plan.IsActive ? "Active on Website" : "Hidden (Draft)")
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">Order: @plan.SortOrder</span>
+                    </div>
+
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">@plan.Name</h3>
+                    <p class="text-gray-500 text-xs mb-4">@plan.Subtitle</p>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 mb-5">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-2xl font-black text-gray-900">@plan.Currency@plan.MonthlyPrice.ToString("N0")</span>
+                            <span class="text-gray-500 text-xs font-medium">/ @plan.BillingCycle</span>
+                        </div>
+                    </div>
+
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Included Features:</h4>
+                    <ul class="space-y-2 mb-6 text-xs text-gray-700">
+                        @foreach (var feat in plan.FeaturesList)
+                        {
+                            <li class="d-flex align-items-start gap-2">
+                                <i class="bi bi-check-circle-fill text-blue-600 mt-0.5"></i>
+                                <span>@feat</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5">
+                        <form method="post" asp-page-handler="ToggleActive">
+                            <input type="hidden" name="id" value="@plan.Id" />
+                            <button type="submit" class="px-2.5 py-1 rounded-lg text-xs font-semibold @(plan.IsActive ? "bg-amber-50 text-amber-700 hover:bg-amber-100" : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100")">
+                                @(plan.IsActive ? "Hide" : "Publish")
+                            </button>
+                        </form>
+
+                        <form method="post" asp-page-handler="TogglePopular">
+                            <input type="hidden" name="id" value="@plan.Id" />
+                            <button type="submit" class="px-2.5 py-1 rounded-lg text-xs font-semibold @(plan.IsPopular ? "bg-blue-50 text-blue-700 hover:bg-blue-100" : "bg-gray-100 text-gray-700 hover:bg-gray-200")">
+                                @(plan.IsPopular ? "Unmark Star" : "Star Popular")
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button type="button" class="px-3 py-1 bg-slate-900 hover:bg-black text-white rounded-lg text-xs font-bold transition-colors" onclick='editPlan(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(plan)))'>
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </button>
+                        <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Delete @plan.Name?');">
+                            <input type="hidden" name="id" value="@plan.Id" />
+                            <button type="submit" class="text-rose-600 hover:text-rose-800 p-1 text-xs">
+                                <i class="bi bi-trash fs-6"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Plan Edit/Create Modal -->
+<div id="planModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between border-b pb-3 mb-4">
+            <h3 id="planModalTitle" class="font-bold text-gray-900 text-lg">Create Pricing Plan</h3>
+            <button type="button" class="text-gray-400 hover:text-gray-600 fs-4" onclick="closePlanModal()">&times;</button>
+        </div>
+
+        <form method="post" asp-page-handler="Save" class="space-y-4 text-xs">
+            <input type="hidden" asp-for="Input.Id" id="input_Id" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Plan Name *</label>
+                    <input asp-for="Input.Name" id="input_Name" class="w-full p-2.5 border rounded-lg text-xs" placeholder="e.g. Starter Plan" required />
+                </div>
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Monthly Price (₦) *</label>
+                    <input asp-for="Input.MonthlyPrice" type="number" id="input_MonthlyPrice" class="w-full p-2.5 border rounded-lg text-xs" placeholder="150000" required />
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-semibold text-gray-700 mb-1">Subtitle / Target Audience</label>
+                <input asp-for="Input.Subtitle" id="input_Subtitle" class="w-full p-2.5 border rounded-lg text-xs" placeholder="e.g. Perfect for small schools & growing businesses" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Currency</label>
+                    <input asp-for="Input.Currency" id="input_Currency" class="w-full p-2.5 border rounded-lg text-xs" value="₦" />
+                </div>
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Billing Cycle</label>
+                    <input asp-for="Input.BillingCycle" id="input_BillingCycle" class="w-full p-2.5 border rounded-lg text-xs" value="month" />
+                </div>
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Sort Order</label>
+                    <input asp-for="Input.SortOrder" type="number" id="input_SortOrder" class="w-full p-2.5 border rounded-lg text-xs" value="1" />
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-semibold text-gray-700 mb-1">Features Included (One perk per line) *</label>
+                <textarea asp-for="Input.FeaturesRaw" id="input_FeaturesRaw" rows="5" class="w-full p-2.5 border rounded-lg text-xs font-sans leading-relaxed" placeholder="100% Private Workspace&#10;Up to 5 Features&#10;Daily Automatic Backups&#10;24/7 Support Desk" required></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Button Text</label>
+                    <input asp-for="Input.CtaText" id="input_CtaText" class="w-full p-2.5 border rounded-lg text-xs" value="Get Started Now" />
+                </div>
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Plan Key Code</label>
+                    <input asp-for="Input.CtaPlanKey" id="input_CtaPlanKey" class="w-full p-2.5 border rounded-lg text-xs" value="Starter" />
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6 pt-2">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" asp-for="Input.IsPopular" id="input_IsPopular" class="rounded text-blue-600" />
+                    <span class="font-medium text-gray-700">Badge as "Most Popular"</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" asp-for="Input.IsActive" id="input_IsActive" class="rounded text-emerald-600" checked />
+                    <span class="font-medium text-gray-700">Published on Website</span>
+                </label>
+            </div>
+
+            <div class="pt-4 border-t flex justify-end gap-2">
+                <button type="button" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold" onclick="closePlanModal()">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold">Save Plan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openCreatePlanModal() {
+        document.getElementById('planModalTitle').innerText = 'Add New Pricing Plan';
+        document.getElementById('input_Id').value = '';
+        document.getElementById('input_Name').value = '';
+        document.getElementById('input_Subtitle').value = '';
+        document.getElementById('input_MonthlyPrice').value = '150000';
+        document.getElementById('input_Currency').value = '₦';
+        document.getElementById('input_BillingCycle').value = 'month';
+        document.getElementById('input_SortOrder').value = '1';
+        document.getElementById('input_FeaturesRaw').value = "100% Private Workspace\n5 Active Features of Choice\nCustom Domain Link\nDaily Automated Backups\nFriendly 24/7 Support";
+        document.getElementById('input_CtaText').value = 'Get Started Now';
+        document.getElementById('input_CtaPlanKey').value = 'Starter';
+        document.getElementById('input_IsPopular').checked = false;
+        document.getElementById('input_IsActive').checked = true;
+        document.getElementById('planModal').style.display = 'flex';
+    }
+
+    function editPlan(plan) {
+        document.getElementById('planModalTitle').innerText = 'Edit ' + plan.Name;
+        document.getElementById('input_Id').value = plan.Id;
+        document.getElementById('input_Name').value = plan.Name;
+        document.getElementById('input_Subtitle').value = plan.Subtitle || '';
+        document.getElementById('input_MonthlyPrice').value = plan.MonthlyPrice;
+        document.getElementById('input_Currency').value = plan.Currency || '₦';
+        document.getElementById('input_BillingCycle').value = plan.BillingCycle || 'month';
+        document.getElementById('input_SortOrder').value = plan.SortOrder || 1;
+        document.getElementById('input_FeaturesRaw').value = (plan.FeaturesList || []).join('\n');
+        document.getElementById('input_CtaText').value = plan.CtaText || 'Get Started Now';
+        document.getElementById('input_CtaPlanKey').value = plan.CtaPlanKey || plan.Name;
+        document.getElementById('input_IsPopular').checked = plan.IsPopular;
+        document.getElementById('input_IsActive').checked = plan.IsActive;
+        document.getElementById('planModal').style.display = 'flex';
+    }
+
+    function closePlanModal() {
+        document.getElementById('planModal').style.display = 'none';
+    }
+</script>

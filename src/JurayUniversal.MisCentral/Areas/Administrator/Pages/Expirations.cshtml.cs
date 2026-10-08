@@ -3,7 +3,7 @@ using JurayUniversal.MisCentral.Models;
 using JurayUniversal.MisCentral.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace JurayUniversal.MisCentral.Pages
+namespace JurayUniversal.MisCentral.Areas.Administrator.Pages
 {
     public class ExpirationsModel : PageModel
     {

@@ -44,6 +44,7 @@ namespace JurayUniversal.Website.Areas.MisConfiguration.Pages.Dashboard.SitePage
                 new SitePageItem { Title = "Payment Receipt Verification", Route = "/pay/callback?ref={transaction_ref}", Description = "Payment confirmation receipt & verification page.", Category = "Payment", TargetAudience = "Public & Members", IconClass = "bi-receipt" },
 
                 // Public Pages
+                new SitePageItem { Title = "Community Profiling Form (misCommunityForm)", Route = "/CommunityForm", Description = "Public clan & community membership profiling questionnaire and application form.", Category = "Public Information", TargetAudience = "Public & Members", IconClass = "bi-ui-checks-grid" },
                 new SitePageItem { Title = "Website Homepage", Route = "/", Description = "Main organization website landing page.", Category = "Public Information", TargetAudience = "Public", IconClass = "bi-house-door-fill" },
                 new SitePageItem { Title = "Contact Us", Route = "/Contact", Description = "Organization contact information and message inquiry form.", Category = "Public Information", TargetAudience = "Public", IconClass = "bi-envelope-paper-fill" },
                 new SitePageItem { Title = "Careers & Jobs", Route = "/Career", Description = "Job openings and career opportunities page.", Category = "Public Information", TargetAudience = "Public", IconClass = "bi-briefcase-fill" },

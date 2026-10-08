@@ -27,7 +27,10 @@ namespace JurayUniversal.Pages.Shared.ViewComponents
             
             var Pages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInFooter == true && x.SecurityPage == false && x.EnableDirectUrl == false).OrderBy(x=>x.SortOrder).ToListAsync();
             ViewBag.pages = Pages;
-            var SecPages = await _context.WebPages.Where(x => x.Publish == true && x.ShowInFooter == true && x.SecurityPage == true).OrderBy(x => x.SortOrder).ToListAsync();
+            var SecPages = await _context.WebPages
+                .Where(x => x.Publish == true && x.ShowInFooter == true && x.SecurityPage == true && x.EnableDirectUrl == false)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
             ViewBag.SecPages = SecPages;
              var linkExternal = await _context.WebPages.Where(x => x.Publish == true && x.ShowInFooter == true && x.EnableDirectUrl == true).ToListAsync();
             ViewBag.linkExternal = linkExternal;
