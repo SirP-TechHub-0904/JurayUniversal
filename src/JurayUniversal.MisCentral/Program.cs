@@ -76,7 +76,15 @@ builder.Services.AddSingleton<IPricingPlanService, PricingPlanService>();
 var app = builder.Build();
 
 // Seed Default Central Roles & Master Super Admin User
-await MasterIdentitySeeder.SeedAsync(app.Services);
+try
+{
+    await MasterIdentitySeeder.SeedAsync(app.Services);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"[CRITICAL] MasterIdentitySeeder encountered an error connecting to database: {ex.Message}");
+    Console.WriteLine($"Stack: {ex.StackTrace}");
+}
 
 // Check for CLI sync flag
 if (args.Contains("--sync-tenants"))
