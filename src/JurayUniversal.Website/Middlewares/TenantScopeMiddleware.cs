@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Reflection.Metadata;
 using JurayUniversal.Application.Dtos;
 using JurayUniversal.Application.Repository.DomainServices;
@@ -221,6 +221,13 @@ public class TenantScopeMiddleware
                 return;
             }
             else if (tenant.ToString().ToLower() == "mobp.juray.ng")
+            {
+                using var scope = tenantProvider.BeginScope(tenant);
+                await _next(httpContext);
+
+                return;
+            }
+                        else if (tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]" || tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]:5060")
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);

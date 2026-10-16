@@ -4,6 +4,7 @@ using JurayUniversal.MisCentral.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+JurayUniversal.MisCentral.DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Load shared appsettings.json from JurayUniversal.Website

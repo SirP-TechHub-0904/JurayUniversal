@@ -1,0 +1,65 @@
+name: Deploy MisCentral to Hostinger
+
+on:
+  push:
+    branches:
+      - master
+      - mis-update-4
+    paths:
+      - 'src/JurayUniversal.MisCentral/**'
+      - '.github/workflows/deploy-miscentral.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy MisCentral
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore src/JurayUniversal.MisCentral/JurayUniversal.MisCentral.csproj
+
+      - name: Publish Application
+        run: |
+          dotnet publish src/JurayUniversal.MisCentral/JurayUniversal.MisCentral.csproj \
+            -c Release \
+            -o ./publish
+
+      - name: Configure SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
+
+      - name: Prepare Remote Directory & Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.HOSTINGER_SSH_PORT }} -H ${{ secrets.HOSTINGER_SERVER_IP }} >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SERVER_IP }} "mkdir -p /var/www/juray-miscentral"
+
+      - name: Deploy to Hostinger VPS (Preserving .env)
+        run: |
+          rsync -avz --delete \
+            --exclude='.env*' \
+            -e "ssh -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
+            ./publish/ \
+            ${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SERVER_IP }}:/var/www/juray-miscentral/
+
+      - name: Restart Systemd Service
+        run: |
+          ssh -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SERVER_IP }} "
+            sudo chown -R www-data:www-data /var/www/juray-miscentral
+            if systemctl is-active --quiet juray-miscentral; then
+              sudo systemctl restart juray-miscentral
+              echo 'juray-miscentral service restarted successfully.'
+            else
+              echo 'Note: juray-miscentral service is not active yet. Please configure and enable it.'
+            fi
+          "

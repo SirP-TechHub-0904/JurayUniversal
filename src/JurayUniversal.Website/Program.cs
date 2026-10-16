@@ -31,6 +31,7 @@ namespace JurayUniversal.Website
     {
         public static async Task Main(string[] args)
         {
+            DotEnv.Load();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Warning() // Don't log Information to avoid huge files, Warning/Error/Fatal only
                 .Enrich.FromLogContext()
