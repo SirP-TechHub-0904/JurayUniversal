@@ -29,10 +29,11 @@ public class TenantScopeMiddleware
         //, , , 
         //List<DomainListDto> domains = await _domainRepository.GetAllDomains();
 
-        if (IPAddress.TryParse(tenant, out IPAddress ipAddress))
+        var hostWithoutPort = tenant.Split(':')[0];
+        if (IPAddress.TryParse(hostWithoutPort, out IPAddress ipAddress))
         {
-            // It's an IP address, handle it accordingly
-            using var scope = tenantProvider.BeginScope(tenant);
+            // It's an IP address (with or without port, e.g. [REDACTED_SERVER_IP]:5080)
+            using var scope = tenantProvider.BeginScope(hostWithoutPort);
             await _next(httpContext);
             return;
         }
