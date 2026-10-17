@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
 namespace JurayUniversal.Infrastructure.TenantSupport;
 
@@ -16,9 +16,19 @@ public class TenantProvider : ITenantProvider
     {
         get
         {
-            if (CurrentTenant != null && _connectionStringPerTenant.TryGetValue(CurrentTenant, out var connectionString))
+            if (CurrentTenant != null)
             {
-                return connectionString;
+                if (_connectionStringPerTenant.TryGetValue(CurrentTenant, out var connectionString))
+                {
+                    return connectionString;
+                }
+
+                // Fallback: check without port if CurrentTenant includes port (e.g., [REDACTED_SERVER_IP]:5077 -> [REDACTED_SERVER_IP])
+                var hostWithoutPort = CurrentTenant.Split(':')[0];
+                if (_connectionStringPerTenant.TryGetValue(hostWithoutPort, out var fallbackConnectionString))
+                {
+                    return fallbackConnectionString;
+                }
             }
 
             return _defaultConnectionString;
