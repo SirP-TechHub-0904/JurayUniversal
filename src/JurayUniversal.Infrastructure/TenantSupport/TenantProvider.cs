@@ -23,7 +23,7 @@ public class TenantProvider : ITenantProvider
                     return connectionString;
                 }
 
-                // Fallback: check without port if CurrentTenant includes port (e.g., [REDACTED_SERVER_IP]:5077 -> [REDACTED_SERVER_IP])
+                // Fallback: check without port if CurrentTenant includes port (e.g., 203.0.113.10:5077 -> 203.0.113.10)
                 var hostWithoutPort = CurrentTenant.Split(':')[0];
                 if (_connectionStringPerTenant.TryGetValue(hostWithoutPort, out var fallbackConnectionString))
                 {

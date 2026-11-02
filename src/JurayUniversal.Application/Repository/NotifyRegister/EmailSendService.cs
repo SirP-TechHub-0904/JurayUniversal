@@ -1,4 +1,4 @@
-﻿using JurayUniversal.Application.Services;
+using JurayUniversal.Application.Services;
 using JurayUniversal.Domain.Models;
 using JurayUniversal.Persistence.EF.SQL;
 using Microsoft.AspNetCore.Identity;
@@ -122,7 +122,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
                     SmtpClient smtp = new SmtpClient("mail.nipsskuru.gov.ng");
 
                     //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
-                    NetworkCredential Credentials = new NetworkCredential("noreply@nipsskuru.gov.ng", "[REDACTED_SMTP_PASSWORD]");
+                    NetworkCredential Credentials = new NetworkCredential("noreply@nipsskuru.gov.ng", (System.Environment.GetEnvironmentVariable("SMTP_PASSWORD") ?? ""));
                     smtp.Credentials = Credentials;
                     smtp.Send(mail);
                     return true;
@@ -459,7 +459,7 @@ namespace JurayUniversal.Application.Repository.NotifyRegister
             //    {
             //        client.UseDefaultCredentials = false;
             //        client.Port = 587;
-            //        client.Credentials = new NetworkCredential("noreply@juray.ng", "[REDACTED_SMTP_PASSWORD]");
+            //        client.Credentials = new NetworkCredential("noreply@juray.ng", "");
             //        client.EnableSsl = true;
 
             //        try

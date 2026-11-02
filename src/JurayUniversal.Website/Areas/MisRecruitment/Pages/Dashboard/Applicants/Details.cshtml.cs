@@ -72,7 +72,7 @@ namespace JurayUniversal.Website.Areas.MisRecruitment.Pages.Dashboard.Applicants
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(newProfile, "[REDACTED_BOOTSTRAP_PASSWORD]");
+            var result = await _userManager.CreateAsync(newProfile, (System.Environment.GetEnvironmentVariable("DEFAULT_USER_PASSWORD") ?? ""));
 
             if (result.Succeeded)
             {

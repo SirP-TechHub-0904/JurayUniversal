@@ -35,7 +35,8 @@ namespace JurayUniversal.MisCentral.Services
             if (domain.StartsWith("http://") || domain.StartsWith("https://"))
                 return domain.TrimEnd('/');
 
-            if (domain.Contains("localhost") || domain.Contains("127.0.0.1") || domain.Contains("[REDACTED_SERVER_IP]"))
+            var hostOnly = domain.Split(':')[0];
+            if (domain.Contains("localhost") || System.Net.IPAddress.TryParse(hostOnly, out _))
                 return $"http://{domain}";
 
             return $"https://{domain}";

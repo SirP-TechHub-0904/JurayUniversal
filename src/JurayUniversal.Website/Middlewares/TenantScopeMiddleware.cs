@@ -32,7 +32,7 @@ public class TenantScopeMiddleware
         var hostWithoutPort = tenant.Split(':')[0];
         if (IPAddress.TryParse(hostWithoutPort, out IPAddress ipAddress))
         {
-            // It's an IP address (with or without port, e.g. [REDACTED_SERVER_IP]:5077)
+            // It's an IP address (with or without port, e.g. 203.0.113.10:5077)
             using var scope = tenantProvider.BeginScope(tenant);
             await _next(httpContext);
             return;
@@ -228,14 +228,7 @@ public class TenantScopeMiddleware
 
                 return;
             }
-                        else if (tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]" || tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]:5060")
-            {
-                using var scope = tenantProvider.BeginScope(tenant);
-                await _next(httpContext);
-
-                return;
-            }
-            else if (tenant.ToString().ToLower() == "[REDACTED_SERVER_IP]")
+                        else if (System.Net.IPAddress.TryParse(tenant.ToString().Split(':')[0], out _))
             {
                 using var scope = tenantProvider.BeginScope(tenant);
                 await _next(httpContext);

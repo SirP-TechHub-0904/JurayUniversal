@@ -72,7 +72,7 @@ namespace JurayUniversal.Website.Areas.Management.Pages.V3
 
 
                 user.Id = Guid.NewGuid().ToString();
-                var result = await _userManager.CreateAsync(user, "[REDACTED_BOOTSTRAP_PASSWORD]");
+                var result = await _userManager.CreateAsync(user, (System.Environment.GetEnvironmentVariable("ADMIN_SEED_PASSWORD") ?? ""));
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

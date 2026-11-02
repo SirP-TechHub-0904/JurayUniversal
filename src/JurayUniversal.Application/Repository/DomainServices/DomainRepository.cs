@@ -1,4 +1,4 @@
-﻿using JurayUniversal.Application.Dtos;
+using JurayUniversal.Application.Dtos;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,12 @@ namespace JurayUniversal.Application.Repository.DomainServices
 
         private readonly string _connectionString;
 
-        public DomainRepository()
+        public DomainRepository(Microsoft.Extensions.Configuration.IConfiguration configuration = null)
         {
-            //_connectionString = "Integrated Security=true;Server=JSS\SQLEXPRESS;Database=DomainBase;";
-            _connectionString = "Server=[REDACTED_DB_HOST];Database=db_a64c98_masterdomain; User Id=db_a64c98_masterdomain_admin;Password=[REDACTED_DB_PASSWORD];";
+            _connectionString = configuration?["ConnectionStrings:MasterDomainConnection"]
+                ?? Environment.GetEnvironmentVariable("ConnectionStrings__MasterDomainConnection")
+                ?? Environment.GetEnvironmentVariable("TenantConfiguration__ConnectionString")
+                ?? string.Empty;
         }
 
 

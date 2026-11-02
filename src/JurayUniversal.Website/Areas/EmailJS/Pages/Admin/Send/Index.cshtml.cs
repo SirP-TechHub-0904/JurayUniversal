@@ -32,7 +32,7 @@ namespace JurayUniversal.Website.Areas.EmailJS.Pages.Admin.Send
 
         public async Task OnGetAsync()
         {
-            string k = "https://nipss24.s3.amazonaws.com/30dd1e90-a424-45b9-b23a-c1990a56fc05.jpg?AWSAccessKeyId=[REDACTED_AWS_ACCESS_KEY]&Expires=1806529807&Signature=2%2BFQ0OUrkwIFCJd162vTvEHwBgw%3D";
+            string k = Environment.GetEnvironmentVariable("EmailBannerImageUrl") ?? string.Empty;
             string emailTemplate = @"
 
 <img class=""img-fluid w-100"" src=""XXXX"" alt=""NIPSS PORTAL"">
